@@ -11,20 +11,3 @@ index 9e23a5a..74459a6 100755
                '-Wno-deprecated',
                '-Wno-missing-field-initializers',
                '-Wno-unused-parameter',
-@@ -340,14 +340,14 @@ else:
-         cflags += ['-D_GLIBCXX_DEBUG', '-D_GLIBCXX_DEBUG_PEDANTIC']
-         cflags.remove('-fno-rtti')  # Needed for above pedanticness.
-     else:
--        cflags += ['-O2', '-DNDEBUG']
-+        cflags += ['-O3', '-DNDEBUG']
-     try:
-         proc = subprocess.Popen(
-             [CXX, '-fdiagnostics-color', '-c', '-x', 'c++', '/dev/null',
-              '-o', '/dev/null'],
-             stdout=open(os.devnull, 'wb'), stderr=subprocess.STDOUT)
-         if proc.wait() == 0:
--            cflags += ['-fdiagnostics-color']
-+            cflags += ['-fdiagnostics-color=always']
-     except:
-         pass
-     if platform.is_mingw():
