@@ -75,9 +75,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gdb"
 
 pre_configure_host() {
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
   unset LDFLAGS
 }
 
