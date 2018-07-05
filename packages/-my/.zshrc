@@ -28,7 +28,6 @@ DISABLE_UPDATE_PROMPT=true
 #ZSH_THEME="muse"
 ZSH_THEME="muse"
 
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
