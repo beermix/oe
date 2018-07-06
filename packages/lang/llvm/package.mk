@@ -52,7 +52,8 @@ PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_LINK_LLVM_DYLIB=ON \
                        -DLLVM_OPTIMIZED_TABLEGEN=ON \
                        -DLLVM_APPEND_VC_REV=OFF \
-                       -DLLVM_ENABLE_RTTI=ON -DCMAKE_BUILD_TYPE=Release"
+                       -DLLVM_ENABLE_RTTI=ON \
+                       -DCMAKE_BUILD_TYPE=Release"
 
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_COMMON \
                      -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"

@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="fontconfig"
-PKG_VERSION="2.12.6"
-PKG_SHA256="064b9ebf060c9e77011733ac9dc0e2ce92870b574cca2405e11f5353a683c334"
+PKG_VERSION="2.13.0"
+PKG_SHA256="a6ca290637d8b2c4e1dd40549b179202977593f7481ec83ddfb1765ad90037ba"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.fontconfig.org"
@@ -27,11 +27,12 @@ PKG_DEPENDS_TARGET="toolchain util-macros freetype libxml2 zlib expat gperf:host
 PKG_SECTION="x11/other"
 PKG_SHORTDESC="fontconfig: A library for font customization and configuration"
 PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
+#PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
                            --with-default-fonts=/usr/share/fonts \
-                           --without-add-fonts \
+                           --with-add-fonts \
                            --disable-dependency-tracking \
                            --disable-docs"
 
