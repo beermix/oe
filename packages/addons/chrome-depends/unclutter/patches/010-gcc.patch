@@ -1,0 +1,30 @@
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index a45aff9..1834bf6
+--- a/Makefile
++++ b/Makefile
+@@ -9,9 +9,9 @@ PREFIX = /usr
+ BINDIR = $(PREFIX)/bin
+ MANDIR = $(PREFIX)/share/man/man1
+ 
+-CC = gcc
+-LD = $(CC)
+-PKG_CONFIG = pkg-config
++CC = x86_64-libreelec-linux-gnu-gcc
++LD = x86_64-libreelec-linux-gnu-gcc -lXext
++PKG_CONFIG = x86_64-pc-linux-gnu-pkg-config
+ 
+ CPPFLAGS += -D'__VERSION="$(shell git describe --all --long --always)"' "-I$(IDIR)"
+ 
+@@ -51,10 +51,6 @@ uninstall:
+ 	$(RM) "$(DESTDIR)$(MANDIR)/unclutter.1"
+ 
+ .PHONY: mans
+-mans: $(MANS)
+-
+-$(MANS): %.1: %.man
+-	a2x --no-xmllint -f manpage "$<"
+ 
+ .PHONY: clean
+ clean:
