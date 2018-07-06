@@ -50,6 +50,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-targets=x86_64-pep \
                          --enable-lto \
                          --enable-plugins \
+                         --enable-threads \
+                         --with-pic \
                          --disable-nls \
                          --disable-gdb"
 
