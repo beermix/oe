@@ -54,7 +54,7 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --enable-lib2to3
                          --disable-idle3
                          --without-cxx-main
-                         --with-expat=builtin
+                         --with-expat=system
                          --with-libmpdec=none
                          --with-doc-strings
                          --without-pymalloc
