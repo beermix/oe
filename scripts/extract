@@ -42,7 +42,7 @@ fi
 
 case $PKG_SOURCE_NAME in
   *.tar)
-    tar xf $FULL_SOURCE_PATH -C $2
+    tar --strip-components=1 xf $FULL_SOURCE_PATH -C $2
     ;;
   *.tar.bz2 | *.tbz)
     tar xjf $FULL_SOURCE_PATH -C $2
