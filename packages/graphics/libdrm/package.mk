@@ -28,46 +28,33 @@ PKG_DEPENDS_TARGET="toolchain libpciaccess"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="libdrm: Userspace interface to kernel DRM services"
 PKG_LONGDESC="The userspace interface library to kernel DRM services."
-PKG_TOOLCHAIN="meson"
+PKG_TOOLCHAIN="autotools"
 
 get_graphicdrivers
 
-PKG_DRM_CONFIG="-Dnouveau=false \
-                -Domap=false \
-                -Dexynos=false \
-                -Dtegra=false"
+DRM_CONFIG="--disable-libkms --disable-intel --disable-radeon --disable-amdgpu"
+DRM_CONFIG="$DRM_CONFIG --disable-nouveau --disable-vmwgfx"
 
-listcontains "$GRAPHIC_DRIVERS" "(i915|i965)" &&
-  PKG_DRM_CONFIG+=" -Dintel=true" || PKG_DRM_CONFIG+=" -Dintel=false"
+for drv in $GRAPHIC_DRIVERS; do
+  [ "$drv" = "i915" -o "$drv" = "i965" ] && \
+    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-libkms/enable-libkms/'` && \
+    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-intel/enable-intel/'`
 
-listcontains "$GRAPHIC_DRIVERS" "(r200|r300|r600|radeonsi)" &&
-  PKG_DRM_CONFIG+=" -Dradeon=true" || PKG_DRM_CONFIG+=" -Dradeon=false"
+  [ "$drv" = "r200" -o "$drv" = "r300" -o "$drv" = "r600" -o "$drv" = "radeonsi" ] && \
+    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-libkms/enable-libkms/'` && \
+    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-radeon/enable-radeon/'` && \
+    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-amdgpu/enable-amdgpu/'`
 
-listcontains "$GRAPHIC_DRIVERS" "radeonsi" &&
-  PKG_DRM_CONFIG+=" -Damdgpu=true" || PKG_DRM_CONFIG+=" -Damdgpu=false"
+  [ "$drv" = "vmware" ] && \
+    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-libkms/enable-libkms/'` && \
+    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-vmwgfx/enable-vmwgfx/'`
+done
 
-listcontains "$GRAPHIC_DRIVERS" "vmware" &&
-  PKG_DRM_CONFIG+=" -Dvmwgfx=true" || PKG_DRM_CONFIG+=" -Dvmwgfx=false"
-
-listcontains "$GRAPHIC_DRIVERS" "vc4" &&
-  PKG_DRM_CONFIG+=" -Dvc4=true" || PKG_DRM_CONFIG+=" -Dvc4=false"
-
-listcontains "$GRAPHIC_DRIVERS" "freedreno" &&
-  PKG_DRM_CONFIG+=" -Dfreedreno=true" || PKG_DRM_CONFIG+=" -Dfreedreno=false"
-
-listcontains "$GRAPHIC_DRIVERS" "etnaviv" &&
-  PKG_DRM_CONFIG+=" -Detnaviv=true" || PKG_DRM_CONFIG+=" -Detnaviv=false"
-
-PKG_MESON_OPTS_TARGET="-Dlibkms=false \
-                       $PKG_DRM_CONFIG \
-                       -Dcairo-tests=false \
-                       -Dman-pages=false \
-                       -Dvalgrind=false \
-                       -Dfreedreno-kgsl=false \
-                       -Dinstall-test-programs=false \
-                       -Dudev=false"
-
-post_makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-    cp -a $PKG_BUILD/.$TARGET_NAME/tests/modetest/modetest $INSTALL/usr/bin/
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
+                           --enable-largefile \
+                           --with-kernel-source=$(kernel_path) \
+                           $DRM_CONFIG \
+                           --disable-install-test-programs \
+                           --disable-cairo-tests \
+                           --disable-manpages \
+                           --disable-valgrind"
