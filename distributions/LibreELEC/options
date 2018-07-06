@@ -70,7 +70,7 @@
   ADDITIONAL_DRIVERS=""
 
 # build and install bluetooth support (yes / no)
-  BLUETOOTH_SUPPORT="no"
+  BLUETOOTH_SUPPORT="yes"
 
 # build and install with KODI webfrontend (yes / no)
   KODI_WEBSERVER_SUPPORT="yes"
@@ -140,7 +140,7 @@
   GRAPHIC_DRIVERS="i965"
 
 # build and install remote support (yes / no)
-  REMOTE_SUPPORT="no"
+  REMOTE_SUPPORT="yes"
 
 # build and install ATV IR remote support (yes / no)
   ATVCLIENT_SUPPORT="no"
