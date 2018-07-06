@@ -48,6 +48,8 @@ PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
   cd $(get_build_dir chromium)
+  
+  cp -fr $PKG_DIR/toolchain/BUILD.gn ./build/toolchain/linux/BUILD.gn
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
@@ -79,7 +81,8 @@ make_target() {
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
   local _flags=(
-    "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "host_toolchain=\"//build/toolchain/linux:host\""
+    "host_toolchain=\"//build/toolchain/linux:host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
