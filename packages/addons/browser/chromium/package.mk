@@ -94,7 +94,6 @@ make_target() {
     'use_allocator="none"'
     'use_custom_libcxx=false'
     'linux_link_libudev=true'
-    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=true'
