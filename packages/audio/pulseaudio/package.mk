@@ -24,7 +24,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://pulseaudio.org/"
 PKG_URL="http://www.freedesktop.org/software/pulseaudio/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain alsa-lib dbus libcap libsndfile libtool openssl soxr systemd fftw"
+PKG_DEPENDS_TARGET="toolchain alsa-lib dbus libcap libsndfile libtool openssl soxr systemd"
 PKG_SECTION="audio"
 PKG_LONGDESC="PulseAudio is a sound system for POSIX OSes, meaning that it is a proxy for your sound applications."
 
@@ -91,7 +91,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --with-system-group=root \
                            --with-access-group=root \
                            --without-caps \
-                           --with-fftw \
+                           --without-fftw \
                            --without-speex \
                            --with-soxr \
                            --with-module-dir=/usr/lib/pulse"
@@ -100,6 +100,8 @@ pre_configure_target()
 {
   sed -e 's|; remixing-use-all-sink-channels = yes|; remixing-use-all-sink-channels = no|' \
       -i $PKG_BUILD/src/daemon/daemon.conf.in
+      
+  LIBS="$LIBS -fopenmp"
 }
 
 post_makeinstall_target() {
