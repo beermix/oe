@@ -17,17 +17,19 @@
 ################################################################################
 PKG_NAME="wxWidgets"
 PKG_VERSION="3.1.1"
-PKG_SITE="https://github.com/wxWidgets/wxWidgets"
+PKG_SITE="https://github.com/wxWidgets/wxWidgets/releases"
 #PKG_URL="https://github.com/wxWidgets/wxWidgets/releases/download/v$PKG_VERSION/wxWidgets-$PKG_VERSION.tar.bz2"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gtk+ libSM tiff libpng gst-plugins-base"
+PKG_DEPENDS_TARGET="toolchain gtk3 libSM tiff libpng gst-plugins-base"
+PKG_DEPENDS_TARGET="toolchain gtk3 libSM tiff libpng"
 PKG_SECTION="depends"
 PKG_SHORTDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic"
+PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic:host +pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2 \
+PKG_CONFIGURE_OPTS_TARGET="--with-gtk=3 \
 			      --with-opengl \
 			      --enable-unicode \
 			      --enable-graphics_ctx \

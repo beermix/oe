@@ -102,6 +102,7 @@ make_target() {
     'use_kerberos=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'use_dbus=true'
     'use_system_libjpeg=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
