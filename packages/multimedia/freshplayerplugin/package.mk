@@ -1,5 +1,5 @@
 PKG_NAME="freshplayerplugin"
-PKG_VERSION="ce233f6"
+PKG_VERSION="4343e4e"
 PKG_SITE="https://github.com/i-rinat/freshplayerplugin"
 PKG_URL="https://github.com/i-rinat/freshplayerplugin/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ragel:host libva-vdpau-driver alsa xrandr libXrender libXcursor libdrm libevent freetype openssl icu libva libvdpau cairo pango"
