@@ -69,6 +69,7 @@ PKG_CONFIGURE_OPTS_TARGET="$UTILLINUX_CONFIG_DEFAULT \
                            --enable-losetup \
                            --enable-fsck \
                            --enable-fstrim \
+                           --enable-unshare \
                            --enable-blkid"
 
 if [ "$SWAP_SUPPORT" = "yes" ]; then
@@ -79,7 +80,8 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-uuidgen \
-                         --enable-libuuid"
+                         --enable-libuuid \
+                         --enable-fdformat"
 
 PKG_CONFIGURE_OPTS_INIT="$UTILLINUX_CONFIG_DEFAULT \
                          --enable-libblkid \
