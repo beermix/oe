@@ -33,7 +33,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="yasm ffmpeg zlib unclutter xdotool libxslt chrome re2 libwebp snappy chromium:host"
+PKG_DEPENDS_TARGET="yasm ffmpeg zlib unclutter xdotool libxslt chrome re2 snappy chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -100,10 +100,8 @@ make_target() {
     'use_gold=false'
     'use_gtk3=true'
     'use_kerberos=false'
-    'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_cups=false'
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
@@ -121,15 +119,15 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
-  [ffmpeg]=ffmpeg
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
+  #[ffmpeg]=ffmpeg
+  #[fontconfig]=fontconfig
+  #[freetype]=freetype2
+  #[harfbuzz-ng]=harfbuzz
   #[icu]=icu
   [libdrm]=
-  [libjpeg]=libjpeg
+  #[libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
-  [libwebp]=libwebp
+  #[libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   #[opus]=opus
