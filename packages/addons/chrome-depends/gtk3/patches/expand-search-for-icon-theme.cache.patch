@@ -1,0 +1,51 @@
+From 17cba207322814d8da51e6006748182d6c43c04e Mon Sep 17 00:00:00 2001
+From: Jose Lamego <jose.a.lamego@intel.com>
+Date: Thu, 17 May 2018 14:46:08 -0500
+Subject: [PATCH] gtk/gtkiconcache: expand search for icon-theme.cache
+
+current search for icon-theme.cache files does not include
+the directories used in stateless systems, leaving these
+files unavailable.
+
+This change searchs for icon-theme.cache files in /var/cache/icons
+directory if it exists.
+
+Signed-off-by: Jose Lamego <jose.a.lamego@intel.com>
+---
+ gtk/gtkiconcache.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/gtk/gtkiconcache.c b/gtk/gtkiconcache.c
+index df2805b1dd..2d05a3f7dc 100644
+--- a/gtk/gtkiconcache.c
++++ b/gtk/gtkiconcache.c
+@@ -90,9 +90,23 @@ gtk_icon_cache_new_for_path (const gchar *path)
+   GStatBuf path_st;
+ 
+    /* Check if we have a cache file */
+-  cache_filename = g_build_filename (path, "icon-theme.cache", NULL);
+-
+-  GTK_NOTE (ICONTHEME, g_message ("look for icon cache in %s", path));
++   /* use /storage/.cache/icons directory if available */
++
++  GDir *icon_cache_dir_exists = NULL;
++  gchar *icon_cache_dir_name = "/storage/.cache/icons";
++  GError* icon_error = NULL;
++  icon_cache_dir_exists = g_dir_open(icon_cache_dir_name, 0, &icon_error);
++
++  if(icon_cache_dir_exists){
++    const gchar *icon_theme = g_path_skip_root(path);
++    cache_filename = g_build_filename (icon_cache_dir_name, icon_theme, "icon-theme.cache", NULL);
++    GTK_NOTE (ICONTHEME, g_message ("look for icon cache in %s/%s", icon_cache_dir_name, icon_theme));
++  }
++  else{
++    cache_filename = g_build_filename (path, "icon-theme.cache", NULL);
++    GTK_NOTE (ICONTHEME, g_message ("look for icon cache in %s", path));
++  }
++  g_dir_close(icon_cache_dir_exists);
+ 
+   if (g_stat (path, &path_st) < 0)
+     goto done;
+-- 
+2.17.0
+
