@@ -18,11 +18,10 @@
 
 PKG_NAME="util-linux"
 PKG_VERSION="2.32"
-#PKG_SHA256="1a51b16fa9cd51d26ef9ab52d2f1de12403b810fc8252bf7d478df91b3cddf11"
+PKG_SHA256="6c7397abc764e32e8159c2e96042874a190303e77adceb4ac5bd502a272a4734"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.32/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://github.com/karelzak/util-linux/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain"
