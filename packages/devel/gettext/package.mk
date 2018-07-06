@@ -42,4 +42,5 @@ PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
                          --disable-acl \
                          --disable-openmp \
                          --disable-csharp \
-                         --disable-relocatable"
+                         --disable-relocatable \
+                         --without-included-gettext"
