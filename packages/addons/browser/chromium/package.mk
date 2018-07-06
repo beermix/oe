@@ -102,7 +102,8 @@ make_target() {
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=true'
+    'use_gtk3=false'
+    'enable_vr=false'
     'use_kerberos=false'
     'use_sysroot=true'
     'use_vaapi=true'
@@ -114,7 +115,7 @@ make_target() {
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=false'
+    'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
