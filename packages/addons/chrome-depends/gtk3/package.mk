@@ -26,9 +26,9 @@ PKG_LICENSE="LGPL"
 PKG_SITE="https://ftp.acc.umu.se/pub/gnome/sources/gtk+/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gtk+/${PKG_VERSION:0:4}/gtk+-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="gtk+-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain atk cairo gdk-pixbuf glib libX11 libXi libXrandr libepoxy pango"
+PKG_DEPENDS_TARGET="toolchain atk at-spi2-atk cairo gdk-pixbuf glib libX11 libXi libXrandr libepoxy pango"
 PKG_LONGDESC="The Gimp ToolKit (GTK) is a library for creating graphical user interfaces for the X Window System."
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --disable-debug \
@@ -41,6 +41,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --enable-xkb \
                            --enable-x11-backend"
 
-#pre_configure_target() {
-#  LIBS="$LIBS -lXcursor"
-#}
+pre_configure_target() {
+  LIBS="$LIBS -lXcursor"
+}
