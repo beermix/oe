@@ -69,7 +69,7 @@ make_target() {
   unset LDFLAGS
   
   CFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
-  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations'
   CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
   export CCACHE_SLOPPINESS=time_macros
@@ -109,7 +109,6 @@ make_target() {
     'use_system_zlib=true'
     'use_system_libdrm=true'
     'use_system_libjpeg=true'
-    'use_system_libpng=true'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'use_v8_context_snapshot=false'
@@ -129,7 +128,6 @@ make_target() {
 # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
   [ffmpeg]=ffmpeg
-  [flac]=flac
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
