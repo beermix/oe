@@ -33,7 +33,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host chrome yasm unclutter xdotool re2 snappy libvpx libxslt"
+PKG_DEPENDS_TARGET="chromium:host chrome yasm unclutter xdotool re2 snappy libxslt"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -136,7 +136,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
@@ -145,4 +145,75 @@ addon() {
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # atk
+  cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # cairo
+  cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gdk-pixbuf
+  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gdk-pixbuf modules
+  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+
+  # gtk3 gdk3
+  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # harfbuzz
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libatk-bridge
+  cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libatspi
+  cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libcups
+  cp -PL $(get_build_dir cups)/cups/libcups.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libxcb
+  cp -PL $(get_build_dir chrome-libxcb)/.install_pkg/usr/lib/libxcb.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib  
+
+  # libXcomposite
+  cp -PL $(get_build_dir chrome-libXcomposite)/.install_pkg/usr/lib/libXcomposite.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libXcursor
+  cp -PL $(get_build_dir libXcursor)/.install_pkg/usr/lib/libXcursor.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libXdamage
+  cp -PL $(get_build_dir chrome-libXdamage)/.install_pkg/usr/lib/libXdamage.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libXfixes
+  cp -PL $(get_build_dir chrome-libXfixes)/.install_pkg/usr/lib/libXfixes.so.3 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libXi  
+  cp -PL $(get_build_dir chrome-libXi)/.install_pkg/usr/lib/libXi.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libXrender
+  cp -PL $(get_build_dir chrome-libXrender)/.install_pkg/usr/lib/libXrender.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libxss
+  cp -PL $(get_build_dir libxss)/.install_pkg/usr/lib/libXss.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libXtst
+  cp -PL $(get_build_dir chrome-libXtst)/.install_pkg/usr/lib/libXtst.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # pango
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpango-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangoft2-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # unclutter
+  cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
+
+  # xdotool
+  cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
+
+  # libxkbcommon
+  cp -P $(get_build_dir libxkbcommon)/libxkbcommon.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
