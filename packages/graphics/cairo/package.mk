@@ -77,23 +77,34 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
+                           --disable-xcb \
+                           --disable-xlib-xcb \
+                           --disable-xcb-shm \
                            --disable-qt \
                            --disable-quartz \
                            --disable-quartz-font \
                            --disable-quartz-image \
                            --disable-win32 \
                            --disable-win32-font \
+                           --disable-skia \
                            --disable-os2 \
                            --disable-beos \
                            --disable-cogl \
+                           --disable-drm \
+                           --disable-gallium \
                            --enable-png \
                            --disable-directfb \
+                           --disable-vg \
+                           --disable-wgl \
+                           --disable-script \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
                            --enable-pdf \
                            --enable-svg \
                            --disable-test-surfaces \
+                           --disable-tee \
+                           --disable-xml \
                            --enable-pthread \
                            --enable-gobject=yes \
                            --disable-full-testing \
