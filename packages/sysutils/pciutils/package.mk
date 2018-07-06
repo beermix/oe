@@ -18,7 +18,7 @@
 
 PKG_NAME="pciutils"
 PKG_VERSION="3.6.0"
-#PKG_SHA256="f346eeb90cce0910c05b877fe49eadc760fa084c0455fd313e39d4b2c2d4bb21"
+PKG_SHA256="f2a41090067022d497262c3a2bd9dc6d2da566a9e8db463bc75e483be5cee99d"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://mj.ucw.cz/pciutils.shtml"

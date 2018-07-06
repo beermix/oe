@@ -1,10 +1,10 @@
 PKG_NAME="zlib-ng"
-PKG_VERSION="df1fd15"
+PKG_VERSION="013b23b"
 PKG_URL="https://github.com/Dead2/zlib-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET=""
 PKG_DEPENDS_HOST=""
 PKG_SECTION="compress"
-PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="cmake-make"
 
 TARGET_CONFIGURE_OPTS="--prefix=/usr"
 HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN"
