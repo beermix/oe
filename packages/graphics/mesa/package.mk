@@ -34,7 +34,7 @@ PKG_BUILD_FLAGS="+lto"
 get_graphicdrivers
 
 PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
-                       -Dgallium-drivers=$GALLIUM_DRIVERS,nouveau \
+                       -Dgallium-drivers=$GALLIUM_DRIVERS \
                        -Dgallium-extra-hud=false \
                        -Dgallium-xvmc=false \
                        -Dgallium-omx=disabled \
@@ -82,7 +82,7 @@ else
   PKG_MESON_OPTS_TARGET+=" -Dgallium-vdpau=false"
 fi
 
-if [ "$VAAPI_SUPPORT" = "yes" ]; then
+if [ "$VAAPI_SUPPORT" = "yes" ] && listcontains "$GRAPHIC_DRIVERS" "(r600|radeonsi)"; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva"
   PKG_MESON_OPTS_TARGET+=" -Dgallium-va=true"
 else

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -13,27 +13,22 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.  --verbose
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="ninja"
-PKG_VERSION="ca041d8"
-PKG_VERSION="1.8.2"
+PKG_NAME="libva-vdpau-driver"
+PKG_VERSION="0.7.4"
+PKG_SHA256="155c1982f0ac3f5435ba20b221bcaa11be212c37db548cd1f2a030ffa17e9bb9"
 PKG_ARCH="any"
-PKG_LICENSE="Apache"
-PKG_SITE="https://github.com/ninja-build/ninja"
-PKG_URL="https://github.com/ninja-build/ninja/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="Python2:host Python3:host re2c:host"
-PKG_SECTION="devel"
-PKG_SHORTDESC="Small build system with a focus on speed"
-PKG_LONGDESC="Small build system with a focus on speed"
-PKG_TOOLCHAIN="manual"
+PKG_LICENSE="GPL"
+PKG_SITE="http://freedesktop.org/wiki/Software/vaapi"
+PKG_URL="http://freedesktop.org/software/vaapi/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain libva libvdpau mesa"
+PKG_SECTION="graphics"
+PKG_SHORTDESC="VDPAU backend for VA API"
+PKG_LONGDESC="VDPAU backend for VA API"
+PKG_TOOLCHAIN="autotools"
 
-make_host() {
-  CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
-}
-
-makeinstall_host() {
-#  strip ninja
-  cp ninja $TOOLCHAIN/bin
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/lib/va/s3g_drv_video.so
 }

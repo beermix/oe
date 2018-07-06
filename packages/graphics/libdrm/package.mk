@@ -65,8 +65,7 @@ PKG_MESON_OPTS_TARGET="-Dlibkms=false \
                        -Dvalgrind=false \
                        -Dfreedreno-kgsl=false \
                        -Dinstall-test-programs=false \
-                       -Dudev=false \
-                       -Dnouveau=true"
+                       -Dudev=false"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
