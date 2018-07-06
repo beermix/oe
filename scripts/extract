@@ -42,7 +42,7 @@ fi
 
 case $PKG_SOURCE_NAME in
   *.tar)
-    tar --strip-components=1 xf $FULL_SOURCE_PATH -C $2
+    tar xf $FULL_SOURCE_PATH -C $2
     ;;
   *.tar.bz2 | *.tbz)
     tar xjf $FULL_SOURCE_PATH -C $2
@@ -51,7 +51,7 @@ case $PKG_SOURCE_NAME in
     tar xzf $FULL_SOURCE_PATH -C $2
     ;;
   *.tar.xz | *.txz)
-    tar xJf $FULL_SOURCE_PATH -C $2
+    tar --strip-components=1 xJf $FULL_SOURCE_PATH -C $2
     ;;
   *.7z)
     mkdir -p $2/$1
