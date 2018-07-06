@@ -19,7 +19,7 @@ index 70bf8b0..c69daf0 100644
  ## Process this file with automake to create Makefile.in.
  
 -SUBDIRS= pango pango-view examples docs tools tests win32
-+SUBDIRS= pango pango-view examples docs tools win32
++SUBDIRS= pango pango-view examples tools
  
  meson_dist_files = \
  	pango/pango-features.h.meson \
@@ -32,7 +32,7 @@ index 8489ca1..51f6ada 100644
  top_builddir = @top_builddir@
  top_srcdir = @top_srcdir@
 -SUBDIRS = pango pango-view examples docs tools tests win32
-+SUBDIRS = pango pango-view examples docs tools win32
++SUBDIRS = pango pango-view examples tools
  meson_dist_files = \
  	pango/pango-features.h.meson \
  	pango-view/meson.build \
