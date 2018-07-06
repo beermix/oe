@@ -2,15 +2,6 @@ diff --git a/configure.py b/configure.py
 index 9e23a5a..74459a6 100755
 --- a/configure.py
 +++ b/configure.py
-@@ -328,7 +328,7 @@ if platform.is_msvc():
-         cflags += ['/Ox', '/DNDEBUG', '/GL']
-         ldflags += ['/LTCG', '/OPT:REF', '/OPT:ICF']
- else:
--    cflags = ['-g', '-Wall', '-Wextra',
-+    cflags = ['-g0', '-Wall', '-Wextra',
-               '-Wno-deprecated',
-               '-Wno-missing-field-initializers',
-               '-Wno-unused-parameter',
 @@ -340,14 +340,14 @@ else:
          cflags += ['-D_GLIBCXX_DEBUG', '-D_GLIBCXX_DEBUG_PEDANTIC']
          cflags.remove('-fno-rtti')  # Needed for above pedanticness.
