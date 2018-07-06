@@ -29,8 +29,7 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxfont: X font Library"
 PKG_LONGDESC="X font Library"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-                           --disable-ipv6 \
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 \
                            --enable-freetype \
                            --enable-builtins \
                            --disable-pcfformat \

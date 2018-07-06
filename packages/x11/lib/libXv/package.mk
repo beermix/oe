@@ -5,6 +5,5 @@ PKG_DEPENDS_TARGET="toolchain util-macros xproto libX11 libXext"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libXau: X authorization file management libary"
 PKG_LONGDESC="X authorization file management libary"
-PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-malloc0returnsnull"
+PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"

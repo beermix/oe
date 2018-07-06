@@ -5,7 +5,7 @@ PKG_URL="https://www.x.org/releases/individual/app/intel-gpu-tools-$PKG_VERSION.
 PKG_URL="https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/snapshot/$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain clang:host libxml llvm zlib"
-PKG_DEPENDS_TARGET="toolchain systemd procps-ng glib mesa libdrm libpciaccess cairo swig:host libunwind libXv"
+PKG_DEPENDS_TARGET="toolchain systemd procps-ng glib mesa libdrm libpciaccess cairo swig:host libunwind"
 PKG_SECTION="tools"
 #PKG_TOOLCHAIN="autotools"
 
