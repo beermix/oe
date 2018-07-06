@@ -38,12 +38,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --disable-gtk-doc-html \
                            --disable-man \
                            --enable-modules \
-                           --enable-x11-backend \
-                           --enable-xdamage \
-                           --enable-xcomposite \
-                           --enable-xrandr \
-                           --enable-xinerama \
-                           --disable-papi"
+                           --enable-xkb \
+                           --enable-x11-backend"
 
 pre_configure_target() {
   LIBS="$LIBS -lXcursor"
