@@ -19,30 +19,27 @@
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
-#  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
 PKG_VERSION="67.0.3396.62"
-PKG_VERSION="67.0.3396.79"
-#PKG_SHA256="d5ee63932ff1c8c4a5f69c834f6577e7127b416681eddd23bc54886caffd770d"
-PKG_REV="147"
+PKG_SHA256="d5ee63932ff1c8c4a5f69c834f6577e7127b416681eddd23bc54886caffd770d"
+PKG_REV="131"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-#PKG_URL="http://192.168.1.200:8080/chromium-$PKG_VERSION.tar.xz"
-#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host libevent:host gperf:host"
+#PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
+#PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
+PKG_DEPENDS_HOST="toolchain ninja:host Python2:host gperf:host libevent:host"
 #PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-#PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ openjpeg chromium:host"
-PKG_DEPENDS_TARGET="chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-GOLD_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -70,17 +67,16 @@ make_target() {
   unset CXXFLAGS
   unset LDFLAGS
 
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always"
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+  # export LDFLAGS="$LDFLAGS -ludev"
+  # export LD=$CXX
 
   export CCACHE_SLOPPINESS=time_macros
-  # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
-  # export CCACHE_CPP2=yes
-  # ---------------------------------------------------------------------------------------------------------
+  export CCACHE_CPP2=yes
+
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
@@ -89,7 +85,7 @@ make_target() {
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'symbol_level=1'
+    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -98,8 +94,6 @@ make_target() {
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
     'link_pulseaudio=true'
-    'use_pulseaudio=false'
-    'use_allocator="none"'
     'linux_use_bundled_binutils=false'
     'use_cups=false'
     'use_custom_libcxx=false'
@@ -107,14 +101,15 @@ make_target() {
     'use_gold=false'
     'use_gtk3=false'
     'use_kerberos=false'
-    'icu_use_data_file=true'
+    'use_pulseaudio=false'
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
-    'enable_widevine=true'
+    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
+    'enable_widevine=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
@@ -123,13 +118,12 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
-  #  -w dupbuild=err
-#---------------------------------------------------------------------------------------------------------
 }
 
 addon() {
@@ -157,11 +151,6 @@ addon() {
 
   # gtk+
   cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # gtk3
-  # cp -ri $(get_build_dir gtk3)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  # cp -ri $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  # cp -ri $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib

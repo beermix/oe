@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.tv; see the file COPYING.  If not, write to
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
-###  beautifulsoup4:host html5lib:host re2 snappy
+#  beautifulsoup4:host html5lib:host re2 snappy
 #  
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
@@ -25,15 +25,15 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="64.0.3282.186"
-PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="170"
+PKG_VERSION="67.0.3396.87"
+PKG_SHA256="5d27a72f0cb8247343034f63fdd9747ff388c05b9fceb541668dd04fb372db1d"
+PKG_REV="180"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host chrome yasm unclutter xdotool re2 snappy libvpx libxslt"
+PKG_DEPENDS_TARGET="yasm ffmpeg zlib unclutter xdotool libxslt chrome re2 snappy at-spi2-atk chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -48,17 +48,20 @@ PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
   cd $(get_build_dir chromium)
+  
+  cp -fr $PKG_DIR/toolchain/BUILD.gn ./build/toolchain/linux/BUILD.gn
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 }
 
 make_host() {
   export CCACHE_SLOPPINESS=time_macros
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
 }
 
 make_target() {
@@ -68,7 +71,7 @@ make_target() {
   unset LDFLAGS
   
   CFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
-  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations'
   CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
   export CCACHE_SLOPPINESS=time_macros
@@ -78,7 +81,8 @@ make_target() {
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
   local _flags=(
-    "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "host_toolchain=\"//build/toolchain/linux:host\""
+    "host_toolchain=\"//build/toolchain/linux:host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -90,36 +94,33 @@ make_target() {
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
     'link_pulseaudio=true'
-    'linux_use_bundled_binutils=false'
+    'use_pulseaudio=false'
     'use_allocator="none"'
+    'linux_use_bundled_binutils=false'
+    'use_cups=false'
     'use_custom_libcxx=false'
-    'linux_link_libudev=true'
-    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=true'
     'use_kerberos=false'
-    'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
     'use_dbus=true'
     'use_system_libjpeg=true'
-    'use_system_zlib=true'
-    'use_system_freetype=true'
-    'use_system_libdrm=true'
-    'use_system_libpng=true'
-    'use_cups=false'
-    'linux_link_libudev=true'
     'use_system_harfbuzz=true'
+    'use_system_freetype=true'
+    'use_system_zlib=true'
+    'use_system_libpng=true'
+    'use_system_libdrm=true'
+    'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=false'
-    'enable_widevine=false'
+    'enable_hangout_services_extension=true'
+    'enable_widevine=true'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
-    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -129,14 +130,14 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox chromedriver -w dupbuild=err
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,chromedriver} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
@@ -145,4 +146,69 @@ addon() {
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # atk
+  cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # cairo
+  cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gdk-pixbuf
+  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gdk-pixbuf modules
+  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+
+  # gtk3 gdk3
+  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # harfbuzz
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libatk-bridge
+  cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libatspi
+  cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libcups
+  cp -PL $(get_build_dir cups)/cups/libcups.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libxcb
+  cp -PL $(get_build_dir chrome-libxcb)/.install_pkg/usr/lib/libxcb.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib  
+
+  # libXcomposite
+  cp -PL $(get_build_dir chrome-libXcomposite)/.install_pkg/usr/lib/libXcomposite.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libXcursor
+  cp -PL $(get_build_dir libXcursor)/.install_pkg/usr/lib/libXcursor.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libXdamage
+  cp -PL $(get_build_dir chrome-libXdamage)/.install_pkg/usr/lib/libXdamage.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libXfixes
+  cp -PL $(get_build_dir chrome-libXfixes)/.install_pkg/usr/lib/libXfixes.so.3 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libXi  
+  cp -PL $(get_build_dir chrome-libXi)/.install_pkg/usr/lib/libXi.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libXrender
+  cp -PL $(get_build_dir chrome-libXrender)/.install_pkg/usr/lib/libXrender.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libxss
+  cp -PL $(get_build_dir libxss)/.install_pkg/usr/lib/libXss.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libXtst
+  cp -PL $(get_build_dir chrome-libXtst)/.install_pkg/usr/lib/libXtst.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # pango
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpango-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangoft2-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # unclutter
+  cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
 }
