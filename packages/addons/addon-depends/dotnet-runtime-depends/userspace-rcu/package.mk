@@ -16,26 +16,20 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="snapserver"
-PKG_VERSION="0.14.0"
-PKG_REV="102"
+PKG_NAME="userspace-rcu"
+PKG_VERSION="0.10.1"
+PKG_SHA256="4ddbca9927b459b7a295dec612cf43df5886d398161d50c59d0097995e368a3b"
 PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain shairport-sync snapcast"
-PKG_SECTION="service"
-PKG_SHORTDESC="Snapserver: Synchronous multi-room audio server"
-PKG_LONGDESC="Snapclient ($PKG_VERSION) is a Snapcast server. Snapcast is a multi-room client-server audio system, where all clients are time synchronized with the server to play perfectly synced audioplays."
-PKG_TOOLCHAIN="manual"
+PKG_LICENSE="LGPLv2.1"
+PKG_SITE="http://liburcu.org"
+PKG_URL="https://github.com/urcu/userspace-rcu/archive/v$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_LONGDESC="userspace read-copy-update library"
+PKG_TOOLCHAIN="autotools"
 
-PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Snapserver"
-PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_REQUIRES="service.librespot:0.0.0"
-PKG_MAINTAINER="Anton Voyl (awiouy)"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+                           --enable-static"
 
-addon() {
-  mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID/bin"
-  cp "$(get_build_dir shairport-sync)/.$TARGET_NAME/shairport-sync" \
-     "$(get_build_dir snapcast)/server/snapserver" \
-     "$ADDON_BUILD/$PKG_ADDON_ID/bin"
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
 }

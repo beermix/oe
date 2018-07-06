@@ -16,26 +16,15 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="snapserver"
-PKG_VERSION="0.14.0"
-PKG_REV="102"
+PKG_NAME="lttng-ust"
+PKG_VERSION="2.10.1"
+PKG_SHA256="8503bb36c95fc3473eb6323b84645e9d95ff52758ad199d2fe7ca80277f81b95"
 PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain shairport-sync snapcast"
-PKG_SECTION="service"
-PKG_SHORTDESC="Snapserver: Synchronous multi-room audio server"
-PKG_LONGDESC="Snapclient ($PKG_VERSION) is a Snapcast server. Snapcast is a multi-room client-server audio system, where all clients are time synchronized with the server to play perfectly synced audioplays."
-PKG_TOOLCHAIN="manual"
+PKG_LICENSE="LGPLv2.1"
+PKG_SITE="https://lttng.org/"
+PKG_URL="https://github.com/lttng/lttng-ust/archive/v$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain userspace-rcu"
+PKG_LONGDESC="LTTng is an open source tracing framework for Linux"
+PKG_TOOLCHAIN="autotools"
 
-PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Snapserver"
-PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_REQUIRES="service.librespot:0.0.0"
-PKG_MAINTAINER="Anton Voyl (awiouy)"
-
-addon() {
-  mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID/bin"
-  cp "$(get_build_dir shairport-sync)/.$TARGET_NAME/shairport-sync" \
-     "$(get_build_dir snapcast)/server/snapserver" \
-     "$ADDON_BUILD/$PKG_ADDON_ID/bin"
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-man-pages"

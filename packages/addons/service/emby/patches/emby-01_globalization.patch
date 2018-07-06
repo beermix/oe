@@ -1,0 +1,15 @@
+diff -Naur system/EmbyServer.runtimeconfig.json system.globalization/EmbyServer.runtimeconfig.json
+--- system/EmbyServer.runtimeconfig.json	2018-05-07 10:31:50.000000000 +0200
++++ system.globalization/EmbyServer.runtimeconfig.json	2018-06-02 11:16:05.448340493 +0200
+@@ -4,6 +4,9 @@
+     "framework": {
+       "name": "Microsoft.NETCore.App",
+       "version": "2.0.0"
++    },
++    "configProperties": {
++      "System.Globalization.Invariant": true
+     }
+   }
+-}
+\ No newline at end of file
++}

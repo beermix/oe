@@ -16,26 +16,22 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="snapserver"
-PKG_VERSION="0.14.0"
-PKG_REV="102"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain shairport-sync snapcast"
-PKG_SECTION="service"
-PKG_SHORTDESC="Snapserver: Synchronous multi-room audio server"
-PKG_LONGDESC="Snapclient ($PKG_VERSION) is a Snapcast server. Snapcast is a multi-room client-server audio system, where all clients are time synchronized with the server to play perfectly synced audioplays."
-PKG_TOOLCHAIN="manual"
+. $(get_pkg_directory curl)/package.mk
 
-PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Snapserver"
-PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_REQUIRES="service.librespot:0.0.0"
-PKG_MAINTAINER="Anton Voyl (awiouy)"
+PKG_NAME="curl3"
+PKG_URL=""
+PKG_LONGDESC="curl for dotnet"
 
-addon() {
-  mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID/bin"
-  cp "$(get_build_dir shairport-sync)/.$TARGET_NAME/shairport-sync" \
-     "$(get_build_dir snapcast)/server/snapserver" \
-     "$ADDON_BUILD/$PKG_ADDON_ID/bin"
+unpack() {
+  mkdir -p $PKG_BUILD
+  cp -r $(get_build_dir curl)/* $PKG_BUILD
+  sed -i 's/CURL_@CURL_LT_SHLIB_VERSIONED_FLAVOUR@4/CURL_@CURL_LT_SHLIB_VERSIONED_FLAVOUR@3/g' $PKG_BUILD/lib/libcurl.vers.in
+}
+
+makeinstall_target() {
+  :
+}
+
+post_makeinstall_target() {
+  :
 }
