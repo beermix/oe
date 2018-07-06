@@ -59,7 +59,7 @@ post_patch() {
 
 make_host() {
   export CCACHE_SLOPPINESS=time_macros
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
 }
 
 make_target() {
@@ -106,6 +106,10 @@ make_target() {
     'use_dbus=true'
     'use_cups=false'
     'linux_link_libudev=true'
+    'use_system_zlib=true'
+    'use_system_libdrm=true'
+    'use_system_libjpeg=true'
+    'use_system_libpng=true'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'use_v8_context_snapshot=false'
@@ -133,11 +137,10 @@ declare -gA _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libvpx]=libvpx            # needs unreleased libvpx
   [libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  [opus]=opus
+  #[opus]=opus
   [re2]=re2
   [snappy]=snappy
   [yasm]=
