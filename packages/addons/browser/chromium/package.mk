@@ -25,9 +25,9 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="66.0.3359.170"
-PKG_SHA256=""
-PKG_REV="180"
+PKG_VERSION="64.0.3282.186"
+PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
+PKG_REV="170"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -93,7 +93,7 @@ make_target() {
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
     'use_custom_libcxx=false'
-    'linux_link_libudev=true'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=true'
@@ -101,24 +101,20 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_ozone=true'
-    'ozone_auto_platforms=false'
-    'ozone_platform="headless"'
-    'ozone_platform_headless=true'
-    'headless_use_embedded_resources=true'
-    'icu_use_data_file=false'
-    'v8_use_external_startup_data=false''
-    'enable_print_preview=false'
-    'enable_remoting=false'
-    'use_alsa=false''
+    'use_dbus=true'
+    'use_system_libjpeg=true'
+    'use_system_zlib=true'
+    'use_system_freetype=true'
+    'use_system_libdrm=true'
+    'use_system_libpng=true'
+    'use_system_harfbuzz=true'
     'use_cups=false'
-    'use_gio=false'
-    'use_libpci=false'
-    'use_udev=false'
+    'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_widevine=true'
+    'enable_hangout_services_extension=true'
+    'enable_widevine=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
@@ -127,14 +123,6 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-
-
-
-#sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
-    
-#sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
-    
-
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
