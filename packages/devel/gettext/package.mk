@@ -43,5 +43,4 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-gnu-ld \
                          --disable-openmp \
                          --disable-csharp \
                          --disable-relocatable \
-                         --without-included-gettext \
-                         --with-included-libxml"
+                         --without-included-gettext"
