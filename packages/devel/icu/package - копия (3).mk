@@ -31,22 +31,50 @@ PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic"
 
-PKG_ICU_OPTS="--disable-extras \
-              --disable-icuio \
-              --disable-layout \
-              --disable-renaming \
-              --disable-samples \
-              --disable-tests \
-              --disable-tools"
+post_unpack() {
+ # sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+  cp -r $PKG_BUILD/source/* $PKG_BUILD/
+}
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-                         --disable-shared \
-                         $PKG_ICU_OPTS"
+pre_configure_host() {
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
+}
 
-PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
-                         $PKG_ICU_OPTS"
+pre_configure_target() {
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
+  LIBS="-latomic"
+}
 
-PKG_CONFIGURE_SCRIPT="source/configure"
+configure_host() {
+ cd $PKG_BUILD/.$HOST_NAME
+ ./runConfigureICU Linux/gcc \
+ 		     CC="$HOST_CC" \
+ 		     CXX="$HOST_CXX" \
+ 		     --disable-samples \
+ 		     --disable-tests \
+ 		     --disable-extras \
+ 		     --disable-icuio \
+ 		     --disable-layout \
+ 		     --disable-renaming \
+ 		     --disable-silent-rules \
+ 		     --prefix=$TOOLCHAIN
+}
+
+configure_target() {
+ cd $PKG_BUILD/.$TARGET_NAME
+ ./runConfigureICU Linux/gcc \
+ 		     CPP="$CPP" \
+ 		     CC="$CC" \
+ 		     CXX="$CXX" \
+ 		     --prefix=/usr \
+ 		     --disable-shared \
+ 		     --enable-static \
+ 		     --disable-silent-rules \
+ 		     --with-data-packaging=archive \
+ 		     --with-cross-build="$PKG_BUILD/.$HOST_NAME"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL
