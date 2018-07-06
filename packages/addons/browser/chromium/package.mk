@@ -101,16 +101,20 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'enable_webrtc=true'
-    'use_aura=true'
-    'enable_hangout_services_extension=true'
-    'is_component_ffmpeg=false'
-    'is_component_build=false'
+    'use_ozone=true'
+    'ozone_auto_platforms=false'
+    'ozone_platform="headless"'
+    'ozone_platform_headless=true'
+    'headless_use_embedded_resources=true'
+    'icu_use_data_file=false'
+    'v8_use_external_startup_data=false''
     'enable_print_preview=false'
     'enable_remoting=false'
-    'use_alsa=false'
+    'use_alsa=false''
     'use_cups=false'
-    'linux_link_libudev=true'
+    'use_gio=false'
+    'use_libpci=false'
+    'use_udev=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -124,54 +128,13 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
-declare -gA _system_libs=(
-  #[ffmpeg]=ffmpeg            # https://crbug.com/731766
-  #[flac]=flac
-  #[fontconfig]=fontconfig
-  #[freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
-  #[libdrm]=
-  [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libvpx]=libvpx
-  #[libwebp]=libwebp
-  #[libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
-  #[opus]=opus
-  [re2]=re2
-  [snappy]=snappy
-  [yasm]=
-  [zlib]=minizip
-)
-_unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-)
-depends+=(${_system_libs[@]})
 
-sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
-    
-sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
-    
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find -type f -path "*third_party/$_lib/*" \
-      \! -path "*third_party/$_lib/chromium/*" \
-      \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
-      \! -path './third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
 
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+#sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+    
+#sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
+    
+
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
