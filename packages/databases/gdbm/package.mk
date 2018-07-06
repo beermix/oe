@@ -1,5 +1,5 @@
 PKG_NAME="gdbm"
-PKG_VERSION="1.15"
+PKG_VERSION="1.16"
 PKG_URL="http://mirror.switch.ch/ftp/mirror/gnu/gdbm/gdbm-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"

@@ -18,7 +18,7 @@ configure_target() {
 	     -Dcc=$CC \
 	     -Dprefix=/usr  \
 	     -Dvendorprefix=/usr \
-	     -Dlibswanted="dl m c crypt ndbm gdbm" \
+	     -Dlibswanted="dl m c crypt db ndbm gdbm" \
 	     -des \
 	     -Dusethreads \
 	     -Dldflags="$LDFLAGS -lpthread -lrt -lm" \

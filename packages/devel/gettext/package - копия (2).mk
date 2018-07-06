@@ -44,4 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
                          --disable-csharp \
                          --disable-relocatable \
                          --without-included-gettext \
-                         --with-included-libxml"
+                         --with-included-libxml \
+                         --with-included-glib \
+                         --with-included-libcroco \
+                         --with-included-libunistring"
