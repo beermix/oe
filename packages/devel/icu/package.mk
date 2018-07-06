@@ -31,20 +31,10 @@ PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic"
 
-PKG_ICU_OPTS="--disable-extras \
-              --disable-icuio \
-              --disable-layout \
-              --disable-renaming \
-              --disable-samples \
-              --disable-tests \
-              --disable-tools"
-
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-                         --disable-shared \
-                         $PKG_ICU_OPTS"
-
 PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
-                         $PKG_ICU_OPTS"
+			      --enable-static \
+			      --disable-shared \
+			      --with-data-packaging=archive"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
