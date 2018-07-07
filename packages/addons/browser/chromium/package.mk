@@ -144,6 +144,8 @@ addon() {
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
+  
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # atk
   cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -175,32 +177,11 @@ addon() {
   # libcups
   cp -PL $(get_build_dir cups)/cups/libcups.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # libxcb
-  cp -PL $(get_build_dir chrome-libxcb)/.install_pkg/usr/lib/libxcb.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib  
-
-  # libXcomposite
-  cp -PL $(get_build_dir chrome-libXcomposite)/.install_pkg/usr/lib/libXcomposite.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
-
   # libXcursor
   cp -PL $(get_build_dir libXcursor)/.install_pkg/usr/lib/libXcursor.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
-  # libXdamage
-  cp -PL $(get_build_dir chrome-libXdamage)/.install_pkg/usr/lib/libXdamage.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
-
-  # libXfixes
-  cp -PL $(get_build_dir chrome-libXfixes)/.install_pkg/usr/lib/libXfixes.so.3 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # libXi  
-  cp -PL $(get_build_dir chrome-libXi)/.install_pkg/usr/lib/libXi.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # libXrender
-  cp -PL $(get_build_dir chrome-libXrender)/.install_pkg/usr/lib/libXrender.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
   # libxss
   cp -PL $(get_build_dir libxss)/.install_pkg/usr/lib/libXss.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
-
-  # libXtst
-  cp -PL $(get_build_dir chrome-libXtst)/.install_pkg/usr/lib/libXtst.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pango
   cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -214,5 +195,5 @@ addon() {
   cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # libxkbcommon
-  cp -P $(get_build_dir libxkbcommon)/libxkbcommon.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -P $(get_build_dir libxkbcommon)/libxkbcommon.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
