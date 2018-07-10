@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="iptables"
-PKG_VERSION="1.6.2"
-PKG_SHA256="55d02dfa46263343a401f297d44190f2a3e5113c8933946f094ed40237053733"
+PKG_VERSION="1.8.0"
+PKG_SHA256="c4cbfa187c4296e4bc2e347ebbc21e309def7274773f20f0df0b8feaf7e8de50"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.netfilter.org/"
