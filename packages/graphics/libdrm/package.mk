@@ -22,7 +22,7 @@ PKG_VERSION="2.4.92"
 PKG_SHA256="e9e48fdb4de139dc4d9880aa1473158a16ff6aff63d14341367bd30a51ff39fa"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://dri.freedesktop.org/libdrm/?C=M;O=D"
+PKG_SITE="http://dri.freedesktop.org"
 PKG_URL="http://dri.freedesktop.org/libdrm/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libpciaccess"
 PKG_SECTION="graphics"
@@ -58,7 +58,8 @@ listcontains "$GRAPHIC_DRIVERS" "freedreno" &&
 listcontains "$GRAPHIC_DRIVERS" "etnaviv" &&
   PKG_DRM_CONFIG+=" -Detnaviv=true" || PKG_DRM_CONFIG+=" -Detnaviv=false"
 
-PKG_MESON_OPTS_TARGET="$PKG_DRM_CONFIG \
+PKG_MESON_OPTS_TARGET="-Dlibkms=false \
+                       $PKG_DRM_CONFIG \
                        -Dcairo-tests=false \
                        -Dman-pages=false \
                        -Dvalgrind=false \
