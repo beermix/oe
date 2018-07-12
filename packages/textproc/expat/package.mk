@@ -28,12 +28,5 @@ PKG_SHORTDESC="expat: XML parser library"
 PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document (like start tags). An introductory article on using Expat is available on xml.com."
 PKG_TOOLCHAIN="configure"
 
-pre_configure_host() {
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
-}
-
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -BUILD_doc=OFF -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
