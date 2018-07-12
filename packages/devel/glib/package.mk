@@ -34,7 +34,8 @@ PKG_CONFIGURE_OPTS_HOST="--with-pcre=internal \
                          --enable-static \
                          --disable-shared \
                          --disable-libmount \
-                         --with-python=python --with-pic"
+                         --with-python=python \
+                         --with-pic"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
