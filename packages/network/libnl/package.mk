@@ -31,4 +31,5 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
-                           --disable-cli --disable-debug"
+                           --disable-cli \
+                           --disable-debug"
