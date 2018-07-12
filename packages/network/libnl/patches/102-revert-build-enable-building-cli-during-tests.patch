@@ -37,7 +37,7 @@ Upstream status: https://github.com/thom311/libnl/pull/141
  
  check_PROGRAMS =
  check_programs =
-@@ -515,6 +513,8 @@ EXTRA_lib_libnl_xfrm_3_la_DEPENDENCIES =
+@@ -511,6 +509,8 @@ EXTRA_lib_libnl_xfrm_3_la_DEPENDENCIES =
  lib_libnl_xfrm_3_la_LIBADD = \
  	lib/libnl-3.la
  
@@ -46,7 +46,7 @@ Upstream status: https://github.com/thom311/libnl/pull/141
  lib_cli_ltlibraries_cls = \
  	lib/cli/cls/basic.la \
  	lib/cli/cls/cgroup.la
-@@ -528,15 +528,11 @@ lib_cli_ltlibraries_qdisc = \
+@@ -524,15 +524,11 @@ lib_cli_ltlibraries_qdisc = \
  	lib/cli/qdisc/pfifo.la \
  	lib/cli/qdisc/plug.la
  
@@ -63,7 +63,7 @@ Upstream status: https://github.com/thom311/libnl/pull/141
  endif
  
  lib_cli_ldflags = \
-@@ -569,9 +565,6 @@ src_lib_ldflags =
+@@ -565,9 +561,6 @@ src_lib_ldflags =
  
  if ENABLE_CLI
  lib_LTLIBRARIES += src/lib/libnl-cli-3.la
@@ -73,7 +73,7 @@ Upstream status: https://github.com/thom311/libnl/pull/141
  endif
  
  src_lib_libnl_cli_3_la_SOURCES = \
-@@ -598,7 +591,7 @@ src_lib_libnl_cli_3_la_CPPFLAGS = \
+@@ -594,7 +587,7 @@ src_lib_libnl_cli_3_la_CPPFLAGS = \
  	-I$(srcdir)/include \
  	-I$(builddir)/include
  src_lib_libnl_cli_3_la_LDFLAGS = \
@@ -82,7 +82,7 @@ Upstream status: https://github.com/thom311/libnl/pull/141
  	-Wl,--version-script=$(srcdir)/libnl-cli-3.sym
  src_lib_libnl_cli_3_la_LIBADD = \
  	lib/libnl-3.la \
-@@ -683,8 +676,6 @@ else
+@@ -679,8 +672,6 @@ else
  noinst_PROGRAMS += $(cli_programs)
  endif
  endif
@@ -91,9 +91,9 @@ Upstream status: https://github.com/thom311/libnl/pull/141
  endif
  
  src_genl_ctrl_list_CPPFLAGS =       $(src_cppflags)
-@@ -868,10 +859,12 @@ tests_test_u32_filter_with_actions_LDADD
- tests_test_loopback_up_down_CPPFLAGS              = $(tests_cppflags)
- tests_test_loopback_up_down_LDADD                 = $(tests_ldadd)
+@@ -858,10 +849,12 @@ tests_test_complex_HTB_with_hash_filters
+ tests_test_u32_filter_with_actions_CPPFLAGS       = $(tests_cppflags)
+ tests_test_u32_filter_with_actions_LDADD          = $(tests_ldadd)
  
 +if ENABLE_CLI
  check_PROGRAMS += \
