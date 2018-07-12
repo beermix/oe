@@ -103,7 +103,6 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'use_dbus=true'
-    'use_system_libjpeg=true'
     'use_system_zlib=true'
     'use_system_freetype=true'
     'use_system_libdrm=true'
