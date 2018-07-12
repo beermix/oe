@@ -18,7 +18,7 @@
 
 PKG_NAME="kodi"
 PKG_VERSION="7e52c1d"
-PKG_SHA256=""
+PKG_SHA256="ff9f02586ea4458a9b4d84579cb2cbac221d7a7d74605298d26d0294412a14ec"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc/tree/Krypton"
