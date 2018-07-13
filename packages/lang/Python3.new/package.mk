@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="Python3"
-PKG_VERSION="3.6.6"
-PKG_SHA256="d79bc15d456e73a3173a2938f18a17e5149c850ebdedf84a78067f501ee6e16f"
+PKG_VERSION="3.7.0"
+PKG_SHA256="0382996d1ee6aafe59763426cf0139ffebe36984474d0ec4126dd1c40a8b3549"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
@@ -33,6 +33,7 @@ PKG_LONGDESC="Python3 is an interpreted object-oriented programming language, an
 PKG_PYTHON_VERSION=python3.6
 
 PKG_TOOLCHAIN="autotools"
+
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          ac_cv_prog_SVNVERSION=/bin/false
