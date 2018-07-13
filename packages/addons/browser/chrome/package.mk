@@ -14,6 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+# https://archive.archlinux.org/packages/p/pepper-flash/
 ################################################################################
 
 PKG_NAME="chrome"
