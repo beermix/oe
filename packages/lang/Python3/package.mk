@@ -110,8 +110,8 @@ post_unpack() {
 }
 
 pre_configure_host() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||g"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-g0|g"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-g0|g"`
 }
 
 post_makeinstall_host() {
