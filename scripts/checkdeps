@@ -72,8 +72,8 @@ fi
 
 DISTRO=${DISTRO,,}
 
-deps=(wget bash bc gcc sed patch lsdiff tar bzip2 gzip perl gawk gperf zip unzip diff lzop ed diffstat cmake time)
-deps_pkg=(wget bash bc gcc sed patch patchutils tar bzip2 gzip perl awk gperf zip unzip diffutils lzop ed diffstat cmake time)
+deps=(wget bash bc gcc sed patch lsdiff tar bzip2 gzip perl gawk gperf zip unzip diff lzop ed diffstat cmake time openssl)
+deps_pkg=(wget bash bc gcc sed patch patchutils tar bzip2 gzip perl awk gperf zip unzip diffutils lzop ed diffstat cmake time openssl)
 
 files=(/usr/include/stdio.h /usr/include/ncurses.h)
 files_pkg=(libc6-dev libncurses5-dev)
@@ -102,7 +102,7 @@ case "$DISTRO" in
       perl_pkg=(JSON XML-Parser)
       ;;
     arch)
-      deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python)
+      deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python openssl)
       deps_pkg+=(g++ xorg-mkfontscale xorg-mkfontdir xorg-bdftopcf libxslt "java-runtime-common jdk8-openjdk" python2)
       perl_pkg=(perl-json perl-xml-parser)
       ;;

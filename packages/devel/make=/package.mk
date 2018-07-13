@@ -16,19 +16,21 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="make-dfsg"
-PKG_VERSION="e4f294d"
+PKG_NAME="make"
+PKG_VERSION="git"
 PKG_GIT_URL="git://anonscm.debian.org/git/users/srivasta/debian/make-dfsg.git"
-PKG_DEPENDS_HOST="autotools:host"
+PKG_URL="http://192.168.1.200:8080/%2Fmake-dfsg-git.tar.xz"
+#PKG_DEPENDS_HOST="autotools:host"
+PKG_SOURCE_DIR="make-dfsg-$PKG_VERSION*"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
 PKG_LONGDESC="The 'make' utility automatically determines which pieces of a large program need to be recompiled, and issues commands to recompile them. This is GNU 'make', which was implemented by Richard Stallman and Roland McGrath. GNU 'make' conforms to section 6.2 of EEE Standard 1003.2-1992' (POSIX.2)."
-PKG_TOOLCHAIN="autotools"
+#sPKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
-			 
-PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
-			 
+#export CC=$LOCAL_CC
+
+PKG_CONFIGURE_OPTS_HOST="--without-guile"
+
 post_makeinstall_host() {
   ln -sf make $TOOLCHAIN/bin/gmake
 }
