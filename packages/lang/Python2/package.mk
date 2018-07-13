@@ -99,6 +99,8 @@ post_makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||g"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||g"`
 }
 
 make_target() {
