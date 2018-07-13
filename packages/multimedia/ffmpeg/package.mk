@@ -41,7 +41,7 @@ PKG_BUILD_FLAGS="-gold -lto"
 get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva intel-hybrid-driver"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
