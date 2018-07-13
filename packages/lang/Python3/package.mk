@@ -34,6 +34,7 @@ PKG_PYTHON_VERSION=python3.6
 
 PKG_TOOLCHAIN="autotools"
 
+
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          ac_cv_prog_SVNVERSION=/bin/false
                          --disable-pyc-build
@@ -106,6 +107,11 @@ post_unpack() {
   # pgen for the target, and tries to run it on the host.
     touch $PKG_BUILD/Include/graminit.h
     touch $PKG_BUILD/Python/graminit.c
+}
+
+pre_configure_host() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||g"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||g"`
 }
 
 post_makeinstall_host() {

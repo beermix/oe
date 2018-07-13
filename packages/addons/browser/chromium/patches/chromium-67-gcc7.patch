@@ -73,6 +73,68 @@
    NOTREACHED();
    return mojom::LifecycleUnitVisibility::VISIBLE;
  #endif
+--- chromium-67.0.3396.10/third_party/blink/renderer/core/frame/local_frame_view.cc.gcc7	2018-04-18 21:05:39.000000000 +0200
++++ chromium-67.0.3396.10/third_party/blink/renderer/core/frame/local_frame_view.cc	2018-04-22 21:37:37.030626382 +0200
+@@ -833,8 +833,7 @@
+ 
+   // Changing overflow should notify scrolling coordinator to ensures that it
+   // updates non-fast scroll rects even if there is no layout.
+-  if (ScrollingCoordinator* scrolling_coordinator =
+-          this->GetScrollingCoordinator()) {
++  if (this->GetScrollingCoordinator() != NULL) {
+     GetScrollingContext()->SetScrollGestureRegionIsDirty(true);
+   }
+ 
+@@ -4096,8 +4095,7 @@
+     scrollable_areas_ = new ScrollableAreaSet;
+   scrollable_areas_->insert(scrollable_area);
+ 
+-  if (ScrollingCoordinator* scrolling_coordinator =
+-          this->GetScrollingCoordinator()) {
++  if (this->GetScrollingCoordinator() != NULL) {
+     ScrollableAreasDidChange();
+   }
+ }
+@@ -4107,8 +4105,7 @@
+     return;
+   scrollable_areas_->erase(scrollable_area);
+ 
+-  if (ScrollingCoordinator* scrolling_coordinator =
+-          this->GetScrollingCoordinator()) {
++  if (this->GetScrollingCoordinator() != NULL) {
+     ScrollableAreasDidChange();
+   }
+ }
+@@ -4132,7 +4129,9 @@
+   // TODO(crbug.com/729196): Trace why LocalFrameView::DetachFromLayout crashes.
+   CHECK(!is_attached_);
+   if (frame_->GetDocument())
++  {
+     CHECK_NE(Lifecycle().GetState(), DocumentLifecycle::kStopping);
++  }
+   is_attached_ = true;
+   parent_ = ParentFrameView();
+   if (!parent_) {
+@@ -5296,8 +5295,7 @@
+ void LocalFrameView::Show() {
+   if (!IsSelfVisible()) {
+     SetSelfVisible(true);
+-    if (ScrollingCoordinator* scrolling_coordinator =
+-            this->GetScrollingCoordinator()) {
++    if (this->GetScrollingCoordinator() != NULL) {
+       GetScrollingContext()->SetScrollGestureRegionIsDirty(true);
+     }
+     SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
+@@ -5325,8 +5323,7 @@
+           });
+     }
+     SetSelfVisible(false);
+-    if (ScrollingCoordinator* scrolling_coordinator =
+-            this->GetScrollingCoordinator()) {
++    if (this->GetScrollingCoordinator() != NULL) {
+       GetScrollingContext()->SetScrollGestureRegionIsDirty(true);
+     }
+     SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
 --- chromium-67.0.3396.10/third_party/blink/renderer/core/html/parser/html_tree_builder.cc.gcc7	2018-04-18 21:05:39.000000000 +0200
 +++ chromium-67.0.3396.10/third_party/blink/renderer/core/html/parser/html_tree_builder.cc	2018-04-22 22:29:51.951074679 +0200
 @@ -943,7 +943,7 @@

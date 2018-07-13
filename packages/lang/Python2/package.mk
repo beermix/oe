@@ -72,6 +72,11 @@ post_patch() {
     touch $PKG_BUILD/Python/graminit.c
 }
 
+pre_configure_host() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||g"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||g"`
+}
+
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
