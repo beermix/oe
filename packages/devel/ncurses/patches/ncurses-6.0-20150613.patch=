@@ -1,0 +1,777 @@
+# ncurses 6.0 - patch 20150613 - Thomas E. Dickey
+#
+# ------------------------------------------------------------------------------
+#
+# Ncurses 6.0 is at
+# 	ftp.gnu.org:/pub/gnu
+#
+# Patches for ncurses 6.0 are in the subdirectory
+# 	ftp://invisible-island.net/ncurses/6.0
+#
+# ------------------------------------------------------------------------------
+# ftp://invisible-island.net/ncurses/5.9/ncurses-6.0-20150613.patch.gz
+# patch by Thomas E. Dickey <dickey@invisible-island.net>
+# created  Sun Jun 14 01:15:46 UTC 2015
+# ------------------------------------------------------------------------------
+# NEWS                             |   14 +++++-
+# VERSION                          |    2 
+# dist.mk                          |    4 -
+# ncurses/tinfo/lib_baudrate.c     |    4 -
+# package/debian-mingw/changelog   |    4 -
+# package/debian-mingw64/changelog |    4 -
+# package/debian/changelog         |    4 -
+# package/mingw-ncurses.nsi        |    4 -
+# package/mingw-ncurses.spec       |    2 
+# package/ncurses.map              |   17 +++++---
+# package/ncurses.spec             |    2 
+# package/ncurses.sym              |   11 ++++-
+# package/ncursest.map             |   71 +++++++++++++++++++----------------
+# package/ncursest.sym             |   63 +++++++++++++++++--------------
+# package/ncursestw.map            |   75 ++++++++++++++++++++-----------------
+# package/ncursestw.sym            |   67 ++++++++++++++++++---------------
+# package/ncursesw.map             |   17 +++++---
+# package/ncursesw.sym             |   11 ++++-
+# 18 files changed, 225 insertions(+), 151 deletions(-)
+# ------------------------------------------------------------------------------
+Index: NEWS
+Prereq:  1.2437 
+--- ncurses-6.0-20150606+/NEWS	2015-06-06 23:53:34.000000000 +0000
++++ ncurses-6.0-20150613/NEWS	2015-06-14 01:13:38.000000000 +0000
+@@ -25,7 +25,7 @@
+ -- sale, use or other dealings in this Software without prior written        --
+ -- authorization.                                                            --
+ -------------------------------------------------------------------------------
+--- $Id: NEWS,v 1.2437 2015/06/06 23:53:34 tom Exp $
++-- $Id: NEWS,v 1.2441 2015/06/14 01:13:38 tom Exp $
+ -------------------------------------------------------------------------------
+ 
+ This is a log of changes that ncurses has gone through since Zeyd started
+@@ -45,10 +45,20 @@
+ Changes through 1.9.9e did not credit all contributions;
+ it is not possible to add this information.
+ 
++20150613
++	+ fix overflow warning for OSX with lib_baudrate.c (cf: 20010630).
++	+ modify script used to generate map/sym files to mark 5.9.20150530 as
++	  the last "5.9" version, and regenerated the files.  That makes the
++	  files not use ".current" for the post-5.9 symbols.  This also
++	  corrects the label for _nc_sigprocmask used in when weak symbols are
++	  configured for the ncursest/ncursestw libraries (prompted by
++	  discussion with Sven Joachim).
++	+ fix typo in NEWS (report by Sven Joachim).
++
+ 20150606 pre-release
+ 	+ make ABI 6 the default by updates to dist.mk and VERSION, with the
+ 	  intention that the existing ABI 5 should build as before using the
+-	  "--with-abi=5" option.
++	  "--with-abi-version=5" option.
+ 	+ regenerate ada- and man-html documentation.
+ 	+ minor fixes to color- and util-manpages.
+ 	+ fix a regression in Ada95/gen/Makefile.in, to handle special case of
+Index: VERSION
+--- ncurses-6.0-20150606+/VERSION	2015-06-06 18:08:17.000000000 +0000
++++ ncurses-6.0-20150613/VERSION	2015-06-13 10:39:10.000000000 +0000
+@@ -1 +1 @@
+-5:0:9	6.0	20150606
++5:0:9	6.0	20150613
+Index: dist.mk
+Prereq:  1.1055 
+--- ncurses-6.0-20150606+/dist.mk	2015-06-06 18:06:16.000000000 +0000
++++ ncurses-6.0-20150613/dist.mk	2015-06-13 10:39:10.000000000 +0000
+@@ -25,7 +25,7 @@
+ # use or other dealings in this Software without prior written               #
+ # authorization.                                                             #
+ ##############################################################################
+-# $Id: dist.mk,v 1.1055 2015/06/06 18:06:16 tom Exp $
++# $Id: dist.mk,v 1.1056 2015/06/13 10:39:10 tom Exp $
+ # Makefile for creating ncurses distributions.
+ #
+ # This only needs to be used directly as a makefile by developers, but
+@@ -37,7 +37,7 @@
+ # These define the major/minor/patch versions of ncurses.
+ NCURSES_MAJOR = 6
+ NCURSES_MINOR = 0
+-NCURSES_PATCH = 20150606
++NCURSES_PATCH = 20150613
+ 
+ # We don't append the patch to the version, since this only applies to releases
+ VERSION = $(NCURSES_MAJOR).$(NCURSES_MINOR)
+Index: ncurses/tinfo/lib_baudrate.c
+Prereq:  1.36 
+--- ncurses-6.0-20150606+/ncurses/tinfo/lib_baudrate.c	2015-04-18 22:08:58.000000000 +0000
++++ ncurses-6.0-20150613/ncurses/tinfo/lib_baudrate.c	2015-06-14 00:34:12.000000000 +0000
+@@ -49,7 +49,7 @@
+  * of the indices up to B115200 fit nicely in a 'short', allowing us to retain
+  * ospeed's type for compatibility.
+  */
+-#if NCURSES_OSPEED_COMPAT && ((defined(__FreeBSD__) && (__FreeBSD_version < 700000)) || defined(__NetBSD__) || defined(__OpenBSD__))
++#if NCURSES_OSPEED_COMPAT && ((defined(__FreeBSD__) && (__FreeBSD_version < 700000)) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__APPLE__))
+ #undef B0
+ #undef B50
+ #undef B75
+@@ -79,7 +79,7 @@
+ #undef USE_OLD_TTY
+ #endif /* USE_OLD_TTY */
+ 
+-MODULE_ID("$Id: lib_baudrate.c,v 1.36 2015/04/18 22:08:58 tom Exp $")
++MODULE_ID("$Id: lib_baudrate.c,v 1.37 2015/06/14 00:34:12 tom Exp $")
+ 
+ /*
+  *	int
+Index: package/debian-mingw/changelog
+--- ncurses-6.0-20150606+/package/debian-mingw/changelog	2015-06-06 19:02:26.000000000 +0000
++++ ncurses-6.0-20150613/package/debian-mingw/changelog	2015-06-13 10:39:10.000000000 +0000
+@@ -1,8 +1,8 @@
+-ncurses6 (6.0+20150606) unstable; urgency=low
++ncurses6 (6.0+20150613) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 06 Jun 2015 15:02:26 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 13 Jun 2015 06:39:10 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+Index: package/debian-mingw64/changelog
+--- ncurses-6.0-20150606+/package/debian-mingw64/changelog	2015-06-06 19:02:26.000000000 +0000
++++ ncurses-6.0-20150613/package/debian-mingw64/changelog	2015-06-13 10:39:10.000000000 +0000
+@@ -1,8 +1,8 @@
+-ncurses6 (6.0+20150606) unstable; urgency=low
++ncurses6 (6.0+20150613) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 06 Jun 2015 15:02:26 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 13 Jun 2015 06:39:10 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+Index: package/debian/changelog
+--- ncurses-6.0-20150606+/package/debian/changelog	2015-06-06 19:02:26.000000000 +0000
++++ ncurses-6.0-20150613/package/debian/changelog	2015-06-13 10:39:10.000000000 +0000
+@@ -1,8 +1,8 @@
+-ncurses6 (6.0+20150606) unstable; urgency=low
++ncurses6 (6.0+20150613) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 06 Jun 2015 15:02:26 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 13 Jun 2015 06:39:10 -0400
+ 
+ ncurses6 (5.9-20120608) unstable; urgency=low
+ 
+Index: package/mingw-ncurses.nsi
+Prereq:  1.108 
+--- ncurses-6.0-20150606+/package/mingw-ncurses.nsi	2015-06-06 19:02:26.000000000 +0000
++++ ncurses-6.0-20150613/package/mingw-ncurses.nsi	2015-06-13 10:39:10.000000000 +0000
+@@ -1,4 +1,4 @@
+-; $Id: mingw-ncurses.nsi,v 1.108 2015/06/06 19:02:26 tom Exp $
++; $Id: mingw-ncurses.nsi,v 1.109 2015/06/13 10:39:10 tom Exp $
+ 
+ ; TODO add examples
+ ; TODO bump ABI to 6
+@@ -10,7 +10,7 @@
+ !define VERSION_MAJOR "6"
+ !define VERSION_MINOR "0"
+ !define VERSION_YYYY  "2015"
+-!define VERSION_MMDD  "0606"
++!define VERSION_MMDD  "0613"
+ !define VERSION_PATCH ${VERSION_YYYY}${VERSION_MMDD}
+ 
+ !define MY_ABI   "5"
+Index: package/mingw-ncurses.spec
+--- ncurses-6.0-20150606+/package/mingw-ncurses.spec	2015-06-06 19:02:26.000000000 +0000
++++ ncurses-6.0-20150613/package/mingw-ncurses.spec	2015-06-13 10:39:10.000000000 +0000
+@@ -3,7 +3,7 @@
+ Summary: shared libraries for terminal handling
+ Name: mingw32-ncurses6
+ Version: 6.0
+-Release: 20150606
++Release: 20150613
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+Index: package/ncurses.map
+Prereq:  1.32 
+--- ncurses-6.0-20150606+/package/ncurses.map	2015-01-31 19:03:03.000000000 +0000
++++ ncurses-6.0-20150613/package/ncurses.map	2015-06-13 21:23:49.000000000 +0000
+@@ -1,4 +1,4 @@
+-# $Id: ncurses.map,v 1.32 2015/01/31 19:03:03 tom Exp $
++# $Id: ncurses.map,v 1.33 2015/06/13 21:23:49 tom Exp $
+ # script for shared library symbol-versioning using ld
+ #
+ # This file was generated by ncu-mapsyms
+@@ -44,7 +44,14 @@
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --with-hashed-db --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --with-broken_linker --with-termlib --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.9.current)
++# Configure options (5.9.20150530)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --with-broken_linker --with-hashed-db --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --with-hashed-db --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --with-broken_linker --with-termlib --with-ticlib --with-trace
++# Configure options (6.0.current)
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --with-broken_linker --with-hashed-db --with-termlib --with-trace
+@@ -729,7 +736,7 @@
+ 		_nc_stdscr_of;
+ } NCURSES_5.7.20081102;
+ 
+-NCURSES_5.9.current {
++NCURSES_5.9.20150530 {
+ 	global:
+ 		wgetdelay;
+ 	local:
+@@ -794,7 +801,7 @@
+ 		_nc_leaks_tic;
+ } NCURSES_TIC_5.5.20051010;
+ 
+-NCURSES_TIC_5.9.current {
++NCURSES_TIC_5.9.20150530 {
+ 	global:
+ 		_nc_strict_bsd;
+ } NCURSES_TIC_5.7.20081102;
+@@ -1127,7 +1134,7 @@
+ 		_nc_tinfo_cmdch;
+ } NCURSES_TINFO_5.7.20081102;
+ 
+-NCURSES_TINFO_5.9.current {
++NCURSES_TINFO_5.9.20150530 {
+ 	global:
+ 		_nc_init_termtype;
+ 		_nc_putchar;
+Index: package/ncurses.spec
+--- ncurses-6.0-20150606+/package/ncurses.spec	2015-06-06 19:02:26.000000000 +0000
++++ ncurses-6.0-20150613/package/ncurses.spec	2015-06-13 10:39:10.000000000 +0000
+@@ -1,7 +1,7 @@
+ Summary: shared libraries for terminal handling
+ Name: ncurses6
+ Version: 6.0
+-Release: 20150606
++Release: 20150613
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+Index: package/ncurses.sym
+Prereq:  1.21 
+--- ncurses-6.0-20150606+/package/ncurses.sym	2015-01-31 22:25:14.000000000 +0000
++++ ncurses-6.0-20150613/package/ncurses.sym	2015-06-13 21:04:35.000000000 +0000
+@@ -1,4 +1,4 @@
+-# $Id: ncurses.sym,v 1.21 2015/01/31 22:25:14 tom Exp $
++# $Id: ncurses.sym,v 1.22 2015/06/13 21:04:35 tom Exp $
+ # script for shared library symbol-visibility using libtool
+ #
+ # This file was generated by ncu-mapsyms
+@@ -44,7 +44,14 @@
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --with-hashed-db --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --with-broken_linker --with-termlib --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.9.current)
++# Configure options (5.9.20150530)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --with-broken_linker --with-hashed-db --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --with-hashed-db --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --with-broken_linker --with-termlib --with-ticlib --with-trace
++# Configure options (6.0.20150606)
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --with-broken_linker --with-hashed-db --with-termlib --with-trace
+Index: package/ncursest.map
+Prereq:  1.27 
+--- ncurses-6.0-20150606+/package/ncursest.map	2015-02-08 00:32:36.000000000 +0000
++++ ncurses-6.0-20150613/package/ncursest.map	2015-06-13 22:19:28.000000000 +0000
+@@ -1,40 +1,49 @@
+-# $Id: ncursest.map,v 1.27 2015/02/08 00:32:36 tom Exp $
++# $Id: ncursest.map,v 1.28 2015/06/13 22:19:28 tom Exp $
+ # script for shared library symbol-versioning using ld
+ #
+ # This file was generated by ncu-mapsyms
+ # Configure options (5.7.20081102)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ # Configure options (5.8.20110226)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib=tinfot --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib=tinfot --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ # Configure options (5.9.20110404)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib=tinfot --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib=tinfot --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.9.current)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++# Configure options (5.9.20150530)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --with-termlib --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfot --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib=tinfot --with-ticlib --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib=tinfot --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace
++# Configure options (6.0.current)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace
+ 
+ NCURSES_TIC_5.0.19991023 {
+ 	global:
+@@ -91,7 +100,7 @@
+ 		_nc_leaks_tic;
+ } NCURSES_TIC_5.5.20051010;
+ 
+-NCURSES_TIC_5.9.current {
++NCURSES_TIC_5.9.20150530 {
+ 	global:
+ 		_nc_strict_bsd;
+ } NCURSES_TIC_5.7.20081102;
+@@ -348,7 +357,6 @@
+ 		_nc_screen_of;
+ 		_nc_set_no_padding;
+ 		_nc_set_tputs_trace;
+-		_nc_sigprocmask;
+ 		_nc_stdscr;
+ 		_nc_strcodes;
+ 		_nc_strfnames;
+@@ -378,6 +386,7 @@
+ 		_nc_retrace_int_attr_t;
+ 		_nc_set_buffer_sp;
+ 		_nc_set_tty_mode_sp;
++		_nc_sigprocmask;
+ 		baudrate_sp;
+ 		cbreak_sp;
+ 		curs_set_sp;
+@@ -436,7 +445,7 @@
+ 		_nc_tinfo_cmdch;
+ } NCURSES_TINFO_5.7.20081102;
+ 
+-NCURSES_TINFO_5.9.current {
++NCURSES_TINFO_5.9.20150530 {
+ 	global:
+ 		_nc_init_termtype;
+ 		_nc_putchar;
+@@ -1091,7 +1100,7 @@
+ 		_nc_stdscr_of;
+ } NCURSEST_5.7.20081102;
+ 
+-NCURSEST_5.9.current {
++NCURSEST_5.9.20150530 {
+ 	global:
+ 		wgetdelay;
+ 	local:
+Index: package/ncursest.sym
+Prereq:  1.22 
+--- ncurses-6.0-20150606+/package/ncursest.sym	2015-02-08 00:12:05.000000000 +0000
++++ ncurses-6.0-20150613/package/ncursest.sym	2015-06-13 21:13:29.000000000 +0000
+@@ -1,40 +1,49 @@
+-# $Id: ncursest.sym,v 1.22 2015/02/08 00:12:05 tom Exp $
++# $Id: ncursest.sym,v 1.23 2015/06/13 21:13:29 tom Exp $
+ # script for shared library symbol-visibility using libtool
+ #
+ # This file was generated by ncu-mapsyms
+ # Configure options (5.7.20081102)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ # Configure options (5.8.20110226)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib=tinfot --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib=tinfot --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ # Configure options (5.9.20110404)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib=tinfot --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib=tinfot --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.9.current)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++# Configure options (5.9.20150530)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace
++# Configure options (6.0.20150606)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --with-termlib --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfot --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib=tinfot --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib=tinfot --with-ticlib --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib=tinfot --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace
+ BC
+ COLOR_PAIR
+ PAIR_NUMBER
+Index: package/ncursestw.map
+Prereq:  1.28 
+--- ncurses-6.0-20150606+/package/ncursestw.map	2015-02-08 00:21:37.000000000 +0000
++++ ncurses-6.0-20150613/package/ncursestw.map	2015-06-13 22:17:50.000000000 +0000
+@@ -1,40 +1,49 @@
+-# $Id: ncursestw.map,v 1.28 2015/02/08 00:21:37 tom Exp $
++# $Id: ncursestw.map,v 1.29 2015/06/13 22:17:50 tom Exp $
+ # script for shared library symbol-versioning using ld
+ #
+ # This file was generated by ncu-mapsyms
+ # Configure options (5.7.20081102)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-widec --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++# Configure options (5.8.20110226)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.8.20110226)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace --without-cxx-binding
+ # Configure options (5.9.20110404)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.9.current)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++# Configure options (5.9.20150530)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace
++# Configure options (6.0.current)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace
+ 
+ NCURSES_TIC_5.0.19991023 {
+ 	global:
+@@ -91,7 +100,7 @@
+ 		_nc_leaks_tic;
+ } NCURSES_TIC_5.5.20051010;
+ 
+-NCURSES_TIC_5.9.current {
++NCURSES_TIC_5.9.20150530 {
+ 	global:
+ 		_nc_strict_bsd;
+ } NCURSES_TIC_5.7.20081102;
+@@ -348,7 +357,6 @@
+ 		_nc_screen_of;
+ 		_nc_set_no_padding;
+ 		_nc_set_tputs_trace;
+-		_nc_sigprocmask;
+ 		_nc_stdscr;
+ 		_nc_strcodes;
+ 		_nc_strfnames;
+@@ -384,6 +392,7 @@
+ 		_nc_retrace_int_attr_t;
+ 		_nc_set_buffer_sp;
+ 		_nc_set_tty_mode_sp;
++		_nc_sigprocmask;
+ 		baudrate_sp;
+ 		cbreak_sp;
+ 		curs_set_sp;
+@@ -442,7 +451,7 @@
+ 		_nc_tinfo_cmdch;
+ } NCURSES_TINFO_5.7.20081102;
+ 
+-NCURSES_TINFO_5.9.current {
++NCURSES_TINFO_5.9.20150530 {
+ 	global:
+ 		_nc_init_termtype;
+ 		_nc_putchar;
+@@ -1209,7 +1218,7 @@
+ 		_nc_stdscr_of;
+ } NCURSESTW_5.7.20081102;
+ 
+-NCURSESTW_5.9.current {
++NCURSESTW_5.9.20150530 {
+ 	global:
+ 		form_driver_w;
+ 		wgetdelay;
+Index: package/ncursestw.sym
+Prereq:  1.20 
+--- ncurses-6.0-20150606+/package/ncursestw.sym	2015-02-08 00:16:07.000000000 +0000
++++ ncurses-6.0-20150613/package/ncursestw.sym	2015-06-13 21:18:19.000000000 +0000
+@@ -1,40 +1,49 @@
+-# $Id: ncursestw.sym,v 1.20 2015/02/08 00:16:07 tom Exp $
++# $Id: ncursestw.sym,v 1.21 2015/06/13 21:18:19 tom Exp $
+ # script for shared library symbol-visibility using libtool
+ #
+ # This file was generated by ncu-mapsyms
+ # Configure options (5.7.20081102)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-widec --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++# Configure options (5.8.20110226)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.8.20110226)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace --without-cxx-binding
+ # Configure options (5.9.20110404)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace --without-cxx-binding
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.9.current)
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib=tinfotw --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace
+-#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib=tinfotw --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace --without-cxx-binding
++# Configure options (5.9.20150530)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace
++# Configure options (6.0.20150606)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-reentrant --enable-sp-funcs --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-broken_linker --with-hashed-db --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-weak-symbols --enable-widec --with-pthread --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-wgetch-events --enable-widec --with-hashed-db --with-pthread --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-weak-symbols --enable-widec --with-broken_linker --with-pthread --with-termlib --with-ticlib --with-trace
+ BC
+ COLOR_PAIR
+ PAIR_NUMBER
+Index: package/ncursesw.map
+Prereq:  1.34 
+--- ncurses-6.0-20150606+/package/ncursesw.map	2015-02-08 00:35:12.000000000 +0000
++++ ncurses-6.0-20150613/package/ncursesw.map	2015-06-13 23:07:40.000000000 +0000
+@@ -1,4 +1,4 @@
+-# $Id: ncursesw.map,v 1.34 2015/02/08 00:35:12 tom Exp $
++# $Id: ncursesw.map,v 1.35 2015/06/13 23:07:40 tom Exp $
+ # script for shared library symbol-versioning using ld
+ #
+ # This file was generated by ncu-mapsyms
+@@ -39,7 +39,14 @@
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-widec --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --enable-widec --with-hashed-db --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-widec --with-broken_linker --with-termlib --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.9.current)
++# Configure options (5.9.20150530)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-widec --with-broken_linker --with-hashed-db --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --enable-widec --with-hashed-db --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-widec --with-broken_linker --with-termlib --with-ticlib --with-trace
++# Configure options (6.0.current)
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-widec --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-widec --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-widec --with-broken_linker --with-hashed-db --with-termlib --with-trace
+@@ -102,7 +109,7 @@
+ 		_nc_leaks_tic;
+ } NCURSES_TIC_5.5.20051010;
+ 
+-NCURSES_TIC_5.9.current {
++NCURSES_TIC_5.9.20150530 {
+ 	global:
+ 		_nc_strict_bsd;
+ } NCURSES_TIC_5.7.20081102;
+@@ -441,7 +448,7 @@
+ 		_nc_tinfo_cmdch;
+ } NCURSES_TINFO_5.7.20081102;
+ 
+-NCURSES_TINFO_5.9.current {
++NCURSES_TINFO_5.9.20150530 {
+ 	global:
+ 		_nc_init_termtype;
+ 		_nc_putchar;
+@@ -1235,7 +1242,7 @@
+ 		_nc_stdscr_of;
+ } NCURSESW_5.7.20081102;
+ 
+-NCURSESW_5.9.current {
++NCURSESW_5.9.20150530 {
+ 	global:
+ 		form_driver_w;
+ 		wgetdelay;
+Index: package/ncursesw.sym
+Prereq:  1.22 
+--- ncurses-6.0-20150606+/package/ncursesw.sym	2015-02-08 00:35:55.000000000 +0000
++++ ncurses-6.0-20150613/package/ncursesw.sym	2015-06-13 21:09:14.000000000 +0000
+@@ -1,4 +1,4 @@
+-# $Id: ncursesw.sym,v 1.22 2015/02/08 00:35:55 tom Exp $
++# $Id: ncursesw.sym,v 1.23 2015/06/13 21:09:14 tom Exp $
+ # script for shared library symbol-visibility using libtool
+ #
+ # This file was generated by ncu-mapsyms
+@@ -39,7 +39,14 @@
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-widec --with-termlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --enable-widec --with-hashed-db --with-termlib --with-ticlib --with-trace --without-cxx-binding
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-widec --with-broken_linker --with-termlib --with-ticlib --with-trace --without-cxx-binding
+-# Configure options (5.9.current)
++# Configure options (5.9.20150530)
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-widec --with-broken_linker --with-hashed-db --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-widec --with-termlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-wgetch-events --enable-widec --with-hashed-db --with-termlib --with-ticlib --with-trace
++#	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-widec --with-broken_linker --with-termlib --with-ticlib --with-trace
++# Configure options (6.0.20150606)
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-getcap --enable-getcap-cache --enable-hard-tabs --enable-termcap --enable-widec --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-interop --enable-widec --with-termlib --with-trace
+ #	--disable-getcap --disable-leaks --disable-root-environ --disable-termcap --enable-hard-tabs --enable-sp-funcs --enable-widec --with-broken_linker --with-hashed-db --with-termlib --with-trace
