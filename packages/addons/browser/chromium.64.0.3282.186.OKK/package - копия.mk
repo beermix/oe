@@ -22,9 +22,9 @@
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="67.0.3396.99"
-#PKG_SHA256="d5ee63932ff1c8c4a5f69c834f6577e7127b416681eddd23bc54886caffd770d"
-PKG_REV="130"
+PKG_VERSION="67.0.3396.62"
+PKG_SHA256="d5ee63932ff1c8c4a5f69c834f6577e7127b416681eddd23bc54886caffd770d"
+PKG_REV="131"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -68,7 +68,7 @@ make_target() {
   unset LDFLAGS
 
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   # export LDFLAGS="$LDFLAGS -ludev"
@@ -99,7 +99,6 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
-    'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
@@ -110,62 +109,19 @@ make_target() {
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
-    'enable_widevine=true'
+    'enable_widevine=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
-    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-  # Keys are the names in the above script; values are the dependencies in Arch
-declare -gA _system_libs=(
-  [ffmpeg]=ffmpeg
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
-  [libdrm]=
-  [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libvpx]=libvpx            # needs unreleased libvpx
-  #[libwebp]=libwebp
-  #[libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
-  #[re2]=re2
-  #[snappy]=snappy
-  [yasm]=
-  [zlib]=minizip
-)
-_unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-)
-depends+=(${_system_libs[@]})
-
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find "third_party/$_lib" -type f \
-      \! -path "third_party/$_lib/chromium/*" \
-      \! -path "third_party/$_lib/google/*" \
-      \! -path 'third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
-
-  python2 ./build/linux/unbundle/replace_gn_files.py \
-    --system-libraries "${!_system_libs[@]}"
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
