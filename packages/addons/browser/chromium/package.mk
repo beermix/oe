@@ -55,7 +55,7 @@ post_patch() {
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
-  # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 }
 
 make_host() {
@@ -96,6 +96,7 @@ make_target() {
     'use_cups=false'
     'use_custom_libcxx=false'
     'linux_link_libudev=true'
+    'use_system_zlib=true'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=true'
@@ -103,18 +104,15 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_dbus=true'
-    'use_cups=false'
-    'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
+    'enable_vr=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
-    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
