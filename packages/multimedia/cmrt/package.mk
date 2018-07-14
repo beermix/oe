@@ -16,20 +16,16 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="intel-hybrid-driver"
-PKG_VERSION="1.0.2"
+PKG_NAME="cmrt"
+PKG_VERSION="1.0.6"
 PKG_SHA256=""
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://01.org/linuxmedia"
-PKG_URL="https://github.com/01org/intel-hybrid-driver/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/intel/cmrt/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain libva cmrt"
+PKG_DEPENDS_TARGET="toolchain libva"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_TOOLCHAIN="autotools"
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
-                           --enable-drm \
-                           --enable-x11"
