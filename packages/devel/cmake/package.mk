@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.11.4"
+PKG_VERSION="3.12.0"
 #PKG_VERSION="3.8.2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://cmake.org/download/"
-PKG_URL="http://www.cmake.org/files/v3.8/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://www.cmake.org/files/v3.12/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host autotools:host openssl:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
