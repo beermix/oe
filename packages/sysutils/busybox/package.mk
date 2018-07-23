@@ -17,8 +17,8 @@
 ################################################################################ findutils grep
 
 PKG_NAME="busybox"
-PKG_VERSION="1.29.0"
-PKG_SHA256="c8115612f0be640644e7c35098766ddaac4a88b773c4c4f0e43564982f660c82"
+PKG_VERSION="1.29.1"
+PKG_SHA256="fc250730ea16d28839bfecda3c431683fa6bd4273ffca6b632cbeb3556c914c3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
