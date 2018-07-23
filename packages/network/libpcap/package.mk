@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libpcap"
-PKG_VERSION="1.8.1"
+PKG_VERSION="1.9.0"
 PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
 PKG_SITE="https://github.com/the-tcpdump-group/libpcap"
 #PKG_URL="https://github.com/the-tcpdump-group/libpcap/archive/${PKG_VERSION}.tar.gz"
