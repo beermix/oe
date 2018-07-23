@@ -27,7 +27,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="179.2"
+PKG_REV="180.gcc8"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -106,10 +106,10 @@ make_target() {
     'use_system_zlib=true'
     'use_system_freetype=true'
     'use_system_libdrm=true'
-    'use_system_libpng=true'
+    'use_system_libpng=false'
     'use_system_harfbuzz=true'
     'linux_link_libudev=true'
-    'use_system_libjpeg=true'
+    'use_system_libjpeg=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
