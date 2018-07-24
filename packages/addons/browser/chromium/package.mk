@@ -109,7 +109,7 @@ make_target() {
     'use_system_harfbuzz=true'
     'linux_link_libudev=true'
     'use_system_libjpeg=false'
-    'use_v8_context_snapshot=true'
+    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
