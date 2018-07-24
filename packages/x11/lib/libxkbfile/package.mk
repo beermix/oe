@@ -28,5 +28,3 @@ PKG_DEPENDS_TARGET="toolchain util-macros libX11"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxkbfile: X11 keyboard file manipulation library"
 PKG_LONGDESC="Libxkbfile provides an interface to read and manipulate description files for XKB, the X11 keyboard configuration extension."
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

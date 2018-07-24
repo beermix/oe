@@ -28,6 +28,3 @@ PKG_DEPENDS_TARGET="toolchain util-macros libX11 libXfixes"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libXdamage: X11 damaged region extension library"
 PKG_LONGDESC="LibXdamage provides an X Window System client interface to the DAMAGE extension to the X protocol. The Damage extension provides for notification of when on-screen regions have been 'damaged' (altered)."
-PKG_BUILD_FLAGS="+pic"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
