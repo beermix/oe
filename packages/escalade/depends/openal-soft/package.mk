@@ -27,9 +27,6 @@ PKG_SECTION="emulators/depends"
 PKG_SHORTDESC="openal: Open Audio Library"
 PKG_LONGDESC="OpenAL, the Open Audio Library, is a joint effort to create an open, vendor- neutral, cross-platform API for interactive, primarily spatialized audio. OpenAL's primary audience are application developers and desktop users that rely on portable standards like OpenGL, for games and other multimedia applications. OpenAL is already supported by a number of hardware vendors and developers."
 
-
-
-
 PKG_CMAKE_OPTS_TARGET="-DALSOFT_EXAMPLES=off \
 		       -DALSOFT_TESTS=off \
 		       -DALSOFT_UTILS=off \
