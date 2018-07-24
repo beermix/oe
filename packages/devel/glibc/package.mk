@@ -56,6 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --disable-debug \
                            --without-selinux \
+                           --disable-werror \
                            --disable-timezone-tools"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
@@ -111,7 +112,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64 -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow="
+  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64"
 # -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow=
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
