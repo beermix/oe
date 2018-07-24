@@ -35,7 +35,7 @@ PKG_TOOLCHAIN="manual"
 
 post_makeinstall_host() {
 #  ln -sf make $TOOLCHAIN/bin/gmake
-  
+ mkdir  -p $TOOLCHAIN/bin/
  ln -sf /usr/bin/make $TOOLCHAIN/bin/gmake
  ln -sf /usr/bin/make $TOOLCHAIN/bin/make
 
