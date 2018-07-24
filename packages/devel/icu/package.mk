@@ -30,7 +30,7 @@ PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic"
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 
 post_unpack() {
   #sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp

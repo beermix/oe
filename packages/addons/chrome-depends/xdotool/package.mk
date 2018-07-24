@@ -29,13 +29,13 @@ PKG_SECTION="x11/app"
 PKG_SHORTDESC="This tool lets you simulate keyboard input and mouse activity, move and resize windows, etc."
 PKG_LONGDESC="This tool lets you simulate keyboard input and mouse activity, move and resize windows, etc."
 
-
 pre_configure_target() {
+  unset CPPFLAGS
   LDFLAGS="$LDFLAGS -lXext"
 }
 
 make_target() {
-  make xdotool.static
+  make LDFLAGS="-Wl,-z -Wl,now -lXext" xdotool.static
   mv xdotool.static xdotool
 }
 
