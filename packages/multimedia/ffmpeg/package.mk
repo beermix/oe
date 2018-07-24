@@ -19,7 +19,7 @@
 
 PKG_NAME="ffmpeg"
 PKG_VERSION="97321ae"
-PKG_VERSION="3.2.11"
+PKG_VERSION="3.2.12"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
@@ -41,7 +41,7 @@ PKG_BUILD_FLAGS="-gold -lto"
 get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva intel-hybrid-driver"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
