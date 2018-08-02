@@ -196,6 +196,6 @@ addon() {
   # xdotool
   cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 
-  # libxkbcommon
-  # cp -P $(get_build_dir libxkbcommon)/libxkbcommon.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # libXft
+  cp -P $(get_build_dir libXft)/libXft.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
