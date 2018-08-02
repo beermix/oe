@@ -3,7 +3,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="harfbuzz"
-PKG_VERSION="1.8.4"
+PKG_VERSION="1.8.5"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

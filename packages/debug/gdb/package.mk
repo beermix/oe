@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="gdb"
-PKG_VERSION="8.1"
-PKG_SHA256="af61a0263858e69c5dce51eab26662ff3d2ad9aa68da9583e8143b5426be4b34"
+PKG_VERSION="8.1.1"
+PKG_SHA256="97dcc3169bd430270fc29adb65145846a58c1b55cdbb73382a4a89307bdad03c"
 #PKG_VERSION="7.12.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
