@@ -123,6 +123,7 @@ configure_target() {
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
+              --extra-libs="$FFMPEG_LIBS" \
               --disable-static \
               --enable-shared \
               --enable-gpl \
@@ -135,7 +136,7 @@ configure_target() {
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
-              --enable-ffprobe \
+              --disable-ffprobe \
               --disable-ffplay \
               --disable-ffserver \
               --enable-ffmpeg \
@@ -162,7 +163,7 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               --disable-hardcoded-tables \
-              --enable-encoders \
+              --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
