@@ -1,0 +1,50 @@
+From: Martin Str|mberg <ams@ludd.ltu.se>
+Date: Sun, 26 Mar 2017 07:32:11 -0400
+Subject: mbr/isohdpfx.S: correct stack for heads/sectors
+
+Heads and sectors were pushed in reverse order per isolinux.asm
+(bb519a95 reversed the order of heads/sectors on the stack).
+
+If anything goes wrong, clear CX in case it contains garbage.
+
+Signed-off-by: Gene Cumm <gene.cumm@gmail.com>
+
+Bug-Debian: https://bugs.debian.org/857597
+Origin: upstream, quashed two commits together:
+ http://git.zytor.com/syslinux/syslinux.git/commit/?id=32c09027423f61c305e2423e52f5f69ecad8e2c0
+ http://git.zytor.com/syslinux/syslinux.git/commit/?id=8739e2ff9ba3f92652c8df846924fd00e1ce2753
+---
+ mbr/isohdpfx.S | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/mbr/isohdpfx.S b/mbr/isohdpfx.S
+index 17e1efe..4b107e4 100644
+--- a/mbr/isohdpfx.S
++++ b/mbr/isohdpfx.S
+@@ -167,20 +167,22 @@ next:
+ 	   read_sector_cbios: movb $0x42, %ah ;  jmp read_common */
+ 	movl	$0xeb42b4+((read_common-read_sector_cbios-4) << 24), \
+ 		(read_sector_cbios)
+-	jmp	1f
++	jmp	2f
+ 1:
++	xor	%cx, %cx	/* Clear EBIOS flag. */
++2:
+ 	popw	%dx
+ 	pushw	%cx		/* EBIOS flag */
+ 
+ 	/* Get (C)HS geometry */
+ 	movb	$0x08, %ah
+ 	int	$0x13
+-	andw	$0x3f, %cx	/* Sector count */
+ 	popw	%bx		/* EBIOS flag */
+-	pushw	%cx		/* -16: Save sectors on the stack */
+ 	movzbw	%dh, %ax	/* dh = max head */
+ 	incw	%ax		/* From 0-based max to count */
+-	pushw	%ax		/* -18: Save heads on the stack */
++	pushw	%ax		/* -16: Save heads on the stack */
++	andw	$0x3f, %cx	/* Sector count */
++	pushw	%cx		/* -18: Save sectors on the stack */
+ 	mulw	%cx		/* Heads*sectors -> sectors per cylinder */
+ 
+ 	pushw	%bx		/* -20: EBIOS flag */
