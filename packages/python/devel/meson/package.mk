@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="meson"
-PKG_VERSION="0.47.0"
-PKG_SHA256="1bd360a58c28039cdb3b8ce909764e90a58481deb79396227ba4081af377f009"
+PKG_VERSION="0.47.1"
+PKG_SHA256="d673de79f7bab064190a5ea06140eaa8415efb386d0121ba549f6d66c555ada6"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/mesonbuild/meson/releases/"

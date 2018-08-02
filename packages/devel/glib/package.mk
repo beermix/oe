@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.56.1"
+PKG_VERSION="2.57.2"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
