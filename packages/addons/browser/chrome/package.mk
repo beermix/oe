@@ -19,7 +19,7 @@
 
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
-PKG_REV="24"
+PKG_REV="25"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
