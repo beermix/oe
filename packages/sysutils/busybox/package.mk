@@ -17,14 +17,14 @@
 ################################################################################ findutils grep
 
 PKG_NAME="busybox"
-PKG_VERSION="1.29.1"
-PKG_SHA256="fc250730ea16d28839bfecda3c431683fa6bd4273ffca6b632cbeb3556c914c3"
+PKG_VERSION="1.29.2"
+PKG_SHA256="67d2fa6e147a45875fe972de62d907ef866fe784c495c363bf34756c444a5d61"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip unrar pciutils usbutils parted procps-ng gptfdisk less bash"
+PKG_DEPENDS_TARGET="toolchain busybox:host dosfstools e2fsprogs zip unzip unrar pciutils usbutils parted procps-ng gptfdisk less bash"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
