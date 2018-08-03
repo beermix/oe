@@ -34,14 +34,15 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-kernel=4.17 \
                            --without-cvs \
                            --without-gd \
-                           --enable-obsolete-rpc \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-debug \
                            --disable-timezone-tools"
 
-NSS_CONF_DIR="$PKG_BUILD/nss"
+# busybox:init needs it
+# testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
+PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
