@@ -30,7 +30,7 @@ PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic:host +pic"
-#PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"  --with-data-packaging=archive
 
 post_unpack() {
   #sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
@@ -45,7 +45,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
 			      --enable-static \
-			      --disable-shared --with-data-packaging=archive"
+			      --disable-shared"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 

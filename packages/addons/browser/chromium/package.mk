@@ -9,15 +9,15 @@
 #############################################################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="68.0.3440.84"
-PKG_SHA256="1031d167ae18d8a37f9291ff0e9a3dca2337c0fc1031f2c243d0327b14ecc9d9"
-PKG_REV="191"
+PKG_VERSION="64.0.3282.186"
+PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
+PKG_REV="186"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk3 libxss re2 snappy chromium:host"
+#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
+#PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk3 libxss chromium:host"
 PKG_DEPENDS_TARGET="chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
@@ -37,17 +37,16 @@ post_patch() {
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
-  # sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
 make_host() {
-  export CCACHE_SLOPPINESS=time_macros
+  # export CCACHE_SLOPPINESS=file_macro
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
-  export CCACHE_SLOPPINESS=time_macros
-  export CCACHE_CPP2=yes
+  # export CCACHE_SLOPPINESS=file_macro
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -70,6 +69,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=true'
@@ -78,6 +78,18 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'use_dbus=true'
+    'use_gio=true'
+    'use_libpci=true'
+    'use_udev=true'
+    'use_system_zlib=true'
+    'use_system_freetype=true'
+    'use_system_libdrm=true'
+    'use_system_libpng=false'
+    'use_system_harfbuzz=true'
+    'linux_link_libudev=true'
+    'use_system_libjpeg=true'
+    'icu_use_data_file=false'
+    'enable_remoting=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -96,7 +108,7 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
