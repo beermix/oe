@@ -119,12 +119,13 @@ addon() {
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
   # config
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin \
+           $ADDON_BUILD/$PKG_ADDON_ID/config \
+           $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
+           $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
-
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # atk
   cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
