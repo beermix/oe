@@ -4,9 +4,10 @@
 
 PKG_NAME="at-spi2-atk"
 PKG_VERSION="2.29.1"
+PKG_SHA256=""
 PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.gnome.org/"
-PKG_URL="https://ftp.gnome.org/pub/gnome/sources/at-spi2-atk/${PKG_VERSION:0:4}/at-spi2-atk-$PKG_VERSION.tar.xz"
+PKG_LICENSE="LGPL-2.1"
+PKG_SITE="http://ftp.acc.umu.se/pub/gnome/sources/at-spi2-atk/?C=M;O=D"
+PKG_URL="https://download.gnome.org/sources/$PKG_NAME/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain at-spi2-core atk libX11 libxml2"
 PKG_SHORTDESC="A GTK+ module that bridges ATK to D-Bus at-spi"

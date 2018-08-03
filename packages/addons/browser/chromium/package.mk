@@ -177,7 +177,7 @@ addon() {
   cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # libXft
-  cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libxkbcommon
   # cp -P $(get_build_dir libxkbcommon)/libxkbcommon.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
