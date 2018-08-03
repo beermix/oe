@@ -113,6 +113,7 @@ make_target() {
     'use_libpci=true'
     'use_udev=true'
     'icu_use_data_file=false'
+    'enable_remoting=false'
     'enable_print_preview=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
