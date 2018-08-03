@@ -105,7 +105,6 @@ make_target() {
     'use_dbus=true'
     'use_system_zlib=true'
     'linux_link_libudev=true'
-    'use_system_libjpeg=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -130,7 +129,7 @@ declare -gA _system_libs=(
   [harfbuzz-ng]=harfbuzz
   #[icu]=icu
   [libdrm]=
-  [libjpeg]=libjpeg
+  #[libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
   #[libvpx]=libvpx            # needs unreleased libvpx
   #[libwebp]=libwebp
@@ -144,7 +143,7 @@ declare -gA _system_libs=(
 )
 _unwanted_bundled_libs=(
   ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
+  #${_system_libs[libjpeg]+libjpeg_turbo}
 )
 depends+=(${_system_libs[@]})
 
