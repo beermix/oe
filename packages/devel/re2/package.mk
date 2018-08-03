@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="re2"
-PKG_VERSION="2018-07-01"
+PKG_VERSION="2018-08-01"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/google/re2/releases"
 PKG_URL="https://github.com/google/re2/archive/$PKG_VERSION.tar.gz"
