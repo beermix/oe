@@ -115,7 +115,7 @@ make_target() {
     'icu_use_data_file=false'
     'enable_remoting=false'
     'enable_print_preview=false'
-    'use_v8_context_snapshot=false'
+    'use_v8_context_snapshot=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
