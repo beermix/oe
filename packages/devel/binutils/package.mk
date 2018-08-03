@@ -46,6 +46,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-targets=x86_64-pep \
+                         --enable-lto \
                          --enable-plugins \
                          --enable-ld=default \
                          --enable-plugins \

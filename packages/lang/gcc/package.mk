@@ -42,6 +42,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
+                           --enable-lto \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
