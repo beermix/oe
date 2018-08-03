@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="18.2.0-rc1"
+PKG_VERSION="18.1.5"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
