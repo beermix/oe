@@ -1,28 +1,13 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libvpx"
-PKG_VERSION="c94dacc"
-PKG_SHA256=""
+PKG_VERSION="1.7.0"
+PKG_SHA256="1fec931eb5c94279ad219a5b6e0202358e94a93a90cfb1603578c326abfc1238"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://www.webmproject.org"
-PKG_URL="https://github.com/webmproject/libvpx/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/webmproject/libvpx/archive/v${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="WebM VP8/VP9 Codec SDK"

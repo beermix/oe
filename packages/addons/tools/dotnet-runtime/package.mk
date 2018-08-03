@@ -1,43 +1,28 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2018-present Team LibreELEC
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 case "$ARCH" in
   "aarch64")
     PKG_NC_ARCH="arm64"
-    PKG_SHA256="009a94832f51f538d83bb99a6ea3d792c85c4b3788ede2437d9d97980be72e80"
+    PKG_SHA256="09c4b9c369c7f98066ba493a36a5c256eb102031739bec4862b58299590b5a18"
     ;;
   "arm")
     PKG_NC_ARCH="arm"
-    PKG_SHA256="325cd83468a25d5dca633bc1f0766b44e5da63428d40c94653d9c8072bce5bcf"
+    PKG_SHA256="bdbb9739092098c1e572bbdcc9799bdfb17de75fbf7f4e72898dbf63d424e14f"
     ;;
   "x86_64")
     PKG_NC_ARCH="x64"
-    PKG_SHA256="de2037a00745aa0d8d27665203d0aa87a110ff660243fd0155f30b2e90e6604f"
+    PKG_SHA256="0d0db92d1d4779ad28562ca445acd3701e61bcef957ae3dbdcc97a7c0e8f10c5"
     ;;
 esac
 
 PKG_NAME="dotnet-runtime"
-PKG_VERSION="2.1.1"
+PKG_VERSION="2.1.2"
 PKG_REV="100"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://dotnet.github.io/"
-PKG_URL="https://download.microsoft.com/download/9/3/E/93ED35C8-57B9-4D50-AE32-0330111B38E8/dotnet-runtime-2.1.1-linux-$PKG_NC_ARCH.tar.gz"
+PKG_URL="https://download.microsoft.com/download/1/f/7/1f7755c5-934d-4638-b89f-1f4ffa5afe89/dotnet-runtime-2.1.2-linux-x64.tar.gz"
 PKG_SOURCE_NAME="$PKG_NAME-$PKG_VERSION-$ARCH.tar.gz"
 PKG_DEPENDS_TARGET="toolchain curl curl3 krb5 lttng-ust"
 PKG_SECTION="tools"

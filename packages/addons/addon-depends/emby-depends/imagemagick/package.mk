@@ -1,24 +1,9 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="imagemagick"
-PKG_VERSION="7.0.7-35"
-PKG_SHA256="eb153673ba7ab20ad2551453dbbbf05d5050630b369116230bb2589a6318b0a5"
+PKG_VERSION="7.0.8-6"
+PKG_SHA256="17320a2019c89c1dc6de15e36ef5455a1a023ad2dc729823c2041acdea5f38ba"
 PKG_ARCH="any"
 PKG_LICENSE="http://www.imagemagick.org/script/license.php"
 PKG_SITE="http://www.imagemagick.org/"
