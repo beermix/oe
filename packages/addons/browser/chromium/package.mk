@@ -41,13 +41,13 @@ post_patch() {
 }
 
 make_host() {
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  export CCACHE_SLOPPINESS=file_macro,time_macros
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
 #  export CCACHE_SLOPPINESS=time_macros
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  export CCACHE_SLOPPINESS=file_macro,time_macros
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -79,6 +79,9 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'use_dbus=true'
+    'use_gio=true'
+    'use_libpci=true'
+    'use_udev=true'
     'use_system_zlib=true'
     'use_system_freetype=true'
     'use_system_libdrm=true'
@@ -119,8 +122,7 @@ addon() {
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
   # config
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin \
-           $ADDON_BUILD/$PKG_ADDON_ID/config \
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
            $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
            $ADDON_BUILD/$PKG_ADDON_ID/lib
 
