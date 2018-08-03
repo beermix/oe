@@ -9,9 +9,9 @@ index 4e9ff440d1..49c1d22870
    ar = "ar"
    ld = cxx
 +  
-+  extra_cflags = getenv("CFLAGS")
-+  extra_cppflags = getenv("CPPFLAGS")
-+  extra_cxxflags = getenv("CXXFLAGS")
++  extra_cflags = "-mfpmath=sse -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
++  extra_cppflags = "-DNO_UNWIND_TABLES"
++  extra_cxxflags = "-mfpmath=sse -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
 +  extra_ldflags = getenv("LDFLAGS")
  
    # Output linker map files for binary size analysis.
