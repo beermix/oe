@@ -39,7 +39,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-ld \
                            --enable-plugin \
                            --enable-ld=default \
-                           --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
                            --enable-lto \
