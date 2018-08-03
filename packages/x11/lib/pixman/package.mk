@@ -23,10 +23,10 @@ if [ "$TARGET_ARCH" = arm ]; then
 elif [ "$TARGET_ARCH" = aarch64 ]; then
   PIXMAN_CONFIG="--disable-mmx --disable-sse2 --disable-vmx --disable-arm-simd --disable-arm-neon --disable-arm-iwmmxt"
 elif [ "$TARGET_ARCH" = x86_64  ]; then
-  PIXMAN_CONFIG="--enable-mmx --enable-sse2 --disable-ssse3 --disable-vmx --disable-arm-simd --disable-arm-neon"
+  PIXMAN_CONFIG="--enable-mmx --enable-sse2 --enable-ssse3 --disable-vmx --disable-arm-simd --disable-arm-neon"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
+PKG_CONFIGURE_OPTS_TARGET="--disable-openmp \
                            --disable-loongson-mmi \
                            $PIXMAN_CONFIG \
                            --disable-mips-dspr2 \
@@ -36,9 +36,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-libpng \
                            --with-gnu-ld"
 
-pre_configure_target() {
-  export LIBS="$LIBS -fopenmp"
-}
+#pre_configure_target() {
+#  export LIBS="$LIBS -fopenmp"
+#}
 
 post_makeinstall_target() {
   cp $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman-1.pc \
