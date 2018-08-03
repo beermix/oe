@@ -62,6 +62,15 @@ make_host() {
 }
 
 make_target() {
+  # unset CPPFLAGS
+  # unset CFLAGS
+  # unset CXXFLAGS
+  # unset LDFLAGS
+  
+  # CFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  # CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  # CPPFLAGS+=' -DNO_UNWIND_TABLES'
+
   export CCACHE_SLOPPINESS=time_macros
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
@@ -105,6 +114,8 @@ make_target() {
     'use_libpci=true'
     'use_udev=true'
     'icu_use_data_file=false'
+    'enable_remoting=false'
+    'enable_print_preview=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
