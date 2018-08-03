@@ -64,11 +64,11 @@ make_target() {
   # unset CPPFLAGS
   # unset CFLAGS
   # unset CXXFLAGS
-  unset LDFLAGS
+  # unset LDFLAGS
   
-  CFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
-  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
-  CPPFLAGS+=' -DNO_UNWIND_TABLES'
+  # CFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  # CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  # CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
   export CCACHE_SLOPPINESS=time_macros
 
