@@ -72,7 +72,7 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -86,6 +86,7 @@ make_target() {
     'linux_link_libudev=true'
     'use_system_libjpeg=true'
     'use_gio=true'
+    'use_aura=true'
     'use_libpci=true'
     'use_udev=true'
     'icu_use_data_file=false'
@@ -142,11 +143,11 @@ addon() {
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # gtk+
-  # cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk3
-  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -180,7 +181,4 @@ addon() {
 
   # libXft
   cp -P $(get_build_dir libXft)/libXft.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # libxkbcommon
-  # cp -P $(get_build_dir libxkbcommon)/libxkbcommon.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
