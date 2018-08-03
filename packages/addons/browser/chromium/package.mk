@@ -108,8 +108,12 @@ make_target() {
     'use_system_libpng=false'
     'use_system_harfbuzz=true'
     'linux_link_libudev=true'
-    'use_system_libjpeg=false'
+    'use_system_libjpeg=true'
+    'use_gio=true'
+    'use_libpci=true'
+    'use_udev=true'
     'icu_use_data_file=false'
+    'enable_print_preview=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
