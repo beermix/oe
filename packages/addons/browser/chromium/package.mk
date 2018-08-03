@@ -11,7 +11,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="185"
+PKG_REV="186"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -41,13 +41,12 @@ post_patch() {
 }
 
 make_host() {
-  export CCACHE_SLOPPINESS=file_macro,time_macros
+  # export CCACHE_SLOPPINESS=file_macro
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
-#  export CCACHE_SLOPPINESS=time_macros
-  export CCACHE_SLOPPINESS=file_macro,time_macros
+  # export CCACHE_SLOPPINESS=file_macro
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -179,7 +178,7 @@ addon() {
   cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # libXft
-  cp -P $(get_build_dir libXft)/libXft.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libxkbcommon
   # cp -P $(get_build_dir libxkbcommon)/libxkbcommon.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib

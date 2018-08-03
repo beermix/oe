@@ -97,7 +97,6 @@ make_target() {
     'use_system_libjpeg=true'
     'icu_use_data_file=true'
     'enable_remoting=false'
-    'enable_print_preview=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -186,7 +185,7 @@ addon() {
   cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # libXft
-  cp -P $(get_build_dir libXft)/libXft.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libxkbcommon
   # cp -P $(get_build_dir libxkbcommon)/libxkbcommon.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
