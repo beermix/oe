@@ -22,7 +22,7 @@ PKG_VERSION="3c03bac"
 #PKG_VERSION="b99f1c9"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
+PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
@@ -50,13 +50,10 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
-                           --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-debug \
-                           --without-selinux \
-                           --disable-werror \
                            --disable-timezone-tools"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
