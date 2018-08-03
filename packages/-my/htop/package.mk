@@ -1,5 +1,5 @@
 PKG_NAME="htop"
-PKG_VERSION="666e1e7"
+PKG_VERSION="d74b6dc"
 PKG_SITE="https://github.com/hishamhm/htop"
 PKG_URL="https://github.com/hishamhm/htop/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses libpciaccess"
