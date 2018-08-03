@@ -38,13 +38,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
+                           --enable-lto \
                            --enable-ld=default \
+                           --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-lto \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --with-linker-hash-style=gnu \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \

@@ -254,10 +254,10 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_BLURAY \
                        $KODI_PLAYER"
 
-pre_configure_target() {
+#pre_configure_target() {
 # kodi should never be built with lto
-  export LIBS="$LIBS -lz -lterminfo"
-}
+#  export LIBS="$LIBS -lz -lterminfo"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/kodi
