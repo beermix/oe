@@ -44,6 +44,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-linker-hash-style=gnu \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
