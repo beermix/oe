@@ -14,7 +14,7 @@ index 9e23a5a..74459a6 100755
               '-o', '/dev/null'],
              stdout=open(os.devnull, 'wb'), stderr=subprocess.STDOUT)
          if proc.wait() == 0:
--            cflags += ['-fdiagnostics-color']
+-            cflags += ['-fdiagnostics-color=2']
 +            cflags += ['-fdiagnostics-color=always']
      except:
          pass
