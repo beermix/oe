@@ -47,6 +47,7 @@ make_host() {
 
 make_target() {
   export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_CPP2=yes
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -77,18 +78,6 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'use_dbus=true'
-    'use_gio=true'
-    'use_libpci=true'
-    'use_udev=true'
-    'use_system_zlib=false'
-    'use_system_freetype=false'
-    'use_system_libdrm=false'
-    'use_system_libpng=false'
-    'use_system_harfbuzz=false'
-    'linux_link_libudev=true'
-    'use_system_libjpeg=false'
-    'icu_use_data_file=true'
-    'enable_remoting=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
