@@ -45,7 +45,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
 			      --enable-static \
-			      --disable-shared"
+			      --disable-shared --with-data-packaging=archive"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
