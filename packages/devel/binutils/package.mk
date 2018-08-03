@@ -18,7 +18,7 @@
 
 PKG_NAME="binutils"
 PKG_VERSION="ea2a7e6"
-PKG_VERSION="2.31.1"
+PKG_VERSION="2.31"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_30-branch"
