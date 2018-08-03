@@ -20,5 +20,5 @@ PKG_MESON_OPTS_TARGET="-Ddocs=false \
                        -Dx11=true \
                        -Djasper=true \
                        -Dpng=true \
-                       -Dtiff=true \
+                       -Dtiff=false \
                        -Djpeg=true"
