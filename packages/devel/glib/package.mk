@@ -21,9 +21,9 @@ PKG_CONFIGURE_OPTS_HOST="--with-pcre=internal \
                          --disable-shared \
                          --disable-libmount \
                          --with-python=python \
-                         --enable-gtk-doc=no \
-                         --enable-gtk-doc-html=no \
-                         --enable-man=no \
+                         --disable-gtk-doc \
+                         --disable-gtk-doc-html \
+                         --disable-man \
                          --with-pic"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
