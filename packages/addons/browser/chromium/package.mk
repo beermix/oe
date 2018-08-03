@@ -95,7 +95,7 @@ make_target() {
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=false'
+    'use_gtk3=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
