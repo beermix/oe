@@ -86,7 +86,7 @@ make_target() {
     'use_system_libjpeg=true'
     'use_libjpeg_turbo=false'
     'pdf_enable_xfa=true'
-    'use_libpci = true'
+    'use_libpci=true'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'use_system_libpng=true'
