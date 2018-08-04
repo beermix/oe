@@ -1,59 +1,11 @@
 --- chromium-62.0.3192.0/cc/paint/paint_op_reader.cc.enum	2017-08-22 21:04:38.000000000 +0200
 +++ chromium-62.0.3192.0/cc/paint/paint_op_reader.cc	2017-08-30 19:19:41.082455143 +0200
-@@ -22,7 +22,7 @@
- }
+@@ -54,7 +54,7 @@
  
  bool IsValidSkShaderTileMode(SkShader::TileMode mode) {
--  return mode < SkShader::kTileModeCount;
-+  return int(mode) <= SkShader::kTileModeCount;
+   // When Skia adds Decal, update this (skbug.com/7638)
+-  return mode <= SkShader::kMirror_TileMode;
++  return int(mode) <= SkShader::kMirror_TileMode;
  }
  
  bool IsValidPaintShaderScalingBehavior(PaintShader::ScalingBehavior behavior) {
---- chromium-62.0.3192.0/content/common/unique_name_helper.cc.unused	2017-08-22 21:04:43.000000000 +0200
-+++ chromium-62.0.3192.0/content/common/unique_name_helper.cc	2017-08-31 07:19:40.055964229 +0200
-@@ -219,15 +219,12 @@
-     // tree and go down from there, it is impossible for a frame path to contain
-     // a unique name (which needs a replacement) that has not already been seen
-     // and inserted into |replacements|.
--    size_t index = 0;
-     for (const auto& replacement : *replacements) {
-       size_t next_index = legacy_name.find(replacement.old_name);
-       if (next_index == std::string::npos)
-         continue;
-       legacy_name.replace(next_index, replacement.old_name.size(),
-                           replacement.new_name);
--      index = next_index -
--              (replacement.old_name.size() - replacement.new_name.size());
-     }
-     return legacy_name;
-   }
---- chromium-62.0.3192.0/build/config/linux/atk/BUILD.gn.clang	2017-08-22 21:04:38.000000000 +0200
-+++ chromium-62.0.3192.0/build/config/linux/atk/BUILD.gn	2017-08-31 08:43:13.077130440 +0200
-@@ -37,7 +37,7 @@
- 
-   cflags = [
-     # glib uses the pre-c++11 typedef-as-static_assert hack.
--    "-Wno-unused-local-typedef",
-+    "-Wno-unused-local-typedefs",
- 
-     # G_DEFINE_TYPE automatically generates a *get_instance_private
-     # inline function after glib 2.37. That's unused. Prevent to
---- chromium-62.0.3192.0/chrome/browser/extensions/menu_manager.cc.gcc5	2017-08-22 21:04:39.000000000 +0200
-+++ chromium-62.0.3192.0/chrome/browser/extensions/menu_manager.cc	2017-08-31 18:21:19.643236478 +0200
-@@ -782,16 +782,13 @@
-   MenuItem* menu_item = GetItemById(id);
-   DCHECK(menu_item);
- 
--  const extensions::MenuItem::OwnedList* list;
-   if (menu_item->parent_id()) {
--    list = &(GetItemById(*menu_item->parent_id())->children());
-   } else {
-     auto i = context_items_.find(menu_item->id().extension_key);
-     if (i == context_items_.end()) {
-       NOTREACHED();
-       return false;
-     }
--    list = &(i->second);
-   }
- 
-   // If we selected a radio item, unselect all other items in its group.
