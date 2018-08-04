@@ -76,18 +76,6 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_dbus=true'
-    'use_gio=true'
-    'use_libpci=true'
-    'use_udev=true'
-    'use_system_zlib=true'
-    'use_system_freetype=true'
-    'use_system_libdrm=true'
-    'use_system_libpng=false'
-    'use_system_harfbuzz=true'
-    'linux_link_libudev=true'
-    'use_system_libjpeg=true'
-    'icu_use_data_file=true'
     'enable_remoting=false'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
@@ -102,6 +90,45 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
+  
+  # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Keys are the names in the above script; values are the dependencies in Arch
+declare -gA _system_libs=(
+  #[ffmpeg]=ffmpeg
+  #[fontconfig]=fontconfig
+  #[freetype]=freetype2
+  #[harfbuzz-ng]=harfbuzz
+  #[icu]=icu
+  #[libdrm]=
+  [libjpeg]=libjpeg
+  #[libpng]=libpng            # https://crbug.com/752403#c10
+  #[libxml]=libxml2           # https://crbug.com/736026
+  [libxslt]=libxslt
+  [re2]=re2
+  [snappy]=snappy
+  [yasm]=
+  [zlib]=minizip
+)
+_unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+)
+depends+=(${_system_libs[@]})
+
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
+  local _lib
+  for _lib in ${_unwanted_bundled_libs[@]}; do
+    find "third_party/$_lib" -type f \
+      \! -path "third_party/$_lib/chromium/*" \
+      \! -path "third_party/$_lib/google/*" \
+      \! -path 'third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
+  done
+	
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
