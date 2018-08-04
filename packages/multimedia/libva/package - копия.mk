@@ -12,12 +12,7 @@ PKG_URL="https://github.com/intel/libva/archive/$PKG_VERSION.tar.gz"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="Libva is an implementation for VA-API (VIdeo Acceleration API)."
 PKG_LONGDESC="Libva is an open source software library and API specification to provide access to hardware accelerated video decoding/encoding and video processing."
-
-PKG_MESON_OPTS_TARGET="-Ddocs=false \
-			  -Ddisable_drm=false \
-			  -Dwith_x11=yes \
-			  -Dwith_wayland=no \
-			  -Denable_docs=false"
+PKG_TOOLCHAIN="autotools"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm"
