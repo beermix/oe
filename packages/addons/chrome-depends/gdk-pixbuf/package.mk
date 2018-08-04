@@ -16,7 +16,7 @@ PKG_MESON_OPTS_TARGET="-Ddocs=false \
                        -Dgir=false \
                        -Dman=false \
                        -Drelocatable=false \
-                       -Dbuiltin_loaders=all \
+                       -Dbuiltin_loaders=no \
                        -Dx11=true \
                        -Djasper=true \
                        -Dpng=true \
