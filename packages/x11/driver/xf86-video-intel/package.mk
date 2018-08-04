@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv) -Ddefault-accel=sna \
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xf86-video-intel"
@@ -19,7 +19,6 @@ PKG_MESON_OPTS_TARGET="-Ddefault-dri=2 \
 			  -Dtools=false \
 			  -Ddebug=no \
 			  -Dbacklight=false \
-			  -Ddefault-accel=sna \
 			  -Dvalgrind=false \
 			  -Dxvmc=false \
 			  -Dbacklight-helper=false \

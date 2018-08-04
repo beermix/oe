@@ -21,4 +21,5 @@ PKG_LONGDESC="Epoxy is a library for handling OpenGL function pointer management
 
 PKG_MESON_OPTS_TARGET="-Ddocs=false \
 			  -Dx11=true \
-			  -Dtests=false"
+			  -Dtests=false \
+			  -Degl=no"
