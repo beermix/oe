@@ -72,7 +72,6 @@ make_target() {
     'use_gold=false'
     'use_gtk3=true'
     'use_kerberos=false'
-    'icu_use_data_file=true'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
@@ -94,7 +93,7 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py     'icu_use_data_file=true'
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
   #[ffmpeg]=ffmpeg            # https://crbug.com/731766
@@ -102,7 +101,7 @@ readonly -A _system_libs=(
   #[fontconfig]=fontconfig    # Enable for M65
   #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
   #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
@@ -132,7 +131,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
