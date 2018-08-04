@@ -39,6 +39,8 @@ PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
 
 post_configure_target() {
  ## configure minizip
+ export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+ export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
  (
   cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
   rm Makefile
