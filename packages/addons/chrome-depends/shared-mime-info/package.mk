@@ -12,5 +12,4 @@ PKG_DEPENDS_TARGET="toolchain libxml2"
 PKG_LONGDESC="The shared-mime-info package contains the core database of common types."
 PKG_BUILD_FLAGS="-parallel"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
-                           --disable-update-mimedb"
+#PKG_CONFIGURE_OPTS_TARGET="--disable-nls --disable-update-mimedb"
