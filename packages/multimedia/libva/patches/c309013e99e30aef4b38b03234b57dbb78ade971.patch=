@@ -1,0 +1,37 @@
+From c309013e99e30aef4b38b03234b57dbb78ade971 Mon Sep 17 00:00:00 2001
+From: Haihao Xiang <haihao.xiang@intel.com>
+Date: Thu, 5 Jul 2018 13:40:26 +0800
+Subject: [PATCH] libva 2.2.1.pre1 for development
+
+Signed-off-by: Haihao Xiang <haihao.xiang@intel.com>
+---
+ configure.ac | 2 +-
+ meson.build  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 6fdadaa4..b0b88361 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -42,7 +42,7 @@ m4_define([va_api_version],
+ # - reset micro version to zero when VA-API major or minor version is changed
+ m4_define([libva_major_version], [m4_eval(va_api_major_version + 1)])
+ m4_define([libva_minor_version], [m4_eval(va_api_minor_version)])
+-m4_define([libva_micro_version], [0])
++m4_define([libva_micro_version], [1])
+ m4_define([libva_pre_version],   [1])
+ 
+ m4_define([libva_version],
+diff --git a/meson.build b/meson.build
+index 1f60d39d..2ff6d9ff 100644
+--- a/meson.build
++++ b/meson.build
+@@ -7,7 +7,7 @@
+ # - reset micro version to zero when VA-API major or minor version is changed
+ project(
+   'libva', 'c',
+-  version : '2.2.0.1',
++  version : '2.2.1.1',
+   meson_version : '>= 0.37.0',
+   default_options : [ 'warning_level=1',
+                       'buildtype=debugoptimized' ])

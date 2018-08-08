@@ -2,9 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="dbus"
-PKG_VERSION="1.11.16"
-#PKG_SHA256="7cf993e97df62c73b939b77dcd920e8883d8e866f9ced1a9b5c715eb28e4b031"
 PKG_VERSION="1.12.10"
+PKG_SHA256="e07b3beedad0386e346820aa16732dcf2c862d73bdc475f4596175061e09faa5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://dbus.freedesktop.org"
@@ -33,7 +32,6 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --enable-inotify \
                            --without-valgrind \
                            --without-x \
-                           --enable-user-session \
                            --with-dbus-user=dbus \
                            --runstatedir=/run \
                            --with-system-socket=/run/dbus/system_bus_socket"

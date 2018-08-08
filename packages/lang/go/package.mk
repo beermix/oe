@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="go"
-PKG_VERSION="1.9.7"
+PKG_VERSION="1.10.3"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
@@ -50,7 +50,7 @@ configure_host() {
 
 make_host() {
   cd $PKG_BUILD/src
-  bash make.bash --no-banner
+  ./make.bash --no-clean -v
 }
 
 pre_makeinstall_host() {

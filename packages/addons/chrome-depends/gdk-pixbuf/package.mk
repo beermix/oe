@@ -1,24 +1,61 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+################################################################################
 
 PKG_NAME="gdk-pixbuf"
-PKG_VERSION="2.37.0"
-PKG_SHA256="81508700f500eca3f21c4cfd0a3486459a373a65e07457a9a4f3bf7d08109c11"
+PKG_VERSION="2.35.5"
+PKG_SHA256="108c682022b260c90452f3e83de5faf2e41d5543fc1550e641f3ff9600fde5e6"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="https://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/?C=M;O=D"
-PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/${PKG_VERSION:0:4}/gdk-pixbuf-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper shared-mime-info tiff"
-PKG_LONGDESC="GdkPixbuf is a a GNOME library for image loading and manipulation."
+PKG_SITE="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.35/?C=M;O=D"
+PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.35/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper"
+PKG_DEPENDS_HOST="glib:host libpng:host tiff:host libjpeg-turbo:host jasper:host"
+PKG_SECTION="x11/toolkits"
+PKG_SHORTDESC="gdk-pixbuf: a GNOME library for image loading and manipulation."
+PKG_LONGDESC="gdk-pixbuf (GdkPixbuf) is a GNOME library for image loading and manipulation. The GdkPixbuf documentation contains both the programmer's guide and the API reference."
+PKG_TOOLCHAIN="autotools"
 
-PKG_MESON_OPTS_TARGET="-Ddocs=false \
-                       -Dgir=false \
-                       -Dman=false \
-                       -Drelocatable=false \
-                       -Dx11=true \
-                       -Djasper=true \
-                       -Dpng=true \
-                       -Dtiff=true \
-                       -Djpeg=true \
-                       -Dinstalled_tests=false"
+PKG_MESON_OPTS_TARGET="-Dpng=true \
+			  -Dtiff=true \
+			  -Djpeg=true \
+			  -Djasper=true \
+			  -Dx11=true \
+			  -Dbuiltin_loaders=all \
+			  -Ddocs=false \
+			  -Dman=false \
+			  -Dnative_windows_loaders=false"
+			  
+PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=no \
+			      --disable-installed-tests \
+			      --enable-nls \
+			      --disable-glibtest \
+			      --disable-gio-sniffing \
+			      --with-libjpeg \
+			      --with-libjasper \
+			      --with-libpng \
+			      --with-libtiff \
+			      --with-x11"
+
+PKG_CONFIGURE_OPTS_HOST="gio_can_sniff=no \
+			    --disable-glibtest \
+			    --with-libpng=$TOOLCHAIN \
+			    --with-libjpeg=no \
+			    --with-libjasper=$TOOLCHAIN \
+			    --with-libtiff=$TOOLCHAIN"

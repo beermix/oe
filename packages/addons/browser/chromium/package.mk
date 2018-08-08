@@ -1,5 +1,5 @@
 #############################################################################################################################
-#  beautifulsoup4:host html5lib:host
+#  beautifulsoup4:host html5lib:host re2 snappy
 #  
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
@@ -11,13 +11,13 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="190"
+PKG_REV="200"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk3 libxss re2 snappy chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -70,13 +70,11 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_system_harfbuzz=true'
-    'use_system_freetype=true'
     'use_libpci=true'
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
@@ -95,12 +93,14 @@ make_target() {
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py     'icu_use_data_file=true'
 # Keys are the names in the above script; values are the dependencies in Arch
+#    'use_system_harfbuzz=true'
+#    #z'use_system_freetype=true'
 readonly -A _system_libs=(
   #[ffmpeg]=ffmpeg            # https://crbug.com/731766
   #[flac]=flac
-  #[fontconfig]=fontconfig    # Enable for M65
-  #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
-  #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
+  [fontconfig]=fontconfig    # Enable for M65
+  [freetype]=freetype2       # Using 'use_system_freetype=true' until M65
+  [harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
   #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
@@ -110,10 +110,10 @@ readonly -A _system_libs=(
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   #[opus]=opus
-  [re2]=re2
-  [snappy]=snappy
+  #[re2]=re2
+  #[snappy]=snappy
   [yasm]=
-  [zlib]=minizip
+  #[zlib]=minizip
 )
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
@@ -176,11 +176,11 @@ addon() {
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # gtk+
-  # cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk3
-  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib

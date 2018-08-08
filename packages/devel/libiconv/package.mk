@@ -27,18 +27,12 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 PKG_LONGDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 
-post_unpack() {
-  sed -i '/preload/d' $PKG_BUILD/Makefile.in
-}
+#post_unpack() {
+#  sed -i '/preload/d' $PKG_BUILD/Makefile.in
+#}
 
 PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
 			      --build=$HOST_NAME \
 			      --prefix=/usr \
-			      --includedir=/usr/include/iconv \
-			      --libdir=/usr/lib/iconv \
 			      --sysconfdir=/etc \
-			      --disable-nls \
-			      --enable-static \
-			      --disable-shared \
-			      --enable-extra-encodings \
-			      --with-gnu-ld"
+			      --enable-extra-encodings"

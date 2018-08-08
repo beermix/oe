@@ -1,6 +1,6 @@
 PKG_NAME="sysbench"
-PKG_VERSION="1.0.14"
-PKG_ARCH="any"
+PKG_VERSION="1.0.15"
+PKG_SITE="https://github.com/akopytov/sysbench/releases"
 PKG_URL="https://github.com/akopytov/sysbench/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib libaio mariadb"
 PKG_PRIORITY="optional"

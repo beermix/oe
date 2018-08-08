@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gettext-tiny"
-PKG_VERSION="be5d98b"
+PKG_VERSION="4f03a78"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/sabotage-linux/gettext-tiny"
 PKG_URL="https://github.com/sabotage-linux/gettext-tiny/archive/${PKG_VERSION}.tar.gz"
