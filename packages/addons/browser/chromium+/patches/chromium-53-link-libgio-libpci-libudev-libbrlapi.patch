@@ -20,6 +20,28 @@ diff -up chromium-53.0.2785.92/build/linux/libbrlapi/BUILD.gn.link_libgio chromi
  
    functions = [
      "brlapi_getHandleSize",
+diff -up chromium-53.0.2785.92/build/linux/libgio/BUILD.gn.link_libgio chromium-53.0.2785.92/build/linux/libgio/BUILD.gn
+--- chromium-53.0.2785.92/build/linux/libgio/BUILD.gn.link_libgio	2016-09-02 21:02:02.000000000 +0200
++++ chromium-53.0.2785.92/build/linux/libgio/BUILD.gn	2016-09-09 14:23:38.667124632 +0200
+@@ -2,6 +2,10 @@
+ # Use of this source code is governed by a BSD-style license that can be
+ # found in the LICENSE file.
+ 
++declare_args() {
++  linux_link_libgio = false
++}
++
+ import("//tools/generate_library_loader/generate_library_loader.gni")
+ 
+ # This generates a target named "libgio".
+@@ -11,6 +15,7 @@ generate_library_loader("libgio") {
+   output_cc = "libgio_loader.cc"
+   header = "<gio/gio.h>"
+   config = "//build/linux:gio_config"
++  link_directly = linux_link_libgio
+ 
+   functions = [
+     "glib_check_version",
 diff -up chromium-53.0.2785.92/build/linux/libpci/BUILD.gn.link_libgio chromium-53.0.2785.92/build/linux/libpci/BUILD.gn
 --- chromium-53.0.2785.92/build/linux/libpci/BUILD.gn.link_libgio	2016-09-02 21:02:02.000000000 +0200
 +++ chromium-53.0.2785.92/build/linux/libpci/BUILD.gn	2016-09-09 14:24:25.124540583 +0200

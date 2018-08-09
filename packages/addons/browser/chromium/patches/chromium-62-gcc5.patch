@@ -1,11 +1,11 @@
 --- chromium-62.0.3192.0/cc/paint/paint_op_reader.cc.enum	2017-08-22 21:04:38.000000000 +0200
 +++ chromium-62.0.3192.0/cc/paint/paint_op_reader.cc	2017-08-30 19:19:41.082455143 +0200
-@@ -22,7 +22,7 @@
- }
+@@ -54,7 +54,7 @@ bool IsValidPaintShaderType(PaintShader:
  
  bool IsValidSkShaderTileMode(SkShader::TileMode mode) {
--  return mode < SkShader::kTileModeCount;
-+  return int(mode) <= SkShader::kTileModeCount;
+   // When Skia adds Decal, update this (skbug.com/7638)
+-  return mode <= SkShader::kMirror_TileMode;
++  return int(mode) <= SkShader::kMirror_TileMode;
  }
  
  bool IsValidPaintShaderScalingBehavior(PaintShader::ScalingBehavior behavior) {

@@ -1,77 +1,14 @@
---- chromium-62.0.3192.0/third_party/angle/src/compiler/translator/ValidateLimitations.cpp.gcc7	2017-08-22 21:06:34.000000000 +0200
-+++ chromium-62.0.3192.0/third_party/angle/src/compiler/translator/ValidateLimitations.cpp	2017-09-08 22:31:37.405728676 +0200
-@@ -82,7 +82,6 @@
-   private:
-     void error(TSourceLoc loc, const char *reason, const char *token);
- 
--    bool withinLoopBody() const;
-     bool isLoopIndex(TIntermSymbol *symbol);
-     bool validateLoopType(TIntermLoop *node);
- 
-@@ -164,11 +163,6 @@
-     mDiagnostics->error(loc, reason, token);
- }
- 
--bool ValidateLimitationsTraverser::withinLoopBody() const
--{
--    return !mLoopSymbolIds.empty();
--}
--
- bool ValidateLimitationsTraverser::isLoopIndex(TIntermSymbol *symbol)
- {
-     return std::find(mLoopSymbolIds.begin(), mLoopSymbolIds.end(), symbol->getId()) !=
---- chromium-62.0.3192.0/third_party/glslang-angle/src/SPIRV/GlslangToSpv.cpp.gcc7	2017-08-22 21:06:41.000000000 +0200
-+++ chromium-62.0.3192.0/third_party/glslang-angle/src/SPIRV/GlslangToSpv.cpp	2017-09-08 22:38:00.736706539 +0200
-@@ -171,7 +171,9 @@
-     bool isTrivialLeaf(const glslang::TIntermTyped* node);
-     bool isTrivial(const glslang::TIntermTyped* node);
-     spv::Id createShortCircuit(glslang::TOperator, glslang::TIntermTyped& left, glslang::TIntermTyped& right);
-+#ifdef AMD_EXTENSIONS
-     spv::Id getExtBuiltins(const char* name);
-+#endif
- 
-     spv::Function* shaderEntry;
-     spv::Function* currentFunction;
-@@ -5043,6 +5045,7 @@
-     return builder.createOp(spv::OpPhi, boolTypeId, phiOperands);
- }
- 
-+#ifdef AMD_EXTENSIONS
- // Return type Id of the imported set of extended instructions corresponds to the name.
- // Import this set if it has not been imported yet.
- spv::Id TGlslangToSpvTraverser::getExtBuiltins(const char* name)
-@@ -5056,6 +5059,7 @@
-         return extBuiltins;
-     }
- }
-+#endif
- 
- };  // end anonymous namespace
- 
 --- chromium-62.0.3192.0/third_party/libyuv/source/row_any.cc.gcc7	2017-08-22 21:06:36.000000000 +0200
 +++ chromium-62.0.3192.0/third_party/libyuv/source/row_any.cc	2017-09-08 22:54:05.079961882 +0200
-@@ -721,7 +721,7 @@
- #define ANY11P16(NAMEANY, ANY_SIMD, T, SBPP, BPP, MASK)                      \
-   void NAMEANY(const uint16* src_ptr, uint16* dst_ptr, T param, int width) { \
-     SIMD_ALIGNED(uint16 temp[16 * 2]);                                       \
--    memset(temp, 0, 32); /* for msan */                                      \
-+    memset(temp, 0, 32*sizeof(uint16)); /* for msan */                                      \
-     int r = width & MASK;                                                    \
-     int n = width & ~MASK;                                                   \
-     if (n > 0) {                                                             \
---- chromium-62.0.3192.0/third_party/webrtc/modules/video_coding/rtt_filter.cc.gcc7	2017-08-22 21:06:39.000000000 +0200
-+++ chromium-62.0.3192.0/third_party/webrtc/modules/video_coding/rtt_filter.cc	2017-09-08 23:06:06.529620651 +0200
-@@ -49,8 +49,8 @@
-   _filtFactCount = 1;
-   _jumpCount = 0;
-   _driftCount = 0;
--  memset(_jumpBuf, 0, kMaxDriftJumpCount);
--  memset(_driftBuf, 0, kMaxDriftJumpCount);
-+  memset(_jumpBuf, 0, kMaxDriftJumpCount * sizeof(int64_t));
-+  memset(_driftBuf, 0, kMaxDriftJumpCount * sizeof(int64_t));
- }
- 
- void VCMRttFilter::Update(int64_t rttMs) {
+@@ -805,7 +805,7 @@ ANY11C(Convert8To16Row_Any_AVX2,
+   void NAMEANY(const uint16_t* src_ptr, uint16_t* dst_ptr, T param, \
+                int width) {                                         \
+     SIMD_ALIGNED(uint16_t temp[32 * 2]);                            \
+-    memset(temp, 0, 64); /* for msan */                             \
++    memset(temp, 0, 64*sizeof(uint16)); /* for msan */                                      \
+     int r = width & MASK;                                           \
+     int n = width & ~MASK;                                          \
+     if (n > 0) {                                                    \
 --- chromium-62.0.3192.0/third_party/webrtc/modules/video_processing/video_denoiser.cc.gcc7	2017-08-22 21:06:40.000000000 +0200
 +++ chromium-62.0.3192.0/third_party/webrtc/modules/video_processing/video_denoiser.cc	2017-09-08 23:17:25.755051027 +0200
 @@ -183,7 +183,7 @@
@@ -132,16 +69,6 @@
    // we do not grant this entry additional bindings if we come back to it.
 --- chromium-62.0.3192.0/content/browser/frame_host/navigator_impl.cc.gcc7	2017-08-22 21:04:43.000000000 +0200
 +++ chromium-62.0.3192.0/content/browser/frame_host/navigator_impl.cc	2017-09-09 02:05:15.758922091 +0200
-@@ -404,7 +404,9 @@
- 
-     // Make sure no code called via RFHM::Navigate clears the pending entry.
-     if (is_pending_entry)
-+    {
-       CHECK_EQ(controller_->GetPendingEntry(), &entry);
-+    }
- 
-     // For security, we should never send non-Web-UI URLs to a Web UI renderer.
-     // Double check that here.
 @@ -470,7 +472,9 @@
  
    // Make sure no code called via RFH::Navigate clears the pending entry.
@@ -189,18 +116,6 @@
    }
  
    scoped_refptr<VideoFrame> Decode(uint8_t* data, int len) final {
---- chromium-62.0.3192.0/chrome/browser/extensions/extension_service.cc.gcc7	2017-08-22 21:04:39.000000000 +0200
-+++ chromium-62.0.3192.0/chrome/browser/extensions/extension_service.cc	2017-09-09 06:33:31.998535383 +0200
-@@ -1344,7 +1344,9 @@
-     // Other than for unpacked extensions, CrxInstaller should have guaranteed
-     // that we aren't downgrading.
-     if (!Manifest::IsUnpackedLocation(extension->location()))
-+    {
-       CHECK_GE(version_compare_result, 0);
-+    }
-   }
- 
-   // If the extension was disabled for a reload, we will enable it.
 --- chromium-62.0.3192.0/third_party/WebKit/Source/core/frame/LocalFrameView.cpp.gcc7	2017-08-22 21:05:00.000000000 +0200
 +++ chromium-62.0.3192.0/third_party/WebKit/Source/core/frame/LocalFrameView.cpp	2017-09-09 10:40:20.353155618 +0200
 @@ -3856,7 +3856,9 @@
