@@ -34,6 +34,6 @@ make_host() {
 }
 
 makeinstall_host() {
-#  strip ninja
+  strip ninja
   cp ninja $TOOLCHAIN/bin
 }
