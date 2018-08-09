@@ -2,7 +2,7 @@ PKG_NAME="htop"
 PKG_VERSION="d74b6dc"
 PKG_SITE="https://github.com/hishamhm/htop"
 PKG_URL="https://github.com/hishamhm/htop/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain ncurses libpciaccess"
+#PKG_DEPENDS_TARGET="toolchain ncurses libpciaccess"
 PKG_SECTION="debug/tools"
 PKG_TOOLCHAIN="autotools"
 
