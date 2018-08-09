@@ -18,6 +18,7 @@
 
 PKG_NAME="libiconv"
 PKG_VERSION="1.15"
+PKG_VERSION="1.11.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://savannah.gnu.org/projects/libiconv/"
@@ -26,13 +27,10 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 PKG_LONGDESC="Libiconv converts from one character encoding to another through Unicode conversion."
+#PKG_TOOLCHAIN="autotools"
 
-#post_unpack() {
-#  sed -i '/preload/d' $PKG_BUILD/Makefile.in
-#}
+pre_configure_target() {
+  CFLAGS="$CFLAGS -DUSE_DOS -std=gnu89"
+}
 
-PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
-			      --build=$HOST_NAME \
-			      --prefix=/usr \
-			      --sysconfdir=/etc \
-			      --enable-extra-encodings"
+PKG_CONFIGURE_OPTS_TARGET="--disable-rpath --enable-relocatable"
