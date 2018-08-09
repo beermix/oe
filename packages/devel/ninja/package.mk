@@ -30,11 +30,16 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  #CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
-  $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
+  CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
+  # $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
+  # emacs -Q --batch -f batch-byte-compile misc/ninja-mode.el
 }
 
 makeinstall_host() {
+  $TOOLCHAIN/bin/python2 ./configure.py
+  ./ninja ninja_test
+  ./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
+
   strip ninja
   cp ninja $TOOLCHAIN/bin
 }
