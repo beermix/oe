@@ -17,7 +17,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --disable-debug \
 			      --enable-cxx \
 			      --with-pic \
-			      --enable-atomicsupport"
+			      --disable-atomicsupport"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 			   

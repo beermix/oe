@@ -4,7 +4,7 @@ PKG_SITE="https://www.x.org/releases/individual/app/?C=M;O=D" # https://cgit.fre
 PKG_URL="https://www.x.org/releases/individual/app/igt-gpu-tools-$PKG_VERSION.tar.xz"
 #PKG_URL="https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/snapshot/$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="igt-gpu-tools-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain kmod systemd procps-ng libpciaccess mesa libdrm libpciaccess cairo swig:host libunwind"
+PKG_DEPENDS_TARGET="toolchain peg:host kmod systemd procps-ng libpciaccess mesa libdrm libpciaccess cairo swig:host libunwind"
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 #PKG_TOOLCHAIN="meson"
