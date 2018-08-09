@@ -9,9 +9,9 @@ index 4e9ff440d1..49c1d22870
    ar = "ar"
    ld = cxx
 +  
-+  extra_cflags = "-mmmx -msse -msse2 -mfpmath=sse -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-+  extra_cxxflags = "-mmmx -msse -msse2 -mfpmath=sse -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-+  extra_cppflags = "-DNO_UNWIND_TABLES"
++  extra_cflags = "-fdiagnostics-color=always"
++  extra_cxxflags = "-fdiagnostics-color=always"
++
 +
  
    # Output linker map files for binary size analysis.
