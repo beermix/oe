@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)  --enable-fat
 
 PKG_NAME="gmp"
 PKG_VERSION="6.1.2"
@@ -19,6 +19,6 @@ pre_configure_host() {
   export CPPFLAGS="$CPPFLAGS -fexceptions"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-fat --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
