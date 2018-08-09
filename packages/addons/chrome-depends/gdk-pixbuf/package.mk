@@ -9,7 +9,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/${PKG_VERSION:0:4}/gdk-pixbuf-$PKG_VERSION.tar.xz"
-#PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper shared-mime-info tiff"
+PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper shared-mime-info tiff"
 PKG_LONGDESC="GdkPixbuf is a a GNOME library for image loading and manipulation."
 
 PKG_MESON_OPTS_TARGET="-Ddocs=false \
