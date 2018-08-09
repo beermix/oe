@@ -35,7 +35,7 @@ post_patch() {
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
-  # set correct widevine CCACHE_SLOPPINESS=time_macros,file_macro,include_file_mtime,include_file_ctime
+  # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
@@ -45,6 +45,7 @@ make_host() {
 }
 
 make_target() {
+  export CCACHE_SLOPPINESS=time_macros
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -75,11 +76,15 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_system_freetype=true'
+    'use_dbus=true'
+    'use_system_zlib=true'
+    'use_system_libdrm=true'
     'use_system_harfbuzz=true'
-    'exclude_unwind_tables=true'
-    'use_libpci=true'
+    'use_system_freetype=true'
+    'use_system_libjpeg=false'
+    'use_system_libpng=false'
     'linux_link_libudev=true'
+    'use_libpci=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -93,46 +98,6 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py     'icu_use_data_file=true'
-# Keys are the names in the above script; values are the dependencies in Arch
-#    'use_system_harfbuzz=true'
-#    'use_system_freetype=true'
-#    'exclude_unwind_tables=true'
-readonly -A _system_libs=(
-  #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
-  #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
-  #[icu]=icu
-  [libdrm]=
-  [libjpeg]=libjpeg
-  [libpng]=libpng            # https://crbug.com/752403#c10
-  #[libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
-  [yasm]=
-  #[zlib]=minizip
-)
-readonly _unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-  freetype
-  harfbuzz-ng
-)
-depends+=(${_system_libs[@]} freetype2 harfbuzz)
-
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find -type f -path "*third_party/$_lib/*" \
-      \! -path "*third_party/$_lib/chromium/*" \
-      \! -path "*third_party/$_lib/google/*" \
-      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
-      \! -path './third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
-
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
