@@ -39,7 +39,6 @@ post_makeinstall_host() {
  ln -sf /usr/bin/make $TOOLCHAIN/bin/gmake
  ln -sf /usr/bin/make $TOOLCHAIN/bin/make
 
-
 #  mkdir -p $TOOLCHAIN/share/aclocal
 
 #  cp -r $PKG_DIR/src/bin/* $TOOLCHAIN/bin/
