@@ -24,5 +24,5 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --with-xz \
                          --without-included-gettext \
                          --disable-native-java \
-                         --disable-csharp \
+                         --enable-csharp \
                          --without-emacs"
