@@ -4,13 +4,12 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="open-vm-tools"
-PKG_VERSION="10.3.0-8931395"
-#PKG_SHA256="b3d0b5fd272a8dc35cab1ddd732f9d436f72682925212a6cdeccdab283e2f5ec"
+PKG_VERSION="stable-10.3.0"
+PKG_SHA256="b3d0b5fd272a8dc35cab1ddd732f9d436f72682925212a6cdeccdab283e2f5ec"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vmware/open-vm-tools/releases"
 PKG_URL="https://github.com/vmware/open-vm-tools/archive/${PKG_VERSION}.tar.gz"
-PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.3.0/open-vm-tools-10.3.0-8931395.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet libtirpc"
 PKG_DEPENDS_TARGET="toolchain fuse glib libdnet"
 PKG_SECTION="virtualization"
@@ -27,21 +26,20 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --without-x \
                            --without-xerces \
                            --without-icu \
-                           --without-procps \
+                           --without-xmlsecurity \
                            --without-kernel-modules \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
                            --with-sysroot=$SYSROOT_PREFIX"
 
-#post_unpack() {
-#  mv $PKG_BUILD/$PKG_NAME/* $PKG_BUILD/
-#
-#  sed -i -e 's|.*common-agent/etc/config/Makefile.*||' $PKG_BUILD/configure.ac
-#  mkdir -p $PKG_BUILD/common-agent/etc/config
-#}
+post_unpack() {
+  mv $PKG_BUILD/$PKG_NAME/* $PKG_BUILD/
+
+  sed -i -e 's|.*common-agent/etc/config/Makefile.*||' $PKG_BUILD/configure.ac
+  mkdir -p $PKG_BUILD/common-agent/etc/config
+}
 
 pre_configure_target() {
   export LIBS="-ldnet -ltirpc"
-  #export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/tirpc"
 }
 
 post_makeinstall_target() {
