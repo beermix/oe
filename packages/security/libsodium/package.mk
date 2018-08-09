@@ -1,5 +1,5 @@
 PKG_NAME="libsodium"
-PKG_VERSION="06ee95c"
+PKG_VERSION="1.0.16"
 PKG_SITE="https://github.com/jedisct1/libsodium/tree/stable"
 PKG_URL="https://github.com/jedisct1/libsodium/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl"
