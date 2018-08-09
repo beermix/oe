@@ -8,7 +8,6 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-#PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -33,20 +32,20 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-kernel=4.17 \
                            --without-cvs \
                            --without-gd \
+                           --enable-obsolete-rpc \
+                           --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-debug \
-                           --disable-werror \
+                           --without-selinux \
                            --disable-timezone-tools"
 
-# busybox:init needs it --disable-experimental-malloc \
-# testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
-PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
-
-GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
+
+NSS_CONF_DIR="$PKG_BUILD/nss"
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -95,16 +94,13 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64"
+  export CFLAGS="-O2 -march=$TARGET_CPU -g3 -m64"
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
   cat >config.cache <<EOF
-libc_cv_forced_unwind=yes
-libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-ac_cv_header_cpuid_h=yess
 libc_cv_slibdir=/usr/lib
 EOF
 

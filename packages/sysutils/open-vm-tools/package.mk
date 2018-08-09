@@ -22,10 +22,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --without-gtk2 \
                            --without-gtkmm \
                            --without-ssl \
-                           --with-x \
+                           --without-x \
                            --without-xerces \
-                           --with-icu \
-                           --without-kernel-modules \
+                           --without-icu \
+                           --with-linuxdir=$(kernel_path) \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
                            --with-sysroot=$SYSROOT_PREFIX"
 
@@ -36,9 +36,9 @@ post_unpack() {
   mkdir -p $PKG_BUILD/common-agent/etc/config
 }
 
-pre_configure_target() {
-  export LDFLAGS="-ldnet -ltirpc -lpthread"
-}
+#pre_configure_target() {
+#  LIBS="$LIBS -ldnet -ltirpc"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/sbin

@@ -76,6 +76,17 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'use_dbus=true'
+    'use_gio=true'
+    'use_libpci=true'
+    'use_udev=true'
+    'use_system_zlib=true'
+    'use_system_harfbuzz=true'
+    'use_system_freetype=true'
+    'use_system_libjpeg=true'
+    'linux_link_libudev=true'
+    'exclude_unwind_tables=true'
+    'use_libpci=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -93,7 +104,7 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   [libpng]=libpng            # https://crbug.com/752403#c10
