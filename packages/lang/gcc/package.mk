@@ -26,6 +26,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
+                           --enable-lto \
+                           --enable-gold \
+                           --enable-ld=default \
                            --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --enable-nls \
