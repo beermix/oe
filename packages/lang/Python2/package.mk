@@ -32,13 +32,13 @@ PKG_LONGDESC="Python2 is an interpreted object-oriented programming language, an
 
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +lto-parallel"
-LTO_SUPPORT="yes"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
+                         --with-computed-gotos \
                          --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
