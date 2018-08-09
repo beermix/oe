@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libxml2"
-PKG_VERSION="2.9.7"
+PKG_VERSION="2.9.8"
 #PKG_SHA256="ffb911191e509b966deb55de705387f14156e1a56b21824357cdf0053233633c"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
