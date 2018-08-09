@@ -77,6 +77,8 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'use_system_freetype=true'
+    'use_system_harfbuzz=true'
     'use_libpci=true'
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
@@ -96,20 +98,16 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py     'icu_use_data_file=true'
 # Keys are the names in the above script; values are the dependencies in Arch
 #    'use_system_harfbuzz=true'
-#    #z'use_system_freetype=true'
+#    'use_system_freetype=true'
 readonly -A _system_libs=(
-  #[ffmpeg]=ffmpeg            # https://crbug.com/731766
-  #[flac]=flac
-  [fontconfig]=fontconfig    # Enable for M65
-  [freetype]=freetype2       # Using 'use_system_freetype=true' until M65
-  [harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
+  #[fontconfig]=fontconfig    # Enable for M65
+  #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
+  #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
   #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libvpx]=libvpx
-  #[libwebp]=libwebp
-  #[libxml]=libxml2           # https://crbug.com/736026
+  [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   #[opus]=opus
   #[re2]=re2
