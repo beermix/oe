@@ -34,18 +34,3 @@ index 8f32ac3be64e..f01af63619b5 100644
  
  #include "url/gurl.h"
  #include "url/url_util.h"
-diff --git a/services/network/public/cpp/cors/cors_legacy.h b/services/network/public/cpp/cors/cors_legacy.h
-index d2cdf026ca3a..dc9295a92c47 100644
---- a/services/network/public/cpp/cors/cors_legacy.h
-+++ b/services/network/public/cpp/cors/cors_legacy.h
-@@ -5,6 +5,7 @@
- #ifndef SERVICES_NETWORK_PUBLIC_CPP_CORS_CORS_LEGACY_H_
- #define SERVICES_NETWORK_PUBLIC_CPP_CORS_CORS_LEGACY_H_
- 
-+#include <string>
- #include <vector>
- 
- #include "base/component_export.h"
--- 
-2.17.1
-
