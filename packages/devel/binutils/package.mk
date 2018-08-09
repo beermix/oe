@@ -3,11 +3,10 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="binutils"
-PKG_VERSION="ea2a7e6"
 PKG_VERSION="2.31"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_30-branch"
+PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_31-branch"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
