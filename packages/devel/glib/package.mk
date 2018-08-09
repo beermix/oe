@@ -32,6 +32,10 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dgtk_doc=false \
 			  -Diconv=gnu"
 
+pre_configure_target() {
+  LDFLAGS="$LDFLAGS -lz"
+}
+
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
     cp g*-2.0.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
