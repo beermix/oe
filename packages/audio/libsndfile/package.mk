@@ -1,20 +1,5 @@
-################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libsndfile"
 PKG_VERSION="1.0.28"
@@ -30,12 +15,16 @@ PKG_LONGDESC="libsndfile is a C library for reading and writing sound files such
 PKG_TOOLCHAIN="configure"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--disable-sqlite \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
+                           --disable-silent-rules \
+                           --disable-sqlite \
                            --enable-alsa \
                            --disable-external-libs \
                            --disable-experimental \
                            --disable-test-coverage \
-                           --enable-largefile"
+                           --enable-largefile \
+                           --with-gnu-ld \
+                           --with-pic"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

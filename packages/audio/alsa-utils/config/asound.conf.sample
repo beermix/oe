@@ -1,9 +1,0 @@
-pcm.!default {
-    type plug
-    slave.pcm {
-        @func getenv
-        vars [ ALSAPCM ]
-        # Device name can be found using the command 'aplay -L'
-        default "CARD=MID"
-    }
-}
