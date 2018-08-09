@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libgpg-error"
-PKG_VERSION="1.31"
-PKG_SHA256="40d0a823c9329478063903192a1f82496083b277265904878f4bc09e0db7a4ef"
+PKG_VERSION="1.32"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://www.gnupg.org"
