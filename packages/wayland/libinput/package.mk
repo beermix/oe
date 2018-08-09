@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libinput"
-PKG_VERSION="1.11.0"
+PKG_VERSION="1.11.3"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
