@@ -1,5 +1,5 @@
 PKG_NAME="openjpeg"
-PKG_VERSION="2c7eb4f"
+PKG_VERSION="d2205ba"
 PKG_URL="https://github.com/uclouvain/openjpeg/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib libxml2 libpng libjpeg-turbo tiff"
 PKG_SECTION="graphics"

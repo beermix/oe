@@ -31,7 +31,7 @@ PKG_ADDON_PROVIDES="executable"
 post_patch() {
   cd $(get_build_dir chromium)
 
-  # Use Python 2     'enable_remoting=false'
+  # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine CCACHE_SLOPPINESS=time_macros,file_macro,include_file_mtime,include_file_ctime
