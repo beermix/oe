@@ -15,6 +15,6 @@ PKG_LONGDESC="Protocol definitions and daemon for D-Bus at-spi"
 PKG_MESON_OPTS_TARGET="-Denable_docs=false \
                        -Denable-introspection=no"
 
-pre_configure_target() {
-  LDFLAGS="$LDFLAGS -lXext"
-}
+#pre_configure_target() {
+#  LDFLAGS="$LDFLAGS -lXext"
+#}

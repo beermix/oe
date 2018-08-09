@@ -13,14 +13,8 @@ PKG_DEPENDS_TARGET="toolchain cairo freetype glib icu"
 PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-coretext=no \
-			      --with-uniscribe=no \
-			      --with-graphite2=no \
-			      --with-cairo=yes \
-			      --with-icu=yes \
-			      --with-freetype=yes \
-			      --with-glib=yes \
-			      --disable-gtk-doc \
+PKG_CONFIGURE_OPTS_TARGET="--with-icu \
+                           --disable-gtk-doc \
                            --disable-gtk-doc-html \
                            --disable-gtk-doc-pdf"
 

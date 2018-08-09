@@ -1,7 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2018-present Team LibreELEC
-#      Copyright (C) 2017 Escalade
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,11 +16,19 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="at-spi2-atk"
-PKG_VERSION="2.26.2"
+PKG_NAME="libev"
+PKG_VERSION="4.24"
+PKG_SHA256="973593d3479abdf657674a55afe5f78624b0e440614e2b8cb3a07f16d4d7f821"
 PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.gnome.org/"
-PKG_URL="https://ftp.gnome.org/pub/gnome/sources/at-spi2-atk/${PKG_VERSION:0:4}/at-spi2-atk-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain at-spi2-core atk libX11 libxml2"
-PKG_SHORTDESC="A GTK+ module that bridges ATK to D-Bus at-spi"
+PKG_LICENSE="GPL"
+PKG_SITE="http://software.schmorp.de/pkg/libev.html"
+PKG_URL="http://dist.schmorp.de/libev/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="multimedia"
+PKG_SHORTDESC="libev: a full-featured and high-performance event loop"
+PKG_LONGDESC="A full-featured and high-performance event loop that is loosely modelled after libevent, but without its limitations and bugs."
+PKG_BUILD_FLAGS="+pic:host +pic"
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
