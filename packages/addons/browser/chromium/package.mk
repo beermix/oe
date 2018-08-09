@@ -22,6 +22,7 @@ PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
+PKG_BUILD_FLAGS="-lto -hardening"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -34,7 +35,7 @@ post_patch() {
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
-  # set correct widevine CCACHE_SLOPPINESS=time_macros,file_macro,include_file_mtime,include_file_ctime
+  # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
@@ -76,6 +77,9 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'use_dbus=true'
+    'use_gio=true'
+    'use_libpci=true'
+    'use_udev=true'
     'use_system_zlib=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
