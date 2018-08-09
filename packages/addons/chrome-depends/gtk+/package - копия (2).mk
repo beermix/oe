@@ -32,7 +32,10 @@ PKG_SHORTDESC="gtk+: The Gimp ToolKit (GTK)"
 PKG_LONGDESC="This is GTK+. GTK+, which stands for the Gimp ToolKit, is a library for creating graphical user interfaces for the X Window System. It is designed to be small, efficient, and flexible. GTK+ is written in C with a very object-oriented approach."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="DB2HTML=false \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GTK_UPDATE_ICON_CACHE=$TOOLCHAIN/bin/gtk-update-icon-cache \
+                           ac_cv_path_GDK_PIXBUF_CSOURCE=$TOOLCHAIN/bin/gdk-pixbuf-csource \
+                           DB2HTML=false \
+                           --disable-glibtest \
                            --with-x \
                            --x-includes=$SYSROOT/usr/include/X11 \
                            --x-libraries=$SYSROOT/usr/lib \
@@ -48,7 +51,6 @@ PKG_CONFIGURE_OPTS_TARGET="DB2HTML=false \
                            --disable-gtk-doc-html \
                            --with-xinput \
                            --enable-silent-rules"
-
 make_target() {
   make SRC_SUBDIRS="gdk gtk modules"
   $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
