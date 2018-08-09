@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-input-mouse"
-PKG_VERSION="1.9.2"
+PKG_VERSION="1.9.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
