@@ -71,10 +71,10 @@ post_patch() {
     touch $PKG_BUILD/Python/graminit.c
 }
 
-pre_configure_host() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-g0|g"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-g0|g"`
-}
+#pre_configure_host() {
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-g0|g"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-g0|g"`
+#}
 
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
@@ -98,8 +98,8 @@ post_makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||g"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||g"`
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||g"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||g"`
 }
 
 make_target() {
