@@ -1,24 +1,11 @@
-################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mariadb"
 PKG_VERSION="10.1.35"
-PKG_REV="1"
+#PKG_VERSION="10.2.16"
+#PKG_VERSION="10.3.8"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
@@ -29,7 +16,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
 PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement for the MySQL relational database management system."
-#PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_MARIADB_SERVER="no"
 
@@ -101,7 +88,7 @@ PKG_MARIADB_SERVER="no"
   MARIADB_IMPORT_EXECUTABLES="-DIMPORT_EXECUTABLES=$PKG_BUILD/.$HOST_NAME/import_executables.cmake"
 
 configure_host() {
-  cmake -G Ninja -DCMAKE_PREFIX_PATH=$TOOLCHAIN/ \
+  cmake -DCMAKE_PREFIX_PATH=$TOOLCHAIN/ \
         -DCMAKE_BUILD_TYPE=Release \
         -DFEATURE_SET=xsmall \
         -DWITHOUT_SERVER=OFF \
@@ -129,11 +116,11 @@ makeinstall_host() {
 }
 
 configure_target() {
-  cmake -G Ninja -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DDISABLE_SHARED=ON \
         -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DWITH_MYSQLD_LDFLAGS="-pie ${TARGET_LDFLAGS}" \
+        -DWITH_MYSQLD_LDFLAGS="-pie ${TARGET_LDFLAGS},-z,now" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
@@ -156,12 +143,12 @@ configure_target() {
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
         -DWITH_READLINE=OFF \
-        -DWITH_PCRE=bundled \
-        -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=no \
+        -DWITH_ZLIB=system \
+        -DWITH_SSL=system \
+        -DWITH_PCRE=bundled \
         -DWITH_LIBWRAP=OFF \
         -DSECURITY_HARDENED=1 \
-        -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
         ..
 }
@@ -171,7 +158,7 @@ post_makeinstall_target() {
   sed -i "s|pkglibdir=.*|pkglibdir=\'$SYSROOT_PREFIX/usr/lib/mysql\'|" scripts/mysql_config
   cp scripts/mysql_config $SYSROOT_PREFIX/usr/bin
   ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $TOOLCHAIN/bin/mysql_config
- 
+
   rm -rf $INSTALL/usr/share/mysql/support-files
   rm -rf $INSTALL/usr/share/mysql/test
   rm -rf $INSTALL/usr/share/mysql/bench
