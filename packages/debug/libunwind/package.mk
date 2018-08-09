@@ -29,8 +29,6 @@ PKG_LONGDESC="library to determine the call-chain of a program"
 PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			   --disable-shared"
 
 makeinstall_target() {
   make DESTDIR=$SYSROOT_PREFIX install
