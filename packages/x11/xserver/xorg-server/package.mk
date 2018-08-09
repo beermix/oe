@@ -9,7 +9,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://www.x.org/archive/individual/xserver/?C=M;O=D"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper nettle libgcrypt"
+PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper"
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
@@ -100,6 +100,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-devel-docs \
                            --with-int10=x86emu \
                            --with-gnu-ld \
+                           --with-sha1=libcrypto \
                            --without-systemd-daemon \
                            --with-os-vendor=LibreELEC.tv \
                            --with-module-dir=$XORG_PATH_MODULES \
