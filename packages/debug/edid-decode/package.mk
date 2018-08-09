@@ -30,8 +30,8 @@ PKG_SHORTDESC="Decode EDID data in human-readable format"
 PKG_LONGDESC="Decode EDID data in human-readable format"
 
 make_target() {
-  echo "$CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c"
-  $CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c
+  echo "$CC $CFLAGS -Wall $LDFLAGS -lm -lm -ldl -lz -lpthread -o edid-decode edid-decode.c"
+  $CC $CFLAGS -Wall $LDFLAGS -lm -lm -ldl -lz -lpthread -o edid-decode edid-decode.c
 }
 
 makeinstall_target() {
