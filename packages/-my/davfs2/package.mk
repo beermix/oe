@@ -17,6 +17,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --datarootdir=/storage/.config"
 
 post_makeinstall_target() {
- # rm -rf $INSTALL/sbin/
+  rm -rf $INSTALL/sbin/
   rm -rf $INSTALL/storage/
 }
