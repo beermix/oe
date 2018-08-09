@@ -10,22 +10,35 @@ PKG_LICENSE="LGPL"
 PKG_SITE="https://ftp.acc.umu.se/pub/gnome/sources/gtk+/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gtk+/${PKG_VERSION:0:4}/gtk+-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="gtk+-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo gdk-pixbuf glib libX11 libXi libXrandr libepoxy pango"
+PKG_DEPENDS_TARGET="toolchain glib:host at-spi2-atk atk cairo gdk-pixbuf glib libX11 libXi libXrandr libepoxy pango"
 PKG_LONGDESC="The Gimp ToolKit (GTK) is a library for creating graphical user interfaces for the X Window System."
+PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
-                           --disable-debug \
-                           --enable-explicit-deps=no \
-                           --disable-gtk-doc \
-                           --disable-gtk-doc-html \
-                           --disable-man \
+PKG_CONFIGURE_OPTS_TARGET="--with-x \
+                           --x-includes=$SYSROOT/usr/include/X11 \
+                           --x-libraries=$SYSROOT/usr/lib \
+                           --with-gdktarget=x11 \
                            --enable-modules \
+                           --enable-explicit-deps=no \
+                           --disable-debug \
+                           --enable-shm \
+                           --disable-cups \
+                           --disable-papi \
                            --enable-xkb \
-                           --disable-schemas-compile \
-                           --enable-x11-backend \
-                           --disable-broadway-backend \
-                           --disable-wayland-backend"
+                           --disable-xinerama \
+                           --disable-gtk-doc-html \
+                           --with-xinput \
+                           --enable-silent-rules"
 
-pre_configure_target() {
-  LIBS="$LIBS -lXcursor"
+#pre_configure_target() {
+#  LIBS="$LIBS -lXcursor"
+#}
+
+make_target() {
+  make SRC_SUBDIRS="gdk gtk modules"
+  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
+}
+
+makeinstall_target() {
+  make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules"
 }
