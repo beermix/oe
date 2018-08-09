@@ -3,7 +3,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="atk"
-PKG_VERSION="2.29.2"
+PKG_VERSION="2.28.1"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

@@ -23,9 +23,9 @@ PKG_CONFIGURE_OPTS_TARGET="--with-x \
                            --disable-debug \
                            --enable-shm \
                            --disable-cups \
-                           --disable-papi \
+                           --disable-schemas-compile \
+                           --enable-x11-backend \
                            --enable-xkb \
-                           --disable-xinerama \
                            --disable-gtk-doc-html \
                            --with-xinput \
                            --enable-silent-rules"

@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="DB2HTML=false \
                            --enable-xkb \
                            --disable-xinerama \
                            --disable-gtk-doc-html \
-                           --with-xinput \
+                           --with-xinput=yes \
                            --enable-silent-rules"
 
 make_target() {

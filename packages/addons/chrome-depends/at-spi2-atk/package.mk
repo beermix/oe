@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="at-spi2-atk"
-PKG_VERSION="2.29.1"
+PKG_VERSION="2.26.2"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="LGPL-2.1"
