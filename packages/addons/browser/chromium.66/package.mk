@@ -9,11 +9,12 @@
 #############################################################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="64.0.3282.186"
-PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="205"
+PKG_VERSION="66.0.3359.181"
+PKG_SHA256="37e6673741b365a25a837217b08f77b24b4f5fc4ad88c8581be6a5dae9a9e919"
+PKG_REV="340"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
+PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
@@ -23,11 +24,11 @@ PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
+GOLD_SUPPORT="yes"
 
 post_patch() {
   cd $(get_build_dir chromium)
@@ -46,6 +47,7 @@ make_host() {
 
 make_target() {
   export CCACHE_SLOPPINESS=time_macros
+  #export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -68,7 +70,6 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
@@ -76,18 +77,8 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_dbus=true'
-    'use_gio=true'
-    'use_libpci=true'
-    'use_udev=true'
-    'use_system_zlib=true'
-    'use_system_harfbuzz=true'
-    'use_system_freetype=true'
-    'linux_link_libudev=true'
-    'enable_remoting=false'
-    'exclude_unwind_tables=true'
-    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
+    'use_dbus=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
@@ -101,35 +92,38 @@ make_target() {
   )
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch     'use_system_libjpeg=true'     'use_gio=true'
-readonly -A _system_libs=(
-  [icu]=icu
+# Keys are the names in the above script; values are the dependencies in Arch
+declare -gA _system_libs=(
+  #[ffmpeg]=ffmpeg # https://crbug.com/731766
+  #[flac]=flac
+  #[fontconfig]=fontconfig
+  #[freetype]=freetype2
+  #[harfbuzz-ng]=harfbuzz
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  [libpng]=libpng            # https://crbug.com/752403#c10
-  [libxml]=libxml2           # https://crbug.com/736026
+  #[libpng]=libpng # https://crbug.com/752403#c10
+  #[libvpx]=libvpx
+  #[libwebp]=libwebp
+  #[libxml]=libxml2 # https://crbug.com/736026
   [libxslt]=libxslt
   [yasm]=
-  #[zlib]=minizip
 )
-readonly _unwanted_bundled_libs=(
+_unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
-  freetype
-  harfbuzz-ng
 )
-depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
+  #       \! -path './base/third_party/icu/*' \
+  #      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
