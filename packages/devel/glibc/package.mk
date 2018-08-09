@@ -31,7 +31,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.17 \
-                           --disable-experimental-malloc \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
@@ -41,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-werror \
                            --disable-timezone-tools"
 
-# busybox:init needs it
+# busybox:init needs it --disable-experimental-malloc \
 # testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
 PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
 
