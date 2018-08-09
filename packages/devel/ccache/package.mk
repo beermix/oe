@@ -18,7 +18,7 @@ export CXX=$LOCAL_CXX
 
 export CFLAGS="-march=haswell -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2"
 export CXXFLAGS="-march=haswell -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2"
-export LDFLAGS="-Wl,--as-needed -s"
+LDFLAGS="-Wl,-O1,--as-needed,-z,relro,-z,now -s"
 
 #PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib=no --disable-silent-rules"
 
