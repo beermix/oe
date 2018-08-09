@@ -1,5 +1,5 @@
 PKG_NAME="bitcoin"
-PKG_VERSION="0.16.0"
+PKG_VERSION="0.16.2"
 PKG_SITE="https://bitcoin.org/bin/"
 PKG_URL="https://bitcoin.org/bin/bitcoin-core-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 #PKG_SOURCE_DIR="${PKG_NAME}-0.15.0"
