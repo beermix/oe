@@ -91,7 +91,7 @@ configure_target() {
     # optimize for size
     CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
     CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-    CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/tirpc"
+    # CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/tirpc"
 
     LDFLAGS="$LDFLAGS -fwhole-program"
 
@@ -109,7 +109,7 @@ configure_init() {
     # optimize for size
     CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
     CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-    CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/tirpc"
+    # CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/tirpc"
 
     LDFLAGS="$LDFLAGS -fwhole-program"
 

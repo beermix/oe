@@ -25,7 +25,7 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
-			  -Dinternal_pcre=false \
+			  -Dinternal_pcre=true \
 			  -Dxattr=false \
 			  -Dlibmount=false \
 			  -Dman=false \
