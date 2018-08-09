@@ -10,6 +10,10 @@ PKG_TOOLCHAIN="autotools"
 #  export LIBS="$LIBS -lm -ludev -lltdl -lpthread -ldl"
 #}
 
+pre_configure_target() {
+  export LIBS="$LIBS -lncursesw -ltinfo"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/htop \
 			      --datarootdir=/storage/.config/htop \
                            --enable-proc \
