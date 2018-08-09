@@ -17963,3 +17963,1315 @@ index 4e2197d6a8..c3406be1d6 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 75b342fea3bc84d11346dc940830abf7724f75ef
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Aug 3 00:02:01 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c3406be1d6..306e72735d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180802
++#define BFD_VERSION_DATE 20180803
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit bde7d74d9cced011afdc715d4b0f3f0b0297adef
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Aug 4 00:01:27 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 306e72735d..b6d0c66303 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180803
++#define BFD_VERSION_DATE 20180804
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 41e73f314477d89a9d2fe6047f2fde0f432f4569
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Aug 5 00:02:13 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b6d0c66303..03e75f0381 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180804
++#define BFD_VERSION_DATE 20180805
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 29d5746fed0c1e9a77371311e6555b0abd5b56b2
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Aug 6 00:01:20 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 03e75f0381..4010ee0922 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180805
++#define BFD_VERSION_DATE 20180806
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit dbf924a63a80f7044f491a09c0df6fe51a07e05e
+Author: Cary Coutant <ccoutant@gmail.com>
+Date:   Mon Aug 6 13:36:42 2018 -0700
+
+    Fix type checking errors.
+    
+    gold/
+            * target.h (Sized_target::record_gnu_property): Change first two
+            parameters to unsigned int.
+            * x86_64.cc (Target_x86_64::record_gnu_property): Likewise.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index 18af5e69b1..9ab8c785dc 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,9 @@
++2018-08-06  Cary Coutant  <ccoutant@gmail.com>
++
++	* target.h (Sized_target::record_gnu_property): Change first two
++	parameters to unsigned int.
++	* x86_64.cc (Target_x86_64::record_gnu_property): Likewise.
++
+ 2018-07-18  Nick Clifton  <nickc@redhat.com>
+ 
+ 	2.31.1 Release point.
+diff --git a/gold/target.h b/gold/target.h
+index bb312067b5..bbc87396f6 100644
+--- a/gold/target.h
++++ b/gold/target.h
+@@ -1147,7 +1147,8 @@ class Sized_target : public Target
+   // Record a target-specific program property in the .note.gnu.property
+   // section.
+   virtual void
+-  record_gnu_property(int, int, size_t, const unsigned char*, const Object*)
++  record_gnu_property(unsigned int, unsigned int, size_t,
++		      const unsigned char*, const Object*)
+   { }
+ 
+   // Merge the target-specific program properties from the current object.
+diff --git a/gold/x86_64.cc b/gold/x86_64.cc
+index 27f273d64b..9d742f6f13 100644
+--- a/gold/x86_64.cc
++++ b/gold/x86_64.cc
+@@ -1307,7 +1307,8 @@ class Target_x86_64 : public Sized_target<size, false>
+   // Record a target-specific program property in the .note.gnu.property
+   // section.
+   void
+-  record_gnu_property(int, int, size_t, const unsigned char*, const Object*);
++  record_gnu_property(unsigned int, unsigned int, size_t,
++		      const unsigned char*, const Object*);
+ 
+   // Merge the target-specific program properties from the current object.
+   void
+@@ -1579,7 +1580,7 @@ Target_x86_64<size>::rela_irelative_section(Layout* layout)
+ template<int size>
+ void
+ Target_x86_64<size>::record_gnu_property(
+-    int, int pr_type,
++    unsigned int, unsigned int pr_type,
+     size_t pr_datasz, const unsigned char* pr_data,
+     const Object* object)
+ {
+
+commit b7991db94c9dabb42a7a0fc5b0a0fb1997d85586
+Author: Cary Coutant <ccoutant@gmail.com>
+Date:   Mon Aug 6 14:08:48 2018 -0700
+
+    Add --warn-drop-version option; by default, do not warn when discarding version info.
+    
+    gold/
+            PR gold/23455
+            * options.h (General_options): Add --warn-drop-version option.
+            * symtab.cc (Symbol_table::set_dynsym_indexes): Check it.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index 9ab8c785dc..cf998d901a 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,9 @@
++2018-08-06  Cary Coutant  <ccoutant@gmail.com>
++
++	PR gold/23455
++	* options.h (General_options): Add --warn-drop-version option.
++	* symtab.cc (Symbol_table::set_dynsym_indexes): Check it.
++
+ 2018-08-06  Cary Coutant  <ccoutant@gmail.com>
+ 
+ 	* target.h (Sized_target::record_gnu_property): Change first two
+diff --git a/gold/options.h b/gold/options.h
+index 98d6be8009..11054981c9 100644
+--- a/gold/options.h
++++ b/gold/options.h
+@@ -1361,6 +1361,10 @@ class General_options
+   DEFINE_bool_ignore(warn_constructors, options::TWO_DASHES, '\0',
+ 		     N_("Ignored"), N_("Ignored"));
+ 
++  DEFINE_bool(warn_drop_version, options::TWO_DASHES, '\0', false,
++	      N_("Warn when discarding version information"),
++	      N_("Do not warn when discarding version information"));
++
+   DEFINE_bool(warn_execstack, options::TWO_DASHES, '\0', false,
+ 	      N_("Warn if the stack is executable"),
+ 	      N_("Do not warn if the stack is executable"));
+diff --git a/gold/symtab.cc b/gold/symtab.cc
+index aa7644156f..759e0d0222 100644
+--- a/gold/symtab.cc
++++ b/gold/symtab.cc
+@@ -2623,11 +2623,12 @@ Symbol_table::set_dynsym_indexes(unsigned int index,
+ 		versions->record_version(this, dynpool, sym);
+ 	      else
+ 		{
+-		  gold_warning(_("discarding version information for "
+-				 "%s@%s, defined in unused shared library %s "
+-				 "(linked with --as-needed)"),
+-			       sym->name(), sym->version(),
+-			       sym->object()->name().c_str());
++		  if (parameters->options().warn_drop_version())
++		    gold_warning(_("discarding version information for "
++				   "%s@%s, defined in unused shared library %s "
++				   "(linked with --as-needed)"),
++				 sym->name(), sym->version(),
++				 sym->object()->name().c_str());
+ 		  sym->clear_version();
+ 		}
+ 	    }
+
+commit 3499ff77ef0cc96a9091dfa6261df7b8390f3703
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Aug 7 00:01:55 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4010ee0922..d85b58ab61 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180806
++#define BFD_VERSION_DATE 20180807
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 1d8f56a971396b403f2f4f42f94d4d236252c479
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Tue Aug 7 08:17:11 2018 +0100
+
+    Updated Bulgarian translation for the ld/ directory
+
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index b110e6b818..a6cd3332ae 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,7 @@
++2018-08-07  Nick Clifton  <nickc@redhat.com>
++
++	* po/bg.po: Updated Bulgarian translation.
++
+ 2018-08-01  Roland McGrath  <mcgrathr@google.com>
+ 
+ 	* testsuite/ld-aarch64/ifunc-1-local.d: Adjust regexps to match
+diff --git a/ld/po/bg.po b/ld/po/bg.po
+index 5e8e818818..bf6ecd9b61 100644
+--- a/ld/po/bg.po
++++ b/ld/po/bg.po
+@@ -13,7 +13,7 @@ msgstr ""
+ "Project-Id-Version: ld 2.30.90\n"
+ "Report-Msgid-Bugs-To: bug-binutils@gnu.org\n"
+ "POT-Creation-Date: 2018-06-24 19:43+0100\n"
+-"PO-Revision-Date: 2018-06-28 22:58+0300\n"
++"PO-Revision-Date: 2018-07-26 20:34+0300\n"
+ "Last-Translator: Румен Петров <transl@roumenpetrov.info>\n"
+ "Language-Team: Bulgarian <dict@ludost.net>\n"
+ "Language: bg\n"
+@@ -33,7 +33,7 @@ msgstr "%X%P: cref_hash_lookup не успя: %E\n"
+ 
+ #: ldcref.c:186
+ msgid "%X%P: cref alloc failed: %E\n"
+-msgstr "%X%P: пропадна заделяне(на памет) за cref: %E\n"
++msgstr "%X%P: не успя заделянето на памет в cref: %E\n"
+ 
+ #: ldcref.c:371
+ #, c-format
+@@ -62,7 +62,7 @@ msgstr "Без имена\n"
+ 
+ #: ldcref.c:413 ldcref.c:565
+ msgid "%P: symbol `%pT' missing from main hash table\n"
+-msgstr "%P: име '%pT' липсва в главната хеш-таблица\n"
++msgstr "%P: в главния речник липсва името '%pT'\n"
+ 
+ #: ldcref.c:517 ldcref.c:628 ldmain.c:1211 ldmisc.c:335 pe-dll.c:715
+ #: pe-dll.c:1296 pe-dll.c:1417 pe-dll.c:1535 earm_wince_pe.c:1430
+@@ -87,7 +87,7 @@ msgstr "%X%P: %C: забранено е кръстосана отпратка о
+ 
+ #: ldctor.c:83
+ msgid "%X%P: different relocs used in set %s\n"
+-msgstr "%X%P: различни \"преместванията\" се използват в множеството %s\n"
++msgstr "%X%P: различни \"премествания\" се използват в набора %s\n"
+ 
+ #: ldctor.c:101
+ msgid "%X%P: different object file formats composing set %s\n"
+@@ -103,7 +103,7 @@ msgstr "%X%P: раздел %s не поддържа преместване %s з
+ 
+ #: ldctor.c:321
+ msgid "%X%P: unsupported size %d for set %s\n"
+-msgstr "%X%P: неподдържан размер %d за множеството %s\n"
++msgstr "%X%P: неподдържан размер %d за набор %s\n"
+ 
+ #: ldctor.c:344
+ msgid ""
+@@ -202,7 +202,7 @@ msgstr "%F%P:%pS не може да се върне обратно брояч н
+ 
+ #: ldexp.c:1167
+ msgid "%F%P:%s: hash creation failed\n"
+-msgstr "%F%P:%s: пропадна създаването на хеш\n"
++msgstr "%F%P:%s: не успя създаването на хеш\n"
+ 
+ #: ldexp.c:1519 ldexp.c:1545 ldexp.c:1605
+ msgid "%F%P:%pS: nonconstant expression for %s\n"
+@@ -210,7 +210,7 @@ msgstr "%F%P:%pS: не е константен изразът за %s\n"
+ 
+ #: ldexp.c:1631 ldlang.c:1234 ldlang.c:3187 ldlang.c:7174
+ msgid "%F%P: can not create hash table: %E\n"
+-msgstr "%F%P: не може да се създаде хеш-таблицата: %E\n"
++msgstr "%F%P: не може да се създаде речник: %E\n"
+ 
+ #: ldfile.c:132 eaarch64cloudabi.c:656 eaarch64cloudabib.c:656
+ #: eaarch64elf.c:656 eaarch64elf32.c:656 eaarch64elf32b.c:656
+@@ -286,12 +286,12 @@ msgstr "%F%P: не може да се създаде хеш-таблицата:
+ #: eshlelf_vxworks.c:370 ev850.c:387 ev850_rh850.c:387 exgateelf.c:341
+ #, c-format
+ msgid "attempt to open %s failed\n"
+-msgstr "опита да се отвори %s не успя\n"
++msgstr "опитът да се отвори %s не успя\n"
+ 
+ #: ldfile.c:134
+ #, c-format
+ msgid "attempt to open %s succeeded\n"
+-msgstr "опита да се отвори %s успя\n"
++msgstr "опитът да се отвори %s успя\n"
+ 
+ #: ldfile.c:140
+ msgid "%F%P: invalid BFD target `%s'\n"
+@@ -353,7 +353,7 @@ msgstr "%F%P:%pS: грешка: синоним за област памет по
+ 
+ #: ldlang.c:1372
+ msgid "%F%P:%pS: error: redefinition of memory region alias `%s'\n"
+-msgstr "%F%P:%pS: грешка: повторен определение на синоним за област памет '%s'\n"
++msgstr "%F%P:%pS: грешка: повторено определение на синоним за област памет '%s'\n"
+ 
+ #: ldlang.c:1379
+ msgid "%F%P:%pS: error: memory region `%s' for alias `%s' does not exist\n"
+@@ -361,7 +361,7 @@ msgstr "%F%P:%pS: грешка: област памет '%s' за синоним
+ 
+ #: ldlang.c:1438 ldlang.c:1477
+ msgid "%F%P: failed creating section `%s': %E\n"
+-msgstr "%F%P: пропадна създаването на раздел '%s': %E\n"
++msgstr "%F%P: не успя създаването на раздел '%s': %E\n"
+ 
+ #: ldlang.c:1998
+ msgid ""
+@@ -439,7 +439,7 @@ msgstr "%F%P: %pB: файлът не е разпознат: %E\n"
+ 
+ #: ldlang.c:2854
+ msgid "%F%P: %pB: member %pB in archive is not an object\n"
+-msgstr "%F%P: %pB: членът, на архива %pB, не е обект\n"
++msgstr "%F%P: %pB: членът на архива %pB не е обект\n"
+ 
+ #: ldlang.c:2869 ldlang.c:2883 eaarch64cloudabi.c:776 eaarch64cloudabib.c:776
+ #: eaarch64elf.c:776 eaarch64elf32.c:776 eaarch64elf32b.c:776
+@@ -518,7 +518,7 @@ msgstr "%F%P: %pB: грешка при добавяне на имената: %E\
+ 
+ #: ldlang.c:3157
+ msgid "%P: warning: could not find any targets that match endianness requirement\n"
+-msgstr "%P: предупреждение: не може да се открие резултат, който да отговаря на изискванията за подредба(на байтовете)\n"
++msgstr "%P: предупреждение: не може да се открие резултат, който да отговаря на изискванията за подредба на байтовете\n"
+ 
+ #: ldlang.c:3171
+ msgid "%F%P: target %s not found\n"
+@@ -546,7 +546,7 @@ msgstr "%X%P: не е определено задължителното име '
+ 
+ #: ldlang.c:3770
+ msgid "%F%P: %s not found for insert\n"
+-msgstr "%F%P: %s не е намерен(за добавяне)\n"
++msgstr "%F%P: %s не е намерен за добавяне\n"
+ 
+ #: ldlang.c:4011
+ msgid " load address 0x%V"
+@@ -598,7 +598,7 @@ msgstr "%X%P: %pB раздел '%s' не се побира в област '%s'\
+ 
+ #: ldlang.c:5050
+ msgid "%F%P:%pS: non constant or forward reference address expression for section %s\n"
+-msgstr "%F%P:%pS: адресния израз не е константен или отпратка за по нататък при раздел %s\n"
++msgstr "%F%P:%pS: адресният израз не е константен или е отпратка за по нататък при раздел %s\n"
+ 
+ #: ldlang.c:5075
+ msgid "%X%P: internal error on COFF shared library section %s\n"
+@@ -664,7 +664,7 @@ msgstr "%X%P: %s архитектурата на входен файл '%pB' е
+ 
+ #: ldlang.c:6332
+ msgid "%X%P: failed to merge target specific data of file %pB\n"
+-msgstr "%X%P: пропадна сливането, на специфични за резултата данни, от файл %pB\n"
++msgstr "%X%P: не успя сливането на целеви данни от файл %pB\n"
+ 
+ #: ldlang.c:6403
+ msgid "%F%P: could not define common symbol `%pT': %E\n"
+@@ -704,7 +704,7 @@ msgstr "%F%P:%pS: грешка: зададено е подравняване с
+ 
+ #: ldlang.c:7198
+ msgid "%F%P: %s: plugin reported error after all symbols read\n"
+-msgstr "%F%P: %s: приставката рапортува грешка, след прочитане на всички имена\n"
++msgstr "%F%P: %s: приставката отчете грешка след прочитане на всички имена\n"
+ 
+ #: ldlang.c:7602
+ msgid "%F%P: multiple STARTUP files\n"
+@@ -805,11 +805,11 @@ msgstr "%P: грешка при свързване, изтриване на из
+ 
+ #: ldmain.c:490
+ msgid "%F%P: %pB: final close failed: %E\n"
+-msgstr "%F%P: %pB: пропадна заключителното затваряне: %E\n"
++msgstr "%F%P: %pB: не успя заключителното затваряне: %E\n"
+ 
+ #: ldmain.c:517
+ msgid "%F%P: unable to open for source of copy `%s'\n"
+-msgstr "%F%P: не можа да се отвори източника на копието '%s'\n"
++msgstr "%F%P: не можа да се отвори източникът на копието '%s'\n"
+ 
+ #: ldmain.c:520
+ msgid "%F%P: unable to open for destination of copy `%s'\n"
+@@ -1017,7 +1017,7 @@ msgstr "%P: вътрешна грешка: прекратяване на %s:%d\n
+ 
+ #: ldmisc.c:703
+ msgid "%F%P: please report this bug\n"
+-msgstr "%F%P: моля, рапортувайте този проблем\n"
++msgstr "%F%P: моля, докладвайте този проблем\n"
+ 
+ #. Output for noisy == 2 is intended to follow the GNU standards.
+ #: ldver.c:37
+@@ -1048,7 +1048,7 @@ msgstr "  Поддържани подражавания:\n"
+ 
+ #: ldwrite.c:60 ldwrite.c:206 ldwrite.c:258 ldwrite.c:299
+ msgid "%F%P: bfd_new_link_order failed\n"
+-msgstr "%F%P: пропадна bfd_new_link_order\n"
++msgstr "%F%P: bfd_new_link_order не успя\n"
+ 
+ #: ldwrite.c:368
+ msgid "%F%P: cannot create split section name for %s\n"
+@@ -1056,7 +1056,7 @@ msgstr "%F%P: при разцепване на раздел, не можа да
+ 
+ #: ldwrite.c:380
+ msgid "%F%P: clone section failed: %E\n"
+-msgstr "%F%P: пропадна копирането на раздел: %E\n"
++msgstr "%F%P: не успя раздвояването на раздел: %E\n"
+ 
+ #: ldwrite.c:418
+ #, c-format
+@@ -1065,7 +1065,7 @@ msgstr "%8x други\n"
+ 
+ #: ldwrite.c:588
+ msgid "%F%P: final link failed: %E\n"
+-msgstr "%F%P: пропадна заключителното свързване: %E\n"
++msgstr "%F%P: не успя заключителното свързване: %E\n"
+ 
+ #: lexsup.c:102 lexsup.c:276
+ msgid "KEYWORD"
+@@ -1490,7 +1490,7 @@ msgstr ""
+ 
+ #: lexsup.c:350
+ msgid "Set default hash table size close to <NUMBER>"
+-msgstr "Установява размер по подразбиране на таблицат за хеш близък до <ЧИСЛО>"
++msgstr "Установява размер, по подразбиране, на речника близък до <ЧИСЛО>"
+ 
+ #: lexsup.c:353
+ msgid "Print option help"
+@@ -1776,15 +1776,15 @@ msgstr "Предупреждение, ако споделен обект съд
+ 
+ #: lexsup.c:518
+ msgid "Warn if an object has alternate ELF machine code"
+-msgstr "Предупреждение ако обекта е с друг ELF ELF код за машина"
++msgstr "Предупреждение, ако обекта е с друг ELF код за машина"
+ 
+ #: lexsup.c:522
+ msgid "Report unresolved symbols as warnings"
+-msgstr "Рапортуване като предупреждения, на несвързани имена"
++msgstr "Докладване на несвързани имена като предупреждения"
+ 
+ #: lexsup.c:525
+ msgid "Report unresolved symbols as errors"
+-msgstr "Рапортуване, като грешки, на несвързани имена"
++msgstr "Докладване на несвързани имена като грешки"
+ 
+ #: lexsup.c:527
+ msgid "Include all objects from following archives"
+@@ -2332,12 +2332,12 @@ msgstr "%X%P: не може да се създаде раздел .reloc: %E\n"
+ #: pe-dll.c:1100
+ #, c-format
+ msgid "%X%P: error: ordinal used twice: %d (%s vs %s)\n"
+-msgstr "%X%P: грешка, номера е използван два пъти: %d (%s с/у %s)\n"
++msgstr "%X%P: грешка, номерът е използван два пъти: %d (%s с/у %s)\n"
+ 
+ #: pe-dll.c:1136
+ #, c-format
+ msgid "%X%P: error: export ordinal too large: %d\n"
+-msgstr "%X%P: грешка: номера е твърде голям: %d\n"
++msgstr "%X%P: грешка: номерът е твърде голям: %d\n"
+ 
+ #: pe-dll.c:1452
+ #, c-format
+@@ -2346,7 +2346,7 @@ msgstr "Сведение: разрешаване на %s със свързван
+ 
+ #: pe-dll.c:1458
+ msgid "%P: warning: auto-importing has been activated without --enable-auto-import specified on the command line; this should work unless it involves constant data structures referencing symbols from auto-imported DLLs\n"
+-msgstr "%P: предупреждение: автоматично внасяне е задействано без да се зададе --enable-auto-import на командния ред.Това работи, освен ако не е свързано с константни структури за данни, които указват към имена от автоматично внасяни DLL-ли.\n"
++msgstr "%P: предупреждение: автоматично внасяне е задействано без да се зададе --enable-auto-import на командния ред. Това работи, освен ако не е свързано с константни структури за данни, които указват към имена от автоматично внасяни DLL-ли.\n"
+ 
+ #. Huh?  Shouldn't happen, but punt if it does.
+ #: pe-dll.c:1527
+@@ -2370,7 +2370,7 @@ msgstr "; липсва съдържание\n"
+ 
+ #: pe-dll.c:2780
+ msgid "%X%P: %C: variable '%pT' can't be auto-imported; please read the documentation for ld's --enable-auto-import for details\n"
+-msgstr "%X%P: %C: променливата '%pT' не може да се внесе автоматично. Да се прочете в документацията на свързващата програма за повече сведения относно --enable-auto-import.\n"
++msgstr "%X%P: %C: променливата '%pT' не може да се внесе автоматично. Да се провери в документацията на свързващата програма за повече сведения относно --enable-auto-import.\n"
+ 
+ #: pe-dll.c:2807
+ #, c-format
+@@ -2469,7 +2469,7 @@ msgstr "%F%P: приставката не можа да задели памет
+ 
+ #: plugin.c:1138
+ msgid "%F%P: %s: plugin reported error claiming file\n"
+-msgstr "%F%P: %s: приставката рапортува грешка, при твърденията за файла\n"
++msgstr "%F%P: %s: приставката отчете грешка при твърденията за файла\n"
+ 
+ #: plugin.c:1248
+ msgid "%P: %s: error in plugin cleanup: %d (ignored)\n"
+@@ -2547,7 +2547,7 @@ msgstr "%P: %s: грешка при почистване на приставка
+ #: eshlelf_nto.c:81 eshlelf_vxworks.c:81 ev850.c:81 ev850_rh850.c:81
+ #: exgateelf.c:81
+ msgid "%F%P: map sections to segments failed: %E\n"
+-msgstr "%F%P: пропадна свързването на раздел към част: %E\n"
++msgstr "%F%P: не успя свързването на раздел към част: %E\n"
+ 
+ #: eaarch64cloudabi.c:101 eaarch64cloudabib.c:101 eaarch64elf.c:101
+ #: eaarch64elf32.c:101 eaarch64elf32b.c:101 eaarch64elfb.c:101
+@@ -5051,31 +5051,31 @@ msgstr "%F%P: не се чете %s\n"
+ 
+ #: eaix5ppc.c:390 eaix5rs6.c:390 eaixppc.c:390 eaixrs6.c:390 eppcmacos.c:390
+ msgid "%P: warning: ignoring invalid -D number %s\n"
+-msgstr "%P: предупреждение: изоставяне на неправилно число за -D %s\n"
++msgstr "%P: предупреждение: пропускане на неправилно число за -D %s\n"
+ 
+ #: eaix5ppc.c:398 eaix5rs6.c:398 eaixppc.c:398 eaixrs6.c:398 eppcmacos.c:398
+ msgid "%P: warning: ignoring invalid -H number %s\n"
+-msgstr "%P: предупреждение: изоставяне на неправилно число за -H %s\n"
++msgstr "%P: предупреждение: пропускане на неправилно число за -H %s\n"
+ 
+ #: eaix5ppc.c:510 eaix5rs6.c:510 eaixppc.c:510 eaixrs6.c:510 eppcmacos.c:510
+ msgid "%P: warning: ignoring invalid -bmaxdata number %s\n"
+-msgstr "%P: предупреждение: изоставяне на неправилно число за -bmaxdata %s\n"
++msgstr "%P: предупреждение: пропускане на неправилно число за -bmaxdata %s\n"
+ 
+ #: eaix5ppc.c:519 eaix5rs6.c:519 eaixppc.c:519 eaixrs6.c:519 eppcmacos.c:519
+ msgid "%P: warning: ignoring invalid -bmaxstack number %s\n"
+-msgstr "%P: предупреждение: изоставяне на неправилно число за -bmaxstack %s\n"
++msgstr "%P: предупреждение: пропускане на неправилно число за -bmaxstack %s\n"
+ 
+ #: eaix5ppc.c:532 eaix5rs6.c:532 eaixppc.c:532 eaixrs6.c:532 eppcmacos.c:532
+ msgid "%P: warning: ignoring invalid module type %s\n"
+-msgstr "%P: предупреждение: изоставяне на неправиен тип на модул %s\n"
++msgstr "%P: предупреждение: пропускане на неправиен тип на модул %s\n"
+ 
+ #: eaix5ppc.c:562 eaix5rs6.c:562 eaixppc.c:562 eaixrs6.c:562 eppcmacos.c:562
+ msgid "%P: warning: ignoring invalid -pD number %s\n"
+-msgstr "%P: предупреждение: изоставяне на неправилно число за -pD %s\n"
++msgstr "%P: предупреждение: пропускане на неправилно число за -pD %s\n"
+ 
+ #: eaix5ppc.c:585 eaix5rs6.c:585 eaixppc.c:585 eaixrs6.c:585 eppcmacos.c:585
+ msgid "%P: warning: ignoring invalid -pT number %s\n"
+-msgstr "%P: предупреждение: изоставяне на неправилно число за -pT %s\n"
++msgstr "%P: предупреждение: пропускане на неправилно число за -pT %s\n"
+ 
+ #: eaix5ppc.c:714 eaix5rs6.c:714 eaixppc.c:714 eaixrs6.c:714 eppcmacos.c:714
+ msgid "%F%P: bfd_xcoff_link_record_set failed: %E\n"
+@@ -5252,7 +5252,7 @@ msgstr "  --[no-]leading-underscore          Изрично установява
+ #: emcorepe.c:392 eppcpe.c:392 eshpe.c:392
+ #, c-format
+ msgid "  --thumb-entry=<symbol>             Set the entry point to be Thumb <symbol>\n"
+-msgstr "  --thumb-entry=<знак>               Установяване на входяща точка да е отбелязания <знак>\n"
++msgstr "  --thumb-entry=<знак>               Установяване на входяща точка на отбелязания <знак>\n"
+ 
+ #: earm_wince_pe.c:393 earmpe.c:393 ei386pe.c:393 ei386pe_posix.c:393
+ #: emcorepe.c:393 eppcpe.c:393 eshpe.c:393
+@@ -5264,7 +5264,7 @@ msgstr "  --[no-]insert-timestamp            Използва истинска 
+ #: ei386pep.c:375 emcorepe.c:394 eppcpe.c:394 eshpe.c:394
+ #, c-format
+ msgid "                                     This makes binaries non-deterministic\n"
+-msgstr "                                     Това прави двоичните файлове неопределяеми\n"
++msgstr "                                     Това прави двоичните файлове несравними\n"
+ 
+ #: earm_wince_pe.c:396 earmpe.c:396 ei386pe.c:396 ei386pe_posix.c:396
+ #: ei386pep.c:377 emcorepe.c:396 eppcpe.c:396 eshpe.c:396
+@@ -5440,7 +5440,7 @@ msgid ""
+ "                                       greater than 2 gigabytes\n"
+ msgstr ""
+ "  --large-address-aware              Програмата поддържа виртуални адреси\n"
+-"                                       по-голями от 2 гигабайта\n"
++"                                       по-големи от 2 гигабайта\n"
+ 
+ #: earm_wince_pe.c:420 earmpe.c:420 ei386pe.c:420 ei386pe_posix.c:420
+ #: emcorepe.c:420 eppcpe.c:420 eshpe.c:420
+@@ -5450,7 +5450,7 @@ msgid ""
+ "                                       addresses greater than 2 gigabytes\n"
+ msgstr ""
+ "  --disable-large-address-aware      Програмата не поддържа виртуални\n"
+-"                                       адреси по-голями от 2 гигабайта\n"
++"                                       адреси по-големи от 2 гигабайта\n"
+ 
+ #: earm_wince_pe.c:421 earmpe.c:421 ei386pe.c:421 ei386pe_posix.c:421
+ #: ei386pep.c:399 emcorepe.c:421 eppcpe.c:421 eshpe.c:421
+@@ -5479,7 +5479,7 @@ msgid ""
+ "  --dynamicbase                      Image base address may be relocated using\n"
+ "                                       address space layout randomization (ASLR)\n"
+ msgstr ""
+-"  --dynamicbase                      Основния адрес на образа може да бъде преместен\n"
++"  --dynamicbase                      Основният адрес на образа може да бъде преместен\n"
+ "                                       като се използва случаен адрес\n"
+ 
+ #: earm_wince_pe.c:424 earmpe.c:424 ei386pe.c:424 ei386pe_posix.c:424
+@@ -5492,13 +5492,13 @@ msgstr "  --forceinteg               Налагане на проверка за
+ #: ei386pep.c:404 emcorepe.c:425 eppcpe.c:425 eshpe.c:425
+ #, c-format
+ msgid "  --nxcompat                 Image is compatible with data execution prevention\n"
+-msgstr "  --nxcompat                 Образа е съвместим с предотвратяване на изпълнение на данни\n"
++msgstr "  --nxcompat                 Образът е съвместим с предотвратяване на изпълнение на данни\n"
+ 
+ #: earm_wince_pe.c:426 earmpe.c:426 ei386pe.c:426 ei386pe_posix.c:426
+ #: ei386pep.c:405 emcorepe.c:426 eppcpe.c:426 eshpe.c:426
+ #, c-format
+ msgid "  --no-isolation             Image understands isolation but do not isolate the image\n"
+-msgstr "  --no-isolation             Образа поддържа изолиране, но да не се изолира\n"
++msgstr "  --no-isolation             Образът поддържа изолиране, но да не се изолира\n"
+ 
+ #: earm_wince_pe.c:427 earmpe.c:427 ei386pe.c:427 ei386pe_posix.c:427
+ #: emcorepe.c:427 eppcpe.c:427 eshpe.c:427
+@@ -5507,7 +5507,7 @@ msgid ""
+ "  --no-seh                   Image does not use SEH. No SE handler may\n"
+ "                                       be called in this image\n"
+ msgstr ""
+-"  --no-seh                   Образа не използва SEH. В този образ не\n"
++"  --no-seh                   Образът не използва SEH. В този образ не\n"
+ "                               може да се извиква SE подръжка\n"
+ 
+ #: earm_wince_pe.c:428 earmpe.c:428 ei386pe.c:428 ei386pe_posix.c:428
+@@ -5526,7 +5526,7 @@ msgstr "  --wdmdriver                Използване на WDM модел з
+ #: ei386pep.c:409 emcorepe.c:430 eppcpe.c:430 eshpe.c:430
+ #, c-format
+ msgid "  --tsaware                  Image is Terminal Server aware\n"
+-msgstr "  --tsaware                  Образа поддържа \"Terminal Server\"\n"
++msgstr "  --tsaware                  Образът поддържа \"Terminal Server\"\n"
+ 
+ #: earm_wince_pe.c:431 earmpe.c:431 ei386pe.c:431 ei386pe_posix.c:431
+ #: ei386pep.c:410 emcorepe.c:431 eppcpe.c:431 eshpe.c:431
+@@ -5603,7 +5603,7 @@ msgstr ""
+ #: earm_wince_pe.c:1302 earmpe.c:1302 ei386pe.c:1302 ei386pe_posix.c:1302
+ #: ei386pep.c:1305 emcorepe.c:1302 eppcpe.c:1302 eshpe.c:1302
+ msgid "%F%P: cannot perform PE operations on non PE output file '%pB'\n"
+-msgstr "%F%P: не може да се извърши \"PE\"-операции на изходен файл '%pB', който не е \"PE\"\n"
++msgstr "%F%P: не може да се извършат \"PE\"-операции на изходен файл '%pB', който не е \"PE\"\n"
+ 
+ #: earm_wince_pe.c:1442 earmpe.c:1442 ei386pe.c:1442 ei386pe_posix.c:1442
+ #: ei386pep.c:1426 emcorepe.c:1442 eppcpe.c:1442 eshpe.c:1442
+@@ -5649,7 +5649,7 @@ msgstr "%P: предупреждение: '--thumb-entry %s' прегазва '-
+ #: earmnto.c:577 earmpe.c:1876 earmsymbian.c:577 ei386pe.c:1876
+ #: ei386pe_posix.c:1876 emcorepe.c:1876 eppcpe.c:1876 eshpe.c:1876
+ msgid "%P: warning: cannot find thumb start symbol %s\n"
+-msgstr "%P: предупреждение: не е намерен, като начален, отбелязания знак %s\n"
++msgstr "%P: предупреждение: не е намерен, като начален, отбелязаният знак %s\n"
+ 
+ #: earmelf.c:603 earmelf_fbsd.c:603 earmelf_fuchsia.c:603 earmelf_linux.c:603
+ #: earmelf_linux_eabi.c:603 earmelf_linux_fdpiceabi.c:603 earmelf_nacl.c:603
+@@ -5700,7 +5700,7 @@ msgstr "%P: неразпознат вид STM32L4XX поправка '%s'\n"
+ #: earmelfb_nacl.c:2851 earmelfb_nbsd.c:2851 earmnto.c:2826 earmsymbian.c:2851
+ #, c-format
+ msgid "  --thumb-entry=<sym>         Set the entry point to be Thumb symbol <sym>\n"
+-msgstr "  --thumb-entry=<знак>        Установява входяща точка да е отбелязания <знак>\n"
++msgstr "  --thumb-entry=<знак>        Установява входяща точка на отбелязания <знак>\n"
+ 
+ #: earmelf.c:2852 earmelf_fbsd.c:2859 earmelf_fuchsia.c:2852
+ #: earmelf_linux.c:2852 earmelf_linux_eabi.c:2852
+@@ -6667,7 +6667,7 @@ msgstr ""
+ 
+ #: eelf32xtensa.c:561
+ msgid "%F%P: failed to create .xtensa.info section\n"
+-msgstr "%F%P: пропадна създаването на раздел .xtensa.info\n"
++msgstr "%F%P: не успя създаването на раздел .xtensa.info\n"
+ 
+ #: eelf32xtensa.c:4073
+ #, c-format
+@@ -6945,7 +6945,7 @@ msgid ""
+ "  --no-seh                   Image does not use SEH; no SE handler may\n"
+ "                                       be called in this image\n"
+ msgstr ""
+-"  --no-seh                   Образа не използва SEH. В този образ не може\n"
++"  --no-seh                   Образът не използва SEH. В този образ не може\n"
+ "                               да се извиква SE подръжка\n"
+ 
+ #: ei386pep.c:908
+
+commit 079a6882b523cfd10709c6f2da89584698abd686
+Author: Alan Modra <amodra@gmail.com>
+Date:   Wed Aug 1 12:14:22 2018 +0930
+
+    PowerPC64 __tls_get_addr_opt stub .eh_frame fix
+    
+    This patch sets stub_offset in ppc_size_one_stub rather than in
+    ppc_build_one_stub.  That allows the plt stub alignment to be done in
+    just ppc_size_one_stub rather than both functions.  The patch also
+    corrects the place where the alignment was done, fixing a possible
+    error in .eh_frame data, and tidies some offset calculations.
+    
+    bfd/
+            * elf64-ppc.c (plt_stub_pad): Delay plt_stub_size call until needed.
+            (ppc_build_one_stub): Don't set stub_offset, instead assert that
+            it is sane.  Don't adjust stub_offset for alignment.  Adjust size
+            calculation.  Use "targ" temp when calculating offsets.
+            (ppc_size_one_stub): Set stub_offset here.  Use "targ" temp when
+            calculating offsets.  Adjust for alignment before setting
+            tls_get_addr_opt_bctrl.
+    ld/
+            * testsuite/ld-powerpc/powerpc.exp: Run tlsopt5 with plt alignment.
+            * testsuite/ld-powerpc/tlsopt5.s: Add extra call.
+            * testsuite/ld-powerpc/tlsopt5.wf: Adjust expected output.
+            * testsuite/ld-powerpc/tlsopt5.d: Likewise.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index d3831b7a65..6b078e2cb3 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,13 @@
++2018-08-01  Alan Modra  <amodra@gmail.com>
++
++	* elf64-ppc.c (plt_stub_pad): Delay plt_stub_size call until needed.
++	(ppc_build_one_stub): Don't set stub_offset, instead assert that
++	it is sane.  Don't adjust stub_offset for alignment.  Adjust size
++	calculation.  Use "targ" temp when calculating offsets.
++	(ppc_size_one_stub): Set stub_offset here.  Use "targ" temp when
++	calculating offsets.  Adjust for alignment before setting
++	tls_get_addr_opt_bctrl.
++
+ 2018-07-23  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	PR ld/23428
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index 45d81777eb..d7604d7678 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -10829,7 +10829,7 @@ plt_stub_pad (struct ppc_link_hash_table *htab,
+ 	      bfd_vma plt_off)
+ {
+   int stub_align;
+-  unsigned stub_size = plt_stub_size (htab, stub_entry, plt_off);
++  unsigned stub_size;
+   bfd_vma stub_off = stub_entry->group->stub_sec->size;
+ 
+   if (htab->params->plt_stub_align >= 0)
+@@ -10841,6 +10841,7 @@ plt_stub_pad (struct ppc_link_hash_table *htab,
+     }
+ 
+   stub_align = 1 << -htab->params->plt_stub_align;
++  stub_size = plt_stub_size (htab, stub_entry, plt_off);
+   if (((stub_off + stub_size - 1) & -stub_align) - (stub_off & -stub_align)
+       > ((stub_size - 1) & -stub_align))
+     return stub_align - (stub_off & (stub_align - 1));
+@@ -11148,7 +11149,7 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+   struct ppc_link_hash_table *htab;
+   bfd_byte *loc;
+   bfd_byte *p;
+-  bfd_vma dest, off;
++  bfd_vma targ, off;
+   Elf_Internal_Rela *r;
+   asection *plt;
+ 
+@@ -11160,8 +11161,7 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+   if (htab == NULL)
+     return FALSE;
+ 
+-  /* Make a note of the offset within the stubs for this entry.  */
+-  stub_entry->stub_offset = stub_entry->group->stub_sec->size;
++  BFD_ASSERT (stub_entry->stub_offset >= stub_entry->group->stub_sec->size);
+   loc = stub_entry->group->stub_sec->contents + stub_entry->stub_offset;
+ 
+   htab->stub_count[stub_entry->stub_type - 1] += 1;
+@@ -11170,16 +11170,16 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+     case ppc_stub_long_branch:
+     case ppc_stub_long_branch_r2off:
+       /* Branches are relative.  This is where we are going to.  */
+-      dest = (stub_entry->target_value
++      targ = (stub_entry->target_value
+ 	      + stub_entry->target_section->output_offset
+ 	      + stub_entry->target_section->output_section->vma);
+-      dest += PPC64_LOCAL_ENTRY_OFFSET (stub_entry->other);
+-      off = dest;
++      targ += PPC64_LOCAL_ENTRY_OFFSET (stub_entry->other);
+ 
+       /* And this is where we are coming from.  */
+-      off -= (stub_entry->stub_offset
+-	      + stub_entry->group->stub_sec->output_offset
+-	      + stub_entry->group->stub_sec->output_section->vma);
++      off = (stub_entry->stub_offset
++	     + stub_entry->group->stub_sec->output_offset
++	     + stub_entry->group->stub_sec->output_section->vma);
++      off = targ - off;
+ 
+       p = loc;
+       if (stub_entry->stub_type == ppc_stub_long_branch_r2off)
+@@ -11226,7 +11226,7 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	    return FALSE;
+ 	  r->r_offset = p - 4 - stub_entry->group->stub_sec->contents;
+ 	  r->r_info = ELF64_R_INFO (0, R_PPC64_REL24);
+-	  r->r_addend = dest;
++	  r->r_addend = targ;
+ 	  if (stub_entry->h != NULL)
+ 	    {
+ 	      struct elf_link_hash_entry **hashes;
+@@ -11278,13 +11278,13 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	  return FALSE;
+ 	}
+ 
+-      dest = (stub_entry->target_value
++      targ = (stub_entry->target_value
+ 	      + stub_entry->target_section->output_offset
+ 	      + stub_entry->target_section->output_section->vma);
+       if (stub_entry->stub_type != ppc_stub_plt_branch_r2off)
+-	dest += PPC64_LOCAL_ENTRY_OFFSET (stub_entry->other);
++	targ += PPC64_LOCAL_ENTRY_OFFSET (stub_entry->other);
+ 
+-      bfd_put_64 (htab->brlt->owner, dest,
++      bfd_put_64 (htab->brlt->owner, targ,
+ 		  htab->brlt->contents + br_entry->offset);
+ 
+       if (br_entry->iter == htab->stub_iteration)
+@@ -11301,7 +11301,7 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 			       + htab->brlt->output_offset
+ 			       + htab->brlt->output_section->vma);
+ 	      rela.r_info = ELF64_R_INFO (0, R_PPC64_RELATIVE);
+-	      rela.r_addend = dest;
++	      rela.r_addend = targ;
+ 
+ 	      rl = htab->relbrlt->contents;
+ 	      rl += (htab->relbrlt->reloc_count++
+@@ -11321,17 +11321,17 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 			     + htab->brlt->output_offset
+ 			     + htab->brlt->output_section->vma);
+ 	      r->r_info = ELF64_R_INFO (0, R_PPC64_RELATIVE);
+-	      r->r_addend = dest;
++	      r->r_addend = targ;
+ 	    }
+ 	}
+ 
+-      dest = (br_entry->offset
++      targ = (br_entry->offset
+ 	      + htab->brlt->output_offset
+ 	      + htab->brlt->output_section->vma);
+ 
+-      off = (dest
+-	     - elf_gp (info->output_bfd)
+-	     - htab->sec_info[stub_entry->group->link_sec->id].toc_off);
++      off = (elf_gp (info->output_bfd)
++	     + htab->sec_info[stub_entry->group->link_sec->id].toc_off);
++      off = targ - off;
+ 
+       if (off + 0x80008000 > 0xffffffff || (off & 7) != 0)
+ 	{
+@@ -11354,7 +11354,7 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	  if (stub_entry->stub_type == ppc_stub_plt_branch_r2off)
+ 	    r[0].r_offset += 4;
+ 	  r[0].r_info = ELF64_R_INFO (0, R_PPC64_TOC16_DS);
+-	  r[0].r_addend = dest;
++	  r[0].r_addend = targ;
+ 	  if (PPC_HA (off) != 0)
+ 	    {
+ 	      r[0].r_info = ELF64_R_INFO (0, R_PPC64_TOC16_HA);
+@@ -11439,8 +11439,8 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	}
+ 
+       /* Now build the stub.  */
+-      dest = stub_entry->plt_ent->plt.offset & ~1;
+-      if (dest >= (bfd_vma) -2)
++      targ = stub_entry->plt_ent->plt.offset & ~1;
++      if (targ >= (bfd_vma) -2)
+ 	abort ();
+ 
+       plt = htab->elf.splt;
+@@ -11453,12 +11453,11 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	  else
+ 	    plt = htab->pltlocal;
+ 	}
++      targ += plt->output_offset + plt->output_section->vma;
+ 
+-      dest += plt->output_offset + plt->output_section->vma;
+-
+-      off = (dest
+-	     - elf_gp (info->output_bfd)
+-	     - htab->sec_info[stub_entry->group->link_sec->id].toc_off);
++      off = (elf_gp (info->output_bfd)
++	     + htab->sec_info[stub_entry->group->link_sec->id].toc_off);
++      off = targ - off;
+ 
+       if (off + 0x80008000 > 0xffffffff || (off & 7) != 0)
+ 	{
+@@ -11473,15 +11472,6 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	  return FALSE;
+ 	}
+ 
+-      if (htab->params->plt_stub_align != 0)
+-	{
+-	  unsigned pad = plt_stub_pad (htab, stub_entry, off);
+-
+-	  stub_entry->group->stub_sec->size += pad;
+-	  stub_entry->stub_offset = stub_entry->group->stub_sec->size;
+-	  loc += pad;
+-	}
+-
+       r = NULL;
+       if (info->emitrelocations)
+ 	{
+@@ -11496,7 +11486,7 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	  r[0].r_offset = loc - stub_entry->group->stub_sec->contents;
+ 	  if (bfd_big_endian (info->output_bfd))
+ 	    r[0].r_offset += 2;
+-	  r[0].r_addend = dest;
++	  r[0].r_addend = targ;
+ 	}
+       if (stub_entry->h != NULL
+ 	  && (stub_entry->h == htab->tls_get_addr_fd
+@@ -11515,7 +11505,7 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+       return FALSE;
+     }
+ 
+-  stub_entry->group->stub_sec->size += p - loc;
++  stub_entry->group->stub_sec->size = stub_entry->stub_offset + (p - loc);
+ 
+   if (htab->params->emit_stub_syms)
+     {
+@@ -11567,7 +11557,7 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+   struct ppc_stub_hash_entry *stub_entry;
+   struct bfd_link_info *info;
+   struct ppc_link_hash_table *htab;
+-  bfd_vma off;
++  bfd_vma targ, off;
+   int size;
+ 
+   /* Massage our args to the form they really have.  */
+@@ -11578,6 +11568,9 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+   if (htab == NULL)
+     return FALSE;
+ 
++  /* Make a note of the offset within the stubs for this entry.  */
++  stub_entry->stub_offset = stub_entry->group->stub_sec->size;
++
+   if (stub_entry->h != NULL
+       && stub_entry->h->save_res
+       && stub_entry->h->elf.root.type == bfd_link_hash_defined
+@@ -11594,8 +11587,8 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+       || stub_entry->stub_type == ppc_stub_plt_call_r2save)
+     {
+       asection *plt;
+-      off = stub_entry->plt_ent->plt.offset & ~(bfd_vma) 1;
+-      if (off >= (bfd_vma) -2)
++      targ = stub_entry->plt_ent->plt.offset & ~(bfd_vma) 1;
++      if (targ >= (bfd_vma) -2)
+ 	abort ();
+       plt = htab->elf.splt;
+       if (!htab->elf.dynamic_sections_created
+@@ -11607,12 +11600,22 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	  else
+ 	    plt = htab->pltlocal;
+ 	}
+-      off += (plt->output_offset
+-	      + plt->output_section->vma
+-	      - elf_gp (info->output_bfd)
+-	      - htab->sec_info[stub_entry->group->link_sec->id].toc_off);
++      targ += plt->output_offset + plt->output_section->vma;
++
++      off = (elf_gp (info->output_bfd)
++	     + htab->sec_info[stub_entry->group->link_sec->id].toc_off);
++      off = targ - off;
++
++      if (htab->params->plt_stub_align != 0)
++	{
++	  unsigned pad = plt_stub_pad (htab, stub_entry, off);
++
++	  stub_entry->group->stub_sec->size += pad;
++	  stub_entry->stub_offset = stub_entry->group->stub_sec->size;
++	}
+ 
+       size = plt_stub_size (htab, stub_entry, off);
++
+       if (stub_entry->h != NULL
+ 	  && (stub_entry->h == htab->tls_get_addr_fd
+ 	      || stub_entry->h == htab->tls_get_addr)
+@@ -11620,10 +11623,8 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	  && (ALWAYS_EMIT_R2SAVE
+ 	      || stub_entry->stub_type == ppc_stub_plt_call_r2save))
+ 	stub_entry->group->tls_get_addr_opt_bctrl
+-	  = stub_entry->group->stub_sec->size + size - 5 * 4;
++	  = stub_entry->stub_offset + size - 5 * 4;
+ 
+-      if (htab->params->plt_stub_align)
+-	size += plt_stub_pad (htab, stub_entry, off);
+       if (info->emitrelocations)
+ 	{
+ 	  stub_entry->group->stub_sec->reloc_count
+@@ -11642,12 +11643,12 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+       bfd_vma r2off = 0;
+       bfd_vma local_off = 0;
+ 
+-      off = (stub_entry->target_value
+-	     + stub_entry->target_section->output_offset
+-	     + stub_entry->target_section->output_section->vma);
+-      off -= (stub_entry->group->stub_sec->size
+-	      + stub_entry->group->stub_sec->output_offset
+-	      + stub_entry->group->stub_sec->output_section->vma);
++      targ = (stub_entry->target_value
++	      + stub_entry->target_section->output_offset
++	      + stub_entry->target_section->output_section->vma);
++      off = (stub_entry->stub_offset
++	     + stub_entry->group->stub_sec->output_offset
++	     + stub_entry->group->stub_sec->output_section->vma);
+ 
+       /* Reset the stub type from the plt variant in case we now
+ 	 can reach with a shorter stub.  */
+@@ -11668,8 +11669,9 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	    size += 4;
+ 	  if (PPC_LO (r2off) != 0)
+ 	    size += 4;
+-	  off -= size - 4;
++	  off += size - 4;
+ 	}
++      off = targ - off;
+ 
+       local_off = PPC64_LOCAL_ENTRY_OFFSET (stub_entry->other);
+ 
+@@ -11709,11 +11711,12 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	    }
+ 
+ 	  stub_entry->stub_type += ppc_stub_plt_branch - ppc_stub_long_branch;
+-	  off = (br_entry->offset
+-		 + htab->brlt->output_offset
+-		 + htab->brlt->output_section->vma
+-		 - elf_gp (info->output_bfd)
+-		 - htab->sec_info[stub_entry->group->link_sec->id].toc_off);
++	  targ = (br_entry->offset
++		  + htab->brlt->output_offset
++		  + htab->brlt->output_section->vma);
++	  off = (elf_gp (info->output_bfd)
++		 + htab->sec_info[stub_entry->group->link_sec->id].toc_off);
++	  off = targ - off;
+ 
+ 	  if (info->emitrelocations)
+ 	    {
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index a6cd3332ae..c719502b78 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,10 @@
++2018-08-01  Alan Modra  <amodra@gmail.com>
++
++	* testsuite/ld-powerpc/powerpc.exp: Run tlsopt5 with plt alignment.
++	* testsuite/ld-powerpc/tlsopt5.s: Add extra call.
++	* testsuite/ld-powerpc/tlsopt5.wf: Adjust expected output.
++	* testsuite/ld-powerpc/tlsopt5.d: Likewise.
++
+ 2018-08-07  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* po/bg.po: Updated Bulgarian translation.
+diff --git a/ld/testsuite/ld-powerpc/powerpc.exp b/ld/testsuite/ld-powerpc/powerpc.exp
+index 0359ba28cb..3c7b707cd0 100644
+--- a/ld/testsuite/ld-powerpc/powerpc.exp
++++ b/ld/testsuite/ld-powerpc/powerpc.exp
+@@ -221,7 +221,7 @@ set ppc64elftests {
+      "tlsopt4"}
+     {"TLS DLL" "-shared -melf64ppc --version-script tlsdll.ver" "" "-a64" {tlsdll.s}
+      {} "tlsdll.so"}
+-    {"TLS opt 5" "-melf64ppc --no-plt-align -shared --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
++    {"TLS opt 5" "-melf64ppc -shared --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
+      {{objdump -dr tlsopt5.d} {readelf -wf tlsopt5.wf}}
+      "tlsopt5"}
+     {"sym@tocbase" "-shared -melf64ppc" "" "-a64" {symtocbase-1.s symtocbase-2.s}
+diff --git a/ld/testsuite/ld-powerpc/tlsopt5.d b/ld/testsuite/ld-powerpc/tlsopt5.d
+index 4521a9b427..4caf1832ea 100644
+--- a/ld/testsuite/ld-powerpc/tlsopt5.d
++++ b/ld/testsuite/ld-powerpc/tlsopt5.d
+@@ -8,6 +8,13 @@
+ 
+ Disassembly of section \.text:
+ 
++.* <.*\.plt_call\.foo>:
++.*:	(18 00 41 f8|f8 41 00 18) 	std     r2,24\(r1\)
++.*:	(28 80 82 e9|e9 82 80 28) 	ld      r12,-32728\(r2\)
++.*:	(a6 03 89 7d|7d 89 03 a6) 	mtctr   r12
++.*:	(20 04 80 4e|4e 80 04 20) 	bctr
++	\.\.\.
++
+ .* <.*\.plt_call\.__tls_get_addr_opt@@GLIBC_2\.22>:
+ .*:	(00 00 63 e9|e9 63 00 00) 	ld      r11,0\(r3\)
+ .*:	(08 00 83 e9|e9 83 00 08) 	ld      r12,8\(r3\)
+@@ -19,17 +26,21 @@ Disassembly of section \.text:
+ .*:	(a6 02 68 7d|7d 68 02 a6) 	mflr    r11
+ .*:	(08 00 61 f9|f9 61 00 08) 	std     r11,8\(r1\)
+ .*:	(18 00 41 f8|f8 41 00 18) 	std     r2,24\(r1\)
+-.*:	(28 80 82 e9|e9 82 80 28) 	ld      r12,-32728\(r2\)
++.*:	(30 80 82 e9|e9 82 80 30) 	ld      r12,-32720\(r2\)
+ .*:	(a6 03 89 7d|7d 89 03 a6) 	mtctr   r12
+ .*:	(21 04 80 4e|4e 80 04 21) 	bctrl
+ .*:	(18 00 41 e8|e8 41 00 18) 	ld      r2,24\(r1\)
+ .*:	(08 00 61 e9|e9 61 00 08) 	ld      r11,8\(r1\)
+ .*:	(a6 03 68 7d|7d 68 03 a6) 	mtlr    r11
+ .*:	(20 00 80 4e|4e 80 00 20) 	blr
++	\.\.\.
+ 
+ .* <_start>:
+ .*:	(08 80 62 38|38 62 80 08) 	addi    r3,r2,-32760
+-.*:	(b9 ff ff 4b|4b ff ff b9) 	bl      .*
++.*:	(9d ff ff 4b|4b ff ff 9d) 	bl      .* <.*\.plt_call\.__tls_get_addr_opt@@GLIBC_2\.22>
++.*:	(00 00 00 60|60 00 00 00) 	nop
++.*:	(75 ff ff 4b|4b ff ff 75) 	bl      .* <.*\.plt_call\.foo>
++.*:	(18 00 41 e8|e8 41 00 18) 	ld      r2,24\(r1\)
+ .*:	(00 00 00 60|60 00 00 00) 	nop
+ .*
+ .*
+@@ -50,5 +61,8 @@ Disassembly of section \.text:
+ .*:	(08 00 6b e9|e9 6b 00 08) 	ld      r11,8\(r11\)
+ .*:	(20 04 80 4e|4e 80 04 20) 	bctr
+ 
++.* <foo@plt>:
++.*	(c8 ff ff 4b|4b ff ff c8) 	b       .*
++
+ .* <__tls_get_addr_opt@plt>:
+-.*:	(c8 ff ff 4b|4b ff ff c8) 	b       .*
++.*:	(c4 ff ff 4b|4b ff ff c4) 	b       .*
+diff --git a/ld/testsuite/ld-powerpc/tlsopt5.s b/ld/testsuite/ld-powerpc/tlsopt5.s
+index 70902ef96a..7cb82db1f6 100644
+--- a/ld/testsuite/ld-powerpc/tlsopt5.s
++++ b/ld/testsuite/ld-powerpc/tlsopt5.s
+@@ -1,7 +1,10 @@
+  .globl _start
++ .weak foo
+ _start:
+  .cfi_startproc
+  addi 3,2,gd@got@tlsgd
+  bl __tls_get_addr(gd@tlsgd)
+  nop
++ bl foo
++ nop
+  .cfi_endproc
+diff --git a/ld/testsuite/ld-powerpc/tlsopt5.wf b/ld/testsuite/ld-powerpc/tlsopt5.wf
+index af8cb76d1c..f0453610e0 100644
+--- a/ld/testsuite/ld-powerpc/tlsopt5.wf
++++ b/ld/testsuite/ld-powerpc/tlsopt5.wf
+@@ -7,11 +7,10 @@ Contents of the \.eh_frame section:
+   Data alignment factor: -8
+   Return address column: 65
+   Augmentation data:     1b
+-
+   DW_CFA_def_cfa: r1 ofs 0
+ 
+ 0+14 0+14 0+18 FDE cie=0+ pc=.*
+-  DW_CFA_advance_loc: 48 to .*
++  DW_CFA_advance_loc: 80 to .*
+   DW_CFA_offset_extended_sf: r65 at cfa\+8
+   DW_CFA_advance_loc: 16 to .*
+   DW_CFA_restore_extended: r65
+
+commit 95fbde6791dd4b7821a40cbbc985a257e4819fdb
+Author: Alan Modra <amodra@gmail.com>
+Date:   Wed Aug 1 18:59:03 2018 +0930
+
+    Re: PowerPC64 __tls_get_addr_opt stub .eh_frame fix
+    
+    The modified test failed on some powerpc targets due to differences in
+    default hash style.  If the default hash style is both, then more
+    sections are created, bumping section ids.  Section id is used in stub
+    symbols and although the test is careful to not depend on id in
+    labels, the stub hash traversal order changes when stub names change.
+    That lead to the stubs being emitted in a different order and thus not
+    matching expected output.
+    
+            * testsuite/ld-powerpc/powerpc.exp: Run tlsopt5 with hash-style
+            specified.
+    
+    (cherry picked from commit a67ae9b01af7eb2b1f8e5c517338a4b12167ce40)
+
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index c719502b78..97fe5699c8 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,8 @@
++2018-08-01  Alan Modra  <amodra@gmail.com>
++
++	* testsuite/ld-powerpc/powerpc.exp: Run tlsopt5 with hash-style
++	specified.
++
+ 2018-08-01  Alan Modra  <amodra@gmail.com>
+ 
+ 	* testsuite/ld-powerpc/powerpc.exp: Run tlsopt5 with plt alignment.
+diff --git a/ld/testsuite/ld-powerpc/powerpc.exp b/ld/testsuite/ld-powerpc/powerpc.exp
+index 3c7b707cd0..de762966e5 100644
+--- a/ld/testsuite/ld-powerpc/powerpc.exp
++++ b/ld/testsuite/ld-powerpc/powerpc.exp
+@@ -221,7 +221,7 @@ set ppc64elftests {
+      "tlsopt4"}
+     {"TLS DLL" "-shared -melf64ppc --version-script tlsdll.ver" "" "-a64" {tlsdll.s}
+      {} "tlsdll.so"}
+-    {"TLS opt 5" "-melf64ppc -shared --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
++    {"TLS opt 5" "-melf64ppc -shared --hash-style=both --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
+      {{objdump -dr tlsopt5.d} {readelf -wf tlsopt5.wf}}
+      "tlsopt5"}
+     {"sym@tocbase" "-shared -melf64ppc" "" "-a64" {symtocbase-1.s symtocbase-2.s}
+
+commit 4aa5eb02fd8e394e7128a78018b780fb566da81d
+Author: Alan Modra <amodra@gmail.com>
+Date:   Sun Aug 5 19:44:03 2018 +0930
+
+    __tls_get_addr_opt stubs and tocsave optimization
+    
+    This patch fixes a bug in the handling of the __tls_get_addr_opt
+    stub.  Calls via this stub don't have a toc restoring instruction
+    following the "bl", and the stub itself doesn't have an initial toc
+    save instruction.  Thus it is incorrect to skip over the first
+    instruction when a __tls_get_addr call is marked with a tocsave
+    reloc.
+    
+            * elf64-ppc.c (ppc64_elf_relocate_section): Don't skip first
+            instruction of __tls_get_addr_opt stub.
+            (plt_stub_size): Omit ALWAYS_EMIT_R2SAVE condition when
+            dealing with __tls_get_addr_opt stub.
+            (build_tls_get_addr_stub, ppc_size_one_stub): Likewise.
+    
+    (cherry picked from commit e81b4c933c1b88e29f4b27627dd9ea0bf9189944)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 6b078e2cb3..8d25c6992b 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,11 @@
++2018-08-07  Alan Modra  <amodra@gmail.com>
++
++	* elf64-ppc.c (ppc64_elf_relocate_section): Don't skip first
++	instruction of __tls_get_addr_opt stub.
++	(plt_stub_size): Omit ALWAYS_EMIT_R2SAVE condition when
++	dealing with __tls_get_addr_opt stub.
++	(build_tls_get_addr_stub, ppc_size_one_stub): Likewise.
++
+ 2018-08-01  Alan Modra  <amodra@gmail.com>
+ 
+ 	* elf64-ppc.c (plt_stub_pad): Delay plt_stub_size call until needed.
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index d7604d7678..139ed1abcd 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -10810,8 +10810,7 @@ plt_stub_size (struct ppc_link_hash_table *htab,
+       && htab->params->tls_get_addr_opt)
+     {
+       size += 7 * 4;
+-      if (ALWAYS_EMIT_R2SAVE
+-	  || stub_entry->stub_type == ppc_stub_plt_call_r2save)
++      if (stub_entry->stub_type == ppc_stub_plt_call_r2save)
+ 	size += 6 * 4;
+     }
+   return size;
+@@ -11056,8 +11055,7 @@ build_tls_get_addr_stub (struct ppc_link_hash_table *htab,
+   bfd_put_32 (obfd, MR_R3_R0, p),		p += 4;
+   if (r != NULL)
+     r[0].r_offset += 7 * 4;
+-  if (!ALWAYS_EMIT_R2SAVE
+-      && stub_entry->stub_type != ppc_stub_plt_call_r2save)
++  if (stub_entry->stub_type != ppc_stub_plt_call_r2save)
+     return build_plt_stub (htab, stub_entry, p, offset, r);
+ 
+   bfd_put_32 (obfd, MFLR_R11, p),		p += 4;
+@@ -11620,8 +11618,7 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	  && (stub_entry->h == htab->tls_get_addr_fd
+ 	      || stub_entry->h == htab->tls_get_addr)
+ 	  && htab->params->tls_get_addr_opt
+-	  && (ALWAYS_EMIT_R2SAVE
+-	      || stub_entry->stub_type == ppc_stub_plt_call_r2save))
++	  && stub_entry->stub_type == ppc_stub_plt_call_r2save)
+ 	stub_entry->group->tls_get_addr_opt_bctrl
+ 	  = stub_entry->stub_offset + size - 5 * 4;
+ 
+@@ -14880,10 +14877,13 @@ ppc64_elf_relocate_section (bfd *output_bfd,
+ 	      addend = 0;
+ 	      reloc_dest = DEST_STUB;
+ 
+-	      if ((stub_entry->stub_type == ppc_stub_plt_call
++	      if (((stub_entry->stub_type == ppc_stub_plt_call
++		    && ALWAYS_EMIT_R2SAVE)
+ 		   || stub_entry->stub_type == ppc_stub_plt_call_r2save)
+-		  && (ALWAYS_EMIT_R2SAVE
+-		      || stub_entry->stub_type == ppc_stub_plt_call_r2save)
++		  && !(h != NULL
++		       && (h == htab->tls_get_addr_fd
++			   || h == htab->tls_get_addr)
++		       && htab->params->tls_get_addr_opt)
+ 		  && rel + 1 < relend
+ 		  && rel[1].r_offset == rel->r_offset + 4
+ 		  && ELF64_R_TYPE (rel[1].r_info) == R_PPC64_TOCSAVE)
+
+commit 0e37f907b02abc23e5aecaa7fbb63a51cfac8a16
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Aug 8 00:01:49 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index d85b58ab61..f15c68bc98 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180807
++#define BFD_VERSION_DATE 20180808
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
