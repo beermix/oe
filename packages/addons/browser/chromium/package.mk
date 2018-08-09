@@ -28,6 +28,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
+GOLD_SUPPORT="yes"
 
 post_patch() {
   cd $(get_build_dir chromium)
@@ -45,8 +46,8 @@ make_host() {
 }
 
 make_target() {
-#  export CCACHE_SLOPPINESS=time_macros
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  export CCACHE_SLOPPINESS=time_macros
+  #export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -77,6 +78,7 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'enable_vulkan=false'
+    'use_dbus=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
@@ -84,7 +86,6 @@ make_target() {
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
-    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -92,40 +93,44 @@ make_target() {
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
-readonly -A _system_libs=(
+declare -gA _system_libs=(
+  #[ffmpeg]=ffmpeg # https://crbug.com/731766
+  #[flac]=flac
+  #[fontconfig]=fontconfig
+  #[freetype]=freetype2
+  #[harfbuzz-ng]=harfbuzz
   #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  [libpng]=libpng            # https://crbug.com/752403#c10
-  [libxml]=libxml2           # https://crbug.com/736026
+  #[libpng]=libpng # https://crbug.com/752403#c10
+  #[libvpx]=libvpx
+  #[libwebp]=libwebp
+  #[libxml]=libxml2 # https://crbug.com/736026
   [libxslt]=libxslt
   [yasm]=
-  #[zlib]=minizip
 )
-readonly _unwanted_bundled_libs=(
+_unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
-  freetype
-  harfbuzz-ng
 )
-depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
+  #       \! -path './base/third_party/icu/*' \
+  #      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
   done
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
