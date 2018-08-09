@@ -2,11 +2,11 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="boost"
-PKG_VERSION="1_67_0"
+PKG_VERSION="1_68_0"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
-PKG_URL="https://dl.bintray.com/boostorg/release/1.67.0/source/boost_$PKG_VERSION.tar.gz"
-PKG_URL="https://fossies.org/linux/misc/boost_1_67_0.tar.xz"
+PKG_URL="https://dl.bintray.com/boostorg/release/1.68.0/source/boost_$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/boost_1_68_0.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain boost:host Python2:host zlib bzip2"
 PKG_LONGDESC="boost: Peer-reviewed STL style libraries for C++"
