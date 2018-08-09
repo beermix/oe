@@ -9,7 +9,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi libiconv pcre elfutils Python2:host util-linux"
+PKG_DEPENDS_TARGET="toolchain zlib libffi pcre elfutils Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
@@ -29,8 +29,7 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dxattr=false \
 			  -Dlibmount=false \
 			  -Dman=false \
-			  -Dgtk_doc=false \
-			  -Diconv=gnu"
+			  -Dgtk_doc=false"
 
 pre_configure_target() {
   LDFLAGS="$LDFLAGS -lz"
