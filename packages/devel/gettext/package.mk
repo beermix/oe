@@ -20,7 +20,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --with-gnu-ld \
                          --disable-java \
                          --disable-curses \
-                         --enable-nls \
+                         --disable-nls \
                          --with-xz \
                          --without-included-gettext \
                          --disable-native-java \
