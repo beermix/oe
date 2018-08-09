@@ -33,7 +33,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-version-specific-runtime-libs \
                          --enable-compressed-debug-sections=all \
                          --enable-plugins \
-                         --disable-nls"
+                         --enable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
