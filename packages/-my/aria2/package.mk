@@ -21,4 +21,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --without-libgcrypt \
                            --without-sqlite3 \
                            --with-libxml2 \
-                           --with-ca-bundle=/etc/ssl/cert.pem"
+                           --with-ca-bundle=/run/libreelec/cacert.pem"
