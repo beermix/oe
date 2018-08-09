@@ -1,0 +1,30 @@
+--- chromium-60.0.3112.40/third_party/widevine/cdm/BUILD.gn.widevine	2017-06-22 00:03:20.000000000 +0200
++++ chromium-60.0.3112.40/third_party/widevine/cdm/BUILD.gn	2017-06-23 23:19:25.326285947 +0200
+@@ -21,7 +21,7 @@
+ if (is_android) {
+   # Always available on Android regardless of branding.
+   widevine_cdm_version_h_file = "android/widevine_cdm_version.h"
+-} else if (is_chrome_branded) {
++} else if (is_chrome_branded || enable_widevine) {
+   if (is_chromeos) {
+     widevine_cdm_version_h_file =
+         "chromeos/$widevine_arch/widevine_cdm_version.h"
+@@ -48,9 +48,6 @@
+     # Other platforms, use the default one.
+     widevine_cdm_version_h_file = "widevine_cdm_version.h"
+   }
+-} else if (enable_widevine) {
+-  widevine_cdm_version_h_file = "stub/widevine_cdm_version.h"
+-  widevine_cdm_manifest_file = [ "stub/manifest.json" ]
+ } else {
+   # No branding, use the default one.
+   widevine_cdm_version_h_file = "widevine_cdm_version.h"
+@@ -82,7 +79,7 @@
+   ]
+ }
+ 
+-if (widevine_cdm_binary_files != []) {
++if (widevine_cdm_binary_files != [] && is_chrome_branded) {
+   copy("widevinecdm") {
+     sources = widevine_cdm_binary_files
+     outputs = [
