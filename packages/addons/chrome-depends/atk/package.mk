@@ -10,7 +10,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://ftp.gnome.org/pub/gnome/sources/atk/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/atk/${PKG_VERSION:0:4}/atk-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib glib:host"
-#PKG_DEPENDS_TARGET="toolchain glib"
 PKG_LONGDESC="ATK provides the set of accessibility interfaces that are implemented by other toolkits and applications."
 PKG_BUILD_FLAGS="+pic"
 

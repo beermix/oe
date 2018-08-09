@@ -18,7 +18,7 @@
 
 PKG_NAME="libiconv"
 PKG_VERSION="1.15"
-PKG_VERSION="1.11.1"
+#PKG_VERSION="1.11.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://savannah.gnu.org/projects/libiconv/"
@@ -33,4 +33,4 @@ pre_configure_target() {
   CFLAGS="$CFLAGS -DUSE_DOS -std=gnu89"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-rpath --enable-relocatable"
+PKG_CONFIGURE_OPTS_TARGET="--disable-rpath --enable-relocatable --enable-extra-encodings"
