@@ -30,6 +30,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gold \
                            --enable-ld=default \
                            --with-linker-hash-style=gnu \
+                           --disable-nls \
                            --disable-multilib \
                            --enable-nls \
                            --enable-checking=release \

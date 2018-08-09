@@ -40,7 +40,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --enable-lto"
+                         --enable-lto \
+                         --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
