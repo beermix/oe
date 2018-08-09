@@ -9,11 +9,12 @@
 #############################################################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="64.0.3282.186"
-PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="205"
+PKG_VERSION="66.0.3359.181"
+PKG_SHA256="37e6673741b365a25a837217b08f77b24b4f5fc4ad88c8581be6a5dae9a9e919"
+PKG_REV="340"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
+PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
@@ -23,7 +24,6 @@ PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
@@ -45,7 +45,8 @@ make_host() {
 }
 
 make_target() {
-  export CCACHE_SLOPPINESS=time_macros
+#  export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -68,7 +69,6 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
@@ -83,10 +83,10 @@ make_target() {
     'use_system_zlib=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
+    'use_system_libjpeg=true'
     'linux_link_libudev=true'
-    'enable_remoting=false'
     'exclude_unwind_tables=true'
-    'use_v8_context_snapshot=false'
+    'use_libpci=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -95,13 +95,14 @@ make_target() {
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
+    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch     'use_system_libjpeg=true'     'use_gio=true'
+# Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
   [icu]=icu
   [libdrm]=
@@ -136,7 +137,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   done
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
