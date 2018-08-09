@@ -34,11 +34,11 @@ PKG_CONFIGURE_OPTS_TARGET="--with-x \
 #  LIBS="$LIBS -lXcursor"
 #}
 
-make_target() {
-  make SRC_SUBDIRS="gdk gtk modules"
-  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
-}
+#make_target() {
+#  make SRC_SUBDIRS="gdk gtk modules"
+#  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
+#}
 
-makeinstall_target() {
-  make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules"
-}
+#makeinstall_target() {
+#  make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules"
+#}
