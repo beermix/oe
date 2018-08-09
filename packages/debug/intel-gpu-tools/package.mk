@@ -1,13 +1,13 @@
 PKG_NAME="intel-gpu-tools"
-PKG_VERSION="e6ddaca"
+PKG_VERSION="1.23"
 PKG_SITE="https://www.x.org/releases/individual/app/?C=M;O=D" # https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/log/
-PKG_URL="https://www.x.org/releases/individual/app/intel-gpu-tools-$PKG_VERSION.tar.xz"
-PKG_URL="https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/snapshot/$PKG_VERSION.tar.xz"
-PKG_SOURCE_DIR="$PKG_VERSION"
+PKG_URL="https://www.x.org/releases/individual/app/igt-gpu-tools-$PKG_VERSION.tar.xz"
+#PKG_URL="https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/snapshot/$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="igt-gpu-tools-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain kmod systemd procps-ng libpciaccess mesa libdrm libpciaccess cairo swig:host libunwind"
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
-PKG_TOOLCHAIN="meson"
+#PKG_TOOLCHAIN="meson"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
 			      --disable-shared \
@@ -26,5 +26,6 @@ PKG_MESON_OPTS_TARGET="-Dbuild_overlay=true \
 			  -Dbuild_man=false \
 			  -Dbuild_docs=false \
 			  -Dbuild_tests=false \
-			  -Dwith_libdrm=intel \
-			  -Duse_rpath=false"
+			  -Dwith_libdrm=intel"
+			  
+# -Duse_rpath=false
