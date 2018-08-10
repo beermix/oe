@@ -136,6 +136,10 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
   done
+  
+  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
+  out/Release/gn gen out/Release --args="${_flags[*]}" \
+    --script-executable=/usr/bin/python2
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
@@ -143,7 +147,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS out/Release chrome chrome_sandbox chromedriver
 }
 
 addon() {

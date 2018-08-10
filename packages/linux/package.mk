@@ -216,14 +216,12 @@ make_target() {
         cp perf $INSTALL/usr/bin
 
       cd $PKG_BUILD/tools/power/cpupower
-      CROSS=$TARGET_PREFIX \
-      CC=$CC \
-      LD=$LD \
-      AR=$AR \
-      STRIP=$STRIP \
-      RANLIB=$RANLIB \
-      HOSTCC=$HOST_CC \
+
       make \
+      CROSS="$TARGET_PREFIX" \
+      CC="$CC" \
+      LD="$LD" \
+      AR="$AR" \
       NLS=false \
       STATIC=false \
       CPUFREQ_BENCH=true \
