@@ -216,7 +216,6 @@ make_target() {
         cp perf $INSTALL/usr/bin
 
       cd $PKG_BUILD/tools/power/cpupower
-      make \ 
       CROSS=$TARGET_PREFIX \
       CC=$CC \
       LD=$LD \
@@ -224,6 +223,7 @@ make_target() {
       STRIP=$STRIP \
       RANLIB=$RANLIB \
       HOSTCC=$HOST_CC \
+      make \
       NLS=false \
       STATIC=false \
       CPUFREQ_BENCH=true \
