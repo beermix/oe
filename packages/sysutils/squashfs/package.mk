@@ -17,13 +17,14 @@ PKG_LONGDESC="Squashfs is intended to be a general read-only filesystem, for arc
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  make -C squashfs-tools mksquashfs \
-       XZ_SUPPORT=1 LZO_SUPPORT=1 ZSTD_SUPPORT=1 \
+  #make -C squashfs-tools mksquashfs \
+       XZ_SUPPORT=1 LZO_SUPPORT=1 \
        XATTR_SUPPORT=0 XATTR_DEFAULT=0 \
        INCLUDEDIR="-I. -I$TOOLCHAIN/include"
 }
 
 makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
-    cp squashfs-tools/mksquashfs $TOOLCHAIN/bin
+    #cp squashfs-tools/mksquashfs $TOOLCHAIN/bin
+    cp $PKG_DIR/mksquashfs $TOOLCHAIN/bin
 }
