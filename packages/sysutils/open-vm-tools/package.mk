@@ -5,17 +5,17 @@
 
 PKG_NAME="open-vm-tools"
 PKG_VERSION="10.3.0-8931395"
-#PKG_SHA256="b3d0b5fd272a8dc35cab1ddd732f9d436f72682925212a6cdeccdab283e2f5ec"
+PKG_SHA256="ca5bcd62a969803015bb4ca8e2610c376487be6b6b95e7500f6684d65813b161"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vmware/open-vm-tools/releases"
 PKG_URL="https://github.com/vmware/open-vm-tools/archive/${PKG_VERSION}.tar.gz"
 PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.3.0/open-vm-tools-10.3.0-8931395.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet libtirpc"
-PKG_DEPENDS_TARGET="toolchain fuse glib libdnet"
+PKG_DEPENDS_TARGET="toolchain fuse glib libdnet rpcsvc-proto:host"
 PKG_SECTION="virtualization"
 PKG_LONGDESC="open-vm-tools: open source implementation of VMware Tools"
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --disable-tests \
@@ -32,16 +32,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
                            --with-sysroot=$SYSROOT_PREFIX"
 
-#post_unpack() {
-#  mv $PKG_BUILD/$PKG_NAME/* $PKG_BUILD/
-#
-#  sed -i -e 's|.*common-agent/etc/config/Makefile.*||' $PKG_BUILD/configure.ac
-#  mkdir -p $PKG_BUILD/common-agent/etc/config
-#}
-
 pre_configure_target() {
-  export LIBS="-ldnet -ltirpc"
-  #export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/tirpc"
+  export LIBS="-ldnet"
 }
 
 post_makeinstall_target() {
