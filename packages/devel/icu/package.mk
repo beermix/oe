@@ -17,9 +17,9 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic:host +pic"
 PKG_TOOLCHAIN="configure"
 
-post_unpack() {
+post_patch() {
   sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-  cp -r $PKG_BUILD/source/* $PKG_BUILD/
+  #cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
 pre_configure_target() {
@@ -33,10 +33,11 @@ makeinstall_host() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
+			      --enable-static --disable-shared \
 			      --with-data-packaging=library \
 			      --enable-release"
 
-#PKG_CONFIGURE_SCRIPT="source/configure"
+PKG_CONFIGURE_SCRIPT="source/configure"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

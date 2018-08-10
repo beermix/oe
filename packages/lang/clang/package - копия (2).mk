@@ -12,10 +12,7 @@ PKG_DEPENDS_HOST="llvm:host"
 #PKG_TOOLCHAIN="manual"
 
 
-configure_host() {
-     cmake -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN \
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
     -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/python \
     -DBUILD_SHARED_LIBS=OFF \
     -DLLVM_LINK_LLVM_DYLIB=OFF \
