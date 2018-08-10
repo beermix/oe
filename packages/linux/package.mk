@@ -216,8 +216,15 @@ make_target() {
         cp perf $INSTALL/usr/bin
         
         cd $PKG_BUILD/tools/power/cpupower
-        make CROSS=${TARGET_PREFIX} CC="${CC}" LD="${LD}" AR=${AR} DEBUG=false NLS=true CPUFREQ_BENCH=true STATIC=false IS_64_BIT=0 libdir=/usr/lib
-        make install DESTDIR=$INSTALL libdir=/usr/lib
+        make CC=$CC LD=$LD AR=$AR NLS=false STATIC=false CPUFREQ_BENCH=true DEBUG=false
+        
+        mkdir -p $INSTALL/usr/lib
+        cp cpupower $INSTALL/usr/bin
+        cp -PL libcpupower.so* $INSTALL/usr/lib
+        
+        # cp cpupower $INSTALL/usr/bin
+        # make install DESTDIR=$INSTALL libdir=/usr/li |  DEBUG=false NLS=true CPUFREQ_BENCH=true 
+        # mkdir -p $INSTALL/usr/bin
     )
   fi
 
