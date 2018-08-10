@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --with-selinux \
+                           --without-selinux \
                            --disable-debug \
                            --disable-timezone-tools"
 
