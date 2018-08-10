@@ -27,7 +27,6 @@ PKG_DEPENDS_HOST="cmake:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="lz4 data compressor/decompressor"
-PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/contrib/cmake_unofficial/CMakeLists.txt"
 
