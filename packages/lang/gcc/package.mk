@@ -46,6 +46,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
+                           --enable-gnu-indirect-function \
+                           --enable-linker-build-id \
+                           --enable-gnu-unique-object \
+                           --enable-default-pie \
+                           --enable-default-ssp \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \

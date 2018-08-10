@@ -18,7 +18,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="chromium-$PKG_VERSION*"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss chromium68:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -30,7 +30,7 @@ PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
-  cd $(get_build_dir chromium)
+  cd $(get_build_dir chromium68)
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
@@ -48,9 +48,16 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
+  # export CC="ccache clang"
+  # export CXX="ccache clang++"
+  # export AR=ar
+  # export NM=nm
+
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    'is_clang=false'
+    'clang_use_chrome_plugins=false'
+    'is_official_build=true' # implies is_cfi=true on x86_64
+    'use_cfi_icall=false' # https://crbug.com/866290
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
     'is_debug=false'
@@ -74,7 +81,7 @@ make_target() {
     'use_vaapi=true'
     'linux_link_libudev=true'
     'enable_vulkan=false'
-    "target_sysroot=\"/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/x86_64-libreelec-linux-gnu/sysroot\""
+    "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
