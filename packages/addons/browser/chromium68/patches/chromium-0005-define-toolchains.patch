@@ -7,7 +7,7 @@
 -  cc = "gcc"
 -  cxx = "g++"
 +  toolchainprefix = "x86_64-libreelec-linux-gnu-"
-+  cc = "${toolchainprefix}gcc"
++  cc = "${toolchainprefix}clang"
 +  cxx = "${toolchainprefix}g++"
  
 -  readelf = "readelf"
