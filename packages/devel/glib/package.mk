@@ -3,7 +3,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) elfutils
 
 PKG_NAME="glib"
-PKG_VERSION="2.57.2"
+PKG_VERSION="2.57.1"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
@@ -14,6 +14,32 @@ PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
+PKG_TOOLCHAIN="autotools"
+
+PKG_CONFIGURE_OPTS_HOST="--enable-static \
+                         --disable-shared \
+                         --disable-libmount \
+                         --with-pcre=internal \
+                         --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
+                           ac_cv_func_vsnprintf_c99=yes \
+                           glib_cv_stack_grows=no \
+                           glib_cv_uscore=no \
+                           glib_cv_va_val_copy=no \
+                           --disable-selinux \
+                           --disable-fam \
+                           --enable-xattr \
+                           --disable-libelf \
+                           --disable-gtk-doc \
+                           --disable-gtk-doc-html \
+                           --disable-man \
+                           --disable-dtrace \
+                           --disable-systemtap \
+                           --enable-Bsymbolic \
+                           --with-gnu-ld \
+                           --with-threads=posix \
+                           --with-pcre=system \
+                           --with-python=python"
 
 PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
@@ -21,9 +47,6 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dxattr=false \
 			-Dman=false \
 			-Ddtrace=false \
-			-Dsystemtap=false \
-			-Dbsymbolic_functions=true \
-			-Dforce_posix_threads=true \
 			-Dinstalled_tests=false \
 			-Dgtk_doc=false"
 
@@ -35,7 +58,6 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Ddtrace=false \
 			  -Dsystemtap=false \
 			  -Dbsymbolic_functions=true \
-			  -Dforce_posix_threads=true \
 			  -Dinstalled_tests=false \
 			  -Dgtk_doc=false"
 
