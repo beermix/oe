@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="8ac0f9e"
+PKG_VERSION="726e155"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
@@ -21,6 +21,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
+                           --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
                            --with-elf \
@@ -28,26 +29,22 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
+                           --enable-stack-protector=strong \
                            --enable-kernel=4.17 \
                            --without-cvs \
                            --without-gd \
+                           --enable-obsolete-rpc \
+                           --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --enable-obsolete-nsl \
-                           --enable-obsolete-rpc \
                            --disable-debug \
+                           --without-selinux \
                            --disable-timezone-tools"
 
-# busybox:init needs it
-# testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
-# PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
-
-#if build_with_debug; then
-#  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
-#else
-#  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
-#fi
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv ldconfig"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -98,9 +95,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  # set some CFLAGS we need
-  # sexport CFLAGS="-O2 -march=$TARGET_CPU -g -m64"
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+  export CFLAGS="-O2 -march=$TARGET_CPU -g3 -m64"
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
