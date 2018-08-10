@@ -58,7 +58,7 @@ case "$LINUX" in
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="no"
+    PKG_BUILD_PERF="yes"
     ;;
 esac
 
@@ -72,7 +72,7 @@ fi
 
 if [ "$PKG_BUILD_PERF" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= $PKG_KERNEL_CFG_FILE ; then
   PKG_BUILD_PERF="yes"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET binutils elfutils libunwind zlib openssl"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET binutils elfutils libunwind zlib openssl pciutils"
 fi
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
@@ -214,6 +214,10 @@ make_target() {
         make $PERF_BUILD_ARGS
       mkdir -p $INSTALL/usr/bin
         cp perf $INSTALL/usr/bin
+        
+        cd $PKG_BUILD/tools/power/cpupower
+        make CROSS=${TARGET_PREFIX} CC="${CC}" LD="${LD}" AR=${AR} DEBUG=false NLS=true CPUFREQ_BENCH=true STATIC=false IS_64_BIT=0 libdir=/usr/lib
+        make install DESTDIR=$INSTALL libdir=/usr/lib
     )
   fi
 

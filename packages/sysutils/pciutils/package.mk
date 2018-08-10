@@ -20,7 +20,7 @@ make_target() {
        CROSS_COMPILE=${TARGET_PREFIX} \
        HOST=$TARGET_ARCH-linux \
        $PKG_MAKE_OPTS \
-       ZLIB=no DNS=no LIBKMOD=yes HWDB=yes
+       ZLIB=no DNS=no LIBKMOD=yes HWDB=no
 }
 
 makeinstall_target() {

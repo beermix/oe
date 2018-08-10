@@ -39,6 +39,9 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dinstalled_tests=false \
 			  -Dgtk_doc=false"
 
+pre_configure_target() {
+   export LDFLAGS="$LDFLAGS -lz"
+}
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig

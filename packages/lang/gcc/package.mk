@@ -22,7 +22,6 @@ post_unpack() {
   sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
- # sed -i '/m64=/s/lib64/lib/' $PKG_BUILD/gcc/config/i386/t-linux64
 }
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
@@ -89,14 +88,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
 
-pre_configure_bootstrap() {
-  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-}
+#pre_configure_bootstrap() {
+#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+#}
 
 post_make_host() {
   # fix wrong link
