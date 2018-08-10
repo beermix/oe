@@ -22,7 +22,8 @@ PKG_BUILD_FLAGS="-lto -gold -hardening"
 #  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
-#}
+#}                           --enable-default-pie \
+                           #--enable-default-ssp \
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -45,8 +46,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
-                           --enable-default-pie \
-                           --enable-default-ssp \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \

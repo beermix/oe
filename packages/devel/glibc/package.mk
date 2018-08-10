@@ -30,6 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.17 \
+                           --disable-experimental-malloc \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \

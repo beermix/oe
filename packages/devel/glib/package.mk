@@ -3,7 +3,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) elfutils
 
 PKG_NAME="glib"
-PKG_VERSION="2.57.1"
+PKG_VERSION="2.57.2"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
