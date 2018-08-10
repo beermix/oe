@@ -48,15 +48,15 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
-  # export CC="ccache clang"
-  # export CXX="ccache clang++"
-  # export AR=ar
-  # export NM=nm
+  export CC="ccache clang"
+  export CXX="ccache clang++"
+  export AR=ar
+  export NM=nm
 
   local _flags=(
-    "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "host_toolchain=\"//build/toolchain/linux:clang_x64\""
     'clang_use_chrome_plugins=false'
-    'is_official_build=true' # implies is_cfi=true on x86_64
+    'is_official_build=false' # implies is_cfi=true on x86_64
     'use_cfi_icall=false' # https://crbug.com/866290
     'clang_use_chrome_plugins=false'
     'symbol_level=0'

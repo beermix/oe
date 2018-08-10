@@ -37,7 +37,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64-clang $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -50,8 +50,7 @@ pre_configure_target() {
 
   case $TARGET_ARCH in
     x86_64)
-      OPENSSL_TARGET=linux-x86_64
-      PLATFORM_FLAGS=enable-ec_nistp_64_gcc_128
+      OPENSSL_TARGET=linux-x86_64-clang
       ;;
     arm)
       OPENSSL_TARGET=linux-armv4
@@ -68,7 +67,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
+  ./Configure linux-x86_64-clang
 }
 
 makeinstall_target() {

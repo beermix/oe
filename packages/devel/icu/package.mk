@@ -14,7 +14,10 @@ PKG_BUILD_FLAGS="+pic"
 
 post_unpack() {
 #  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-  cp -r $PKG_BUILD/source/* $PKG_BUILD/
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -a $PKG_BUILD/source/* $PKG_BUILD/.$TARGET_NAME/
+  cp -a $PKG_BUILD/source/* $PKG_BUILD/.$HOST_NAME/
 }
 
 pre_configure_target() {
