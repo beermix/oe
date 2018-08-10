@@ -67,12 +67,12 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure linux-x86_64-clang
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw -j1
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw -j1
+  make INSTALL_PREFIX=$INSTALL install_sw
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }
@@ -83,18 +83,14 @@ post_makeinstall_target() {
 
   debug_strip $INSTALL/usr/bin/openssl
 
-  # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
-  
   mkdir -p $INSTALL/etc/ssl
     cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cacert.pem.system
-#  perl $PKG_DIR/cert/mk-ca-bundle.pl
-#  cp $PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+
   # give user the chance to include their own CA
   mkdir -p $INSTALL/usr/bin
     cp $PKG_DIR/scripts/openssl-config $INSTALL/usr/bin
     ln -sf /run/libreelec/cacert.pem $INSTALL/etc/ssl/cacert.pem
-    ln -sf /run/libreelec/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
@@ -104,8 +100,6 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/ssl
     ln -sf /run/libreelec/cacert.pem $INSTALL/usr/lib/ssl/cert.pem
 }
-#  mkdir -p $INSTALL/etc/ssl/certs
-#    ln -sf /etc/ssl/cert.pem $INSTALL/etc/ssl/certs/ca-certificates.crt
 
 post_install() {
   enable_service openssl-config.service
