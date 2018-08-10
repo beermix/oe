@@ -30,24 +30,15 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.17 \
-                           --disable-experimental-malloc \
                            --without-cvs \
                            --without-gd \
+                           --enable-obsolete-rpc \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --with-selinux \
                            --disable-debug \
                            --disable-timezone-tools"
-
-# busybox:init needs it
-# testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
-PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
-
-if build_with_debug; then
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
-else
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
-fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -99,8 +90,13 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  # sexport CFLAGS="-O2 -march=$TARGET_CPU -g -m64"
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+  # sexport CFLAGS="-O2 -march=$TARGET_CPU -g"
+  # export CFLAGS="$CFLAGS -g"
+
+  export CFLAGS="-O2 -march=$TARGET_CPU -g2 -m64  -Wl,-z,max-page-size=0x1000 "
+  unset LDFLAGS
+  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
+
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
@@ -121,7 +117,7 @@ build-programs=yes
 EOF
 
   # binaries to install into target
-  GLIBC_INCLUDE_BIN="getent ldd locale"
+  GLIBC_INCLUDE_BIN="getent ldd locale iconv iconvconfig"
 
   # Generic "installer" needs localedef to define drawing chars
   if [ "$PROJECT" = "Generic" ]; then

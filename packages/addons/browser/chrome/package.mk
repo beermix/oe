@@ -54,6 +54,9 @@ addon() {
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
+  # icu
+  cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicudata.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
   # libatk-bridge
   cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
