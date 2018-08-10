@@ -12,9 +12,11 @@ PKG_LONGDESC="Libiconv converts from one character encoding to another through U
 PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
-			      --build=$HOST_NAME \
-			      --enable-shared \
-			      --enable-static \
-			      --disable-rpath \
-			      --enable-relocatable \
-			      --enable-extra-encodings"
+            --build=$HOST_NAME \
+            --prefix=/usr \
+            --includedir=/usr/include/iconv \
+            --libdir=/usr/lib/iconv \
+            --sysconfdir=/etc \
+            --disable-nls \
+            --enable-extra-encodings \
+            --with-gnu-ld"

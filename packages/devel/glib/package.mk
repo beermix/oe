@@ -9,7 +9,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
+PKG_DEPENDS_TARGET="toolchain zlib libffi libiconv pcre Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
@@ -19,21 +19,30 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
 			-Dinternal_pcre=true \
 			-Dxattr=false \
-			-Dlibmount=false \
 			-Dman=false \
+			-Ddtrace=false \
+			-Dsystemtap=false \
+			-Dbsymbolic_functions=true \
+			-Dforce_posix_threads=true \
+			-Dinstalled_tests=false \
 			-Dgtk_doc=false"
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
 			  -Dinternal_pcre=false \
 			  -Dxattr=false \
-			  -Dlibmount=false \
 			  -Dman=false \
-			  -Dgtk_doc=false"
+			  -Ddtrace=false \
+			  -Dsystemtap=false \
+			  -Dbsymbolic_functions=true \
+			  -Dforce_posix_threads=true \
+			  -Dinstalled_tests=false \
+			  -Dgtk_doc=false \
+			  -Diconv=gnu"
 
-#pre_configure_target() {
-#  LDFLAGS="$LDFLAGS -lz"
-#}
+pre_configure_target() {
+  LDFLAGS="-latomic -lz"
+}
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
