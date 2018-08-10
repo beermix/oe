@@ -9,7 +9,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi libiconv icu pcre Python2:host util-linux"
+PKG_DEPENDS_TARGET="toolchain zlib libffi icu pcre Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
@@ -37,12 +37,8 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true \
 			  -Dinstalled_tests=false \
-			  -Dgtk_doc=false \
-			  -Diconv=gnu"
+			  -Dgtk_doc=false"
 
-pre_configure_target() {
-  LDFLAGS="-latomic -lz"
-}
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
