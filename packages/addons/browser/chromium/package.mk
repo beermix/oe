@@ -6,6 +6,7 @@
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
+#  https://src.fedoraproject.org/rpms/chromium/commits/master
 #############################################################################################################################
 
 PKG_NAME="chromium"
