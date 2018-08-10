@@ -1,25 +1,6 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2018-present Team LibreELEC
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
-
 PKG_NAME="llvm"
-PKG_VERSION="6.0.0"
-PKG_SHA256="1ff53c915b4e761ef400b803f07261ade637b0c269d99569f18040f3dcee4408"
+PKG_VERSION="6.0.1"
+PKG_SHA256=""
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
@@ -43,7 +24,7 @@ PKG_CMAKE_OPTS_TARGET="-DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_INCLUDE_DOCS=OFF \
                        -DLLVM_ENABLE_DOXYGEN=OFF \
                        -DLLVM_ENABLE_SPHINX=OFF \
-                       -DLLVM_TARGETS_TO_BUILD="AMDGPU" \
+                       -DLLVM_TARGETS_TO_BUILD="X86" \
                        -DLLVM_ENABLE_TERMINFO=OFF \
                        -DLLVM_ENABLE_ASSERTIONS=OFF \
                        -DLLVM_ENABLE_WERROR=OFF \
@@ -56,7 +37,7 @@ PKG_CMAKE_OPTS_TARGET="-DLLVM_INCLUDE_TOOLS=ON \
                        -DCMAKE_HOST_TOOLCHAIN_FILE="$TOOLCHAIN/etc/cmake-$HOST_NAME.conf" \
                        -DCMAKE_HOST_INSTALL_RPATH="$TOOLCHAIN/lib" \
                        -DCMAKE_CROSSCOMPILING=ON \
-                       -DCMAKE_BUILD_TYPE=MinSizeRel \
+                       -DCMAKE_BUILD_TYPE=Release \
                        -DCMAKE_C_FLAGS="$CFLAGS" \
                        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
                        -DLLVM_TARGET_ARCH="$TARGET_ARCH""

@@ -10,27 +10,6 @@ diff -up chromium-62.0.3202.62/chrome/browser/ui/webui/settings/on_startup_handl
  }
  
  void OnStartupHandler::HandleGetNtpExtension(const base::ListValue* args) {
-diff -up chromium-62.0.3202.62/ui/views/animation/ink_drop_host_view.cc.another-rvalue-fix chromium-62.0.3202.62/ui/views/animation/ink_drop_host_view.cc
---- chromium-62.0.3202.62/ui/views/animation/ink_drop_host_view.cc.another-rvalue-fix	2017-10-18 10:15:16.408497853 -0400
-+++ chromium-62.0.3202.62/ui/views/animation/ink_drop_host_view.cc	2017-10-18 10:15:43.793967075 -0400
-@@ -305,7 +305,7 @@ std::unique_ptr<InkDropImpl> InkDropHost
-       base::MakeUnique<InkDropImpl>(this, size());
-   ink_drop->SetAutoHighlightMode(
-       views::InkDropImpl::AutoHighlightMode::HIDE_ON_RIPPLE);
--  return ink_drop;
-+  return std:move(ink_drop);
- }
- 
- std::unique_ptr<InkDropImpl>
-@@ -314,7 +314,7 @@ InkDropHostView::CreateDefaultFloodFillI
-       InkDropHostView::CreateDefaultInkDropImpl();
-   ink_drop->SetAutoHighlightMode(
-       views::InkDropImpl::AutoHighlightMode::SHOW_ON_RIPPLE);
--  return ink_drop;
-+  return std:move(ink_drop);
- }
- 
- }  // namespace views
 diff -up chromium-62.0.3202.62/ui/views/controls/button/checkbox.cc.another-rvalue-fix chromium-62.0.3202.62/ui/views/controls/button/checkbox.cc
 --- chromium-62.0.3202.62/ui/views/controls/button/checkbox.cc.another-rvalue-fix	2017-10-18 10:14:18.054627919 -0400
 +++ chromium-62.0.3202.62/ui/views/controls/button/checkbox.cc	2017-10-18 10:14:42.265159378 -0400
