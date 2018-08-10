@@ -5,7 +5,7 @@
 PKG_NAME="gcc"
 PKG_VERSION="8.2.0"
 #PKG_SHA256="196c3c04ba2613f893283977e6011b2345d1cd1af9abeac58e916b1aab3e0080"
-PKG_VERSION="8-20180803"
+#PKG_VERSION="8-20180803"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -44,6 +44,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
+                           --enable-gnu-indirect-function \
+                           --enable-gnu-unique-object \
+                           --enable-linker-build-id \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell"
