@@ -1,0 +1,14 @@
+Description: Add missing base namespace to PathService identifier
+Author: Olivier Tilloy <olivier.tilloy@canonical.com>
+
+--- a/chrome/common/chrome_paths.cc
++++ b/chrome/common/chrome_paths.cc
+@@ -381,7 +381,7 @@ bool PathProvider(int key, base::FilePat
+     // TODO(crbug.com/663554): Remove this after component updated CDM is
+     // supported on Linux and ChromeOS.
+     case chrome::FILE_WIDEVINE_CDM:
+-      PathService::Get(base::DIR_HOME, &cur);
++      base::PathService::Get(base::DIR_HOME, &cur);
+       cur = cur.Append(FILE_PATH_LITERAL(".local/lib/libwidevinecdm.so"));
+       if (base::PathExists(cur)) {
+         break;

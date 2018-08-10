@@ -9,14 +9,14 @@
 #  https://src.fedoraproject.org/rpms/chromium/commits/master
 #############################################################################################################################
 
-PKG_NAME="chromium"
+PKG_NAME="chromium68"
 PKG_VERSION="68.0.3440.106"
 PKG_SHA256="7021040635a0a0d47f699bdb22e3ef5c91482e4f51b428d1de3016da95f0e698"
 PKG_REV="310"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="chromium-$PKG_VERSION*"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
 PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss chromium:host"
 PKG_SECTION="browser"
@@ -74,7 +74,7 @@ make_target() {
     'use_vaapi=true'
     'linux_link_libudev=true'
     'enable_vulkan=false'
-    "target_sysroot=\"${SYSROOT_PREFIX}\""
+    "target_sysroot=\"/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/x86_64-libreelec-linux-gnu/sysroot\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
