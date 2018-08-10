@@ -37,7 +37,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64-clang $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -50,7 +50,7 @@ pre_configure_target() {
 
   case $TARGET_ARCH in
     x86_64)
-      OPENSSL_TARGET=linux-x86_64-clang
+      OPENSSL_TARGET=linux-x86_64
       ;;
     arm)
       OPENSSL_TARGET=linux-armv4
