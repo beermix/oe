@@ -106,10 +106,10 @@ readonly -A _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
   [libpng]=libpng            # https://crbug.com/752403#c10
-  [libxml]=libxml2           # https://crbug.com/736026
+  #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [yasm]=
-  #[zlib]=minizip
+  [zlib]=minizip
 )
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
