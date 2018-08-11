@@ -15,4 +15,4 @@ Author: Olivier Tilloy <olivier.tilloy@canonical.com>
 +    #endif
  
      static uint32_t read_cpu_features() {
-         const uint32_t kHWCAP_CRC32 = (1<<7);
+         const uint32_t kHWCAP_CRC32   = (1<< 7),

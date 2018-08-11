@@ -1,20 +1,21 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2018-present Team LibreELEC
+#      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 #
-#  LibreELEC is free software: you can redistribute it and/or modify
+#  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
 #
-#  LibreELEC is distributed in the hope that it will be useful,
+#  This Program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
+#  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
 import os
@@ -24,7 +25,7 @@ import xbmcaddon
 import subprocess
 from xml.dom.minidom import parse
 
-sys.path.append('/usr/share/kodi/addons/service.libreelec.settings')
+sys.path.append('/usr/share/kodi/addons/service.openelec.settings')
 
 import oe
 
@@ -92,21 +93,57 @@ def resumeXbmc():
     xbmc.enableNavSounds(True)
 
 def startChromium(args):
-  try:
-    new_env = os.environ.copy()
-    new_env['VAAPI_MODE'] = __addon__.getSetting('VAAPI_MODE')
-    new_env['WINDOW_MODE'] = __addon__.getSetting('WINDOW_MODE')
-    new_env['RASTER_MODE'] = __addon__.getSetting('RASTER_MODE')
+  oe.execute('chmod +x ' + __path__ + 'chromium')
+  oe.execute('chmod +x ' + __path__ + 'chromium.bin')
+  oe.execute('chmod 4755 ' + __path__ + 'chrome-sandbox')
 
-    new_env['ALSA_DEVICE'] = ''
+  try:
+    window_mode = {
+      'maximized': '--start-maximized',
+      'kiosk': '--kiosk',
+      'none': '',
+    }
+
+    raster_mode = {
+      'default': '',
+      'off': '--disable-accelerated-2d-canvas --disable-gpu-compositing',
+      'force': '--enable-gpu-rasterization --enable-accelerated-2d-canvas --ignore-gpu-blacklist',
+    }
+
+    new_env = os.environ.copy()
+    vaapi_mode = __addon__.getSetting('VAAPI_MODE')
+    gpu_accel_mode = ''
+    if vaapi_mode == 'intel':
+      new_env['LIBVA_DRIVERS_PATH'] = '/usr/lib/va'
+      new_env['LIBVA_DRIVER_NAME'] = 'i965'
+    elif vaapi_mode == 'amd':
+      new_env['LIBVA_DRIVERS_PATH'] = os.path.join(__addon__.getAddonInfo('path'), 'lib')
+      new_env['LIBVA_DRIVER_NAME'] = 'vdpau'
+    elif vaapi_mode == 'nvidia':
+      new_env['LIBVA_DRIVERS_PATH'] = os.path.join(__addon__.getAddonInfo('path'), 'lib')
+      new_env['LIBVA_DRIVER_NAME'] = 'vdpau'
+      gpu_accel_mode = '--allow-no-sandbox-job --disable-gpu-sandbox'
+    else:
+      new_env['LIBGL_ALWAYS_SOFTWARE'] = '1'
+
+    flash_plugin = ''
+    if os.path.exists(__path__ + 'PepperFlash/libpepflashplayer.so'):
+      flash_plugin = '--ppapi-flash-path=' + __path__ + 'PepperFlash/libpepflashplayer.so'
+
     if __addon__.getSetting('USE_CUST_AUDIODEVICE') == 'true':
       alsa_device = __addon__.getSetting('CUST_AUDIODEVICE_STR')
     else:
       alsa_device = getAudioDevice()
+    alsa_param = ''
     if not alsa_device == None and not alsa_device == '':
-      new_env['ALSA_DEVICE'] = alsa_device
+      alsa_param = '--alsa-output-device=' + alsa_device
 
-    chrome_params = args + ' ' + \
+    chrome_params = window_mode.get(__addon__.getSetting('WINDOW_MODE')) + ' ' + \
+                    raster_mode.get(__addon__.getSetting('RASTER_MODE')) + ' ' + \
+                    flash_plugin + ' ' + \
+                    gpu_accel_mode + ' ' + \
+                    alsa_param + ' ' + \
+                    args + ' ' + \
                     __addon__.getSetting('HOMEPAGE')
     subprocess.call(__path__ + 'chromium ' + chrome_params, shell=True, env=new_env)
   except Exception, e:
