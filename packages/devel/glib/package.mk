@@ -52,8 +52,7 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dman=false \
 			-Ddtrace=false \
 			-Dinstalled_tests=false \
-			-Dgtk_doc=false \
-			-Diconv=libc"
+			-Dgtk_doc=false"
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
@@ -63,12 +62,12 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Ddtrace=false \
 			  -Dsystemtap=false \
 			  -Dbsymbolic_functions=true \
+			  -Dforce_posix_threads=true \
 			  -Dinstalled_tests=false \
-			  -Dgtk_doc=false \
-			  -Diconv=libc"
+			  -Dgtk_doc=false"
 
 pre_configure_target() {
-   export LDFLAGS="$LDFLAGS -lz"
+   export LDFLAGS="$LDFLAGS -latomic -lm -ldl -lz"
 }
 
 post_makeinstall_target() {

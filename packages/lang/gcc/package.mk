@@ -5,7 +5,7 @@
 PKG_NAME="gcc"
 PKG_VERSION="8.2.0"
 #PKG_SHA256="196c3c04ba2613f893283977e6011b2345d1cd1af9abeac58e916b1aab3e0080"
-#PKG_VERSION="8-20180803"
+PKG_VERSION="8-20180803"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -18,12 +18,11 @@ PKG_SHORTDESC="gcc: The GNU Compiler Collection (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-#post_unpack() {
-#  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
-#}                           --enable-default-pie \
-                           #--enable-default-ssp \
+post_unpack() {
+  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
+}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -44,9 +43,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --enable-gnu-indirect-function \
-                           --enable-gnu-unique-object \
-                           --enable-linker-build-id \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell"
@@ -87,14 +83,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
 
-#pre_configure_bootstrap() {
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-#}
+pre_configure_bootstrap() {
+  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+}
 
 post_make_host() {
   # fix wrong link

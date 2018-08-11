@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="726e155"
+PKG_VERSION="2813e41"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
@@ -30,7 +30,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.17 \
-                           --disable-experimental-malloc \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -91,12 +90,12 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  # sexport CFLAGS="-O2 -march=$TARGET_CPU -g"
+  sexport CFLAGS="-O2 -march=$TARGET_CPU -g"
   # export CFLAGS="$CFLAGS -g"
 
-  export CFLAGS="-O2 -march=$TARGET_CPU -g2 -m64  -Wl,-z,max-page-size=0x1000 "
-  unset LDFLAGS
-  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
+  # export CFLAGS="-O2 -march=$TARGET_CPU -g2 -m64  -Wl,-z,max-page-size=0x1000 "
+  # unset LDFLAGS
+  # export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
