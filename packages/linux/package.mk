@@ -182,9 +182,7 @@ make_target() {
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
 
-  cd $PKG_BUILD/tools/power/cpupower
-
-  make \
+  make -C $PKG_BUILD/tools/power/cpupower  \
   CROSS="$TARGET_PREFIX" \
   CC="$CC" \
   LD="$LD" \
