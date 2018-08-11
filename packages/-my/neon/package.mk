@@ -12,7 +12,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --with-libxml2 \
 			      --disable-documentation \
 			      --with-ssl=openssl \
-			      --with-ca-bundle=/run/libreelec/cacert.pem"
+			      --with-ca-bundle=/etc/ssl/cacert.pem"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
