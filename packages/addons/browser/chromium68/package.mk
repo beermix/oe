@@ -1,27 +1,22 @@
-#############################################################################################################################
-#  beautifulsoup4:host html5lib:host re2 snappy
+########################################################################################################################  beautifulsoup4:host html5lib:host re2 snappy
 #  
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
-#  https://www.chromestatus.com/
+#  https://www.chromestatus.com/ chromium68:host
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
 #  https://src.fedoraproject.org/rpms/chromium/commits/master
-#############################################################################################################################
-
+#######################################################################################################################
 PKG_NAME="chromium68"
 PKG_VERSION="68.0.3440.106"
 PKG_SHA256="7021040635a0a0d47f699bdb22e3ef5c91482e4f51b428d1de3016da95f0e698"
 PKG_REV="310"
 PKG_ARCH="x86_64"
-PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="chromium-$PKG_VERSION*"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss chromium68:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss"
 PKG_SECTION="browser"
-PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
-PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="yes"
@@ -32,13 +27,7 @@ PKG_ADDON_PROVIDES="executable"
 post_patch() {
   cd $(get_build_dir chromium68)
 
-  # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
-}
-
-make_host() {
-  export CCACHE_SLOPPINESS=time_macros
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
@@ -47,11 +36,6 @@ make_target() {
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
-
-  export CC="ccache clang"
-  export CXX="ccache clang++"
-  export AR=ar
-  export NM=nm
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:clang_x64\""
@@ -73,12 +57,27 @@ make_target() {
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
-    'use_gold=false'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
+    'enable_google_now=false'
+    'enable_mdns=true'
+    'enable_vr=false'
+    'enable_wayland_server=false'
+    'is_component_ffmpeg=true'
+    'is_desktop_linux=true'
+    'symbol_level=0'
+    'use_alsa=true'
+    'use_aura=true'
+    'use_dbus=true'
+    'use_gio=true'
+    'use_glib=true'
+    'use_gold=true'
+    'use_libpci=true'
     'use_vaapi=true'
+    'rtc_enable_protobuf=false'
+    'clang_use_chrome_plugins=false'
     'linux_link_libudev=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -92,7 +91,9 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  ./third_party/libaddressinput/chromium/tools/update-strings.py
+  # ./third_party/libaddressinput/chromium/tools/update-strings.py
+  
+  $TOOLCHAIN/bin/python tools/gn/bootstrap/bootstrap.py -s --no-clean
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
@@ -132,6 +133,9 @@ addon() {
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # icu
+  cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicudata.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # gdk-pixbuf
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
