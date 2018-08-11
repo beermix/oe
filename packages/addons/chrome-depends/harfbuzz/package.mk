@@ -11,7 +11,7 @@ PKG_SITE="http://www.freedesktop.org/wiki/Software/HarfBuzz"
 PKG_URL="https://www.freedesktop.org/software/harfbuzz/release/harfbuzz-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain cairo freetype glib icu"
 PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
-PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-coretext=no \
 			      --with-uniscribe=no \

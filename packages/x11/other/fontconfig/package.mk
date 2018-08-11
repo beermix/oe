@@ -14,6 +14,11 @@ PKG_SHORTDESC="fontconfig: A library for font customization and configuration"
 PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
 PKG_TOOLCHAIN="autotools"
 
+post_unpack() {
+  # Delete this as a workaround https://bugs.freedesktop.org/show_bug.cgi?id=101280
+  rm -f $PKG_BUILD/src/fcobjshash.h
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
                            --with-default-fonts=/usr/share/fonts \
@@ -27,9 +32,6 @@ pre_configure_target() {
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
   CFLAGS="$CFLAGS -I$PKG_BUILD"
   CXXFLAGS="$CXXFLAGS -I$PKG_BUILD"
-
-  # Delete this as a workaround https://bugs.freedesktop.org/show_bug.cgi?id=101280
-  # rm -f $PKG_BUILD/src/fcobjshash.h
 }
 
 post_makeinstall_target() {
