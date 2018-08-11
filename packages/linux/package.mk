@@ -182,7 +182,8 @@ make_target() {
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
 
-  make -C $PKG_BUILD/tools/power/cpupower  \
+  cd $PKG_BUILD/tools/power/cpupower
+  make \
   CROSS="$TARGET_PREFIX" \
   CC="$CC" \
   LD="$LD" \
@@ -196,6 +197,8 @@ make_target() {
   mkdir -p $INSTALL/usr/bin
   cp cpupower $INSTALL/usr/bin
   cp -PL libcpupower.so* $INSTALL/usr/lib
+  
+  cd $PKG_BUILD
 
   if [ "$PKG_BUILD_PERF" = "yes" ] ; then
     ( cd tools/perf
