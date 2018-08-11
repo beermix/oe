@@ -98,7 +98,7 @@ make_target() {
     'use_alsa=true'
     'use_aura=true'
     'use_glib=true'
-    'use_gold=true'
+    'use_gold=false'
     'rtc_enable_protobuf=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -147,13 +147,9 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       -delete
   done
   
-  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
-  out/Release/gn gen out/Release --args="${_flags[*]}" \
-    --script-executable=/usr/bin/python2
-
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
-  ./third_party/libaddressinput/chromium/tools/update-strings.py
+  #./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
