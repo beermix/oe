@@ -58,7 +58,7 @@ case "$LINUX" in
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="yes"
+    PKG_BUILD_PERF="no"
     ;;
 esac
 
@@ -182,6 +182,23 @@ make_target() {
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
 
+  cd $PKG_BUILD/tools/power/cpupower
+
+  make \
+  CROSS="$TARGET_PREFIX" \
+  CC="$CC" \
+  LD="$LD" \
+  AR="$AR" \
+  NLS=true \
+  STATIC=false \
+  CPUFREQ_BENCH=true \
+  DEBUG=false
+
+  mkdir -p $INSTALL/usr/lib
+  mkdir -p $INSTALL/usr/bin
+  cp cpupower $INSTALL/usr/bin
+  cp -PL libcpupower.so* $INSTALL/usr/lib
+
   if [ "$PKG_BUILD_PERF" = "yes" ] ; then
     ( cd tools/perf
 
@@ -214,23 +231,6 @@ make_target() {
         make $PERF_BUILD_ARGS
       mkdir -p $INSTALL/usr/bin
         cp perf $INSTALL/usr/bin
-
-      cd $PKG_BUILD/tools/power/cpupower
-
-      make \
-      CROSS="$TARGET_PREFIX" \
-      CC="$CC" \
-      LD="$LD" \
-      AR="$AR" \
-      NLS=false \
-      STATIC=false \
-      CPUFREQ_BENCH=true \
-      DEBUG=false
-
-      mkdir -p $INSTALL/usr/lib
-      mkdir -p $INSTALL/usr/bin
-      cp cpupower $INSTALL/usr/bin
-      cp -PL libcpupower.so* $INSTALL/usr/lib
     )
   fi
 

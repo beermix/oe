@@ -4,11 +4,11 @@
 
 PKG_NAME="ninja"
 PKG_VERSION="ca041d8"
-PKG_VERSION="1.8.2"
+#PKG_VERSION="1.8.2"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
-PKG_URL="https://github.com/ninja-build/ninja/archive/v$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/ninja-build/ninja/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python2:host Python3:host re2c:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Small build system with a focus on speed"
@@ -16,8 +16,8 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  #CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
-  $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
+  CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
+  #$TOOLCHAIN/bin/python2 ./configure.py --bootstrap
   # emacs -Q --batch -f batch-byte-compile misc/ninja-mode.el
 }
 

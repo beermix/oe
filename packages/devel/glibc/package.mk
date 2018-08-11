@@ -117,7 +117,7 @@ build-programs=yes
 EOF
 
   # binaries to install into target
-  GLIBC_INCLUDE_BIN="getent ldd locale iconv iconvconfig"
+  GLIBC_INCLUDE_BIN="getent ldd locale"
 
   # Generic "installer" needs localedef to define drawing chars
   if [ "$PROJECT" = "Generic" ]; then
@@ -127,7 +127,7 @@ EOF
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-# ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+ ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
