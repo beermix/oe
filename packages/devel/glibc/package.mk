@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="4b25485"
+PKG_VERSION="c9570bd"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
@@ -38,6 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --without-selinux \
                            --disable-debug \
+                           --disable-werror \
                            --disable-timezone-tools"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
