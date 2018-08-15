@@ -18,10 +18,14 @@ PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-nls \
+                           --with-zlib \
+                           --without-bzlib \
                            --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="utrace_cv_cc_biarch=false \
                            --disable-nls \
+                           --with-zlib \
+                           --without-bzlib \
                            --without-lzma"
 
 makeinstall_host() {

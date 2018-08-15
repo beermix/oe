@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 PKG_NAME="ncurses"
 PKG_VERSION="6.0"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
