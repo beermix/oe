@@ -37,11 +37,16 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
+  export CC="ccache x86_64-libreelec-linux-gnu-clang"
+  export CXX="ccache x86_64-libreelec-linux-gnu-clang++"
+  export AR=ar
+  export NM=nm
+
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'symbol_level=0'
+    'is_official_build=true' # implies is_cfi=true on x86_64
+    'use_cfi_icall=false' # https://crbug.com/866290
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -72,7 +77,6 @@ make_target() {
     'enable_google_now=false'
     'enable_mdns=true'
     'enable_wayland_server=false'
-    'is_component_ffmpeg=true'
     'is_desktop_linux=true'
     'use_alsa=true'
     'use_aura=true'
