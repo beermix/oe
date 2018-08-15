@@ -4,6 +4,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="c9570bd"
+PKG_VERSION="fdb16de"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
