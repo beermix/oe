@@ -13,4 +13,5 @@ PKG_DEPENDS_TARGET="toolchain cairo freetype fontconfig fribidi glib harfbuzz li
 PKG_LONGDESC="The Pango library for layout and rendering of internationalized text."
 PKG_TOOLCHAIN="meson"
 
-PKG_MESON_OPTS_TARGET="-Denable_docs=false"
+PKG_MESON_OPTS_TARGET="-Denable_docs=false \
+                       -Dgir=false"
