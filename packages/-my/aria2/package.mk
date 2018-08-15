@@ -15,10 +15,10 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-ipv6 \
                            --without-gnutls \
                            --without-libssh2 \
+                           --with-ca-bundle=/etc/ssl/cacert.pem \
                            --with-libexpat \
                            --with-zlib \
                            --with-libuv \
                            --without-libgcrypt \
                            --without-sqlite3 \
-                           --with-libxml2 \
-                           --with-ca-bundle=/etc/ssl/cacert.pem"
+                           --with-libxml2"
