@@ -13,6 +13,7 @@ PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper shared-mime-info 
 PKG_LONGDESC="GdkPixbuf is a a GNOME library for image loading and manipulation."
 
 PKG_MESON_OPTS_TARGET="-Ddocs=false \
+                       -Dgir=false \
                        -Dman=false \
                        -Drelocatable=false \
                        -Djasper=true"
