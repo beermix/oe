@@ -30,6 +30,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
+                         --enable-compressed-debug-sections=all \
                          --disable-gdb \
                          --with-system-zlib \
                          --enable-plugins \
