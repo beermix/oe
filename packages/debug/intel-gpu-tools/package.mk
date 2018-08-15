@@ -8,7 +8,7 @@ PKG_SOURCE_DIR="$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain peg:host kmod systemd procps-ng libpciaccess mesa libdrm libpciaccess cairo swig:host libunwind libXv"
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
-#sPKG_TOOLCHAIN="meson"
+PKG_TOOLCHAIN="meson"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
 			      --disable-shared \
@@ -21,7 +21,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
 			      --enable-intel"
 			      
 PKG_MESON_OPTS_TARGET="-Dbuild_overlay=true \
-			  -Doverlay_backends=x \
 			  -Dbuild_audio=false \
 			  -Dbuild_chamelium=false \
 			  -Dwith_valgrind=false \
