@@ -33,7 +33,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   zen)
-    PKG_VERSION="a2b7ab4"
+    PKG_VERSION="ea40215"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
@@ -53,10 +53,10 @@ case "$LINUX" in
     PKG_URL="https://github.com/raspberrypi/linux/archive/$PKG_VERSION.tar.gz"
     ;;
   *)
-    PKG_VERSION="4.18"
+    PKG_VERSION="4.18.1"
     PKG_SHA256=""
-    #PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    #PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
