@@ -1,29 +1,13 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-2017 Christian Hewitt (chewitt@libreelec.tv)
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="openvpn"
-PKG_VERSION="2.4.1"
-PKG_SHA256="fde9e22c6df7a335d2d58c6a4d5967be76df173c766a5c51ece57fd044c76ee5"
+PKG_VERSION="2.4.6"
+PKG_SHA256="4f6434fa541cc9e363434ea71a16a62cf2615fb2f16af5b38f43ab5939998c26"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://openvpn.net"
-PKG_URL="http://swupdate.openvpn.org/community/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_SITE="https://openvpn.net"
+PKG_URL="https://swupdate.openvpn.org/community/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain lzo openssl"
 PKG_SECTION="network"
 PKG_SHORTDESC="openvpn: a full featured SSL VPN software solution that integrates OpenVPN server capabilities."

@@ -1,20 +1,5 @@
-################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="xmlstarlet"
 PKG_VERSION="1.6.1"
@@ -37,8 +22,7 @@ PKG_CONFIGURE_OPTS_HOST="  ac_cv_func_malloc_0_nonnull=yes \
                            --with-libxml-include-prefix=$TOOLCHAIN/include/libxml2 \
                            --with-libxml-libs-prefix=$TOOLCHAIN/lib \
                            --with-libxslt-include-prefix=$TOOLCHAIN/include \
-                           --with-libxslt-libs-prefix=$TOOLCHAIN/lib \
-                           --enable-build-docs=no"
+                           --with-libxslt-libs-prefix=$TOOLCHAIN/lib"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
@@ -48,8 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-libxml-include-prefix=$SYSROOT_PREFIX/usr/include/libxml2 \
                            --with-libxml-libs-prefix=$SYSROOT_PREFIX/usr/lib \
                            --with-libxslt-include-prefix=$SYSROOT_PREFIX/usr/include \
-                           --with-libxslt-libs-prefix=$SYSROOT_PREFIX/usr/lib \
-                           --enable-build-docs=no"
+                           --with-libxslt-libs-prefix=$SYSROOT_PREFIX/usr/lib"
 
 post_makeinstall_host() {
   ln -sf xml $TOOLCHAIN/bin/xmlstarlet
