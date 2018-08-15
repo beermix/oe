@@ -37,7 +37,7 @@ case "$LINUX" in
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
-    PKG_PATCH_DIRS="4.17"
+    PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
   4.14)
