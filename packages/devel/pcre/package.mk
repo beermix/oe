@@ -7,7 +7,6 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/svn2github/pcre/"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
-#PKG_URL="https://github.com/svn2github/pcre/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host autotools:host autoconf:host"
 PKG_SECTION="devel"
@@ -21,6 +20,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-jit \
 			      --enable-utf8 \
 			      --enable-unicode-properties \
 			      --enable-pcre8 \
+			      --enable-pcre16 \
 			      --enable-cpp"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
