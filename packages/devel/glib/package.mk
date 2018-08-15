@@ -21,6 +21,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-libmount \
                          --with-pcre=internal \
                          --with-pic"
+
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \
@@ -49,6 +50,7 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Ddtrace=false \
 			-Dinstalled_tests=false \
 			-Dgtk_doc=false"
+
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
 			  -Dinternal_pcre=false \

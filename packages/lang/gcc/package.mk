@@ -5,7 +5,7 @@
 PKG_NAME="gcc"
 PKG_VERSION="8.2.0"
 #PKG_SHA256="196c3c04ba2613f893283977e6011b2345d1cd1af9abeac58e916b1aab3e0080"
-PKG_VERSION="7-20180809"
+PKG_VERSION="8-20180810"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -35,7 +35,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
-                           --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
