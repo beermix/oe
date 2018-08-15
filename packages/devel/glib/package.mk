@@ -15,6 +15,7 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="meson"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
@@ -39,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=internal \
+                           --with-pcre=system \
                            --with-python=python"
 
 PKG_MESON_OPTS_HOST="-Dselinux=false \
