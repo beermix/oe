@@ -39,7 +39,6 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -65,23 +64,20 @@ make_target() {
     'use_gio=true'
     'use_libpci=true'
     'use_udev=true'
-    'use_system_zlib=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
-    'use_system_libjpeg=true'
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     'enable_google_now=false'
     'enable_mdns=true'
-    'enable_vr=false'
     'enable_wayland_server=false'
     'is_component_ffmpeg=true'
     'is_desktop_linux=true'
     'use_alsa=true'
     'use_aura=true'
     'use_glib=true'
-    'use_gold=true'
+    'use_gold=false'
     'rtc_enable_protobuf=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'

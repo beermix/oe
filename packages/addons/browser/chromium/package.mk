@@ -11,7 +11,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="210"
+PKG_REV="220"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -23,7 +23,6 @@ PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-#GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -53,11 +52,11 @@ make_target() {
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
   local _flags=(
-    'custom_toolchain="//build/toolchain/linux/unbundle:default"'
-    'host_toolchain="//build/toolchain/linux/unbundle:default"'
+    "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
+    'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'is_official_build=true' # implies is_cfi=true on x86_64
-    'use_cfi_icall=false' # https://crbug.com/866290
+    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -72,23 +71,24 @@ make_target() {
     'use_custom_libcxx=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gold=true'
+    'use_gold=false'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'use_sysroot=false'
+    'use_sysroot=true'
     'use_vaapi=true'
     'use_dbus=true'
     'use_gio=true'
     'use_libpci=true'
     'use_udev=true'
-    'use_system_zlib=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
-    'use_system_libjpeg=true'
     'linux_link_libudev=true'
-    'use_v8_context_snapshot=false'
+    'exclude_unwind_tables=true'
+    'use_libpci=true'
     'enable_vulkan=false'
+    'use_v8_context_snapshot=true'
+    "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_vr=false'
@@ -101,7 +101,7 @@ make_target() {
   )
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch 
+# Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
   [icu]=icu
   [libdrm]=
@@ -122,7 +122,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries       \! -path './base/third_party/icu/*' \
+  # added benefit of not having to list all the remaining libraries
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
@@ -134,14 +134,14 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
   done
-  
+
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j7 -C out/Release chrome chrome_sandbox chromedriver
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
