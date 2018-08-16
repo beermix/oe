@@ -1,4 +1,4 @@
-#############################################################################################################################
+##################################################################################
 #  beautifulsoup4:host html5lib:host re2 snappy
 #  
 #  https://chromereleases.googleblog.com/
@@ -6,12 +6,12 @@
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
-#############################################################################################################################
+##################################################################################
 
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="227"
+PKG_REV="228"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -23,7 +23,7 @@ PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-#GOLD_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -55,7 +55,6 @@ make_target() {
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
-    'use_cfi_icall=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
     'is_debug=false'
@@ -106,7 +105,7 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
@@ -125,9 +124,6 @@ readonly _unwanted_bundled_libs=(
 )
 depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
@@ -182,9 +178,6 @@ addon() {
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # icu
-  # cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicudata.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # gdk-pixbuf
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
