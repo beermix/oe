@@ -34,6 +34,7 @@ makeinstall_host() {
 
 PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
 			      --enable-static --disable-shared \
+			      --with-data-packaging=library \
 			      --enable-release"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
