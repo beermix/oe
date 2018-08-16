@@ -41,12 +41,11 @@ post_patch() {
 }
 
 make_host() {
-  export CCACHE_SLOPPINESS=time_macros,file_macro,include_file_mtime,include_file_ctime
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  export CCACHE_SLOPPINESS=time_macros
+  ./tools/gn/bootstrap/bootstrap.py -s --no-rebuild --no-clean
 }
 
 make_target() {
-  #export CCACHE_SLOPPINESS=time_macros,file_macro,include_file_mtime,include_file_ctime
   export CCACHE_SLOPPINESS=time_macros
   export CCACHE_CPP2=yes
 
