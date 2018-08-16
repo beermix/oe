@@ -15,6 +15,13 @@ PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
+pre_configure_host() {
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
+}
+
 make_host() {
   # CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose.
   # CXX=$TOOLCHAIN/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
