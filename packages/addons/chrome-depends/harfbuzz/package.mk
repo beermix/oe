@@ -25,5 +25,5 @@ PKG_CONFIGURE_OPTS_TARGET="--with-coretext=no \
                            --disable-gtk-doc-pdf"
 
 pre_configure_target() {
-  export LDFLAGS="$LDFLAGS -ldl"
+  export LDFLAGS="$LDFLAGS -pthread -ldl"
 }

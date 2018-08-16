@@ -12,7 +12,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros freetype libxml2 zlib expat gperf:host
 PKG_SECTION="x11/other"
 PKG_SHORTDESC="fontconfig: A library for font customization and configuration"
 PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
-PKG_TOOLCHAIN="autotools"
 
 post_unpack() {
   # Delete this as a workaround https://bugs.freedesktop.org/show_bug.cgi?id=101280
