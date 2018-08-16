@@ -37,6 +37,15 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' \
+    ./tools/generate_shim_headers/generate_shim_headers.py
+
+  sed -i \
+    -e '/"-Wno-ignored-pragma-optimize"/d' \
+    ./build/config/compiler/BUILD.gn
+
+  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py.
+
 #  export CC="ccache x86_64-libreelec-linux-gnu-clang"
 #  export CXX="ccache x86_64-libreelec-linux-gnu-clang++"
 #  export AR=ar
