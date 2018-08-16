@@ -15,7 +15,7 @@ PKG_ARCH="x86_64"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="chromium-$PKG_VERSION*"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ clang:host lld:host libxss"
 PKG_SECTION="browser"
 PKG_TOOLCHAIN="manual"
 
@@ -44,6 +44,8 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    'use_lld=true'
+    'is_clang=true'
     'clang_use_chrome_plugins=false'
     'is_official_build=true' # implies is_cfi=true on x86_64
     'use_cfi_icall=false' # https://crbug.com/866290
@@ -95,9 +97,7 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  # ./third_party/libaddressinput/chromium/tools/update-strings.py
-  
-  $TOOLCHAIN/bin/python tools/gn/bootstrap/bootstrap.py -s --no-clean
+  ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 

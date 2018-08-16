@@ -19,24 +19,21 @@ PKG_TOOLCHAIN="configure"
 
 post_patch() {
   sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-  #cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
 pre_configure_target() {
   LIBS="-latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--with-data-packaging=archive"
 
-makeinstall_host() {
- : # nothing todo
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
-			      --enable-static --disable-shared \
-			      --enable-release"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
+
+#makeinstall_host() {
+# : # nothing todo
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
