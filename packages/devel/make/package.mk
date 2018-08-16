@@ -17,8 +17,7 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 export CC=$LOCAL_CC
 export CXX=$LOCAL_CXX
 
-export CFLAGS="-march=haswell -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2"
-export CXXFLAGS="-march=haswell -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2"
+export CFLAGS="-march=haswell -O2 -pipe -Wall"
 LDFLAGS="-Wl,-O1,--as-needed,-z,relro,-z,now -s"
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
