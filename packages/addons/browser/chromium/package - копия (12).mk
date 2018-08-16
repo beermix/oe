@@ -54,6 +54,7 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64\""
     'is_clang=false'
     'use_cfi_icall=false'
     'clang_use_chrome_plugins=false'
@@ -88,7 +89,7 @@ make_target() {
     'exclude_unwind_tables=true'
     'use_libpci=true'
     'enable_vulkan=false'
-    'use_v8_context_snapshot=false'
+    'use_v8_context_snapshot=true'
     'enable_google_now=false'
     'enable_mdns=true'
     'enable_wayland_server=false'
