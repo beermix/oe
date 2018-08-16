@@ -1,3 +1,0 @@
-#!/bin/sh
-# Recover malformed XML document
-./xmlstarlet fo -R xml/malformed.xml 2>/dev/null

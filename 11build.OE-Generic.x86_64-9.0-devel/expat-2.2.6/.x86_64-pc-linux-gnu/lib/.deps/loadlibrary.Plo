@@ -1,5 +1,0 @@
-loadlibrary.lo: \
- /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/loadlibrary.c \
- /usr/include/stdc-predef.h
-
-/usr/include/stdc-predef.h:

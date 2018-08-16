@@ -1,5 +1,0 @@
-src/x86/ffi.lo: \
- /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/libffi-3.2.1/src/x86/ffi.c \
- /usr/include/stdc-predef.h
-
-/usr/include/stdc-predef.h:

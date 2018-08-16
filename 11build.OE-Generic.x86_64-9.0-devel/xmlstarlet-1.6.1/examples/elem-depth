@@ -1,3 +1,0 @@
-#!/bin/sh
-# display unique elements up to depth 2
-./xmlstarlet el -d2 ./xml/tab-obj.xml

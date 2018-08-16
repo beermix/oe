@@ -1,5 +1,0 @@
-libyywrap.lo: \
- /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/flex-2.6.4/src/libyywrap.c \
- /usr/include/stdc-predef.h
-
-/usr/include/stdc-predef.h:

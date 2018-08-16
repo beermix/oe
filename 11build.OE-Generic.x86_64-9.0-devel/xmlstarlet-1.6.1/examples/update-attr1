@@ -1,3 +1,0 @@
-#!/bin/sh
-# Update value of an attribute
-./xmlstarlet ed -u '/xml/table/rec[@id=3]/@id' -v 5 xml/tab-obj.xml

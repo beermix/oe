@@ -1,2 +1,0 @@
-option('unshared_option', type : 'string', value : 'one')
-option('shared_option', type : 'string', value : 'two')

@@ -1,2 +1,0 @@
-#!/bin/sh
-./xmlstarlet c14n xml/c14n.xml | tr '\r' R | grep R

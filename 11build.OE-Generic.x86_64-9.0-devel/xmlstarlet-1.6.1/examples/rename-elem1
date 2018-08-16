@@ -1,3 +1,0 @@
-#!/bin/sh
-# Rename elements
-./xmlstarlet ed -r "/xml/table/rec" -v record xml/tab-obj.xml

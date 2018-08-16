@@ -1,2 +1,0 @@
-set CC_FOR_TARGET "/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/host-gcc"
-set CXX_FOR_TARGET "/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/host-g++"

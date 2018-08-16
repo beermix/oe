@@ -1,3 +1,0 @@
-<!ELEMENT doc ( foo+, bar+ ) >
-<!ELEMENT foo ( #PCDATA ) >
-<!ELEMENT bar ( #PCDATA ) >

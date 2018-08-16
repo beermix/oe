@@ -25,6 +25,6 @@ make_host() {
 
 makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
-    #cp squashfs-tools/mksquashfs $TOOLCHAIN/bin
-    cp $PKG_DIR/mksquashfs $TOOLCHAIN/bin
+   #cp squashfs-tools/mksquashfs $TOOLCHAIN/bin
+   cp $PKG_DIR/mksquashfs $TOOLCHAIN/bin
 }
