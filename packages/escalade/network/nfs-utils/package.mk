@@ -5,7 +5,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://sourceforge.net/projects/nfs"
 PKG_URL="http://downloads.sf.net/sourceforge/nfs/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libnfsidmap libtirpc libevent"
+PKG_DEPENDS_TARGET="toolchain libnfsidmap libevent"
 PKG_SECTION="escalade"
 PKG_SHORTDESC="Support programs for Network File Systems"
 
