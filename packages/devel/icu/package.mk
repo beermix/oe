@@ -25,7 +25,7 @@ pre_configure_target() {
   LIBS="-latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--with-data-packaging=archive"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
