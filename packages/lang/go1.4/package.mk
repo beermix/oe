@@ -1,32 +1,12 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
-
 PKG_NAME="go1.4"
-PKG_VERSION="4d5426a"
+PKG_VERSION="182bdbb"
 PKG_URL="https://github.com/golang/go/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="go-${PKG_VERSION}*"
 PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
 PKG_LONGDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
-
-
-
+PKG_TOOLCHAIN="manual"
 
 ####################################################################
 # On Fedora `dnf install golang` will install go to /usr/lib/golang

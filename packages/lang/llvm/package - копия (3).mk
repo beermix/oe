@@ -16,10 +16,8 @@ PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure desi
 
 PKG_CMAKE_OPTS_HOST="-DLLVM_ENABLE_PROJECTS="" \
 			-DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib \
-			-DLLVM_BUILD_GLOBAL_ISEL=OFF \
 			-DCMAKE_BUILD_TYPE=Release \
 			-DLLVM_TARGETS_TO_BUILD="X86" \
-			-DLLVM_TARGET_ARCH="$TARGET_ARCH" \
 			-DBUILD_SHARED_LIBS=OFF \
 			-DLLVM_BUILD_LLVM_DYLIB=ON \
 			-DLLVM_LINK_LLVM_DYLIB=ON \
@@ -40,7 +38,6 @@ PKG_CMAKE_OPTS_HOST="-DLLVM_ENABLE_PROJECTS="" \
 			-DLLVM_ENABLE_MODULE_DEBUGGING=OFF \
 			-DLLVM_ENABLE_LIBCXX=OFF \
 			-DLLVM_ENABLE_LLD=OFF \
-			-DLLVM_OPTIMIZED_TABLEGEN=ON \
 			-DGO_EXECUTABLE=GO_EXECUTABLE-NOTFOUND \
 			-DOCAMLFIND=OCAMLFIND-NOTFOUND \
 			-DLLVM_OPTIMIZED_TABLEGEN=ON \
@@ -69,12 +66,18 @@ PKG_CMAKE_OPTS_HOST="-DLLVM_ENABLE_PROJECTS="" \
 			-DLLVM_INCLUDE_GO_TESTS=OFF \
 			-DLLVM_INCLUDE_TESTS=OFF"
 
-#make_host() {
-#  ninja -j${CONCURRENCY_MAKE_LEVEL} llvm-config llvm-tblgen
-#  cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
-#  cp -a bin/llvm-tblgen $TOOLCHAIN/bin
-#  cp -a bin/llvm-config $TOOLCHAIN/bin
-#}
+make_host() {
+  ninja -j${CONCURRENCY_MAKE_LEVEL} llvm-config llvm-tblgen
+  cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
+  cp -a bin/llvm-tblgen $TOOLCHAIN/bin
+  cp -a bin/llvm-config $TOOLCHAIN/bin
+}
+
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
+                       -DCMAKE_C_FLAGS="$CFLAGS" \
+                       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+                       -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
+                       -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
