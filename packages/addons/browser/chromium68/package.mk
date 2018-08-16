@@ -10,14 +10,17 @@
 PKG_NAME="chromium68"
 PKG_VERSION="68.0.3440.106"
 PKG_SHA256="7021040635a0a0d47f699bdb22e3ef5c91482e4f51b428d1de3016da95f0e698"
-PKG_REV="310"
+PKG_REV="400"
 PKG_ARCH="x86_64"
+PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="chromium-$PKG_VERSION*"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ re2 snappy clang:host lld:host libxss chromium68:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ re2 snappy libxss chromium68:host"
 PKG_SECTION="browser"
 PKG_TOOLCHAIN="manual"
+PKG_BUILD_FLAGS="-lto -hardening"
+GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -35,7 +38,7 @@ post_patch() {
 
 make_host() {
   export CCACHE_SLOPPINESS=time_macros
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s --no-rebuild --no-clean
 }
 
 make_target() {
@@ -61,12 +64,9 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    'use_lld=true'
-    'is_clang=true'
+    'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'is_cfi=true'
-    'is_official_build=true' # implies is_cfi=true on x86_64
-    'use_cfi_icall=false' # https://crbug.com/866290
+    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -74,6 +74,7 @@ make_target() {
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
+    'is_component_build=false'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
@@ -82,31 +83,21 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
+    'use_dbus=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'use_sysroot=true'
-    'use_vaapi=true'
+    'linux_link_libudev=true'
     'use_dbus=true'
-    'use_gio=true'
-    'use_libpci=true'
-    'use_udev=true'
+    'use_cups=false'
+    'use_system_libjpeg=true'
+    'use_system_libpng=false'
+    'use_system_libdrm=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
-    'use_system_libjpeg=true'
-    'linux_link_libudev=true'
-    'use_libpci=true'
+    'use_sysroot=true'
+    'use_vaapi=true'
     'enable_vulkan=false'
-    'use_v8_context_snapshot=true'
-    'enable_google_now=false'
-    'enable_mdns=true'
-    'enable_wayland_server=false'
-    'is_component_ffmpeg=true'
-    'is_desktop_linux=true'
-    'use_alsa=true'
-    'use_aura=true'
-    'use_glib=true'
-    'use_gold=false'
-    'rtc_enable_protobuf=false'
+    'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
@@ -128,7 +119,6 @@ declare -gA _system_libs=(
   [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
   [libxml]=libxml2
   [libxslt]=libxslt
   [re2]=re2
@@ -193,9 +183,6 @@ addon() {
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # icu
-  # cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicudata.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # gdk-pixbuf
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
