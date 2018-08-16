@@ -69,6 +69,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --disable-vtable-verify \
                          --enable-libatomic \
                          --enable-libgomp \
                          $GCC_OPTS"
@@ -76,14 +77,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
-
-#pre_configure_bootstrap() {
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-#}
 
 post_make_host() {
   # fix wrong link
