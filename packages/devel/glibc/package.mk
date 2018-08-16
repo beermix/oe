@@ -25,6 +25,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
+                           --disable-dependency-tracking \
                            --with-elf \
                            --with-tls \
                            --with-__thread \
@@ -34,6 +35,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
+                           --enable-obsolete-nsl \
+                           --enable-tunables \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \

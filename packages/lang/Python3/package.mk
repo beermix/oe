@@ -93,11 +93,6 @@ post_unpack() {
     touch $PKG_BUILD/Python/graminit.c
 }
 
-#pre_configure_host() {
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-g0|g"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-g0|g"`
-#}
-
 post_makeinstall_host() {
   rm -f $TOOLCHAIN/bin/python*-config
   rm -f $TOOLCHAIN/bin/smtpd.py*

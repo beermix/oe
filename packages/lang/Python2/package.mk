@@ -1,20 +1,5 @@
-################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="Python2"
 PKG_VERSION="2.7.15"
@@ -73,10 +58,6 @@ post_patch() {
     touch $PKG_BUILD/Python/graminit.c
 }
 
-#pre_configure_host() {
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-g0|g"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-g0|g"`
-#}
 
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
@@ -100,8 +81,6 @@ post_makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||g"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||g"`
 }
 
 make_target() {
