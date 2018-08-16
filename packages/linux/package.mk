@@ -33,8 +33,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   zen)
-    PKG_VERSION="ea40215"
-    PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
+    PKG_VERSION="19ca1cc" # https://github.com/zen-kernel/zen-kernel/tree/4.18/master
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="default"
