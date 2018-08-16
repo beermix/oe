@@ -15,7 +15,7 @@ PKG_ARCH="x86_64"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="chromium-$PKG_VERSION*"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ clang:host lld:host libxss"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ re2 snappy clang:host lld:host libxss chromium68:host"
 PKG_SECTION="browser"
 PKG_TOOLCHAIN="manual"
 
@@ -80,6 +80,7 @@ make_target() {
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
+    'use_gold=false'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -93,11 +94,13 @@ make_target() {
     'use_system_freetype=true'
     'use_system_libjpeg=true'
     'linux_link_libudev=true'
-    'use_v8_context_snapshot=false'
+    'use_libpci=true'
     'enable_vulkan=false'
+    'use_v8_context_snapshot=true'
     'enable_google_now=false'
     'enable_mdns=true'
     'enable_wayland_server=false'
+    'is_component_ffmpeg=true'
     'is_desktop_linux=true'
     'use_alsa=true'
     'use_aura=true'
@@ -116,6 +119,40 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Keys are the names in the above script; values are the dependencies in Arch
+declare -gA _system_libs=(
+  [fontconfig]=fontconfig
+  [freetype]=freetype2
+  [harfbuzz-ng]=harfbuzz
+  [icu]=icu
+  [libdrm]=
+  [libjpeg]=libjpeg
+  #[libpng]=libpng            # https://crbug.com/752403#c10
+  [libxml]=libxml2
+  [libxslt]=libxslt
+  [re2]=re2
+  [snappy]=snappy
+  [yasm]=
+  [zlib]=minizip
+)
+_unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+)
+
+  local _lib
+  for _lib in ${_unwanted_bundled_libs[@]}; do
+    find "third_party/$_lib" -type f \
+      \! -path "third_party/$_lib/chromium/*" \
+      \! -path "third_party/$_lib/google/*" \
+      \! -path 'third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
+  done
+
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
@@ -127,7 +164,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 

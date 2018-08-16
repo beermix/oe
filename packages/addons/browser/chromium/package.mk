@@ -11,7 +11,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="223"
+PKG_REV="224"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -54,6 +54,7 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64\""
     'is_clang=false'
     'use_cfi_icall=false'
     'clang_use_chrome_plugins=false'
@@ -120,9 +121,9 @@ readonly -A _system_libs=(
   #[libpng]=libpng            # https://crbug.com/752403#c10
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  [yasm]=
   [re2]=re2
   [snappy]=snappy
+  [yasm]=
   [zlib]=minizip
 )
 readonly _unwanted_bundled_libs=(
