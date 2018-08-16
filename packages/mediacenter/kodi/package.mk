@@ -216,7 +216,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_XSLT=OFF \
                        -DENABLE_CCACHE=ON \
                        -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=OFF \
+                       -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LDGOLD=ON \
                        -DENABLE_DEBUGFISSION=OFF \
                        -DENABLE_APP_AUTONAME=OFF \
