@@ -15,11 +15,9 @@ PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure desi
 #PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_HOST="-DLLVM_ENABLE_PROJECTS="" \
-			-DCMAKE_INSTALL_RPATH="$TOOLCHAIN/lib" \
-			-DLLVM_BUILD_GLOBAL_ISEL=OFF \
+			-DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib \
 			-DCMAKE_BUILD_TYPE=Release \
 			-DLLVM_TARGETS_TO_BUILD="X86" \
-			-DLLVM_TARGET_ARCH="$TARGET_ARCH" \
 			-DBUILD_SHARED_LIBS=OFF \
 			-DLLVM_BUILD_LLVM_DYLIB=ON \
 			-DLLVM_LINK_LLVM_DYLIB=ON \
@@ -75,6 +73,11 @@ make_host() {
   cp -a bin/llvm-tblgen $TOOLCHAIN/bin
   cp -a bin/llvm-config $TOOLCHAIN/bin
 }
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
+                       -DCMAKE_C_FLAGS="$CFLAGS" \
+                       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+                       -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
+                       -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
