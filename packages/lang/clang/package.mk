@@ -1,12 +1,12 @@
 PKG_NAME="clang"
-PKG_VERSION="bdb1c36"
+PKG_VERSION="6.0.1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/llvm-mirror/clang/tree/release_70"
 PKG_URL="http://releases.llvm.org/$PKG_VERSION/cfe-$PKG_VERSION.src.tar.xz"
-PKG_URL="https://github.com/llvm-mirror/clang/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/llvm-mirror/clang/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="cfe-$PKG_VERSION*"
-PKG_SOURCE_DIR="clang-$PKG_VERSION*"
+#PKG_SOURCE_DIR="clang-$PKG_VERSION*"
 PKG_DEPENDS_HOST="llvm:host lld:host"
 
 configure_host() {
