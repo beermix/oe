@@ -2,11 +2,12 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="expat"
-PKG_VERSION="2.2.5"
+PKG_VERSION="2.2.6"
+PKG_SHA256="17b43c2716d521369f82fc2dc70f359860e90fa440bea65b3b85f0b246ea81f2"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/libexpat/libexpat/releases"
-PKG_URL="https://github.com/libexpat/libexpat/releases/download/R_2_2_5/expat-$PKG_VERSION.tar.bz2"
+PKG_URL="https://github.com/libexpat/libexpat/releases/download/R_2_2_6/expat-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="cmake:host"
 PKG_SECTION="textproc"
