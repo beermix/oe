@@ -69,12 +69,12 @@ PKG_CMAKE_OPTS_HOST="-DLLVM_ENABLE_PROJECTS="" \
 			-DLLVM_INCLUDE_GO_TESTS=OFF \
 			-DLLVM_INCLUDE_TESTS=OFF"
 
-#make_host() {
-#  ninja -j${CONCURRENCY_MAKE_LEVEL} llvm-config llvm-tblgen
-#  cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
-#  cp -a bin/llvm-tblgen $TOOLCHAIN/bin
-#  cp -a bin/llvm-config $TOOLCHAIN/bin
-#}
+make_host() {
+  ninja -j${CONCURRENCY_MAKE_LEVEL} llvm-config llvm-tblgen
+  cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
+  cp -a bin/llvm-tblgen $TOOLCHAIN/bin
+  cp -a bin/llvm-config $TOOLCHAIN/bin
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
