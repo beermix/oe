@@ -27,13 +27,13 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST --with-cross-build=$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-#makeinstall_host() {
-# : # nothing todo
-#}
+makeinstall_host() {
+ : # nothing todo
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
