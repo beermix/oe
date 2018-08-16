@@ -4,7 +4,7 @@
 
 PKG_NAME="ninja"
 PKG_VERSION="ca041d8"
-#PKG_VERSION="1.8.2"
+PKG_VERSION="253e94c"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
@@ -17,7 +17,7 @@ PKG_TOOLCHAIN="manual"
 
 make_host() {
   # CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose.
-  # CXX=$TOOLCHAIN/bin/clang++
+  # CXX=$TOOLCHAIN/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
   $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
   # emacs -Q --batch -f batch-byte-compile misc/ninja-mode.el
 }
