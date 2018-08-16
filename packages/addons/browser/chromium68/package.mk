@@ -27,7 +27,15 @@ PKG_ADDON_PROVIDES="executable"
 post_patch() {
   cd $(get_build_dir chromium68)
 
+  # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
+  # set correct widevine
+  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+}
+
+make_host() {
+  export CCACHE_SLOPPINESS=time_macros
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
