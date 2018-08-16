@@ -52,7 +52,7 @@ make_target() {
     -e '/"-Wno-ignored-pragma-optimize"/d' \
     ./build/config/compiler/BUILD.gn
 
-  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py.
+#  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py.
 
 #  export CC="ccache x86_64-libreelec-linux-gnu-clang"
 #  export CXX="ccache x86_64-libreelec-linux-gnu-clang++"
