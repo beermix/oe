@@ -37,16 +37,17 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
-  export CC="ccache x86_64-libreelec-linux-gnu-clang"
-  export CXX="ccache x86_64-libreelec-linux-gnu-clang++"
-  export AR=ar
-  export NM=nm
+#  export CC="ccache x86_64-libreelec-linux-gnu-clang"
+#  export CXX="ccache x86_64-libreelec-linux-gnu-clang++"
+#  export AR=ar
+#  export NM=nm
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     'use_lld=true'
     'is_clang=true'
     'clang_use_chrome_plugins=false'
+    'is_cfi=true'
     'is_official_build=true' # implies is_cfi=true on x86_64
     'use_cfi_icall=false' # https://crbug.com/866290
     'is_debug=false'
@@ -73,6 +74,7 @@ make_target() {
     'use_udev=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
+    'use_system_libjpeg=true'
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
