@@ -7,7 +7,7 @@ index 9e23a5a..573219c 100755
              stdout=open(os.devnull, 'wb'), stderr=subprocess.STDOUT)
          if proc.wait() == 0:
 -            cflags += ['-fdiagnostics-color']
-+            cflags += ['-fdiagnostics-color=always']
++            cflags += ['-fdiagnostics-color=2']
      except:
          pass
      if platform.is_mingw():
