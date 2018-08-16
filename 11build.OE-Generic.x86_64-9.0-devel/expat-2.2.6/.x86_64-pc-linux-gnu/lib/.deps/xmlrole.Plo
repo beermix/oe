@@ -1,0 +1,26 @@
+xmlrole.lo: \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/xmlrole.c \
+ /usr/include/stdc-predef.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stddef.h \
+ ../expat_config.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/expat_external.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/internal.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/xmlrole.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/xmltok.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/ascii.h
+
+/usr/include/stdc-predef.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stddef.h:
+
+../expat_config.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/expat_external.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/internal.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/xmlrole.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/xmltok.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/lib/ascii.h:

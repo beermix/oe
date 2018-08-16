@@ -1,0 +1,13 @@
+# See: man pkg-config
+prefix=/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Python
+Description: Python library
+Requires: 
+Version: 3.6
+Libs.private: -lpthread -ldl  -lutil
+Libs: -L${libdir} -lpython3.6
+Cflags: -I${includedir}/python3.6

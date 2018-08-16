@@ -1,0 +1,16 @@
+lib/asnprintf.o: \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/bison-3.0.5/lib/asnprintf.c \
+ /usr/include/stdc-predef.h lib/config.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/bison-3.0.5/lib/vasnprintf.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stdarg.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stddef.h
+
+/usr/include/stdc-predef.h:
+
+lib/config.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/bison-3.0.5/lib/vasnprintf.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stdarg.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stddef.h:

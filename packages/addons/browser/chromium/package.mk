@@ -11,7 +11,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="228"
+PKG_REV="229"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -79,16 +79,16 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'linux_link_libudev=true'
-    'use_sysroot=true'
-    'use_vaapi=true'
     'use_dbus=true'
-    'use_gio=true'
-    'use_libpci=true'
-    'use_udev=true'
+    'use_cups=false'
+    'use_system_zlib=true'
+    'use_system_libjpeg=true'
+    'use_system_libpng=false'
+    'use_system_libdrm=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
-    'exclude_unwind_tables=true'
-    'use_libpci=true'
+    'use_sysroot=true'
+    'use_vaapi=true'
     'enable_vulkan=false'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -103,42 +103,6 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
-readonly -A _system_libs=(
-  [icu]=icu
-  [libdrm]=
-  [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
-  [re2]=re2
-  [snappy]=snappy
-  [yasm]=
-  [zlib]=minizip
-)
-readonly _unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-  freetype
-  harfbuzz-ng
-)
-depends+=(${_system_libs[@]} freetype2 harfbuzz)
-
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find -type f -path "*third_party/$_lib/*" \
-      \! -path "*third_party/$_lib/chromium/*" \
-      \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
-      \! -path './third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
-
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
@@ -150,7 +114,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 

@@ -24,6 +24,7 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
                          --enable-unicode=ucs4 \
+                         --with-computed-gotos \
                          --with-system-ffi \
                          --with-system-expat"
 
@@ -47,6 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-tsc \
                            --with-pymalloc \
                            --without-fpectl \
+                           --with-computed-gotos \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat"

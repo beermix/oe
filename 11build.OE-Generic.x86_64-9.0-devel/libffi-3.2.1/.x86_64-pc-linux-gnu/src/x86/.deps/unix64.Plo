@@ -1,0 +1,11 @@
+src/x86/unix64.lo: \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/libffi-3.2.1/src/x86/unix64.S \
+ /usr/include/stdc-predef.h fficonfig.h include/ffi.h include/ffitarget.h
+
+/usr/include/stdc-predef.h:
+
+fficonfig.h:
+
+include/ffi.h:
+
+include/ffitarget.h:

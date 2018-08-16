@@ -1,0 +1,11 @@
+xmlwf-codepage.o: \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/xmlwf/codepage.c \
+ /usr/include/stdc-predef.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/xmlwf/codepage.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/xmlwf/../lib/internal.h
+
+/usr/include/stdc-predef.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/xmlwf/codepage.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/expat-2.2.6/xmlwf/../lib/internal.h:

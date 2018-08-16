@@ -1,0 +1,49 @@
+lib/basename-lgpl.o: \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/bison-3.0.5/lib/basename-lgpl.c \
+ /usr/include/stdc-predef.h lib/config.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/bison-3.0.5/lib/dirname.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stdbool.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stddef.h \
+ /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/bison-3.0.5/lib/dosname.h \
+ lib/string.h /usr/include/string.h /usr/include/bits/libc-header-start.h \
+ /usr/include/features.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/bits/long-double.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+ /usr/include/bits/types/locale_t.h /usr/include/bits/types/__locale_t.h \
+ /usr/include/strings.h
+
+/usr/include/stdc-predef.h:
+
+lib/config.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/bison-3.0.5/lib/dirname.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stdbool.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/8.2.0/include/stddef.h:
+
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/bison-3.0.5/lib/dosname.h:
+
+lib/string.h:
+
+/usr/include/string.h:
+
+/usr/include/bits/libc-header-start.h:
+
+/usr/include/features.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/bits/long-double.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/include/bits/types/locale_t.h:
+
+/usr/include/bits/types/__locale_t.h:
+
+/usr/include/strings.h:

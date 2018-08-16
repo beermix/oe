@@ -1,0 +1,3 @@
+src/conf/help.o: src/conf/help.cc /usr/include/stdc-predef.h
+
+/usr/include/stdc-predef.h:

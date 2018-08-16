@@ -1,0 +1,1 @@
+ELFUTILS_0.173 { global: ia64_init; local: *; };

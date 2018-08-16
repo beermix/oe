@@ -1,0 +1,14 @@
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/lib/pkgconfig/libzstd.pc
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/include/zstd.h
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/include/zbuff.h
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/include/zdict.h
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/include/zstd_errors.h
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/lib/libzstd.a
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/zstd
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/zstd
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/zstdcat
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/unzstd
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/share/man/man1/zstd.1
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/share/man/man1/zstdcat.1
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/share/man/man1/unzstd.1
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/zstdmt

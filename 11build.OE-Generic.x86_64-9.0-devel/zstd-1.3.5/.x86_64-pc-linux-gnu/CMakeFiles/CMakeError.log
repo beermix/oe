@@ -1,0 +1,33 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zstd-1.3.5/.x86_64-pc-linux-gnu/CMakeFiles/CMakeTmp
+
+Run Build Command:"/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/gmake" "cmTC_5d391/fast"
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/gmake -f CMakeFiles/cmTC_5d391.dir/build.make CMakeFiles/cmTC_5d391.dir/build
+gmake[1]: Entering directory '/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zstd-1.3.5/.x86_64-pc-linux-gnu/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5d391.dir/CheckSymbolExists.c.o
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/host-gcc   -O2 -I/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/include -fdiagnostics-color=always -Wno-format-security -fPIC -DPIC -std=c99 -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes    -o CMakeFiles/cmTC_5d391.dir/CheckSymbolExists.c.o   -c /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zstd-1.3.5/.x86_64-pc-linux-gnu/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_5d391
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5d391.dir/link.txt --verbose=1
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/bin/host-gcc -O2 -I/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/include -fdiagnostics-color=always -Wno-format-security -fPIC -DPIC -std=c99 -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes   -Wl,-rpath,/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/lib -L/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain/lib -fPIC  -rdynamic CMakeFiles/cmTC_5d391.dir/CheckSymbolExists.c.o  -o cmTC_5d391 
+/bin/ld: CMakeFiles/cmTC_5d391.dir/CheckSymbolExists.c.o: in function `main':
+CheckSymbolExists.c:(.text.startup+0x3): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_5d391.dir/build.make:87: cmTC_5d391] Error 1
+gmake[1]: Leaving directory '/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zstd-1.3.5/.x86_64-pc-linux-gnu/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:121: cmTC_5d391/fast] Error 2
+
+File /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zstd-1.3.5/.x86_64-pc-linux-gnu/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
