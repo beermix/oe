@@ -71,7 +71,7 @@ post_makeinstall_target() {
   # perl $PKG_DIR/cert/mk-ca-bundle.pl
   # cp $PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
   cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
-  ln -sf /etc/ssl/cert.pem $INSTALL/etc/ssl/cacert.pem
+  cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cacert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
