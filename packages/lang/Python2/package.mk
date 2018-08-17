@@ -17,6 +17,8 @@ PKG_LONGDESC="Python2 is an interpreted object-oriented programming language, an
 
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +lto-parallel"
+GOLD_SUPPORT="yes"
+LTO_SUPPORT="yes"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
@@ -24,7 +26,6 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
                          --enable-unicode=ucs4 \
-                         --with-computed-gotos \
                          --with-system-ffi \
                          --with-system-expat"
 
@@ -48,7 +49,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-tsc \
                            --with-pymalloc \
                            --without-fpectl \
-                           --with-computed-gotos \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat"
