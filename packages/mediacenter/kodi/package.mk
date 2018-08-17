@@ -3,8 +3,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="kodi"
-PKG_VERSION="7e52c1d"
-PKG_SHA256="ff9f02586ea4458a9b4d84579cb2cbac221d7a7d74605298d26d0294412a14ec"
+PKG_VERSION="17.6-Krypton"
+PKG_SHA256="c8312fe92e5bab1cdac1da93d60baed88fa1574146c50c44e3c86d01671c2b1d"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc/tree/Krypton"
@@ -205,8 +205,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
                        -DGIT_VERSION=$PKG_VERSION \
-                       -DWITH_FFMPEG=$(get_build_dir ffmpeg) \
-                       -DENABLE_INTERNAL_FFMPEG=OFF \
+                       -DENABLE_INTERNAL_FFMPEG=ON \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_SDL=OFF \
@@ -215,7 +214,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_DBUS=ON \
                        -DENABLE_XSLT=OFF \
                        -DENABLE_CCACHE=ON \
-                       -DENABLE_LIRC=ON \
+                       -DENABLE_LIRC=OFF \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LDGOLD=ON \
                        -DENABLE_DEBUGFISSION=OFF \
