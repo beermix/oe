@@ -4,7 +4,7 @@
 
 PKG_NAME="ninja"
 PKG_VERSION="ca041d8"
-#PKG_VERSION="253e94c"
+PKG_VERSION="253e94c"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"

@@ -85,8 +85,6 @@ pre_configure_target()
 {
   sed -e 's|; remixing-use-all-sink-channels = yes|; remixing-use-all-sink-channels = no|' \
       -i $PKG_BUILD/src/daemon/daemon.conf.in
-      
-  LIBS="$LIBS -fopenmp"
 }
 
 post_makeinstall_target() {

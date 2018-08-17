@@ -1,5 +1,5 @@
 PKG_NAME="lld"
-PKG_VERSION="6.0.1"
+PKG_VERSION="6.0.0"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/llvm-mirror/lld/tree/release_70"
