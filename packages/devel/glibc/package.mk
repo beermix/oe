@@ -4,11 +4,12 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="c9570bd"
-PKG_VERSION="436e4d5"
+PKG_VERSION="2.26"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -25,7 +26,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
-                           --disable-dependency-tracking \
                            --with-elf \
                            --with-tls \
                            --with-__thread \
