@@ -4,7 +4,7 @@
 
 PKG_NAME="binutils"
 PKG_VERSION="2.31.1"
-PKG_SHA256="e88f8d36bd0a75d3765a4ad088d819e35f8d7ac6288049780e2fefcad18dde88"
+PKG_SHA256="5d20086ecf5752cc7d9134246e9588fa201740d540f7eb84d795b1f7a93bca86"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_31-branch"
