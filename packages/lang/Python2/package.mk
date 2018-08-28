@@ -50,6 +50,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-pymalloc \
                            --without-fpectl \
                            --without-cxx-main \
+                           --enable-optimizations \
+                           --with-lto \
                            --with-system-ffi \
                            --with-system-expat"
 post_patch() {
