@@ -4,6 +4,7 @@
 
 PKG_NAME="binutils"
 PKG_VERSION="2.31.1"
+PKG_SHA256="e88f8d36bd0a75d3765a4ad088d819e35f8d7ac6288049780e2fefcad18dde88"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_31-branch"
@@ -30,11 +31,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --disable-gdb \
+                         --enable-compressed-debug-sections=all \
                          --enable-plugins \
                          --enable-gold \
-                         --enable-threads \
-                         --with-pic \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls"
@@ -53,11 +52,9 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-libssp \
                          --disable-plugins \
                          --disable-gold \
-                         --with-system-zlib \
                          --disable-ld \
                          --disable-lto \
-                         --disable-nls \
-                         --disable-gdb"
+                         --disable-nls"
 
 pre_configure_host() {
   unset CPPFLAGS
@@ -80,12 +77,6 @@ make_target() {
   make configure-host
   make -C libiberty
   make -C bfd
-}
-
-makeinstall_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
-  make DESTDIR="$SYSROOT_PREFIX" -C bfd install
 }
 
 makeinstall_target() {
