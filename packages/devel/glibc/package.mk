@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="aa8a3e4"
+PKG_VERSION="174709d"
 #PKG_VERSION="2.26"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
