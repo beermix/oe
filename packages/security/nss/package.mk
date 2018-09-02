@@ -2,12 +2,12 @@
 # Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="nss"
-PKG_VERSION="3.38"
+PKG_VERSION="3.39"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="https://ftp.mozilla.org/pub/security/nss/releases/"
-PKG_URL="http://ftp.mozilla.org/pub/security/nss/releases/NSS_3_38_RTM/src/nss-$PKG_VERSION-with-nspr-4.19.tar.gz"
+PKG_URL="http://ftp.mozilla.org/pub/security/nss/releases/NSS_3_39_RTM/src/nss-$PKG_VERSION-with-nspr-4.20.tar.gz"
 PKG_DEPENDS_HOST="nspr:host zlib:host"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib sqlite"
 PKG_SECTION="security"
