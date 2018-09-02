@@ -2,7 +2,7 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="setuptools"
-PKG_VERSION="40.0.0"
+PKG_VERSION="40.2.0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://github.com/pypa/setuptools/releases"
