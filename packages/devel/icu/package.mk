@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="icu"
-PKG_VERSION="61.1"
+PKG_VERSION="62.1"
 #PKG_SHA256="3dd9868d666350dda66a6e305eecde9d479fb70b30d5b55d78a1deffb97d5aa3"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
@@ -17,9 +17,9 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic:host +pic"
 PKG_TOOLCHAIN="configure"
 
-post_patch() {
-  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-}
+#post_patch() {
+#  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+#}
 
 pre_configure_target() {
   LIBS="-latomic"
