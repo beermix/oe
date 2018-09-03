@@ -9,7 +9,7 @@ PKG_SOURCE_DIR=$PKG_NAME-$PKG_VERSION
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="fast real-time compression algorithm"
-PKG_TOOLCHAIN="cmake-make"
+#PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/build/cmake/CMakeLists.txt"
