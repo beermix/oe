@@ -38,8 +38,8 @@ post_patch() {
 
 make_host() {
   export CCACHE_SLOPPINESS=file_macro
-  # ./tools/gn/bootstrap/bootstrap.py -s --no-rebuild --no-clean
-  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
+  # ./tools/gn/bootstrap/bootstrap.py -s --no-rebuild --no-clean |     "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
@@ -51,7 +51,6 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -147,7 +146,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release -s --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
