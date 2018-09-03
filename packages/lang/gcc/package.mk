@@ -47,8 +47,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-vtable-verify \
-                           --enable-gnu-indirect-function \
-                           --enable-linker-build-id \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
