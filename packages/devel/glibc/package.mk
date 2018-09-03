@@ -39,6 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-tunables \
                            --disable-build-nscd \
                            --disable-nscd \
+                           --disable-crypt \
                            --enable-lock-elision \
                            --without-selinux \
                            --disable-debug \

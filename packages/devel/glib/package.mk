@@ -4,7 +4,7 @@
 
 PKG_NAME="glib"
 PKG_VERSION="2.58.0"
-PKG_SHA256=""
+PKG_SHA256="c0f4ce0730b4f95c47b711613b5406a887c2ee13ea6d25930d72a4fa7fdb77f6"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
@@ -30,7 +30,7 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
-			  -Dinternal_pcre=false \
+			  -Dinternal_pcre=true \
 			  -Dxattr=false \
 			  -Dman=false \
 			  -Ddtrace=false \
