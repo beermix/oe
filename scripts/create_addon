@@ -119,7 +119,7 @@ pack_addon() {
     fi
     cd $ADDON_BUILD
     printf  "%${BUILD_INDENT}c $(print_color CLR_INFO "*** compressing Addon $PKG_ADDON_ID ... ***")\n" ' '>&$SILENT_OUT
-    $TOOLCHAIN/bin/7za a -l -mx9 -bsp0 -bso0 -tzip $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID
+    7za a -l -mx9 -bsp0 -bso0 -tzip $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID
     cd - &>/dev/null
 
     mkdir -p $ADDON_INSTALL_DIR
