@@ -23,4 +23,5 @@ PKG_MESON_OPTS_TARGET="-Ddocs=false \
 			  -Dx11=true \
 			  -Dtests=false \
 			  -Dglx=yes \
-			  -Degl=yes"
+			  -Degl=yes \
+			  --buildtype=release"

@@ -50,7 +50,8 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dman=false \
 			-Ddtrace=false \
 			-Dinstalled_tests=false \
-			-Dgtk_doc=false"
+			-Dgtk_doc=false \
+			--buildtype=release"
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
@@ -62,7 +63,8 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true \
 			  -Dinstalled_tests=false \
-			  -Dgtk_doc=false"
+			  -Dgtk_doc=false \
+			  --buildtype=release"
 
 #pre_configure_target() {
 #   export LDFLAGS="$LDFLAGS -latomic -lm -ldl -lz"

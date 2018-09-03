@@ -17,4 +17,5 @@ PKG_MESON_OPTS_TARGET="-Ddocs=false \
 			  -Ddisable_drm=false \
 			  -Dwith_x11=yes \
 			  -Dwith_wayland=no \
-			  -Denable_docs=false"
+			  -Denable_docs=false \
+			  --buildtype=release"

@@ -21,7 +21,8 @@ get_graphicdrivers
 PKG_DRM_CONFIG="-Dnouveau=false \
                 -Domap=false \
                 -Dexynos=false \
-                -Dtegra=false"
+                -Dtegra=false \
+                --buildtype=release"
 
 listcontains "$GRAPHIC_DRIVERS" "(i915|i965)" &&
   PKG_DRM_CONFIG+=" -Dintel=true" || PKG_DRM_CONFIG+=" -Dintel=false"
