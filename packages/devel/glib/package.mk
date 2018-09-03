@@ -24,8 +24,9 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dman=false \
 			-Ddtrace=false \
 			-Dinstalled_tests=false \
-			-Dgtk_doc=false \
-			--buildtype=release"
+			-Dforce_posix_threads=true \
+			-Ddefault_library=static \
+			-Dgtk_doc=false"
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
@@ -37,6 +38,7 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true \
 			  -Dinstalled_tests=false \
+			  -Ddefault_library=shared \
 			  -Dgtk_doc=false"
 
 #pre_configure_target() {

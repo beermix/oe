@@ -16,8 +16,6 @@ PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
 PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
                            --with-default-fonts=/usr/share/fonts \
-                           --without-add-fonts \
-                           --disable-dependency-tracking \
                            --disable-docs"
 
 pre_configure_target() {
