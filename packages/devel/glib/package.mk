@@ -17,32 +17,6 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_TOOLCHAIN="autotools"
 PKG_TOOLCHAIN="meson"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-                         --disable-shared \
-                         --disable-libmount \
-                         --with-pcre=internal \
-                         --with-pic"
-
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
-                           ac_cv_func_vsnprintf_c99=yes \
-                           glib_cv_stack_grows=no \
-                           glib_cv_uscore=no \
-                           glib_cv_va_val_copy=no \
-                           --disable-selinux \
-                           --disable-fam \
-                           --enable-xattr \
-                           --disable-libelf \
-                           --disable-gtk-doc \
-                           --disable-gtk-doc-html \
-                           --disable-man \
-                           --disable-dtrace \
-                           --disable-systemtap \
-                           --enable-Bsymbolic \
-                           --with-gnu-ld \
-                           --with-threads=posix \
-                           --with-pcre=system \
-                           --with-python=python"
-
 PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
 			-Dinternal_pcre=true \
@@ -63,8 +37,7 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true \
 			  -Dinstalled_tests=false \
-			  -Dgtk_doc=false \
-			  --buildtype=release"
+			  -Dgtk_doc=false"
 
 #pre_configure_target() {
 #   export LDFLAGS="$LDFLAGS -latomic -lm -ldl -lz"
