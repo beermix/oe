@@ -39,5 +39,8 @@ pre_configure_host() {
   unset CPPFLAGS
   unset CFLAGS
   unset CXXFLAGS
-  export LDFLAGS="$LDFLAGS -s"
+}
+
+post_makeinstall_host() {
+  strip $TOOLCHAIN/bin/node
 }
