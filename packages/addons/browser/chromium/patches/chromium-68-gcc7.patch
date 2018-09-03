@@ -128,16 +128,6 @@
  }
  
  void LogUMA(Action action, base::TimeTicks start_time) {
---- chromium-68.0.3440.7/services/network/public/cpp/cors/cors_legacy.h.gcc7	2018-05-31 12:45:46.000000000 +0200
-+++ chromium-68.0.3440.7/services/network/public/cpp/cors/cors_legacy.h	2018-06-02 16:30:52.133685434 +0200
-@@ -5,6 +5,7 @@
- #ifndef SERVICES_NETWORK_PUBLIC_CPP_CORS_CORS_LEGACY_H_
- #define SERVICES_NETWORK_PUBLIC_CPP_CORS_CORS_LEGACY_H_
- 
-+#include <string>
- #include <vector>
- 
- #include "base/component_export.h"
 --- chromium-68.0.3440.7/cc/input/snap_fling_controller.cc.gcc7	2018-05-31 12:45:27.000000000 +0200
 +++ chromium-68.0.3440.7/cc/input/snap_fling_controller.cc	2018-06-02 16:44:43.320656957 +0200
 @@ -27,6 +27,8 @@

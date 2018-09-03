@@ -25,7 +25,10 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --with-threads \
                          --enable-unicode=ucs4 \
                          --with-system-ffi \
-                         --with-system-expat"
+                         --with-system-expat \
+                         --disable-ipv6 \
+                         --enable-optimizations \
+                         --with-lto"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
