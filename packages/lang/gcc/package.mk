@@ -44,6 +44,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-vtable-verify \
+                           --enable-gnu-indirect-function \
+                           --enable-linker-build-id \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -71,8 +74,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --disable-vtable-verify \
-                         --enable-gnu-indirect-function \
                          --enable-libatomic \
                          --enable-libgomp \
                          $GCC_OPTS"

@@ -27,7 +27,6 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --with-system-ffi \
                          --with-system-expat \
                          --disable-ipv6 \
-                         --enable-optimizations \
                          --with-lto"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
