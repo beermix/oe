@@ -80,7 +80,6 @@ make_target() {
     'use_udev=true'
     'use_system_zlib=true'
     'use_system_freetype=true'
-    'use_system_libdrm=true'
     'use_system_libpng=false'
     'use_system_harfbuzz=true'
     'exclude_unwind_tables=true'
@@ -139,6 +138,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
