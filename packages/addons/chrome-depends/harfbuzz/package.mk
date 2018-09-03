@@ -4,7 +4,7 @@
 
 PKG_NAME="harfbuzz"
 PKG_VERSION="1.8.8"
-PKG_SHA256=""
+PKG_SHA256="a8e5c86e4d99e1cc9865ec1b8e9b05b98e413c2a885cd11f8e9bb9502dd3e3a9"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/HarfBuzz"
