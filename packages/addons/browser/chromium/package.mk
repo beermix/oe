@@ -3,11 +3,11 @@
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
-#  https://www.chromestatus.com/ chromium68:host
+#  https://www.chromestatus.com/ chromium:host
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
 #  https://src.fedoraproject.org/rpms/chromium/commits/master
 #######################################################################################################################
-PKG_NAME="chromium68"
+PKG_NAME="chromium"
 PKG_VERSION="68.0.3440.106"
 PKG_SHA256="7021040635a0a0d47f699bdb22e3ef5c91482e4f51b428d1de3016da95f0e698"
 PKG_REV="400"
@@ -16,7 +16,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="chromium-$PKG_VERSION*"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ re2 snappy libxss chromium68:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ re2 snappy libxss chromium:host"
 PKG_SECTION="browser"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
@@ -28,7 +28,7 @@ PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
-  cd $(get_build_dir chromium68)
+  cd $(get_build_dir chromium)
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
