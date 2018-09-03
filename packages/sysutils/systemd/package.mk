@@ -92,7 +92,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        --buildtype=release"
 
 pre_configure_target() {
-  #export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
+  # export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
   export LC_ALL=en_US.UTF-8
 }
 
