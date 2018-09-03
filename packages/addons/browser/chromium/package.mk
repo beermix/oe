@@ -1,22 +1,23 @@
-########################################################################################################################  beautifulsoup4:host html5lib:host re2 snappy
+###################################################################################  beautifulsoup4:host html5lib:host re2 snappy
 #  
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
-#  https://www.chromestatus.com/ chromium:host
+#  https://www.chromestatus.com/
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
-#  https://src.fedoraproject.org/rpms/chromium/commits/master
-#######################################################################################################################
+##################################################################################
 PKG_NAME="chromium"
-PKG_VERSION="68.0.3440.106"
-PKG_SHA256="7021040635a0a0d47f699bdb22e3ef5c91482e4f51b428d1de3016da95f0e698"
-PKG_REV="400"
+PKG_VERSION="64.0.3282.186"
+PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
+PKG_REV="186"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
 PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ re2 snappy libxss chromium:host"
 PKG_SECTION="browser"
+PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
+PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
 GOLD_SUPPORT="yes"
@@ -47,19 +48,11 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
-  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' \
-    ./tools/generate_shim_headers/generate_shim_headers.py
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
-  sed -i \
-    -e '/"-Wno-ignored-pragma-optimize"/d' \
-    ./build/config/compiler/BUILD.gn
+  sed -i -e '/"-Wno-ignored-pragma-optimize"/d' ./build/config/compiler/BUILD.gn
 
-#  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py.
-
-#  export CC="ccache x86_64-libreelec-linux-gnu-clang"
-#  export CXX="ccache x86_64-libreelec-linux-gnu-clang++"
-#  export AR=ar
-#  export NM=nm
+  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py.
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
@@ -73,7 +66,6 @@ make_target() {
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
-    'is_component_build=false'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
@@ -85,7 +77,8 @@ make_target() {
     'use_dbus=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'linux_link_libudev=true'
+    'use_sysroot=true'
+    'use_vaapi=true'
     'use_dbus=true'
     'use_cups=false'
     'use_system_libjpeg=true'
@@ -158,15 +151,12 @@ addon() {
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
   # config
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
+           $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
+           $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
-
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # pango
-  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpango-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangoft2-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # atk
   cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -175,20 +165,28 @@ addon() {
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gtk
-  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # harfbuzz
-  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
   # gdk-pixbuf
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # pixbuf loaders
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+  # gdk-pixbuf modules
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+
+  # gtk+
+  cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gtk3
+ # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+ # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # harfbuzz
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libatk-bridge
+  cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+
+  # libatspi
+  cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libXcursor
   cp -PL $(get_build_dir libXcursor)/.install_pkg/usr/lib/libXcursor.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
@@ -198,6 +196,10 @@ addon() {
 
   # libXtst
   cp -PL $(get_build_dir libXtst)/.install_pkg/usr/lib/libXtst.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # pango
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpango-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangoft2-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # unclutter
   cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
@@ -207,4 +209,7 @@ addon() {
 
   # libXft
   cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libxkbcommon
+  # cp -P $(get_build_dir libxkbcommon)/libxkbcommon.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
