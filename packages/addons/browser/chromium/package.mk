@@ -53,8 +53,6 @@ make_target() {
 
   sed -i -e '/"-Wno-ignored-pragma-optimize"/d' ./build/config/compiler/BUILD.gn
 
-  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py.
-
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
