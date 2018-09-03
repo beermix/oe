@@ -1,21 +1,16 @@
-################################################################################
-#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
-################################################################################
-
 PKG_NAME="apsw"
-PKG_VERSION="3.23.1-r1"
+PKG_VERSION="3.24.0"
 PKG_ARCH="any"
-PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/rogerbinns/apsw"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
-PKG_URL="https://github.com/rogerbinns/apsw/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python2 sqlite distutilscross:host"
-PKG_SECTION="xmedia/depends"
-PKG_SHORTDESC="APSW stands for Another Python SQLite Wrapper"
-PKG_LONGDESC="APSW stands for Another Python SQLite Wrapper."
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/rogerbinns/apsw/releases"
+#PKG_URL="https://github.com/rogerbinns/apsw/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/rogerbinns/apsw/releases/download/$PKG_VERSION-r1/apsw-$PKG_VERSION-r1.zip"
+PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host expat sqlite"
+PKG_PRIORITY="optional"
+PKG_SECTION="python/devel"
+PKG_SHORTDESC="Mako: A super-fast templating language that borrows the best ideas from the existing templating languages."
+PKG_LONGDESC="Mako is a super-fast templating language that borrows the best ideas from the existing templating languages."
+PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
@@ -23,13 +18,10 @@ pre_configure_target() {
 }
 
 make_target() {
-  python setup.py build --enable=load_extension
+  python2 setup.py build --compiler=unix
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1 --skip-build
+  python setup.py install --root=$INSTALL --prefix=/usr
 }
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/lib/python*/site-packages/$PKG_NAME-*.egg-info
-}
