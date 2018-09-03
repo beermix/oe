@@ -40,8 +40,7 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
                        -Dbuild-tests=false \
                        -Dtexture-float=true \
                        -Dselinux=false \
-                       -Dosmesa=none \
-                       --buildtype=release"
+                       -Dosmesa=none"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence xrandr"

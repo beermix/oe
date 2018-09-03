@@ -88,11 +88,11 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dkill-path=/usr/bin/kill \
                        -Dkmod-path=/usr/bin/kmod \
                        -Dmount-path=/usr/bin/mount \
-                       -Dumount-path=/usr/bin/umount \
-                       --buildtype=release"
+                       -Dumount-path=/usr/bin/umount"
 
 pre_configure_target() {
   # export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
+  export CFLAGS="$CFLAGS -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error   -Wl,-z,max-page-size=0x1000 -m64"
   export LC_ALL=en_US.UTF-8
 }
 

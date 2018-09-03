@@ -15,5 +15,4 @@ PKG_LONGDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleratio
 PKG_MESON_OPTS_TARGET="-Ddrm=true \
 			  -Dx11=true \
 			  -Dwayland=false \
-			  -Dtests=false \
-			  --buildtype=release"
+			  -Dtests=false"
