@@ -8,8 +8,8 @@
 ##################################################################################
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
-PKG_VERSION="68.0.3440.106"
-#PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
+#PKG_VERSION="68.0.3440.106"
+PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
 PKG_REV="186"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -81,7 +81,6 @@ make_target() {
     'use_dbus=true'
     'use_cups=false'
     'use_system_libjpeg=true'
-    'use_system_libpng=false'
     'use_system_libdrm=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
@@ -91,7 +90,6 @@ make_target() {
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
-    'enable_widevine=true'
     'enable_vr=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
