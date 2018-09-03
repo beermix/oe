@@ -37,12 +37,13 @@ post_patch() {
 }
 
 make_host() {
-  # export CCACHE_SLOPPINESS=file_macro
-  ./tools/gn/bootstrap/bootstrap.py -s --no-rebuild --no-clean
+  export CCACHE_SLOPPINESS=file_macro
+  # ./tools/gn/bootstrap/bootstrap.py -s --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
 }
 
 make_target() {
-  # export CCACHE_SLOPPINESS=file_macro
+  export CCACHE_SLOPPINESS=file_macro
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
