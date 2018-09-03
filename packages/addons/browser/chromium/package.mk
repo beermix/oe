@@ -141,6 +141,9 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       -delete
   done
 
+  mkdir -p $(@D)/third_party/node/linux/node-linux-x64/bin
+  ln -sf /home/user/.bin/node $(@D)/third_party/node/linux/node-linux-x64/bin/
+
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 

@@ -12,15 +12,11 @@ PKG_DEPENDS_HOST="ccache:host autotools:host autoconf:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="pcre: Perl Compatible Regulat Expressions"
 PKG_LONGDESC="The PCRE library is a set of functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5. PCRE has its own native API, as well as a set of wrapper functions that correspond to the POSIX regular expression API. The PCRE library is free, even for building commercial software."
-PKG_TOOLCHAIN="autotools"
 PKG_TOOLCHAIN="configure"
-#PKG_BUILD_FLAGS="+pic:host"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-jit \
-			      --enable-utf8 \
-			      --enable-unicode-properties \
-			      --enable-pcre8 \
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \
+			      --enable-unicode-properties \
 			      --enable-cpp"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
