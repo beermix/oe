@@ -19,4 +19,6 @@ PKG_TOOLCHAIN="configure"
 PKG_CMAKE_OPTS_TARGET="-BUILD_doc=OFF -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
-
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
+}
