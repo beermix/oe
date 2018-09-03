@@ -39,7 +39,7 @@ post_patch() {
 make_host() {
   export CCACHE_SLOPPINESS=file_macro
   # ./tools/gn/bootstrap/bootstrap.py -s --no-rebuild --no-clean |     "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
 }
 
 make_target() {
