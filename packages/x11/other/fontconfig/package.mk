@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="fontconfig"
-PKG_VERSION="2.13.0"
-PKG_SHA256="a6ca290637d8b2c4e1dd40549b179202977593f7481ec83ddfb1765ad90037ba"
+PKG_VERSION="2.13.1"
+PKG_SHA256="9f0d852b39d75fc655f9f53850eb32555394f36104a044bb2b2fc9e66dbbfa7f"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://www.freedesktop.org/software/fontconfig/release/?C=M;O=D"
