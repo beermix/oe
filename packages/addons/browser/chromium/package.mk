@@ -88,7 +88,7 @@ make_target() {
     'linux_link_libudev=true'
     'use_system_libjpeg=true'
     'enable_remoting=false'
-    'use_v8_context_snapshot=true'
+    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
