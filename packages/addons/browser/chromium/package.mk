@@ -87,7 +87,6 @@ make_target() {
     'use_libpci=true'
     'linux_link_libudev=true'
     'use_system_libjpeg=true'
-    'icu_use_data_file=true'
     'enable_remoting=false'
     'use_v8_context_snapshot=true'
     'enable_vulkan=false'
@@ -117,7 +116,6 @@ readonly -A _system_libs=(
   [libpng]=libpng            # https://crbug.com/752403#c10
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  #[opus]=opus
   [re2]=re2
   [snappy]=snappy
   [yasm]=
@@ -149,7 +147,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release -s --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
@@ -158,11 +156,11 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config
+  # config *.dat,
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
