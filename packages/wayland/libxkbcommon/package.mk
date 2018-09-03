@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libxkbcommon"
-PKG_VERSION="0.7.1"
-PKG_SHA256="ba59305d2e19e47c27ea065c2e0df96ebac6a3c6e97e28ae5620073b6084e68b"
+PKG_VERSION="0.8.2"
+PKG_SHA256="7ab8c4b3403d89d01898066b72cb6069bddeb5af94905a65368f671a026ed58c"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://xkbcommon.org"
