@@ -141,15 +141,14 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       -delete
   done
 
-  mkdir -p $(@D)/third_party/node/linux/node-linux-x64/bin
-  ln -sf /home/user/.bin/node $(@D)/third_party/node/linux/node-linux-x64/bin/
-
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
+  ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter -w dupbuild=warn
 }
 
 addon() {
