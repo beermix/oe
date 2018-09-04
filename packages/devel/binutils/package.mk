@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
 			      --with-sysroot=$SYSROOT_PREFIX \
 			      --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
 			      --enable-compressed-debug-sections=all \
-			      --enable-targets=x86_64-linux \
 			      --without-ppl \
 			      --without-cloog \
 			      --enable-static \
