@@ -15,9 +15,10 @@ PKG_LONGDESC="The PCRE library is a set of functions that implement regular expr
 PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
+			      --enable-pcre8 \
 			      --enable-pcre16 \
 			      --enable-unicode-properties \
-			      --enable-cpp"
+			      --disable-cpp"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
