@@ -29,7 +29,7 @@
   UPDATE_ROOT=/storage/.update
   UPDATE_DIR="$UPDATE_ROOT"
 
-  UPDATE_KERNEL="KERNEL"
+  f="KERNEL"
   UPDATE_SYSTEM="SYSTEM"
   IMAGE_KERNEL="@KERNEL_NAME@"
   IMAGE_SYSTEM="SYSTEM"
@@ -39,7 +39,7 @@
   RUN_FSCK="yes"
   RUN_FSCK_DISKS=""
   SYSLINUX_DEFAULT=""
-  GRUB_DEFAULT=""
+  GRUB_DEFAULT="pti=off spectre_v2=off l1tf=off nospec_store_bypass_disable no_stf_barrier"
 
   NBD_DEVS="0"
   FLASH_FREE_MIN="5"

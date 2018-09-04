@@ -53,10 +53,9 @@ case "$LINUX" in
     PKG_SOURCE_NAME="linux-$LINUX-$PKG_VERSION.tar.gz"
     ;;
   *)
-    PKG_VERSION="4.18.5"
-    PKG_SHA256="fb090a3680eddf6f10bf895bc3075bd3f830e3d2429ce469982db5a28df647bd"
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    #PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
+    PKG_VERSION="4.19-rc2"
+    PKG_SHA256=""
+    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
@@ -94,7 +93,7 @@ post_patch() {
     sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
 
   # ask for new config options after kernel update
-   # make -C $PKG_BUILD oldconfig
+   make -C $PKG_BUILD oldconfig
 
   # disable swap support if not enabled
   if [ ! "$SWAP_SUPPORT" = yes ]; then

@@ -13,6 +13,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="fast real-time compression algorithm"
 PKG_BUILD_FLAGS="+pic"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/build/cmake/CMakeLists.txt"
 
