@@ -18,7 +18,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre8 \
 			      --enable-pcre16 \
 			      --enable-unicode-properties \
-			      --disable-cpp"
+			      --enable-cpp"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
