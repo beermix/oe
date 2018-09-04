@@ -26,8 +26,7 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --enable-unicode=ucs4 \
                          --with-system-ffi \
                          --with-system-expat \
-                         --disable-ipv6 \
-                         --with-lto"
+                         --disable-ipv6"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -50,7 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-pymalloc \
                            --without-fpectl \
                            --without-cxx-main \
-                           --disable-optimizations \
+                           --enable-optimizations \
                            --with-lto \
                            --with-system-ffi \
                            --with-system-expat"
