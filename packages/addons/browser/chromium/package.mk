@@ -39,8 +39,7 @@ post_patch() {
 
 make_host() {
   export CCACHE_SLOPPINESS=file_macro
-  # ./tools/gn/bootstrap/bootstrap.py -s --no-rebuild --no-clean |     "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
-  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
@@ -78,6 +77,7 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'use_udev=true'
+    'use_system_zlib=true'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'exclude_unwind_tables=true'
