@@ -23,8 +23,12 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
+                           --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
+                           --with-elf \
+                           --with-tls \
+                           --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.18 \
@@ -90,7 +94,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="-O2 -march=$TARGET_CPU -g"
+  export CFLAGS="$CFLAGS -g"
 
   # export CFLAGS="-O2 -march=$TARGET_CPU -g2 -m64  -Wl,-z,max-page-size=0x1000 "
   # unset LDFLAGS
