@@ -20,7 +20,7 @@ PKG_PATCH_DIRS="$LINUX"
 case "$LINUX" in
   pf)
     PKG_VERSION="4.16-pf7"
-    PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
+    PKG_SITE="https://github.com/pfactum/pf-kernel/releases"
     PKG_URL="https://github.com/pfactum/pf-kernel/archive/v$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="pf-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="4.16"

@@ -36,7 +36,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --enable-relro \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \

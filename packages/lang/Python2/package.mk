@@ -22,11 +22,13 @@ PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
+                         --without-pydebug \
                          --with-threads \
+                         --disable-ipv6
                          --enable-unicode=ucs4 \
                          --with-system-ffi \
                          --with-system-expat \
-                         --disable-ipv6"
+                         --with-lto"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -59,7 +61,6 @@ post_patch() {
     touch $PKG_BUILD/Include/graminit.h
     touch $PKG_BUILD/Python/graminit.c
 }
-
 
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
