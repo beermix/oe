@@ -53,6 +53,7 @@ make_target() {
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
+    'use_v8_context_snapshot=true'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -84,7 +85,6 @@ make_target() {
     'linux_link_libudev=true'
     'use_system_libjpeg=true'
     'enable_remoting=false'
-    'use_v8_context_snapshot=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -151,7 +151,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter -w dupbuild=warn
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
