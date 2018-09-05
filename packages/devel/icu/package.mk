@@ -27,7 +27,10 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-data-packaging=archive --with-cross-build=$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+			      --enable-static \
+			      --with-data-packaging=archive \
+			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
