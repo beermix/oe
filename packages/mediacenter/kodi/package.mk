@@ -16,7 +16,7 @@ PKG_SHORTDESC="kodi: Kodi Mediacenter"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
 # Single threaded LTO is very slow so rely on Kodi for LTO support
 PKG_BUILD_FLAGS="-lto"
-PKG_TOOLCHAIN="cmake-make"
+#PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
 
