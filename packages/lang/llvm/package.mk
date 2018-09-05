@@ -1,10 +1,11 @@
 PKG_NAME="llvm"
 PKG_VERSION="6.0.1"
+PKG_VERSION="600f7a2"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/llvm-mirror/llvm/tree/release_70"
 PKG_URL="http://llvm.org/releases/$PKG_VERSION/${PKG_NAME}-${PKG_VERSION}.src.tar.xz"
-#PKG_URL="https://github.com/llvm-mirror/llvm/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/llvm-mirror/llvm/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}.src"
 #PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}*"
 PKG_DEPENDS_HOST="libxml2:host"
@@ -12,7 +13,7 @@ PKG_DEPENDS_TARGET="toolchain llvm:host zlib libxml2"
 PKG_SECTION="lang"
 PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
-#PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_HOST="-DLLVM_ENABLE_PROJECTS="" \
 			-DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib \
