@@ -12,7 +12,7 @@ PKG_SECTION="security"
 PKG_SHORTDESC="Netscape Portable Runtime (NSPR) provides a platform-neutral API for system level and libc like functions"
 PKG_LONGDESC="Netscape Portable Runtime (NSPR) provides a platform-neutral API for system level and libc like functions"
 PKG_TOOLCHAIN="configure"
-#PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="-parallel"
 
 if [ "$TARGET_ARCH" = "x86_64" ] ; then
   TARGET_USE_64="--enable-64bit"
@@ -24,7 +24,7 @@ PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$TOOLCHAIN/bin/nsinstall"
 
 configure_host() {
   cd $(get_build_dir nss)/nspr
-  ./configure --enable-64bit --with-pthreads --enable-optimize --disable-debug --prefix=$TOOLCHAIN
+  ./configure --with-pthreads --enable-64bit --with-pthreads --enable-optimize --disable-debug --prefix=$TOOLCHAIN
 }
 
 pre_make_host() {
