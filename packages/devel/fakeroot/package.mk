@@ -17,4 +17,4 @@ PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="fakeroot: provides a fake root environment by means of LD_PRELOAD and SYSV IPC (or TCP) trickery."
 PKG_LONGDESC="fakeroot provides a fake root environment by means of LD_PRELOAD and SYSV IPC (or TCP) trickery."
 
-PKG_CONFIGURE_OPTS_HOST="--with-ipc=sysv"
+PKG_CONFIGURE_OPTS_HOST="--with-ipc=sysv --with-gnu-ld"
