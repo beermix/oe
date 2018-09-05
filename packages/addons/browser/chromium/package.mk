@@ -10,7 +10,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV=".301"
+PKG_REV="301"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -53,7 +53,7 @@ make_target() {
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
-    'use_v8_context_snapshot=true'
+    'use_v8_context_snapshot=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
