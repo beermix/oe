@@ -2,7 +2,7 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="ethtool"
-PKG_VERSION="4.17"
+PKG_VERSION="4.18"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
