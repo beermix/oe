@@ -15,7 +15,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ re2 snappy minizip libxss chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ re2 snappy minizip libxss chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -51,7 +51,6 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -85,7 +84,7 @@ make_target() {
     'linux_link_libudev=true'
     'use_system_libjpeg=true'
     'enable_remoting=false'
-    'use_v8_context_snapshot=true'
+    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -116,7 +115,7 @@ readonly -A _system_libs=(
   [re2]=re2
   [snappy]=snappy
   [yasm]=
-  [zlib]=minizip
+  #[zlib]=minizip
 )
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
