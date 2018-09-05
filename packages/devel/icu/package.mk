@@ -25,7 +25,12 @@ pre_configure_target() {
   LIBS="-latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_HOST="--disable-samples \
+			    --disable-tests \
+			    --disable-extras \
+			    --disable-icuio \
+			    --disable-layout \
+			    --disable-renaming"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
