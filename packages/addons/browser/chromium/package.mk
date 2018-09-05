@@ -51,6 +51,7 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -84,7 +85,7 @@ make_target() {
     'linux_link_libudev=true'
     'use_system_libjpeg=true'
     'enable_remoting=false'
-    'use_v8_context_snapshot=false'
+    'use_v8_context_snapshot=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'

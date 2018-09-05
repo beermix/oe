@@ -39,7 +39,7 @@ if [ -z "$PKG_SOURCE_DIR" ]; then
 	TAR_OPTS="--strip-components=1"
 	DESTDIR="$2/$PKG_NAME-$PKG_VERSION"
 else
-	TAR_OPTS=""
+	TAR_OPTS="--strip-components=1"
 	DESTDIR="$2"
 fi
 
