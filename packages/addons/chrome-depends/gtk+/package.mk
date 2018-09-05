@@ -12,14 +12,8 @@ PKG_SHORTDESC="gtk+: The Gimp ToolKit (GTK)"
 PKG_LONGDESC="This is GTK+. GTK+, which stands for the Gimp ToolKit, is a library for creating graphical user interfaces for the X Window System. It is designed to be small, efficient, and flexible. GTK+ is written in C with a very object-oriented approach."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GTK_UPDATE_ICON_CACHE=$TOOLCHAIN/bin/gtk-update-icon-cache \
-                           ac_cv_path_GDK_PIXBUF_CSOURCE=$TOOLCHAIN/bin/gdk-pixbuf-csource \
-                           DB2HTML=false \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$TOOLCHAIN/bin/glib-genmarshal \
                            --disable-glibtest \
-                           --with-x \
-                           --x-includes=$SYSROOT/usr/include/X11 \
-                           --x-libraries=$SYSROOT/usr/lib \
-                           --with-gdktarget=x11 \
                            --enable-modules \
                            --enable-explicit-deps=no \
                            --disable-debug \
@@ -29,13 +23,16 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GTK_UPDATE_ICON_CACHE=$TOOLCHAIN/bin/gtk-u
                            --enable-xkb \
                            --disable-xinerama \
                            --disable-gtk-doc-html \
-                           --with-xinput \
-                           --enable-silent-rules"
+                           --with-xinput"
 make_target() {
-  make SRC_SUBDIRS="gdk gtk modules"
   $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
 }
 
 makeinstall_target() {
+  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
   make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules"
+}
+
+post_makeinstall_target() {
+  echo gtk-font-name=\"Liberation Sans 12\" > $INSTALL/etc/gtk-2.0/gtkrc
 }
