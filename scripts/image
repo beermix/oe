@@ -210,7 +210,7 @@ $TOOLCHAIN/bin/depmod -b $INSTALL/usr/lib/kernel-overlays/base -a -e -F "$BUILD/
 
 # strip kernel modules
 for MOD in $(find $INSTALL/usr/lib/kernel-overlays/ -type f -name *.ko); do
-  ${TARGET_KERNEL_PREFIX}strip --strip-all $MOD
+  ${TARGET_KERNEL_PREFIX}strip $MOD
 done
 
 # symlink overlayed modules to /usr/lib/modules

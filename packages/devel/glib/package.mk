@@ -14,7 +14,6 @@ PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
-PKG_TOOLCHAIN="meson"
 
 PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
@@ -29,7 +28,7 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
-			  -Dinternal_pcre=true \
+			  -Dinternal_pcre=false \
 			  -Dxattr=false \
 			  -Dman=false \
 			  -Ddtrace=false \
@@ -39,10 +38,6 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dinstalled_tests=false \
 			  -Ddefault_library=shared \
 			  -Dgtk_doc=false"
-
-#pre_configure_target() {
-#   export LDFLAGS="$LDFLAGS -latomic -lm -ldl -lz"
-#}
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
