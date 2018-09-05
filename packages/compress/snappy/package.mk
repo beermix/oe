@@ -1,5 +1,5 @@
 PKG_NAME="snappy"
-PKG_VERSION="1.1.7"
+PKG_VERSION="ea660b5"
 PKG_ARCH="any"
 PKG_LICENSE="BSD/GPLv2"
 PKG_SITE="https://github.com/google/snappy"
