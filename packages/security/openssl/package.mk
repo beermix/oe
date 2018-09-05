@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2p"
 PKG_SHA256="50a98e07b1a89eb8f6a99477f262df71c6fa7bef77df4dc83025a2845c827d00"
@@ -11,7 +14,6 @@ PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 #PKG_BUILD_FLAGS="-parallel"
-#PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -30,7 +32,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-zlib no-zlib-dynamic  no-static-engine linux-x86_64
   #  "-Wa,--noexecstack $CFLAGS $LDFLAGS -ffunction-sections -fdata-sections -Wl,--gc-sections"
 }
 
@@ -67,10 +69,11 @@ post_makeinstall_target() {
 
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
-  
+
   mkdir -p $INSTALL/etc/ssl
   # perl $PKG_DIR/cert/mk-ca-bundle.pl
   # cp $PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  cp $PKG_DIR/scripts/openssl-config $INSTALL/usr/bin
   cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
   cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cacert.pem
 
