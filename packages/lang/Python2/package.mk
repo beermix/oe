@@ -50,7 +50,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-fpectl \
                            --without-cxx-main \
                            --with-lto \
-                           --enable-optimizations \
                            --with-system-ffi \
                            --with-system-expat"
 post_patch() {
