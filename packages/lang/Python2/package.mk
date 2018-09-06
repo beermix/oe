@@ -24,11 +24,10 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --without-pydebug \
                          --with-threads \
-                         --disable-ipv6
+                         --disable-ipv6 \
                          --enable-unicode=ucs4 \
                          --with-system-ffi \
-                         --with-system-expat \
-                         --with-lto"
+                         --with-system-expat"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -51,7 +50,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-pymalloc \
                            --without-fpectl \
                            --without-cxx-main \
-                           --with-lto \
                            --with-system-ffi \
                            --with-system-expat"
 post_patch() {
