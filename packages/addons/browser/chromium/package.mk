@@ -51,8 +51,6 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
-    'use_v8_context_snapshot=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -97,7 +95,7 @@ make_target() {
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py     'icu_use_data_file=true'
 # Keys are the names in the above script; values are the dependencies in Arch
-#    'use_system_harfbuzz=true'
+#    'use_system_harfbuzz=true'     "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""   'use_v8_context_snapshot=false'
 #    'use_system_freetype=true'
 readonly -A _system_libs=(
   #[fontconfig]=fontconfig    # Enable for M65
