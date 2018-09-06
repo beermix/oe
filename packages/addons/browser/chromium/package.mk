@@ -52,7 +52,7 @@ make_target() {
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
-    'use_v8_context_snapshot=true'
+    'use_v8_context_snapshot=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
