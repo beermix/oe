@@ -31,9 +31,9 @@ make_host() {
 }
 
 makeinstall_host() {
-  #$TOOLCHAIN/bin/python2 ./configure.py
-  ./ninja ninja_test
-  ./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
+  # $TOOLCHAIN/bin/python2 ./configure.py
+  # ./ninja ninja_test
+  # ./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
 
   strip ninja
   cp ninja $TOOLCHAIN/bin

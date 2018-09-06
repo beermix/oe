@@ -21,9 +21,9 @@ PKG_TOOLCHAIN="configure"
 #  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
 #}
 
-pre_configure_target() {
-  LIBS="-latomic"
-}
+#pre_configure_target() {
+#  export LIBS="-latomic"
+#}
 
 PKG_CONFIGURE_OPTS_HOST="--disable-samples \
 			    --disable-tests \
