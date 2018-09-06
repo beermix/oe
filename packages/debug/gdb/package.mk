@@ -2,12 +2,13 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="gdb"
-PKG_VERSION="8.1.1"
-PKG_SHA256="97dcc3169bd430270fc29adb65145846a58c1b55cdbb73382a4a89307bdad03c"
+PKG_VERSION="8.2"
+PKG_SHA256="c3a441a29c7c89720b734e5a9c6289c0a06be7e0c76ef538f7bbcef389347c39"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
 PKG_URL="http://ftpmirror.gnu.org/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib ncurses expat"
 PKG_SECTION="debug"
 PKG_SHORTDESC="gdb: The GNU Debugger"
