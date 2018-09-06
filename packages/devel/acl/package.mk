@@ -1,6 +1,6 @@
 PKG_NAME="acl"
 PKG_VERSION="2.2.53"
-PKG_URL="http://git.savannah.nongnu.org/cgit/acl.git/snapshot/acl-2.2.53.tar.gz"
+PKG_URL="http://git.savannah.nongnu.org/cgit/acl.git/snapshot/acl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain attr"
 PKG_DEPENDS_HOST="toolchain attr:host"
 PKG_SECTION="tools"
