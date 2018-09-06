@@ -20,6 +20,7 @@ PKG_LONGDESC="The GNU binutils are utilities of use when dealing with object fil
 #post_unpack() {
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
 #}
+# --enable-targets=i386-linux,x86_64-linux \
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -32,7 +33,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-compressed-debug-sections=all \
-                         --enable-targets=i386-linux,x86_64-linux \
                          --enable-secureplt \
                          --enable-plugins \
                          --enable-gold \
@@ -44,7 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
 			      --with-sysroot=$SYSROOT_PREFIX \
 			      --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
 			      --enable-compressed-debug-sections=all \
-			      --enable-targets=i386-linux,x86_64-linux \
+			      --enable-targets=x86_64-linux \
 			      --without-ppl \
 			      --without-cloog \
 			      --enable-static \
