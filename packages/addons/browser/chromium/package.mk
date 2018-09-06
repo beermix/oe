@@ -76,7 +76,7 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_udev=true'
+    'linux_link_libudev=true'
     'use_system_zlib=true'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
