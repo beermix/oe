@@ -16,13 +16,14 @@ PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 
 PKG_MESON_OPTS_HOST="-Dselinux=false \
-			-Dinternal_pcre=true \
+			-Dlibmount=false \
 			-Dman=false \
 			-Ddefault_library=static \
 			-Dgtk_doc=false"
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dman=false \
+			  -Dlibmount=false \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true \
 			  -Dgtk_doc=false"
