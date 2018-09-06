@@ -30,3 +30,4 @@ mkpkg-temp
 .directory
 
 /.ccache-oe.*/
+/=.*

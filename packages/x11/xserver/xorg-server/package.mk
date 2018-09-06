@@ -42,6 +42,7 @@ PKG_MESON_OPTS_TARGET="-Dos_vendor="LibreELEC.tv" \
 			  -Dmitshm=true \
 			  -Dint10=x86emu \
 			  -Dxinerama=true \
+			  -Dxselinux=false \
 			  -Dsystemd_logind=false \
 			  -Dxdmcp=false \
 			  -Dmodule_dir=$XORG_PATH_MODULES \
