@@ -1,0 +1,99 @@
+From 08ef815c7b55f28417b1a965eeab3640558d5f5a Mon Sep 17 00:00:00 2001
+From: Stefan Becker <chemobejk@gmail.com>
+Date: Sat, 7 Apr 2018 16:42:35 +0300
+Subject: [PATCH] Add NINJA_FALLTHROUGH macro
+
+Borrow macro implementation from OpenSSL code.
+
+Add the macro after each fallthrough switch case to indicate our
+intention to the compiler. This silences GCC -Wimplicit-fallthrough
+warnings, which is implied by GCC 7.x -Wextra.
+---
+ src/build_log.cc |  6 ++++++
+ src/hash_map.h   |  3 +++
+ src/util.cc      |  2 +-
+ src/util.h       | 14 ++++++++++++++
+ 4 files changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/src/build_log.cc b/src/build_log.cc
+index c75be9538..2a65f9dac 100644
+--- a/src/build_log.cc
++++ b/src/build_log.cc
+@@ -76,11 +76,17 @@ uint64_t MurmurHash64A(const void* key, size_t len) {
+   switch (len & 7)
+   {
+   case 7: h ^= uint64_t(data[6]) << 48;
++          NINJA_FALLTHROUGH;
+   case 6: h ^= uint64_t(data[5]) << 40;
++          NINJA_FALLTHROUGH;
+   case 5: h ^= uint64_t(data[4]) << 32;
++          NINJA_FALLTHROUGH;
+   case 4: h ^= uint64_t(data[3]) << 24;
++          NINJA_FALLTHROUGH;
+   case 3: h ^= uint64_t(data[2]) << 16;
++          NINJA_FALLTHROUGH;
+   case 2: h ^= uint64_t(data[1]) << 8;
++          NINJA_FALLTHROUGH;
+   case 1: h ^= uint64_t(data[0]);
+           h *= m;
+   };
+diff --git a/src/hash_map.h b/src/hash_map.h
+index a91aeb996..55d2c9d46 100644
+--- a/src/hash_map.h
++++ b/src/hash_map.h
+@@ -18,6 +18,7 @@
+ #include <algorithm>
+ #include <string.h>
+ #include "string_piece.h"
++#include "util.h"
+ 
+ // MurmurHash2, by Austin Appleby
+ static inline
+@@ -40,7 +41,9 @@ unsigned int MurmurHash2(const void* key, size_t len) {
+   }
+   switch (len) {
+   case 3: h ^= data[2] << 16;
++          NINJA_FALLTHROUGH;
+   case 2: h ^= data[1] << 8;
++          NINJA_FALLTHROUGH;
+   case 1: h ^= data[0];
+     h *= m;
+   };
+diff --git a/src/util.cc b/src/util.cc
+index 61a038bb1..760bc23c0 100644
+--- a/src/util.cc
++++ b/src/util.cc
+@@ -197,7 +197,7 @@ bool CanonicalizePath(char* path, size_t* len, uint64_t* slash_bits,
+       case '\\':
+         bits |= bits_mask;
+         *c = '/';
+-        // Intentional fallthrough.
++        NINJA_FALLTHROUGH;
+       case '/':
+         bits_mask <<= 1;
+     }
+diff --git a/src/util.h b/src/util.h
+index 4ee41a500..1b4227c4e 100644
+--- a/src/util.h
++++ b/src/util.h
+@@ -34,6 +34,20 @@ using namespace std;
+ /// Log a fatal message and exit.
+ NORETURN void Fatal(const char* msg, ...);
+ 
++// Have a generic fall-through for different versions of C/C++.
++#if defined(__cplusplus) && __cplusplus >= 201703L
++#define NINJA_FALLTHROUGH [[fallthrough]]
++#elif defined(__cplusplus) && __cplusplus >= 201103L && defined(__clang__)
++#define NINJA_FALLTHROUGH [[clang::fallthrough]]
++#elif defined(__cplusplus) && __cplusplus >= 201103L && defined(__GNUC__) && \
++    __GNUC__ >= 7
++#define NINJA_FALLTHROUGH [[gnu::fallthrough]]
++#elif defined(__GNUC__) && __GNUC__ >= 7 // gcc 7
++#define NINJA_FALLTHROUGH __attribute__ ((fallthrough))
++#else // C++11 on gcc 6, and all other cases
++#define NINJA_FALLTHROUGH
++#endif
++
+ /// Log a warning message.
+ void Warning(const char* msg, ...);
+ 

@@ -1,0 +1,296 @@
+From d61c499beecd621740f01db4002e8c4a8a93a088 Mon Sep 17 00:00:00 2001
+From: Michael Giuffrida <michaelg@michaelg.us>
+Date: Thu, 26 Jan 2017 16:22:20 -0800
+Subject: [PATCH] Add -o flag for output options for verbosity and raw output
+
+Adds the general-purpose -o flag to address #746, with options for
+verbosity (#480) and control sequence stripping (#581, #672, #916). Also
+provides the ability to enable both verbose and raw output as a
+workaround for #1214 without changing the existing verbose behavior.
+
+-o verbose  show all command lines while building
+-o quiet    hide command lines and outputs while building
+-o raw      never strip control sequences from output
+-o strip    always strip control sequences from output
+-o color    strip most control sequences from output, but retain color codes
+
+This patch does not affect Ninja's defaults of normal verbosity and
+smart terminal detection for escape sequence stripping.
+
+"-o color" is particularly useful for utilities like `head` and
+`less -R` that interpret color codes from stdin and pass this colored
+output to stdout. Any valid ANSI color code, of the form:
+
+    `'ESC' '[' [ colors ] 'm'`
+
+where `colors` is a semicolon-delimited list of optional integers:
+
+   `[ n ] [ ';' colors ]`
+
+is retained in its entirety when using "-o color" (any other CSI escape
+sequences besides ANSI color codes are still stripped for non-smart
+terminals).
+---
+ src/build.cc     | 15 ++++++++------
+ src/build.h      | 17 ++++++++++++----
+ src/ninja.cc     | 51 +++++++++++++++++++++++++++++++++++++++++++++---
+ src/util.cc      | 13 +++++++++++-
+ src/util.h       |  5 +++--
+ src/util_test.cc | 27 ++++++++++++++++++++++---
+ 6 files changed, 109 insertions(+), 19 deletions(-)
+
+diff --git a/src/build.cc b/src/build.cc
+index 61ef0e849..5b47a5c43 100644
+--- a/src/build.cc
++++ b/src/build.cc
+@@ -84,7 +84,7 @@ BuildStatus::BuildStatus(const BuildConfig& config)
+       overall_rate_(), current_rate_(config.parallelism) {
+ 
+   // Don't do anything fancy in verbose mode.
+-  if (config_.verbosity != BuildConfig::NORMAL)
++  if (config_.verbosity == BuildConfig::VERBOSE)
+     printer_.set_smart_terminal(false);
+ 
+   progress_status_format_ = getenv("NINJA_STATUS");
+@@ -150,16 +150,19 @@ void BuildStatus::BuildEdgeFinished(Edge* edge,
+     // be run with a flag that forces them to always print color escape codes.
+     // To make sure these escape codes don't show up in a file if ninja's output
+     // is piped to a file, ninja strips ansi escape codes again if it's not
+-    // writing to a |smart_terminal_|.
++    // writing to a |smart_terminal_| unless overridden by an -o flag.
+     // (Launching subprocesses in pseudo ttys doesn't work because there are
+     // only a few hundred available on some systems, and ninja can launch
+     // thousands of parallel compile commands.)
+-    // TODO: There should be a flag to disable escape code stripping.
+     string final_output;
+-    if (!printer_.is_smart_terminal())
+-      final_output = StripAnsiEscapeCodes(output);
+-    else
++    if (config_.control_sequences == BuildConfig::KEEP_ALL ||
++        (config_.control_sequences == BuildConfig::SMART &&
++         printer_.is_smart_terminal())) {
+       final_output = output;
++    } else {
++      final_output = StripAnsiEscapeCodes(
++          output, config_.control_sequences == BuildConfig::KEEP_COLORS);
++    }
+ 
+ #ifdef _WIN32
+     // Fix extra CR being added on Windows, writing out CR CR LF (#773)
+diff --git a/src/build.h b/src/build.h
+index 43786f1c9..c81fed896 100644
+--- a/src/build.h
++++ b/src/build.h
+@@ -124,15 +124,24 @@ struct CommandRunner {
+ 
+ /// Options (e.g. verbosity, parallelism) passed to a build.
+ struct BuildConfig {
+-  BuildConfig() : verbosity(NORMAL), dry_run(false), parallelism(1),
+-                  failures_allowed(1), max_load_average(-0.0f) {}
++  BuildConfig() : verbosity(NORMAL), control_sequences(SMART), dry_run(false),
++                  parallelism(1), failures_allowed(1), max_load_average(-0.0f) {
++  }
+ 
+   enum Verbosity {
+     NORMAL,
+-    QUIET,  // No output -- used when testing.
+-    VERBOSE
++    QUIET,  // No output -- used for output mode "quiet".
++    VERBOSE  // Print all command lines -- used for output mode "verbose".
++  };
++  enum ControlSequences {
++    SMART,  // ninja will decide whether to strip control sequences.
++    KEEP_ALL,  // Never strip control sequences.
++    KEEP_NONE,  // Always strip control sequences.
++    KEEP_COLORS  // Always strip control sequences except for color codes.
+   };
+   Verbosity verbosity;
++  /// Specifies what control sequences to retain in the output.
++  ControlSequences control_sequences;
+   bool dry_run;
+   int parallelism;
+   int failures_allowed;
+diff --git a/src/ninja.cc b/src/ninja.cc
+index ed004ac8f..1f5353cdf 100644
+--- a/src/ninja.cc
++++ b/src/ninja.cc
+@@ -210,7 +210,7 @@ void Usage(const BuildConfig& config) {
+ "  -k N     keep going until N jobs fail [default=1]\n"
+ "  -l N     do not start new jobs if the load average is greater than N\n"
+ "  -n       dry run (don't run commands but act like they succeeded)\n"
+-"  -v       show all command lines while building\n"
++"  -o MODE  change output mode (use -o list to list modes)\n"
+ "\n"
+ "  -d MODE  enable debugging (use -d list to list modes)\n"
+ "  -t TOOL  run a subtool (use -t list to list subtools)\n"
+@@ -877,6 +877,47 @@ bool WarningEnable(const string& name, Options* options) {
+   }
+ }
+ 
++/// Enable an output mode. Returns false if Ninja should exit instead of
++/// continuing.
++bool OutputEnable(const string& name, BuildConfig* config) {
++  if (name == "list") {
++    printf("output modes:\n"
++"  verbose  show all command lines while building\n"
++"  quiet    hide command lines and outputs while building\n"
++"\n"
++"  raw      never strip control sequences from output\n"
++"  strip    always strip control sequences from output\n"
++"  color    strip most control sequences from output, but retain color codes\n"
++"\n"
++"multiple modes can be enabled via -o FOO -o BAR\n"
++"by default, ninja will decide whether to output control sequences\n"
++);
++    return false;
++  } else if (name == "quiet") {
++    config->verbosity = BuildConfig::QUIET;
++  } else if (name == "verbose") {
++    config->verbosity = BuildConfig::VERBOSE;
++  } else if (name == "raw") {
++    config->control_sequences = BuildConfig::KEEP_ALL;
++  } else if (name == "strip") {
++    config->control_sequences = BuildConfig::KEEP_NONE;
++  } else if (name == "color") {
++    config->control_sequences = BuildConfig::KEEP_COLORS;
++  } else {
++    const char* suggestion =
++        SpellcheckString(name.c_str(),
++                         "quiet", "verbose", "raw", "strip", "color", NULL);
++    if (suggestion) {
++      Error("unknown output setting '%s', did you mean '%s'?",
++            name.c_str(), suggestion);
++    } else {
++      Error("unknown output setting '%s'", name.c_str());
++    }
++    return false;
++  }
++  return true;
++}
++
+ bool NinjaMain::OpenBuildLog(bool recompact_only) {
+   string log_path = ".ninja_log";
+   if (!build_dir_.empty())
+@@ -1047,7 +1088,7 @@ int ReadFlags(int* argc, char*** argv,
+ 
+   int opt;
+   while (!options->tool &&
+-         (opt = getopt_long(*argc, *argv, "d:f:j:k:l:nt:vw:C:h", kLongOptions,
++         (opt = getopt_long(*argc, *argv, "d:f:j:k:l:no:t:vw:C:h", kLongOptions,
+                             NULL)) != -1) {
+     switch (opt) {
+       case 'd':
+@@ -1088,12 +1129,16 @@ int ReadFlags(int* argc, char*** argv,
+       case 'n':
+         config->dry_run = true;
+         break;
++      case 'o':
++        if (!OutputEnable(optarg, config))
++          return 1;
++        break;
+       case 't':
+         options->tool = ChooseTool(optarg);
+         if (!options->tool)
+           return 0;
+         break;
+-      case 'v':
++      case 'v':  // Retained for backwards compatibility.
+         config->verbosity = BuildConfig::VERBOSE;
+         break;
+       case 'w':
+diff --git a/src/util.cc b/src/util.cc
+index ae94d346b..866806272 100644
+--- a/src/util.cc
++++ b/src/util.cc
+@@ -447,7 +447,7 @@ bool islatinalpha(int c) {
+   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+ }
+ 
+-string StripAnsiEscapeCodes(const string& in) {
++string StripAnsiEscapeCodes(const string& in, bool preserve_color) {
+   string stripped;
+   stripped.reserve(in.size());
+ 
+@@ -463,6 +463,17 @@ string StripAnsiEscapeCodes(const string& in) {
+     if (in[i + 1] != '[') continue;  // Not a CSI.
+     i += 2;
+ 
++    if (preserve_color) {
++      size_t start = i - 2;
++      // Check for display attributes, e.g. "ESC[4m" or "ESC[31;46m".
++      while (i < in.size() && (isdigit(in[i]) || in[i] == ';'))
++        ++i;
++      if (i < in.size() && in[i] == 'm') {
++        stripped.insert(stripped.size(), in, start, i - start + 1);
++        continue;
++      }
++    }
++
+     // Skip everything up to and including the next [a-zA-Z].
+     while (i < in.size() && !islatinalpha(in[i]))
+       ++i;
+diff --git a/src/util.h b/src/util.h
+index 4ee41a500..c00b4be0f 100644
+--- a/src/util.h
++++ b/src/util.h
+@@ -72,8 +72,9 @@ const char* SpellcheckString(const char* text, ...);
+ 
+ bool islatinalpha(int c);
+ 
+-/// Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).
+-string StripAnsiEscapeCodes(const string& in);
++/// Removes Ansi escape codes, optionally preserving color codes (see
++/// http://www.termsys.demon.co.uk/vtansi.htm).
++string StripAnsiEscapeCodes(const string& in, bool preserve_color);
+ 
+ /// @return the number of processors on the machine.  Useful for an initial
+ /// guess for how many jobs to run in parallel.  @return 0 on error.
+diff --git a/src/util_test.cc b/src/util_test.cc
+index b4b75169d..d184dc714 100644
+--- a/src/util_test.cc
++++ b/src/util_test.cc
+@@ -400,10 +400,16 @@ TEST(PathEscaping, SensibleWin32PathsAreNotNeedlesslyEscaped) {
+ }
+ 
+ TEST(StripAnsiEscapeCodes, EscapeAtEnd) {
+-  string stripped = StripAnsiEscapeCodes("foo\33");
++  string stripped = StripAnsiEscapeCodes("foo\33", false);
+   EXPECT_EQ("foo", stripped);
+ 
+-  stripped = StripAnsiEscapeCodes("foo\33[");
++  stripped = StripAnsiEscapeCodes("foo\33", true);
++  EXPECT_EQ("foo", stripped);
++
++  stripped = StripAnsiEscapeCodes("foo\33[", false);
++  EXPECT_EQ("foo", stripped);
++
++  stripped = StripAnsiEscapeCodes("foo\33[", true);
+   EXPECT_EQ("foo", stripped);
+ }
+ 
+@@ -411,9 +417,24 @@ TEST(StripAnsiEscapeCodes, StripColors) {
+   // An actual clang warning.
+   string input = "\33[1maffixmgr.cxx:286:15: \33[0m\33[0;1;35mwarning: "
+                  "\33[0m\33[1musing the result... [-Wparentheses]\33[0m";
+-  string stripped = StripAnsiEscapeCodes(input);
++  string stripped = StripAnsiEscapeCodes(input, false);
+   EXPECT_EQ("affixmgr.cxx:286:15: warning: using the result... [-Wparentheses]",
+             stripped);
++
++  stripped = StripAnsiEscapeCodes(input, true);
++  EXPECT_EQ("\33[1maffixmgr.cxx:286:15: \33[0m\33[0;1;35mwarning: "
++            "\33[0m\33[1musing the result... [-Wparentheses]\33[0m",
++            stripped);
++
++  // Mix colors and other escape codes.
++  input = "\33[33mfoo\33[4i\33[30;44mbar\33[5u\33[mz";
++  stripped = StripAnsiEscapeCodes(input, true);
++  EXPECT_EQ("\33[33mfoo\33[30;44mbar\33[mz", stripped);
++
++  // Unusual but valid color code.
++  input = "bland\33[;;;0;1;4;32mexciting";
++  stripped = StripAnsiEscapeCodes(input, true);
++  EXPECT_EQ(input, stripped);
+ }
+ 
+ TEST(ElideMiddle, NothingToElide) {
