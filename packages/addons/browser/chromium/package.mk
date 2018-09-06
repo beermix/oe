@@ -82,7 +82,6 @@ make_target() {
     'use_system_harfbuzz=true'
     'exclude_unwind_tables=true'
     'use_libpci=true'
-    'linux_link_libudev=true'
     'use_system_libjpeg=true'
     'enable_remoting=false'
     'enable_vulkan=false'
