@@ -26,6 +26,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
+GOLD_SUPPORT="yes"
 
 post_patch() {
   cd $(get_build_dir chromium)
@@ -77,11 +78,8 @@ make_target() {
     'use_dbus=true'
     'use_system_zlib=true'
     'use_system_freetype=true'
-    'use_system_libdrm=true'
-    'use_system_libpng=false'
     'use_system_harfbuzz=true'
     'linux_link_libudev=true'
-    'use_system_libjpeg=true'
     'use_gio=true'
     'use_aura=true'
     'use_libpci=true'
