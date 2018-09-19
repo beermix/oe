@@ -122,7 +122,7 @@ unset -f post_makeinstall_bootstrap
 
 # configure debug build defaults
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
-  CMAKE_BUILD_TYPE="Debug"
+  CMAKE_BUILD_TYPE=""
   MESON_BUILD_TYPE="debug"
 else
   CMAKE_BUILD_TYPE=""
