@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+
 PKG_NAME="util-linux"
 PKG_VERSION="2.32.1"
 PKG_SHA256="86e6707a379c7ff5489c218cfaf1e3464b0b95acf7817db0bc5f179e356a67b2"
@@ -13,6 +15,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
 PKG_LONGDESC="The util-linux package contains a large variety of low-level system utilities that are necessary for a Linux system to function. Among many features, Util-linux contains the fdisk configuration tool and the login program."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic:host"
 
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
