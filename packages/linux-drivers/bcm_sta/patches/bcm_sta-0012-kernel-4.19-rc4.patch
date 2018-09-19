@@ -1,0 +1,25 @@
+From 11730a85b8801daca6fb6b0ec02381b5b8e86163 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Mon, 17 Sep 2018 18:17:30 +0100
+Subject: [PATCH] fix 4.19-rc4 build
+
+---
+ x86-64/src/wl/sys/wl_linux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/x86-64/src/wl/sys/wl_linux.c b/x86-64/src/wl/sys/wl_linux.c
+index 0d05100..803b862 100644
+--- a/x86-64/src/wl/sys/wl_linux.c
++++ b/x86-64/src/wl/sys/wl_linux.c
+@@ -156,7 +156,7 @@ static int wl_set_radio_block(void *data, bool blocked);
+ static void wl_report_radio_state(wl_info_t *wl);
+ #endif
+ 
+-MODULE_LICENSE("MIXED/Proprietary");
++MODULE_LICENSE("GPL v2");
+ 
+ static struct pci_device_id wl_id_table[] =
+ {
+-- 
+2.14.1
+
