@@ -9,7 +9,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME::-1}-$PKG_VERSION*"
-PKG_DEPENDS_HOST="zlib:host bzip2:host expat:host sqlite:host openssl:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host expat:host sqlite:host openssl:host util-linux:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl Python3:host readline ncurses"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python3: The Python3 programming language"
@@ -23,13 +23,13 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          ac_cv_prog_SVNVERSION=/bin/false
                          --disable-pyc-build
                          --disable-ossaudiodev
-                         --enable-sqlite3
+                         --disable-sqlite3
                          --disable-codecs-cjk
                          --disable-nis
                          --enable-unicodedata
                          --enable-openssl
                          --disable-readline
-                         --enable-bzip2
+                         --disable-bzip2
                          --enable-zlib
                          --disable-xz
                          --disable-tk

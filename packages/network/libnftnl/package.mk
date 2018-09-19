@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libnftnl"
-PKG_VERSION="1.0.9"
-PKG_SHA256="fec1d824aee301e59a11aeaae2a2d429cb99ead81e6bafab791a4dd6569b3635"
+PKG_VERSION="1.1.1"
+PKG_SHA256="5d6a65413f27ec635eedf6aba033f7cf671d462a2afeacc562ba96b19893aff2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://netfilter.org/projects/libnftnl"
