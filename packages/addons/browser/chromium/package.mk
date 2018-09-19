@@ -82,12 +82,8 @@ make_target() {
     'use_system_zlib=true'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
-    'linux_link_libudev=true'
     'exclude_unwind_tables=true'
-    'use_gio=true'
-    'use_aura=true'
-    'use_libpci=true'
-    'use_udev=true'
+    'enable_remoting=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -101,10 +97,8 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py     'icu_use_data_file=true'
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
-#    'use_system_harfbuzz=true'     "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""   'use_v8_context_snapshot=false'
-#    'use_system_freetype=true'
 readonly -A _system_libs=(
   #[fontconfig]=fontconfig    # Enable for M65
   #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
@@ -160,12 +154,13 @@ addon() {
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config 
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
-  cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # config *.dat,
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
+           $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
+           $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+  # config
+  cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
   # atk
   cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -177,7 +172,7 @@ addon() {
   # gdk-pixbuf
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gdk-pixbuf modules
+  # gdk-pixbuf modulesw
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # gtk
