@@ -34,7 +34,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-version-specific-runtime-libs \
                          --enable-compressed-debug-sections=all \
                          --enable-targets=i386-linux,x86_64-linux \
-                         --enable-secureplt \
                          --enable-threads \
                          --with-pic \
                          --enable-plugins \
