@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libtirpc"
-PKG_VERSION="1.0.3"
-PKG_SHA256="86c3a78fc1bddefa96111dd233124c703b22a78884203c55c3e06b3be6a0fd5e"
+PKG_VERSION="1.1.4"
+PKG_SHA256="2ca529f02292e10c158562295a1ffd95d2ce8af97820e3534fe1b0e3aec7561d"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceforge.net/projects/libtirpc/"

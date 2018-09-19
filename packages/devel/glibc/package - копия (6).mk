@@ -35,11 +35,15 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-kernel=4.18 \
                            --without-cvs \
                            --without-gd \
+                           --enable-obsolete-rpc \
+                           --enable-obsolete-nsl \
+                           --enable-tunables \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
                            --without-selinux \
                            --disable-debug \
+                           --disable-werror \
                            --disable-timezone-tools"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
