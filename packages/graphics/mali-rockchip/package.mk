@@ -2,7 +2,7 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mali-rockchip"
-PKG_VERSION="12daf22"
+PKG_VERSION="12daf22c405a4f8faf6cbc4d2e88b85b36dc61d9"
 PKG_SHA256="e6004e0f5a8a4aba098d301b3f964e2a9a961bb79f180d55ea6e9e73cd6eb874"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="nonfree"

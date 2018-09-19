@@ -3,6 +3,7 @@
 
 PKG_NAME="libpng"
 PKG_VERSION="1.6.35"
+PKG_SHA256="23912ec8c9584917ed9b09c5023465d71709dce089be503c7867fec68a93bcd7"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.libpng.org/"
