@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="elfutils"
-PKG_VERSION="0.173"
-PKG_SHA256="b76d8c133f68dad46250f5c223482c8299d454a69430d9aa5c19123345a000ff"
+PKG_VERSION="0.174"
+PKG_SHA256="cdf27e70076e10a29539d89e367101d516bc4aa11b0d7777fe52139e3fcad08a"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/elfutils/"
