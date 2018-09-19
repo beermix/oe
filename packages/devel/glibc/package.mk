@@ -3,8 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="0b79004"
-PKG_VERSION="174709d"
+PKG_VERSION="1fe2b9c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
