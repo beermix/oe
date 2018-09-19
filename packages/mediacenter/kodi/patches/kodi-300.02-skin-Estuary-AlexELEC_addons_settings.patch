@@ -1,0 +1,68 @@
+diff -Naurp kodi-7e52c1d/addons/skin.estuary/language/resource.language.en_gb/strings.po kodi-7e52c1d-patch/addons/skin.estuary/language/resource.language.en_gb/strings.po
+--- kodi-7e52c1d/addons/skin.estuary/language/resource.language.en_gb/strings.po	2018-02-12 20:41:29.000000000 +0200
++++ kodi-7e52c1d-patch/addons/skin.estuary/language/resource.language.en_gb/strings.po	2018-04-26 09:40:09.000000000 +0300
+@@ -725,3 +725,13 @@ msgstr ""
+ msgctxt "#31161"
+ msgid "Numeric pad"
+ msgstr ""
++
++#: /xml/Settings.xml
++msgctxt "#31201"
++msgid "AE Common"
++msgstr ""
++
++#: /xml/Settings.xml
++msgctxt "#31202"
++msgid "AE Extended"
++msgstr ""
+diff -Naurp kodi-7e52c1d/addons/skin.estuary/language/resource.language.ru_ru/strings.po kodi-7e52c1d-patch/addons/skin.estuary/language/resource.language.ru_ru/strings.po
+--- kodi-7e52c1d/addons/skin.estuary/language/resource.language.ru_ru/strings.po	2018-02-12 20:41:29.000000000 +0200
++++ kodi-7e52c1d-patch/addons/skin.estuary/language/resource.language.ru_ru/strings.po	2018-04-26 09:41:03.000000000 +0300
+@@ -543,3 +543,11 @@ msgstr "Флаги сведений"
+ msgctxt "#31161"
+ msgid "Numeric pad"
+ msgstr "Цифровая клавиатура"
++
++msgctxt "#31201"
++msgid "AE Common"
++msgstr "AE Общие"
++
++msgctxt "#31202"
++msgid "AE Extended"
++msgstr "AE Расширенные"
+diff -Naurp kodi-7e52c1d/addons/skin.estuary/xml/DialogPVRChannelsOSD.xml kodi-7e52c1d-patch/addons/skin.estuary/xml/DialogPVRChannelsOSD.xml
+--- kodi-7e52c1d/addons/skin.estuary/xml/DialogPVRChannelsOSD.xml	2018-02-12 20:41:29.000000000 +0200
++++ kodi-7e52c1d-patch/addons/skin.estuary/xml/DialogPVRChannelsOSD.xml	2018-04-26 09:25:47.000000000 +0300
+@@ -15,7 +15,7 @@
+ 					<width>875</width>
+ 					<height>100%</height>
+ 					<onleft>PreviousChannelGroup</onleft>
+-					<onright>60</onright>
++					<onright>NextChannelGroup</onright>
+ 					<onup>11</onup>
+ 					<ondown>11</ondown>
+ 					<pagecontrol>60</pagecontrol>
+diff -Naurp kodi-7e52c1d/addons/skin.estuary/xml/Settings.xml kodi-7e52c1d-patch/addons/skin.estuary/xml/Settings.xml
+--- kodi-7e52c1d/addons/skin.estuary/xml/Settings.xml	2018-02-12 20:41:29.000000000 +0200
++++ kodi-7e52c1d-patch/addons/skin.estuary/xml/Settings.xml	2018-04-26 09:33:52.000000000 +0300
+@@ -149,10 +149,16 @@
+ 					<icon>icons/settings/system.png</icon>
+ 				</item>
+ 				<item>
+-					<label>LibreELEC</label>
+-					<onclick>RunAddon(service.libreelec.settings)</onclick>
+-					<icon>icons/settings/libreelec.png</icon>
+-					<visible>System.HasAddon(service.libreelec.settings)</visible>
++					<label>$LOCALIZE[31201]</label>
++					<onclick>RunAddon(service.common.settings)</onclick>
++					<icon>icons/settings/ae-common.png</icon>
++					<visible>System.HasAddon(service.common.settings)</visible>
++				</item>
++				<item>
++					<label>$LOCALIZE[31202]</label>
++					<onclick>RunAddon(service.extended.settings)</onclick>
++					<icon>icons/settings/ae-extended.png</icon>
++					<visible>System.HasAddon(service.extended.settings)</visible>
+ 				</item>
+ 				<item>
+ 					<label>$LOCALIZE[138]</label>

@@ -1,0 +1,34 @@
+diff --git a/xbmc/cores/VideoPlayer/VideoPlayerAudio.cpp b/xbmc/cores/VideoPlayer/VideoPlayerAudio.cpp
+index 920ec91..70821b5 100644
+--- a/xbmc/cores/VideoPlayer/VideoPlayerAudio.cpp
++++ b/xbmc/cores/VideoPlayer/VideoPlayerAudio.cpp
+@@ -214,6 +214,10 @@ void CVideoPlayerAudio::UpdatePlayerInfo()
+   std::ostringstream s;
+   s << "aq:"     << std::setw(2) << std::min(99,m_messageQueue.GetLevel()) << "%";
+   s << ", Kb/s:" << std::fixed << std::setprecision(2) << (double)GetAudioBitrate() / 1024.0;
++  s << " "       << m_processInfo.GetAudioDecoderName().c_str();
++  if (!m_info.passthrough)
++    s << ", chan:" << m_processInfo.GetAudioChannels().c_str();
++  s << ", " << m_streaminfo.samplerate/1000 << " kHz";
+ 
+   //print the inverse of the resample ratio, since that makes more sense
+   //if the resample ratio is 0.5, then we're playing twice as fast
+diff --git a/xbmc/cores/VideoPlayer/VideoPlayerVideo.cpp b/xbmc/cores/VideoPlayer/VideoPlayerVideo.cpp
+index ce52bb4..669ad28 100644
+--- a/xbmc/cores/VideoPlayer/VideoPlayerVideo.cpp
++++ b/xbmc/cores/VideoPlayer/VideoPlayerVideo.cpp
+@@ -956,10 +956,13 @@ int CVideoPlayerVideo::OutputPicture(const VideoPicture* src, double pts)
+ 
+ std::string CVideoPlayerVideo::GetPlayerInfo()
+ {
++  int width, height;
++  m_processInfo.GetVideoDimensions(width, height);
+   std::ostringstream s;
+   s << "vq:"   << std::setw(2) << std::min(99,GetLevel()) << "%";
+   s << ", Mb/s:" << std::fixed << std::setprecision(2) << (double)GetVideoBitrate() / (1024.0*1024.0);
+-  s << ", fr:"     << std::fixed << std::setprecision(3) << m_fFrameRate;
++  s << " "  << m_processInfo.GetVideoDecoderName().c_str();
++  s << ", " << width << "x" << height << "[" << std::setprecision(2) << m_processInfo.GetVideoDAR() << "]@" << std::fixed << std::setprecision(3) << m_processInfo.GetVideoFps() << ", deint:" << m_processInfo.GetVideoDeintMethod();
+   s << ", drop:" << m_iDroppedFrames;
+   s << ", skip:" << m_renderManager.GetSkippedFrames();
+ 
