@@ -19,7 +19,7 @@ index ae18855ff..90c1244f9
  # install/uninstall most things
 -install: install.bin install.modules install.fns install.man install.runhelp
 -uninstall: uninstall.bin uninstall.modules uninstall.fns uninstall.man uninstall.runhelp
-+install: install.bin install.modules install.fns install.runhelp
++install: install.bin install.modules install.fns
 +uninstall: uninstall.bin uninstall.modules uninstall.fns uninstall.runhelp
  
  # install/uninstall just the binary
