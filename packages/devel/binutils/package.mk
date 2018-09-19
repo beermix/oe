@@ -33,6 +33,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-compressed-debug-sections=all \
+                         --enable-targets=i386-linux,x86_64-linux \
                          --enable-secureplt \
                          --enable-plugins \
                          --enable-gold \
