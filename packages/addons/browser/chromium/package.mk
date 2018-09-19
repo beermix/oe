@@ -50,10 +50,11 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
+# "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
+
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
-    'use_v8_context_snapshot=true'
+    'use_v8_context_snapshot=false'
     'use_cfi_icall=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
