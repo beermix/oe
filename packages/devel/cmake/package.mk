@@ -21,7 +21,5 @@ configure_host() {
                -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -s" \
                -DCMAKE_USE_OPENSSL=ON \
-               -DKWSYS_CHAR_IS_SIGNED=1 \
-               -DKWSYS_LFS_WORKS=1 \
                -DBUILD_CursesDialog=0
 }

@@ -13,9 +13,9 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="mpc: A C library for the arithmetic of high precision complex numbers"
 PKG_LONGDESC="pc is a C library for the arithmetic of complex numbers with arbitrarily high precision and correct rounding of the result. It is built upon and follows the same principles as Mpfr."
 
-pre_configure_host() {
-  unset CFLAGS
-}
+#pre_configure_host() {
+#  unset CFLAGS
+#}
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
