@@ -1,8 +1,8 @@
 {
     "description": "Pepper Flash Player", 
     "name": "Flapper", 
-    "version": "30.0.0.154", 
-    "x-flapper-revision": "92849", 
+    "version": "31.0.0.108", 
+    "x-flapper-revision": "93542", 
     "x-ppapi-arch": "x64", 
     "x-ppapi-os": "linux", 
     "x-ppapi-required-interfaces": [
