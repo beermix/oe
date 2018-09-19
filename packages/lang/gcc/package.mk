@@ -44,8 +44,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
-                           --disable-libssp \
-                           --with-tune=haswell"
+                           --disable-libssp"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
