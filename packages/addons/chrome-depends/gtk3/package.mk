@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gtk3"
-PKG_VERSION="3.24.0"
+PKG_VERSION="3.24.1"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
