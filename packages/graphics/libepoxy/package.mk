@@ -18,16 +18,8 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="libepoxy: a library for handling OpenGL function pointer management for you."
 PKG_LONGDESC="Epoxy is a library for handling OpenGL function pointer management for you."
-PKG_TOOLCHAIN="autotools"
 
-if [ "$OPENGL" != "no" ]; then
-  PKG_DEPENDS_TARGET+=" $OPENGL"
-fi
-
-if [ "$OPENGLES" != "no" ]; then
-  PKG_DEPENDS_TARGET+=" $OPENGLES"
-fi
-
-if [ "$DISPLAYSERVER" != "x11" ]; then
-  PKG_CONFIGURE_OPTS_TARGET="--disable-glx"
-fi
+PKG_MESON_OPTS_TARGET="-Ddocs=false \
+			  -Dx11=true \
+			  -Dglx=yes \
+			  -Degl=yes"

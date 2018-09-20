@@ -22,6 +22,7 @@ configure_host() {
   	 -DENABLE_STATIC=ON \
         -DENABLE_SHARED=OFF \
         -DWITH_SIMD=OFF \
+        -DWITH_JAVA=0 \
         -DCMAKE_INSTALL_LIBDIR:PATH=lib \
   	 ..
 }
@@ -33,6 +34,7 @@ configure_target() {
         -DENABLE_STATIC=OFF \
         -DENABLE_SHARED=ON \
         -DWITH_SIMD=ON \
+        -DWITH_JAVA=0 \
         -DCMAKE_BUILD_TYPE=Release \
         ..
 }
