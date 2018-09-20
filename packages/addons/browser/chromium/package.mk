@@ -22,7 +22,7 @@ PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-GOLD_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -103,7 +103,7 @@ readonly -A _system_libs=(
   #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libxslt]=libxslt
+  [libxslt]=libxslt
   [re2]=re2
   [snappy]=snappy
   [yasm]=
