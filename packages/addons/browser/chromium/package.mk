@@ -89,6 +89,7 @@ make_target() {
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_vr=false'
+    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
