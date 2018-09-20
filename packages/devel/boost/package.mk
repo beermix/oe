@@ -2,13 +2,13 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="boost"
-PKG_VERSION="1_68_0"
+PKG_VERSION="1_66_0"
+PKG_SHA256="5721818253e6a0989583192f96782c4a98eb6204965316df9f5ad75819225ca9"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
-PKG_URL="https://dl.bintray.com/boostorg/release/1.68.0/source/boost_$PKG_VERSION.tar.gz"
-PKG_URL="https://fossies.org/linux/misc/boost_1_68_0.tar.xz"
+PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.66.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain boost:host Python2:host zlib bzip2"
+PKG_DEPENDS_TARGET="toolchain boost:host Python2 zlib bzip2"
 PKG_LONGDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="+pic"
@@ -48,10 +48,10 @@ makeinstall_target() {
                           --with-chrono \
                           --with-date_time \
                           --with-filesystem \
-                          --with-python \
                           --with-iostreams \
                           --with-program_options \
                           --with-exception \
+                          --with-python \
                           --with-atomic \
                           --with-random \
                           --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
