@@ -13,7 +13,6 @@ PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvorbis libva"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -34,7 +33,7 @@ else
 fi
 
 if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau"
   FFMPEG_VDPAU="--enable-vdpau"
 else
   FFMPEG_VDPAU="--disable-vdpau"
@@ -109,6 +108,7 @@ configure_target() {
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
+              --extra-libs="$FFMPEG_LIBS" \
               --disable-static \
               --enable-shared \
               --enable-gpl \
@@ -148,7 +148,7 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               --disable-hardcoded-tables \
-              --enable-encoders \
+              --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
@@ -186,7 +186,7 @@ configure_target() {
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
+              --disable-libvorbis \
               --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
