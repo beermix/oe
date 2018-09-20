@@ -100,12 +100,12 @@ make_target() {
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
   #[fontconfig]=fontconfig    # Enable for M65
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libxslt]=libxslt
-  [re2]=re2
-  [snappy]=snappy
+  #[re2]=re2
+  #[snappy]=snappy
   [yasm]=
   #[zlib]=minizip
 )
@@ -146,11 +146,11 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config
+  # config | *.dat,
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
            $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
            $ADDON_BUILD/$PKG_ADDON_ID/lib
