@@ -16,7 +16,6 @@ PKG_TOOLCHAIN="configure"
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-                           --disable-silent-rules \
                            --disable-sqlite \
                            --enable-alsa \
                            --disable-external-libs \

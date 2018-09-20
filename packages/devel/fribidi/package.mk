@@ -16,7 +16,6 @@ PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-deprecated \
-                           --disable-silent-rules \
                            --enable-charsets \
                            --with-gnu-ld \
                            --without-glib \

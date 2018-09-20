@@ -34,8 +34,7 @@ else
   PKG_PULSEAUDIO_NEON="--disable-neon-opt"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
-                           --disable-nls \
+PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
                            --enable-largefile \
                            --disable-rpath \
                            $PKG_PULSEAUDIO_NEON \
