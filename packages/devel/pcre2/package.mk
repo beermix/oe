@@ -1,5 +1,6 @@
 PKG_NAME="pcre2"
 PKG_VERSION="10.31"
+PKG_SHA256="e07d538704aa65e477b6a392b32ff9fc5edf75ab9a40ddfc876186c4ff4d68ac"
 PKG_SITE="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/?C=M;O=D"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="zlib:host"
@@ -7,8 +8,16 @@ PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
 PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic:host +pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-pcre2-8 --enable-pcre2-16 --disable-pcre2grep-callout"
+#PKG_CONFIGURE_OPTS_TARGET="--enable-pcre2-8 --enable-pcre2-16 --disable-pcre2grep-callout"
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+			      --enable-static \
+			      --enable-utf8 \
+			      --enable-pcre2-16 \
+			      --enable-unicode-properties \
+			      --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 
