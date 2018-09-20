@@ -1,0 +1,35 @@
+From 4f943644e5bf7544f126ce1d23e430e649a82c41 Mon Sep 17 00:00:00 2001
+From: Rosen Penev <rosenp@gmail.com>
+Date: Tue, 4 Sep 2018 19:17:58 -0700
+Subject: [PATCH] Enable DSPr2 SIMD extensions if CPU type is mipsel
+
+The DSPr2 extensions have been verified to work with little endian MIPS.
+Whether or not CMAKE_SYSTEM_PROCESSOR is set to "mips" or "mipsel" in a
+little endian MIPS environment seems to be inconsistent, but our build
+system needs to handle both cases.
+---
+ simd/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/simd/CMakeLists.txt b/simd/CMakeLists.txt
+index 346994cbf..8dbd7f1ec 100755
+--- a/simd/CMakeLists.txt
++++ b/simd/CMakeLists.txt
+@@ -262,7 +262,7 @@ endif()
+ # MIPS (GAS)
+ ###############################################################################
+ 
+-elseif(CPU_TYPE STREQUAL "mips")
++elseif(CPU_TYPE STREQUAL "mips" OR CPU_TYPE STREQUAL "mipsel")
+ 
+ enable_language(ASM)
+ 
+@@ -293,7 +293,7 @@ if(NOT HAVE_DSPR2)
+   return()
+ endif()
+ 
+-add_library(simd OBJECT ${CPU_TYPE}/jsimd_dspr2.S ${CPU_TYPE}/jsimd.c)
++add_library(simd OBJECT mips/jsimd_dspr2.S mips/jsimd.c)
+ 
+ if(CMAKE_POSITION_INDEPENDENT_CODE OR ENABLE_SHARED)
+   set_target_properties(simd PROPERTIES POSITION_INDEPENDENT_CODE 1)

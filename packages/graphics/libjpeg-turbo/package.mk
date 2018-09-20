@@ -17,29 +17,24 @@ PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic:host"
 
 configure_host() {
-  cmake -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN \
+  cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN \
   	 -DWITH_JPEG8=ON \
   	 -DENABLE_STATIC=ON \
         -DENABLE_SHARED=OFF \
         -DWITH_SIMD=OFF \
+        -DCMAKE_INSTALL_LIBDIR:PATH=lib \
   	 ..
 }
 
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_INSTALL_PREFIX:PATH=/usr \
         -DWITH_JPEG8=ON \
         -DENABLE_STATIC=OFF \
         -DENABLE_SHARED=ON \
         -DWITH_SIMD=ON \
+        -DCMAKE_BUILD_TYPE=Release \
         ..
-}
-
-post_makeinstall_host() {
-  mv -f $TOOLCHAIN/lib64/pkgconfig/* $TOOLCHAIN/lib/pkgconfig/
-  rm -rf $TOOLCHAIN/lib64/pkgconfig
-  mv -f $TOOLCHAIN/lib64/* $TOOLCHAIN/lib/
-  rm -rf $TOOLCHAIN/lib64
 }
 
 post_makeinstall_target() {
