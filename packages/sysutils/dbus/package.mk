@@ -13,6 +13,7 @@ PKG_DEPENDS_TARGET="toolchain expat systemd"
 PKG_SECTION="system"
 PKG_SHORTDESC="dbus: simple interprocess messaging system"
 PKG_LONGDESC="D-Bus is a message bus, used for sending messages between applications. This package contains the D-Bus daemon and related utilities and the dbus shared library."
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -34,7 +35,9 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --without-x \
                            --with-dbus-user=dbus \
                            --runstatedir=/run \
-                           --with-system-socket=/run/dbus/system_bus_socket"
+                           --with-system-socket=/run/dbus/system_bus_socket \
+                           --with-dbus-session-bus-connect-address=unix:runtime=yes \
+                           --enable-user-session"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc.d
