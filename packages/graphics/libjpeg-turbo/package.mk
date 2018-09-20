@@ -30,8 +30,8 @@ configure_target() {
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_BUILD_TYPE=Release \
         -DWITH_JPEG8=ON \
-        -DENABLE_STATIC=ON \
-        -DENABLE_SHARED=OFF \
+        -DENABLE_STATIC=OFF \
+        -DENABLE_SHARED=ON \
         -DWITH_SIMD=ON \
         ..
 }
