@@ -33,7 +33,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-compressed-debug-sections=all \
-                         --enable-targets=x86_64-linux \
+                         --enable-targets=i386-linux,x86_64-linux \
                          --enable-threads \
                          --with-pic \
                          --enable-plugins \
@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
 			      --with-sysroot=$SYSROOT_PREFIX \
 			      --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
 			      --enable-compressed-debug-sections=all \
-			      --enable-targets=x86_64-linux \
+			      --enable-targets=i386-linux,x86_64-linux \
 			      --without-ppl \
 			      --without-cloog \
 			      --enable-static \

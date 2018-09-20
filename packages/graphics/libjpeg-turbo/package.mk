@@ -21,7 +21,7 @@ configure_host() {
   	 -DWITH_JPEG8=ON \
   	 -DENABLE_STATIC=ON \
         -DENABLE_SHARED=OFF \
-        -DWITH_SIMD=ON \
+        -DWITH_SIMD=OFF \
   	 ..
 }
 
