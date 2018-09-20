@@ -1,0 +1,40 @@
+From 97627983539e8d45ed34017e53437d29288d8003 Mon Sep 17 00:00:00 2001
+From: Heiner Kallweit <hkallweit1@gmail.com>
+Date: Wed, 19 Sep 2018 21:45:24 +0200
+Subject: [PATCH] r8169 link negotiation limited to 10Mbit/Half duplex after
+ resume from suspend
+
+Hi Neil,
+
+after the recent experimental fix here comes the final one.
+Could you please confirm it fixes the issue?
+I'd then add your "Tested-by" when submitting the fix.
+
+Regards, Heiner
+---
+ drivers/net/ethernet/realtek/r8169.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/net/ethernet/realtek/r8169.c b/drivers/net/ethernet/realtek/r8169.c
+index 1d86313..7f4647c 100644
+--- a/drivers/net/ethernet/realtek/r8169.c
++++ b/drivers/net/ethernet/realtek/r8169.c
+@@ -4069,6 +4069,15 @@ static void rtl8169_init_phy(struct net_device *dev, struct rtl8169_private *tp)
+ 	phy_speed_up(dev->phydev);
+ 
+ 	genphy_soft_reset(dev->phydev);
++
++	/* It was reported that chip version 33 ends up with 10MBit/Half on a
++	 * 1GBit link after resuming from S3. For whatever reason the PHY on
++	 * this chip doesn't properly start a renegotiation when soft-reset.
++	 * Explicitly requesting a renegotiation fixes this.
++	 */
++	if (tp->mac_version == RTL_GIGA_MAC_VER_33 &&
++	    dev->phydev->autoneg == AUTONEG_ENABLE)
++		phy_restart_aneg(dev->phydev);
+ }
+ 
+ static void rtl_rar_set(struct rtl8169_private *tp, u8 *addr)
+-- 
+2.14.1
+
