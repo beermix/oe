@@ -28,7 +28,6 @@ configure_host() {
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_BUILD_TYPE=Release \
         -DWITH_JPEG8=ON \
         -DENABLE_STATIC=OFF \
         -DENABLE_SHARED=ON \
