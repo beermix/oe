@@ -1,5 +1,6 @@
 PKG_NAME="pyxattr"
-PKG_VERSION="0.6.0"
+PKG_VERSION="0.6.1"
+PKG_SHA256="b525843f6b51036198b3b87c4773a5093d6dec57d60c18a1f269dd7059aa16e3"
 PKG_URL="http://pyxattr.k1024.org/downloads/pyxattr-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host attr"
 PKG_SECTION="python/system"
