@@ -1,0 +1,4 @@
+<settings>
+   <setting id="ru_nice" value="10" />
+   <setting id="ru_port" value="6880" />
+</settings>

@@ -1,0 +1,4 @@
+<settings>
+   <setting id="hp_nice" value="10" />
+   <setting id="hp_port" value="8181" />
+</settings>

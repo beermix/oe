@@ -1,0 +1,4 @@
+<settings>
+   <setting id="nz_nice" value="10" />
+   <setting id="nz_port" value="6789" />
+</settings>

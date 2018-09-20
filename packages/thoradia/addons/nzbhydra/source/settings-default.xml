@@ -1,0 +1,4 @@
+<settings>
+   <setting id="hy_nice" value="10" />
+   <setting id="hy_port" value="5075" />
+</settings>

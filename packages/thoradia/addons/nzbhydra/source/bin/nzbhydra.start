@@ -1,0 +1,11 @@
+#!/bin/sh
+
+. /etc/profile
+oe_setup_addon service.nzbhydra
+
+nice -n "$hy_nice" \
+python "$ADDON_DIR/nzbhydra/nzbhydra.py" \
+        --config "$ADDON_HOME/settings.cfg" \
+        --database "$ADDON_HOME/nzbhydra.db" \
+        --port "$hy_port" \
+        --no-browser

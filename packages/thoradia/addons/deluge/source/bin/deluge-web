@@ -1,0 +1,5 @@
+#!/bin/python
+import deluge.ui.web
+
+if __name__ == '__main__':
+    deluge.ui.web.start()

@@ -1,0 +1,11 @@
+[Unit]
+Description=Deluge daemon
+Documentation=http://deluge-torrent.org/
+After=multi-user.target network-online.target
+Requires=multi-user.target network-online.target
+
+[Service]
+ExecStart=/bin/sh /storage/.kodi/addons/service.deluge/bin/deluged.start
+
+[Install]
+WantedBy=kodi.target

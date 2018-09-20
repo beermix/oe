@@ -1,0 +1,22 @@
+#!/bin/sh
+
+. /etc/profile
+oe_setup_addon service.jackett
+
+if [ ! -d "$ADDON_HOME/Jackett" ]; then
+  tmp="$(mktemp -d)"
+  find "/storage/.config/Jackett" "$ADDON_HOME" -maxdepth 1 -mindepth 1 \
+      ! -name settings.xml -exec mv {} "$tmp" ";"
+  mv "$tmp" "$ADDON_HOME/Jackett"
+  rm -fr "/storage/.config/Jackett"
+fi
+
+if [ -z "$jk_nice" ]; then
+  jk_nice="0"
+fi
+
+XDG_CONFIG_HOME="$ADDON_HOME" cert-sync --quiet --user /etc/pki/tls/cacert.pem
+
+XDG_CONFIG_HOME="$ADDON_HOME" \
+nice -n "$jk_nice" \
+mono "$ADDON_DIR/Jackett/JackettConsole.exe" --NoRestart

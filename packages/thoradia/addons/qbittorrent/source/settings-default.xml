@@ -1,0 +1,4 @@
+<settings>
+   <setting id="qb_nice" value="10" />
+   <setting id="qb_port" value="8880" />
+</settings>

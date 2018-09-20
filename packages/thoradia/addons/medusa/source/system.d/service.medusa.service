@@ -1,0 +1,12 @@
+[Unit]
+Description=Medusa
+Documentation=https://github.com/pymedusa/Medusa
+After=multi-user.target network-online.target
+Requires=multi-user.target network-online.target
+
+[Service]
+ExecStart=/bin/sh /storage/.kodi/addons/service.medusa/bin/medusa.start
+Restart=always
+
+[Install]
+WantedBy=kodi.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Deluge web user interface
+Documentation=http://deluge-torrent.org/
+After=multi-user.target network-online.target
+Requires=multi-user.target network-online.target
+
+[Service]
+ExecStart=/bin/sh /storage/.kodi/addons/service.deluge/bin/deluge-web.start
+
+[Install]
+WantedBy=kodi.target

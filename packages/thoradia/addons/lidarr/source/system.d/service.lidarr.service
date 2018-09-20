@@ -1,0 +1,12 @@
+[Unit]
+Description=Lidarr
+Documentation=http://lidarr.audio/
+After=multi-user.target network-online.target
+Requires=multi-user.target network-online.target
+
+[Service]
+ExecStart=/bin/sh /storage/.kodi/addons/service.lidarr/bin/lidarr.start
+Restart=always
+
+[Install]
+WantedBy=kodi.target

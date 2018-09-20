@@ -1,0 +1,6 @@
+<settings version="2">
+    <setting id="vpn_conf" default="true"></setting>
+    <setting id="vpn_nice" default="true">10</setting>
+    <setting id="vpn_pass" default="true"></setting>
+    <setting id="vpn_user" default="true"></setting>
+</settings>

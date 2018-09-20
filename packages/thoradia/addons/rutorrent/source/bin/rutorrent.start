@@ -1,0 +1,11 @@
+#!/bin/sh
+
+. /etc/profile
+oe_setup_addon service.rutorrent
+
+if [ ! -e "$ADDON_HOME/share" ]; then
+  cp -R "$ADDON_DIR/rutorrent/share" "$ADDON_HOME"
+fi
+
+nice -n "$ru_nice" \
+httpd -c "$ADDON_DIR/config/httpd.conf" -p "$ru_port"

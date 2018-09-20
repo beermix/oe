@@ -1,0 +1,12 @@
+[Unit]
+Description=NZBHydra
+Documentation=https://github.com/theotherp/nzbhydra
+After=multi-user.target network-online.target
+Requires=multi-user.target network-online.target
+
+[Service]
+ExecStart=/bin/sh /storage/.kodi/addons/service.nzbhydra/bin/nzbhydra.start
+Restart=always
+
+[Install]
+WantedBy=kodi.target

@@ -1,0 +1,4 @@
+<settings>
+   <setting id="me_nice" value="10" />
+   <setting id="me_port" value="18081" />
+</settings>
