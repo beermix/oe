@@ -21,12 +21,12 @@ PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
+GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
-GOLD_SUPPORT="yes"
 
 post_patch() {
   cd $(get_build_dir chromium)
@@ -55,7 +55,6 @@ make_target() {
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     'use_v8_context_snapshot=false'
-    'use_cfi_icall=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -102,13 +101,9 @@ make_target() {
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
   #[fontconfig]=fontconfig    # Enable for M65
-  #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
-  #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
   #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   #[re2]=re2
   #[snappy]=snappy
@@ -173,7 +168,7 @@ addon() {
   # gdk-pixbuf
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gdk-pixbuf modulesw
+  # gdk-pixbuf modules
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # gtk
