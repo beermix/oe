@@ -11,7 +11,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="305"
+PKG_REV="308"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -78,6 +78,7 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'use_dbus=true'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'exclude_unwind_tables=true'
@@ -99,7 +100,7 @@ make_target() {
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
   #[fontconfig]=fontconfig    # Enable for M65
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libxslt]=libxslt
@@ -124,7 +125,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
@@ -145,11 +145,11 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config | *.dat,
+  # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
            $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
            $ADDON_BUILD/$PKG_ADDON_ID/lib
