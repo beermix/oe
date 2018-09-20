@@ -32,7 +32,6 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/mc \
                            --disable-doxygen-dot \
                            --disable-doxygen-html \
                            --without-internal-edit \
-                           --disable-silent-rules \
                            --disable-background \
                            --enable-charset \
                            --without-gpm-mouse \
