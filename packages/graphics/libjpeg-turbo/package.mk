@@ -8,7 +8,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://libjpeg-turbo.virtualgl.org/"
 PKG_URL="$SOURCEFORGE_SRC/libjpeg-turbo/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="toolchain"
+#PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="libjpeg-turbo: a high-speed version of libjpeg for x86 and x86-64 processors which uses SIMD instructions (MMX, SSE2, etc.) to accelerate baseline JPEG compression and decompression."
@@ -28,9 +28,10 @@ configure_host() {
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_BUILD_TYPE=Release \
         -DWITH_JPEG8=ON \
         -DENABLE_STATIC=ON \
-        -DENABLE_SHARED=ON \
+        -DENABLE_SHARED=OFF \
         -DWITH_SIMD=ON \
         ..
 }
