@@ -18,42 +18,11 @@ PKG_LONGDESC="zlib is a general purpose data compression library. All the code i
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic:host +pic"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+#PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 
-PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
+#PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
-}
-
-post_configure_target() {
- ## configure minizip
- (
-  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-  rm Makefile
-  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
-  do_autoreconf
-  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --enable-static --disable-shared
- )
-}
-
-pre_build_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
-}
-
-pre_build_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-  cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
-}
-
-post_make_target() {
- # make minizip
- make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-}
-
-post_makeinstall_target() {
- # Install minizip
- make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip DESTDIR=$SYSROOT_PREFIX install -j1
 }
