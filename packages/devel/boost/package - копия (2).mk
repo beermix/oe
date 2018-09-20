@@ -44,12 +44,15 @@ makeinstall_target() {
   $TOOLCHAIN/bin/bjam -d2 --ignore-site-config \
                           --layout=system \
                           --prefix=$SYSROOT_PREFIX/usr \
-                          --toolset=gcc link=static \
+                          --toolset=gcc variant=release link=static threading=multi \
                           --with-chrono \
                           --with-date_time \
                           --with-filesystem \
                           --with-iostreams \
+                          --with-program_options \
+                          --with-exception \
                           --with-python \
+                          --with-atomic \
                           --with-random \
                           --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                           --with-serialization \
