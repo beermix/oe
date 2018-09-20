@@ -27,6 +27,7 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true \
+			  -Ddefault_library=shared \
 			  -Dgtk_doc=false"
 
 post_makeinstall_target() {
