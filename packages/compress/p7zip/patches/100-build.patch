@@ -47,7 +47,7 @@ index 9e34c34..075c6a8 100644
 -#
  
 +
-+# OPTFLAGS=-Ofast -flto -march=westmere -funroll-loops -s
++# OPTFLAGS=-O3 -flto -march=westmere -funroll-loops -s
  OPTFLAGS=-O -s
  
 -ALLFLAGS=${OPTFLAGS} -pipe \
