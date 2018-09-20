@@ -38,7 +38,7 @@
   MD5_FAILED="0"
   RUN_FSCK="yes"
   RUN_FSCK_DISKS=""
-  SYSLINUX_DEFAULT="pti=off spectre_v2=off l1tf=off"
+  SYSLINUX_DEFAULT=""
   GRUB_DEFAULT="pti=off spectre_v2=off l1tf=off"
 
   NBD_DEVS="0"

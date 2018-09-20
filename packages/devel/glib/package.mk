@@ -15,14 +15,16 @@ PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
+#PKG_BUILD_FLAGS="+pic:host"
 
 PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
 			-Dman=false \
 			-Dgtk_doc=false \
 			-Dinternal_pcre=true \
-			-Ddefault_library=static \
-			-Dgtk_doc=false"
+			-Dbsymbolic_functions=true \
+			-Dforce_posix_threads=true \
+			-Ddefault_library=static"
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
