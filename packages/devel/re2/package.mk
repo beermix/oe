@@ -1,4 +1,4 @@
--DCMAKE_BUILD_TYPE=ReleasePKG_NAME="re2"
+PKG_NAME="re2"
 PKG_VERSION="2018-09-01"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/google/re2/releases"
