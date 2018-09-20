@@ -53,7 +53,7 @@
     PROJECT_CFLAGS="-mmmx -mno-3dnow -msse -msse2 -msse3 -mssse3 -mno-sse4a -mcx16 -msahf -mno-movbe -mno-aes -mno-sha -mno-pclmul -mpopcnt -mno-abm -mno-lwp -mno-fma -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2 -msse4.2 -msse4.1 -mno-lzcnt -mno-rtm -mno-hle -mno-rdrnd -mno-f16c -mno-fsgsbase -mno-rdseed -mno-prfchw -mno-adx -mfxsr -mno-xsave -mno-xsaveopt -mno-avx512f -mno-avx512er -mno-avx512cd -mno-avx512pf -mno-prefetchwt1 -mno-clflushopt -mno-xsavec -mno-xsaves -mno-avx512dq -mno-avx512bw -mno-avx512vl -mno-avx512ifma -mno-avx512vbmi -mno-clwb -mno-mwaitx -mfpmath=sse"
 
   # SquashFS compression method (gzip / lzo / xz / zstd)
-    SQUASHFS_COMPRESSION="gzip"
+    SQUASHFS_COMPRESSION="zstd"
 
 
 ################################################################################
@@ -93,7 +93,7 @@
   # ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta intel_nuc_led"
 
   # build and install driver addons (yes / no)
-    DRIVER_ADDONS_SUPPORT="NO"
+    DRIVER_ADDONS_SUPPORT="no"
 
   # driver addons to install:
   # for a list of additional drivers see packages/linux-driver-addons
