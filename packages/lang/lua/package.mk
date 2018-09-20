@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="lua"
-PKG_VERSION="5.3.5"
+PKG_VERSION="5.3.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
@@ -15,8 +15,6 @@ PKG_DEPENDS_HOST="readline:host"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="lua: A lightweight, extensible programming language"
 PKG_LONGDESC="Lua is a powerful light-weight programming language designed for extending applications. Lua is also frequently used as a general-purpose, stand-alone language."
-
-
 
 _MAJORVER=${PKG_VERSION%.*}
 
@@ -39,7 +37,7 @@ pre_make_host() {
 }
 
 make_host() {
-  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" LDFLAGS="$LDFLAGS -lreadline" linux all
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_3 -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" LDFLAGS="$LDFLAGS -lreadline" linux all
 }
 
 makeinstall_host() {
@@ -49,7 +47,7 @@ makeinstall_host() {
 }
 
 make_target() {
-  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" LDFLAGS="$LDFLAGS -lreadline" linux all
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_3 -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" LDFLAGS="$LDFLAGS -lreadline" linux all
 }
 
 makeinstall_target() {
