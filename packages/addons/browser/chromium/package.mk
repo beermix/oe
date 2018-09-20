@@ -40,18 +40,16 @@ post_patch() {
 }
 
 make_host() {
-  export CCACHE_SLOPPINESS=file_macro
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
-  export CCACHE_SLOPPINESS=file_macro
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
-
-# "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
