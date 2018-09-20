@@ -87,7 +87,6 @@ make_target() {
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_vr=false'
-    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
@@ -118,7 +117,7 @@ readonly _unwanted_bundled_libs=(
 depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
+  # *should* do what the remove_bundled_libraries.py script does, with the 'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
   # added benefit of not having to list all the remaining libraries        \! -path './base/third_party/icu/*' \
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
