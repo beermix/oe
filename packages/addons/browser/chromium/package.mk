@@ -1,10 +1,11 @@
-###################################################################################  beautifulsoup4:host html5lib:host re2 snappy
+##################################################################################
 #  
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
+# re2 snappy
 ##################################################################################
 
 PKG_NAME="chromium"
