@@ -11,6 +11,6 @@ PKG_SITE="http://www.X.org"
 PKG_URL="https://xorg.freedesktop.org/archive/individual/lib/libXcursor-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libX11 libXfixes libXrender"
 PKG_LONGDESC="X11 Cursor management library"
-PKG_BUILD_FLAGS="+pic"
+#PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+#PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
