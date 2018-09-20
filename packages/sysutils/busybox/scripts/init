@@ -38,8 +38,8 @@
   MD5_FAILED="0"
   RUN_FSCK="yes"
   RUN_FSCK_DISKS=""
-  SYSLINUX_DEFAULT="pti=off spectre_v2=off l1tf=off nospec_store_bypass_disable no_stf_barrier"
-  GRUB_DEFAULT="pti=off spectre_v2=off l1tf=off nospec_store_bypass_disable no_stf_barrier"
+  SYSLINUX_DEFAULT="pti=off spectre_v2=off l1tf=off"
+  GRUB_DEFAULT="pti=off spectre_v2=off l1tf=off"
 
   NBD_DEVS="0"
   FLASH_FREE_MIN="5"
