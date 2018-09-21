@@ -134,8 +134,8 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       -delete
   done
   
-  CFLAGS+='   -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always'
-  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always'
+  CFLAGS+='   -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
   CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
