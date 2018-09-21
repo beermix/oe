@@ -20,7 +20,11 @@ PKG_BUILD_FLAGS="+pic +pic:host"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-static \
                            --enable-shared \
-                           --enable-intel-sse"
+                           --enable-hardware-optimizations=yes \
+                           --enable-arm-neon=no \
+                           --enable-mips-msa=no \
+                           --enable-intel-sse=yes \
+                           --enable-powerpc-vsx=no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
