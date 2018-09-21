@@ -1,6 +1,6 @@
 PKG_NAME="pcre2"
-PKG_VERSION="10.31"
-PKG_SHA256="e07d538704aa65e477b6a392b32ff9fc5edf75ab9a40ddfc876186c4ff4d68ac"
+PKG_VERSION="10.32"
+PKG_SHA256=""
 PKG_SITE="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/?C=M;O=D"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="zlib:host"
@@ -16,6 +16,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --enable-utf8 \
 			      --enable-pcre2-16 \
+			      --enable-jit \
 			      --enable-unicode-properties \
 			      --with-gnu-ld"
 
