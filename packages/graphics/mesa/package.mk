@@ -19,7 +19,7 @@ PKG_BUILD_FLAGS="+lto"
 get_graphicdrivers
 
 PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
-                       -Dgallium-drivers=$GALLIUM_DRIVERS \
+                       -Dgallium-drivers=$GALLIUM_DRIVERS,swrast \
                        -Dgallium-extra-hud=false \
                        -Dgallium-xvmc=false \
                        -Dgallium-omx=disabled \

@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="cairo"
-PKG_VERSION="1.15.12"
-PKG_SHA256="7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9"
+PKG_VERSION="1.15.14"
+PKG_SHA256="16566b6c015a761bb0b7595cf879b77f8de85f90b443119083c4c2769b93298d"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://cairographics.org/snapshots/?C=M;O=D"
 PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
