@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --with-data-packaging=archive \
 
 PKG_NAME="icu"
 PKG_VERSION="61.1"
@@ -36,7 +36,6 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
-			      --with-data-packaging=archive \
 			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"

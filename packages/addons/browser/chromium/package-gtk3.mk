@@ -41,7 +41,7 @@ post_patch() {
 
 make_host() {
   export CCACHE_SLOPPINESS=time_macros
-  ./tools/gn/bootstrap/bootstrap.py -s --no-clean 
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
@@ -143,7 +143,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # ./tools/gn/bootstrap/bootstrap.py -s --no-clean --gn-gen-args="${_flags[*]}"
 
-  ./out/Release/gn gen out/Release -s --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
