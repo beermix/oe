@@ -23,7 +23,7 @@ PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from 
 PKG_TOOLCHAIN="manual"
 GOLD_SUPPORT="yes"
 
-PKG_IS_ADDON="yes"
+#PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
