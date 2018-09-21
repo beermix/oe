@@ -17,20 +17,20 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic:host +pic"
 PKG_TOOLCHAIN="configure"
 
-#post_patch() {
-#  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-#}
+post_patch() {
+  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+}
 
 #pre_configure_target() {
 #  export LIBS="-latomic"
 #}
 
-PKG_CONFIGURE_OPTS_HOST="--disable-samples \
-			    --disable-tests \
-			    --disable-extras \
-			    --disable-icuio \
-			    --disable-layout \
-			    --disable-renaming"
+#PKG_CONFIGURE_OPTS_HOST="--disable-samples \
+#			    --disable-tests \
+#			    --disable-extras \
+#			    --disable-icuio \
+#			    --disable-layout \
+#			    --disable-renaming"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
