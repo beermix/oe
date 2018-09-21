@@ -25,8 +25,8 @@ PKG_TOOLCHAIN="manual"
 
 make_host() {
   # CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose.
-  # CXX=$TOOLCHAIN/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
-  $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
+  CXX=/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
+  # $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
   # emacs -Q --batch -f batch-byte-compile misc/ninja-mode.el
 }
 
