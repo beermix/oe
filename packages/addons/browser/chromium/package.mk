@@ -133,6 +133,10 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
   done
+  
+  CFLAGS+='   -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always'
+  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always'
+  CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
