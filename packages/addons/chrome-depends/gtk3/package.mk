@@ -3,16 +3,17 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gtk3"
+#PKG_VERSION="3.22.30"
 PKG_VERSION="3.24.1"
-PKG_VERSION="3.22.30"
-PKG_SHA256=""
+PKG_SHA256="68387be307b99aadcdc653561d7a2a7f0113b93561fb18ded7075ec9ced5b02f"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://ftp.acc.umu.se/pub/gnome/sources/gtk+/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gtk+/${PKG_VERSION:0:4}/gtk+-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="gtk+-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain glib:host at-spi2-atk atk cairo gdk-pixbuf glib libX11 libXi libXrandr libepoxy pango"
+PKG_DEPENDS_TARGET="toolchain glib:host at-spi2-atk atk cairo gdk-pixbuf glib libX11 libXi libXrandr libepoxy pango libXcursor"
 PKG_LONGDESC="The Gimp ToolKit (GTK) is a library for creating graphical user interfaces for the X Window System."
+PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --disable-debug \
@@ -22,6 +23,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --disable-gtk-doc-html \
                            --disable-man \
                            --enable-modules \
+                           --disable-schemas-compile \
+                           --enable-x11-backend \
                            --disable-papi \
                            --disable-xinerama \
                            --enable-xkb"
