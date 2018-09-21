@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="opus"
-PKG_VERSION="1.2.1"
-PKG_SHA256="cfafd339ccd9c5ef8d6ab15d7e1a412c054bf4cb4ecbbbcc78c12ef2def70732"
+PKG_VERSION="1.3-rc2"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.opus-codec.org"
