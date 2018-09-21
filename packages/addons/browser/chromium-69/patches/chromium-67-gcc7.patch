@@ -1,14 +1,3 @@
---- chromium-67.0.3396.10/third_party/blink/renderer/platform/wtf/text/text_codec.h.gcc7	2018-04-18 21:05:42.000000000 +0200
-+++ chromium-67.0.3396.10/third_party/blink/renderer/platform/wtf/text/text_codec.h	2018-04-22 13:45:58.788711322 +0200
-@@ -70,7 +70,7 @@
- 
- static_assert(!kDoNotFlush, "DoNotFlush should be falsy");
- static_assert(kFetchEOF, "FetchEOF should be truthy");
--static_assert(kDataEOF, "DataEOF should be truthy");
-+static_assert(kDataEOF != 0, "DataEOF should be truthy");
- 
- class WTF_EXPORT TextCodec {
-   USING_FAST_MALLOC(TextCodec);
 --- chromium-67.0.3396.10/third_party/crashpad/crashpad/client/crashpad_info.h.gcc7	2018-04-18 21:05:43.000000000 +0200
 +++ chromium-67.0.3396.10/third_party/crashpad/crashpad/client/crashpad_info.h	2018-04-22 14:48:58.402613864 +0200
 @@ -220,7 +220,7 @@
@@ -75,16 +64,6 @@
  #endif
 --- chromium-67.0.3396.10/third_party/blink/renderer/core/frame/local_frame_view.cc.gcc7	2018-04-18 21:05:39.000000000 +0200
 +++ chromium-67.0.3396.10/third_party/blink/renderer/core/frame/local_frame_view.cc	2018-04-22 21:37:37.030626382 +0200
-@@ -833,8 +833,7 @@
- 
-   // Changing overflow should notify scrolling coordinator to ensures that it
-   // updates non-fast scroll rects even if there is no layout.
--  if (ScrollingCoordinator* scrolling_coordinator =
--          this->GetScrollingCoordinator()) {
-+  if (this->GetScrollingCoordinator() != NULL) {
-     GetScrollingContext()->SetScrollGestureRegionIsDirty(true);
-   }
- 
 @@ -4096,8 +4095,7 @@
      scrollable_areas_ = new ScrollableAreaSet;
    scrollable_areas_->insert(scrollable_area);

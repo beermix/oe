@@ -1,25 +1,25 @@
-###################################################################################  beautifulsoup4:host html5lib:host re2 snappy
+##################################################################################
 #  
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
-##################################################################################
+################################################################################## libvpx chromium:host
+
 PKG_NAME="chromium"
-PKG_VERSION="68.0.3440.106"
-PKG_SHA256=""
-PKG_REV="186"
+PKG_VERSION="69.0.3497.100"
+PKG_SHA256="e3391560e73e25fb4afc3f2dd5616607e2dbfc58aa88251a2c5d6b7096fe9e35"
+PKG_REV="400"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
-PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
+PKG_URL="http://192.168.1.200:8080/%2Fchromium-69.0.3497.100.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ re2 snappy libxss chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss re2 snappy"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-lto -hardening"
 GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
@@ -36,10 +36,10 @@ post_patch() {
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
-make_host() {
-  export CCACHE_SLOPPINESS=time_macros
-  ./tools/gn/bootstrap/bootstrap.py -s --no-rebuild --no-clean
-}
+#make_host() {
+#  export CCACHE_SLOPPINESS=time_macros
+#  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+#}
 
 make_target() {
   export CCACHE_SLOPPINESS=time_macros
@@ -54,6 +54,8 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
+    'use_v8_context_snapshot=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -72,24 +74,28 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
+    'icu_use_data_file=true'
+    'use_system_libjpeg=true'
+    'use_libjpeg_turbo=false'
+    'pdf_enable_xfa=true'
+    'fatal_linker_warnings=false'
+    'is_debug=false'
+    'is_clang=false'
+    'use_system_harfbuzz=true'
+    'use_system_libpng=true'
     'use_dbus=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_dbus=true'
-    'use_cups=false'
-    'use_system_libjpeg=true'
-    'use_system_libdrm=true'
-    'use_system_harfbuzz=true'
+    'enable_linux_installer=false'
     'use_system_freetype=true'
-    'use_sysroot=true'
-    'use_vaapi=true'
+    'use_system_harfbuzz=true'
+    'enable_remoting=false'
     'enable_vulkan=false'
-    'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
-    'enable_vr=false'
+    'enable_widevine=true'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
@@ -97,6 +103,9 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
+
+  mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
+  ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
@@ -107,6 +116,7 @@ declare -gA _system_libs=(
   [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
+  #[libpng]=libpng            # https://crbug.com/752403#c10
   [libxml]=libxml2
   [libxslt]=libxslt
   [re2]=re2
@@ -118,7 +128,9 @@ _unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
 )
-
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find "third_party/$_lib" -type f \
@@ -130,10 +142,11 @@ _unwanted_bundled_libs=(
   done
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./tools/gn/bootstrap/bootstrap.py --gn-gen-args="${_flags[*]}" -s --no-clean
+
+  ./out/Release/gn gen out/Release -s --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
@@ -142,9 +155,9 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
@@ -167,22 +180,24 @@ addon() {
   # gdk-pixbuf modules
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
-  # gtk+
-  cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # gtk
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gtk3
-  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # gtk3 gdk3
+  #cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gdk/.libs/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # libatk-bridge
-  cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+  # gdk-pixbuf
+  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # libatspi
-  cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+  # pixbuf loaders
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # libXcursor
   cp -PL $(get_build_dir libXcursor)/.install_pkg/usr/lib/libXcursor.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 

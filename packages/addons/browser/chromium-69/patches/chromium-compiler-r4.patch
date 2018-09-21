@@ -39,17 +39,17 @@ index 6e38ad782d38..87bbd423f67f 100644
    # Print absolute paths in diagnostics. There is no precedent for doing this
    # on Linux/Mac (GCC doesn't support it), but MSVC does this with /FC and
    # Windows developers rely on it (crbug.com/636109) so only do this on Windows.
-@@ -1473,10 +1459,6 @@ config("default_warnings") {
- 
-         # TODO(hans): https://crbug.com/766891
-         "-Wno-null-pointer-arithmetic",
+@@ -1463,10 +1463,6 @@
+         cflags += [
+           # TODO(thakis): https://crbug.com/753973
+           "-Wno-enum-compare-switch",
 -
--        # Ignore warnings about MSVC optimization pragmas.
--        # TODO(thakis): Only for no_chromium_code? http://crbug.com/505314
--        "-Wno-ignored-pragma-optimize",
-       ]
-     } else if (use_xcode_clang) {
-       cflags += [
+-          # Ignore warnings about MSVC optimization pragmas.
+-          # TODO(thakis): Only for no_chromium_code? http://crbug.com/505314
+-          "-Wno-ignored-pragma-optimize",
+         ]
+       }
+     }
 @@ -1518,22 +1500,6 @@ config("chromium_code") {
        "__STDC_FORMAT_MACROS",
      ]

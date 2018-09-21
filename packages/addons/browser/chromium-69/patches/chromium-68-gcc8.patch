@@ -10,8 +10,8 @@
  }
  
  HistogramSamples::HistogramSamples(uint64_t id, Metadata* meta)
---- chromium-68.0.3440.106/mojo/edk/system/data_pipe_consumer_dispatcher.cc.gcc8	2018-08-14 03:11:50.492927855 +0200
-+++ chromium-68.0.3440.106/mojo/edk/system/data_pipe_consumer_dispatcher.cc	2018-08-14 03:12:32.254163933 +0200
+--- chromium-68.0.3440.106/mojo/core/data_pipe_consumer_dispatcher.cc.gcc8	2018-08-14 03:11:50.492927855 +0200
++++ chromium-68.0.3440.106/mojo/core/data_pipe_consumer_dispatcher.cc	2018-08-14 03:12:32.254163933 +0200
 @@ -40,7 +40,7 @@
    uint64_t buffer_guid_high;
    uint64_t buffer_guid_low;
@@ -21,8 +21,8 @@
  
  static_assert(sizeof(SerializedState) % 8 == 0,
                "Invalid SerializedState size.");
---- chromium-68.0.3440.106/mojo/edk/system/data_pipe_producer_dispatcher.cc.gcc8	2018-08-14 03:11:52.923883382 +0200
-+++ chromium-68.0.3440.106/mojo/edk/system/data_pipe_producer_dispatcher.cc	2018-08-14 03:12:35.341107472 +0200
+--- chromium-68.0.3440.106/mojo/core/data_pipe_producer_dispatcher.cc.gcc8	2018-08-14 03:11:52.923883382 +0200
++++ chromium-68.0.3440.106/mojo/core/data_pipe_producer_dispatcher.cc	2018-08-14 03:12:35.341107472 +0200
 @@ -39,7 +39,7 @@
    uint64_t buffer_guid_high;
    uint64_t buffer_guid_low;
@@ -120,29 +120,16 @@
    {
 --- chromium-68.0.3440.106/third_party/webrtc/modules/rtp_rtcp/source/rtp_rtcp_impl.cc.gcc8	2018-08-08 21:13:16.000000000 +0200
 +++ chromium-68.0.3440.106/third_party/webrtc/modules/rtp_rtcp/source/rtp_rtcp_impl.cc	2018-08-14 21:51:07.382922793 +0200
-@@ -64,8 +64,10 @@
+@@ -64,7 +64,9 @@
    } else {
      // No clock implementation provided, use default clock.
      RtpRtcp::Configuration configuration_copy;
 +#pragma GCC diagnostic ignored "-Wclass-memaccess"
-     memcpy(&configuration_copy, &configuration,
-            sizeof(RtpRtcp::Configuration));
+     memcpy(&configuration_copy, &configuration, sizeof(RtpRtcp::Configuration));
 +#pragma GCC diagnostic pop
      configuration_copy.clock = Clock::GetRealTimeClock();
      return new ModuleRtpRtcpImpl(configuration_copy);
    }
---- chromium-68.0.3440.106/third_party/webrtc/modules/rtp_rtcp/source/rtp_receiver_impl.cc.gcc8	2018-08-08 21:13:16.000000000 +0200
-+++ chromium-68.0.3440.106/third_party/webrtc/modules/rtp_rtcp/source/rtp_receiver_impl.cc	2018-08-14 21:52:17.932690573 +0200
-@@ -179,7 +179,9 @@
-   }
- 
-   WebRtcRTPHeader webrtc_rtp_header;
-+#pragma GCC diagnostic ignored "-Wclass-memaccess"
-   memset(&webrtc_rtp_header, 0, sizeof(webrtc_rtp_header));
-+#pragma GCC diagnostic pop
-   webrtc_rtp_header.header = rtp_header;
-   CheckCSRC(webrtc_rtp_header);
- 
 --- chromium-68.0.3440.106/third_party/blink/renderer/platform/wtf/vector.h.gcc8	2018-08-08 21:11:52.000000000 +0200
 +++ chromium-68.0.3440.106/third_party/blink/renderer/platform/wtf/vector.h	2018-08-14 21:59:58.115654176 +0200
 @@ -141,8 +141,10 @@
@@ -360,7 +347,7 @@
  }
 --- chromium-68.0.3440.106/third_party/webrtc/modules/video_coding/decoder_database.cc.gcc8	2018-08-08 21:13:16.000000000 +0200
 +++ chromium-68.0.3440.106/third_party/webrtc/modules/video_coding/decoder_database.cc	2018-08-14 22:42:30.590539511 +0200
-@@ -134,7 +134,9 @@
+@@ -99,7 +99,9 @@
    dec_map_.erase(it);
    if (receive_codec_.plType == payload_type) {
      // This codec is currently in use.
@@ -370,8 +357,8 @@
    }
    return true;
  }
-@@ -150,7 +152,9 @@
-   // Check for exisitng decoder, if exists - delete.
+@@ -115,7 +117,9 @@
+   // If decoder exists - delete.
    if (ptr_decoder_) {
      ptr_decoder_.reset();
 +#pragma GCC diagnostic ignored "-Wclass-memaccess"
@@ -380,7 +367,7 @@
    }
    ptr_decoder_ = CreateAndInitDecoder(frame, &receive_codec_);
    if (!ptr_decoder_) {
-@@ -161,7 +165,9 @@
+@@ -126,7 +130,9 @@
    if (ptr_decoder_->RegisterDecodeCompleteCallback(decoded_frame_callback) <
        0) {
      ptr_decoder_.reset();
@@ -460,8 +447,8 @@
    while (byte == 0xff) {
 --- chromium-68.0.3440.106/third_party/pdfium/xfa/fxfa/cxfa_textlayout.cpp.gcc8	2018-08-08 21:13:13.000000000 +0200
 +++ chromium-68.0.3440.106/third_party/pdfium/xfa/fxfa/cxfa_textlayout.cpp	2018-08-14 23:29:04.550904864 +0200
-@@ -590,7 +590,9 @@
-         pCharPos = FX_Alloc(FXTEXT_CHARPOS, iChars);
+@@ -591,7 +591,9 @@
+         pCharPos = FX_Realloc(FXTEXT_CHARPOS, pCharPos, iChars);
          iCharCount = iChars;
        }
 +#pragma GCC diagnostic ignored "-Wclass-memaccess"
@@ -530,7 +517,7 @@
  void SimdScalarLowering::LowerGraph() {
 --- chromium-68.0.3440.106/v8/src/log.cc.gcc8	2018-08-08 21:13:19.000000000 +0200
 +++ chromium-68.0.3440.106/v8/src/log.cc	2018-08-14 23:55:16.938544439 +0200
-@@ -500,7 +500,9 @@
+@@ -668,7 +668,9 @@
                                    SharedFunctionInfo* shared, const char* name,
                                    int length) {
    JitCodeEvent event;
@@ -540,7 +527,7 @@
    event.type = JitCodeEvent::CODE_ADDED;
    event.code_start = reinterpret_cast<void*>(code->InstructionStart());
    event.code_type =
-@@ -519,7 +521,9 @@
+@@ -689,7 +691,9 @@
  void JitLogger::LogRecordedBuffer(const wasm::WasmCode* code, const char* name,
                                    int length) {
    JitCodeEvent event;
@@ -550,7 +537,7 @@
    event.type = JitCodeEvent::CODE_ADDED;
    event.code_type = JitCodeEvent::JIT_CODE;
    event.code_start = code->instructions().start();
-@@ -554,7 +558,9 @@
+@@ -726,7 +730,9 @@
      int position,
      JitCodeEvent::PositionType position_type) {
    JitCodeEvent event;
@@ -560,7 +547,7 @@
    event.type = JitCodeEvent::CODE_ADD_LINE_POS_INFO;
    event.user_data = jit_handler_data;
    event.line_info.offset = pc_offset;
-@@ -567,7 +573,9 @@
+@@ -740,7 +746,9 @@
  
  void* JitLogger::StartCodePosInfoEvent() {
    JitCodeEvent event;
@@ -568,9 +555,9 @@
    memset(&event, 0, sizeof(event));
 +#pragma GCC diagnostic pop
    event.type = JitCodeEvent::CODE_START_LINE_INFO_RECORDING;
+   event.isolate = reinterpret_cast<v8::Isolate*>(isolate_);
  
-   code_event_handler_(&event);
-@@ -577,7 +585,9 @@
+@@ -751,7 +759,9 @@
  void JitLogger::EndCodePosInfoEvent(Address start_address,
                                      void* jit_handler_data) {
    JitCodeEvent event;
@@ -614,8 +601,8 @@
      resent_wheel_event.SetPositionInWidget(
          resent_wheel_event.PositionInWidget().x + offset_from_embedder.x(),
          resent_wheel_event.PositionInWidget().y + offset_from_embedder.y());
---- chromium-68.0.3440.106/device/gamepad/public/mojom/gamepad_mojom_traits.cc.gcc8	2018-08-08 21:10:57.000000000 +0200
-+++ chromium-68.0.3440.106/device/gamepad/public/mojom/gamepad_mojom_traits.cc	2018-08-16 14:55:08.981030117 +0200
+--- chromium-68.0.3440.106/device/gamepad/public/cpp/gamepad_mojom_traits.cc.gcc8	2018-08-08 21:10:57.000000000 +0200
++++ chromium-68.0.3440.106/device/gamepad/public/cpp/gamepad_mojom_traits.cc	2018-08-16 14:55:08.981030117 +0200
 @@ -12,7 +12,9 @@
  void StructTraits<
      device::mojom::GamepadQuaternionDataView,
@@ -681,7 +668,7 @@
 --- chromium-68.0.3440.106/device/gamepad/gamepad_shared_buffer.cc.gcc8	2018-08-08 21:10:57.000000000 +0200
 +++ chromium-68.0.3440.106/device/gamepad/gamepad_shared_buffer.cc	2018-08-16 15:12:56.372693313 +0200
 @@ -16,7 +16,9 @@
-   void* mem = shared_memory_.memory();
+   void* mem = shared_memory_mapping_.memory();
    DCHECK(mem);
    hardware_buffer_ = new (mem) GamepadHardwareBuffer();
 +#pragma GCC diagnostic ignored "-Wclass-memaccess"
@@ -714,8 +701,8 @@
      ++contention_count;
      if (contention_count == kMaximumContentionCount)
        break;
---- chromium-68.0.3440.106/content/renderer/gamepad_shared_memory_reader.cc.gcc8	2018-08-08 21:10:55.000000000 +0200
-+++ chromium-68.0.3440.106/content/renderer/gamepad_shared_memory_reader.cc	2018-08-16 22:01:05.038368945 +0200
+--- chromium-68.0.3440.106/third_party/blink/renderer/modules/gamepad/gamepad_shared_memory_reader.cc.gcc8	2018-08-08 21:10:55.000000000 +0200
++++ chromium-68.0.3440.106/third_party/blink/renderer/modules/gamepad/gamepad_shared_memory_reader.cc	2018-08-16 22:01:05.038368945 +0200
 @@ -87,7 +87,9 @@
    base::subtle::Atomic32 version;
    do {
@@ -813,8 +800,8 @@
  MOJO_STATIC_ASSERT(sizeof(MojoCreateSharedBufferOptions) == 8,
                     "MojoCreateSharedBufferOptions has wrong size");
  
---- chromium-68.0.3440.106/mojo/edk/system/options_validation_unittest.cc.gcc8	2018-08-08 21:11:05.000000000 +0200
-+++ chromium-68.0.3440.106/mojo/edk/system/options_validation_unittest.cc	2018-08-18 15:16:30.947990424 +0200
+--- chromium-68.0.3440.106/mojo/core/options_validation_unittest.cc.gcc8	2018-08-08 21:11:05.000000000 +0200
++++ chromium-68.0.3440.106/mojo/core/options_validation_unittest.cc	2018-08-18 15:16:30.947990424 +0200
 @@ -18,7 +18,6 @@
  
  using TestOptionsFlags = uint32_t;
