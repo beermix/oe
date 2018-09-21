@@ -17,12 +17,12 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss re2 snappy chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss re2 snappy libvpx chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-#GOLD_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -51,10 +51,9 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
-#  "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
-
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'use_v8_context_snapshot=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
@@ -95,21 +94,22 @@ make_target() {
   )
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch     'exclude_unwind_tables=true'
+# Keys are the names in the above script; values are the dependencies in Arch     x     'exclude_unwind_tables=true'
 readonly -A _system_libs=(
   #[fontconfig]=fontconfig    # Enable for M65
   #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
   #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
+  #[libpng]=libpng            # https://crbug.com/752403#c10.
+  [libvpx]=libvpx
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
   [snappy]=snappy
   [yasm]=
-  #[zlib]=minizip
+  [zlib]=minizip
 )
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
@@ -121,13 +121,12 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
 # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
+  # added benefit of not having to list all the remaining libraries -       \! -path './base/third_party/icu/*' \
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
@@ -152,11 +151,11 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config *.dat,
+  # config 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
            $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
            $ADDON_BUILD/$PKG_ADDON_ID/lib

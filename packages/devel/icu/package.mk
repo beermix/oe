@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="icu"
-PKG_VERSION="58.2"
+PKG_VERSION="61.1"
 #PKG_SHA256="3dd9868d666350dda66a6e305eecde9d479fb70b30d5b55d78a1deffb97d5aa3"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
