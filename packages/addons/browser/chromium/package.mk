@@ -9,8 +9,8 @@
 ##################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="64.0.3282.186"
-PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
+PKG_VERSION="64.0.3282.140"
+PKG_SHA256="146afbab37982c52251e5c71b6e19e6e7053b527217fe1da9966c794478c29ce"
 PKG_REV="315"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -81,7 +81,6 @@ make_target() {
     'use_vaapi=true'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
-    'exclude_unwind_tables=true'
     'enable_remoting=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -96,11 +95,16 @@ make_target() {
   )
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
+# Keys are the names in the above script; values are the dependencies in Arch     'exclude_unwind_tables=true'
 readonly -A _system_libs=(
+  #[fontconfig]=fontconfig    # Enable for M65
+  #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
+  #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
   [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
+  #[libpng]=libpng            # https://crbug.com/752403#c10
+  #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
   [snappy]=snappy
@@ -115,9 +119,9 @@ readonly _unwanted_bundled_libs=(
 )
 depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the 'use_jumbo_build=false' #      'enable_vr=false' ssshttps://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
-  # added benefit of not having to list all the remaining libraries        \! -path './base/third_party/icu/*' \
+# Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
