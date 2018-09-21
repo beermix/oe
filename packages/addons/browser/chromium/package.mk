@@ -78,6 +78,7 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'enable_linux_installer=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'enable_remoting=false'
@@ -130,7 +131,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
   done
-  
+
   CFLAGS+='   -fno-unwind-tables -fno-asynchronous-unwind-tables'
   CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
   CPPFLAGS+=' -DNO_UNWIND_TABLES'
@@ -179,6 +180,10 @@ addon() {
   # gtk
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gtk3 gdk3
+  #cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gdk/.libs/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
