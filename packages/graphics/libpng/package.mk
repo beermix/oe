@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# --enable-hardware-optimization
 
 PKG_NAME="libpng"
 PKG_VERSION="1.6.35"
@@ -19,7 +20,6 @@ PKG_BUILD_FLAGS="+pic +pic:host"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-static \
                            --enable-shared \
-                           --enable-hardware-optimization \
                            --enable-intel-sse"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
