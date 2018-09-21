@@ -51,9 +51,10 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
+#  "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
+
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'use_v8_context_snapshot=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
@@ -78,7 +79,6 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_dbus=true'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'exclude_unwind_tables=true'
@@ -87,7 +87,6 @@ make_target() {
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
-    'enable_vr=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
@@ -99,7 +98,6 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
-  [fontconfig]=fontconfig    # Enable for M65
   [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
@@ -118,7 +116,7 @@ readonly _unwanted_bundled_libs=(
 depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the 'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
+  # *should* do what the remove_bundled_libraries.py script does, with the 'use_jumbo_build=false' #      'enable_vr=false' ssshttps://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
   # added benefit of not having to list all the remaining libraries        \! -path './base/third_party/icu/*' \
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
