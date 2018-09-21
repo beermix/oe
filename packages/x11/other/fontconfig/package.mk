@@ -35,7 +35,4 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/etc/fonts/conf.d
     cp $PKG_DIR/conf.d/*.conf $INSTALL/etc/fonts/conf.d
-    
-  mkdir -p $INSTALL/usr/share/fonts
-    ln -s /storage/.config/fonts $INSTALL/usr/share/fonts
 }
