@@ -11,13 +11,13 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.140"
 PKG_SHA256="146afbab37982c52251e5c71b6e19e6e7053b527217fe1da9966c794478c29ce"
-PKG_REV="316"
+PKG_REV="318-gtk3"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss re2 snappy libvpx chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk3 libxss re2 snappy libvpx chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -76,7 +76,7 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=false'
+    'use_gtk3=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -103,9 +103,9 @@ readonly -A _system_libs=(
   #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10.
+  [libpng]=libpng            # https://crbug.com/752403#c10.
   [libvpx]=libvpx
-  #[libxml]=libxml2           # https://crbug.com/736026
+  [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
   [snappy]=snappy
@@ -180,12 +180,18 @@ addon() {
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # gtk
-  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk3 gdk3
-  #cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gdk/.libs/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gdk/.libs/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libatk-bridge
+  cp -PL $(get_build_dir at-spi2-atk)/.$TARGET_NAME/atk-adaptor/libatk-bridge-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libatspi
+  cp -PL $(get_build_dir at-spi2-core)/.$TARGET_NAME/atspi/libatspi.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
