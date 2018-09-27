@@ -7,7 +7,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://github.com/pypa/setuptools/releases"
 PKG_URL="https://github.com/pypa/setuptools/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="Python2:host six:host packaging:host appdirs:host"
+PKG_DEPENDS_HOST="Python2:host Python3:host six:host packaging:host appdirs:host"
 PKG_DEPENDS_TARGET="toolchain Python2 setuptools:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="setuptools: A collection of enhancements to the Python distutils"
@@ -19,11 +19,13 @@ make_host() {
 }
 
 makeinstall_host() {
-  python setup.py install --prefix=$TOOLCHAIN
+  python2 setup.py install --prefix=$TOOLCHAIN
+  python3 setup.py install --prefix=$TOOLCHAIN
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr --force
+  python2 setup.py install --root=$INSTALL --prefix=/usr --force
+  python3 setup.py install --root=$INSTALL --prefix=/usr --force
 }
 
 post_makeinstall_target() {
