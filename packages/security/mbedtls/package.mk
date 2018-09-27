@@ -1,5 +1,5 @@
 PKG_NAME="mbedtls"
-PKG_VERSION="2.9.0"
+PKG_VERSION="2.13.0"
 PKG_URL="https://tls.mbed.org/download/mbedtls-$PKG_VERSION-gpl.tgz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="security"
