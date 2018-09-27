@@ -40,8 +40,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libatomic \
-                           --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libsanitizer \
@@ -49,10 +47,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
-                              --disable-__cxa_atexit \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
+                              --disable-libitm \
+                              --disable-libquadmath \
                               --with-newlib \
                               --disable-decimal-float \
                               $GCC_OPTS"

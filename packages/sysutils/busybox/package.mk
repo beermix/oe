@@ -16,7 +16,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable. It provides replacements for most of the utilities you usually find in GNU fileutils, shellutils, etc. The utilities in BusyBox generally have fewer options than their full-featured GNU cousins; however, the options that are included provide the expected functionality and behave very much like their GNU counterparts. BusyBox provides a fairly complete environment for any small or embedded system."
 # busybox fails to build with GOLD support enabled with binutils-2.25
-PKG_BUILD_FLAGS="-parallel -gold"
+# PKG_BUILD_FLAGS="-parallel -gold"
 
 PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=0 install"
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
