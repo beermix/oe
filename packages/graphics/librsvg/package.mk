@@ -1,5 +1,5 @@
 PKG_NAME="librsvg"
-PKG_VERSION="2.43.4"
+PKG_VERSION="2.44.4"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://live.gnome.org/LibRsvg"

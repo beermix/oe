@@ -3,6 +3,7 @@
 
 PKG_NAME="cmake"
 PKG_VERSION="3.12.2"
+PKG_VERSION="3.8.2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://cmake.org/download/"
