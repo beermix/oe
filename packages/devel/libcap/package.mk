@@ -31,6 +31,7 @@ make_host() {
        BUILD_CFLAGS="$HOST_CFLAGS -I$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
        lib=/lib \
+       RAISE_SETFCAP=no \
        BUILD_GPERF=no \
        -C libcap libcap.pc libcap.a
 }
@@ -45,6 +46,7 @@ make_target() {
        BUILD_CFLAGS="$HOST_CFLAGS -I$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
        lib=/lib \
+       RAISE_SETFCAP=no \
        BUILD_GPERF=no \
        -C libcap libcap.pc libcap.a
 }
