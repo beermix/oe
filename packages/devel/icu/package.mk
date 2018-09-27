@@ -4,7 +4,7 @@
 
 PKG_NAME="icu"
 PKG_VERSION="62.1"
-#PKG_SHA256="d007f89ae8a2543a53525c74359b65b36412fa84b3349f1400be6dcf409fafef"
+PKG_SHA256="3dd9868d666350dda66a6e305eecde9d479fb70b30d5b55d78a1deffb97d5aa3"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
@@ -24,13 +24,6 @@ PKG_TOOLCHAIN="configure"
 pre_configure_target() {
   export LIBS="-latomic"
 }
-
-#PKG_CONFIGURE_OPTS_HOST="--disable-samples \
-#			    --disable-tests \
-#			    --disable-extras \
-#			    --disable-icuio \
-#			    --disable-layout \
-#			    --disable-renaming"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 
