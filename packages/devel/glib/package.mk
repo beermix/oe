@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) | gettext:host
 
 PKG_NAME="glib"
 PKG_VERSION="2.58.1"
@@ -10,12 +10,13 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D" # https://github.com/GNOME/glib/tree/glib-2-58
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain gettext:host zlib libffi pcre Python2:host util-linux"
+PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="meson"
 
 PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
@@ -30,7 +31,7 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
 			  -Dman=false \
 			  -Dgtk_doc=false \
-			  -Dinternal_pcre=true \
+			  -Dinternal_pcre=false \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true"
 
@@ -40,6 +41,7 @@ PKG_CONFIGURE_OPTS_HOST="PCRE_LIBS=-l:libpcre.a \
                          --disable-libmount \
                          --with-python=python \
                          --with-pic"
+
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \
