@@ -97,7 +97,7 @@ fi
   [ -z "${LOCAL_CXX}" ] && export LOCAL_CXX="$(which g++)"
 
 # verbose compilation mode (yes/no)
-  VERBOSE="yes"
+  VERBOSE="${VERBOSE:-yes}"
 
 # Concurrency make level (-j option)
 #  Try value 1 (default) to 4 on single CPU computer, or more on
@@ -110,7 +110,7 @@ fi
 # value. The default is gigabytes. The actual value stored is rounded down to
 # the nearest multiple of 16 kilobytes.  Keep in mind this per project .ccache
 # directory.
-  CCACHE_CACHE_SIZE="6G"
+  CCACHE_CACHE_SIZE="7G"
 
 # read options from $HOME if available
   if [ -f "$HOME/.libreelec/options" ]; then
