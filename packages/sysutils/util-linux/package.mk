@@ -7,7 +7,7 @@ PKG_VERSION="2.32.1"
 PKG_SHA256="86e6707a379c7ff5489c218cfaf1e3464b0b95acf7817db0bc5f179e356a67b2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.32/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain"
@@ -84,7 +84,7 @@ post_makeinstall_target() {
       cp -PR $PKG_DIR/scripts/mount-swap $INSTALL/usr/lib/libreelec
 
     mkdir -p $INSTALL/etc
-      cat $PKG_DIR/config/swap.conf | \
+      cat $PKG_DIR/config/swap.conf  \
         sed -e "s,@SWAPFILESIZE@,$SWAPFILESIZE,g" \
             -e "s,@SWAP_ENABLED_DEFAULT@,$SWAP_ENABLED_DEFAULT,g" \
             > $INSTALL/etc/swap.conf
