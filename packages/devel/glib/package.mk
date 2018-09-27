@@ -10,12 +10,12 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D" # https://github.com/GNOME/glib/tree/glib-2-58
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
+PKG_DEPENDS_TARGET="toolchain gettext:host zlib libffi pcre Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
-#PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="autotools"
 
 PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
