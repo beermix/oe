@@ -43,7 +43,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libsanitizer \
-                           --disable-libssp"
+                           --disable-libssp \
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
