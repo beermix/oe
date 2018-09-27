@@ -39,7 +39,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-nscd \
                            --enable-lock-elision \
                            --without-selinux \
-                           --disable-timezone-tools"
+                           --disable-timezone-tools \
+                           --disable-werror"
 
 # busybox:init needs it
 # testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
