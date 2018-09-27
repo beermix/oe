@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --with-data-packaging=archive \
 
 PKG_NAME="icu"
-PKG_VERSION="61.1"
-PKG_SHA256="d007f89ae8a2543a53525c74359b65b36412fa84b3349f1400be6dcf409fafef"
+PKG_VERSION="62.1"
+#PKG_SHA256="d007f89ae8a2543a53525c74359b65b36412fa84b3349f1400be6dcf409fafef"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
@@ -17,9 +17,9 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic:host +pic"
 PKG_TOOLCHAIN="configure"
 
-post_patch() {
-  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-}
+#post_patch() {
+#  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+#}
 
 pre_configure_target() {
   export LIBS="-latomic"
