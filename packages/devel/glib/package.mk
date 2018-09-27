@@ -21,7 +21,7 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
 			-Dman=false \
 			-Dgtk_doc=false \
-			-Dinternal_pcre=true \
+			-Dinternal_pcre=false \
 			-Dbsymbolic_functions=true \
 			-Dforce_posix_threads=true \
 			-Ddefault_library=static"
@@ -30,7 +30,7 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
 			  -Dman=false \
 			  -Dgtk_doc=false \
-			  -Dinternal_pcre=false \
+			  -Dinternal_pcre=true \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true"
 
