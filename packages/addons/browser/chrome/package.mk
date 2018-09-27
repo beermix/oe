@@ -8,7 +8,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
-                    cups gdk-pixbuf gtk3 gtk+ harfbuzz \
+                    cups gdk-pixbuf gtk+ gtk3 harfbuzz \
                     libXtst libXcursor libxss nss pango scrnsaverproto unclutter"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Google Chrome Browser"
