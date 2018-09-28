@@ -88,6 +88,7 @@ make_target() {
     'enable_linux_installer=false'
     'use_system_freetype=true'
     'exclude_unwind_tables=true'
+    'linux_link_libudev = true'
     'use_system_harfbuzz=true'
     'enable_remoting=false'
     'enable_vulkan=true'
