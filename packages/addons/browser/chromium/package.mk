@@ -10,7 +10,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.167"
 PKG_SHA256="f3308b41f241d53a269ec0c73e8512f4ac58b7aafe16967a3dba5b99abc4c455"
-PKG_REV="321-gtk2-glibc26"
+PKG_REV="322-gtk2-glibc26"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -84,7 +84,7 @@ make_target() {
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'enable_remoting=false'
-    'enable_vulkan=false'
+    'enable_vulkan=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
