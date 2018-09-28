@@ -91,12 +91,9 @@ make_target() {
     'exclude_unwind_tables=true'
     'linux_link_libudev = true'
     'use_system_harfbuzz=true'
-    'enable_remoting=false'
-    'enable_vulkan=true'
     'enable_google_now=false'
     'is_desktop_linux=true'
     'enable_vr=false'
-    'rtc_enable_protobuf=false'
     'enable_wayland_server=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -110,7 +107,7 @@ make_target() {
   )
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
+# Keys are the names in the above script; values are the dependencies in Arch     'enable_remoting=false' 'rtc_enable_protobuf=false'
 readonly -A _system_libs=(
   [icu]=icu
   [libdrm]=
