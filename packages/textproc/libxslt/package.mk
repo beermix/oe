@@ -20,6 +20,7 @@ PKG_LONGDESC="libxslt"
 
 PKG_CONFIGURE_OPTS_HOST="  ac_cv_header_ansidecl_h=no \
                            ac_cv_header_xlocale_h=no \
+                           --enable-static --enable-shared \
                            --without-python \
                            --with-libxml-prefix=$TOOLCHAIN \
                            --without-crypto \
@@ -27,6 +28,7 @@ PKG_CONFIGURE_OPTS_HOST="  ac_cv_header_ansidecl_h=no \
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_ansidecl_h=no \
                            ac_cv_header_xlocale_h=no \
+                           --enable-static --enable-shared \
                            --without-python \
                            --with-libxml-prefix=$SYSROOT_PREFIX/usr \
                            --without-crypto \
