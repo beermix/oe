@@ -9,7 +9,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME::-1}-$PKG_VERSION*"
-PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host expat:host libffi:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:host expat:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python2: The Python2 programming language"
@@ -25,8 +25,7 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --with-threads \
                          --disable-ipv6 \
                          --enable-unicode=ucs4 \
-                         --with-system-ffi \
-                         --with-system-expat"
+                         --with-expat=system"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -50,7 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-fpectl \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-system-expat"
+                           --with-expat=system"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
@@ -62,7 +61,8 @@ post_patch() {
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES"
+       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES" \
+       LDFLAGS="$(HOST_LDFLAGS) -Wl,--enable-new-dtags"
 
   # python distutils per default adds -L$LIBDIR when linking binary extensions
     sed -e "s|^ 'LIBDIR':.*| 'LIBDIR': '/usr/lib',|g" -i $(cat pybuilddir.txt)/_sysconfigdata.py
