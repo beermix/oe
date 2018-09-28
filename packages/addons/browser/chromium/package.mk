@@ -58,7 +58,6 @@ make_target() {
 
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /usr/bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
-  #ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
