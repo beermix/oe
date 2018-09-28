@@ -9,7 +9,16 @@ PKG_USE_CMAKE="no"
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-nls --disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
+			      --disable-shared \
+			      --enable-static \
+			      --enable-swap-16bit-csp \
+			      --enable-experimental \
+			      --enable-libwebpmux \
+			      --enable-libwebpmux \
+			      --enable-libwebdemux \
+			      --enable-libwebdecoder \
+			      --enable-libwebextras"
 
 #post_makeinstall_target() {
 #  rm -rf $INSTALL
