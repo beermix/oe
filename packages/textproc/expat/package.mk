@@ -25,6 +25,7 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
-#post_makeinstall_target() {
-#  rm -rf $INSTALL/usr/bin
-#}
+# cleanup
+post_unpack() {
+  rm -fr $BUILD/libexpat-R_${PKG_VERSION//./_}
+}
