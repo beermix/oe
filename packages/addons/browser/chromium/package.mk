@@ -93,6 +93,11 @@ make_target() {
     'use_system_harfbuzz=true'
     'enable_remoting=false'
     'enable_vulkan=true'
+    'enable_google_now=false'
+    'is_desktop_linux=true'
+    'enable_vr=false'
+    'rtc_enable_protobuf=false'
+    'enable_wayland_server=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
