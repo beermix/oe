@@ -1,5 +1,6 @@
 ##################################################################################
-#   re2 snappy
+#   re2 snappy libXcursor:host  alsa-lib:host
+#  "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
@@ -16,7 +17,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor libXcursor:host alsa-lib alsa-lib:host yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss libvpx chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss libvpx opus chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -61,8 +62,6 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
-    'use_v8_context_snapshot=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -91,6 +90,7 @@ make_target() {
     'exclude_unwind_tables=true'
     'linux_link_libudev = true'
     'use_system_harfbuzz=true'
+    'use_v8_context_snapshot=false'
     'enable_google_now=false'
     'is_desktop_linux=true'
     'enable_vr=false'
@@ -115,6 +115,9 @@ readonly -A _system_libs=(
   [libvpx]=libvpx
   [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
+  [opus]=opus
+  #[re2]=re2
+  #[snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
@@ -134,7 +137,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
@@ -142,6 +144,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   done
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./tools/gn/bootstrap/bootstrap.py -s --no-clean
