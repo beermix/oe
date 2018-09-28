@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv) | --with-included-gettext=no
 
 PKG_NAME="gettext"
 PKG_VERSION="0.19.8.1"
@@ -29,6 +29,6 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-openmp \
                          --disable-relocatable \
                          --enable-nls \
-                         --with-included-gettext \
                          --with-pic \
                          --with-included-libxml=no"
+                         
