@@ -1,25 +1,19 @@
 PKG_NAME="zlib-ng"
-PKG_VERSION="013b23b"
+PKG_VERSION="9992d3b"
 PKG_URL="https://github.com/Dead2/zlib-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET=""
 PKG_DEPENDS_HOST=""
 PKG_SECTION="compress"
 PKG_TOOLCHAIN="cmake-make"
+PKG_BUILD_FLAGS="+pic:host +pic"
 
-TARGET_CONFIGURE_OPTS="--prefix=/usr"
-HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN"
-
-pre_build_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
+configure_host() {
+  cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN \
+  	 -DZLIB_COMPAT=1 \
+  	 -DWITH_GZFILEOP=1 \
+  	 -DWITH_OPTIM=1 \
+        -DCMAKE_INSTALL_LIBDIR:PATH=lib \
+  	 ..
 }
 
-pre_build_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-  cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
-}
-
-pre_configure_target() {
- export CFLAGS="$CFLAGS -O3 -fPIC"
- export CXXFLAGS="$CXXFLAGS -O3 -fPIC"
-}
+PKG_CMAKE_OPTS_TARGET="-DZLIB_COMPAT=1 -DWITH_GZFILEOP=1 -DWITH_OPTIM=1 -DCC=$TARGET_CC"
