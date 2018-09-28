@@ -28,7 +28,8 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-acl \
                          --disable-openmp \
                          --disable-relocatable \
-                         --without-included-gettext \
+                         --with-included-gettext \
+                         --with-pic \
                          --with-included-libxml \
                          --with-included-glib \
                          --with-included-libcroco \
