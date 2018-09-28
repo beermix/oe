@@ -95,6 +95,10 @@ post_unpack() {
     touch $PKG_BUILD/Python/graminit.c
 }
 
+pre_configure_host() {
+  export LDFLAGS="$HOST_LDFLAGS -Wl,--enable-new-dtags"
+}
+
 post_makeinstall_host() {
   rm -f $TOOLCHAIN/bin/python*-config
   rm -f $TOOLCHAIN/bin/smtpd.py*

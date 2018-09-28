@@ -21,6 +21,8 @@ PKG_BUILD_FLAGS="-parallel +lto-parallel"
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
+                         ac_cv_prog_HAS_HG=/bin/false \
+                         ac_cv_prog_SVNVERSION=/bin/false \
                          --without-cxx-main \
                          --with-threads \
                          --disable-ipv6 \
@@ -58,11 +60,14 @@ post_patch() {
     touch $PKG_BUILD/Python/graminit.c
 }
 
+pre_configure_host() {
+  export LDFLAGS="$HOST_LDFLAGS -Wl,--enable-new-dtags"
+}
+
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES" \
-       LDFLAGS="$(HOST_LDFLAGS) -Wl,--enable-new-dtags"
+       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES"
 
   # python distutils per default adds -L$LIBDIR when linking binary extensions
     sed -e "s|^ 'LIBDIR':.*| 'LIBDIR': '/usr/lib',|g" -i $(cat pybuilddir.txt)/_sysconfigdata.py
