@@ -13,12 +13,23 @@ PKG_SECTION="compress"
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic:host +pic"
 
-PKG_CMAKE_OPTS_TARGET="-DZLIB_COMPAT=1 -DWITH_GZFILEOP=1 -DWITH_OPTIM=1"
-
 configure_host() {
   cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN \
   	 -DZLIB_COMPAT=1 \
   	 -DWITH_GZFILEOP=1 \
   	 -DWITH_OPTIM=1 \
   	 ..
+}
+
+PKG_CMAKE_OPTS_TARGET="-DZLIB_COMPAT=1 -DWITH_GZFILEOP=1 -DWITH_OPTIM=1"
+
+makeinstall_target() {
+  cp -v minigzip64 $SYSROOT_PREFIX/usr/bin/
+  cp -v minigzip $SYSROOT_PREFIX/usr/bin/
+  #cp -v libminizip.a $SYSROOT_PREFIX/usr/lib/
+}
+
+makeinstall_host() {
+  cp -v minigzip64 $TOOLCHAIN/bin/
+  cp -v minigzip $TOOLCHAIN/bin/
 }

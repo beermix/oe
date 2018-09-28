@@ -25,8 +25,9 @@ make_host() {
   INCLUDES="-I$TOOLCHAIN/include" \
   make BUILD_OPT=1 USE_64=1 \
      PREFIX=$TOOLCHAIN \
+     NSS_USE_SYSTEM_SQLITE=1 \
+     USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
-     USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
      SKIP_SHLIBSIGN=1 \
      NSS_TESTS="dummy" \
      CC=$CC LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
