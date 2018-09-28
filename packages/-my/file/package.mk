@@ -11,4 +11,5 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
+
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
