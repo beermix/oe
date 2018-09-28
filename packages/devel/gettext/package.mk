@@ -12,7 +12,7 @@ PKG_DEPENDS_HOST="ccache:host autotools:host m4:host libxml2:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="gettext: A program internationalization library and tools"
 PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or maintainers of other packages or programs which they want to see internationalized. As one step the handling of messages in different languages should be implemented. For this task GNU gettext provides the needed tools and library functions."
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
