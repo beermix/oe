@@ -15,7 +15,7 @@ PKG_LONGDESC="High productivity build system"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  python3 setup.py build --optimize=1
+  python3 setup.py build
 }
 
 makeinstall_host() {
