@@ -10,7 +10,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.167"
 PKG_SHA256="f3308b41f241d53a269ec0c73e8512f4ac58b7aafe16967a3dba5b99abc4c455"
-PKG_REV="325-gtk2-glibc26-unwind-no_alloc"
+PKG_REV="322-gtk2-glibc26"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -102,14 +102,17 @@ make_target() {
   )
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
+# Keys are the names in the above script; values are the dependencies in Arch     x     'exclude_unwind_tables=true'
 readonly -A _system_libs=(
   [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
+  #[libpng]=libpng            # https://crbug.com/752403#c10.
   [libvpx]=libvpx
   [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
+  #[re2]=re2
+  #[snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
