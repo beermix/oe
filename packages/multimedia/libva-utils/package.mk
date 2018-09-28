@@ -11,8 +11,18 @@ PKG_URL="https://github.com/intel/libva-utils/archive/$PKG_VERSION.tar.gz"
 PKG_SECTION="debug"
 PKG_SHORTDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleration API)"
 PKG_LONGDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleration API)"
+PKG_TOOLCHAIN="autotools"
 
-PKG_MESON_OPTS_TARGET="-Ddrm=true \
-			  -Dx11=true \
-			  -Dwayland=false \
-			  -Dtests=false"
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="toolchain libva libdrm libX11"
+  DISPLAYSERVER_LIBVA="--enable-x11"
+else
+  PKG_DEPENDS_TARGET="toolchain libva libdrm"
+  DISPLAYSERVER_LIBVA="--disable-x11"
+fi
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+                           --enable-drm \
+                           $DISPLAYSERVER_LIBVA \
+                           --disable-wayland \
+                           --disable-tests"
