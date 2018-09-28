@@ -15,11 +15,11 @@ PKG_LONGDESC="High productivity build system"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  python3 setup.py build
+  python3 setup.py build --optimize=1
 }
 
 makeinstall_host() {
-  python3 setup.py install --prefix=$TOOLCHAIN --skip-build
+  python3 setup.py install --prefix=$TOOLCHAIN --skip-build --optimize=1
 
   # Avoid using full path to python3 that may exceed 128 byte limit.
   # Instead use PATH as we know our toolchain is first.

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) | ,swrast
 
 PKG_NAME="mesa"
 PKG_VERSION="18.2.1"
@@ -19,7 +19,7 @@ PKG_BUILD_FLAGS="+lto"
 get_graphicdrivers
 
 PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
-                       -Dgallium-drivers=$GALLIUM_DRIVERS,swrast \
+                       -Dgallium-drivers=$GALLIUM_DRIVERS \
                        -Dgallium-extra-hud=false \
                        -Dgallium-xvmc=false \
                        -Dgallium-omx=disabled \
@@ -35,13 +35,13 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
                        -Dasm=true \
                        -Dvalgrind=false \
                        -Dlibunwind=false \
-                       -Dlmsensors=false \
+                       -Dlmsensors=true \
                        -Dbuild-tests=false \
                        -Dselinux=false \
                        -Dosmesa=none"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr libva"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr libva lm_sensors"
   export X11_INCLUDES=
   PKG_MESON_OPTS_TARGET+=" -Dplatforms=x11,drm -Ddri3=true -Dglx=dri"
 elif [ "$DISPLAYSERVER" = "weston" ]; then
