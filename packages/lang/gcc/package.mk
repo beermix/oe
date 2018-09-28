@@ -42,7 +42,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libatomic \
                            --disable-libgomp \
                            --disable-libmpx \
-                           --disable-libsanitizer \
                            --disable-libssp \
                            --with-tune=generic"
 
@@ -53,6 +52,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --without-headers \
                               --disable-libitm \
                               --disable-libquadmath \
+                              --disable-libsanitizer \
                               --with-newlib \
                               --disable-decimal-float \
                               $GCC_OPTS"
