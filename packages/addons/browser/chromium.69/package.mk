@@ -15,7 +15,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="http://192.168.1.200:8080/%2Fchromium-69.0.3497.100.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss re2 snappy"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -36,11 +36,6 @@ post_patch() {
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
-#make_host() {
-#  export CCACHE_SLOPPINESS=time_macros
-#  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
-#}
-
 make_target() {
   export CCACHE_SLOPPINESS=time_macros
 
@@ -48,13 +43,12 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
-  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+  #sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
-  sed -i -e '/"-Wno-ignored-pragma-optimize"/d' ./build/config/compiler/BUILD.gn
+  #sed -i -e '/"-Wno-ignored-pragma-optimize"/d' ./build/config/compiler/BUILD.gn
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'use_v8_context_snapshot=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
@@ -74,25 +68,10 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
-    'icu_use_data_file=true'
-    'use_system_libjpeg=true'
-    'use_libjpeg_turbo=false'
-    'pdf_enable_xfa=true'
-    'fatal_linker_warnings=false'
-    'is_debug=false'
-    'is_clang=false'
-    'use_system_harfbuzz=true'
-    'use_system_libpng=true'
-    'use_dbus=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'enable_linux_installer=false'
-    'use_system_freetype=true'
-    'use_system_harfbuzz=true'
-    'enable_remoting=false'
-    'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
@@ -113,14 +92,14 @@ declare -gA _system_libs=(
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
   [libxml]=libxml2
   [libxslt]=libxslt
-  [re2]=re2
-  [snappy]=snappy
+  #[re2]=re2
+  #[snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
@@ -141,12 +120,13 @@ _unwanted_bundled_libs=(
       -delete
   done
 
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-  ./third_party/libaddressinput/chromium/tools/update-strings.py
+  $TOOLCHAIN/bin/python2 ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
-  ./tools/gn/bootstrap/bootstrap.py --gn-gen-args="${_flags[*]}" -s --no-clean
+  $TOOLCHAIN/bin/python2 ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release -s --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  $TOOLCHAIN/bin/python2 ./tools/gn/bootstrap/bootstrap.py -s --no-clean --gn-gen-args="${_flags[*]}"
+
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
