@@ -10,10 +10,12 @@ PKG_SITE="http://www.openal.org/"
 PKG_URL="http://kcat.strangesoft.net/openal-releases/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib"
 PKG_LONGDESC="OpenAL the Open Audio Library"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CMAKE_OPTS_TARGET="-DALSOFT_BACKEND_OSS=off \
                        -DALSOFT_BACKEND_WAVE=off \
                        -DALSOFT_BACKEND_PULSEAUDIO=off \
                        -DALSOFT_EXAMPLES=off \
                        -DALSOFT_TESTS=off \
-                       -DALSOFT_UTILS=off"
+                       -DALSOFT_UTILS=off \
+                       -DLIBTYPE:STRING=STATIC"

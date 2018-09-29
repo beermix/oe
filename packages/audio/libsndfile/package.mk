@@ -15,15 +15,12 @@ PKG_LONGDESC="libsndfile is a C library for reading and writing sound files such
 PKG_TOOLCHAIN="configure"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-                           --disable-sqlite \
+PKG_CONFIGURE_OPTS_TARGET="--disable-sqlite \
                            --enable-alsa \
                            --disable-external-libs \
                            --disable-experimental \
                            --disable-test-coverage \
-                           --enable-largefile \
-                           --with-gnu-ld \
-                           --with-pic"
+                           --enable-largefile"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
