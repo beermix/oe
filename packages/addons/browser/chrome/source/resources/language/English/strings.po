@@ -29,10 +29,6 @@ msgctxt "#30005"
 msgid "Window Mode"
 msgstr ""
 
-msgctxt "#30006"
-msgid "Default Homepage"
-msgstr ""
-
 msgctxt "#30007"
 msgid "Use Custom Audio Device"
 msgstr ""
@@ -43,4 +39,8 @@ msgstr ""
 
 msgctxt "#30009"
 msgid "Hide Cursor"
+msgstr ""
+
+msgctxt "#300010"
+msgid "Enable Flash"
 msgstr ""
