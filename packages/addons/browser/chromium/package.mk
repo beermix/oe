@@ -11,7 +11,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.167"
 PKG_SHA256="f3308b41f241d53a269ec0c73e8512f4ac58b7aafe16967a3dba5b99abc4c455"
-PKG_REV="326-gtk2-icu"
+PKG_REV="326-gtk2-icu-wo_unwind-tables"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -47,10 +47,6 @@ make_host() {
 
 make_target() {
   export CCACHE_SLOPPINESS=time_macros
-  
-#CFLAGS+='   -fno-unwind-tables -fno-asynchronous-unwind-tables'
-#CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
-#CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -86,14 +82,9 @@ make_target() {
     'use_vaapi=true'
     'enable_linux_installer=false'
     'use_system_freetype=true'
-    'exclude_unwind_tables=true'
     'linux_link_libudev = true'
     'use_system_harfbuzz=true'
     'use_v8_context_snapshot=false'
-    'enable_google_now=false'
-    'is_desktop_linux=true'
-    'enable_vr=false'
-    'enable_wayland_server=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
@@ -105,7 +96,11 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+#     'enable_google_now=false'
+#    'is_desktop_linux=true'
+#    'enable_vr=false'
+#    'enable_wayland_server=false'
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py | 'exclude_unwind_tables=true'
 # Keys are the names in the above script; values are the dependencies in Arch     'enable_remoting=false' 'rtc_enable_protobuf=false'
 readonly -A _system_libs=(
   [icu]=icu
