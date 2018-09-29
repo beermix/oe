@@ -18,6 +18,7 @@
 
 PKG_NAME="pvr.vdr.vnsi"
 PKG_VERSION="e5dc3dd"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
@@ -26,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="pvr.vdr.vnsi"
 PKG_LONGDESC="pvr.vdr.vnsi"
-
+PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.pvrclient"
