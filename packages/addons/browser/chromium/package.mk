@@ -1,5 +1,5 @@
 ##################################################################################
-#   re2 snappy libXcursor:host  alsa-lib:host
+#    libXcursor:host  alsa-lib:host
 #  "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
@@ -11,13 +11,13 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.167"
 PKG_SHA256="f3308b41f241d53a269ec0c73e8512f4ac58b7aafe16967a3dba5b99abc4c455"
-PKG_REV="325-gtk2-glibc26-unwind"
+PKG_REV="326-gtk2-icu"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss opus chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss opus re2 snappy chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -108,7 +108,7 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch     'enable_remoting=false' 'rtc_enable_protobuf=false'
 readonly -A _system_libs=(
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   [libxml]=libxml2
@@ -116,8 +116,8 @@ readonly -A _system_libs=(
   #[libvpx]=libvpx
   #[libwebp]=libwebp
   [opus]=opus
-  #[re2]=re2
-  #[snappy]=snappy
+  [re2]=re2
+  [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
@@ -137,6 +137,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
@@ -161,8 +162,8 @@ addon() {
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
-  #cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  #cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \

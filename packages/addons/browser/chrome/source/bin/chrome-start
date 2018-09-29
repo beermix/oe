@@ -73,10 +73,10 @@ case $RASTER_MODE in
 esac
 
 # flash
-if [ -f "$ADDON_DIR/bin/PepperFlash/libpepflashplayer.so" ] && [ -f "$ADDON_DIR/bin/PepperFlash/manifest.json" ] ; then
-  CHROMIUM_FLASH_VERSION=$(grep '"version":' "$ADDON_DIR/bin/PepperFlash/manifest.json" | awk -F\" '{ print $4 }')
-  chrome_OPTS=" --ppapi-flash-path=$ADDON_DIR/bin/PepperFlash/libpepflashplayer.so --ppapi-flash-version=$CHROMIUM_FLASH_VERSION"
-fi
+# if [ -f "$ADDON_DIR/bin/PepperFlash/libpepflashplayer.so" ] && [ -f "$ADDON_DIR/bin/PepperFlash/manifest.json" ] ; then
+#   CHROMIUM_FLASH_VERSION=$(grep '"version":' "$ADDON_DIR/bin/PepperFlash/manifest.json" | awk -F\" '{ print $4 }')
+#   chrome_OPTS=" --ppapi-flash-path=$ADDON_DIR/bin/PepperFlash/libpepflashplayer.so --ppapi-flash-version=$CHROMIUM_FLASH_VERSION"
+# fi
 
 # alsa
 if [ ! -z $ALSA_DEVICE ]; then
@@ -85,15 +85,14 @@ fi
 
 # HACK!!! to get sound at Chrome stop pulseaudio
 # systemctl stop pulseaudio
+#   --disable-printing \
+#  --enable-tcp-fastopen \
 
 # start chrome
 LD_PRELOAD=/usr/lib/libGL.so $ADDON_DIR/chrome-bin/chrome \
   $chrome_OPTS \
   --no-sandbox \
-  --no-default-browser-check \
   --disable-smooth-scrolling \
-  --disable-printing \
-  --enable-tcp-fastopen \
   --user-data-dir=$ADDON_HOME/profile \
   --test-type $@ \
   2>&1 | tee $ADDON_LOG_FILE
