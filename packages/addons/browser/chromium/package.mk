@@ -145,7 +145,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   #./tools/gn/bootstrap/bootstrap.py -s --no-clean --gn-gen-args="${_flags[*]}"
 
-  mkdir -p ./out/Release/gn
+  mkdir -p ./out/Release
   cp /home/user/.bin/gn ./out/Release/
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
