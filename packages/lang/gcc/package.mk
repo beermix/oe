@@ -34,25 +34,26 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --with-tune=generic"
+                           --with-tune=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
+                              --disable-__cxa_atexit \
+                              --enable-tls \
+                              --disable-libsanitizer \
+                              --disable-libitm \
+                              --disable-libquadmath \
+                              --disable-libatomic \
+                              --disable-libgomp \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
-                              --disable-libitm \
-                              --disable-libquadmath \
-                              --disable-libsanitizer \
                               --with-newlib \
                               --disable-decimal-float \
                               $GCC_OPTS"
