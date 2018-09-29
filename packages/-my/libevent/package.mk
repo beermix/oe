@@ -8,6 +8,7 @@ PKG_SOURCE_DIR="$PKG_NAME-release-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain openssl zlib"
 PKG_SHORTDESC="libevent: a library for asynchronous event notification"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-libevent-regress \
                            --disable-samples \
