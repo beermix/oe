@@ -7,10 +7,10 @@ PKG_DEPENDS_TARGET="toolchain readline mpfr libsigsegv"
 PKG_DEPENDS_HOST="mpfr:host libsigsegv:host"
 
 post_makeinstall_target() {
-  ln -sfv gawk $INSTALL/usr/bin/awk
+  ln -sf gawk $INSTALL/usr/bin/awk
 }
 
 post_makeinstall_host() {
- mkdir -p $TOOLCHAIN/bin
- ln -sf gawk $TOOLCHAIN/bin/awk
+  mkdir -p $TOOLCHAIN/bin
+  ln -sf gawk $TOOLCHAIN/bin/awk
 }
