@@ -143,7 +143,10 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./tools/gn/bootstrap/bootstrap.py -s --no-clean --gn-gen-args="${_flags[*]}"
+  #./tools/gn/bootstrap/bootstrap.py -s --no-clean --gn-gen-args="${_flags[*]}"
+
+  mkdir -p ./out/Release/gn
+  cp /home/user/.bin/gn ./out/Release/
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
