@@ -27,6 +27,6 @@ PKG_MESON_OPTS_TARGET="-Dbuild_overlay=true \
 			  -Dbuild_man=false \
 			  -Dbuild_docs=false \
 			  -Dbuild_tests=false \
-			  -Dwith_libdrm=intel"
-			  
-# -Duse_rpath=false
+			  -Dwith_libdrm=intel \
+			  -Duse_rpath=false \
+			  -Ddefault_library=static"

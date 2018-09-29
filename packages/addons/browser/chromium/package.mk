@@ -1,5 +1,4 @@
 ##################################################################################
-#    libXcursor:host  alsa-lib:host
 #  "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
@@ -17,8 +16,8 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss opus re2 snappy chromium:host"
-PKG_SECTION="browser"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss opus re2 snappy"
+PKG_SECTION="browser" # chromium:host
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
@@ -39,11 +38,11 @@ post_patch() {
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
-make_host() {
-  export CCACHE_SLOPPINESS=time_macros
+#make_host() {
+#  export CCACHE_SLOPPINESS=time_macros
   #./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
   #./tools/gn/bootstrap/bootstrap.py -s --no-clean
-}
+#}
 
 make_target() {
   export CCACHE_SLOPPINESS=time_macros
@@ -80,7 +79,6 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'enable_linux_installer=false'
     'use_system_freetype=true'
     'linux_link_libudev = true'
     'use_system_harfbuzz=true'
@@ -101,7 +99,7 @@ make_target() {
 #    'enable_vr=false'
 #    'enable_wayland_server=false'
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py | 'exclude_unwind_tables=true'
-# Keys are the names in the above script; values are the dependencies in Arch     'enable_remoting=false' 'rtc_enable_protobuf=false'
+# Keys are the names in the above script; values are the dependencies in Arch     'enable_remoting=false'  'enable_linux_installer=false''rtc_enable_protobuf=false'
 readonly -A _system_libs=(
   [icu]=icu
   [libdrm]=
@@ -143,10 +141,11 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  #./tools/gn/bootstrap/bootstrap.py -s --no-clean --gn-gen-args="${_flags[*]}"
+  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
 
-  mkdir -p ./out/Release
-  cp /home/user/.bin/gn ./out/Release/
+  #  --gn-gen-args="${_flags[*]}"
+  #mkdir -p ./out/Release
+  #cp /home/user/.bin/gn ./out/Release/
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
