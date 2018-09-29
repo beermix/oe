@@ -66,7 +66,8 @@ case $RASTER_MODE in
 esac
 
 # flash
-if [ -f "$ADDON_DIR/bin/PepperFlash/libpepflashplayer.so" ] && [ -f "$ADDON_DIR/bin/PepperFlash/manifest.json" ] ; then
+if [ "$ENABLE_FLASH" == "true" ]
+then
   CHROMIUM_FLASH_VERSION=$(grep '"version":' "$ADDON_DIR/bin/PepperFlash/manifest.json" | awk -F\" '{ print $4 }')
   CHROMIUM_OPTS=" --ppapi-flash-path=$ADDON_DIR/bin/PepperFlash/libpepflashplayer.so --ppapi-flash-version=$CHROMIUM_FLASH_VERSION"
 fi
