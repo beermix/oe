@@ -41,6 +41,6 @@ msgctxt "#30009"
 msgid "Hide Cursor"
 msgstr ""
 
-msgctxt "#300010"
+msgctxt "#30006"
 msgid "Enable Flash"
 msgstr ""
