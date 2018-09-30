@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain openssl"
 PKG_SHORTDESC="libzip"
 PKG_LONGDESC="libzip"
 PKG_TOOLCHAIN="cmake-make"
-PKG_BUILD_FLAGS="+pic"
+PKG_BUILD_FLAGS="+pic:host +pic"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 			  -DBUILD_SHARED_LIBS=0 \
