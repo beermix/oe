@@ -13,6 +13,7 @@ PKG_LONGDESC="SQLite is a C library that implements an embeddable SQL database e
 # libsqlite3.a(sqlite3.o): requires dynamic R_X86_64_PC32 reloc against 'sqlite3_stricmp' which may overflow at runtime
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel"
+HARDENING_SUPPORT="yes"
 
 # sqlite fails to compile with fast-math link time optimization.
   CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O3|g"`
@@ -45,6 +46,6 @@ PKG_BUILD_FLAGS="-parallel"
 # mmap_size pragma.
   CFLAGS="$CFLAGS -DSQLITE_TEMP_STORE=3 -DSQLITE_DEFAULT_MMAP_SIZE=268435456"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-threadsafe --enable-dynamic-extensions"
+PKG_CONFIGURE_OPTS_TARGET="--enable-threadsafe --enable-dynamic-extensions --disable-silent-rules"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
