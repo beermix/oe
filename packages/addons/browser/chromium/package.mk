@@ -10,7 +10,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.167"
 PKG_SHA256="f3308b41f241d53a269ec0c73e8512f4ac58b7aafe16967a3dba5b99abc4c455"
-PKG_REV="326-gtk2-icu-wo_unwind-tables"
+PKG_REV="327-gtk2-icu-std-wo_unwind-tables"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -101,7 +101,7 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py | 'exclude_unwind_tables=true'
 # Keys are the names in the above script; values are the dependencies in Arch     'enable_remoting=false'  'enable_linux_installer=false''rtc_enable_protobuf=false'
 readonly -A _system_libs=(
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   [libxml]=libxml2
@@ -130,7 +130,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
@@ -142,10 +141,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./tools/gn/bootstrap/bootstrap.py -s --no-clean
-
-  #  --gn-gen-args="${_flags[*]}"
-  #mkdir -p ./out/Release
-  #cp /home/user/.bin/gn ./out/Release/
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
@@ -159,8 +154,8 @@ addon() {
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  #cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  #cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
