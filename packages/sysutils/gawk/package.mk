@@ -1,7 +1,7 @@
 PKG_NAME="gawk"
 #PKG_VERSION="4.1.4"
 PKG_VERSION="7f684e83cdfa0647d8e197271fe318d2c185d291"
-#PKG_SHA256="d1119785e746d46a8209d28b2de404a57f983aa48670f4e225531d3bdc175551"
+# http://git.savannah.gnu.org/cgit/gawk.git/log/?h=gawk-4.2-stable
 PKG_URL="http://ftpmirror.gnu.org/gawk/gawk-$PKG_VERSION.tar.xz"
 PKG_URL="http://git.savannah.gnu.org/cgit/gawk.git/snapshot/gawk-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain readline mpfr libsigsegv"
