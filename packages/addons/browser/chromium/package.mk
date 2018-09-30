@@ -10,7 +10,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.167"
 PKG_SHA256="f3308b41f241d53a269ec0c73e8512f4ac58b7aafe16967a3dba5b99abc4c455"
-PKG_REV="327-gtk2-icu-std-wo_unwind-tables"
+PKG_REV="328-gtk2-icu-std-wo_unwind-tables-v8"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -56,6 +56,7 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -81,7 +82,7 @@ make_target() {
     'use_system_freetype=true'
     'linux_link_libudev = true'
     'use_system_harfbuzz=true'
-    'use_v8_context_snapshot=false'
+    'use_v8_context_snapshot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
