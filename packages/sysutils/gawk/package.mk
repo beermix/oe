@@ -7,11 +7,14 @@ PKG_URL="http://git.savannah.gnu.org/cgit/gawk.git/snapshot/gawk-$PKG_VERSION.ta
 PKG_DEPENDS_TARGET="toolchain readline mpfr libsigsegv"
 PKG_DEPENDS_HOST="mpfr:host libsigsegv:host"
 PKG_TOOLCHAIN="configure"
-PKG_LOCALE_INSTALL="yes"
-PKG_INCLUDE_INSTALL="yes"
+#PKG_LOCALE_INSTALL="yes"
+#PKG_INCLUDE_INSTALL="yes"
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-rpath --disable-extensions --with-gnu-ld"
 
 post_makeinstall_target() {
   ln -sf gawk $INSTALL/usr/bin/awk
+  #make check
 }
 
 post_makeinstall_host() {
