@@ -25,7 +25,7 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
                        -Dgallium-omx=disabled \
                        -Dgallium-nine=false \
                        -Dgallium-opencl=disabled \
-                       -Dvulkan-drivers=intel \
+                       -Dvulkan-drivers= \
                        -Dshader-cache=true \
                        -Dshared-glapi=true \
                        -Dopengl=true \
