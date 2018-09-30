@@ -5,7 +5,7 @@
 PKG_NAME="glibc"
 #PKG_VERSION="2.28"
 #PKG_SHA256="b1900051afad76f7a4f73e71413df4826dce085ef8ddb785a945b66d7d513082"
-PKG_VERSION="c5c90b4"
+PKG_VERSION="202d08d"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
