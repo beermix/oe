@@ -66,7 +66,6 @@ make_target() {
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
-    'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
     'use_cups=false'

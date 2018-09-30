@@ -33,7 +33,7 @@ post_patch() {
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
   # set correct widevine
-  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  # sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
 make_target() {
@@ -43,13 +43,14 @@ make_target() {
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
-  #sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
   #sed -i -e '/"-Wno-ignored-pragma-optimize"/d' ./build/config/compiler/BUILD.gn
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    'use_v8_context_snapshot=false'
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
+    'use_v8_context_snapshot=true'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -60,7 +61,6 @@ make_target() {
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
-    'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
     'use_cups=false'
@@ -70,7 +70,7 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'use_sysroot=true'
+    'use_sysroot=false'
     'use_vaapi=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -86,45 +86,9 @@ make_target() {
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
-declare -gA _system_libs=(
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
-  [libdrm]=
-  [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  [libxml]=libxml2
-  [libxslt]=libxslt
-  #[re2]=re2
-  #[snappy]=snappy
-  [yasm]=
-  [zlib]=minizip
-)
-_unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-)
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find "third_party/$_lib" -type f \
-      \! -path "third_party/$_lib/chromium/*" \
-      \! -path "third_party/$_lib/google/*" \
-      \! -path 'third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
+  # ./tools/gn/bootstrap/bootstrap.py -s --no-clean --gn-gen-args="${_flags[*]}"
 
-  $TOOLCHAIN/bin/python2 ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-
-  $TOOLCHAIN/bin/python2 ./third_party/libaddressinput/chromium/tools/update-strings.py
-
-  $TOOLCHAIN/bin/python2 ./tools/gn/bootstrap/bootstrap.py -s --no-clean --gn-gen-args="${_flags[*]}"
+  mkdir -p ./out/Release; cp /home/user/.bin/gn out/Release/gn
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
