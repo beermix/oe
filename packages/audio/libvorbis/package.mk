@@ -16,7 +16,6 @@ PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
                            --with-ogg=$SYSROOT_PREFIX/usr \
                            --disable-docs \
                            --disable-examples \

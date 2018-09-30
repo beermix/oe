@@ -18,7 +18,6 @@ PKG_BUILD_FLAGS="+pic"
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
                            --disable-rpath \
                            --disable-altivec \
                            --disable-doxygen-docs \

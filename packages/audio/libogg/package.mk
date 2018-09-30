@@ -14,5 +14,4 @@ PKG_SECTION="audio"
 PKG_LONGDESC="Libogg contains necessary functionality to create, decode, and work with Ogg bitstreams."
 PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static"
