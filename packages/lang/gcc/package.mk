@@ -34,7 +34,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-libunwind-exceptions \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
