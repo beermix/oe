@@ -60,9 +60,9 @@ post_patch() {
     touch $PKG_BUILD/Python/graminit.c
 }
 
-pre_configure_host() {
-  export LDFLAGS="$HOST_LDFLAGS -Wl,--enable-new-dtags"
-}
+#pre_configure_host() {
+#  export LDFLAGS="$HOST_LDFLAGS -Wl,--enable-new-dtags"
+#}
 
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
