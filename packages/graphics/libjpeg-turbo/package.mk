@@ -15,6 +15,7 @@ PKG_SHORTDESC="libjpeg-turbo: a high-speed version of libjpeg for x86 and x86-64
 PKG_LONGDESC="libjpeg-turbo is a high-speed version of libjpeg for x86 and x86-64 processors which uses SIMD instructions (MMX, SSE2, etc.) to accelerate baseline JPEG compression and decompression. libjpeg-turbo is generally 2-4x as fast as the unmodified version of libjpeg, all else being equal."
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic:host +pic"
+HARDENING_SUPPORT="yes"
 
 configure_host() {
   cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN \
