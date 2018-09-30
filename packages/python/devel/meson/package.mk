@@ -3,7 +3,7 @@
 
 PKG_NAME="meson"
 PKG_VERSION="0.48.0"
-#PKG_SHA256="92d8afd921751261e36151643464efd3394162f69efbe8cd53e0a66b1cf395eb"
+PKG_SHA256="982937ba5b380abe13f3a0c4dff944dd19d08b72870e3b039f5037c91f82835f"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/mesonbuild/meson/releases/"
@@ -27,10 +27,10 @@ make_host() {
 makeinstall_host() {
   python3 setup.py install --prefix=$TOOLCHAIN --skip-build --optimize=1
 
-  #--root="${pkgdir}" --optimize=1 --skip-build
   # Avoid using full path to python3 that may exceed 128 byte limit.
   # Instead use PATH as we know our toolchain is first.
-  for f in meson mesonconf mesontest mesonintrospect wraptool; do
+  # mesonconf mesontest mesonintrospect wraptool
+  for f in meson; do
     sed -i '1 s/^#!.*$/#!\/usr\/bin\/env python3/' $TOOLCHAIN/bin/$f
   done
 }
