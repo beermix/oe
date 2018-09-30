@@ -36,7 +36,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
                            --with-isl=$TOOLCHAIN \
-                           --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
@@ -58,7 +57,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --enable-tls \
                               --disable-libsanitizer \
                               --disable-libitm \
                               --disable-libquadmath \
