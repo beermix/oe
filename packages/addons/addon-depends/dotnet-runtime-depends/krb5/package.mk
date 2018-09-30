@@ -15,7 +15,13 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_regcomp=yes \
                            ac_cv_printf_positional=yes \
-                           krb5_cv_attr_constructor_destructor=yes,yes"
+                           krb5_cv_attr_constructor_destructor=yes,yes \
+                           --without-system-db \
+                           --without-system-et \
+                           --without-system-ss \
+                           --without-system-verto \
+                           --without-tcl \
+                           --disable-rpath"
 
 post_unpack() {
   rm -rf $PKG_BUILD/doc
