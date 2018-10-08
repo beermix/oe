@@ -12,12 +12,17 @@ PKG_DEPENDS_TARGET="toolchain libva libdrm"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
+PKG_TOOLCHAIN="autotools"
+HARDENING_SUPPORT="yes"
 
-post_unpack() {
-  sed -i '1s/python$/&2/' $PKG_BUILD/src/shaders/gpp.py
-  sed -i 's/2.2.0/2.2.0.0/' $PKG_BUILD/meson.build
-}
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  DISPLAYSERVER_LIBVA="--disable-x11 --enable-wayland"
+else
+  DISPLAYSERVER_LIBVA="--disable-x11 --disable-wayland"
+fi
 
-PKG_MESON_OPTS_TARGET="-Dwith_x11=yes \
-			  -Dwith_wayland=no \
-			  -Denable_tests=false"
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+                           --enable-drm \
+                           $DISPLAYSERVER_LIBVA"
