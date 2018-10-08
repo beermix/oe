@@ -32,7 +32,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --enable-compressed-debug-sections=all \
                          --enable-targets=x86_64-linux \
                          --enable-threads \
                          --with-pic \
