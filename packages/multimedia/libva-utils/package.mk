@@ -11,6 +11,7 @@ PKG_URL="https://github.com/intel/libva-utils/archive/$PKG_VERSION.tar.gz"
 PKG_SECTION="debug"
 PKG_SHORTDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleration API)"
 PKG_LONGDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleration API)"
+HARDENING_SUPPORT="yes"
 
 PKG_MESON_OPTS_TARGET="-Ddrm=true \
 			  -Dx11=true \
