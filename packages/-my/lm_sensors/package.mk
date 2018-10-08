@@ -1,5 +1,5 @@
 PKG_NAME="lm_sensors"
-PKG_VERSION="c52ce34"
+PKG_VERSION="c755805"
 PKG_SITE="https://github.com/groeck/lm-sensors"
 PKG_URL="https://github.com/groeck/lm-sensors/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="lm-sensors-$PKG_VERSION*"
