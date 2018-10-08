@@ -49,7 +49,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gnu-indirect-function \
                            --without-ppl \
                            --without-cloog \
-                           --disable-libada \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \

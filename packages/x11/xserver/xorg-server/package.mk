@@ -3,12 +3,15 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xorg-server"
-PKG_VERSION="1.20.1"
-PKG_SHA256="59c99fe86fe75b8164c6567bfc6e982aecc2e4a51e6fbac1b842d5d00549e918"
+PKG_VERSION="32677ce03d793a1f2aa8871112eb3d19b3cb762f"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="https://www.x.org/archive/individual/xserver/?C=M;O=D"
+PKG_SITE="https://cgit.freedesktop.org/xorg/xserver/log/" # https://github.com/mirror/xserver
 PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://cgit.freedesktop.org/xorg/xserver/snapshot/$PKG_VERSION.tar.xz"
+#PKG_URL="https://github.com/mirror/xserver/archive/${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR="$PKG_VERSION*"
+#PKG_SOURCE_DIR="xserver-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper"
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_SECTION="x11/xserver"
