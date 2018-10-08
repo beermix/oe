@@ -18,6 +18,7 @@ PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
 PKG_LONGDESC="Xorg is a full featured X server that was originally designed for UNIX and UNIX-like operating systems running on Intel x86 hardware."
 PKG_TOOLCHAIN="autotools"
+HARDENING_SUPPORT="no"
 
 get_graphicdrivers
 
