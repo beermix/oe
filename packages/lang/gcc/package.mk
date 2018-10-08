@@ -46,6 +46,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --disable-libunwind-exceptions \
+                           --enable-gnu-indirect-function \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \

@@ -978,3 +978,11 @@ print_color() {
 if [ -f "distributions/$DISTRO/config/functions" ]; then
   . distributions/$DISTRO/config/functions
 fi
+
+# die (message, code) abort with optional message and code
+die() {
+  if [ -n "$1" ]; then
+    echo "$1"
+  fi
+  exit "${2:-1}"
+}
