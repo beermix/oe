@@ -1,15 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) | gettext:host
+# https://github.com/GNOME/glib/tree/glib-2-58
 
 PKG_NAME="glib"
-PKG_VERSION="2.58.1"
-PKG_SHA256="97d6a9d926b6aa3dfaadad3077cfb43eec74432ab455dff14250c769d526d7d6"
+#PKG_VERSION="2.58.1"
+#PKG_SHA256="97d6a9d926b6aa3dfaadad3077cfb43eec74432ab455dff14250c769d526d7d6"
+PKG_VERSION="fc7b8e8"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D" # https://github.com/GNOME/glib/tree/glib-2-58
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
