@@ -147,7 +147,8 @@ CMAKE_GENERATOR_NINJA="-GNinja \
                        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
 TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-                   -DCMAKE_INSTALL_PREFIX=/usr"
+                   -DCMAKE_INSTALL_PREFIX=/usr \
+                   -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE"
 
 TARGET_MESON_OPTS="--prefix=/usr \
                    --bindir=/usr/bin \
