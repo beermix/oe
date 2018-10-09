@@ -1,14 +1,3 @@
---- chromium-67.0.3396.10/third_party/blink/renderer/platform/wtf/text/text_codec.h.gcc7	2018-04-18 21:05:42.000000000 +0200
-+++ chromium-67.0.3396.10/third_party/blink/renderer/platform/wtf/text/text_codec.h	2018-04-22 13:45:58.788711322 +0200
-@@ -70,7 +70,7 @@
- 
- static_assert(!kDoNotFlush, "DoNotFlush should be falsy");
- static_assert(kFetchEOF, "FetchEOF should be truthy");
--static_assert(kDataEOF, "DataEOF should be truthy");
-+static_assert(kDataEOF != 0, "DataEOF should be truthy");
- 
- class WTF_EXPORT TextCodec {
-   USING_FAST_MALLOC(TextCodec);
 --- chromium-67.0.3396.10/third_party/crashpad/crashpad/client/crashpad_info.h.gcc7	2018-04-18 21:05:43.000000000 +0200
 +++ chromium-67.0.3396.10/third_party/crashpad/crashpad/client/crashpad_info.h	2018-04-22 14:48:58.402613864 +0200
 @@ -220,7 +220,7 @@
@@ -73,6 +62,58 @@
    NOTREACHED();
    return mojom::LifecycleUnitVisibility::VISIBLE;
  #endif
+--- chromium-67.0.3396.10/third_party/blink/renderer/core/frame/local_frame_view.cc.gcc7	2018-04-18 21:05:39.000000000 +0200
++++ chromium-67.0.3396.10/third_party/blink/renderer/core/frame/local_frame_view.cc	2018-04-22 21:37:37.030626382 +0200
+@@ -4096,8 +4095,7 @@
+     scrollable_areas_ = new ScrollableAreaSet;
+   scrollable_areas_->insert(scrollable_area);
+ 
+-  if (ScrollingCoordinator* scrolling_coordinator =
+-          this->GetScrollingCoordinator()) {
++  if (this->GetScrollingCoordinator() != NULL) {
+     ScrollableAreasDidChange();
+   }
+ }
+@@ -4107,8 +4105,7 @@
+     return;
+   scrollable_areas_->erase(scrollable_area);
+ 
+-  if (ScrollingCoordinator* scrolling_coordinator =
+-          this->GetScrollingCoordinator()) {
++  if (this->GetScrollingCoordinator() != NULL) {
+     ScrollableAreasDidChange();
+   }
+ }
+@@ -4132,7 +4129,9 @@
+   // TODO(crbug.com/729196): Trace why LocalFrameView::DetachFromLayout crashes.
+   CHECK(!is_attached_);
+   if (frame_->GetDocument())
++  {
+     CHECK_NE(Lifecycle().GetState(), DocumentLifecycle::kStopping);
++  }
+   is_attached_ = true;
+   parent_ = ParentFrameView();
+   if (!parent_) {
+@@ -5296,8 +5295,7 @@
+ void LocalFrameView::Show() {
+   if (!IsSelfVisible()) {
+     SetSelfVisible(true);
+-    if (ScrollingCoordinator* scrolling_coordinator =
+-            this->GetScrollingCoordinator()) {
++    if (this->GetScrollingCoordinator() != NULL) {
+       GetScrollingContext()->SetScrollGestureRegionIsDirty(true);
+     }
+     SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
+@@ -5325,8 +5323,7 @@
+           });
+     }
+     SetSelfVisible(false);
+-    if (ScrollingCoordinator* scrolling_coordinator =
+-            this->GetScrollingCoordinator()) {
++    if (this->GetScrollingCoordinator() != NULL) {
+       GetScrollingContext()->SetScrollGestureRegionIsDirty(true);
+     }
+     SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
 --- chromium-67.0.3396.10/third_party/blink/renderer/core/html/parser/html_tree_builder.cc.gcc7	2018-04-18 21:05:39.000000000 +0200
 +++ chromium-67.0.3396.10/third_party/blink/renderer/core/html/parser/html_tree_builder.cc	2018-04-22 22:29:51.951074679 +0200
 @@ -943,7 +943,7 @@
@@ -112,30 +153,3 @@
  inline void DispatchBlurEvent(const Document& document,
                                Element& focused_element) {
    focused_element.DispatchBlurEvent(nullptr, kWebFocusTypePage);
---- chromium-67.0.3396.40/ui/events/x/keyboard_hook_posix.cc.gcc7	2018-05-09 21:06:41.000000000 +0200
-+++ chromium-67.0.3396.40/ui/events/x/keyboard_hook_posix.cc	2018-05-15 21:43:04.529676041 +0200
-@@ -24,11 +24,6 @@
-   DISALLOW_COPY_AND_ASSIGN(KeyboardHookPosix);
- };
- 
--KeyboardHookPosix::KeyboardHookPosix(
--    base::Optional<base::flat_set<int>> key_codes,
--    KeyEventCallback callback)
--    : KeyboardHookBase(std::move(key_codes), std::move(callback)) {}
--
- KeyboardHookPosix::~KeyboardHookPosix() = default;
- 
- }  // namespace
---- chromium-68.0.3418.2/chrome/browser/ui/views/tabs/new_tab_button.cc.gcc7	2018-05-04 06:05:13.000000000 +0200
-+++ chromium-68.0.3418.2/chrome/browser/ui/views/tabs/new_tab_button.cc	2018-05-08 03:14:41.063153884 +0200
-@@ -495,8 +495,8 @@
-   DCHECK(theme_provider);
-   return theme_provider->GetColor(
-       ui::MaterialDesignController::IsTouchOptimizedUiEnabled()
--          ? ThemeProperties::COLOR_TOOLBAR
--          : ThemeProperties::COLOR_BACKGROUND_TAB);
-+          ? int(ThemeProperties::COLOR_TOOLBAR)
-+          : int(ThemeProperties::COLOR_BACKGROUND_TAB));
- }
- 
- void NewTabButton::InitButtonIcons() {

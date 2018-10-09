@@ -68,7 +68,6 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
-    'use_kerberos=true'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
