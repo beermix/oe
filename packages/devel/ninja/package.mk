@@ -1,41 +1,25 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="ninja"
-PKG_VERSION="ca041d8"
+#PKG_VERSION="ca041d8"
 PKG_VERSION="1.8.2"
+PKG_SHA256="86b8700c3d0880c2b44c2ff67ce42774aaf8c28cbf57725cb881569288c1c6f4"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
 PKG_URL="https://github.com/ninja-build/ninja/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="Python2:host Python3:host re2c:host"
+PKG_DEPENDS_HOST="Python2:host re2c:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
-#pre_configure_host() {
-#  unset CPPFLAGS
-#  unset CFLAGS
-#  unset CXXFLAGS
-#  unset LDFLAGS
-#}
-
 make_host() {
-  # CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
-  CXX=/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
-  # $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
-  # emacs -Q --batch -f batch-byte-compile misc/ninja-mode.el
-  #./ninja ninja_test
-  #./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
+  python2 configure.py --bootstrap
 }
 
 makeinstall_host() {
-  # $TOOLCHAIN/bin/python2 ./configure.py
-  #./ninja ninja_test
-  #./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
-
   strip ninja
   cp ninja $TOOLCHAIN/bin
 }
