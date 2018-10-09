@@ -28,4 +28,8 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-curses \
                          --disable-native-java \
                          --disable-csharp \
-                         --without-emacs"
+                         --without-emacs \
+                         --disable-libasprintf \
+                         --disable-acl \
+                         --disable-openmp \
+                         --disable-relocatable"
