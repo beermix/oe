@@ -1,9 +1,9 @@
 PKG_NAME="gnutls"
-PKG_VERSION="3.5.16"
+PKG_VERSION="3.6.4"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
-PKG_SITE="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/"
-PKG_URL="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/gnutls-$PKG_VERSION.tar.xz"
+PKG_SITE="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/"
+PKG_URL="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-$PKG_VERSION.tar.xz"
 #PKG_DEPENDS_TARGET="toolchain openssl libidn2 nettle libgcrypt libtasn1 libunistring"
 PKG_DEPENDS_TARGET="toolchain openssl nettle gmp libtasn1"
 PKG_SECTION="escalade/depends"
@@ -21,4 +21,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
 			      --without-libidn2 \
 			      --without-p11-kit \
 			      --with-included-unistring \
-			      --with-zlib"
+			      --with-zlib \
+			      --with-nettle-mini"
