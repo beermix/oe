@@ -23,10 +23,10 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 
 #PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
 
-#pre_configure_target() {
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
-#}
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+}
 
 post_configure_target() {
  ## configure minizip
