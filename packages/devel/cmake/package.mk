@@ -24,6 +24,6 @@ configure_host() {
                -DBUILD_CursesDialog=0
 }
 
-post_makeinstall_host() {
- strip $TOOLCHAIN/bin/cmake
-}
+#post_makeinstall_host() {
+# strip $TOOLCHAIN/bin/cmake
+#}

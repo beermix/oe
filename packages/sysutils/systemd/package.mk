@@ -17,8 +17,6 @@ PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with
 PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Drootprefix=/usr \
                        -Dsplit-usr=false \
-                       -Dlog-trace=false \
-                       -Ddebug-extra=mmap-cache \
                        -Dsplit-bin=true \
                        -Ddefault-hierarchy=hybrid \
                        -Dtty-gid=5 \

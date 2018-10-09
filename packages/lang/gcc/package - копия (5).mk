@@ -45,6 +45,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
+                           --disable-libunwind-exceptions \
+                           --enable-gnu-indirect-function \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-cloog \
                            --disable-libmudflap \
