@@ -12,7 +12,6 @@ PKG_DEPENDS_TARGET="toolchain libusb"
 PKG_SECTION="devel"
 PKG_SHORTDESC="libFTDI is an open source library to talk to FTDI chips"
 PKG_LONGDESC="libFTDI is an open source library to talk to FTDI chips"
-PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic"
 
 PKG_CMAKE_OPTS_TARGET="-DSTATICLIBS=ON \

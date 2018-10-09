@@ -20,7 +20,7 @@ PKG_PYTHON_VERSION=python3.7
 
 PKG_TOOLCHAIN="autotools"
 HARDENING_SUPPORT="yes"
- 
+
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          ac_cv_prog_SVNVERSION=/bin/false
                          --disable-pyc-build
@@ -46,7 +46,6 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-doc-strings
                          --without-pymalloc
                          --without-ensurepip
-                         --disable-ipv6
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
