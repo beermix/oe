@@ -22,6 +22,5 @@ pre_build_target() {
 PKG_CONFIGURE_OPTS_HOST="--without-mysql"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-aio \
-			      --disable-rpath \
 			      --with-gcc-arch=westmere \
 			      --with-mysql"
