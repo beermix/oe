@@ -3,7 +3,6 @@
 
 PKG_NAME="cmake"
 PKG_VERSION="3.12.3"
-#PKG_VERSION="3.8.2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://cmake.org/download/"
@@ -20,7 +19,11 @@ configure_host() {
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-O2 -Wall -Wno-format-security" \
-               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -s" \
+               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0
+}
+
+post_makeinstall_host() {
+ strip $TOOLCHAIN/bin/cmake
 }
