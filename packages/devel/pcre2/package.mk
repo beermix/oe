@@ -9,7 +9,7 @@ PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic:host +pic"
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 
 #PKG_CONFIGURE_OPTS_TARGET="--enable-pcre2-8 --enable-pcre2-16 --disable-pcre2grep-callout"
 

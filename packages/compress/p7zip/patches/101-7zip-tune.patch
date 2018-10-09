@@ -6,30 +6,12 @@ diff -Naur p7zip-16.02-orig/makefile.machine p7zip-16.02/makefile.machine
  
 -# OPTFLAGS=-O3 -flto -march=westmere -funroll-loops -s
 -OPTFLAGS=-O -s
-+OPTFLAGS=-O3 -march=bonnell -m32 -funroll-loops -fvisibility=hidden
++OPTFLAGS=-O2 -march=westmere
 +#OPTFLAGS=-O3 -s
  
  # use "-m32" to have a 32bits executable
 -ALLFLAGS=-m64 ${OPTFLAGS} -pipe \
-+ALLFLAGS=-m32 ${OPTFLAGS} -pipe \
++ALLFLAGS=-m64 ${OPTFLAGS} \
      	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
  	-DNDEBUG -D_REENTRANT -DENV_UNIX \
  	-D_7ZIP_LARGE_PAGES \
-@@ -15,14 +15,14 @@
- CC=gcc
- CC_SHARED=-fPIC
- LINK_SHARED=-fPIC -shared
--ASM=yasm -f elf -m amd64 -Dx64
-+ASM=yasm -f elf -m x86 -Dx86
- 
- PRE_COMPILED_HEADER=StdAfx.h.gch
- 
- LOCAL_LIBS=-lpthread
- LOCAL_LIBS_DLL=$(LOCAL_LIBS) -ldl
- 
--CPU=x64
--OBJ_CRC32=$(OBJ_CRC32_x86_64)
-+CPU=x86
-+OBJ_CRC32=$(OBJ_CRC32_x86)
- OBJ_AES=AesOpt.o
- 
