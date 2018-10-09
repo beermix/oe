@@ -6,5 +6,6 @@ PKG_URL="https://github.com/nghttp2/nghttp2/releases/download/v$PKG_VERSION/nght
 PKG_DEPENDS_TARGET="toolchain libevent libev libuv"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_TOOLCHAIN="cmake-make"
+HARDENING_SUPPORT="yes"
 
 PKG_CMAKE_OPTS_TARGET="-DENABLE_LIB_ONLY=1"
