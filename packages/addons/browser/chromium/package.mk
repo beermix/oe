@@ -10,13 +10,13 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.167"
 PKG_SHA256="f3308b41f241d53a269ec0c73e8512f4ac58b7aafe16967a3dba5b99abc4c455"
-PKG_REV="332-gtk2-icu-std-wo_unwind-tables-no_icu"
+PKG_REV="333-gtk2-icu-std-wo_unwind-tables-no_icu-minizip"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss opus re2 snappy krb5"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss opus re2 snappy krb5 zlib"
 PKG_SECTION="browser" # chromium:host
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -105,7 +105,7 @@ readonly -A _system_libs=(
   [re2]=re2
   [snappy]=snappy
   [yasm]=
-  #[zlib]=minizip
+  [zlib]=minizip
 )
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
@@ -209,3 +209,4 @@ addon() {
   # libXft
   cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
+a
