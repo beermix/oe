@@ -27,14 +27,14 @@ make_host() {
   CXX=/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
   # $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
   # emacs -Q --batch -f batch-byte-compile misc/ninja-mode.el
-  ./ninja ninja_test
-  ./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
+  #./ninja ninja_test
+  #./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
 }
 
 makeinstall_host() {
   # $TOOLCHAIN/bin/python2 ./configure.py
-  ./ninja ninja_test
-  ./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
+  #./ninja ninja_test
+  #./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
 
   strip ninja
   cp ninja $TOOLCHAIN/bin

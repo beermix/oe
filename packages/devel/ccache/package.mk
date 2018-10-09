@@ -14,13 +14,13 @@ PKG_SHORTDESC="ccache: A fast compiler cache"
 PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ code by caching previous compiles and detecting when the same compile is being done again."
 
 export CC=$LOCAL_CC
+export CXX=$LOCAL_CXX
 
-export CFLAGS="-march=haswell -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2 -Wall"
+export CFLAGS="-march=haswell -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2"
 
-PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-silent-rules"
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 
 post_makeinstall_host() {
- srip $TOOLCHAIN/bin/ccache
 # setup ccache
   if [ -z "$CCACHE_DISABLE" ]; then
     $TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
