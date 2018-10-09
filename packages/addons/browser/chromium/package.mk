@@ -43,7 +43,6 @@ make_host() {
 }
 
 make_target() {
-  export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   export CCACHE_SLOPPINESS=time_macros
 

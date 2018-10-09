@@ -36,6 +36,6 @@ makeinstall_host() {
   #./ninja ninja_test
   #./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
 
-  #strip ninja
+  strip ninja
   cp ninja $TOOLCHAIN/bin
 }

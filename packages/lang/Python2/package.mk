@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="Python2"
+# When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
 PKG_VERSION="2.7.15"
 PKG_SHA256="22d9b1ac5b26135ad2b8c2901a9413537e08749a753356ee913c84dbd2df5574"
 PKG_ARCH="any"
@@ -9,7 +11,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME::-1}-$PKG_VERSION*"
-PKG_DEPENDS_HOST="zlib:host bzip2:host expat:host sqlite:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python2: The Python2 programming language"
@@ -22,13 +24,10 @@ HARDENING_SUPPORT="yes"
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
-                         ac_cv_prog_HAS_HG=/bin/false \
-                         ac_cv_prog_SVNVERSION=/bin/false \
                          --without-cxx-main \
                          --with-threads \
                          --disable-ipv6 \
-                         --enable-unicode=ucs4 \
-                         --with-expat=system"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -52,7 +51,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-fpectl \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-expat=system"
+                           --with-system-expat"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
