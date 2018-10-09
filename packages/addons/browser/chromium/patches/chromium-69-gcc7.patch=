@@ -506,17 +506,6 @@
  }
  
  }  // namespace
---- chromium-69.0.3497.4/third_party/blink/renderer/platform/text/character_property_data_generator.h.gcc7	2018-07-22 13:38:55.938619906 +0200
-+++ chromium-69.0.3497.4/third_party/blink/renderer/platform/text/character_property_data_generator.h	2018-07-22 13:39:12.271315025 +0200
-@@ -247,7 +247,7 @@
-     0xFFA0, 0xFFDC,
- };
- 
--static const UChar32 kIsHangulArray[] = {};
-+static const UChar32 kIsHangulArray[] = {0};
- 
- }  // namespace blink
- 
 --- chromium-69.0.3497.42/chrome/browser/resource_coordinator/local_site_characteristics_webcontents_observer.cc.gcc7	2018-08-17 03:05:19.000000000 +0200
 +++ chromium-69.0.3497.42/chrome/browser/resource_coordinator/local_site_characteristics_webcontents_observer.cc	2018-08-18 23:31:30.084822331 +0200
 @@ -254,9 +254,11 @@
