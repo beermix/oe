@@ -19,7 +19,7 @@ make_host() {
 }
 
 makeinstall_host() {
-  python3 setup.py install --prefix=$TOOLCHAIN --skip-build --optimize=1
+  python3 setup.py install --prefix=$TOOLCHAIN --skip-build
 
   # Avoid using full path to python3 that may exceed 128 byte limit.
   # Instead use PATH as we know our toolchain is first.
