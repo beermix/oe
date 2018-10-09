@@ -10,7 +10,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.167"
 PKG_SHA256="f3308b41f241d53a269ec0c73e8512f4ac58b7aafe16967a3dba5b99abc4c455"
-PKG_REV="331-gtk2-icu-std-wo_unwind-tables-icu"
+PKG_REV="332-gtk2-icu-std-wo_unwind-tables-icu_shared"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
