@@ -14,24 +14,24 @@ PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
-#PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_BUILD_FLAGS="+pic:host +pic"
 PKG_TOOLCHAIN="configure"
 
 pre_configure_target() {
   export LIBS="-latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-shared --disable-static"
+#PKG_CONFIGURE_OPTS_HOST="--enable-shared --disable-static"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
-			      --disable-static \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+			      --enable-static \
 			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-#makeinstall_host() {
-# : # nothing todo
-#}
+makeinstall_host() {
+ : # nothing todo
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
