@@ -31,4 +31,4 @@ mkpkg-temp
 
 /.ccache-oe.*/
 /=.*
-*.log
+/build.log
