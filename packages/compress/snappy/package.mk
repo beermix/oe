@@ -9,6 +9,7 @@ PKG_SECTION="compress"
 PKG_SHORTDESC="fast real-time compression algorithm"
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic"
+HARDENING_SUPPORT="yes"
 
 pre_configure_target() {
  export CXXFLAGS="$CXXFLAGS -DNDEBUG"
