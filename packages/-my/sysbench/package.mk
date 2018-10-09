@@ -2,7 +2,7 @@ PKG_NAME="sysbench"
 PKG_VERSION="1.0.15"
 PKG_SITE="https://github.com/akopytov/sysbench/releases"
 PKG_URL="https://github.com/akopytov/sysbench/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib libaio mariadb"
+PKG_DEPENDS_TARGET="toolchain zlib libaio"
 PKG_PRIORITY="optional"
 PKG_SECTION="depends"
 PKG_SHORTDESC="CSS parsing library"
@@ -22,5 +22,5 @@ pre_build_target() {
 PKG_CONFIGURE_OPTS_HOST="--without-mysql"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-aio \
-			      --with-gcc-arch=westmere \
-			      --with-mysql"
+			   --with-gcc-arch=westmere \
+			   --without-mysql"
