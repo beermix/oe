@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="lua"
-PKG_VERSION="5.3.4"
+PKG_VERSION="5.3.5"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
