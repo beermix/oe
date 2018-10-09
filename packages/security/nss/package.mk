@@ -3,7 +3,7 @@
 
 PKG_NAME="nss"
 PKG_VERSION="3.39"
-PKG_SHA256=""
+PKG_SHA256="bc2c8e6b88f23415f2a534e46ac71b164bbcd3b473942de99f34e628fc936d1e"
 PKG_ARCH="any"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="https://ftp.mozilla.org/pub/security/nss/releases/"
@@ -25,7 +25,6 @@ make_host() {
   INCLUDES="-I$TOOLCHAIN/include" \
   make BUILD_OPT=1 USE_64=1 \
      PREFIX=$TOOLCHAIN \
-     NSS_USE_SYSTEM_SQLITE=1 \
      NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
      SKIP_SHLIBSIGN=1 \
