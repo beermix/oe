@@ -21,7 +21,7 @@ pre_configure_target() {
   export LIBS="-latomic"
 }
 
-#PKG_CONFIGURE_OPTS_HOST="--enable-shared --disable-static"
+PKG_CONFIGURE_OPTS_HOST="--enable-shared --disable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
