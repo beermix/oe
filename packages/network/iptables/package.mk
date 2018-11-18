@@ -9,6 +9,7 @@ PKG_SITE="https://netfilter.org/projects/iptables/files/?C=M;O=D"
 PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(kernel_path)"
 
