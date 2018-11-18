@@ -16,28 +16,12 @@ PKG_BUILD_FLAGS="-lto -gold"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-backlight-helper \
-                           --disable-gen4asm \
-                           --enable-udev \
                            --disable-tools \
-                           --enable-dri \
-                           --disable-dri1 \
-                           --enable-dri2 \
-                           --enable-dri3 \
-                           --enable-kms --enable-kms-only \
-                           --disable-ums --disable-ums-only \
-                           --enable-sna \
-                           --enable-uxa \
-                           --disable-xvmc \
-                           --disable-xaa \
-                           --disable-dga \
-                           --disable-tear-free \
-                           --disable-create2 \
-                           --disable-async-swap \
                            --with-default-dri=3 \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
-  #CFLAGS="$CFLAGS -D_GNU_SOURCE"
+#CFLAGS="$CFLAGS -D_GNU_SOURCE"
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-z,now||"`
   CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
