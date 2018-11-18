@@ -12,7 +12,7 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_TOOLCHAIN="meson"
-PKG_BUILD_FLAGS="+lto +hardening"
+PKG_BUILD_FLAGS="+lto"
 
 get_graphicdrivers
 
