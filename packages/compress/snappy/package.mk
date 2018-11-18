@@ -4,7 +4,6 @@ PKG_LICENSE="BSD/GPLv2"
 PKG_SITE="https://github.com/google/snappy"
 PKG_URL="https://github.com/google/snappy/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-#PKG_BUILD_FLAGS="+pic"
 
 pre_configure_target() {
  export CXXFLAGS="$CXXFLAGS -DNDEBUG"
