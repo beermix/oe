@@ -10,7 +10,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="425"
+PKG_REV="426"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -43,10 +43,10 @@ make_host() {
 }
 
 make_target() {
-  # unset CPPFLAGS
-  # unset CFLAGS
-  # unset CXXFLAGS
-  # unset LDFLAGS
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
   
   export CCACHE_SLOPPINESS=time_macros
 
@@ -91,6 +91,8 @@ make_target() {
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'use_vaapi=true'
+    'enable_vr=false'
+    'enable_vulkan=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
