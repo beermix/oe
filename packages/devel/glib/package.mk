@@ -4,9 +4,9 @@
 # https://github.com/GNOME/glib/tree/glib-2-58
 
 PKG_NAME="glib"
-PKG_VERSION="2.58.1"
-PKG_SHA256="d08b04e22d348c4ca494b016d278f835386e3fd91f294f20204cd50f205e5cfe"
-#PKG_VERSION="0a94fcf"
+#PKG_VERSION="2.58.1"
+#PKG_SHA256="d08b04e22d348c4ca494b016d278f835386e3fd91f294f20204cd50f205e5cfe"
+PKG_VERSION="0a94fcf"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D" # https://github.com/GNOME/glib/tree/glib-2-58
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
