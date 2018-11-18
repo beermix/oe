@@ -8,9 +8,7 @@ PKG_LICENSE="MIT"
 PKG_SITE="http://xmlstar.sourceforge.net"
 PKG_URL="http://netcologne.dl.sourceforge.net/project/xmlstar/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="libxml2:host libxslt:host"
-PKG_DEPENDS_TARGET="toolchain libxml2 libxslt"
-PKG_SECTION="tools"
-PKG_LONGDESC="XMLStarlet is a command-line XML utility which allows the modification and validation of XML documents."
+PKG_DEPENDS_TARGET="toolchain libxml2 libxslt xmlstarlet:host"
 
 PKG_CONFIGURE_OPTS_HOST="  ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
