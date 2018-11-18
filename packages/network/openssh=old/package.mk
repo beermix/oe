@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="openssh"
-PKG_VERSION="7.8p1"
-PKG_SHA256="1a484bb15152c183bb2514e112aa30dd34138c3cfb032eee5490a66c507144ca"
+PKG_VERSION="7.5p1"
+PKG_SHA256="9846e3c5fab9f0547400b4d2c017992f914222b3fd1f8eee6c7dc6bc5e59f9f0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.openssh.com/"

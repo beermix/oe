@@ -72,8 +72,8 @@ index 67c4486..b4297bf 100644
  echo "                   OSF SIA support: $SIA_MSG"
 diff --git a/pathnames.h b/pathnames.h
 index ec89fc6..8a33ca2 100644
---- a/pathnames.h
-+++ b/pathnames.h
+--- a/pathnames.h       2017-10-02 21:34:26.000000000 +0200
++++ b/pathnames.h   2018-02-01 19:24:09.095534492 +0100
 @@ -18,6 +18,10 @@
  #define SSHDIR				ETCDIR "/ssh"
  #endif
@@ -101,16 +101,18 @@ index ec89fc6..8a33ca2 100644
   */
  #define _PATH_SERVER_CONFIG_FILE	SSHDIR "/sshd_config"
  #define _PATH_HOST_CONFIG_FILE		SSHDIR "/ssh_config"
--#define _PATH_HOST_KEY_FILE		SSHDIR "/ssh_host_key"
 -#define _PATH_HOST_DSA_KEY_FILE		SSHDIR "/ssh_host_dsa_key"
 -#define _PATH_HOST_ECDSA_KEY_FILE	SSHDIR "/ssh_host_ecdsa_key"
 -#define _PATH_HOST_ED25519_KEY_FILE	SSHDIR "/ssh_host_ed25519_key"
+-#define _PATH_HOST_XMSS_KEY_FILE	SSHDIR "/ssh_host_xmss_key"
 -#define _PATH_HOST_RSA_KEY_FILE		SSHDIR "/ssh_host_rsa_key"
-+#define _PATH_HOST_KEY_FILE		KEYDIR "/ssh_host_key"
+-#define _PATH_DH_MODULI			SSHDIR "/moduli"
 +#define _PATH_HOST_DSA_KEY_FILE		KEYDIR "/ssh_host_dsa_key"
 +#define _PATH_HOST_ECDSA_KEY_FILE	KEYDIR "/ssh_host_ecdsa_key"
 +#define _PATH_HOST_ED25519_KEY_FILE	KEYDIR "/ssh_host_ed25519_key"
++#define _PATH_HOST_XMSS_KEY_FILE	KEYDIR "/ssh_host_xmss_key"
 +#define _PATH_HOST_RSA_KEY_FILE		KEYDIR "/ssh_host_rsa_key"
- #define _PATH_DH_MODULI			SSHDIR "/moduli"
- /* Backwards compatibility */
- #define _PATH_DH_PRIMES			SSHDIR "/primes"
++#define _PATH_DH_MODULI			KEYDIR "/moduli"
+ 
+ #ifndef _PATH_SSH_PROGRAM
+ #define _PATH_SSH_PROGRAM		"/usr/bin/ssh"
