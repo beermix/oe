@@ -93,5 +93,6 @@ addon() {
   cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libsnappy.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # icu
-  cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libicu*.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libicuuc.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libicudata.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
