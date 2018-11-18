@@ -4,8 +4,6 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="8-20181116"
-#PKG_SHA256="725ec907fd7463568ec0c097802824b978a679523a2e3374bdc2e3d265cd2b6c"
-#PKG_VERSION="7.2.1-20171224"
 PKG_LICENSE="GPL"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
@@ -54,8 +52,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libatomic \
-                           --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
@@ -66,6 +62,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
+                              --disable-libitm \
+                              --disable-libquadmath \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -91,20 +89,16 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -g1 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
-  export CXXFLAGS="$CXXFLAGS -g1"
-  export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -march=westmere -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
-  export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -march=westmere -O2"
+  export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET $CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET $CXXFLAGS"
 
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
 pre_configure_bootstrap() {
-  export CFLAGS="$CFLAGS -g1 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
-  export CXXFLAGS="$CXXFLAGS -g1"
-  export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -march=westmere -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
-  export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -march=westmere -O2"
+  export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET $CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET $CXXFLAGS"
 }
 
 post_make_host() {
