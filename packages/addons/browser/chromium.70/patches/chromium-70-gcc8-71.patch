@@ -29,22 +29,6 @@
    N_ = N;
    n_ = 0;
  }
---- chromium-70.0.3528.4/net/third_party/quic/core/quic_framer.cc.gcc8	2018-08-22 02:56:37.112699039 +0200
-+++ chromium-70.0.3528.4/net/third_party/quic/core/quic_framer.cc	2018-08-22 20:08:42.304813883 +0200
-@@ -1208,11 +1208,13 @@
-         if (remaining.length() >=
-             sizeof(header->possible_stateless_reset_token)) {
-           header->has_possible_stateless_reset_token = true;
-+#pragma GCC diagnostic ignored "-Wclass-memaccess"
-           memcpy(
-               &header->possible_stateless_reset_token,
-               &remaining.data()[remaining.length() -
-                                 sizeof(header->possible_stateless_reset_token)],
-               sizeof(header->possible_stateless_reset_token));
-+#pragma GCC diagnostic pop
-         }
-       }
-     }
 --- chromium-70.0.3528.4/components/viz/common/gl_helper.cc.gcc8	2018-08-21 11:49:36.000000000 +0200
 +++ chromium-70.0.3528.4/components/viz/common/gl_helper.cc	2018-08-22 20:20:05.439042583 +0200
 @@ -476,7 +476,7 @@
@@ -290,37 +274,6 @@
  }
  
  void LocalCardMigrationDialogView::OnSaveButtonClicked() {
---- chromium-70.0.3528.4/third_party/blink/renderer/modules/background_fetch/background_fetch_registration.cc.gcc8	2018-08-21 11:50:19.000000000 +0200
-+++ chromium-70.0.3528.4/third_party/blink/renderer/modules/background_fetch/background_fetch_registration.cc	2018-08-24 01:23:50.677245606 +0200
-@@ -259,17 +259,17 @@
-     case mojom::BackgroundFetchState::SUCCESS:
-       return "success";
-     case mojom::BackgroundFetchState::FAILURE:
--      return "failure";
-+      break;
-     case mojom::BackgroundFetchState::PENDING:
-       return "pending";
-   }
--  NOTREACHED();
-+  return "failure";
- }
- 
- const String BackgroundFetchRegistration::failureReason() const {
-   switch (failure_reason_) {
-     case mojom::BackgroundFetchFailureReason::NONE:
--      return "";
-+      break;
-     case mojom::BackgroundFetchFailureReason::CANCELLED_FROM_UI:
-     case mojom::BackgroundFetchFailureReason::CANCELLED_BY_DEVELOPER:
-       return "aborted";
-@@ -284,6 +284,7 @@
-       return "total-download-exceeded";
-   }
-   NOTREACHED();
-+  return "";
- }
- 
- void BackgroundFetchRegistration::Dispose() {
 --- chromium-70.0.3528.4/third_party/blink/renderer/modules/accessibility/ax_position.cc.gcc8	2018-08-21 11:50:19.000000000 +0200
 +++ chromium-70.0.3528.4/third_party/blink/renderer/modules/accessibility/ax_position.cc	2018-08-24 01:39:59.717763044 +0200
 @@ -696,7 +696,7 @@
@@ -369,41 +322,6 @@
  }
  
  }  // namespace blink
---- chromium-70.0.3528.4/v8/src/interface-descriptors.h.gcc8	2018-08-24 20:21:09.588641771 +0200
-+++ chromium-70.0.3528.4/v8/src/interface-descriptors.h	2018-08-24 20:24:49.422023115 +0200
-@@ -328,8 +328,8 @@
-       CallInterfaceDescriptorData::kNoFlags;              \
-   static constexpr int kReturnCount = return_count;       \
-   enum ParameterIndices {                                 \
--    __dummy = -1, /* to be able to pass zero arguments */ \
--    ##__VA_ARGS__,                                        \
-+    __dummy = -1 __VA_OPT__(,) /* to be able to pass zero arguments */ \
-+    __VA_ARGS__,                                        \
-                                                           \
-     kParameterCount,                                      \
-     kContext = kParameterCount /* implicit parameter */   \
-@@ -340,8 +340,8 @@
-       CallInterfaceDescriptorData::kNoContext;                     \
-   static constexpr int kReturnCount = return_count;                \
-   enum ParameterIndices {                                          \
--    __dummy = -1, /* to be able to pass zero arguments */          \
--    ##__VA_ARGS__,                                                 \
-+    __dummy = -1 __VA_OPT__(,) /* to be able to pass zero arguments */ \
-+    __VA_ARGS__,                                                   \
-                                                                    \
-     kParameterCount                                                \
-   };
-@@ -374,8 +374,8 @@
-   enum ParameterIndices {                               \
-     kTarget,                                            \
-     kNewTarget,                                         \
--    kActualArgumentsCount,                              \
--    ##__VA_ARGS__,                                      \
-+    kActualArgumentsCount __VA_OPT__(,)                 \
-+    __VA_ARGS__,                                        \
-                                                         \
-     kParameterCount,                                    \
-     kContext = kParameterCount /* implicit parameter */ \
 --- chromium-70.0.3528.4/content/browser/media/capture/mouse_cursor_overlay_controller_aura.cc.gcc8	2018-08-21 11:49:37.000000000 +0200
 +++ chromium-70.0.3528.4/content/browser/media/capture/mouse_cursor_overlay_controller_aura.cc	2018-08-28 16:24:08.166914370 +0200
 @@ -174,7 +174,7 @@
@@ -465,47 +383,6 @@
  }
  
  AutofillPopupSuggestionView::AutofillPopupSuggestionView(
---- chromium-70.0.3534.4/content/browser/background_fetch/background_fetch_job_controller.cc.gcc8	2018-08-28 06:10:15.000000000 +0200
-+++ chromium-70.0.3534.4/content/browser/background_fetch/background_fetch_job_controller.cc	2018-09-02 22:09:28.242971914 +0200
-@@ -157,7 +157,7 @@
- BackgroundFetchJobController::MojoFailureReason() const {
-   switch (reason_to_abort_) {
-     case BackgroundFetchReasonToAbort::NONE:
--      return blink::mojom::BackgroundFetchFailureReason::NONE;
-+      break;
-     case BackgroundFetchReasonToAbort::CANCELLED_FROM_UI:
-       return blink::mojom::BackgroundFetchFailureReason::CANCELLED_FROM_UI;
-     case BackgroundFetchReasonToAbort::ABORTED_BY_DEVELOPER:
-@@ -171,7 +171,7 @@
-     case BackgroundFetchReasonToAbort::QUOTA_EXCEEDED:
-       return blink::mojom::BackgroundFetchFailureReason::QUOTA_EXCEEDED;
-   }
--  NOTREACHED();
-+  return blink::mojom::BackgroundFetchFailureReason::NONE;
- }
- 
- void BackgroundFetchJobController::Abort(
---- chromium-70.0.3534.4/pdf/pdfium/pdfium_mem_buffer_file_write.h.gcc8	2018-08-28 06:10:30.000000000 +0200
-+++ chromium-70.0.3534.4/pdf/pdfium/pdfium_mem_buffer_file_write.h	2018-09-03 00:10:44.124607097 +0200
-@@ -6,6 +6,7 @@
- #define PDF_PDFIUM_PDFIUM_MEM_BUFFER_FILE_WRITE_H_
- 
- #include <stddef.h>
-+#include <cstdint>
- 
- #include <vector>
- 
---- chromium-70.0.3534.4/third_party/pdfium/third_party/base/optional.h.gcc8	2018-08-28 06:12:17.000000000 +0200
-+++ chromium-70.0.3534.4/third_party/pdfium/third_party/base/optional.h	2018-09-03 00:37:03.805402420 +0200
-@@ -6,6 +6,8 @@
- #define PDFIUM_THIRD_PARTY_BASE_OPTIONAL_H_
- 
- #include <type_traits>
-+#include <utility>
-+#include <functional>
- 
- #include "third_party/base/logging.h"
- 
 --- chromium-70.0.3534.4/third_party/blink/renderer/core/animation/animation_time_delta.h.gcc8	2018-08-28 06:11:07.000000000 +0200
 +++ chromium-70.0.3534.4/third_party/blink/renderer/core/animation/animation_time_delta.h	2018-09-03 01:38:14.169583523 +0200
 @@ -53,7 +53,7 @@
@@ -517,30 +394,6 @@
    double InMillisecondsF() const { return delta_ * 1000; }
  
    bool is_max() const {
---- chromium-70.0.3538.22/components/metrics/call_stack_profile_metrics_provider.cc.gcc8	2018-09-19 21:10:37.000000000 +0200
-+++ chromium-70.0.3538.22/components/metrics/call_stack_profile_metrics_provider.cc	2018-09-23 20:01:07.435532483 +0200
-@@ -74,9 +74,6 @@
-   // provided to future invocations of CollectProfilesIfCollectionEnabled.
-   void SetCollectionEnabled(bool enabled);
- 
--  // True if profiles are being collected.
--  bool IsCollectionEnabled() const;
--
-   // Adds |profile| to the list of profiles if collection is enabled; it is
-   // not const& because it must be passed with std::move.
-   void CollectProfilesIfCollectionEnabled(ProfileState profile);
-@@ -135,11 +132,6 @@
-   }
- }
- 
--bool PendingProfiles::IsCollectionEnabled() const {
--  base::AutoLock scoped_lock(lock_);
--  return collection_enabled_;
--}
--
- void PendingProfiles::CollectProfilesIfCollectionEnabled(ProfileState profile) {
-   base::AutoLock scoped_lock(lock_);
- 
 --- chromium-70.0.3538.22/media/audio/audio_processing.cc.gcc8	2018-09-19 21:10:51.000000000 +0200
 +++ chromium-70.0.3538.22/media/audio/audio_processing.cc	2018-09-23 20:14:22.964158434 +0200
 @@ -12,7 +12,7 @@
@@ -609,28 +462,6 @@
  FontRenderParams& GetFontRenderParams() {
    static base::NoDestructor<FontRenderParams> instance;
    return *instance;
---- chromium-70.0.3538.22/chrome/browser/ui/views/omnibox/omnibox_text_view.cc.gcc8	2018-09-19 21:10:31.000000000 +0200
-+++ chromium-70.0.3538.22/chrome/browser/ui/views/omnibox/omnibox_text_view.cc	2018-09-23 22:37:28.291834783 +0200
-@@ -175,7 +175,7 @@ void ApplyTextStyleForType(SuggestionAns
-       style = {part_color, .baseline = gfx::SUPERIOR};
-       break;
-     case SuggestionAnswer::TextStyle::BOLD:
--      style = {part_color, .weight = gfx::Font::Weight::BOLD};
-+      style = {part_color, gfx::NORMAL_BASELINE, gfx::Font::Weight::BOLD};
-       break;
-     case SuggestionAnswer::TextStyle::NORMAL:
-     case SuggestionAnswer::TextStyle::NORMAL_DIM:
---- chromium-70.0.3538.22/third_party/blink/renderer/platform/graphics/paint/scroll_paint_property_node.h.gcc8	2018-09-19 21:11:35.000000000 +0200
-+++ chromium-70.0.3538.22/third_party/blink/renderer/platform/graphics/paint/scroll_paint_property_node.h	2018-09-24 00:24:20.825990817 +0200
-@@ -99,7 +99,7 @@ class PLATFORM_EXPORT ScrollPaintPropert
-     return state_.overscroll_behavior.y;
-   }
- 
--  base::Optional<SnapContainerData> SnapContainerData() const {
-+  base::Optional<SnapContainerData> getSnapContainerData() const {
-     return state_.snap_container_data;
-   }
- 
 --- chromium-70.0.3538.22/third_party/blink/renderer/core/loader/mixed_content_checker.cc.gcc8	2018-09-19 21:11:34.000000000 +0200
 +++ chromium-70.0.3538.22/third_party/blink/renderer/core/loader/mixed_content_checker.cc	2018-09-24 02:43:04.295333866 +0200
 @@ -238,11 +238,12 @@ bool MixedContentChecker::IsMixedContent
@@ -647,36 +478,6 @@
  }
  
  // static
---- chromium-70.0.3538.22/third_party/blink/renderer/platform/graphics/compositing/property_tree_manager.cc.gcc8	2018-09-19 21:11:35.000000000 +0200
-+++ chromium-70.0.3538.22/third_party/blink/renderer/platform/graphics/compositing/property_tree_manager.cc	2018-09-24 03:27:36.289874239 +0200
-@@ -299,7 +299,7 @@ void PropertyTreeManager::CreateComposit
-           scroll_node->OverscrollBehaviorX()),
-       static_cast<cc::OverscrollBehavior::OverscrollBehaviorType>(
-           scroll_node->OverscrollBehaviorY()));
--  compositor_node.snap_container_data = scroll_node->SnapContainerData();
-+  compositor_node.snap_container_data = scroll_node->getSnapContainerData();
- 
-   auto compositor_element_id = scroll_node->GetCompositorElementId();
-   if (compositor_element_id) {
---- chromium-70.0.3538.22/third_party/blink/renderer/platform/graphics/paint/scroll_paint_property_node.cc.gcc8	2018-09-19 21:11:35.000000000 +0200
-+++ chromium-70.0.3538.22/third_party/blink/renderer/platform/graphics/paint/scroll_paint_property_node.cc	2018-09-24 03:31:06.508249594 +0200
-@@ -12,14 +12,13 @@ WTF::String OverscrollBehaviorTypeToStri
-     OverscrollBehavior::OverscrollBehaviorType value) {
-   switch (value) {
-     case OverscrollBehavior::kOverscrollBehaviorTypeNone:
--      return "none";
-+      break;
-     case OverscrollBehavior::kOverscrollBehaviorTypeAuto:
-       return "auto";
-     case OverscrollBehavior::kOverscrollBehaviorTypeContain:
-       return "contain";
--    default:
--      NOTREACHED();
-   }
-+  return "none";
- }
- 
- }  // namespace
 --- chromium-70.0.3538.22/content/renderer/media/stream/media_stream_audio_processor_options.cc.gcc8	2018-09-19 21:10:43.000000000 +0200
 +++ chromium-70.0.3538.22/content/renderer/media/stream/media_stream_audio_processor_options.cc	2018-09-24 03:46:13.701580453 +0200
 @@ -63,7 +63,7 @@ AudioProcessingProperties::ToAudioProces

@@ -1,5 +1,5 @@
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/BUILD.gn.gtk2_support	2018-08-29 15:55:22.346870411 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/BUILD.gn	2018-08-31 20:20:58.189798543 +0200
+--- a/chrome/browser/ui/libgtkui/BUILD.gn.gtk2_support	2018-08-29 15:55:22.346870411 +0200
++++ b/chrome/browser/ui/libgtkui/BUILD.gn	2018-08-31 20:20:58.189798543 +0200
 @@ -16,8 +16,6 @@
      "app_indicator_icon_menu.h",
      "chrome_gtk_menu_subclasses.cc",
@@ -57,8 +57,8 @@
    public_deps = [
      "//chrome/browser:theme_properties",
    ]
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/print_dialog_gtk.cc.gtk2_support	2018-08-31 20:52:32.075987134 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/print_dialog_gtk.cc	2018-08-31 20:52:57.255522813 +0200
+--- a/chrome/browser/ui/libgtkui/print_dialog_gtk.cc.gtk2_support	2018-08-31 20:52:32.075987134 +0200
++++ b/chrome/browser/ui/libgtkui/print_dialog_gtk.cc	2018-08-31 20:52:57.255522813 +0200
 @@ -487,7 +487,11 @@
  
  static void OnJobCompletedThunk(GtkPrintJob* print_job,
@@ -71,8 +71,8 @@
                                  ) {
    static_cast<PrintDialogGtk*>(user_data)->OnJobCompleted(print_job, error);
  }
---- chromium-70.0.3534.4/remoting/host/disconnect_window_linux.cc.gtk2_support	2018-08-28 06:10:31.000000000 +0200
-+++ chromium-70.0.3534.4/remoting/host/disconnect_window_linux.cc	2018-08-31 20:55:07.846114863 +0200
+--- a/remoting/host/disconnect_window_linux.cc.gtk2_support	2018-08-28 06:10:31.000000000 +0200
++++ b/remoting/host/disconnect_window_linux.cc	2018-08-31 20:55:07.846114863 +0200
 @@ -211,8 +211,12 @@
    // The alignment sets narrow margins at the top and bottom, compared with
    // left and right.  The left margin is made larger to accommodate the
@@ -152,8 +152,8 @@
    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
  
    DrawBackground(cr, current_width_, current_height_);
---- chromium-70.0.3534.4/build/linux/sysroot_scripts/sysroot-creator-sid.sh.gtk2_support	2018-08-28 06:09:55.000000000 +0200
-+++ chromium-70.0.3534.4/build/linux/sysroot_scripts/sysroot-creator-sid.sh	2018-08-29 15:55:22.345870429 +0200
+--- a/build/linux/sysroot_scripts/sysroot-creator-sid.sh.gtk2_support	2018-08-28 06:09:55.000000000 +0200
++++ b/build/linux/sysroot_scripts/sysroot-creator-sid.sh	2018-08-29 15:55:22.345870429 +0200
 @@ -151,6 +151,7 @@
    libgtk-4-0
    libgtk-4-dev
@@ -162,8 +162,8 @@
    libharfbuzz-dev
    libharfbuzz-gobject0
    libharfbuzz-icu0
---- chromium-70.0.3534.4/build/config/linux/atk/BUILD.gn.gtk2_support	2018-08-28 06:09:55.000000000 +0200
-+++ chromium-70.0.3534.4/build/config/linux/atk/BUILD.gn	2018-08-31 21:37:07.450910205 +0200
+--- a/build/config/linux/atk/BUILD.gn.gtk2_support	2018-08-28 06:09:55.000000000 +0200
++++ b/build/config/linux/atk/BUILD.gn	2018-08-31 21:37:07.450910205 +0200
 @@ -3,6 +3,7 @@
  # found in the LICENSE file.
  
@@ -199,16 +199,16 @@
  }
  
  # gn orders flags on a target before flags from configs. The default config
---- chromium-70.0.3534.4/build/config/linux/gtk/gtk.gni.gtk2_support	2018-08-31 21:39:22.319501733 +0200
-+++ chromium-70.0.3534.4/build/config/linux/gtk/gtk.gni	2018-08-31 21:39:24.566461595 +0200
+--- a/build/config/linux/gtk/gtk.gni.gtk2_support	2018-08-31 21:39:22.319501733 +0200
++++ b/build/config/linux/gtk/gtk.gni	2018-08-31 21:39:24.566461595 +0200
 @@ -7,4 +7,4 @@
    gtk_version = 3
  }
  
 -assert(gtk_version >= 3 && gtk_version <= 4)
 +assert(gtk_version >= 2 && gtk_version <= 4)
---- chromium-70.0.3534.4/remoting/host/continue_window_linux.cc.gtk2_support	2018-08-28 06:10:31.000000000 +0200
-+++ chromium-70.0.3534.4/remoting/host/continue_window_linux.cc	2018-08-29 15:55:22.356870226 +0200
+--- a/remoting/host/continue_window_linux.cc.gtk2_support	2018-08-28 06:10:31.000000000 +0200
++++ b/remoting/host/continue_window_linux.cc	2018-08-29 15:55:22.356870226 +0200
 @@ -71,10 +71,14 @@
    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
    DCHECK(!continue_window_);
@@ -225,8 +225,8 @@
        l10n_util::GetStringUTF8(IDS_STOP_SHARING_BUTTON).c_str(),
        GTK_RESPONSE_CANCEL,
        l10n_util::GetStringUTF8(IDS_CONTINUE_BUTTON).c_str(),
---- chromium-70.0.3534.4/chrome/common/features.gni.gtk2_support	2018-08-28 06:10:04.000000000 +0200
-+++ chromium-70.0.3534.4/chrome/common/features.gni	2018-08-29 15:55:22.355870245 +0200
+--- a/chrome/common/features.gni.gtk2_support	2018-08-28 06:10:04.000000000 +0200
++++ b/chrome/common/features.gni	2018-08-29 15:55:22.355870245 +0200
 @@ -7,6 +7,7 @@
  import("//build/config/compiler/compiler.gni")
  import("//build/config/dcheck_always_on.gni")
@@ -235,8 +235,8 @@
  import("//device/vr/buildflags/buildflags.gni")
  import("//extensions/buildflags/buildflags.gni")
  import("//media/media_options.gni")
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_status_icon.cc.gtk2_support	2018-08-28 06:10:02.000000000 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_status_icon.cc	2018-09-01 00:16:15.324692802 +0200
+--- a/chrome/browser/ui/libgtkui/gtk_status_icon.cc.gtk2_support	2018-08-28 06:10:02.000000000 +0200
++++ b/chrome/browser/ui/libgtkui/gtk_status_icon.cc	2018-09-01 00:16:15.324692802 +0200
 @@ -21,11 +21,13 @@
                               const base::string16& tool_tip) {
    GdkPixbuf* pixbuf = GdkPixbufFromSkBitmap(*image.bitmap());
@@ -251,8 +251,8 @@
      gtk_status_icon_ = gtk_status_icon_new_from_pixbuf(pixbuf);
    }
    g_object_unref(pixbuf);
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_ui.cc.gtk2_support	2018-08-28 06:10:02.000000000 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_ui.cc	2018-09-01 00:30:15.710359496 +0200
+--- a/chrome/browser/ui/libgtkui/gtk_ui.cc.gtk2_support	2018-08-28 06:10:02.000000000 +0200
++++ b/chrome/browser/ui/libgtkui/gtk_ui.cc	2018-09-01 00:30:15.710359496 +0200
 @@ -34,12 +34,9 @@
  #include "chrome/browser/ui/libgtkui/gtk_key_bindings_handler.h"
  #include "chrome/browser/ui/libgtkui/gtk_status_icon.h"
@@ -545,8 +545,8 @@
  
    // Blacklist scaling factors <120% (crbug.com/484400) and round
    // to 1 decimal to prevent rendering problems (crbug.com/485183).
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_ui.h.gtk2_support	2018-08-28 06:10:02.000000000 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_ui.h	2018-09-02 16:01:58.299489588 +0200
+--- a/chrome/browser/ui/libgtkui/gtk_ui.h.gtk2_support	2018-08-28 06:10:02.000000000 +0200
++++ b/chrome/browser/ui/libgtkui/gtk_ui.h	2018-09-02 16:01:58.299489588 +0200
 @@ -145,6 +145,10 @@
    // Updates |default_font_*|.
    void UpdateDefaultFont();
@@ -558,8 +558,8 @@
    float GetRawDeviceScaleFactor();
  
    ui::NativeTheme* native_theme_;
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_util.cc.gtk2_support	2018-08-28 06:10:02.000000000 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_util.cc	2018-08-29 15:55:22.353870282 +0200
+--- a/chrome/browser/ui/libgtkui/gtk_util.cc.gtk2_support	2018-08-28 06:10:02.000000000 +0200
++++ b/chrome/browser/ui/libgtkui/gtk_util.cc	2018-08-29 15:55:22.353870282 +0200
 @@ -169,8 +169,12 @@
  }
  
@@ -588,8 +588,8 @@
 +#endif
  
  }  // namespace libgtkui
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_util.h.gtk2_support	2018-08-28 06:10:02.000000000 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_util.h	2018-09-02 16:04:22.159824953 +0200
+--- a/chrome/browser/ui/libgtkui/gtk_util.h.gtk2_support	2018-08-28 06:10:02.000000000 +0200
++++ b/chrome/browser/ui/libgtkui/gtk_util.h	2018-09-02 16:04:22.159824953 +0200
 @@ -83,6 +83,7 @@
                         std::vector<views::FrameButton>* leading_buttons,
                         std::vector<views::FrameButton>* trailing_buttons);
@@ -607,7 +607,7 @@
  }  // namespace libgtkui
  
 --- /dev/null	2018-08-24 20:04:13.670821848 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/native_theme_gtk2.cc	2018-08-29 15:55:22.354870263 +0200
++++ b/chrome/browser/ui/libgtkui/native_theme_gtk2.cc	2018-08-29 15:55:22.354870263 +0200
 @@ -0,0 +1,474 @@
 +// Copyright (c) 2013 The Chromium Authors. All rights reserved.
 +// Use of this source code is governed by a BSD-style license that can be
@@ -1084,7 +1084,7 @@
 +
 +}  // namespace libgtkui
 --- /dev/null	2018-08-24 20:04:13.670821848 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/native_theme_gtk2.h	2018-08-29 15:55:22.354870263 +0200
++++ b/chrome/browser/ui/libgtkui/native_theme_gtk2.h	2018-08-29 15:55:22.354870263 +0200
 @@ -0,0 +1,55 @@
 +// Copyright (c) 2013 The Chromium Authors. All rights reserved.
 +// Use of this source code is governed by a BSD-style license that can be
@@ -1141,8 +1141,8 @@
 +}  // namespace libgtkui
 +
 +#endif  // CHROME_BROWSER_UI_LIBGTKUI_NATIVE_THEME_GTK2_H_
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/app_indicator_icon.cc.gtk2_support	2018-08-28 06:10:02.000000000 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/app_indicator_icon.cc	2018-09-02 16:16:52.197941328 +0200
+--- a/chrome/browser/ui/libgtkui/app_indicator_icon.cc.gtk2_support	2018-08-28 06:10:02.000000000 +0200
++++ b/chrome/browser/ui/libgtkui/app_indicator_icon.cc	2018-09-02 16:16:52.197941328 +0200
 @@ -91,6 +91,18 @@
  
    void* indicator_lib = nullptr;
@@ -1171,7 +1171,7 @@
    if (!indicator_lib)
      return;
 --- /dev/null	2018-08-24 20:04:13.670821848 +0200
-+++ chromium-70.0.3534.4/ui/accessibility/platform/atk_util_auralinux_gtk2.cc	2018-08-29 15:55:22.357870208 +0200
++++ b/ui/accessibility/platform/atk_util_auralinux_gtk2.cc	2018-08-29 15:55:22.357870208 +0200
 @@ -0,0 +1,84 @@
 +// Copyright 2017 The Chromium Authors. All rights reserved.
 +// Use of this source code is governed by a BSD-style license that can be
@@ -1257,8 +1257,8 @@
 +}
 +
 +}  // namespace ui
---- chromium-70.0.3534.4/ui/accessibility/BUILD.gn.gtk2_support	2018-08-28 06:11:24.000000000 +0200
-+++ chromium-70.0.3534.4/ui/accessibility/BUILD.gn	2018-09-02 16:25:36.244248804 +0200
+--- a/ui/accessibility/BUILD.gn.gtk2_support	2018-08-28 06:11:24.000000000 +0200
++++ b/ui/accessibility/BUILD.gn	2018-09-02 16:25:36.244248804 +0200
 @@ -2,6 +2,7 @@
  # Use of this source code is governed by a BSD-style license that can be
  # found in the LICENSE file.
@@ -1287,8 +1287,8 @@
    }
  
    if (use_aura) {
---- chromium-70.0.3534.4/ui/views/features.gni.gtk2_support	2018-08-28 06:11:26.000000000 +0200
-+++ chromium-70.0.3534.4/ui/views/features.gni	2018-09-02 16:28:06.750466728 +0200
+--- a/ui/views/features.gni.gtk2_support	2018-08-28 06:11:26.000000000 +0200
++++ b/ui/views/features.gni	2018-09-02 16:28:06.750466728 +0200
 @@ -2,10 +2,12 @@
  # Use of this source code is governed by a BSD-style license that can be
  # found in the LICENSE file.
@@ -1517,8 +1517,8 @@
 +G_END_DECLS
 +
 +#endif  // CHROME_BROWSER_UI_LIBGTKUI_CHROME_GTK_FRAME_H_
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_key_bindings_handler.cc.gtk2	2018-08-28 06:10:02.000000000 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/gtk_key_bindings_handler.cc	2018-09-02 21:37:00.380595129 +0200
+--- a/chrome/browser/ui/libgtkui/gtk_key_bindings_handler.cc.gtk2	2018-08-28 06:10:02.000000000 +0200
++++ b/chrome/browser/ui/libgtkui/gtk_key_bindings_handler.cc	2018-09-02 21:37:00.380595129 +0200
 @@ -77,7 +77,11 @@
    // will be emitted.
  
@@ -1531,8 +1531,8 @@
        &gdk_event);
  
    bool matched = !edit_commands_.empty();
---- chromium-70.0.3534.4/chrome/browser/ui/libgtkui/x11_input_method_context_impl_gtk.cc.gtk2	2018-08-28 06:10:02.000000000 +0200
-+++ chromium-70.0.3534.4/chrome/browser/ui/libgtkui/x11_input_method_context_impl_gtk.cc	2018-09-02 21:47:37.698848448 +0200
+--- a/chrome/browser/ui/libgtkui/x11_input_method_context_impl_gtk.cc.gtk2	2018-08-28 06:10:02.000000000 +0200
++++ b/chrome/browser/ui/libgtkui/x11_input_method_context_impl_gtk.cc	2018-09-02 21:47:37.698848448 +0200
 @@ -86,7 +86,10 @@
    gint win_y = 0;
    gdk_window_get_origin(event->key.window, &win_x, &win_y);

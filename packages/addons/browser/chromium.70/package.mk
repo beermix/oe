@@ -8,20 +8,19 @@
 ################################################################################## libvpx chromium:host
 
 PKG_NAME="chromium"
-PKG_VERSION="70.0.3538.77"
-PKG_SHA256="c914f86c4c8375b719eca89ea89dbec4ae3d09df3f758d5f7c91d4914d290449"
-PKG_REV="500"
-PKG_ARCH="x86_64"
+PKG_VERSION="70.0.3538.102-arch1"
+PKG_SHA256="dc9d8b86d7f0d4afa085904a8d98d48f34db3ef704a47795d4b60dae473ea4db"
+PKG_REV="510"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
+PKG_URL="https://sources.archlinux.org/other/chromium/chromium-70.0.3538.102-arch1.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss opus re2 snappy krb5 zlib"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss re2 snappy libvpx"
 PKG_SECTION="browser" # chromium:host
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
-PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-GOLD_SUPPORT="no"
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -92,20 +91,15 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
-  #[ffmpeg]=ffmpeg
-  #[flac]=flac
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libvpx]=libvpx            # needs unreleased libvpx
-  #[libwebp]=libwebp
+  [libpng]=libpng            # https://crbug.com/752403#c10
   [libxml]=libxml2
   [libxslt]=libxslt
-  #[opus]=opus
   [re2]=re2
   [snappy]=snappy
   [yasm]=
@@ -130,7 +124,7 @@ depends+=(${_system_libs[@]})
       -delete
   done
 
-  ./build/linux/unbundle/replace_gn_files.py \--system-libraries "${!_system_libs[@]}"
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /usr/bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
@@ -139,19 +133,18 @@ depends+=(${_system_libs[@]})
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
-
-  # config
+  # config *.dat,
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
            $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
            $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -207,5 +200,5 @@ addon() {
   cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # libXft
-  cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
