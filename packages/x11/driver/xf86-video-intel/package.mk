@@ -25,7 +25,7 @@ pre_configure_target() {
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-z,now||"` sed -e "s|,-z,now||"`
   
-  #CFLAGS="$CFLAGS -D_GNU_SOURCE"
+#CFLAGS="$CFLAGS -D_GNU_SOURCE"
 }
 
 post_makeinstall_target() {
