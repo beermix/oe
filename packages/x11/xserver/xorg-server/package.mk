@@ -114,6 +114,9 @@ pre_configure_target() {
 # hack to prevent a build error
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
+  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
 }
 
 post_makeinstall_target() {
