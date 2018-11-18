@@ -8,7 +8,7 @@ PKG_SITE="https://github.com/fluxbox/fluxbox"
 PKG_URL="https://github.com/fluxbox/fluxbox/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender"
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-lto -gold +hardening"
+PKG_BUILD_FLAGS="-lto -gold"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
