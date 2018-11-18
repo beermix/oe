@@ -493,7 +493,7 @@ if [ "$TARGET" = "target" -a "$PKG_IS_ADDON" = "yes" ]; then
 fi
 
 if [ "$TARGET" = "target" -o "$TARGET" = "init" ]; then
-  if [ -d $INSTALL ] ; then
+  if [ -d $INSTALL ]; then
     [ ! "$PKG_INCLUDE_INSTALL" = yes ] && rm -rf $INSTALL/{usr/,}include
     rm -rf $INSTALL/{usr/,}lib/cmake
     rm -rf $INSTALL/{usr/,}lib/pkgconfig
