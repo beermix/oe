@@ -3,7 +3,6 @@ PKG_VERSION="0.24.1"
 PKG_URL="https://github.com/draios/sysdig"
 PKG_URL="https://github.com/draios/sysdig/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="debug"
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 

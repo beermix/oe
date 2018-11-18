@@ -14,7 +14,6 @@ PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable."
 # busybox fails to build with GOLD support enabled with binutils-2.25
 #PKG_BUILD_FLAGS="-parallel -gold"
-PKG_BUILD_FLAGS="+hardening"
 
 PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=0 install"
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
