@@ -4,14 +4,11 @@
 PKG_NAME="fontconfig"
 PKG_VERSION="2.13.1"
 PKG_SHA256="9f0d852b39d75fc655f9f53850eb32555394f36104a044bb2b2fc9e66dbbfa7f"
-PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://www.freedesktop.org/software/fontconfig/release/?C=M;O=D"
 PKG_URL="http://www.freedesktop.org/software/fontconfig/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-macros freetype libxml2 zlib expat gperf:host json-c"
-PKG_DEPENDS_TARGET="toolchain util-macros freetype libxml2 zlib expat gperf:host"
-PKG_SHORTDESC="fontconfig: A library for font customization and configuration"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+PKG_BUILD_FLAGS="-lto -gold"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
