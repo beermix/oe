@@ -13,7 +13,7 @@ PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
-PKG_BUILD_FLAGS="-gold +hardening"
+PKG_BUILD_FLAGS="-gold"
 
 # Dependencies
 get_graphicdrivers
