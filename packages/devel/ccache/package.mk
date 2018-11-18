@@ -39,4 +39,6 @@ $TOOLCHAIN/bin/ccache $CXX "\$@"
 EOF
 
   chmod +x $TOOLCHAIN/bin/host-g++
+
+ strip $TOOLCHAIN/bin/ccache 
 }
