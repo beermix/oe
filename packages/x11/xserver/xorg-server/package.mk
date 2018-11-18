@@ -117,6 +117,7 @@ pre_configure_target() {
 
   CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-z,now||"
 }
 
 post_makeinstall_target() {
