@@ -76,8 +76,8 @@ configure_target() {
 }
 
 makeinstall_target() {
-  make DESTDIR=$INSTALL install_sw
-  make DESTDIR=$SYSROOT_PREFIX install_sw
+  make DESTDIR=$INSTALL install_sw -j1
+  make DESTDIR=$SYSROOT_PREFIX install_sw -j1
 }
 
 post_makeinstall_target() {
