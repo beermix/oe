@@ -12,7 +12,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX1
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_LONGDESC="Xorg is a full featured X server running on Intel x86 hardware."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-lto -gold +hardening"
 
 get_graphicdrivers
 
@@ -113,10 +112,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 pre_configure_target() {
 # hack to prevent a build error
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
-#  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Wl,-z,now||"`
-
-#  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
-#  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
 }
 
 post_makeinstall_target() {
