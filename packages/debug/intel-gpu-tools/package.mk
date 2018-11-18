@@ -6,14 +6,12 @@ PKG_URL="https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/snapshot/$PKG_VER
 PKG_SOURCE_DIR="igt-gpu-tools-$PKG_VERSION"
 PKG_SOURCE_DIR="$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain peg:host kmod systemd procps-ng libpciaccess mesa libdrm libpciaccess cairo swig:host libunwind libXv elfutils"
-PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 #PKG_TOOLCHAIN="meson"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
 			      --disable-shared \
 			      --enable-static \
-			      --with-gnu-ld \
 			      --disable-git-hash \
 			      --disable-debug \
 			      --disable-amdgpu \
