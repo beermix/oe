@@ -4,10 +4,6 @@ PKG_VERSION="4.6.0"
 PKG_URL="http://ftpmirror.gnu.org/findutils/findutils-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 
-post_unpack() {
-  sed -i '/^SUBDIRS/s/locate//' $PKG_BUILD/Makefile.in
-}
-
 pre_configure_target() {
   CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
