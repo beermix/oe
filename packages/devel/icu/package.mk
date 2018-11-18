@@ -17,15 +17,15 @@ pre_configure_target() {
   export LIBS="-latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-shared --disable-static"
+#PKG_CONFIGURE_OPTS_HOST="--enable-shared --disable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-makeinstall_host() {
- : # nothing todo
-}
+#makeinstall_host() {
+# : # nothing todo
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
