@@ -17,3 +17,9 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-vmwarectrl-client \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
+
+pre_configure_target() {
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
+  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-z,now||"`
+}
