@@ -9,10 +9,9 @@ PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log/"
 PKG_URL="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-macros systemd xorg-server"
-PKG_SECTION="x11/driver"
 PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+PKG_BUILD_FLAGS="-lto -gold"
 # xf86-video-intel is broken enough. dont link with LTO
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
@@ -38,7 +37,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -D_GNU_SOURCE"
+  CFLAGS="$CFLAGS -D_GNU_SOURCE"
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-z,now||"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
+  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
 }
 
 post_makeinstall_target() {
