@@ -47,7 +47,7 @@ make_target() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  
+
   export CCACHE_SLOPPINESS=time_macros
 
   export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
@@ -126,12 +126,13 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries ||  \! -path './base/third_party/icu/*' \
+  # added benefit of not having to list all the remaining libraries ||  
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
