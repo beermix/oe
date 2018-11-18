@@ -4,16 +4,13 @@
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2p"
 PKG_SHA256="50a98e07b1a89eb8f6a99477f262df71c6fa7bef77df4dc83025a2845c827d00"
-PKG_ARCH="any"
 PKG_LICENSE="BSD"
-PKG_SITE="https://www.openssl.org"
+PKG_SITE="https://www.openssl.org/source/"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="yasm:host"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib"
-PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
-PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
-#PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -32,7 +29,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-zlib no-zlib-dynamic  no-static-engine linux-x86_64
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-zlib no-zlib-dynamic no-static-engine linux-x86_64
   #  "-Wa,--noexecstack $CFLAGS $LDFLAGS -ffunction-sections -fdata-sections -Wl,--gc-sections"
 }
 
@@ -51,7 +48,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED no-static-engine linux-x86_64 $CFLAGS $CPPFLAGS $LDFLAGS
 }
 
 makeinstall_target() {

@@ -2,18 +2,14 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="cairo"
-PKG_VERSION="1.15.14"
-PKG_SHA256="16566b6c015a761bb0b7595cf879b77f8de85f90b443119083c4c2769b93298d"
+PKG_VERSION="1.16.0"
+PKG_SHA256="5e7b29b3f113ef870d1e3ecf8adf21f923396401604bda16d44be45e66052331"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://cairographics.org/snapshots/?C=M;O=D"
 PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://cairographics.org/releases/cairo-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
-PKG_SECTION="graphics"
-PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
-PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 PKG_TOOLCHAIN="configure" # ToDo
-#PKG_TOOLCHAIN="autotools"
 
 if [ "$OPENGL" != "no" ]; then
   PKG_DEPENDS_TARGET+=" $OPENGL"

@@ -1,20 +1,18 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) | ,swrast
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="18.2.2"
-PKG_SHA256="c3ba82b12a89d3d9fed2bdd96b4702dbb7ab675034650a8b1b718320daf073c4"
-PKG_ARCH="any"
+PKG_VERSION="18.3.0-rc3"
+#PKG_SHA256="b12c32872832e5353155e1e8026e1f1ab75bba9dc5b178d712045684d26c2b73"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
 PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
-PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
-PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
 PKG_TOOLCHAIN="meson"
-PKG_BUILD_FLAGS="+lto"
+PKG_BUILD_FLAGS="+lto +hardening"
 
 get_graphicdrivers
 

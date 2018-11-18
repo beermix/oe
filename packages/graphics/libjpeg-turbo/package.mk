@@ -10,12 +10,8 @@ PKG_SITE="http://libjpeg-turbo.virtualgl.org/"
 PKG_URL="$SOURCEFORGE_SRC/libjpeg-turbo/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="nasm:host"
 PKG_DEPENDS_TARGET="toolchain nasm:host"
-PKG_SECTION="graphics"
-PKG_SHORTDESC="libjpeg-turbo: a high-speed version of libjpeg for x86 and x86-64 processors which uses SIMD instructions (MMX, SSE2, etc.) to accelerate baseline JPEG compression and decompression."
-PKG_LONGDESC="libjpeg-turbo is a high-speed version of libjpeg for x86 and x86-64 processors which uses SIMD instructions (MMX, SSE2, etc.) to accelerate baseline JPEG compression and decompression. libjpeg-turbo is generally 2-4x as fast as the unmodified version of libjpeg, all else being equal."
 PKG_TOOLCHAIN="cmake-make"
-PKG_BUILD_FLAGS="+pic:host +pic"
-HARDENING_SUPPORT="yes"
+PKG_BUILD_FLAGS="+pic:host +pic +hardening"
 
 configure_host() {
   cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN \

@@ -4,15 +4,13 @@
 PKG_NAME="gdb"
 PKG_VERSION="8.2"
 PKG_SHA256="c3a441a29c7c89720b734e5a9c6289c0a06be7e0c76ef538f7bbcef389347c39"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
 PKG_URL="http://ftpmirror.gnu.org/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib ncurses expat"
-PKG_SECTION="debug"
 PKG_SHORTDESC="gdb: The GNU Debugger"
-PKG_LONGDESC="The purpose of a debugger such as GDB is to allow you to see what is going on ``inside'' another program while it executes--or what another program was doing at the moment it crashed."
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 # gdb could fail on runtime if build with LTO support
 
 CC_FOR_BUILD="$HOST_CC"

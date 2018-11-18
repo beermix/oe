@@ -2,15 +2,12 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="meson"
-PKG_VERSION="0.47.2"
-PKG_SHA256="92d8afd921751261e36151643464efd3394162f69efbe8cd53e0a66b1cf395eb"
-PKG_ARCH="any"
+PKG_VERSION="0.48.2"
+PKG_SHA256="39ead8bfd0dc9c7b0af15e23ea975c864600bf871fba279c9918625bb9a85506"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/mesonbuild/meson/releases/"
 PKG_URL="https://github.com/mesonbuild/meson/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="Python3:host pathlib:host"
-PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="High productivity build system"
+PKG_DEPENDS_HOST="Python3:host pathlib:host setuptools:host"
 PKG_LONGDESC="High productivity build system"
 PKG_TOOLCHAIN="manual"
 
@@ -23,7 +20,7 @@ makeinstall_host() {
 
   # Avoid using full path to python3 that may exceed 128 byte limit.
   # Instead use PATH as we know our toolchain is first.
-  for f in meson mesonconf mesontest mesonintrospect wraptool; do
+  for f in meson; do
     sed -i '1 s/^#!.*$/#!\/usr\/bin\/env python3/' $TOOLCHAIN/bin/$f
   done
 }

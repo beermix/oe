@@ -2,20 +2,15 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="iptables"
-PKG_VERSION="1.8.0"
-PKG_SHA256="c4cbfa187c4296e4bc2e347ebbc21e309def7274773f20f0df0b8feaf7e8de50"
-PKG_ARCH="any"
+PKG_VERSION="1.8.2"
+PKG_SHA256="a3778b50ed1a3256f9ca975de82c2204e508001fc2471238c8c97f3d1c4c12af"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.netfilter.org/"
+PKG_SITE="https://netfilter.org/projects/iptables/files/?C=M;O=D"
 PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl"
-PKG_SECTION="network"
-PKG_SHORTDESC="iptables: IP packet filter administration"
-PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP packet filter rules in the Linux kernel. There are several different tables which may be defined, and each table contains a number of built-in chains, and may contain user-defined chains."
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(kernel_path)"
-
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/iptables/

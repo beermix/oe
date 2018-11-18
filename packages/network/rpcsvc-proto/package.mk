@@ -3,7 +3,7 @@
 
 PKG_NAME="rpcsvc-proto"
 PKG_VERSION="1.4"
-PKG_SHA256=""
+PKG_SHA256="4149d5f05d8f7224a4d207362fdfe72420989dc1b028b28b7b62b6c2efe22345"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceforge.net/projects/libtirpc/"

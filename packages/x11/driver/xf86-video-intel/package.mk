@@ -3,18 +3,16 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="25c9a2f"
-PKG_SHA256="8b170ae5ed86d264487f8f2720fd8a5dc218abcf4a019a4e45589188b09a7985"
-PKG_ARCH="x86_64"
+PKG_VERSION="746ab3b"
+PKG_SHA256="e8159be47615685a9fb22e32308a2d13ad18ca898e008df051c51b013e75329b"
 PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log/"
 PKG_URL="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/$PKG_VERSION.tar.xz"
-PKG_SOURCE_DIR="$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-macros systemd xorg-server"
 PKG_SECTION="x11/driver"
-PKG_SHORTDESC="xf86-video-intel: The Xorg driver for Intel video chips"
-PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G video chips."
+PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 # xf86-video-intel is broken enough. dont link with LTO
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
@@ -35,8 +33,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-dga \
                            --disable-tear-free \
                            --disable-create2 \
+                           --disable-async-swap \
                            --with-default-dri=3 \
-                           --with-xorg-module-dir=$XORG_PATH_MODULES"
+                           --with-xorg-module-dir=$XORG_PATH_MODULES \
+                           --disable-silent-rules"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -D_GNU_SOURCE"

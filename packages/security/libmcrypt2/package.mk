@@ -31,7 +31,7 @@ makeinstall_target() {
   make -j1 install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
 
   for i in $(find $INSTALL_DEV/usr/lib/ -name "*.la" 2>/dev/null); do
-    $SED "s|\(['= ]\)/usr|\\1$INSTALL_DEV/usr|g" $i
+    sed "s|\(['= ]\)/usr|\\1$INSTALL_DEV/usr|g" $i
   done
 }
 

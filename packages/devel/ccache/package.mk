@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="ccache"
-PKG_VERSION="3.4.3"
-PKG_SHA256="297e55a7622578395c1d5cfa163cc61e345ed69c52aaf94a9583634046c15f4a"
+PKG_VERSION="3.5"
+PKG_SHA256="bdd44b72ae4506a2e2deef9fefb15c606a474bbca7658cd2be26105155eec012"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.samba.org/ftp/ccache/?C=M;O=D"

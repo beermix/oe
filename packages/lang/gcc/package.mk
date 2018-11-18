@@ -3,10 +3,9 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20181004"
+PKG_VERSION="8-20181116"
 #PKG_SHA256="725ec907fd7463568ec0c097802824b978a679523a2e3374bdc2e3d265cd2b6c"
 #PKG_VERSION="7.2.1-20171224"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
@@ -14,20 +13,24 @@ PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.x
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
-PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection (aka GNU C Compiler)"
-PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-post_unpack() {
-  rm -rf $PKG_BUILD/libjava/*
-  rm -rf $PKG_BUILD/libgo/*
-  rm -rf $PKG_BUILD/libgo/*
-  rm -rf $PKG_BUILD/libstdc++-v3/testsuite/*
+#post_unpack() {
+#  rm -rf $PKG_BUILD/libjava/*
+#  rm -rf $PKG_BUILD/libgo/*
+#  rm -rf $PKG_BUILD/libgo/*
+#  rm -rf $PKG_BUILD/libstdc++-v3/testsuite/*
+#
+#  mkdir -p $PKG_BUILD/libstdc++-v3/testsuite/
+#  echo "all:" > $PKG_BUILD/libstdc++-v3/testsuite/Makefile.in
+#  echo "install:" >> $PKG_BUILD/libstdc++-v3/testsuite/Makefile.in
+#}
 
-  mkdir -p $PKG_BUILD/libstdc++-v3/testsuite/
-  echo "all:" > $PKG_BUILD/libstdc++-v3/testsuite/Makefile.in
-  echo "install:" >> $PKG_BUILD/libstdc++-v3/testsuite/Makefile.in
+post_unpack() {
+  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
 }
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
@@ -46,8 +49,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
                            --without-cloog \
+                           --disable-libada \
                            --disable-libmudflap \
+                           --disable-libatomic \
+                           --disable-libitm \
+                           --disable-libquadmath \
+                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=westmere"
@@ -57,10 +66,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
-                              --disable-libitm \
-                              --disable-libquadmath \
-                              --disable-libatomic \
-                              --disable-libgomp \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -86,8 +91,20 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
+  export CFLAGS="$CFLAGS -g1 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS="$CXXFLAGS -g1"
+  export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -march=westmere -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -march=westmere -O2"
+
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
+}
+
+pre_configure_bootstrap() {
+  export CFLAGS="$CFLAGS -g1 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS="$CXXFLAGS -g1"
+  export CFLAGS_FOR_TARGET="$CFLAGS_FOR_TARGET -march=westmere -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS_FOR_TARGET="$CXXFLAGS_FOR_TARGET -march=westmere -O2"
 }
 
 post_make_host() {

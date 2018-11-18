@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 . /etc/profile
 oe_setup_addon browser.chrome

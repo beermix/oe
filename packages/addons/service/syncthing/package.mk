@@ -1,25 +1,10 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="syncthing"
-PKG_VERSION="0.14.29"
-PKG_SHA256="99002701279abedace88283b1381ff7850b6c20df62ae119b271ffd89716fcfd"
-PKG_REV="105"
+PKG_VERSION="0.14.49"
+PKG_SHA256="6af41f4acda85a49eb84faebea9f7eec1cd309f2a6ed97fca9b0b79a88b494ce"
+PKG_REV="106"
 PKG_ARCH="any"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://syncthing.net/"
@@ -36,21 +21,19 @@ PKG_ADDON_TYPE="xbmc.service"
 PKG_MAINTAINER="Anton Voyl (awiouy)"
 
 configure_target() {
+  export GOLANG=$TOOLCHAIN/lib/golang/bin/go
+
+  cd $PKG_BUILD
+  $GOLANG generate -v ./lib/auto ./cmd/strelaypoolsrv/auto
+
   export GOOS=linux
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
   export LDFLAGS="-w -linkmode external -extldflags -Wl,--unresolved-symbols=ignore-in-shared-libs -extld $CC -X main.Version=v$PKG_VERSION"
-  export GOLANG=$TOOLCHAIN/lib/golang/bin/go
-  export GOPATH=$PKG_BUILD/src/github.com/syncthing/syncthing:$PKG_BUILD/vendor:$PKG_BUILD/Godeps/_workspace
+  export GOPATH=$PKG_BUILD:$PKG_BUILD/Godeps/_workspace
   export GOROOT=$TOOLCHAIN/lib/golang
   export PATH=$PATH:$GOROOT/bin
-
-  $TOOLCHAIN/lib/golang/bin/go run build.go assets
-
-  mkdir -p $PKG_BUILD $PKG_BUILD/src/github.com/syncthing
-  ln -fs $PKG_BUILD $PKG_BUILD/src/github.com/syncthing/syncthing
-  ln -fs $PKG_BUILD/vendor $PKG_BUILD/vendor/src
 
   case $TARGET_ARCH in
     x86_64)
@@ -74,8 +57,10 @@ configure_target() {
 }
 
 make_target() {
+  mkdir -p $PKG_BUILD/src/github.com/syncthing
+  ln -sf $PKG_BUILD $PKG_BUILD/src/github.com/syncthing/syncthing
   cd $PKG_BUILD/src/github.com/syncthing/syncthing
-  mkdir -p bin
+  mkdir bin
   $GOLANG build -v -o bin/syncthing -a -ldflags "$LDFLAGS" ./cmd/syncthing
 }
 

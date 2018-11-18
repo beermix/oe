@@ -3,23 +3,18 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="harfbuzz"
-PKG_VERSION="1.8.8"
-PKG_SHA256="a8e5c86e4d99e1cc9865ec1b8e9b05b98e413c2a885cd11f8e9bb9502dd3e3a9"
-PKG_ARCH="any"
+PKG_VERSION="2.1.3"
+PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.freedesktop.org/software/harfbuzz/release/?C=M;O=D"
 PKG_URL="https://www.freedesktop.org/software/harfbuzz/release/harfbuzz-$PKG_VERSION.tar.bz2"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain cairo freetype glib icu"
-PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-coretext=no \
-			      --with-uniscribe=no \
-			      --with-graphite2=no \
-			      --with-cairo=yes \
-			      --with-icu=yes \
-			      --with-freetype=yes \
-			      --with-glib=yes \
+PKG_CONFIGURE_OPTS_TARGET="--with-icu \
+			      --with-freetype \
+			      --with-glib \
 			      --disable-gtk-doc \
                            --disable-gtk-doc-html \
                            --disable-gtk-doc-pdf"

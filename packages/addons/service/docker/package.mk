@@ -1,32 +1,16 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2009-2017 Lukas Rusak (lrusak@libreelec.tv)
-#      Copyright (C) 2017-present Team LibreELEC
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2017 Lukas Rusak (lrusak@libreelec.tv)
+# Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="docker"
-PKG_VERSION="17.10.0"
-PKG_SHA256="90f54b988d5241ee0472800e139e0628ae8a58dac168bb32fdb031383f3b46be"
-PKG_REV="117"
+PKG_VERSION="18.06.1"
+PKG_SHA256="153cb489033686260dfe7a42acbdd1753d56f7a9c2d7ad90633f0c8cce563b23"
+PKG_REV="119"
 PKG_ARCH="any"
 PKG_ADDON_PROJECTS="any !WeTek_Core !WeTek_Play"
 PKG_LICENSE="ASL"
 PKG_SITE="http://www.docker.com/"
 PKG_URL="https://github.com/docker/docker-ce/archive/v${PKG_VERSION}-ce.tar.gz"
-PKG_SOURCE_DIR="docker-ce-${PKG_VERSION}-ce"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini systemd"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Docker is an open-source engine that automates the deployment of any application as a lightweight, portable, self-sufficient container that will run virtually anywhere."
@@ -72,22 +56,36 @@ configure_target() {
   export CGO_CFLAGS=$CFLAGS
   export LDFLAGS="-w -linkmode external -extldflags -Wl,--unresolved-symbols=ignore-in-shared-libs -extld $CC"
   export GOLANG=$TOOLCHAIN/lib/golang/bin/go
-  export GOPATH=$PKG_BUILD/.gopath:$PKG_BUILD/.gopath_cli
+  export GOPATH=$PKG_BUILD/.gopath_cli:$PKG_BUILD/.gopath
   export GOROOT=$TOOLCHAIN/lib/golang
   export PATH=$PATH:$GOROOT/bin
 
   mkdir -p $PKG_BUILD/.gopath
   mkdir -p $PKG_BUILD/.gopath_cli
+
   PKG_ENGINE_PATH=$PKG_BUILD/components/engine
   PKG_CLI_PATH=$PKG_BUILD/components/cli
+
   if [ -d $PKG_ENGINE_PATH/vendor ]; then
     mv $PKG_ENGINE_PATH/vendor $PKG_BUILD/.gopath/src
   fi
+
   if [ -d $PKG_CLI_PATH/vendor ]; then
     mv $PKG_CLI_PATH/vendor $PKG_BUILD/.gopath_cli/src
   fi
-  ln -fs $PKG_ENGINE_PATH $PKG_BUILD/.gopath/src/github.com/docker/docker
-  ln -fs $PKG_CLI_PATH $PKG_BUILD/.gopath_cli/src/github.com/docker/cli
+
+  cp -rf $PKG_BUILD/.gopath/src/* $PKG_BUILD/.gopath_cli/src
+
+  mkdir -p $PKG_BUILD/.gopath_cli/src/github.com/docker/docker/builder
+  cp -rf $PKG_ENGINE_PATH/builder/* $PKG_BUILD/.gopath_cli/src/github.com/docker/docker/builder
+
+  if [ ! -L $PKG_BUILD/.gopath/src/github.com/docker/docker ];then
+    ln -fs $PKG_ENGINE_PATH $PKG_BUILD/.gopath/src/github.com/docker/docker
+  fi
+
+  if [ ! -L $PKG_BUILD/.gopath_cli/src/github.com/docker/cli ];then
+    ln -fs $PKG_CLI_PATH $PKG_BUILD/.gopath_cli/src/github.com/docker/cli
+  fi
 
   # used for docker version
   export GITCOMMIT=${PKG_VERSION}-ce

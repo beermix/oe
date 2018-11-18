@@ -20,5 +20,5 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-zlib \
                            --with-libuv \
                            --without-libgcrypt \
-                           --without-sqlite3 \
+                           --with-sqlite3 \
                            --with-libxml2"

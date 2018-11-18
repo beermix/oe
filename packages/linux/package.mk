@@ -3,15 +3,12 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="linux"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host pciutils xz:host wireless-regdb keyutils $KERNEL_EXTRA_DEPENDS_TARGET"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-PKG_SECTION="linux"
-PKG_SHORTDESC="linux26: The Linux kernel 2.6 precompiled kernel binary image and modules"
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 PKG_IS_KERNEL_PKG="yes"
 
@@ -26,31 +23,30 @@ case "$LINUX" in
     PKG_PATCH_DIRS="4.16"
     PKG_BUILD_PERF="no"
   ;;
-  4.16)
-    PKG_VERSION="4.16.13"
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="4.16"
-    PKG_BUILD_PERF="no"
-    ;;
-  zen)
-    PKG_VERSION="4.18.12-lqx2"
-    PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/v$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
+  4.19zen)
+    PKG_VERSION="05d2f46"
+    PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
-  4.14)
-    PKG_VERSION="4.14.15"
+  zen)
+    PKG_VERSION="4.18.19-lqx1"
+    PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/v$PKG_VERSION.tar.gz"
+    PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
+    PKG_PATCH_DIRS="zen"
+    PKG_BUILD_PERF="no"
+    ;;
+  4.18zen)
+    PKG_VERSION="05d2f46"
     #PKG_SHA256="ffc393a0c66f80375eacd3fb177b92e5c9daa07de0dcf947e925e049352e6142"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="4.14"
+    PKG_PATCH_DIRS="4.18"
     PKG_BUILD_PERF="no"
     ;;
   *)
-    PKG_VERSION="4.18.11"
+    PKG_VERSION="4.19.2"
     PKG_SHA256=""
-    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
-    PKG_URL="https://cdn.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
@@ -66,7 +62,7 @@ fi
 
 if [ "$PKG_BUILD_PERF" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= $PKG_KERNEL_CFG_FILE ; then
   PKG_BUILD_PERF="yes"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET binutils elfutils libunwind zlib openssl pciutils"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET binutils elfutils libunwind zlib openssl"
 fi
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
@@ -176,23 +172,23 @@ make_target() {
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
 
-  cd $PKG_BUILD/tools/power/cpupower
-  make \
-  CROSS="$TARGET_PREFIX" \
-  CC="$CC" \
-  LD="$LD" \
-  AR="$AR" \
-  NLS=true \
-  STATIC=false \
-  CPUFREQ_BENCH=true \
-  DEBUG=false
+#  cd $PKG_BUILD/tools/power/cpupower
+#  make \
+#  CROSS="$TARGET_PREFIX" \
+#  CC="$CC" \
+#  LD="$LD" \
+#  AR="$AR" \
+#  NLS=true \
+#  STATIC=false \
+#  CPUFREQ_BENCH=true \
+#  DEBUG=false
 
-  mkdir -p $INSTALL/usr/lib
-  mkdir -p $INSTALL/usr/bin
-  cp cpupower $INSTALL/usr/bin
-  cp -PL libcpupower.so* $INSTALL/usr/lib
+#  mkdir -p $INSTALL/usr/lib
+#  mkdir -p $INSTALL/usr/bin
+#  cp cpupower $INSTALL/usr/bin
+#  cp -PL libcpupower.so* $INSTALL/usr/lib
   
-  cd $PKG_BUILD
+#  cd $PKG_BUILD
 
   if [ "$PKG_BUILD_PERF" = "yes" ] ; then
     ( cd tools/perf

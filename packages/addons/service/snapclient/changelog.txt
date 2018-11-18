@@ -1,5 +1,5 @@
 102
-- Update to 0.14.0
+- Update to 0.15.0
 - Add alsa-plugins
 
 101

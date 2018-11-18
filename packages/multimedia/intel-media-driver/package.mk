@@ -15,4 +15,8 @@ PKG_SHORTDESC="intel-media-driver: VA-API user mode driver for Intel GEN Graphic
 PKG_LONGDESC="intel-media-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_TOOLCHAIN="cmake-make"
 
-PKG_CMAKE_OPTS_TARGET="-DINSTALL_DRIVER_SYSCONF=1 -Wno-dev"
+pre_configure_target() {
+   export LIBS="$LIBS -lpciaccess"
+}
+
+PKG_CMAKE_OPTS_TARGET="-DINSTALL_DRIVER_SYSCONF=0 -Wno-dev"

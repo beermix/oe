@@ -5,17 +5,13 @@
 PKG_NAME="kodi"
 PKG_VERSION="7e52c1d"
 PKG_SHA256="ff9f02586ea4458a9b4d84579cb2cbac221d7a7d74605298d26d0294412a14ec"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc/tree/Krypton"
 PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav libhdhomerun"
-PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
-PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
-# Single threaded LTO is very slow so rely on Kodi for LTO support
-PKG_BUILD_FLAGS="-lto"
+PKG_BUILD_FLAGS="-lto -gold +hardening"
 #PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
@@ -215,7 +211,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_CCACHE=ON \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
-                       -DENABLE_LDGOLD=ON \
+                       -DENABLE_LDGOLD=OFF \
                        -DENABLE_AVX=OFF \
                        -DENABLE_AVX2=OFF \
                        -DENABLE_SSE=ON \
@@ -229,6 +225,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DHAVE_SSE3=TRUE \
                        -DHAVE_SSE4_1=TRUE \
                        -DHAVE_SSSE3=TRUE \
+                       -DCMAKE_VERBOSE_MAKEFILE=ON \
                        $KODI_ARCH \
                        $KODI_OPENGL \
                        $KODI_OPENGLES \
@@ -255,6 +252,9 @@ pre_configure_target() {
 # kodi should never be built with lto
 
   export LIBS="$LIBS -lz -ltinfo"
+
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2|-D_FORTIFY_SOURCE=1|g"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2|-D_FORTIFY_SOURCE=1|g"`
 }
 
 post_makeinstall_target() {
@@ -288,11 +288,11 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.openelec.tv $INSTALL/usr/share/kodi/addons
-    $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
+    sed "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
     cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
-    $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
+    sed "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
     cp -R $PKG_DIR/config/repository.libreelec.tv $INSTALL/usr/share/kodi/addons
-    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
+    sed "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
 
   mkdir -p $INSTALL/usr/share/kodi/config
     cp $PKG_DIR/config/guisettings.xml $INSTALL/usr/share/kodi/config

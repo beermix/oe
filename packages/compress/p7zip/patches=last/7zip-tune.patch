@@ -1,0 +1,39 @@
+diff -Naur p7zip-16.02-orig/CPP/7zip/CMAKE/CMakeLists.txt p7zip-16.02/CPP/7zip/CMAKE/CMakeLists.txt
+--- p7zip-16.02-orig/CPP/7zip/CMAKE/CMakeLists.txt	2018-04-27 03:59:20.131831991 +0300
++++ p7zip-16.02/CPP/7zip/CMAKE/CMakeLists.txt	2016-02-17 09:16:08.000000000 +0300
+@@ -25,23 +25,8 @@
+ 
+ add_subdirectory(7za)
+ 
+-add_subdirectory(7z_)
+-
+-add_subdirectory(7zr)
+-
+ add_subdirectory(Format7zFree  bin)
+ 
+-find_package(wxWidgets COMPONENTS core base adv)
+-
+-if(wxWidgets_FOUND)
+-
+-	add_subdirectory(7zG)
+-
+-	add_subdirectory(7zFM)
+-
+-else(wxWidgets_FOUND)
+-	message("Warning : wxWidgets not found")
+-endif(wxWidgets_FOUND)
+ 
+ 
+ 
+diff -Naur p7zip-16.02-orig/CPP/7zip/CMAKE/CMakeLists.txt p7zip-16.02/CPP/7zip/CMAKE/CMakeLists.txt
+--- p7zip-16.02-orig/CPP/7zip/CMAKE/CMakeLists.txt	2018-04-27 04:04:07.933774492 +0300
++++ p7zip-16.02/CPP/7zip/CMAKE/CMakeLists.txt	2018-04-27 04:04:05.821757100 +0300
+@@ -25,8 +25,5 @@
+ 
+ add_subdirectory(7za)
+ 
+-add_subdirectory(Format7zFree  bin)
+-
+-
+ 
+ 

@@ -1,32 +1,17 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="tvheadend42"
-PKG_VERSION="5613551"
-PKG_SHA256="eff2d5aa08d7c91595d2ec4d4dda2f1bedc07ee8672d1ffb5ed994e284714f23"
-PKG_VERSION_NUMBER="4.2.6-7"
-PKG_REV="115"
+PKG_VERSION="db177a6047769caff02fbf65de7eef00a930a027"
+PKG_SHA256="2d301e54e45dc054181b837a80382d9dec9a659b996aa7411b31d16063046022"
+PKG_VERSION_NUMBER="4.2.6-62"
+PKG_REV="116"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
 PKG_URL="https://github.com/tvheadend/tvheadend/archive/$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="tvheadend-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain avahi curl dvb-apps ffmpegx libdvbcsa libhdhomerun libiconv openssl pngquant:host Python2:host tvh-dtv-scan-tables"
+PKG_DEPENDS_TARGET="toolchain avahi comskip curl dvb-apps ffmpegx libdvbcsa libhdhomerun \
+                    libiconv openssl pngquant:host Python2:host tvh-dtv-scan-tables"
 PKG_SECTION="service"
 PKG_SHORTDESC="Tvheadend: a TV streaming server for Linux"
 PKG_LONGDESC="Tvheadend ($PKG_VERSION_NUMBER): is a TV streaming server for Linux supporting DVB-S/S2, DVB-C, DVB-T/T2, IPTV, SAT>IP, ATSC and ISDB-T"
@@ -127,6 +112,7 @@ addon() {
 
   cp -P $PKG_BUILD/build.linux/tvheadend $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P $PKG_BUILD/capmt_ca.so $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P $(get_build_dir comskip)/.install_pkg/usr/bin/comskip $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   #dvb-scan files
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/dvb-scan

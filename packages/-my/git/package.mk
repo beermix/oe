@@ -10,8 +10,8 @@ pre_configure_target() {
   cd $PKG_BUILD
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
- 
-#  export NO_EXPAT="YesPlease"
+
+  export NO_EXPAT="YesPlease"
   export NO_ICONV="YesPlease"
   export NO_PYTHON="YesPlease"
   export NO_UNIX_SOCKETS="YesPlease"

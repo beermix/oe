@@ -1,24 +1,9 @@
-################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
-#
-#  LibreELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  LibreELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="adafruit-libraries"
 PKG_VERSION=""
-PKG_REV="106"
+PKG_REV="107"
 PKG_ARCH="any"
 PKG_ADDON_PROJECTS="RPi"
 PKG_LICENSE="MIT"
@@ -40,7 +25,7 @@ addon() {
     cp -PR $(get_build_dir Adafruit_Python_ADXL345)/Adafruit_ADXL345           $ADDON_BUILD/$PKG_ADDON_ID/lib/
     cp -PR $(get_build_dir Adafruit_Python_BMP)/Adafruit_BMP                   $ADDON_BUILD/$PKG_ADDON_ID/lib/
     cp -PR $(get_build_dir Adafruit_Python_CharLCD)/Adafruit_CharLCD           $ADDON_BUILD/$PKG_ADDON_ID/lib/
-    cp -PR $(get_build_dir Adafruit_Python_DHT)/build/lib.linux-*/Adafruit_DHT $ADDON_BUILD/$PKG_ADDON_ID/lib/
+    cp -PR $(get_build_dir Adafruit_Python_DHT)/build/lib/Adafruit_DHT         $ADDON_BUILD/$PKG_ADDON_ID/lib/
     cp -PR $(get_build_dir Adafruit_Python_GPIO)/Adafruit_GPIO                 $ADDON_BUILD/$PKG_ADDON_ID/lib/
     cp -PR $(get_build_dir Adafruit_Python_LED_Backpack)/Adafruit_LED_Backpack $ADDON_BUILD/$PKG_ADDON_ID/lib/
     cp -PR $(get_build_dir Adafruit_Python_LSM303)/Adafruit_LSM303             $ADDON_BUILD/$PKG_ADDON_ID/lib/

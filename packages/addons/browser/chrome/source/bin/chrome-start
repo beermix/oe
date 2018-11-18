@@ -84,16 +84,14 @@ if [ ! -z $ALSA_DEVICE ]; then
   chrome_OPTS="$chrome_OPTS --alsa-output-device=$ALSA_DEVICE"
 fi
 
-# HACK!!! to get sound at Chrome stop pulseaudio
-# systemctl stop pulseaudio
-#   --disable-printing \
-#  --enable-tcp-fastopen \
-
 # start chrome
 LD_PRELOAD=/usr/lib/libGL.so $ADDON_DIR/chrome-bin/chrome \
   $chrome_OPTS \
   --no-sandbox \
+  --no-default-browser-check \
   --disable-smooth-scrolling \
+  --disable-printing \
+  --enable-tcp-fastopen \
   --user-data-dir=$ADDON_HOME/profile \
   --test-type $@ \
   2>&1 | tee $ADDON_LOG_FILE
@@ -103,7 +101,3 @@ if [ "$HIDE_CURSOR" == "true" ]
 then
   kill $UNCLUTTER_PID
 fi
-
-# HACK!!! to get sound at Kodi start pulseaudio
-# sleep 5
-# systemctl start pulseaudio

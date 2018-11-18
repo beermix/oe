@@ -1,11 +1,9 @@
 PKG_NAME="libav"
-PKG_VERSION="12.3"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_GIT_URL="https://github.com/libav/libav"
-PKG_GIT_BRANCH="release/12"
+PKG_VERSION="56f5018"
+PKG_URL="https://github.com/libav/libav/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ffmpeg freetype openssl"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-gold -lto"
+PKG_BUILD_FLAGS="-gold -lto +hardening"
 
 get_graphicdrivers
 
@@ -31,21 +29,20 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
-              --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
               --enable-static \
               --disable-shared \
-              --enable-gpl \
-              --disable-version3 \
-              --enable-nonfree \
-              --enable-logging \
+              --disable-logging \
               --disable-doc \
+              --disable-debug \
+              --enable-gpl \
+              --enable-nonfree \
               --enable-pic \
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
-              --enable-yasm
+              --enable-x86asm
 }
 
 makeinstall_target() {
@@ -55,3 +52,4 @@ makeinstall_target() {
 make_target() {
   make
 }
+

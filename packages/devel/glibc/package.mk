@@ -3,21 +3,19 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="202d08d"
-#PKG_SHA256="e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd"
-PKG_ARCH="any"
+PKG_VERSION="c75772e"
+PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
+PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
+PKG_SITE="https://github.com/bminor/glibc"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
-PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="glibc: The GNU C library"
-PKG_LONGDESC="The Glibc package contains the main C library. This library provides the basic routines for allocating memory, searching directories, opening and closing files, reading and writing files, string handling, pattern matching, arithmetic, and so on."
-PKG_BUILD_FLAGS="-gold"
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            ac_cv_path_PERL=no \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
@@ -32,16 +30,17 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.18 \
+                           --enable-stack-protector=yes \
                            --without-cvs \
                            --without-gd \
+                           --enable-obsolete-rpc \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
                            --without-selinux \
-                           --disable-timezone-tools \
-                           --disable-werror"
+                           --disable-timezone-tools"
 
-# busybox:init needs it
+# busybox:init needs it  \ --disable-werror
 # testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
 PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
 
@@ -97,6 +96,7 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
 
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||"`
 
   unset LD_LIBRARY_PATH
 

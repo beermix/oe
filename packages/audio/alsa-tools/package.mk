@@ -3,7 +3,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="alsa-tools"
-PKG_VERSION="1.1.3"
+PKG_VERSION="1.1.7"
 PKG_SITE="ftp://ftp.alsa-project.org/pub/tools/"
 PKG_URL="ftp://ftp.alsa-project.org/pub/tools/alsa-tools-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib ncurses gtk+"

@@ -2,8 +2,7 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libgcrypt"
-PKG_VERSION="1.8.3"
-PKG_ARCH="any"
+PKG_VERSION="1.8.4"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://www.gnupg.org/"
 PKG_URL="https://www.gnupg.org/ftp/gcrypt/libgcrypt/$PKG_NAME-$PKG_VERSION.tar.bz2"

@@ -1,7 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+
 PKG_NAME="sqlite"
-PKG_VERSION="autoconf-3250200"
-PKG_SHA256="da9a1484423d524d3ac793af518cdf870c8255d209e369bd6a193e9f9d0e3181"
-PKG_ARCH="any"
+PKG_VERSION="autoconf-3250300"
+PKG_SHA256="00ebf97be13928941940cc71de3d67e9f852698233cd98ce2d178fd08092f3dd"
 PKG_LICENSE="PublicDomain"
 PKG_SITE="https://www.sqlite.org/"
 PKG_URL="https://www.sqlite.org/2018/$PKG_NAME-$PKG_VERSION.tar.gz"
@@ -9,11 +12,9 @@ PKG_DEPENDS_TARGET="toolchain zlib sqlite:host"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="database"
 PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
-PKG_LONGDESC="SQLite is a C library that implements an embeddable SQL database engine. Programs that link with the SQLite library can have SQL database access without running a separate RDBMS process. The distribution comes with a standalone command-line access program (sqlite) that can be used to administer an SQLite database and which serves as an example of how to use the SQLite library. SQLite is not a client library used to connect to a big database server. SQLite is the server. The SQLite library reads and writes directly to and from the database files on disk."
 # libsqlite3.a(sqlite3.o): requires dynamic R_X86_64_PC32 reloc against 'sqlite3_stricmp' which may overflow at runtime
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-parallel"
-HARDENING_SUPPORT="yes"
+PKG_BUILD_FLAGS="-parallel +hardening"
 
 # sqlite fails to compile with fast-math link time optimization.
   CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O3|g"`

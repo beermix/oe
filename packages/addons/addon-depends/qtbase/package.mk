@@ -2,14 +2,13 @@
 # Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.6.3"
-PKG_SHA256="fef48529a6fc2617a30d75d952cb327c6be341fd104154993922184b3b3b4da1"
+PKG_VERSION="5.9.7"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_URL="http://download.qt.io/official_releases/qt/5.9/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="pcre zlib"
-PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
 

@@ -49,7 +49,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-overwrite \
 post_makeinstall_target() {
   cp misc/ncurses-config $TOOLCHAIN/bin
   chmod +x $TOOLCHAIN/bin/ncurses-config
-  $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $TOOLCHAIN/bin/ncurses-config
+  sed "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $TOOLCHAIN/bin/ncurses-config
 
   ln -sf ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
   ln -sf formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc

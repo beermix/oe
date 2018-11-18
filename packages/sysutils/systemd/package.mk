@@ -3,21 +3,19 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="systemd"
-PKG_VERSION="239"
-PKG_SHA256="8a11b1b07d620f4c06a16e95bba4dd2a97e90efdf2a5ba47ed0a935085787a14"
-PKG_ARCH="any"
+PKG_VERSION="b8cb5ef"
+#PKG_SHA256="8a11b1b07d620f4c06a16e95bba4dd2a97e90efdf2a5ba47ed0a935085787a14"
 PKG_LICENSE="LGPL2.1+"
 PKG_SITE="https://github.com/systemd/systemd/releases"
-PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
-PKG_SECTION="system"
-PKG_SHORTDESC="systemd: a system and session manager"
-PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
+PKG_LONGDESC="A system and session manager for Linux, compatible with SysV and LSB init scripts."
 
 PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Drootprefix=/usr \
                        -Dsplit-usr=false \
                        -Dsplit-bin=true \
+                       -Dgnu-efi=false \
                        -Ddefault-hierarchy=hybrid \
                        -Dtty-gid=5 \
                        -Dtests=false \

@@ -2,16 +2,12 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="bison"
-PKG_VERSION="3.1"
-PKG_SHA256="7c2464ad6cb7b513b2c350a092d919327e1f63d12ff024836acbb504475da5c6"
-PKG_ARCH="any"
+PKG_VERSION="3.2.1"
+PKG_SHA256="8ba8bd5d6e935d01b89382fa5c2fa7602e03bbb435575087bfdc3c450d4d9ecd"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/bison/"
 PKG_URL="http://ftpmirror.gnu.org/bison/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_SECTION="devel"
-PKG_SHORTDESC="bison: The GNU general-purpose parser generator"
-PKG_LONGDESC="Bison is a general-purpose parser generator that converts a grammar description for an LALR(1) context-free grammar into a C program to parse that grammar. Once you are proficient with Bison, you may use it to develop a wide range of language parsers, from those used in simple desk calculators to complex programming languages. Bison is upward compatible with Yacc: all properly-written Yacc grammars ought to work with Bison with no change. Anyone familiar with Yacc should be able to use Bison with little trouble. You need to be fluent in C programming in order to use Bison or to understand this manual."
 
 PKG_CONFIGURE_OPTS_HOST="--disable-rpath --with-gnu-ld"
 

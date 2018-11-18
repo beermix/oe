@@ -15,6 +15,6 @@ PKG_SHORTDESC="xf86-input-evdev: Generic Xorg Linux input driver"
 PKG_LONGDESC="Evdev is an Xorg input driver for Linux's generic event devices. It therefore supports all input devices that the kernel knows about, including most mice and keyboards."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --with-xorg-module-dir=$XORG_PATH_MODULES \
                            --with-gnu-ld"

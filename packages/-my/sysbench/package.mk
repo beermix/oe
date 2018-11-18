@@ -1,5 +1,5 @@
 PKG_NAME="sysbench"
-PKG_VERSION="1.0.15"
+PKG_VERSION="49f1757"
 PKG_SITE="https://github.com/akopytov/sysbench/releases"
 PKG_URL="https://github.com/akopytov/sysbench/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib libaio"
@@ -21,6 +21,4 @@ pre_build_target() {
 
 PKG_CONFIGURE_OPTS_HOST="--without-mysql"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-aio \
-			   --with-gcc-arch=westmere \
-			   --without-mysql"
+PKG_CONFIGURE_OPTS_TARGET="--enable-aio --with-gcc-arch=westmere --without-mysql"
