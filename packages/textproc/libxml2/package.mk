@@ -10,6 +10,7 @@ PKG_SITE="http://xmlsoft.org"
 PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="zlib:host icu:host"
 PKG_DEPENDS_TARGET="toolchain zlib icu"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --enable-static \
@@ -17,12 +18,12 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --disable-ipv6 \
              --without-python \
              --with-zlib=$TOOLCHAIN \
-             --with-icu \
+             --with-icu=$TOOLCHAIN \
              --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX --with-icu"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX --with-icu=$SYSROOT_PREFIX"
 
 post_makeinstall_target() {
   sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/xml2-config
