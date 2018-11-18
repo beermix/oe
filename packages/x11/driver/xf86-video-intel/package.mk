@@ -12,7 +12,7 @@ PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-ma
 PKG_SECTION="x11/driver"
 PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+PKG_BUILD_FLAGS="-lto -gold"
 # xf86-video-intel is broken enough. dont link with LTO
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
