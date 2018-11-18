@@ -9,8 +9,7 @@ PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib bzip2 libpng"
 PKG_DEPENDS_HOST="zlib:host zlib:host bzip2:host libpng:host"
-PKG_SECTION="print"
-PKG_SHORTDESC="freetype: TrueType font rendering library"
+PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine."
 PKG_TOOLCHAIN="configure"
 
 # package specific configure options
@@ -25,7 +24,7 @@ PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
 # host specific configure options
 PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$TOOLCHAIN/include \
                            LIBPNG_LDFLAGS=-L$TOOLCHAIN/lib \
-                           -with-zlib=yes \
+                           --with-zlib=yes \
                            --with-bzip2=yes \
                            --with-png=yes \
                            --enable-freetype-config \
