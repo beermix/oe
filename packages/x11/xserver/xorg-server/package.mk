@@ -12,7 +12,7 @@ PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX1
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_LONGDESC="Xorg is a full featured X server running on Intel x86 hardware."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-lto -gold +hardening"
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 get_graphicdrivers
 
