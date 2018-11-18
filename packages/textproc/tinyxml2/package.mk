@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="tinyxml2"
-PKG_VERSION="7.0.0"
-PKG_SHA256="fa0d1c745d65d4d833e62cb183e23c2034dc7a35ec1a4977e808bdebb9b4fe60"
+PKG_VERSION="7.0.1"
+PKG_SHA256="a381729e32b6c2916a23544c04f342682d38b3f6e6c0cad3c25e900c3a7ef1a6"
 PKG_LICENSE="zlib"
 PKG_URL="https://github.com/leethomason/tinyxml2/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
