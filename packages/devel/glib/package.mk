@@ -4,14 +4,14 @@
 # https://github.com/GNOME/glib/tree/glib-2-58
 
 PKG_NAME="glib"
-#PKG_VERSION="2.58.1"
-#PKG_SHA256="97d6a9d926b6aa3dfaadad3077cfb43eec74432ab455dff14250c769d526d7d6"
-PKG_VERSION="17519e039f29b5ffd0aad5ed1661bc56eb1dfeaa"
-PKG_SHA256="527cdb675eb1d86d057e4d6ed878eb0d0f1b7d6fa672333deab34dd6c2e7bd9c"
+PKG_VERSION="2.58.1"
+PKG_SHA256="97d6a9d926b6aa3dfaadad3077cfb43eec74432ab455dff14250c769d526d7d6"
+#PKG_VERSION="17519e039f29b5ffd0aad5ed1661bc56eb1dfeaa"
+#PKG_SHA256="527cdb675eb1d86d057e4d6ed878eb0d0f1b7d6fa672333deab34dd6c2e7bd9c"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D" # https://github.com/GNOME/glib/tree/glib-2-58
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host"
 
