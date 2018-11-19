@@ -15,7 +15,7 @@ PKG_SHORTDESC="python3: The Python3 programming language"
 PKG_PYTHON_VERSION=python3.7
 
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+hardening"
+#PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          ac_cv_prog_SVNVERSION=/bin/false
@@ -43,6 +43,7 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --without-pymalloc
                          --without-ensurepip
                          --with-computed-gotos
+                         --with-pymalloc
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
@@ -83,7 +84,19 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --with-threads
                            --disable-ipv6
                            --with-computed-gotos
+                           --with-pymalloc
+                           --with-lto=8
 "
+
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+}
+
+pre_configure_host() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+}
 
 post_unpack() {
   # This is needed to make sure the Python build process doesn't try to

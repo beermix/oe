@@ -4,13 +4,16 @@
 PKG_NAME="connman"
 PKG_VERSION="1.36"
 PKG_SHA256="c789db41cc443fa41e661217ea321492ad59a004bebcd1aa013f3bc10a6e0074"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.connman.net"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables wpa_supplicant"
-PKG_BUILD_FLAGS="+hardening"
 PKG_TOOLCHAIN="autotools"
+
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -fstack-protector-strong -mzero-caller-saved-regs=used |"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -fstack-protector-strong -mzero-caller-saved-regs=used |"`
+}
 
 PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --srcdir=.. \

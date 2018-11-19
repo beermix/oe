@@ -69,12 +69,13 @@ pre_configure_target() {
       ;;
   esac
 
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -ffunction-sections -fdata-sections"`
+  export LDFLAGS="$CXXFLAGS -Wl,--gc-sections"
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET "-Wa,--noexecstack $CFLAGS -ffunction-sections -fdata-sections -Wl,--gc-sections"
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET "-Wa,--noexecstack $CFLAGS $LDFLAGS"
 }
 
 makeinstall_target() {
