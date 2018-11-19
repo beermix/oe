@@ -10,14 +10,19 @@ PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic:host +pic +hardening"
+PKG_BUILD_FLAGS="+pic:host +pic"
 
 TARGET_CONFIGURE_OPTS="--prefix=/usr"
 HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN"
 
 pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+}
+
+pre_configure_host() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
 }
 
 post_configure_target() {
