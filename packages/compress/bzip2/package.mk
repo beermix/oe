@@ -10,7 +10,7 @@ PKG_SITE="http://www.bzip.org"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
-PKG_BUILD_FLAGS="+pic +pic:host +hardening"
+PKG_BUILD_FLAGS="+pic +pic:host"
 
 pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME

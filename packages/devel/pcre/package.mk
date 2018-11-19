@@ -12,7 +12,6 @@ PKG_DEPENDS_TARGET="toolchain zlib bzip2"
 PKG_DEPENDS_HOST="ccache:host autotools:host autoconf:host"
 PKG_SHORTDESC="pcre: Perl Compatible Regulat Expressions"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \

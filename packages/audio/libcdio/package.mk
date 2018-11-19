@@ -27,7 +27,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-cxx \
                            --without-cd-read \
                            --without-iso-info \
                            --without-iso-read \
-                           --without-libiconv-prefix"
+                           --without-libiconv-prefix \
+                           --with-gnu-ld"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
