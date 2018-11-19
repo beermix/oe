@@ -15,7 +15,7 @@ export CXX=$LOCAL_CXX
 
 export CFLAGS="-march=native -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2 -fno-plt -Wall"
 export CXXFLAGS="-march=native -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2 -fno-plt -Wall"
-export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
+export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
 
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 
