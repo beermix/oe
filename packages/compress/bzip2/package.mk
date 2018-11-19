@@ -14,13 +14,11 @@ PKG_BUILD_FLAGS="+pic +pic:host"
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3  -fPIC|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3  -fPIC|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
 }
 
 pre_configure_host() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3  -fPIC|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3  -fPIC|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
 }
-
-PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules"
