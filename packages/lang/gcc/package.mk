@@ -94,6 +94,8 @@ pre_configure_host() {
 #  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
 #  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 
+  export CCACHE_RECACHE=true
+
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
