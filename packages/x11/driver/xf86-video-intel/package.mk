@@ -21,12 +21,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,now||"`
-  unset LDFLAGS
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||g"`
 
-  CFLAGS="$CFLAGS -D_GNU_SOURCE"
+  export CFLAGS="$CFLAGS -D_GNU_SOURCE"
 }
 
 post_makeinstall_target() {
