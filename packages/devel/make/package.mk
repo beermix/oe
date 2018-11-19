@@ -11,7 +11,8 @@ PKG_URL="http://ftpmirror.gnu.org/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
 
 export CC=$LOCAL_CC
 
-export CFLAGS="-march=native -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2 -fno-plt"
+export CFLAGS="-march=native -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2 -fno-plt -Wall"
+export CXXFLAGS="-march=native -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2 -fno-plt -Wall"
 export LDFLAGS="-march=native -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
