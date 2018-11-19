@@ -3,33 +3,29 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="zlib-ng"
-PKG_VERSION="9992d3b"
+PKG_VERSION="796ad10"
 PKG_URL="https://github.com/Dead2/zlib-ng/archive/${PKG_VERSION}.tar.gz"
 #PKG_VERSION="665de7d"
 #PKG_URL="https://github.com/mtl1979/zlib-ng/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_SECTION="compress"
-PKG_TOOLCHAIN="cmake-make"
-PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic:host +pic +hardening"
 
-configure_host() {
-  cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN \
-  	 -DZLIB_COMPAT=1 \
-  	 -DWITH_GZFILEOP=0 \
-  	 -DWITH_OPTIM=0 \
-  	 ..
+TARGET_CONFIGURE_OPTS="--prefix=/usr --zlib-compat --with-gzfileops --without-new-strategies"
+HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN --zlib-compat --with-gzfileops --without-new-strategies"
+
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -Wall|"`
 }
 
-PKG_CMAKE_OPTS_TARGET="-DZLIB_COMPAT=1 -DWITH_GZFILEOP=1 -DWITH_OPTIM=1"
-
-post_makeinstall_target() {
-  cp -v minigzip64 $SYSROOT_PREFIX/usr/bin/
-  cp -v minigzip $SYSROOT_PREFIX/usr/bin/
-  #cp -v libminizip.a $SYSROOT_PREFIX/usr/lib/
+pre_build_target() {
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
 }
 
-post_makeinstall_host() {
-  cp -v minigzip64 $TOOLCHAIN/bin/
-  cp -v minigzip $TOOLCHAIN/bin/
+pre_build_host() {
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+  cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
 }
