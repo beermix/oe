@@ -82,7 +82,7 @@ addon() {
 
   # unclutter
   cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
-  
+
   # libnotify
   cp -PL $(get_build_dir libnotify)/.install_pkg/usr/lib/libnotify.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
@@ -91,7 +91,7 @@ addon() {
 
   # snappy
   cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libsnappy.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
+
   # icu
   cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuuc.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicudata.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
