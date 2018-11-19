@@ -11,53 +11,16 @@ PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
 PKG_BUILD_FLAGS="+pic +pic:host"
+PKG_TOOLCHAIN="autotools"
 
-pre_build_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-  cp -r $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3  -fPIC|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3  -fPIC|"`
 }
 
-make_host() {
-  cd $PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS"
+pre_configure_host() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3  -fPIC|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3  -fPIC|"`
 }
 
-makeinstall_host() {
-  make install PREFIX=$TOOLCHAIN
-}
-
-pre_build_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -r $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
-}
-
-pre_make_target() {
-  cd $PKG_BUILD/.$TARGET_NAME
-  sed -e "s,ln -s (lib.*),ln -snf \$$1; ln -snf libbz2.so.$PKG_VERSION libbz2.so,g" -i Makefile-libbz2_so
-}
-
-make_target() {
-  make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS"
-  make -f Makefile libbz2.a bzip2 bzip2recover CC="$CC" CFLAGS="$CFLAGS"
-}
-
-post_make_target() {
-  ln -snf libbz2.so.1.0 libbz2.so
-}
-
-makeinstall_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/include
-    cp bzlib.h $SYSROOT_PREFIX/usr/include
-  mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib
-    cp libbz2.a $SYSROOT_PREFIX/usr/lib
-
-  mkdir -p $INSTALL/usr/lib
-    cp -P libbz2.so* $INSTALL/usr/lib
-    
-  mkdir -p $INSTALL/usr/bin
-    cp -P bzdiff $INSTALL/usr/bin
-    cp -P bzgrep $INSTALL/usr/bin
-    cp -P bzip2 $INSTALL/usr/bin
-    cp -P bzmore $INSTALL/usr/bin
-}
+PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules"

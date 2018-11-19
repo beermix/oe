@@ -8,11 +8,15 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/intel-vaapi-driver/releases"
 PKG_URL="https://github.com/intel/intel-vaapi-driver/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
-#PKG_BUILD_FLAGS="+hardening"
 
 post_unpack() {
   sed -i '1s/python$/&2/' $PKG_BUILD/src/shaders/gpp.py
   sed -i 's/2.2.0/2.2.0.0/' $PKG_BUILD/meson.build
+}
+
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
 }
 
 PKG_MESON_OPTS_TARGET="-Dwith_x11=yes \
