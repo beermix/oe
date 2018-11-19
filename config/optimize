@@ -34,6 +34,7 @@ HOST_INCDIR="$TOOLCHAIN/include /usr/include"
 HOST_CFLAGS="$HOST_CFLAGS -Wno-format-security"
 HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security" 
 
+# -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math
 # lto flags
 FLAGS_OPTIM_LTO_NO_PARALLEL="-flto"
 FLAGS_OPTIM_LTO_PARALLEL="-flto=${CONCURRENCY_MAKE_LEVEL}"
