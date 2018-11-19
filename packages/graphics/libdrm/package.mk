@@ -11,7 +11,6 @@ PKG_SITE="https://dri.freedesktop.org/libdrm/?C=M;O=D"
 PKG_URL="http://dri.freedesktop.org/libdrm/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libpciaccess"
 PKG_TOOLCHAIN="meson"
-#PKG_BUILD_FLAGS="+hardening"
 
 get_graphicdrivers
 
