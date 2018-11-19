@@ -24,7 +24,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||g"`
 
-  export CFLAGS="$CFLAGS -D_GNU_SOURCE"
+  #export CFLAGS="$CFLAGS -D_GNU_SOURCE"
 }
 
 post_makeinstall_target() {
