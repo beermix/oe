@@ -85,25 +85,26 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
+                         --disable-libunwind-exceptions \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+  export CCACHE_DISABLE=true
 
-  export CCACHE_RECACHE=true
+  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
-#pre_configure_bootstrap() {
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-#}
+pre_configure_bootstrap() {
+  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+}
 
 post_make_host() {
   # fix wrong link
