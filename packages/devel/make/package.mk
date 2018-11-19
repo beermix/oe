@@ -11,11 +11,14 @@ PKG_URL="http://ftpmirror.gnu.org/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
 
 export CC=$LOCAL_CC
 
+export CFLAGS="-march=native -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2 -fno-plt"
+export LDFLAGS="-march=native -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
+
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
  ln -sf make $TOOLCHAIN/bin/gmake
- strip $TOOLCHAIN/bin/make
+ #strip $TOOLCHAIN/bin/make
 
  #mkdir -p $TOOLCHAIN/bin
  #ln -sf /bin/make $TOOLCHAIN/bin/gmake
