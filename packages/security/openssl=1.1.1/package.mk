@@ -68,7 +68,7 @@ pre_configure_target() {
       OPENSSL_TARGET=linux-aarch64
       ;;
   esac
-  
+
   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }

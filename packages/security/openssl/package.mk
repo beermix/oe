@@ -69,8 +69,8 @@ pre_configure_target() {
       ;;
   esac
 
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 configure_target() {
