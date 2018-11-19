@@ -11,7 +11,7 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="A tool for generating programs that perform pattern-matching on text."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_func_reallocarray=no --enable-static --disable-shared --disable-rpath --with-gnu-ld --disable-doc"
 
 post_makeinstall_host() {
   cat > $TOOLCHAIN/bin/lex << "EOF"
@@ -22,3 +22,4 @@ EOF
   chmod -v 755 $TOOLCHAIN/bin/lex
 }
 
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_reallocarray=no --disable-program --disable-doc"
