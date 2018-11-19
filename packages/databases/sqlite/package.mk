@@ -10,10 +10,9 @@ PKG_SITE="https://www.sqlite.org/"
 PKG_URL="https://www.sqlite.org/2018/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib sqlite:host"
 PKG_DEPENDS_HOST="zlib:host"
-PKG_SECTION="database"
 PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
 # libsqlite3.a(sqlite3.o): requires dynamic R_X86_64_PC32 reloc against 'sqlite3_stricmp' which may overflow at runtime
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +hardening"
 
 # sqlite fails to compile with fast-math link time optimization.
