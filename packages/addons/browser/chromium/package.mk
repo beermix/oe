@@ -228,4 +228,5 @@ addon() {
   cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicui18n.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuio.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicutu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicutest.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
