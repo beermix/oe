@@ -3,7 +3,7 @@
 
 PKG_NAME="ninja"
 PKG_VERSION="5a78423"
-PKG_SHA256=""
+PKG_SHA256="41c2f4f43fa6affcb23e837e0d662ddb4cad7d1a8b62d1850155b42acb40f022"
 #PKG_VERSION="1.8.2"
 #PKG_SHA256="86b8700c3d0880c2b44c2ff67ce42774aaf8c28cbf57725cb881569288c1c6f4"
 PKG_LICENSE="Apache"
@@ -13,7 +13,7 @@ PKG_DEPENDS_HOST="Python2:host re2c:host"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  CXX=/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
+  $TOOLCHAIN/bin/python2 ./configure.py --bootstrap
   #CXX=/bin/clang++ 
   #python2 configure.py --bootstrap
 }
