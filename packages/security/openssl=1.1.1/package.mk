@@ -2,31 +2,27 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2p"
-PKG_SHA256="50a98e07b1a89eb8f6a99477f262df71c6fa7bef77df4dc83025a2845c827d00"
+PKG_VERSION="1.1.1"
+PKG_SHA256="2836875a0f89c03d0fdf483941512613a50cfb421d6fd94b9f41d7279d586a3d"
 PKG_LICENSE="BSD"
-PKG_SITE="https://www.openssl.org/source/"
+PKG_SITE="https://www.openssl.org"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
+PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="-parallel"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            no-ec2m \
-                           no-gmp \
-                           no-jpake \
-                           no-krb5 \
-                           no-libunbound \
                            no-md2 \
                            no-rc5 \
                            no-rfc3779
                            no-sctp \
                            no-ssl-trace \
-                           no-ssl2 \
                            no-ssl3 \
-                           no-store \
                            no-unit-test \
                            no-weak-ssl-ciphers \
                            no-zlib \
@@ -38,6 +34,10 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --openssldir=/etc/ssl"
 
+post_unpack() {
+  find $PKG_BUILD/apps -type f | xargs -n 1 -t sed 's|./demoCA|/etc/ssl|' -i
+}
+
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
@@ -45,7 +45,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -68,21 +68,19 @@ pre_configure_target() {
       OPENSSL_TARGET=linux-aarch64
       ;;
   esac
-
+  
   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw -j1
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw -j1
-  chmod 755 $INSTALL/usr/lib/*.so*
-  chmod 755 $INSTALL/usr/lib/engines/*.so
+  make DESTDIR=$INSTALL install_sw -j1
+  make DESTDIR=$SYSROOT_PREFIX install_sw -j1
 }
 
 post_makeinstall_target() {
