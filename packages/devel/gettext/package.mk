@@ -8,6 +8,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/s/gettext/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host m4:host autotools:host libxml2:host"
+PKG_DEPENDS_HOST="ccache:host libxml2:host"
 PKG_SHORTDESC="gettext: A program internationalization library and tools"
 #PKG_TOOLCHAIN="autotools"
 
