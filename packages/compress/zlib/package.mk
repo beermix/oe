@@ -27,7 +27,7 @@ post_configure_target() {
   rm Makefile
   export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
   do_autoreconf
-  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS
+  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --enable-static=no
  )
 }
 
