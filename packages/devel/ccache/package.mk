@@ -18,7 +18,7 @@ export CFLAGS="-march=haswell -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE
 export CXXFLAGS="-march=haswell -O2 -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2 -fno-plt -Wall"
 export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
 
-PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib=no"
+#PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib=no"
 
 post_makeinstall_host() {
 # setup ccache
