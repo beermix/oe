@@ -1,7 +1,7 @@
-GCC_OPTIM="-O2 -pipe"
+GCC_OPTIM="-O2 -pipe -fno-plt"
 # Linker hash-style is set to gnu via gcc default
-LD_OPTIM="-Wl,--as-needed"
-# LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
+# LD_OPTIM="-Wl,--as-needed"
+LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
@@ -50,11 +50,11 @@ CXXFLAGS_OPTIM_PIC="-fPIC -DPIC"
 LDFLAGS_OPTIM_PIC="-fPIC"
 
 # hardening support
-# TODO: basiclly copied from debian 9, should adjust for LE
-CFLAGS_OPTIM_HARDENING="-fstack-protector -Wp,-D_FORTIFY_SOURCE=2 -fno-plt -Wformat -Werror=format-security"
+# TODO: basiclly copied from debian 9, should adjust for LE | -Wl,-z,relro -Wl,-z,now
+CFLAGS_OPTIM_HARDENING="-fstack-protector -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security"
 CXXFLAGS_OPTIM_HARDENING="$CFLAGS_OPTIM_HARDENING"
 CPPFLAGS_OPTIM_HARDENING=""
-LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
+LDFLAGS_OPTIM_HARDENING=""
 
 # add distro specific library dirs
 if [ -z "$HOST_LIBDIR" ]; then
