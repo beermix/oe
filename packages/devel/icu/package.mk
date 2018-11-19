@@ -17,7 +17,12 @@ pre_configure_target() {
   export LIBS="-latomic"
 }
 
-#PKG_CONFIGURE_OPTS_HOST="--enable-shared --disable-static"
+PKG_CONFIGURE_OPTS_HOST="--disable-samples \
+			    --disable-tests \
+			    --disable-extras \
+			    --disable-icuio \
+			    --disable-layout \
+			    --disable-renaming"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
