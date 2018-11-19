@@ -7,7 +7,6 @@ PKG_SHA256="f338497b867bbc9bf008e4892eaebda08955785dc7eb2005855bba5f1a20b037"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/libva-utils/releases"
 PKG_URL="https://github.com/intel/libva-utils/archive/$PKG_VERSION.tar.gz"
-PKG_BUILD_FLAGS="+hardening"
 
 PKG_MESON_OPTS_TARGET="-Ddrm=true \
 			  -Dx11=true \
