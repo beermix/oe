@@ -3,10 +3,10 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="c75772e"
+PKG_VERSION="0c7f97aead9bf82f868d39cf7dc179caf224189a"
 PKG_SHA256=""
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
+PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
 PKG_SITE="https://github.com/bminor/glibc"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
@@ -15,7 +15,7 @@ PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:boot
 PKG_DEPENDS_INIT="glibc"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
