@@ -5,9 +5,8 @@ PKG_URL="http://ftpmirror.gnu.org/findutils/findutils-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 
 pre_configure_target() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,now||"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_stdin=yes \
