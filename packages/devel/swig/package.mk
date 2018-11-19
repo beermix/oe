@@ -39,5 +39,4 @@ PKG_CONFIGURE_OPTS_HOST="--program-suffix=3.0 \
 
 post_makeinstall_host() {
   ln -sf swig3.0 $TOOLCHAIN/bin/swig
-  strip $TOOLCHAIN/bin/swig
 }
