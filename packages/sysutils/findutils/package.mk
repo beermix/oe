@@ -7,6 +7,7 @@ PKG_DEPENDS_TARGET="toolchain"
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s| -Wl,-z,now||g"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_stdin=yes \

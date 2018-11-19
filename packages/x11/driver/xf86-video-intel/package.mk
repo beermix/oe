@@ -23,6 +23,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s| -Wl,-z,now||g"`
 
   #export CFLAGS="$CFLAGS -D_GNU_SOURCE"
 }
