@@ -55,7 +55,7 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 # TODO: basiclly copied from debian 9, should adjust for LE
 CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -fno-plt -Wformat -Werror=format-security -znow -zrelro"
 CXXFLAGS_OPTIM_HARDENING="$CFLAGS_OPTIM_HARDENING"
-CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
+CPPFLAGS_OPTIM_HARDENING="-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2"
 LDFLAGS_OPTIM_HARDENING="-Wl,-z,now -Wl,-z,relro"
 
 # add distro specific library dirs
