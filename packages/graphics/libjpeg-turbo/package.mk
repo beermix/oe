@@ -11,7 +11,7 @@ PKG_URL="$SOURCEFORGE_SRC/libjpeg-turbo/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.
 PKG_DEPENDS_HOST="nasm:host"
 PKG_DEPENDS_TARGET="toolchain nasm:host"
 PKG_TOOLCHAIN="cmake-make"
-PKG_BUILD_FLAGS="+pic:host +pic +hardening"
+PKG_BUILD_FLAGS="+pic:host +pic -hardening"
 
 configure_host() {
   cmake -DCMAKE_INSTALL_PREFIX:PATH=$TOOLCHAIN \
