@@ -135,8 +135,7 @@ TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
                        --libexecdir=/usr/lib \
                        --localstatedir=/var \
                        --disable-static \
-                       --enable-shared \
-                       --enable-silent-rules"
+                       --enable-shared"
 
 CMAKE_GENERATOR_NINJA="-GNinja \
                        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"

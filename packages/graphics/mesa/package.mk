@@ -15,8 +15,8 @@ PKG_TOOLCHAIN="meson"
 #PKG_BUILD_FLAGS="+lto"
 
 pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math |"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math |"`
 }
 
 get_graphicdrivers
