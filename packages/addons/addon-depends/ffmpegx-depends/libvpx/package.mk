@@ -9,7 +9,7 @@ PKG_SITE="https://www.webmproject.org"
 PKG_URL="https://github.com/webmproject/libvpx/archive/v${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host"
 PKG_LONGDESC="WebM VP8/VP9 Codec"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+PKG_BUILD_FLAGS="-lto -gold +hardening"
 
 configure_target() {
 
