@@ -11,7 +11,7 @@ PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.x
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
-PKG_SHORTDESC="gcc: The GNU Compiler Collection (aka GNU C Compiler)"
+PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 #post_unpack() {
@@ -52,6 +52,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libatomic \
+                           --disable-libitm \
+                           --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
@@ -62,8 +64,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
-                              --disable-libitm \
-                              --disable-libquadmath \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
