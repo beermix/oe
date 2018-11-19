@@ -30,13 +30,15 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.18 \
+                           --enable-stack-protector=strong \
+                           --enable-tunables \
+                           --enable-systemtap \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --without-selinux \
                            --disable-timezone-tools"
 
 # busybox:init needs it  \ --disable-werror
