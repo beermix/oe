@@ -3,7 +3,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="go"
-PKG_VERSION="1.10.5"
+PKG_VERSION="1.11.2"
 PKG_SHA256=""
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/golang/go/releases"
@@ -33,7 +33,7 @@ configure_host() {
 
 make_host() {
   cd $PKG_BUILD/src
-  bash make.bash --no-banner -v
+  bash make.bash --no-banner --no-clean -v
 }
 
 pre_makeinstall_host() {
