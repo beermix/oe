@@ -5,19 +5,19 @@ PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva"
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic"
 
-# Dependencies
 get_graphicdrivers
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --enable-swap-16bit-csp \
 			      --enable-experimental \
+			      --enable-libwebp \
 			      --enable-libwebpmux \
 			      --enable-libwebpmux \
 			      --enable-libwebdemux \
 			      --enable-libwebdecoder \
 			      --enable-libwebextras"
 
-#post_makeinstall_target() {
-#  rm -rf $INSTALL
-#}
+pre_configure_target() {
+  unset LDFLAGS
+}
