@@ -8,7 +8,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/intel-vaapi-driver/releases"
 PKG_URL="https://github.com/intel/intel-vaapi-driver/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
-PKG_BUILD_FLAGS="+hardening"
+#PKG_BUILD_FLAGS="+hardening"
 
 post_unpack() {
   sed -i '1s/python$/&2/' $PKG_BUILD/src/shaders/gpp.py

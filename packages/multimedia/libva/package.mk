@@ -10,7 +10,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/libva/releases"
 PKG_URL="https://github.com/intel/libva/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="libX11 libXext libXfixes libdrm"
-PKG_BUILD_FLAGS="+hardening"
+#PKG_BUILD_FLAGS="+hardening"
 
 PKG_MESON_OPTS_TARGET="-Ddocs=false \
 			  -Ddisable_drm=false \
