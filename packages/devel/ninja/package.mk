@@ -13,7 +13,7 @@ PKG_DEPENDS_HOST="Python2:host re2c:host"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  python2 configure.py --bootstrap
+  CXX=clang++ python2 configure.py --bootstrap
   #CXX=/bin/clang++ | $TOOLCHAIN/bin/python2
   #python2 configure.py --bootstrap
 }
