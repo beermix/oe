@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="gdb"
-PKG_VERSION="8.1"
-PKG_SHA256="af61a0263858e69c5dce51eab26662ff3d2ad9aa68da9583e8143b5426be4b34"
+PKG_VERSION="8.2"
+PKG_SHA256="c3a441a29c7c89720b734e5a9c6289c0a06be7e0c76ef538f7bbcef389347c39"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
 PKG_URL="http://ftpmirror.gnu.org/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
