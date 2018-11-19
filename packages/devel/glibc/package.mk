@@ -30,7 +30,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.18 \
-                           --enable-stack-protector=yes \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -85,6 +84,7 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
