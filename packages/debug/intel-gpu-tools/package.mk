@@ -8,7 +8,7 @@ PKG_SOURCE_DIR="igt-gpu-tools-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain peg:host kmod systemd procps-ng libpciaccess mesa libdrm libpciaccess cairo swig:host libunwind libXv"
 PKG_TOOLCHAIN="autotools"
 #PKG_TOOLCHAIN="meson"
-PKG_BUILD_FLAGS="+hardening"
+#PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
 			      --disable-shared \
