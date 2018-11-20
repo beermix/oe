@@ -249,12 +249,10 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_PLAYER"
 
 pre_configure_target() {
-# kodi should never be built with lto
-
   export LIBS="$LIBS -lz -ltinfo"
 
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2|-D_FORTIFY_SOURCE=1|g"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2|-D_FORTIFY_SOURCE=1|g"`
+  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 }
 
 post_makeinstall_target() {
