@@ -146,7 +146,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 noti ninja -C out/Release chrome chrome_sandbox
+  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
 
 addon() {
@@ -157,7 +157,7 @@ addon() {
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config *.dat, ,libwidevinecdmadapter.so ++  -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS
+  # config *.dat, ,libwidevinecdmadapter.so ++  
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
            $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
            $ADDON_BUILD/$PKG_ADDON_ID/lib
