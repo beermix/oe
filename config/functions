@@ -38,6 +38,8 @@ listremoveitem() {
 print_color() {
   local clr_name="$1" clr_text="$2" clr_actual
 
+  [ -z "${clr_name}" ] && return 0
+
   if [ "$DISABLE_COLORS" = "yes" ]; then
     [ $# -eq 2 ] && echo -en "${clr_text}"
     return 0
@@ -82,6 +84,19 @@ print_color() {
     echo -en "${!clr_actual}${clr_text}${endcolor}"
   else
     echo -en "${!clr_actual}"
+  fi
+}
+
+# print build progress messages
+# param1: message color, p2: label, p3: text, p4: indent (optional)
+build_msg() {
+  printf "%${BUILD_INDENT}c$(print_color "${1}" "${2}")      ${3}\n" ' '>&${SILENT_OUT}
+
+  # pad left space to create "indent" effect
+  if [ "${4}" = "indent" ]; then
+    export BUILD_INDENT=$((${BUILD_INDENT:-0}+${BUILD_INDENT_SIZE}))
+  elif [ -n "${4}" ]; then
+    die "ERROR: ${0} unexpected parameter: ${4}"
   fi
 }
 
