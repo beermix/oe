@@ -1,0 +1,14 @@
+#!/bin/bash
+
+xfs_repair /dev/sdb1
+e2fsck -fpDv -E bmap2extent /dev/sdd1
+e2fsck -fpDv -E bmap2extent /dev/sdc1
+
+mount -t xfs /dev/sdb1 /home/user
+mount -t ext4 /dev/sdc1 /home/user/-f2fs
+mount -t ext4 /dev/sdd1 /home/user/.aa
+
+#systemctl stop irqbalance
+systemctl stop docker
+
+/bin/smbd
