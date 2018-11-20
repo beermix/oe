@@ -64,7 +64,7 @@ index 0000000..0da9682
  	{
  		func load
  		files [
-+			"/usr/share/defaults/alsa/asound.conf"
++			"/storage/.config/asound.conf"
  			"/etc/alsa/conf.d"
  			"/etc/asound.conf"
  			"~/.asoundrc"
