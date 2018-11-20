@@ -251,8 +251,8 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
 pre_configure_target() {
   export LIBS="$LIBS -lz -ltinfo"
 
-  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
+  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
 }
 
 post_makeinstall_target() {
