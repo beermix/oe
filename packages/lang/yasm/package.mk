@@ -8,3 +8,14 @@ PKG_URL="https://github.com/yasm/yasm/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host re2c:host nasm:host"
 PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
 PKG_TOOLCHAIN="autotools"
+
+PKG_CONFIGURE_OPTS_HOST="--disable-debug \
+                         --disable-warnerror \
+                         --disable-profiling \
+                         --disable-gcov \
+                         --disable-python-bindings \
+                         --enable-nls \
+                         --disable-rpath \
+                         --without-dmalloc \
+                         --without-libiconv-prefix \
+                         --without-libintl-prefix"
