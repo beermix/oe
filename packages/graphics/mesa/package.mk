@@ -12,10 +12,7 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_TOOLCHAIN="meson"
-#PKG_BUILD_FLAGS="+lto"
-
-LTO_SUPPORT="yes"
-GOLD_SUPPORT="yes"
+PKG_BUILD_FLAGS="+lto"
 
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math |"`
@@ -44,9 +41,7 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
                        -Dlmsensors=false \
                        -Dbuild-tests=false \
                        -Dselinux=false \
-                       -Dosmesa=none \
-                       -Db_lto=false \
-                       -Db_ndebug=false"
+                       -Dosmesa=none"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr libva"
