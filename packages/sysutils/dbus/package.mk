@@ -4,7 +4,6 @@
 PKG_NAME="dbus"
 PKG_VERSION="1.12.10"
 PKG_SHA256="4b693d24976258c3f2fa9cc33ad9288c5fbfa7a16481dbd9a8a429f7aa8cdcf7"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://dbus.freedesktop.org/releases/dbus/?C=M;O=D"
 PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
@@ -33,6 +32,11 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --with-dbus-user=dbus \
                            --runstatedir=/run \
                            --with-system-socket=/run/dbus/system_bus_socket"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc.d
