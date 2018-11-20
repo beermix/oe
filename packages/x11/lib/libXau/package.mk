@@ -15,3 +15,8 @@ PKG_SHORTDESC="libXau: X authorization file management libary"
 PKG_LONGDESC="X authorization file management libary"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-xthreads"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+  export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+}

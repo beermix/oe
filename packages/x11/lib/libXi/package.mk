@@ -15,6 +15,11 @@ PKG_SHORTDESC="libxi: X11 Input extension library"
 PKG_LONGDESC="LibXi provides an X Window System client interface to the XINPUT extension to the X protocol."
 PKG_BUILD_FLAGS="+pic"
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+  export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
                            --disable-docs \
                            --disable-specs \

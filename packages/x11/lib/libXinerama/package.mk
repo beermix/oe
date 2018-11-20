@@ -12,3 +12,8 @@ PKG_DEPENDS_TARGET="toolchain util-macros libXext"
 PKG_SECTION="x11/lib"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+  export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+}
