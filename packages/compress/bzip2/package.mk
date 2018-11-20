@@ -10,7 +10,7 @@ PKG_SITE="http://www.bzip.org"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
-#PKG_BUILD_FLAGS="+pic +pic:host"
+PKG_BUILD_FLAGS="+pic +pic:host"
 
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
