@@ -6,6 +6,8 @@ PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap"
 
 pre_configure_target() {
   export LIBS="$LIBS -lncursesw -ltinfo"
+  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
@@ -13,7 +15,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
 			      --enable-pcre \
 			      --disable-ansi2knr \
 			      --disable-dynamic \
-			      --enable-multibyte \
 			      --sysconfdir=/storage/.config \
 			      --with-term-lib=ncursesw \
 			      --enable-etcdir \
