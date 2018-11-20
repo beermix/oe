@@ -13,3 +13,8 @@ PKG_DEPENDS_TARGET="toolchain util-macros libX11"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxfixes: X Fixes Library"
 PKG_LONGDESC="X Fixes Library"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto -fno-semantic-interposition "
+  export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto -fno-semantic-interposition "
+}
