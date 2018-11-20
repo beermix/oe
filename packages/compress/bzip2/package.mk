@@ -10,14 +10,9 @@ PKG_SITE="http://www.bzip.org"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
-PKG_BUILD_FLAGS="+pic +pic:host"
+#PKG_BUILD_FLAGS="+pic +pic:host"
 
 pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
-}
-
-pre_configure_host() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
 }
@@ -33,7 +28,7 @@ make_host() {
 }
 
 makeinstall_host() {
-  make install PREFIX=$TOOLCHAIN
+  make install PREFIX=$TOOLCHAIN -j1
 }
 
 pre_build_target() {
