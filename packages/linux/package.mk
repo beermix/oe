@@ -31,6 +31,7 @@ case "$LINUX" in
     ;;
   zen)
     PKG_VERSION="4.18.19-lqx2"
+    PKG_SHA256="bd33a2c7c0384450bffb801f60b47355c98d3b423f07a920c49c4a1ce77b39ad"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/v$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="zen"
