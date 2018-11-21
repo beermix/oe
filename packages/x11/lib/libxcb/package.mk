@@ -9,10 +9,8 @@ PKG_SITE="http://xcb.freedesktop.org"
 PKG_URL="http://xcb.freedesktop.org/dist/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros Python2:host xcb-proto libpthread-stubs libXau"
 PKG_LONGDESC="X C-language Bindings library."
-PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--with-doxygen=no \
                            --disable-screensaver \
                            --disable-xprint \
                            --disable-selinux \
@@ -24,4 +22,7 @@ pre_configure_target() {
 
   PKG_CONFIG="$PKG_CONFIG --define-variable=pythondir=$PYTHON_TOOLCHAIN_PATH"
   PKG_CONFIG="$PKG_CONFIG --define-variable=xcbincludedir=$SYSROOT_PREFIX/usr/share/xcb"
+
+  export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition"
+  export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition"
 }
