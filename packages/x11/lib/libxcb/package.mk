@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libxcb"
-PKG_VERSION="1.13"
-PKG_SHA256="188c8752193c50ff2dbe89db4554c63df2e26a2e47b0fa415a70918b5b851daa"
+PKG_VERSION="1.13.1"
+PKG_SHA256="a89fb7af7a11f43d2ce84a844a4b38df688c092bf4b67683aef179cdf2a647c4"
 PKG_LICENSE="OSS"
 PKG_SITE="http://xcb.freedesktop.org"
 PKG_URL="http://xcb.freedesktop.org/dist/$PKG_NAME-$PKG_VERSION.tar.bz2"
