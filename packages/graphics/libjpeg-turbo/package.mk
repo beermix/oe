@@ -2,9 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libjpeg-turbo"
-PKG_VERSION="2.0.0"
-PKG_SHA256="778876105d0d316203c928fd2a0374c8c01f755d0a00b12a1c8934aeccff8868"
-PKG_ARCH="any"
+PKG_VERSION="2.0.1"
+PKG_SHA256="e5f86cec31df1d39596e0cca619ab1b01f99025a27dafdfc97a30f3a12f866ff"
 PKG_LICENSE="GPL"
 PKG_SITE="http://libjpeg-turbo.virtualgl.org/"
 PKG_URL="$SOURCEFORGE_SRC/libjpeg-turbo/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
