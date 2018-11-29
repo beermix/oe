@@ -149,7 +149,7 @@ if [ -d "$SOURCES/$1" -o -d "$PKG_DIR/sources" ]; then
       fi
 
       if [ -f "$i" ]; then
-        build_msg "CLR_APPLY_PATCH" "APPLY PATCH" "$(print_color CLR_PATCH_DESC "${PATCH_DESC}")  ${i#${ROOT}/}"
+        build_msg "CLR_APPLY_PATCH" "APPLY PATCH $(print_color "CLR_PATCH_DESC" "${PATCH_DESC}")" "${i#${ROOT}/}"
         if grep -qE '^GIT binary patch$|^rename from|^rename to' $i; then
           cat $i | git apply --directory=$(echo "$PKG_BUILD" | cut -f1 -d\ ) -p1 --verbose --whitespace=nowarn --unsafe-paths >&$VERBOSE_OUT
         else

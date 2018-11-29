@@ -41,7 +41,7 @@ fi
 
 $SCRIPTS/build $@
 
-build_msg "CLR_INSTALL" "INSTALL" "${PACKAGE_NAME} $(print_color CLR_TARGET "(${TARGET})") " "indent"
+build_msg "CLR_INSTALL" "INSTALL" "${PACKAGE_NAME} $(print_color CLR_TARGET "(${TARGET})")" "indent"
 
 if [ "$TARGET" = target ] ; then
   for p in $PKG_DEPENDS_TARGET; do
