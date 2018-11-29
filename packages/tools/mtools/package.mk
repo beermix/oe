@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="mtools"
-PKG_VERSION="4.0.20"
-PKG_SHA256="6061d31c9f65274cf6de3264907028c90badd8b7f22dd1b385617fa353868aed"
+PKG_VERSION="4.0.21"
+PKG_SHA256="021efedb74db33fe3fc28cb4412864377ee4744dc4ca2dede5eb61727af3cbcf"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/mtools/"
 PKG_URL="http://ftpmirror.gnu.org/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
