@@ -3,21 +3,20 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="18.2.6"
-PKG_SHA256="9ebafa4f8249df0c718e93b9ca155e3593a1239af303aa2a8b0f2056a7efdc12"
+PKG_VERSION="18.3.0"
+PKG_SHA256="b63f947e735d6ef3dfaa30c789a9adfbae18aea671191eaacde95a18c17fc38a"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
 PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_TOOLCHAIN="meson"
 PKG_BUILD_FLAGS="+lto"
 
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math |"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math |"`
-}
+#pre_configure_target() {
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math |"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math |"`
+#}
 
 get_graphicdrivers
 
