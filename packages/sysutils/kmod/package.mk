@@ -4,7 +4,6 @@
 PKG_NAME="kmod"
 PKG_VERSION="25"
 PKG_SHA256="7165e6496656159dcb909a91ed708a0fe273a4b128b4b1dc997ccb5189eef1cd"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.profusion.mobi/cgit.cgi/kmod.git/"
 PKG_URL="https://www.kernel.org/pub/linux/utils/kernel/kmod/$PKG_NAME-$PKG_VERSION.tar.xz"
