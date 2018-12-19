@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="e2fsprogs"
-PKG_VERSION="1.44.4"
-PKG_SHA256="ee03b2f2180614c5ae5f6dd2666f8808de61c3d8b37d22ba86cc6daea25be55a"
+PKG_VERSION="1.44.5"
+PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://e2fsprogs.sourceforge.net/"
 PKG_URL="https://www.kernel.org/pub/linux/kernel/people/tytso/$PKG_NAME/v$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
