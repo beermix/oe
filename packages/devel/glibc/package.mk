@@ -29,7 +29,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=4.18 \
+                           --enable-kernel=4.19 \
                            --enable-stack-protector=strong \
                            --enable-tunables \
                            --without-cvs \
