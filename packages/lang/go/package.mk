@@ -33,7 +33,7 @@ configure_host() {
 
 make_host() {
   cd $PKG_BUILD/src
-  bash make.bash --no-banner --no-clean -v
+  bash make.bash --no-banner -v
 }
 
 pre_makeinstall_host() {
