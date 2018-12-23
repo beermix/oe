@@ -12,7 +12,7 @@
 
 PKG_NAME="curl"
 PKG_VERSION="7.63.0"
-PKG_SHA256=""
+PKG_SHA256="9bab7ed4ecff77020a312d84cc5fb7eb02d58419d218f267477a724a17fd8dd8"
 PKG_LICENSE="MIT"
 PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
