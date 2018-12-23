@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="ninja"
-PKG_VERSION="5a78423"
-PKG_SHA256="41c2f4f43fa6affcb23e837e0d662ddb4cad7d1a8b62d1850155b42acb40f022"
+PKG_VERSION="6e02ebc"
+PKG_SHA256=""
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
 PKG_URL="https://github.com/ninja-build/ninja/archive/$PKG_VERSION.tar.gz"
