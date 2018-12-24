@@ -29,9 +29,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-loadable-i18n \
                            --disable-lint-library \
                            --disable-ipv6 \
                            --without-launchd \
-                           --without-lint \
-                           --with-xcb \
-                           --without-perl"
+                           --without-lint"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
