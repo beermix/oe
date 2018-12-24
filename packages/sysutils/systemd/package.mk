@@ -54,7 +54,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dcoredump=false \
                        -Dresolve=false \
                        -Dlogind=true \
-                       -Dhostnamed=true \
+                       -Dnss-myhostname=true \
                        -Dlocaled=false \
                        -Dmachined=false \
                        -Dnetworkd=false \
@@ -82,7 +82,6 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dhtml=false \
                        -Dbashcompletiondir=no \
                        -Dzshcompletiondir=no \
-                       -Dkill-path=/usr/bin/kill \
                        -Dkmod-path=/usr/bin/kmod \
                        -Dmount-path=/usr/bin/mount \
                        -Dumount-path=/usr/bin/umount"
