@@ -1,5 +1,5 @@
 PKG_NAME="json-c"
-PKG_VERSION="39c9fa0"
+PKG_VERSION="985c46f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/json-c/json-c/wiki"
 PKG_URL="https://github.com/json-c/json-c/archive/$PKG_VERSION.tar.gz"
@@ -11,5 +11,4 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
                            --enable-static --disable-shared \
-                           --disable-oldname-compat \
                            --enable-threading"
