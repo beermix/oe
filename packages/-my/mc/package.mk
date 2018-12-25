@@ -2,7 +2,6 @@ PKG_NAME="mc"
 PKG_VERSION="4.8.21"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libtool:host e2fsprogs util-linux pcre fuse libssh2"
-PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
