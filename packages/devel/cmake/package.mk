@@ -17,7 +17,7 @@ configure_host() {
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security -fno-plt" \
                -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security -fno-plt" \
-               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -Wl,--as-needed,-z,relro,-z,now -s" \
+               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -Wl,-z,relro -Wl,-z,now -s" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0
 }
