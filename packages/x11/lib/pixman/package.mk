@@ -2,9 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="pixman"
-PKG_VERSION="0.34.0"
-PKG_SHA256="39ba3438f3d17c464b0cb8be006dacbca0ab5aee97ebde69fec7ecdbf85794a0"
-PKG_ARCH="any"
+PKG_VERSION="0.36.0"
+PKG_SHA256="fd92c0cc99183977e54a278d7c595ee094a8e75724c03faf3796d1e49f7780dc"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"

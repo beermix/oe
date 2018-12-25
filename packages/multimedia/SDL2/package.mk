@@ -1,23 +1,30 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="SDL2"
 PKG_VERSION="2.0.8"
 PKG_SHA256="edc77c57308661d576e843344d8638e025a7818bff73f8fbfab09c3c5fd092ec"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
 PKG_URL="https://www.libsdl.org/release/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host alsa-lib systemd dbus"
-PKG_SECTION="multimedia"
-PKG_SHORTDESC="SDL2: A cross-platform Graphic API"
-PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform multimedia library designed to provide fast access to the graphics framebuffer and audio device. It is used by MPEG playback software, emulators, and many popular games, including the award winning Linux port of 'Civilization: Call To Power.' Simple DirectMedia Layer supports Linux, Win32, BeOS, MacOS, Solaris, IRIX, and FreeBSD."
+PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus"
+PKG_LONGDESC="A cross-platform multimedia library designed to provide fast access to the graphics framebuffer and audio device. "
+PKG_BUILD_FLAGS="+pic"
+
+if [ "$TARGET_ARCH" = "x86_64" ]; then
+  PKG_DEPENDS_TARGET+=" nasm:host"
+  PKG_SDL2_X86ASM="-DASSEMBLY=ON"
+else
+  # Only x86(-64) and ppc assembly present as of 2.0.8
+  PKG_SDL2_X86ASM="-DASSEMBLY=OFF"
+fi
 
 PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=ON \
                        -DSDL_SHARED=OFF \
                        -DLIBC=ON \
                        -DGCC_ATOMICS=ON \
-                       -DASSEMBLY=ON \
+                       $PKG_SDL2_X86ASM \
                        -DALTIVEC=OFF \
                        -DOSS=OFF \
                        -DALSA=ON \
@@ -94,7 +101,7 @@ else
 fi
 
 post_makeinstall_target() {
-  sed "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/sdl2-config
+  sed -e "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/sdl2-config
 
   rm -rf $INSTALL/usr/bin
 }
