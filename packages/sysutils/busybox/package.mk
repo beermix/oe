@@ -15,15 +15,15 @@ PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into 
 # busybox fails to build with GOLD support enabled with binutils-2.25
 #PKG_BUILD_FLAGS="-parallel -gold"
 
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
-}
+#pre_configure_target() {
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+#}
 
-pre_configure_init() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
-}
+#pre_configure_init() {
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+#}
 
 PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=0 install"
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
