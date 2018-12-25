@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="bison"
-PKG_VERSION="3.2.3"
-PKG_SHA256="3cb07a84ff698b205ea244e36eccb4979dd4e10f2120ebbf58c5f1f700023f29"
+PKG_VERSION="3.2.4"
+PKG_SHA256="523d44419f4df68286503740c95c7b3400b748d7d8b797209195ee5d67f05634"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/bison/"
 PKG_URL="http://ftpmirror.gnu.org/bison/$PKG_NAME-$PKG_VERSION.tar.xz"
