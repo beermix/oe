@@ -3,13 +3,14 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="binutils"
-PKG_VERSION="2.30"
-PKG_SHA256="6e46b8aeae2f727a36f0bd9505e405768a72218f1796f0d09757d45209871ae6"
+PKG_VERSION="2.29.1"
+PKG_VERSION="8efd17c"
+PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_31-branch"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
-#PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
+PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host elfutils:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host zlib"
 
@@ -32,7 +33,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --disable-nls"
+                         --disable-nls \
+                         --disable-gdb"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
 			      --with-sysroot=$SYSROOT_PREFIX \
@@ -50,7 +52,8 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
 			      --disable-gold \
 			      --disable-ld \
 			      --disable-lto \
-			      --disable-nls"
+			      --disable-nls \
+			      --disable-gdb"
 
 pre_configure_host() {
   unset CPPFLAGS
