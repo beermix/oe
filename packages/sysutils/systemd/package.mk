@@ -87,10 +87,8 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dumount-path=/usr/bin/umount"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
+  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation -fstack-protector-strong -mzero-caller-saved-regs=used"
   export LC_ALL=en_US.UTF-8
-  #export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
-  #export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
 }
 
 post_makeinstall_target() {
