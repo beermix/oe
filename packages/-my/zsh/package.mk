@@ -6,8 +6,8 @@ PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap"
 
 pre_configure_target() {
   export LIBS="$LIBS -lncursesw -ltinfo"
-  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+  export CFLAGS="$CFLAGS -fstack-protector-strong"
+  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
