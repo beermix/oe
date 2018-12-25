@@ -92,7 +92,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CCACHE_DISABLE=true
+  export CCACHE_DISABLE=true
 
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
