@@ -4,13 +4,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="open-vm-tools"
-PKG_VERSION="10.3.0-8931395"
-PKG_SHA256="ca5bcd62a969803015bb4ca8e2610c376487be6b6b95e7500f6684d65813b161"
-PKG_ARCH="x86_64"
+PKG_VERSION="10.3.5-10430147"
+PKG_SHA256="364cd0fdfa5a05e872d08609659e6231ec99788669f7ebba24bfb8c94168daef"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/vmware/open-vm-tools"
-PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.3.0/open-vm-tools-$PKG_VERSION.tar.gz"
-#PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
+PKG_SITE="https://github.com/vmware/open-vm-tools/releases"
+PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.3.5/open-vm-tools-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet rpcsvc-proto:host"
 #PKG_TOOLCHAIN="autotools"
 
