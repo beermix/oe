@@ -37,11 +37,11 @@ case "$LINUX" in
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
-  4.18zen)
-    PKG_VERSION="05d2f46"
-    #PKG_SHA256="ffc393a0c66f80375eacd3fb177b92e5c9daa07de0dcf947e925e049352e6142"
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="4.18"
+  lts)
+    PKG_VERSION="4.14.81"
+    PKG_SHA256="4b36dfd053844ef0617799d432eed67aa4795d3403216d6789288aa7a0e75bde"
+    PKG_URL="http://192.168.1.200:8080/%2Flinux-4.14.81.tar.xz"
+    PKG_PATCH_DIRS="lts-4.14"
     PKG_BUILD_PERF="no"
     ;;
   *)
