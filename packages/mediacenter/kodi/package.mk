@@ -211,21 +211,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_CCACHE=ON \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
-                       -DENABLE_LDGOLD=OFF \
-                       -DENABLE_AVX=OFF \
-                       -DENABLE_AVX2=OFF \
-                       -DENABLE_SSE=ON \
-                       -DENABLE_SSE2=ON \
-                       -DENABLE_SSE3=ON \
-                       -DENABLE_SSE4_1=ON \
-                       -DENABLE_SSE4_2=ON \
-                       -DENABLE_SSSE3=ON \
-                       -DHAVE_SSE=TRUE \
-                       -DHAVE_SSE2=TRUE \
-                       -DHAVE_SSE3=TRUE \
-                       -DHAVE_SSE4_1=TRUE \
-                       -DHAVE_SSSE3=TRUE \
-                       -DCMAKE_VERBOSE_MAKEFILE=1 \
+                       -DENABLE_LDGOLD=ON \
                        $KODI_ARCH \
                        $KODI_OPENGL \
                        $KODI_OPENGLES \
@@ -251,9 +237,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
 pre_configure_target() {
   #export LIBS="$LIBS -lz -ltinfo"
   export LIBS="$LIBS -lncurses"
-
-  #export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
-  #export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
 }
 
 post_makeinstall_target() {
