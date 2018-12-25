@@ -1,6 +1,6 @@
 PKG_NAME="clang"
-PKG_VERSION="7.0.0"
-PKG_SHA256="550212711c752697d2f82c648714a7221b1207fd9441543ff4aa9e3be45bba55"
+PKG_VERSION="7.0.1"
+PKG_SHA256=""
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/llvm-mirror/clang/tree/release_70"
