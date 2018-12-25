@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# --enable-hardware-optimization
 
 PKG_NAME="libpng"
 PKG_VERSION="1.6.36"
