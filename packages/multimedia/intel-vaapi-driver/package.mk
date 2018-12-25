@@ -12,9 +12,9 @@ PKG_DEPENDS_TARGET="toolchain libva libdrm"
 post_unpack() {
   # Only relevant if intel-gpu-tools is installed,
   # since then the shaders will be recompiled
-  sed -i '1s/python$/&2/' intel-vaapi-driver/src/shaders/gpp.py
+  sed -i '1s/python$/&2/' $PKG_BUILD//src/shaders/gpp.py
   # Fix undefined variable in src/meson.build
-  sed -i 's/2.2.0/2.2.0.0/' intel-vaapi-driver/meson.build
+  sed -i 's/2.2.0/2.2.0.0/' $PKG_BUILD//meson.build
 }
 
 #pre_configure_target() {
