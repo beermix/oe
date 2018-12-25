@@ -13,7 +13,7 @@ PKG_DEPENDS_HOST="zlib:host"
 PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
 # libsqlite3.a(sqlite3.o): requires dynamic R_X86_64_PC32 reloc against 'sqlite3_stricmp' which may overflow at runtime
 #PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="-parallel +hardening"
 
 #pre_configure_target() {
 #  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|g"`
