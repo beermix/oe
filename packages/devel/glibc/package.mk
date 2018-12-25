@@ -1,16 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
-
+# --enable-stack-protector=strong --enable-static-pie \
+                          
 PKG_NAME="glibc"
-PKG_VERSION="2.28"
-PKG_SHA256="b1900051afad76f7a4f73e71413df4826dce085ef8ddb785a945b66d7d513082"
+PKG_VERSION="a0bc5dd"
+PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.28/master"
 PKG_SITE="https://github.com/bminor/glibc"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
@@ -30,8 +31,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.14 \
-                           --enable-stack-protector=strong \
-                           --enable-static-pie \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
