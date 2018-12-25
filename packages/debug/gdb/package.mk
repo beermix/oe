@@ -10,6 +10,7 @@ PKG_URL="http://ftpmirror.gnu.org/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib ncurses expat"
 PKG_LONGDESC="GNU Project debugger, allows you to see what is going on inside another program while it executes."
 # gdb could fail on runtime if build with LTO support
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 CC_FOR_BUILD="$HOST_CC"
 CFLAGS_FOR_BUILD="$HOST_CFLAGS"
