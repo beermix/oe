@@ -88,8 +88,8 @@ make_target() {
     'use_sysroot=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=true'
-    'enable_widevine=false'
+    'enable_hangout_services_extension=false'
+    'enable_widevine=true'
     'use_vaapi=true'
     'enable_vr=false'
     'enable_vulkan=false'
@@ -108,7 +108,7 @@ readonly -A _system_libs=(
   [libdrm]=
   [icu]=icu
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
+  [libpng]=libpng            # https://crbug.com/752403#c10
   [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   #[libvpx]=libvpx
@@ -142,18 +142,19 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
-  ./third_party/libaddressinput/chromium/tools/update-strings.py
+  #./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+# ionice -c3 nice -n20  
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
