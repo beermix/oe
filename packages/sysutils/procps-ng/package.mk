@@ -21,5 +21,5 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-kill"
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/usr/sbin/
+  rm -rf $INSTALL/usr/sbin
 }
