@@ -13,8 +13,8 @@ PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by cachi
 export CC=$LOCAL_CC
 export CXX=$LOCAL_CXX
 
-export CFLAGS="-march=haswell -O2 -fstack-protector-strong"
-export CXXFLAGS="-march=haswell -O2 -fstack-protector-strong"
+export CFLAGS="-march=native -O2 -fstack-protector-strong"
+export CXXFLAGS="-march=native -O2 -fstack-protector-strong"
 export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
 
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"

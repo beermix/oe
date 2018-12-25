@@ -12,13 +12,12 @@ PKG_DEPENDS_HOST=""
 export CC=$LOCAL_CC
 
 export CFLAGS="-march=native -O2 -fstack-protector-strong"
-export LDFLAGS="-Wl,-z,relro -Wl,-z,now"
+export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
   ln -sf make $TOOLCHAIN/bin/gmak
-  strip $TOOLCHAIN/bin/make
 
  #mkdir -p $TOOLCHAIN/bin
  #ln -sf /bin/make $TOOLCHAIN/bin/gmake
