@@ -85,7 +85,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
-                         --disable-libunwind-exceptions \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
