@@ -12,7 +12,7 @@ PKG_DEPENDS_HOST=""
 export CC=$LOCAL_CC
 
 export CFLAGS="-march=native -O2 -fstack-protector-strong"
-#export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
+export LDFLAGS="-Wl,-z,relro -Wl,-z,now"
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
