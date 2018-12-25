@@ -33,14 +33,6 @@ PKG_MESON_OPTS_TARGET="-Dselinux=disabled \
 			  -Dforce_posix_threads=true"
 
 post_makeinstall_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
-    cp g*-2.0.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
-
-  mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
-    cp ../m4macros/glib-gettext.m4 $SYSROOT_PREFIX/usr/share/aclocal
-}
-
-post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/lib/gdbus-2.0
   rm -rf $INSTALL/usr/lib/glib-2.0
