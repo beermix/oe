@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) | gawk 
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) | gawk parted
 
 PKG_NAME="busybox"
 PKG_VERSION="1.29.3"
@@ -9,7 +9,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://busybox.net/downloads/?C=M;O=D"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip unrar parted pciutils usbutils procps-ng gptfdisk less bash grep findutils"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip unrar pciutils usbutils procps-ng gptfdisk less bash grep findutils"
 PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable."
 # busybox fails to build with GOLD support enabled with binutils-2.25
