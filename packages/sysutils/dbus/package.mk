@@ -3,7 +3,7 @@
 
 PKG_NAME="dbus"
 PKG_VERSION="1.12.12"
-PKG_SHA256="03cc236b6b1682f42761f63fb7968a0a25c324d4d867d257946e600ebe718ef9"
+PKG_SHA256="9546f226011a1e5d9d77245fe5549ef25af4694053189d624d0d6ac127ecf5f8"
 PKG_LICENSE="GPL"
 PKG_SITE="https://dbus.freedesktop.org/releases/dbus/?C=M;O=D"
 PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
