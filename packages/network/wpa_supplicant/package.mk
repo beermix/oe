@@ -10,15 +10,10 @@ PKG_URL="https://w1.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
-#PKG_BUILD_FLAGS="+lto +hardening"
+PKG_BUILD_FLAGS="+lto +hardening"
 
 PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
-
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -fstack-protector-strong -mzero-caller-saved-regs=used |"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -fstack-protector-strong -mzero-caller-saved-regs=used |"`
-}
 
 configure_target() {
   export LIBS="$LIBS -lpthread -lrt -lm"
