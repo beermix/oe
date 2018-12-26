@@ -24,13 +24,8 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/peripheral.joystick"
 PKG_URL="https://github.com/xbmc/peripheral.joystick/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform p8-platform"
-PKG_SECTION=""
-PKG_SHORTDESC="peripheral.joystick: Joystick support in Kodi"
-PKG_LONGDESC="peripheral.joystick provides joystick support and button mapping"
-
 
 PKG_IS_ADDON="yes"
-PKG_TOOLCHAIN="cmake-make"
 PKG_ADDON_TYPE="kodi.peripheral"
 
 addon() {
