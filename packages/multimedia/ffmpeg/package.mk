@@ -14,7 +14,7 @@ PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
-PKG_BUILD_FLAGS="-gold +hardening"
+PKG_BUILD_FLAGS="-gold -hardening"
 
 # Dependencies
 get_graphicdrivers
@@ -73,8 +73,8 @@ pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 
-  #export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
-  #export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
+  export CFLAGS="$CFLAGS --param=ssp-buffer-size=4 -fstack-protector -mzero-caller-saved-regs"
+  export CXXFLAGS="$CXXFLAGS --param=ssp-buffer-size=4 -fstack-protector -mzero-caller-saved-regs"
 
   # -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math 
 

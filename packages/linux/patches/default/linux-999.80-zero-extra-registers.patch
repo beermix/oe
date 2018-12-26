@@ -15,7 +15,7 @@ This for Zero used caller-saved general registers upon function return.
  # Avoid indirect branches in kernel to deal with Spectre
  ifdef CONFIG_RETPOLINE
 -  KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)
-+  KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)  -mzero-caller-saved-regs=used
++  KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)  -mzero-caller-saved-regs
  endif
  
  archscripts: scripts_basic
