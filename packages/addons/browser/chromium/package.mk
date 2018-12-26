@@ -51,8 +51,8 @@ make_target() {
 
   export CCACHE_SLOPPINESS=time_macros
 
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -mzero-caller-saved-regs"
+  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -mzero-caller-saved-regs"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
@@ -75,7 +75,6 @@ make_target() {
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
     'linux_use_bundled_binutils=false'
-    'use_allocator="none"'
     'use_cups=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
