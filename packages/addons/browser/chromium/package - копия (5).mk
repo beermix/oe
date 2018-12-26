@@ -1,33 +1,50 @@
-##################################################################################
-#  "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
+###  beautifulsoup4:host html5lib:host re2 snappy
+#  
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
-################################################################################## =  opus re2 snappy
+################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="66.0.3359.181"
-PKG_SHA256="37e6673741b365a25a837217b08f77b24b4f5fc4ad88c8581be6a5dae9a9e919"
-PKG_REV="500"
+PKG_VERSION="64.0.3282.186"
+PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
+PKG_REV="185"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
-PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss krb5 zlib chromium:host"
+#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
+#PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss chromium:host"
+PKG_DEPENDS_TARGET="chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
+
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
-GOLD_SUPPORT="no"
 
 post_patch() {
   cd $(get_build_dir chromium)
@@ -41,19 +58,24 @@ post_patch() {
 
 make_host() {
   export CCACHE_SLOPPINESS=time_macros
-  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
-  #export CCACHE_SLOPPINESS=time_macros
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  # unset CPPFLAGS
+  # unset CFLAGS
+  # unset CXXFLAGS
+  # unset LDFLAGS
+  
+  # CFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  # CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  # CPPFLAGS+=' -DNO_UNWIND_TABLES'
+
+  export CCACHE_SLOPPINESS=time_macros
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
-
-  mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
-  ln -fs /usr/bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
@@ -72,69 +94,41 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
-    'enable_vulkan=false'
-    'use_udev=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'enable_vulkan=false'
     'use_dbus=true'
+    'use_system_zlib=true'
+    'use_system_freetype=true'
+    'use_system_libdrm=true'
+    'use_system_libpng=false'
+    'use_system_harfbuzz=true'
+    'linux_link_libudev=true'
+    'use_system_libjpeg=true'
+    'use_gio=true'
+    'use_libpci=true'
+    'use_udev=true'
+    'icu_use_data_file=false'
+    'enable_remoting=false'
+    'enable_print_preview=false'
+    'use_v8_context_snapshot=false'
+    'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_vr=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
-    'enable_vulkan=false'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
-declare -gA _system_libs=(
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
-  [libdrm]=
-  [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
-  #[opus]=opus
-  [re2]=re2
-  [snappy]=snappy
-  [yasm]=
-  [zlib]=minizip
-)
-_unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-)
-depends+=(${_system_libs[@]})
-
-# Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries  |       \! -path './base/third_party/icu/*' \
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find -type f -path "*third_party/$_lib/*" \
-      \! -path "*third_party/$_lib/chromium/*" \
-      \! -path "*third_party/$_lib/google/*" \
-      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
-      \! -path './third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
-
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
@@ -147,18 +141,17 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
-  #cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   # config
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
-           $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
-           $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # config
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
+
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
+  
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # atk
   cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -173,20 +166,22 @@ addon() {
   # gdk-pixbuf modules
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
-  # gtk
-  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # gtk+
+  cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gtk3
+  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gdk-pixbuf
-  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # libatk-bridge
+  cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
-  # pixbuf loaders
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
-  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+  # libatspi
+  cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libXcursor
   cp -PL $(get_build_dir libXcursor)/.install_pkg/usr/lib/libXcursor.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
@@ -209,5 +204,5 @@ addon() {
   cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # libXft
-  cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -P $(get_build_dir libXft)/libXft.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }

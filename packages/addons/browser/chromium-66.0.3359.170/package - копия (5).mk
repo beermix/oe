@@ -8,25 +8,26 @@
 ################################################################################## =  opus re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="64.0.3282.186"
-PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="450-static-glibc26-gcc7"
+PKG_VERSION="66.0.3359.181"
+PKG_SHA256="37e6673741b365a25a837217b08f77b24b4f5fc4ad88c8581be6a5dae9a9e919"
+PKG_REV="500"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
+PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss re2 snappy chromium:host"
+PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss krb5 zlib chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
+PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
-
-GOLD_SUPPORT="no"
+PKG_BUILD_FLAGS="-lto -hardening"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
+GOLD_SUPPORT="no"
 
 post_patch() {
   cd $(get_build_dir chromium)
@@ -40,20 +41,12 @@ post_patch() {
 
 make_host() {
   export CCACHE_SLOPPINESS=time_macros
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
 }
 
 make_target() {
-  #unset CPPFLAGS
-  #unset CFLAGS
-  #unset CXXFLAGS
-  #unset LDFLAGS
-
-  export CCACHE_SLOPPINESS=time_macros
-
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  #export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -74,28 +67,29 @@ make_target() {
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
+    'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
     'use_cups=false'
-    'use_system_freetype=true'
-    'use_system_harfbuzz=true'
     'use_custom_libcxx=false'
-    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_kerberos=false'
     'use_gtk3=false'
+    'enable_vulkan=false'
+    'use_udev=false'
+    'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
-    'use_v8_context_snapshot=false'
-    "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=false'
-    'enable_widevine=true'
     'use_vaapi=true'
-    'enable_vr=false'
     'enable_vulkan=false'
+    'use_dbus=true'
+    "target_sysroot=\"${SYSROOT_PREFIX}\""
+    'enable_hangout_services_extension=true'
+    'enable_widevine=true'
+    'enable_vr=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
+    'enable_vulkan=false'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
@@ -104,36 +98,37 @@ make_target() {
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
-readonly -A _system_libs=(
+declare -gA _system_libs=(
+  [fontconfig]=fontconfig
+  [freetype]=freetype2
+  [harfbuzz-ng]=harfbuzz
+  #[icu]=icu
   [libdrm]=
-  [icu]=icu
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
+  #[opus]=opus
   [re2]=re2
   [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
-readonly _unwanted_bundled_libs=(
+_unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
-  freetype
-  harfbuzz-ng
 )
-depends+=(${_system_libs[@]} freetype2 harfbuzz)
+depends+=(${_system_libs[@]})
 
-  # Remove bundled libraries for which we will use the system copies; this
+# Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries ||  
+  # added benefit of not having to list all the remaining libraries  |       \! -path './base/third_party/icu/*' \
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
+      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
@@ -145,18 +140,19 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config *.dat, ,libwidevinecdmadapter.so ++  
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  #cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
            $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
            $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -213,19 +209,5 @@ addon() {
   cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # libXft
-  cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # re2
-  cp -PL $(get_build_dir re2)/.install_pkg/usr/lib/libre2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # snappy
-  cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libsnappy.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # icu
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuuc.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicudata.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicui18n.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuio.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicutu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicutest.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir libXft)/.install_pkg/usr/lib/libXft.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
