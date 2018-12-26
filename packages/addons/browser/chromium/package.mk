@@ -20,7 +20,7 @@ PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclu
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+PKG_BUILD_FLAGS="-lto +gold -hardening"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
