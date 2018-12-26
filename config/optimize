@@ -33,8 +33,8 @@ HOST_CFLAGS="$HOST_CFLAGS -Wno-format-security"
 HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security" 
 
 # lto flags
-FLAGS_OPTIM_LTO_NO_PARALLEL="-flto -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-FLAGS_OPTIM_LTO_PARALLEL="-flto=${CONCURRENCY_MAKE_LEVEL} -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+FLAGS_OPTIM_LTO_NO_PARALLEL="-flto"
+FLAGS_OPTIM_LTO_PARALLEL="-flto=${CONCURRENCY_MAKE_LEVEL}"
 FLAGS_OPTIM_LTO_NO_FAT="-fno-fat-lto-objects"
 FLAGS_OPTIM_LTO_FAT="-ffat-lto-objects"
 FLAGS_OPTIM_LTO_OFF="-fno-lto"
