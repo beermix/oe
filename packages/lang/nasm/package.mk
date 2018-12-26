@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="nasm"
-PKG_VERSION="2.14.01"
-PKG_SHA256="c28dfae587d59409a91271971268020ade1809a191fefdffa81e6800609ac014"
+PKG_VERSION="2.14.02"
+PKG_SHA256="e24ade3e928f7253aa8c14aa44726d1edf3f98643f87c9d72ec1df44b26be8f5"
 PKG_LICENSE="BSD"
 PKG_SITE="https://www.nasm.us/"
 PKG_URL="http://www.nasm.us/pub/nasm/releasebuilds/${PKG_VERSION}/nasm-${PKG_VERSION}.tar.xz"
