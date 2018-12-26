@@ -147,8 +147,8 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
-  # ionice -c3 nice -n20 
+  ionice -c3 nice -n20 noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+
 }
 
 addon() {
