@@ -50,10 +50,10 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 
 # hardening support
 # TODO: basiclly copied from debian 9, should adjust for LE | -fPIE  -fno-caller-saves
-CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fno-plt"
-CXXFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fno-plt"
-CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
-LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
+CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -mzero-caller-saved-regs"
+CXXFLAGS_OPTIM_HARDENING="-fstack-protector-strong -mzero-caller-saved-regs"
+#CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
+#LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
 
 # add distro specific library dirs
 if [ -z "$HOST_LIBDIR" ]; then
