@@ -13,9 +13,9 @@ PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by cachi
 export CC=$LOCAL_CC
 export CXX=$LOCAL_CXX
 
-export CFLAGS="-march=native -O2 -fstack-protector-strong"
-export CXXFLAGS="-march=native -O2 -fstack-protector-strong"
-export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
+export CFLAGS="-march=native -O2 --param=ssp-buffer-size=4 -fstack-protector"
+export CXXFLAGS="-march=native -O2 --param=ssp-buffer-size=4 -fstack-protector"
+#export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
 
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 
@@ -31,6 +31,7 @@ $TOOLCHAIN/bin/ccache $CC "\$@"
 EOF
 
   chmod +x $TOOLCHAIN/bin/host-gcc
+
 
   cat > $TOOLCHAIN/bin/host-g++ <<EOF
 #!/bin/sh
