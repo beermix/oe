@@ -109,10 +109,9 @@ readonly -A _system_libs=(
   [libdrm]=
   [icu]=icu
   [libjpeg]=libjpeg
-  [libpng]=libpng            # https://crbug.com/752403#c10
+  #[libpng]=libpng            # https://crbug.com/752403#c10
   [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  #[libvpx]=libvpx
   [re2]=re2
   [snappy]=snappy
   [yasm]=
@@ -148,7 +147,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ionice -c3 nice -n20 ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
-# ionice -c3 nice -n20 
 }
 
 addon() {
