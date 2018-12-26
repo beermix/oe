@@ -143,8 +143,7 @@ CMAKE_GENERATOR_NINJA="-GNinja \
 
 TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
                    -DCMAKE_INSTALL_PREFIX=/usr \
-                   -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \
-                   -Wno-dev"
+                   -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE"
 
 TARGET_MESON_OPTS="--prefix=/usr \
                    --bindir=/usr/bin \
@@ -155,7 +154,7 @@ TARGET_MESON_OPTS="--prefix=/usr \
                    --localstatedir=/var \
                    --buildtype=$MESON_BUILD_TYPE"
 
-# configure HOST build defaults
+# configure HOST build defaults = -Wno-dev
 HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
                      --build=$HOST_NAME \
                      --prefix=$TOOLCHAIN \
@@ -170,8 +169,7 @@ HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
 
 HOST_CMAKE_OPTS="$CMAKE_GENERATOR \
                  -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-                 -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN \
-                 -Wno-dev"
+                 -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN"
 
 HOST_MESON_OPTS="--prefix=$TOOLCHAIN \
                  --bindir=$TOOLCHAIN/bin \
