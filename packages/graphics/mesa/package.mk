@@ -12,12 +12,12 @@ PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_TOOLCHAIN="meson"
-#PKG_BUILD_FLAGS="+lto"
+PKG_BUILD_FLAGS="+lto"
 
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
-}
+#pre_configure_target() {
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+#}
 
 get_graphicdrivers
 
