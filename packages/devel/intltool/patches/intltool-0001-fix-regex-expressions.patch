@@ -1,18 +1,7 @@
-Fix regex errors thrown by Perl 5.26:
-
-Unescaped left brace in regex is illegal here in regex; marked by <-- HERE in m/^(.*)\${ <-- HERE ?([A-Z_]+)}?(.*)$/ at $BUILDROOT/host/usr/bin/intltool-update line 1065.
-
-Fetched from:
-https://github.com/Alexpux/MSYS2-packages/blob/master/intltool/perl-5.22-compatibility.patch
-
-Reported upstream:
-https://bugs.launchpad.net/intltool/+bug/1696658
-
-Signed-off-by: Jörg Krause <joerg.krause@embedded.rocks>
-
---- intltool-0.51.0.orig/intltool-update.in	2015-03-09 02:39:54.000000000 +0100
-+++ intltool-0.51.0.orig/intltool-update.in	2015-06-19 01:52:07.171228154 +0200
-@@ -1062,7 +1062,7 @@ 
+=== modified file 'intltool-update.in'
+--- a/intltool-update.in	2014-05-14 02:15:53 +0000
++++ b/intltool-update.in	2016-01-19 15:59:38 +0000
+@@ -1062,7 +1062,7 @@
  	}
      }
  
@@ -21,7 +10,7 @@ Signed-off-by: Jörg Krause <joerg.krause@embedded.rocks>
      {
  	my $rest = $3;
  	my $untouched = $1;
-@@ -1190,10 +1190,10 @@ 
+@@ -1190,10 +1190,10 @@
  	$name    =~ s/\(+$//g;
  	$version =~ s/\(+$//g;
  
@@ -36,7 +25,7 @@ Signed-off-by: Jörg Krause <joerg.krause@embedded.rocks>
      }
  
      if ($conf_source =~ /^AC_INIT\(([^,\)]+),([^,\)]+)[,]?([^,\)]+)?/m)
-@@ -1219,11 +1219,11 @@ 
+@@ -1219,11 +1219,11 @@
  	$version =~ s/\(+$//g;
          $bugurl  =~ s/\(+$//g if (defined $bugurl);
  
@@ -53,3 +42,4 @@ Signed-off-by: Jörg Krause <joerg.krause@embedded.rocks>
      }
  
      # \s makes this not work, why?
+
