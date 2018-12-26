@@ -6,13 +6,15 @@
 #  https://www.chromestatus.com/
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
 ################################################################################## =  opus re2 snappy
+# http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/releases/66.0.3359.170/1.mga7/SOURCES/?sortby=date
 
 PKG_NAME="chromium"
-PKG_VERSION="64.0.3282.186"
-PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="450-static-glibc26-gcc7"
+PKG_VERSION="66.0.3359.170"
+PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
+PKG_REV="600"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
+PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
@@ -20,9 +22,9 @@ PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclu
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-lto -hardening"
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-GOLD_SUPPORT="yes"
+GOLD_SUPPORT="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
@@ -102,14 +104,16 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
-readonly -A _system_libs=(
+declare -gA _system_libs=(
+  [fontconfig]=fontconfig
+  [freetype]=freetype2
+  [harfbuzz-ng]=harfbuzz
+  #[icu]=icu
   [libdrm]=
-  [icu]=icu
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
+  [libpng]=libpng            # https://crbug.com/752403#c10
   [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
@@ -117,24 +121,21 @@ readonly -A _system_libs=(
   [yasm]=
   [zlib]=minizip
 )
-readonly _unwanted_bundled_libs=(
+_unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
-  freetype
-  harfbuzz-ng
 )
-depends+=(${_system_libs[@]} freetype2 harfbuzz)
+depends+=(${_system_libs[@]})
 
-  # Remove bundled libraries for which we will use the system copies; this
+# Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries ||  
+  # added benefit of not having to list all the remaining libraries  |       \! -path './base/third_party/icu/*' \
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
+      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
