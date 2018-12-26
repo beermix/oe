@@ -10,7 +10,6 @@ PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
-PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
@@ -75,7 +74,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET "-flto=8 -ffunction-sections -fsemantic-interposition -falign-functions=32 $CFLAGS $LDFLAGS"
 #  -ffunction-sections -fdata-sections -Wl,--gc-sections  
 }
 

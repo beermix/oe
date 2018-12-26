@@ -23,6 +23,11 @@ configure_host() {
 
 PKG_CMAKE_OPTS_TARGET="-DWITH_JPEG8=ON -DENABLE_SHARED=ON -DENABLE_STATIC=ON"
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+}
+
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
 }
