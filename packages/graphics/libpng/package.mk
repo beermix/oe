@@ -11,7 +11,7 @@ PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SHORTDESC="libpng: Portable Network Graphics (PNG) Reference Library"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic +pic:host +lto +hardening"
+PKG_BUILD_FLAGS="+pic +pic:host +hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-static \

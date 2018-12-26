@@ -11,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain zlib bzip2 libpng"
 PKG_DEPENDS_HOST="zlib:host zlib:host bzip2:host libpng:host"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine."
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+lto -hardening"
+PKG_BUILD_FLAGS="+hardening"
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
@@ -36,10 +36,9 @@ pre_configure_target() {
     ( cd ..
       unset LIBTOOL
       sh autogen.sh
-    )
 
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used|"`
-  #export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used|"`
+  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"    )
 }
 
 post_makeinstall_target() {
