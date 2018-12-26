@@ -7,7 +7,7 @@ PKG_SHA256="523d44419f4df68286503740c95c7b3400b748d7d8b797209195ee5d67f05634"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/bison/"
 PKG_URL="http://ftpmirror.gnu.org/bison/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_HOST="ccache:host m4:host"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-rpath --with-gnu-ld"
 
