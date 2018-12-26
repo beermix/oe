@@ -6,8 +6,6 @@
 PKG_NAME="glib"
 PKG_VERSION="2.59.0"
 PKG_SHA256="664a5dee7307384bb074955f8e5891c7cecece349bbcc8a8311890dc185b428e"
-#PKG_VERSION="17519e039f29b5ffd0aad5ed1661bc56eb1dfeaa"
-#PKG_SHA256="527cdb675eb1d86d057e4d6ed878eb0d0f1b7d6fa672333deab34dd6c2e7bd9c"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D" # https://github.com/GNOME/glib/tree/glib-2-58
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -31,6 +29,11 @@ PKG_MESON_OPTS_TARGET="-Dselinux=disabled \
 			  -Dinternal_pcre=false \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true"
+
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+#  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
