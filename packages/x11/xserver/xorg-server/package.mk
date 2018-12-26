@@ -12,7 +12,7 @@ PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX1
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_LONGDESC="Xorg is a full featured X server running on Intel x86 hardware."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+lto -gold +hardening"
+PKG_BUILD_FLAGS="-lto -gold +hardening"
 
 get_graphicdrivers
 
@@ -111,10 +111,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --without-fop"
 
 
-#pre_configure_target() {
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used|"`
-#}
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/var/cache/xkb
