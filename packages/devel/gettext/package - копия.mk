@@ -10,7 +10,7 @@ PKG_SITE="http://www.gnu.org/s/gettext/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host m4:host autotools:host libxml2:host bison:host"
 PKG_SHORTDESC="gettext: A program internationalization library and tools"
-#PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="autotools"
 
 post_unpack() {
   sed '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/examples$$//' $PKG_BUILD/gettext-tools/Makefile.in
