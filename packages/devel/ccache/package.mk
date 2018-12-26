@@ -15,7 +15,7 @@ export CXX=$LOCAL_CXX
 
 export CFLAGS="-march=native -O2 --param=ssp-buffer-size=4 -fstack-protector"
 export CXXFLAGS="-march=native -O2 --param=ssp-buffer-size=4 -fstack-protector"
-#export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
+LDFLAGS="-s"
 
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 

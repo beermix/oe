@@ -12,7 +12,7 @@ PKG_DEPENDS_HOST=""
 export CC=$LOCAL_CC
 
 export CFLAGS="-march=native -O2 --param=ssp-buffer-size=4 -fstack-protector"
-export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
+export LDFLAGS="-s"
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
