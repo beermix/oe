@@ -13,7 +13,7 @@ else
   TARGET_LDFLAGS="$TARGET_LDFLAGS"
 fi
 
-NINJA_OPTS=""
+NINJA_OPTS="-v"
 
 #TARGET_CPPFLAGS="-DNO_UNWIND_TABLES"
 TARGET_CPPFLAGS=""
@@ -36,10 +36,10 @@ HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security"
 
 # -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math
 # lto flags
-FLAGS_OPTIM_LTO_NO_PARALLEL="-flto"
-FLAGS_OPTIM_LTO_PARALLEL="-flto=${CONCURRENCY_MAKE_LEVEL}"
+FLAGS_OPTIM_LTO_NO_PARALLEL="-flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+FLAGS_OPTIM_LTO_PARALLEL="-flto=${CONCURRENCY_MAKE_LEVEL} -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
 FLAGS_OPTIM_LTO_NO_FAT="-fno-fat-lto-objects"
-FLAGS_OPTIM_LTO_FAT="-ffat-lto-objects"
+FLAGS_OPTIM_LTO_FAT="-falign-functions=32 -ffat-lto-objects"
 FLAGS_OPTIM_LTO_OFF="-fno-lto"
 LDFLAGS_OPTIM_LTO_COMMON="-fuse-linker-plugin"
 
