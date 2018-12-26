@@ -7,7 +7,6 @@ PKG_SHA256="03cc236b6b1682f42761f63fb7968a0a25c324d4d867d257946e600ebe718ef9"
 PKG_LICENSE="GPL"
 PKG_SITE="https://dbus.freedesktop.org/releases/dbus/?C=M;O=D"
 PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat systemd"
 PKG_LONGDESC="D-Bus is a message bus, used for sending messages between applications."
 PKG_BUILD_FLAGS="+hardening"
@@ -33,11 +32,6 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --with-dbus-user=dbus \
                            --runstatedir=/run \
                            --with-system-socket=/run/dbus/system_bus_socket"
-
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-#  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc.d
