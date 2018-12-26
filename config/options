@@ -8,7 +8,7 @@ fi
 export LC_ALL=C
 
 #export CCACHE_DISABLE=1
-export CCACHE_SLOPPINESS=file_macro,time_macros
+#export CCACHE_SLOPPINESS=file_macro,time_macros
 #export CCACHE_SLOPPINESS=file_macro
 #export CCACHE_COMPRESS=true
 #export CCACHE_COMPRESSLEVEL=8
