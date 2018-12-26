@@ -9,6 +9,8 @@ PKG_DEPENDS_HOST="ccache:host re2c:host nasm:host"
 PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
 PKG_TOOLCHAIN="autotools"
 
+CCACHE_DISABLE=true
+
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --disable-warnerror \
                          --disable-profiling \
