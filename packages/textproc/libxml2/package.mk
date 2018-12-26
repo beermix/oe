@@ -23,11 +23,11 @@ PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX"
 
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
-#  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used "
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs"
+  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs"
 #  unset LDFLAGS
-#}
+}
 
 post_makeinstall_target() {
   sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/xml2-config
