@@ -235,8 +235,8 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_PLAYER"
 
 pre_configure_target() {
-  #export LIBS="$LIBS -lz -ltinfo"
-  #export LIBS="$LIBS -lncurses"
+# export LIBS="$LIBS -lz -ltinfo"
+# export LIBS="$LIBS -lncurses"
 
   export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
   export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
