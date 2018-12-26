@@ -4,14 +4,11 @@
 PKG_NAME="lame"
 PKG_VERSION="3.100"
 PKG_SHA256="835971db07e460ca431290396d7b702fe9a57a93fcfcd3f9e1086152422bf7d9"
-PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://lame.sourceforge.net/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="audio"
-PKG_SHORTDESC="lame: LAME Ain't an Mp3 Encoder"
-PKG_LONGDESC="LAME originally stood for LAME Ain't an Mp3 Encoder. The goal of the LAME project is to use the open source model to improve the psycho acoustics, noise shaping and speed of MP3. Another goal of the LAME project is to use these improvements for the basis of a patent free audio compression codec for the GNU project."
+PKG_LONGDESC="A high quality MPEG Audio Layer III (MP3) encoder."
 PKG_BUILD_FLAGS="-parallel +pic"
 
 # package specific configure options

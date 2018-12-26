@@ -8,6 +8,7 @@ PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnu.org/software/make/"
 PKG_URL="http://ftpmirror.gnu.org/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
+PKG_LONGDESC="Utility to maintain groups of programs."
 
 export CC=$LOCAL_CC
 

@@ -11,7 +11,7 @@ PKG_URL="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="ALSA (Advanced Linux Sound Architecture) is the next generation Linux Sound API."
 PKG_TOOLCHAIN="autotools"
-#PKG_BUILD_FLAGS="+pic"
+PKG_BUILD_FLAGS="+pic"
 
 if build_with_debug; then
   PKG_ALSA_DEBUG=--with-debug

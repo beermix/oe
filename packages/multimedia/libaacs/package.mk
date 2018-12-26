@@ -8,6 +8,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org/developers/libaacs.html"
 PKG_URL="http://download.videolan.org/pub/videolan/libaacs/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libgcrypt"
+PKG_LONGDESC="libaacs is a research project to implement the Advanced Access Content System specification."
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-werror \

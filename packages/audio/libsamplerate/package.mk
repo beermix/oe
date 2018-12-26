@@ -8,10 +8,12 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.mega-nerd.com/SRC/"
 PKG_URL="http://www.mega-nerd.com/SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SHORTDESC="libsamplerate: A Sample Rate Converter library for audio"
+PKG_LONGDESC="A Sample Rate Converter for audio."
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--datadir=/usr/share \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+                           --enable-static \
+                           --datadir=/usr/share \
                            --disable-fftw \
                            --disable-sndfile"
 
