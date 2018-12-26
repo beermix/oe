@@ -9,6 +9,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/libva/releases"
 PKG_URL="https://github.com/intel/libva/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="libX11 libXext libXfixes libdrm"
+PKG_BUILD_FLAGS="+hardening"
 
 #pre_configure_target() {
 #  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`

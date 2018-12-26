@@ -8,6 +8,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/intel-vaapi-driver/releases"
 PKG_URL="https://github.com/intel/intel-vaapi-driver/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
+PKG_BUILD_FLAGS="+hardening"
 
 post_unpack() {
   # Only relevant if intel-gpu-tools is installed,
