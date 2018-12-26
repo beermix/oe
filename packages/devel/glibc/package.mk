@@ -16,7 +16,7 @@ PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:boot
 PKG_DEPENDS_INIT="glibc"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            ac_cv_path_PERL=no \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
@@ -101,7 +101,11 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  # export CFLAGS="$CFLAGS -g"
+
+  export CFLAGS="$CFLAGS -g2  -Wl,-z,max-page-size=0x1000 "
+  unset LDFLAGS
+  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump

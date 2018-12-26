@@ -45,7 +45,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
-                           --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
@@ -94,6 +93,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
   #export CCACHE_DISABLE=true
 
+  unset CFLAGS
+  unset CXXFLAGS
+  export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000"
+  export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000"
+
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 
@@ -102,6 +106,11 @@ pre_configure_host() {
 }
 
 pre_configure_bootstrap() {
+  unset CFLAGS
+  unset CXXFLAGS
+  export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000"
+  export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000"
+
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
