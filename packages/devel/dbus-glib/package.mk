@@ -8,12 +8,15 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://freedesktop.org/wiki/Software/dbus"
 PKG_URL="https://dbus.freedesktop.org/releases/dbus-glib/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain dbus glib expat"
+PKG_LONGDESC="A message bus, used for sending messages between applications."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic +lto"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_abstract_sockets=yes \
                            ac_cv_func_posix_getpwnam_r=yes \
                            have_abstract_sockets=yes \
+                           --enable-static \
+                           --disable-shared \
                            --disable-tests \
                            --disable-bash-completion \
                            --enable-asserts=no"

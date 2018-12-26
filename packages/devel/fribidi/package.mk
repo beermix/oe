@@ -8,9 +8,13 @@ PKG_LICENSE="LGPL"
 PKG_SITE="https://github.com/fribidi/fribidi/releases/"
 PKG_URL="https://github.com/fribidi/fribidi/releases/download/v$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
+PKG_LONGDESC="A bidirectional algorithm library."
+PKG_BUILD_FLAGS="+pic"
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+                           --enable-static \
+                           --disable-debug \
                            --disable-deprecated \
                            --enable-charsets \
                            --with-gnu-ld \

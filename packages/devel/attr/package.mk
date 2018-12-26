@@ -9,9 +9,8 @@ PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL="https://mirrors.up.pt/pub/nongnu/attr/attr-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="accessibility"
-PKG_SHORTDESC="attr: Extended Attributes Of Filesystem Objects"
-PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_LONGDESC="Extended Attributes Of Filesystem Objects."
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="OPTIMIZER= \
                            CONFIG_SHELL=/bin/bash \

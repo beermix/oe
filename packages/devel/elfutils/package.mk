@@ -10,6 +10,7 @@ PKG_SITE="https://sourceware.org/elfutils/"
 PKG_URL="https://sourceware.org/elfutils/ftp/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="make:host zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_LONGDESC="A collection of utilities to handle ELF objects."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic"
 
