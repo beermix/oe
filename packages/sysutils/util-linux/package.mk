@@ -8,11 +8,11 @@ PKG_SHA256="86e6707a379c7ff5489c218cfaf1e3464b0b95acf7817db0bc5f179e356a67b2"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain util-linux:host"
 PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="A large variety of low-level system utilities that are necessary for a Linux system to function."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+pic:host +hardening"
+PKG_BUILD_FLAGS="+pic:host"
 
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
@@ -53,8 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="$UTILLINUX_CONFIG_DEFAULT \
                            --enable-losetup \
                            --enable-fsck \
                            --enable-fstrim \
-                           --enable-blkid \
-                           --enable-unshare"
+                           --enable-blkid"
 
 if [ "$SWAP_SUPPORT" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-swapon"

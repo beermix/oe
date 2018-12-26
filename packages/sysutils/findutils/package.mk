@@ -4,12 +4,6 @@ PKG_VERSION="4.6.0"
 PKG_URL="http://ftpmirror.gnu.org/findutils/findutils-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s| -Wl,-z,now||g"`
-}
-
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_stdin=yes \
 			      ac_cv_func_working_mktime=yes \
 			      gl_cv_func_wcwidth_works=yes \

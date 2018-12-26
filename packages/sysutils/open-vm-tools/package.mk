@@ -10,7 +10,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vmware/open-vm-tools/releases"
 PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.3.5/open-vm-tools-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet rpcsvc-proto:host"
-#PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --disable-tests \
