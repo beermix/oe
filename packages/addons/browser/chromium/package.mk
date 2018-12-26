@@ -10,7 +10,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="427-glibc26-gcc7"
+PKG_REV="450-static-glibc26-gcc7"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -44,10 +44,10 @@ make_host() {
 }
 
 make_target() {
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
+  #unset CPPFLAGS
+  #unset CFLAGS
+  #unset CXXFLAGS
+  #unset LDFLAGS
 
   export CCACHE_SLOPPINESS=time_macros
 
@@ -109,7 +109,7 @@ readonly -A _system_libs=(
   [libdrm]=
   [icu]=icu
   [libjpeg]=libjpeg
-  [libpng]=libpng            # https://crbug.com/752403#c10
+  #[libpng]=libpng            # https://crbug.com/752403#c10
   [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
