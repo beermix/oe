@@ -69,7 +69,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dquotacheck=false \
                        -Dsysusers=false \
                        -Dtmpfiles=true \
-                       -Dhwdb=true \
+                       -Dhwdb=false \
                        -Drfkill=false \
                        -Dldconfig=false \
                        -Defi=false \
@@ -222,7 +222,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/etc/tmpfiles.d
   ln -sf /storage/.config/tmpfiles.d $INSTALL/etc/tmpfiles.d
   rm -rf $INSTALL/etc/udev/hwdb.d
-  ln -sf /storage/.config/hwdb.d $INSTALL/etc/udev/hwdb.d
+  #ln -sf /storage/.config/hwdb.d $INSTALL/etc/udev/hwdb.d
   rm -rf $INSTALL/etc/udev/rules.d
   ln -sf /storage/.config/udev.rules.d $INSTALL/etc/udev/rules.d
 }
@@ -254,5 +254,5 @@ post_install() {
   enable_service userconfig.service
   enable_service usercache.service
   enable_service kernel-overlays.service
-  enable_service hwdb.service
+  #enable_service hwdb.service
 }
