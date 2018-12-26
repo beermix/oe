@@ -83,6 +83,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-c99 \
                          --enable-long-long \
                          --enable-threads=posix \
+                         --enable-gnu-indirect-function \
+                         --disable-vtable-verify \
+                         --disable-libunwind-exceptions \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
