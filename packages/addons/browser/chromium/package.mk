@@ -82,7 +82,6 @@ make_target() {
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'use_custom_libcxx=false'
-    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_kerberos=false'
