@@ -95,8 +95,8 @@ pre_configure_host() {
 
   unset CFLAGS
   unset CXXFLAGS
-  export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000"
-  export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000"
+  export CFLAGS="-march=native -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
+  export CXXFLAGS="-march=native -g -O2  -Wl,-z,max-page-size=0x1000 "
 
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
@@ -108,8 +108,8 @@ pre_configure_host() {
 pre_configure_bootstrap() {
   unset CFLAGS
   unset CXXFLAGS
-  export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000"
-  export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000"
+  export CFLAGS="-march=native -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
+  export CXXFLAGS="-march=native -g -O2  -Wl,-z,max-page-size=0x1000 "
 
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
