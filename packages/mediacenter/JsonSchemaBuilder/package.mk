@@ -23,10 +23,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL=""
 PKG_NEED_UNPACK="$(get_pkg_directory $MEDIACENTER)"
-PKG_SECTION="mediacenter"
-PKG_SHORTDESC="kodi-platform:"
-PKG_LONGDESC="kodi-platform:"
-PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_SCRIPT="$(get_build_dir $MEDIACENTER)/tools/depends/native/JsonSchemaBuilder/CMakeLists.txt"
 
