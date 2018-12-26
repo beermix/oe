@@ -10,12 +10,8 @@ PKG_SITE="http://www.vmware.com"
 PKG_URL="http://xorg.freedesktop.org/releases/individual/driver/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain mesa libX11 xorg-server"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-vmwarectrl-client \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
-#pre_configure_target() {
-#  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
-#  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
-#  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-z,now||"
-#}

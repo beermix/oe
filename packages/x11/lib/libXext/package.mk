@@ -9,10 +9,11 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros libX11"
+PKG_LONGDESC="LibXext provides an X Window System client interface to several extensions to the X protocol."
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --without-xmlto"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto "
-  export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto "
+  export CFLAGS="$CFLAGS -ffat-lto-objects -flto"
+  export CXXFLAGS="$CXXFLAGS -ffat-lto-objects -flto"
 }

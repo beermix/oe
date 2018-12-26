@@ -9,7 +9,6 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros libX11 libXfixes"
-PKG_SECTION="x11/lib"
 PKG_BUILD_FLAGS="+pic"
 
 pre_configure_target() {
