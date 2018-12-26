@@ -111,10 +111,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --without-fop"
 
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+#  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/var/cache/xkb
