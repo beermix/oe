@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="dbus"
-PKG_VERSION="1.12.12"
-PKG_SHA256="9546f226011a1e5d9d77245fe5549ef25af4694053189d624d0d6ac127ecf5f8"
+PKG_VERSION="1.11.16"
+PKG_SHA256="7cf993e97df62c73b939b77dcd920e8883d8e866f9ced1a9b5c715eb28e4b031"
 PKG_LICENSE="GPL"
 PKG_SITE="https://dbus.freedesktop.org/releases/dbus/?C=M;O=D"
 PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
