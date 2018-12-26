@@ -11,6 +11,7 @@ PKG_DEPENDS_TARGET="toolchain zlib bzip2 libpng"
 PKG_DEPENDS_HOST="zlib:host zlib:host bzip2:host libpng:host"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine."
 PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+lto -hardening"
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \

@@ -9,7 +9,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://download.osgeo.org/libtiff/?C=M;O=D"
 PKG_URL="http://download.osgeo.org/libtiff/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo zlib"
-PKG_BUILD_FLAGS="+pic"
+PKG_BUILD_FLAGS="+pic +lto +hardening"
 PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-mdi \
