@@ -1,5 +1,5 @@
 PKG_NAME="powertop"
-PKG_VERSION="6f5edbc"
+PKG_VERSION="16b788f"
 PKG_URL="https://github.com/fenrus75/powertop/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain readline libnl"
 PKG_SECTION="tools"
