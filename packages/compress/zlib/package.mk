@@ -10,7 +10,7 @@ PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_BUILD_FLAGS="+pic:host +pic +hardening"
 
 TARGET_CONFIGURE_OPTS="--prefix=/usr"
 HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN"
