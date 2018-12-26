@@ -24,7 +24,9 @@ PKG_CONFIGURE_OPTS_HOST="--disable-samples \
 			    --disable-layout \
 			    --disable-renaming"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+			      --disable-shared \
+			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
