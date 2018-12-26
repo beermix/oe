@@ -9,7 +9,7 @@ PKG_SITE="http://www.oberhumer.com/opensource/lzo"
 PKG_URL="http://www.oberhumer.com/opensource/lzo/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="cmake:host ninja:host"
 PKG_DEPENDS_TARGET="toolchain"
-#PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+lto"
 
 #pre_configure_target() {
 #  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition"
@@ -18,7 +18,7 @@ PKG_DEPENDS_TARGET="toolchain"
 
 PKG_CMAKE_OPTS_HOST="-DENABLE_SHARED=OFF -DENABLE_STATIC=ON"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DENABLE_SHARED=ON -DENABLE_STATIC=ON"
+PKG_CMAKE_OPTS_TARGET="-DENABLE_SHARED=ON -DENABLE_STATIC=ON"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/libexec
