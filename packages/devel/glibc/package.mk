@@ -5,6 +5,7 @@
                           
 PKG_NAME="glibc"
 PKG_VERSION="a0bc5dd"
+PKG_VERSION="ba4b8fa"
 PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
