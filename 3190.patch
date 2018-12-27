@@ -1,0 +1,671 @@
+From 6b1793b2638c76a1d6007f8fd123f14ac09685ce Mon Sep 17 00:00:00 2001
+From: vpeter4 <peter.vicman@gmail.com>
+Date: Wed, 26 Dec 2018 18:28:35 +0100
+Subject: [PATCH] mariadb: initial addon
+
+---
+ packages/addons/service/mariadb/changelog.txt |   2 +
+ packages/addons/service/mariadb/config/my.cnf | 206 ++++++++++++++++++
+ .../service/mariadb/config/prepare_kodi.sql   |   3 +
+ packages/addons/service/mariadb/icon/icon.png | Bin 0 -> 9628 bytes
+ packages/addons/service/mariadb/package.mk    | 103 +++++++++
+ .../service/mariadb/source/bin/mariadb.start  |  64 ++++++
+ .../service/mariadb/source/bin/mariadb.stop   |   6 +
+ .../addons/service/mariadb/source/default.py  |   2 +
+ .../source/system.d/service.mariadb.service   |  18 ++
+ 9 files changed, 404 insertions(+)
+ create mode 100644 packages/addons/service/mariadb/changelog.txt
+ create mode 100644 packages/addons/service/mariadb/config/my.cnf
+ create mode 100644 packages/addons/service/mariadb/config/prepare_kodi.sql
+ create mode 100644 packages/addons/service/mariadb/icon/icon.png
+ create mode 100644 packages/addons/service/mariadb/package.mk
+ create mode 100755 packages/addons/service/mariadb/source/bin/mariadb.start
+ create mode 100755 packages/addons/service/mariadb/source/bin/mariadb.stop
+ create mode 100644 packages/addons/service/mariadb/source/default.py
+ create mode 100644 packages/addons/service/mariadb/source/system.d/service.mariadb.service
+
+diff --git a/packages/addons/service/mariadb/changelog.txt b/packages/addons/service/mariadb/changelog.txt
+new file mode 100644
+index 00000000000..af9f010a450
+--- /dev/null
++++ b/packages/addons/service/mariadb/changelog.txt
+@@ -0,0 +1,2 @@
++100
++- initial version
+diff --git a/packages/addons/service/mariadb/config/my.cnf b/packages/addons/service/mariadb/config/my.cnf
+new file mode 100644
+index 00000000000..7f3fd3191ea
+--- /dev/null
++++ b/packages/addons/service/mariadb/config/my.cnf
+@@ -0,0 +1,206 @@
++# MariaDB database server configuration file.
++#
++# You can copy this file to one of:
++# - "/etc/mysql/my.cnf" to set global options,
++# - "~/.my.cnf" to set user-specific options.
++#
++# One can use all long options that the program supports.
++# Run program with --help to get a list of available options and with
++# --print-defaults to see which it would actually understand and use.
++#
++# For explanations see
++# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
++
++# This will be passed to all mysql clients
++# It has been reported that passwords should be enclosed with ticks/quotes
++# escpecially if they contain "#" chars...
++# Remember to edit /etc/mysql/debian.cnf when changing the socket location.
++[client]
++port		= 3306
++socket	= /var/run/mysqld/mysqld.sock
++
++# Here is entries for some specific programs
++# The following values assume you have at least 32M ram
++
++# This was formally known as [safe_mysqld]. Both versions are currently parsed.
++[mysqld_safe]
++socket	= /var/run/mysqld/mysqld.sock
++nice		= 0
++
++[mysqld]
++#
++# * Basic Settings
++#
++user		  = root
++pid-file	= /var/run/mysqld/mysqld.pid
++socket		= /var/run/mysqld/mysqld.sock
++port		  = 3306
++basedir   = /storage/.kodi/addons/service.mariadb
++datadir   = /storage/.kodi/userdata/addon_data/service.mariadb/data
++log-error = /storage/.kodi/userdata/addon_data/service.mariadb/mysqld.log
++tmpdir		= /tmp
++#lc_messages_dir	= /usr/share/mysql
++lc_messages	= en_US
++skip-external-locking
++# Kodi needs more for library (256K should probably be enough)
++#thread_stack = 128K
++thread_stack = 384K
++#
++# Instead of skip-networking the default is now to listen only on
++# localhost which is more compatible and is not less secure.
++#bind-address		= 127.0.0.1
++#
++# * Fine Tuning
++#
++max_connections		= 100
++connect_timeout		= 5
++wait_timeout			= 600
++max_allowed_packet	= 16M
++thread_cache_size   = 128
++sort_buffer_size	= 4M
++bulk_insert_buffer_size	= 16M
++tmp_table_size		= 32M
++max_heap_table_size	= 32M
++#
++# * MyISAM
++#
++# This replaces the startup script and checks MyISAM tables if needed
++# the first time they are touched. On error, make copy and try a repair.
++myisam_recover_options = BACKUP
++key_buffer_size		= 128M
++#open-files-limit	= 2000
++#table_open_cache	= 400
++table_open_cache	= 1000
++myisam_sort_buffer_size	= 512M
++concurrent_insert	= 2
++read_buffer_size	= 2M
++read_rnd_buffer_size	= 1M
++#
++# * Query Cache Configuration
++#
++# Cache only tiny result sets, so we can fit more in the query cache.
++query_cache_limit		= 128K
++query_cache_size		= 64M
++# for more write intensive setups, set to DEMAND or OFF
++#query_cache_type		= DEMAND
++#
++# * Logging and Replication
++#
++# Both location gets rotated by the cronjob.
++# Be aware that this log type is a performance killer.
++# As of 5.1 you can enable the log at runtime!
++#general_log_file        = /var/log/mysql/mysql.log
++#general_log             = 1
++#
++# Error logging goes to syslog due to /etc/mysql/conf.d/mysqld_safe_syslog.cnf.
++#
++# we do want to know about network errors and such
++log_warnings		= 2
++#
++# Enable the slow query log to see queries with especially long duration
++#slow_query_log[={0|1}]
++slow_query_log_file	= /var/log/mysql/mariadb-slow.log
++long_query_time = 10
++#log_slow_rate_limit	= 1000
++log_slow_verbosity	= query_plan
++
++#log-queries-not-using-indexes
++#log_slow_admin_statements
++#
++# The following can be used as easy to replay backup logs or for replication.
++# note: if you are setting up a replication slave, see README.Debian about
++#       other settings you may need to change.
++#server-id		= 1
++#report_host		= master1
++#auto_increment_increment = 2
++#auto_increment_offset	= 1
++# disable binary log
++#log_bin			= /var/log/mysql/mariadb-bin
++#log_bin_index		= /var/log/mysql/mariadb-bin.index
++# not fab for performance, but safer
++#sync_binlog		= 1
++expire_logs_days	= 10
++max_binlog_size         = 100M
++# slaves
++#relay_log		= /var/log/mysql/relay-bin
++#relay_log_index	= /var/log/mysql/relay-bin.index
++#relay_log_info_file	= /var/log/mysql/relay-bin.info
++#log_slave_updates
++#read_only
++#
++# If applications support it, this stricter sql_mode prevents some
++# mistakes like inserting invalid dates etc.
++#sql_mode		= NO_ENGINE_SUBSTITUTION,TRADITIONAL
++#
++# * InnoDB
++#
++# InnoDB is enabled by default with a 10MB datafile in /var/lib/mysql/.
++# Read the manual for more InnoDB related options. There are many!
++default_storage_engine	= InnoDB
++# you can't just change log file size, requires special procedure
++#innodb_log_file_size	= 50M
++
++# optimizations https://forum.kodi.tv/showthread.php?tid=329046&pid=2708799 #pid2708799
++#               https://discourse.coreelec.org/t/kodi-and-mariadb-part-2/513
++#  innodb_buffer_pool_size=2G  # MariaDB recommends using 80% of your available memory but the default 1G might be enough. Always set to multiples of 1G.
++#  innodb_buffer_pool_instances=2  # When innodb_buffer_pool_size is > 1G, MariaDB will split the pool in instances. They should be even dividers of 1G.
++#  innodb_file_format=Barracuda  # Gone in 10.3 / This is an optimized storage engine not available in MySQL
++#  innodb_log_block_size=4096  # Gone in 10.3 / Default is 512, when using an SSD or 4k drives, block size should be 4096
++#  innodb_adaptive_hash_index=OFF  # For Kodi no benefit is gained from additional indexes. This should only be used with large databases.
++#  character-set-server=utf8  # I really hope you all used this in MySQL already.  This avoids potential pitfalls with text in exotic codepages.
++#  key-buffer-size=64k  # When not using MyISAM as storage engine, this buffer can be reduced to a minimum
++#  skip-name-resolve  # Avoids name resolving in the local network, thus reducing overhead. That also means that all connections are done by IP only.
++#  optimizer_search_depth=1  # Here we are, this is winner of the year.
++
++innodb_buffer_pool_size	= 256M
++innodb_log_buffer_size	= 8M
++innodb_file_per_table	= 1
++innodb_open_files	= 400
++innodb_io_capacity	= 400
++innodb_flush_method	= O_DIRECT
++character-set-server=utf8    # This avoids potential pitfalls with text in exotic codepages.
++#skip-name-resolve            # Avoids name resolving in the local network, thus reducing overhead. That also means that all connections are done by IP only.
++optimizer_search_depth=1     # Here we are, this is winner of the year.
++
++#
++# * Security Features
++#
++# Read the manual, too, if you want chroot!
++# chroot = /var/lib/mysql/
++#
++# For generating SSL certificates I recommend the OpenSSL GUI "tinyca".
++#
++# ssl-ca=/etc/mysql/cacert.pem
++# ssl-cert=/etc/mysql/server-cert.pem
++# ssl-key=/etc/mysql/server-key.pem
++
++#
++# * Galera-related settings
++#
++[galera]
++# Mandatory settings
++#wsrep_on=ON
++#wsrep_provider=
++#wsrep_cluster_address=
++#binlog_format=row
++#default_storage_engine=InnoDB
++#innodb_autoinc_lock_mode=2
++#
++# Allow server to accept connections on all interfaces.
++#
++#bind-address=0.0.0.0
++#
++# Optional setting
++#wsrep_slave_threads=1
++#innodb_flush_log_at_trx_commit=0
++
++[mysqldump]
++quick
++quote-names
++max_allowed_packet	= 16M
++
++[mysql]
++#no-auto-rehash	# faster start of mysql but no tab completion
++
++[isamchk]
++key_buffer		= 16M
+diff --git a/packages/addons/service/mariadb/config/prepare_kodi.sql b/packages/addons/service/mariadb/config/prepare_kodi.sql
+new file mode 100644
+index 00000000000..e9e99fc4382
+--- /dev/null
++++ b/packages/addons/service/mariadb/config/prepare_kodi.sql
+@@ -0,0 +1,3 @@
++CREATE USER 'kodi' IDENTIFIED BY 'kodi';
++GRANT ALL ON *.* TO 'kodi';
++flush privileges;
+diff --git a/packages/addons/service/mariadb/icon/icon.png b/packages/addons/service/mariadb/icon/icon.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..b53b4f889bf55ec79989a417f6bb0a209680a3b9
+GIT binary patch
+literal 9628
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/addons/service/mariadb/package.mk b/packages/addons/service/mariadb/package.mk
+new file mode 100644
+index 00000000000..7491c891a17
+--- /dev/null
++++ b/packages/addons/service/mariadb/package.mk
+@@ -0,0 +1,103 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
++
++PKG_NAME="mariadb"
++PKG_VERSION="10.3.11"
++PKG_REV="100"
++PKG_SHA256="211655b794c9d5397ba3be6c90737eac02e882f296268299239db47ba328f1b2"
++PKG_LICENSE="GPL2"
++PKG_SITE="https://mariadb.org/"
++PKG_URL="https://downloads.mariadb.org/interstitial/${PKG_NAME}-${PKG_VERSION}/source/${PKG_NAME}-${PKG_VERSION}.tar.gz"
++PKG_DEPENDS_HOST="toolchain ncurses:host"
++PKG_DEPENDS_TARGET="toolchain ncurses libaio openssl zlib bzip2 lzo binutils systemd libxml2 mariadb:host"
++PKG_SHORTDESC="MariaDB is a community-developed fork of the MySQL."
++PKG_LONGDESC="${PKG_SHORTDESC}"
++PKG_BUILD_FLAGS="-gold"
++
++PKG_IS_ADDON="yes"
++PKG_SECTION="service"
++PKG_ADDON_NAME="MariaDB"
++PKG_ADDON_TYPE="xbmc.service"
++
++PKG_CMAKE_OPTS_HOST=" \
++  -DCMAKE_INSTALL_MESSAGE=NEVER \
++  -DSTACK_DIRECTION=-1 \
++  -DHAVE_IB_GCC_ATOMIC_BUILTINS=1 \
++  -DCMAKE_CROSSCOMPILING=OFF \
++  -DCMAKE_SYSTEM_PROCESSOR=${TARGET_GCC_ARCH} \
++    import_executables"
++
++make_host() {
++  ninja ${NINJA_OPTS} import_executables
++}
++
++makeinstall_host() {
++  : #
++}
++
++PKG_CMAKE_OPTS_TARGET=" \
++  -DCMAKE_INSTALL_MESSAGE=NEVER \
++  -DCMAKE_BUILD_TYPE=Release \
++  -DBUILD_CONFIG=mysql_release \
++  -DFEATURE_SET=classic \
++  -DSTACK_DIRECTION=1 \
++  -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=ON \
++  -DCMAKE_CROSSCOMPILING=ON \
++  -DIMPORT_EXECUTABLES=${PKG_BUILD}/.${HOST_NAME}/import_executables.cmake \
++  -DWITHOUT_AWS_KEY_MANAGEMENT=ON \
++  -DWITH_EXTRA_CHARSETS=complex \
++  -DWITH_SSL=system \
++  -DWITH_SSL=${SYSROOT_PREFIX}/usr \
++  -DWITH_JEMALLOC=OFF \
++  -DWITH_PCRE=bundled \
++  -DWITH_ZLIB=bundled \
++  -DWITH_EDITLINE=bundled \
++  -DWITH_LIBEVENT=bundled \
++  -DCONNECT_WITH_LIBXML2=bundled \
++  -DSKIP_TESTS=ON \
++  -DWITH_DEBUG=OFF \
++  -DWITH_UNIT_TESTS=OFF \
++  -DENABLE_DTRACE=OFF \
++  -DSECURITY_HARDENED=OFF \
++  -DWITH_EMBEDDED_SERVER=OFF \
++  -DWITHOUT_SERVER=OFF \
++  -DPLUGIN_AUTH_SOCKET=STATIC \
++  -DaCONNECT_WITH_JDBC=NO \
++  -DaCONNECT_WITH_MONGO=NO \
++  -DaCONNECT_WITH_ODBC=NO \
++  -DDISABLE_SHARED=NO \
++  -DENABLED_PROFILING=OFF \
++  -DENABLE_STATIC_LIBS=OFF \
++  -DMYSQL_UNIX_ADDR=/var/run/mysqld/mysqld.sock \
++  -DWITH_SAFEMALLOC=OFF \
++  -DWITHOUT_AUTH_EXAMPLES=ON"
++
++makeinstall_target() {
++  # use only for addon
++  local INSTALL_ADDON="${PKG_BUILD}/.install_addon"
++
++  DESTDIR=${INSTALL_ADDON} ninja ${NINJA_OPTS} install
++  rm -rf "${INSTALL_ADDON}/usr/mysql-test"
++}
++
++addon() {
++  local ADDON="${ADDON_BUILD}/${PKG_ADDON_ID}"
++  local MARIADB="${PKG_BUILD}/.install_addon/usr"
++
++  mkdir -p ${ADDON}/bin
++  mkdir -p ${ADDON}/config
++
++  cp ${MARIADB}/bin/mysql \
++     ${MARIADB}/bin/mysqld \
++     ${MARIADB}/bin/mysqladmin \
++     ${MARIADB}/bin/mysql_secure_installation \
++     ${MARIADB}/bin/my_print_defaults \
++     ${MARIADB}/bin/resolveip \
++     ${MARIADB}/scripts/mysql_install_db \
++     ${ADDON}/bin
++
++  cp ${PKG_DIR}/config/my.cnf ${ADDON}/config
++  cp ${PKG_DIR}/config/prepare_kodi.sql ${ADDON}/config
++
++  cp -PR ${MARIADB}/share ${ADDON}
++}
+diff --git a/packages/addons/service/mariadb/source/bin/mariadb.start b/packages/addons/service/mariadb/source/bin/mariadb.start
+new file mode 100755
+index 00000000000..0becc0fab34
+--- /dev/null
++++ b/packages/addons/service/mariadb/source/bin/mariadb.start
+@@ -0,0 +1,64 @@
++#!/bin/sh
++
++# SPDX-License-Identifier: GPL-2.0-or-later
++# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
++
++. /etc/profile
++
++MYSQL_ROOT_PASS=123
++
++ADDON_ID=service.mariadb
++ADDON_DIR="$HOME/.kodi/addons/$ADDON_ID"
++ADDON_HOME="$HOME/.kodi/userdata/addon_data/$ADDON_ID"
++
++chmod a+x $ADDON_DIR/bin/*
++
++# create addon home dir
++mkdir -p "$ADDON_HOME/data"
++
++# check/create dir for sock
++mkdir -p /var/run/mysqld
++
++# exit if already running
++PID=$(ps aux | grep "$ADDON_DIR/bin/mysqld " | grep -v grep | awk '{print $1}')
++if [ -n "$PID" ]; then
++  echo "MariaDB is already running"
++  exit 0
++fi
++
++# copy config file
++if [ ! -f "$ADDON_HOME/config/my.cnf" ]; then
++  cp $ADDON_DIR/config/my.cnf $ADDON_HOME
++fi
++
++# run first time setup
++FIRST_RUN=0
++if [ ! -d "$ADDON_HOME/data/mysql" ]; then
++  echo "Running first time setup"
++  FIRST_RUN=1
++  $ADDON_DIR/bin/mysql_install_db --basedir=$ADDON_DIR --datadir=$ADDON_HOME/data --user=root
++fi
++
++# get local IP address only if not set in my.cnf
++if ! grep -q "^bind-address" $ADDON_HOME/my.cnf; then
++  bind_address="--bind-address=$(ifconfig | awk '/inet addr:/{print substr($2,6); exit}')"
++fi
++
++# start mysqld
++echo "Starting mysqld"
++exec $ADDON_DIR/bin/mysqld --defaults-file=$ADDON_HOME/my.cnf --user=root $bind_address &
++
++# set a root password
++if [ $FIRST_RUN == 1 ]; then
++  echo "Wait for server to start up"
++  while ! $ADDON_DIR/bin/mysql -u root -e ";" 2> /dev/null; do
++    sleep 1
++  done
++
++  sleep 2
++  echo "Setting up root password: $MYSQL_ROOT_PASS"
++  $ADDON_DIR/bin/mysqladmin -u root password $MYSQL_ROOT_PASS
++
++  echo "Preparing kodi access"
++  cat $ADDON_DIR/config/prepare_kodi.sql | mysql --password=$MYSQL_ROOT_PASS -h localhost
++fi
+diff --git a/packages/addons/service/mariadb/source/bin/mariadb.stop b/packages/addons/service/mariadb/source/bin/mariadb.stop
+new file mode 100755
+index 00000000000..049c577decb
+--- /dev/null
++++ b/packages/addons/service/mariadb/source/bin/mariadb.stop
+@@ -0,0 +1,6 @@
++#!/bin/sh
++
++# SPDX-License-Identifier: GPL-2.0-or-later
++# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
++
++kill $(cat /var/run/mysqld/mysqld.pid)
+diff --git a/packages/addons/service/mariadb/source/default.py b/packages/addons/service/mariadb/source/default.py
+new file mode 100644
+index 00000000000..cd0d51d91f1
+--- /dev/null
++++ b/packages/addons/service/mariadb/source/default.py
+@@ -0,0 +1,2 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+diff --git a/packages/addons/service/mariadb/source/system.d/service.mariadb.service b/packages/addons/service/mariadb/source/system.d/service.mariadb.service
+new file mode 100644
+index 00000000000..ff20575a491
+--- /dev/null
++++ b/packages/addons/service/mariadb/source/system.d/service.mariadb.service
+@@ -0,0 +1,18 @@
++[Unit]
++Description=MariaDB server
++After=graphical.target network-online.service
++Before=kodi.service
++
++[Service]
++Type=forking
++PIDFile=/var/run/mysqld/mysqld.pid
++ExecStart=/bin/sh -c "exec sh /storage/.kodi/addons/service.mariadb/bin/mariadb.start"
++ExecStop=/bin/sh -c "exec sh /storage/.kodi/addons/service.mariadb/bin/mariadb.stop"
++TimeoutStartSec=120
++TimeoutStopSec=120
++Restart=always
++RestartSec=10
++StartLimitInterval=0
++
++[Install]
++WantedBy=kodi.service

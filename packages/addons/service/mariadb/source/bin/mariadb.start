@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+
+. /etc/profile
+
+MYSQL_ROOT_PASS=123
+
+ADDON_ID=service.mariadb
+ADDON_DIR="$HOME/.kodi/addons/$ADDON_ID"
+ADDON_HOME="$HOME/.kodi/userdata/addon_data/$ADDON_ID"
+
+chmod a+x $ADDON_DIR/bin/*
+
+# create addon home dir
+mkdir -p "$ADDON_HOME/data"
+
+# check/create dir for sock
+mkdir -p /var/run/mysqld
+
+# exit if already running
+PID=$(ps aux | grep "$ADDON_DIR/bin/mysqld " | grep -v grep | awk '{print $1}')
+if [ -n "$PID" ]; then
+  echo "MariaDB is already running"
+  exit 0
+fi
+
+# copy config file
+if [ ! -f "$ADDON_HOME/config/my.cnf" ]; then
+  cp $ADDON_DIR/config/my.cnf $ADDON_HOME
+fi
+
+# run first time setup
+FIRST_RUN=0
+if [ ! -d "$ADDON_HOME/data/mysql" ]; then
+  echo "Running first time setup"
+  FIRST_RUN=1
+  $ADDON_DIR/bin/mysql_install_db --basedir=$ADDON_DIR --datadir=$ADDON_HOME/data --user=root
+fi
+
+# get local IP address only if not set in my.cnf
+if ! grep -q "^bind-address" $ADDON_HOME/my.cnf; then
+  bind_address="--bind-address=$(ifconfig | awk '/inet addr:/{print substr($2,6); exit}')"
+fi
+
+# start mysqld
+echo "Starting mysqld"
+exec $ADDON_DIR/bin/mysqld --defaults-file=$ADDON_HOME/my.cnf --user=root $bind_address &
+
+# set a root password
+if [ $FIRST_RUN == 1 ]; then
+  echo "Wait for server to start up"
+  while ! $ADDON_DIR/bin/mysql -u root -e ";" 2> /dev/null; do
+    sleep 1
+  done
+
+  sleep 2
+  echo "Setting up root password: $MYSQL_ROOT_PASS"
+  $ADDON_DIR/bin/mysqladmin -u root password $MYSQL_ROOT_PASS
+
+  echo "Preparing kodi access"
+  cat $ADDON_DIR/config/prepare_kodi.sql | mysql --password=$MYSQL_ROOT_PASS -h localhost
+fi
