@@ -235,11 +235,12 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_PLAYER"
 
 pre_configure_target() {
-# export LIBS="$LIBS -lz -ltinfo"
-# export LIBS="$LIBS -lncurses"
+  export LIBS="$LIBS -lz -ltinfo"
 
-  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs"
-  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs"
+  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs"
+  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs"
+
+# export LIBS="$LIBS -lncurses" | -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math
 }
 
 post_makeinstall_target() {
