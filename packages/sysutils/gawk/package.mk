@@ -14,10 +14,10 @@ PKG_CONFIGURE_OPTS_TARGET="--without-libsigsegv"
 
 PKG_CONFIGURE_OPTS_HOST="--without-libsigsegv"
 
-post_makeinstall_target() {
-  ln -sf gawk $INSTALL/usr/bin/awk
-  #make check
-}
+#post_makeinstall_target() {
+#  ln -sf gawk $INSTALL/usr/bin/awk
+#  make check
+#}
 
 post_makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
