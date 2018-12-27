@@ -1,11 +1,11 @@
 --- chromium-59.0.3071.86/third_party/swiftshader/src/Reactor/BUILD.gn.gcc-5	2017-06-05 21:04:23.000000000 +0200
 +++ chromium-59.0.3071.86/third_party/swiftshader/src/Reactor/BUILD.gn	2017-06-10 18:13:09.946401226 +0200
-@@ -92,7 +92,7 @@
+@@ -95,7 +95,7 @@
          cflags += [ "-Wno-sign-compare" ]
        }
      }
--  } else if (is_linux || is_mac) {
-+  } else if (is_clang && (is_linux || is_mac)) {
+-  } else if (is_linux || is_mac || is_fuchsia) {
++  } else if (is_clang && (is_linux || is_mac || is_fuchsia)) {
      cflags += [ "-Wno-macro-redefined" ]
    }
  
@@ -19,29 +19,3 @@
  #define SUBZERO_TARGET(X)                                                      \
    namespace X {                                                                \
    std::unique_ptr<::Ice::TargetLowering>                                       \
---- chromium-64.0.3282.71/third_party/angle/src/libANGLE/renderer/vulkan/RendererVk.cpp.gcc7	2018-01-04 00:07:24.000000000 +0100
-+++ chromium-64.0.3282.71/third_party/angle/src/libANGLE/renderer/vulkan/RendererVk.cpp	2018-01-07 10:21:55.519574204 +0100
-@@ -578,11 +578,6 @@
- {
-     ANGLE_TRY(commandBuffer->ensureFinished());
- 
--    VkFenceCreateInfo fenceInfo;
--    fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
--    fenceInfo.pNext = nullptr;
--    fenceInfo.flags = 0;
--
-     VkSubmitInfo submitInfo;
-     submitInfo.sType                = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-     submitInfo.pNext                = nullptr;
---- chromium-60.0.3112.40/third_party/angle/src/libANGLE/renderer/vulkan/SurfaceVk.cpp.gcc-5	2017-06-22 00:04:04.000000000 +0200
-+++ chromium-60.0.3112.40/third_party/angle/src/libANGLE/renderer/vulkan/SurfaceVk.cpp	2017-06-25 19:08:03.664996888 +0200
-@@ -221,9 +221,6 @@
-     gl::Extents windowSize;
-     ANGLE_TRY_RESULT(createSurfaceVk(renderer), windowSize);
- 
--    uint32_t presentQueue = 0;
--    ANGLE_TRY_RESULT(renderer->selectPresentQueueForSurface(mSurface), presentQueue);
--
-     const VkPhysicalDevice &physicalDevice = renderer->getPhysicalDevice();
- 
-     VkSurfaceCapabilitiesKHR surfaceCaps;

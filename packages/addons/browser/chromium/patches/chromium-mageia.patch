@@ -1,0 +1,22 @@
+--- chromium-69.0.3472.3/chrome/app/resources/manpage.1.in.mageia	2018-06-26 06:32:57.000000000 +0200
++++ chromium-69.0.3472.3/chrome/app/resources/manpage.1.in	2018-07-08 11:28:26.615606487 +0200
+@@ -3,17 +3,13 @@
+ .TH @@PACKAGE@@ 1 "" "" "USER COMMANDS"
+ 
+ .SH NAME
+-@@PACKAGE@@ \- the web browser from Google
++@@PACKAGE@@ \- a web browser
+ 
+ .SH SYNOPSIS
+-.B @@PACKAGE@@
++.B chromium-browser
+ [\fIOPTION\fR] [\fIPATH\fR|\fIURL\fR]
+ 
+ .SH DESCRIPTION
+-See the Google Chrome help center for help on using the browser.
+-.IP
+-<https://support.google.com/chrome/>
+-.PP
+ This manpage only describes invocation, environment, and arguments.
+ 
+ .SH OPTIONS
