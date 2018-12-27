@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="systemd"
-PKG_VERSION="240"
-PKG_SHA256="8f15aec1ac926e13a21a04d0ca3fe371f7004951448142a6f8952075c5b5f0b5"
+PKG_VERSION="239"
+PKG_SHA256="8a11b1b07d620f4c06a16e95bba4dd2a97e90efdf2a5ba47ed0a935085787a14"
 PKG_LICENSE="LGPL2.1+"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
@@ -53,8 +53,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Denvironment-d=false \
                        -Dbinfmt=false \
                        -Dcoredump=false \
-                       -Dnss-resolve=false \
-                       -Dnss-mymachines=false \
+                       -Dresolve=false \
                        -Dlogind=true \
                        -Dhostnamed=true \
                        -Dlocaled=false \
@@ -62,7 +61,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dnetworkd=false \
                        -Dtimedated=false \
                        -Dtimesyncd=true \
-                       -Dnss-myhostname=false \
+                       -Dmyhostname=false \
                        -Dfirstboot=false \
                        -Drandomseed=false \
                        -Dbacklight=false \
@@ -84,6 +83,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dhtml=false \
                        -Dbashcompletiondir=no \
                        -Dzshcompletiondir=no \
+                       -Dkill-path=/usr/bin/kill \
                        -Dkmod-path=/usr/bin/kmod \
                        -Dmount-path=/usr/bin/mount \
                        -Dumount-path=/usr/bin/umount"
