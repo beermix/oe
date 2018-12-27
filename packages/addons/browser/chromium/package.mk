@@ -10,7 +10,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="450-static-glibc26-gcc7"
+PKG_REV="451-static-png-xml2-glibc26-gcc7"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -51,8 +51,8 @@ make_target() {
 
   export CCACHE_SLOPPINESS=time_macros
 
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -mzero-caller-saved-regs"
+  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -mzero-caller-saved-regs"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
@@ -91,7 +91,6 @@ make_target() {
     'is_desktop_linux=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=false'
     'enable_widevine=true'
     'use_vaapi=true'
     'enable_vr=false'
@@ -99,6 +98,10 @@ make_target() {
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
+    'enable_hangout_services_extension=true'
+    'enable_wayland_server=false'
+    'enable_webrtc=true'
+    'is_component_ffmpeg=true'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -110,8 +113,8 @@ readonly -A _system_libs=(
   [libdrm]=
   [icu]=icu
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libxml]=libxml2           # https://crbug.com/736026
+  [libpng]=libpng            # https://crbug.com/752403#c10
+  [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
   [snappy]=snappy
