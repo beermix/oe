@@ -4,8 +4,8 @@
 # https://github.com/GNOME/glib/tree/glib-2-58
 
 PKG_NAME="glib"
-PKG_VERSION="2.59.0"
-PKG_SHA256="664a5dee7307384bb074955f8e5891c7cecece349bbcc8a8311890dc185b428e"
+PKG_VERSION="2.58.2"
+PKG_SHA256=""
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D" # https://github.com/GNOME/glib/tree/glib-2-58
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -13,7 +13,7 @@ PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME
 PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host"
 
-PKG_MESON_OPTS_HOST="-Dselinux=disabled \
+PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
 			-Dman=false \
 			-Dgtk_doc=false \
@@ -22,7 +22,7 @@ PKG_MESON_OPTS_HOST="-Dselinux=disabled \
 			-Dforce_posix_threads=true \
 			-Ddefault_library=static"
 
-PKG_MESON_OPTS_TARGET="-Dselinux=disabled \
+PKG_MESON_OPTS_TARGET="-Dselinux=false \
 			  -Dlibmount=false \
 			  -Dman=false \
 			  -Dgtk_doc=false \
