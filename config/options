@@ -19,7 +19,7 @@ export LC_ALL=C
 #export CCACHE_CPP2=1
 export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 export CCACHE_COMPILERCHECK=content
-#export CCACHE_COMPILERCHECK=mtime
+export CCACHE_COMPILERCHECK=mtime
 
 # set default independent variables
 ROOT="${PWD}"

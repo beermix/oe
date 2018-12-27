@@ -48,6 +48,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-vtable-verify \
+                           --disable-libunwind-exceptions \
+                           --with-linker-hash-style=gnu \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -83,8 +86,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --enable-gnu-indirect-function \
-                         --disable-vtable-verify \
-                         --disable-libunwind-exceptions \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
