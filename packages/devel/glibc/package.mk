@@ -36,6 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --disable-werror \
                            --disable-timezone-tools"
 
 # busybox:init needs it  \ --disable-werror
