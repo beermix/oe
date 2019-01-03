@@ -10,7 +10,6 @@ PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_LONGDESC="A system and session manager for Linux, compatible with SysV and LSB init scripts."
-PKG_BUILD_FLAGS="+hardening"
 
 PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Drootprefix=/usr \
@@ -70,7 +69,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dquotacheck=false \
                        -Dsysusers=false \
                        -Dtmpfiles=true \
-                       -Dhwdb=false \
+                       -Dhwdb=true \
                        -Drfkill=false \
                        -Dldconfig=false \
                        -Defi=false \
