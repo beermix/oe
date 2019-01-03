@@ -24,8 +24,8 @@ PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs"
-  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs"
+  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
+  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
 #  unset LDFLAGS
 }
 
