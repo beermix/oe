@@ -3,16 +3,16 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="binutils"
-PKG_VERSION="2.31.1"
-PKG_SHA256="5d20086ecf5752cc7d9134246e9588fa201740d540f7eb84d795b1f7a93bca86"
-#PKG_VERSION="62dccf6"
+PKG_VERSION="8efd17c"
+PKG_SHA256=""
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_31-branch"
+PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_29-branch"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
-#PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
-PKG_DEPENDS_HOST="ccache:host bison:host flex:host elfutils:host linux:host"
-PKG_DEPENDS_TARGET="toolchain binutils:host zlib"
+PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
+PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
+PKG_DEPENDS_TARGET="toolchain binutils:host"
+PKG_LONGDESC="A GNU collection of binary utilities."
 
 post_unpack() {
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
@@ -28,19 +28,17 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --enable-compressed-debug-sections=all \
-                         --enable-targets=x86_64-linux \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --disable-nls"
+                         --disable-nls \
+                         --disable-gdb"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
 			      --with-sysroot=$SYSROOT_PREFIX \
 			      --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
 			      --enable-compressed-debug-sections=all \
-			      --enable-targets=x86_64-linux \
 			      --without-ppl \
 			      --without-cloog \
 			      --enable-static \
@@ -53,7 +51,8 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
 			      --disable-gold \
 			      --disable-ld \
 			      --disable-lto \
-			      --disable-nls"
+			      --disable-nls \
+			      --disable-gdb"
 
 pre_configure_host() {
   unset CPPFLAGS
