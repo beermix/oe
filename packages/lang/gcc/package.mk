@@ -44,13 +44,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
+                           --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --disable-vtable-verify \
-                           --disable-libunwind-exceptions \
-                           --with-linker-hash-style=gnu \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -85,7 +83,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-c99 \
                          --enable-long-long \
                          --enable-threads=posix \
-                         --enable-gnu-indirect-function \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
@@ -94,7 +91,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CCACHE_DISABLE=true
+  export CCACHE_DISABLE=true
 
   unset CFLAGS
   unset CXXFLAGS
@@ -109,6 +106,8 @@ pre_configure_host() {
 }
 
 pre_configure_bootstrap() {
+  export CCACHE_DISABLE=true
+
   unset CFLAGS
   unset CXXFLAGS
   export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
