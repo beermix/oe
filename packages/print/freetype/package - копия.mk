@@ -16,12 +16,20 @@ PKG_TOOLCHAIN="configure"
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
                            LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
-                           --with-zlib"
+                           --with-zlib=yes \
+                           --with-bzip2=yes \
+                           --with-png=yes \
+                           --enable-freetype-config \
+                           --with-harfbuzz=no"
 
 # host specific configure options
 PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$TOOLCHAIN/include \
                            LIBPNG_LDFLAGS=-L$TOOLCHAIN/lib \
-                           --with-zlib"
+                           --with-zlib=yes \
+                           --with-bzip2=yes \
+                           --with-png=yes \
+                           --enable-freetype-config \
+                           --with-harfbuzz=no"
 
 pre_configure_target() {
   # unset LIBTOOL because freetype uses its own
