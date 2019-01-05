@@ -19,7 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-gen4asm \
                            --enable-udev \
                            --disable-tools \
-                           --with-default-dri=2 \
+                           --with-default-dri=3 \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
