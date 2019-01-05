@@ -104,11 +104,11 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  # export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g"
 
-  export CFLAGS="$CFLAGS -g2  -Wl,-z,max-page-size=0x1000 "
-  unset LDFLAGS
-  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
+  # export CFLAGS="$CFLAGS -g2  -Wl,-z,max-page-size=0x1000 "
+  # unset LDFLAGS
+  # export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
