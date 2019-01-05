@@ -14,7 +14,7 @@ PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable."
 # busybox fails to build with GOLD support enabled with binutils-2.25
 
-PKG_BUILD_FLAGS="-parallel -gold"
+PKG_BUILD_FLAGS="-gold"
 
 # nano text editor
 if [ "$NANO_EDITOR" = "yes" ]; then
@@ -30,14 +30,14 @@ pre_build_target() {
   PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
                         HOSTCC=$HOST_CC \
                         CROSS_COMPILE=$TARGET_PREFIX \
-                        KBUILD_VERBOSE=1 \
+                        KBUILD_VERBOSE=0 \
                         install"
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
 }
 
 pre_build_host() {
-  PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
+  PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=0 install"
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
 }
@@ -46,7 +46,7 @@ pre_build_init() {
   PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
                       HOSTCC=$HOST_CC \
                       CROSS_COMPILE=$TARGET_PREFIX \
-                      KBUILD_VERBOSE=1 \
+                      KBUILD_VERBOSE=0 \
                       install"
   mkdir -p $PKG_BUILD/.$TARGET_NAME-init
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME-init
