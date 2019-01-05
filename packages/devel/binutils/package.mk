@@ -32,9 +32,14 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
+                         --enable-relro \
+                         --enable-shared \
+                         --enable-targets=x86_64-pep \
+                         --enable-threads \
+                         --disable-gdb \
+                         --with-pic \
                          --enable-lto \
-                         --disable-nls \
-                         --disable-gdb"
+                         --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
 			      --with-sysroot=$SYSROOT_PREFIX \
