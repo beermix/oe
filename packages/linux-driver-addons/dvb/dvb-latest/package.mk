@@ -2,13 +2,11 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="dvb-latest"
-PKG_VERSION="baf45935ffad914f33faf751ad9f4d0dd276c021"
-PKG_SHA256="591f0c4c039f4b2453982187447232fa2e72a48dfd915ed307ae11c7a6427031"
-PKG_ARCH="any"
+PKG_VERSION="bd2896dbe1969af199b9f0569d1c60b0ab2859ff"
+PKG_SHA256="00923e79db7b34fec4015cafc1390db388165b86e78564f340759f6da245824e"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.linuxtv.org/media_build.git"
 PKG_URL="https://git.linuxtv.org/media_build.git/snapshot/${PKG_VERSION}.tar.gz"
-PKG_SOURCE_DIR="${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain linux media_tree"
 PKG_NEED_UNPACK="$LINUX_DEPENDS media_tree"
 PKG_SECTION="driver.dvb"
@@ -29,8 +27,8 @@ pre_make_target() {
 make_target() {
   cp -RP $(get_build_dir media_tree)/* $PKG_BUILD/linux
 
-  # make staging config (all + experimental)
-  kernel_make VER=$KERNEL_VER SRCDIR=$(kernel_path) stagingconfig
+  # make config all
+  kernel_make VER=$KERNEL_VER SRCDIR=$(kernel_path) allyesconfig
 
   kernel_make VER=$KERNEL_VER SRCDIR=$(kernel_path)
 }

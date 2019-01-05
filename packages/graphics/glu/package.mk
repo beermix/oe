@@ -8,8 +8,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://cgit.freedesktop.org/mesa/glu/"
 PKG_URL="http://cgit.freedesktop.org/mesa/glu/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain mesa"
-PKG_SECTION="graphics"
-PKG_SHORTDESC="glu: The OpenGL utility library"
+PKG_LONGDESC="libglu is the The OpenGL utility library"
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \

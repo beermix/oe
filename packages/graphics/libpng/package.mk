@@ -9,16 +9,15 @@ PKG_SITE="http://www.libpng.org/"
 PKG_URL="$SOURCEFORGE_SRC/libpng/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
-PKG_SHORTDESC="libpng: Portable Network Graphics (PNG) Reference Library"
+PKG_LONGDESC="An extensible file format for the lossless, portable, well-compressed storage of raster images."
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic +pic:host +hardening"
+PKG_BUILD_FLAGS="+pic +pic:host"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-static \
                            --enable-shared \
                            --enable-hardware-optimizations \
-                           --enable-intel-sse \
-                           --enable-powerpc-vsx=no"
+                           --enable-intel-sse"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 

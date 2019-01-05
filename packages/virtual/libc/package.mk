@@ -3,9 +3,8 @@
 
 PKG_NAME="libc"
 PKG_VERSION=""
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.openelec.tv"
+PKG_SITE="https://libreelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain glibc tz"
 PKG_DEPENDS_INIT="toolchain glibc:init"

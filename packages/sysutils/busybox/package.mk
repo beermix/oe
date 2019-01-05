@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) | gawk parted
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="busybox"
 PKG_VERSION="1.30.0"
@@ -32,6 +32,7 @@ pre_build_target() {
                         CROSS_COMPILE=$TARGET_PREFIX \
                         KBUILD_VERBOSE=0 \
                         install"
+
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
 }
@@ -48,6 +49,7 @@ pre_build_init() {
                       CROSS_COMPILE=$TARGET_PREFIX \
                       KBUILD_VERBOSE=0 \
                       install"
+
   mkdir -p $PKG_BUILD/.$TARGET_NAME-init
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME-init
 }

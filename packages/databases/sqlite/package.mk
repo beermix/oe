@@ -8,18 +8,17 @@ PKG_SHA256="5daa6a3fb7d1e8c767cd59c4ded8da6e4b00c61d3b466d0685e35c4dd6d7bf5d"
 PKG_LICENSE="PublicDomain"
 PKG_SITE="https://www.sqlite.org/"
 PKG_URL="https://www.sqlite.org/2018/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib sqlite:host"
-PKG_DEPENDS_HOST="zlib:host"
-PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_LONGDESC="An Embeddable SQL Database Engine."
 # libsqlite3.a(sqlite3.o): requires dynamic R_X86_64_PC32 reloc against 'sqlite3_stricmp' which may overflow at runtime
-#PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-parallel +hardening"
+PKG_BUILD_FLAGS="+pic +pic:host -parallel"
 
-#pre_configure_target() {
-#  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|g"`
-#  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|g"`
-#}
+PKG_CONFIGURE_OPTS_TARGET="--disable-readline \
+                           --enable-threadsafe \
+                           --enable-dynamic-extensions \
+                           --with-gnu-ld"
 
+pre_configure_target() {
 # sqlite fails to compile with fast-math link time optimization.
   CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O3|g"`
   CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
@@ -50,7 +49,4 @@ PKG_BUILD_FLAGS="-parallel +hardening"
 # sqlite3_config(SQLITE_CONFIG_MMAP_SIZE) call, or at run-time using the
 # mmap_size pragma.
   CFLAGS="$CFLAGS -DSQLITE_TEMP_STORE=3 -DSQLITE_DEFAULT_MMAP_SIZE=268435456"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-threadsafe --enable-dynamic-extensions --disable-silent-rules"
-
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+}

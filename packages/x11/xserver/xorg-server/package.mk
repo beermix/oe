@@ -12,7 +12,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX1
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_LONGDESC="Xorg is a full featured X server running on Intel x86 hardware."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-hardening"
 
 get_graphicdrivers
 
@@ -31,6 +30,7 @@ else
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+                           --enable-silent-rules \
                            --disable-strict-compilation \
                            --enable-largefile \
                            --enable-visibility \
@@ -109,7 +109,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-serverconfig-path=/usr/lib/xserver \
                            --without-xmlto \
                            --without-fop"
-
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used"

@@ -18,7 +18,6 @@ PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump nghttp2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump"
-PKG_SECTION="web"
 PKG_LONGDESC="Client and library for (HTTP, HTTPS, FTP, ...) transfers."
 PKG_TOOLCHAIN="configure"
 

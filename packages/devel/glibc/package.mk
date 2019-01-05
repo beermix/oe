@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
-# --enable-stack-protector=strong --enable-static-pie \
-                          
+
 PKG_NAME="glibc"
 PKG_VERSION="b79dc8d"
 PKG_SHA256=""
@@ -41,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-werror \
                            --disable-timezone-tools"
 
-# busybox:init needs it  \ --disable-werror
+# busybox:init needs it
 # testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
 PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
 
@@ -50,8 +49,6 @@ if build_with_debug; then
 else
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
 fi
-
-NSS_CONF_DIR="$PKG_BUILD/nss"
 
 pre_build_target() {
   cd $PKG_BUILD

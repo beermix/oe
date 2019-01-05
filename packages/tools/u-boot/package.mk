@@ -23,8 +23,8 @@ case "$PROJECT" in
     PKG_NEED_UNPACK+=" $(get_pkg_directory rkbin)"
     ;;
   *)
-    PKG_VERSION="2017.09"
-    PKG_SHA256="b2d15f2cf5f72e706025cde73d67247c6da8cd35f7e10891eefe7d9095089744"
+    PKG_VERSION="2018.09"
+    PKG_SHA256="839bf23cfe8ce613a77e583a60375179d0ad324e92c82fbdd07bebf0fd142268"
     PKG_URL="http://ftp.denx.de/pub/u-boot/u-boot-$PKG_VERSION.tar.bz2"
     ;;
 esac
@@ -51,20 +51,6 @@ makeinstall_target() {
 
     # Always install the update script
     find_file_path bootloader/update.sh && cp -av ${FOUND_PATH} $INSTALL/usr/share/bootloader
-
-    # Replace partition names in update.sh
-    if [ -f "$INSTALL/usr/share/bootloader/update.sh" ] ; then
-      sed -e "s/@BOOT_LABEL@/$DISTRO_BOOTLABEL/g" \
-          -e "s/@DISK_LABEL@/$DISTRO_DISKLABEL/g" \
-          -i $INSTALL/usr/share/bootloader/update.sh
-    fi
-
-    # Replace labels in boot.ini
-    if [ -f "$INSTALL/usr/share/bootloader/boot.ini" ] ; then
-      sed -e "s/@BOOT_LABEL@/$DISTRO_BOOTLABEL/g" \
-          -e "s/@DISK_LABEL@/$DISTRO_DISKLABEL/g" \
-          -i $INSTALL/usr/share/bootloader/boot.ini
-    fi
 
     # Always install the canupdate script
     if find_file_path bootloader/canupdate.sh; then

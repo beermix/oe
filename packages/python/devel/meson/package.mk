@@ -20,7 +20,7 @@ makeinstall_host() {
 
   # Avoid using full path to python3 that may exceed 128 byte limit.
   # Instead use PATH as we know our toolchain is first.
-  #for f in meson; do
-  #  sed -i '1 s/^#!.*$/#!\/usr\/bin\/env python3/' $TOOLCHAIN/bin/$f
-  #done
+  for f in meson; do
+    sed -i '1 s/^#!.*$/#!\/usr\/bin\/env python3/' $TOOLCHAIN/bin/$f
+  done
 }

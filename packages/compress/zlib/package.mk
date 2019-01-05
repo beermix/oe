@@ -9,6 +9,7 @@ PKG_SITE="http://www.zlib.net"
 PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
+PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic:host +pic +hardening"
 

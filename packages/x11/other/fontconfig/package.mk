@@ -23,6 +23,7 @@ pre_configure_target() {
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
   CFLAGS="$CFLAGS -I$PKG_BUILD"
   CXXFLAGS="$CXXFLAGS -I$PKG_BUILD"
+
   # Delete this as a workaround https://bugs.freedesktop.org/show_bug.cgi?id=101280
   rm -f $PKG_BUILD/src/fcobjshash.h
 }

@@ -4,13 +4,10 @@
 PKG_NAME="pycryptodome"
 PKG_VERSION="3.6.6"
 PKG_SHA256="b3cb4af317d9b84f6df50f0cfa6840ba69556af637a83fd971537823e13d601a"
-PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://pypi.python.org/pypi/pycryptodome"
 PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
-PKG_SECTION="python/security"
-PKG_SHORTDESC="Cryptographic library for Python"
 PKG_LONGDESC="PyCryptodome is a self-contained Python package of low-level cryptographic primitives."
 PKG_TOOLCHAIN="manual"
 

@@ -9,10 +9,10 @@ PKG_SITE="https://github.com/facebook/zstd/releases"
 PKG_URL="https://github.com/facebook/zstd/archive/v${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR=$PKG_NAME-$PKG_VERSION
 PKG_DEPENDS_TARGET="toolchain"
-PKG_BUILD_FLAGS="+pic"
+PKG_LONGDESC="A fast real-time compression algorithm."
 
-PKG_CMAKE_SCRIPT="$PKG_BUILD/build/cmake/CMakeLists.txt"
-
-PKG_CMAKE_OPTS_HOST="-DZSTD_BUILD_SHARED=0"
-
-PKG_CMAKE_OPTS_TARGET="-DZSTD_MULTITHREAD_SUPPORT=1 -DZSTD_BUILD_PROGRAMS=0 -DZSTD_BUILD_SHARED=0"
+configure_package() {
+  PKG_CMAKE_SCRIPT="$PKG_BUILD/build/cmake/CMakeLists.txt"
+  PKG_CMAKE_OPTS_HOST="-DZSTD_BUILD_SHARED=0"
+  PKG_CMAKE_OPTS_TARGET="-DZSTD_BUILD_SHARED=0"
+}

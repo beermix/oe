@@ -1,18 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="setuptools"
 PKG_VERSION="40.6.3"
 PKG_LICENSE="OSS"
 PKG_SITE="http://github.com/pypa/setuptools/releases"
 PKG_URL="https://github.com/pypa/setuptools/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="Python2:host Python3:host six:host packaging:host appdirs:host"
-PKG_DEPENDS_TARGET="toolchain Python2 setuptools:host"
-PKG_SECTION="python/devel"
-PKG_SHORTDESC="setuptools: A collection of enhancements to the Python distutils"
+PKG_DEPENDS_HOST="Python2:host Python3:host"
+PKG_LONGDESC="Replaces Setuptools as the standard method for working with Python module distributions."
 PKG_TOOLCHAIN="manual"
-
-export SETUPTOOLS_INSTALL_WINDOWS_SPECIFIC_FILES=0
 
 make_host() {
   python2 bootstrap.py

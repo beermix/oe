@@ -9,12 +9,9 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
 PKG_URL="http://llvm.org/releases/$PKG_VERSION/${PKG_NAME}-${PKG_VERSION}.src.tar.xz"
-PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}.src"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain llvm:host zlib"
-PKG_SECTION="lang"
-PKG_SHORTDESC="llvm: Low Level Virtual Machine"
-PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
+PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure."
 
 PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_BUILD_TOOLS=OFF \
@@ -28,7 +25,7 @@ PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_INCLUDE_DOCS=OFF \
                        -DLLVM_ENABLE_DOXYGEN=OFF \
                        -DLLVM_ENABLE_SPHINX=OFF \
-                       -DLLVM_TARGETS_TO_BUILD="X86" \
+                       -DLLVM_TARGETS_TO_BUILD="AMDGPU" \
                        -DLLVM_ENABLE_TERMINFO=OFF \
                        -DLLVM_ENABLE_ASSERTIONS=OFF \
                        -DLLVM_ENABLE_WERROR=OFF \
@@ -42,21 +39,23 @@ PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_COMMON \
                      -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
 
+pre_configure_target() {
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
+                         -DCMAKE_BUILD_TYPE=MinSizeRel \
+                         -DCMAKE_C_FLAGS="$CFLAGS" \
+                         -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+                         -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
+                         -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen"
+}
+
 make_host() {
-  ninja -j${CONCURRENCY_MAKE_LEVEL} llvm-config llvm-tblgen
+  ninja $NINJA_OPTS llvm-config llvm-tblgen
 }
 
 makeinstall_host() {
   cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
   cp -a bin/llvm-tblgen $TOOLCHAIN/bin
 }
-
-PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
-                       -DCMAKE_BUILD_TYPE=Release \
-                       -DCMAKE_C_FLAGS="$CFLAGS" \
-                       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
-                       -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
-                       -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

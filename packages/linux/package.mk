@@ -229,7 +229,7 @@ make_target() {
   ( cd $ROOT
     rm -rf $BUILD/initramfs
     $SCRIPTS/install initramfs
-  )
+  ) || die "FAILURE: Building initramfs"
 
   if [ "$BOOTLOADER" = "u-boot" -a -n "$KERNEL_UBOOT_EXTRA_TARGET" ]; then
     for extra_target in "$KERNEL_UBOOT_EXTRA_TARGET"; do
@@ -319,10 +319,6 @@ makeinstall_init() {
 
 post_install() {
   mkdir -p $INSTALL/$(get_full_firmware_dir)/
-    ln -sf /storage/.config/firmware/ $INSTALL/$(get_full_firmware_dir)/updates
-
-  # bluez looks in /etc/firmware/
-    ln -sf /$(get_full_firmware_dir)/ $INSTALL/etc/firmware
 
   # regdb and signature is now loaded as firmware by 4.15+
     if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= $PKG_BUILD/.config; then

@@ -9,6 +9,7 @@ PKG_SITE="https://cairographics.org/snapshots/?C=M;O=D"
 PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
 PKG_URL="https://cairographics.org/releases/cairo-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
+PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support."
 PKG_TOOLCHAIN="configure" # ToDo
 
 if [ "$OPENGL" != "no" ]; then

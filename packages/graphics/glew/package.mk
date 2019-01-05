@@ -8,8 +8,7 @@ PKG_LICENSE="BSD"
 PKG_SITE="http://glew.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/glew/glew/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="graphics"
-PKG_SHORTDESC="glew: The OpenGL Extension Wrangler Library"
+PKG_LONGDESC="A cross-platform C/C++ extension loading library."
 
 make_target() {
   make CC="$CC" LD="$CC" AR="$AR" \

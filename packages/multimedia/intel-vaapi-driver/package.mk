@@ -4,25 +4,22 @@
 PKG_NAME="intel-vaapi-driver"
 PKG_VERSION="2.3.0"
 PKG_SHA256="fcc3f09291e58fd316fd015d4e1329e7e03c38cffa4651bda725d500a66aa74e"
+PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/intel/intel-vaapi-driver/releases"
+PKG_SITE="https://01.org/linuxmedia"
 PKG_URL="https://github.com/intel/intel-vaapi-driver/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
-PKG_BUILD_FLAGS="+hardening"
+PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
+PKG_TOOLCHAIN="autotools"
 
-post_unpack() {
-  # Only relevant if intel-gpu-tools is installed,
-  # since then the shaders will be recompiled
-  sed -i '1s/python$/&2/' $PKG_BUILD/src/shaders/gpp.py
-  # Fix undefined variable in src/meson.build
-  sed -i 's/2.2.0/2.2.0.0/' $PKG_BUILD/meson.build
-}
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  DISPLAYSERVER_LIBVA="--disable-x11 --enable-wayland"
+else
+  DISPLAYSERVER_LIBVA="--disable-x11 --disable-wayland"
+fi
 
-#pre_configure_target() {
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O2 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
-#}
-
-PKG_MESON_OPTS_TARGET="-Dwith_x11=yes \
-			  -Dwith_wayland=no \
-			  -Denable_tests=false"
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+                           --enable-drm \
+                           $DISPLAYSERVER_LIBVA"

@@ -8,6 +8,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://freedesktop.org/wiki/Software/dbus"
 PKG_URL="https://dbus.freedesktop.org/releases/dbus-python/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python2 dbus dbus-glib"
+PKG_LONGDESC="D-BUS is a message bus, used for sending messages between applications."
 PKG_BUILD_FLAGS="+lto"
 
 pre_configure_target() {
