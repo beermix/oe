@@ -9,7 +9,7 @@
   TARGET_GCC_ARCH="${TARGET_SUBARCH/-/}"
   TARGET_KERNEL_ARCH=x86
 
-# setup ARCH specific *FLAGS | -mno-sse4a
+# setup ARCH specific *FLAGS
   TARGET_CFLAGS="-march=$TARGET_CPU -m64 -mmmx -msse -msse2 -msse3 -mssse3 -mcx16 -mno-sse4a -msahf -mpopcnt -msse4.2 -msse4.1 -mfpmath=sse"
   TARGET_LDFLAGS="-march=$TARGET_CPU -m64"
 
