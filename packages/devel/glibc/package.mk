@@ -4,7 +4,7 @@
 # --enable-stack-protector=strong --enable-static-pie \
                           
 PKG_NAME="glibc"
-PKG_VERSION="890461f"
+PKG_VERSION="b79dc8d"
 PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
@@ -32,6 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.19 \
                            --enable-stack-protector=strong \
+                           --enable-static-pie \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
