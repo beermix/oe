@@ -1,5 +1,5 @@
 PKG_NAME="gzip"
-PKG_VERSION="1.9"
+PKG_VERSION="1.10"
 PKG_URL="http://ftpmirror.gnu.org/gzip/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host"
