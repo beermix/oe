@@ -44,10 +44,10 @@ make_host() {
 }
 
 make_target() {
-  #unset CPPFLAGS
-  #unset CFLAGS
-  #unset CXXFLAGS
-  #unset LDFLAGS
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
 
   export CCACHE_SLOPPINESS=time_macros
 
