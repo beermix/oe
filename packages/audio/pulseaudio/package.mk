@@ -32,7 +32,8 @@ else
   PKG_PULSEAUDIO_NEON="--disable-neon-opt"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
+                           --disable-nls \
                            --enable-largefile \
                            --disable-rpath \
                            $PKG_PULSEAUDIO_NEON \
@@ -78,8 +79,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
                            --with-soxr \
                            --with-module-dir=/usr/lib/pulse"
 
-pre_configure_target()
-{
+pre_configure_target() {
   sed -e 's|; remixing-use-all-sink-channels = yes|; remixing-use-all-sink-channels = no|' \
       -i $PKG_BUILD/src/daemon/daemon.conf.in
 }
