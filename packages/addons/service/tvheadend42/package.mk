@@ -2,10 +2,10 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="tvheadend42"
-PKG_VERSION="db177a6047769caff02fbf65de7eef00a930a027"
-PKG_SHA256="2d301e54e45dc054181b837a80382d9dec9a659b996aa7411b31d16063046022"
-PKG_VERSION_NUMBER="4.2.6-62"
-PKG_REV="116"
+PKG_VERSION="036b9cbab12ea9f76ea8ffd2d704163e5e43427c"
+PKG_SHA256="adc1a74790aac532f8bf4a10e662ad30e55f1eb083fd690205e4ac2c26230627"
+PKG_VERSION_NUMBER="4.2.7-34"
+PKG_REV="117"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
@@ -46,37 +46,37 @@ if [[ "$TARGET_ARCH" != "x86_64" ]]; then
     --disable-libx265"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-                           --arch=$TARGET_ARCH \
-                           --cpu=$TARGET_CPU \
-                           --cc=$CC \
-                           $PKG_TVH_TRANSCODING \
-                           --enable-avahi \
-                           --enable-bundle \
-                           --disable-dbus_1 \
-                           --enable-dvbcsa \
-                           --enable-dvben50221 \
-                           --disable-dvbscan \
-                           --enable-hdhomerun_client \
-                           --disable-hdhomerun_static \
-                           --enable-epoll \
-                           --enable-inotify \
-                           --enable-pngquant \
-                           --disable-libmfx_static \
-                           --disable-nvenc \
-                           --disable-uriparser \
-                           --enable-tvhcsa \
-                           --enable-trace \
-                           --nowerror \
-                           --disable-bintray_cache \
-                           --python=$TOOLCHAIN/bin/python"
-
 post_unpack() {
   sed -e 's/VER="0.0.0~unknown"/VER="'$PKG_VERSION_NUMBER' ~ LibreELEC Tvh-addon v'$ADDON_VERSION'.'$PKG_REV'"/g' -i $PKG_BUILD/support/version
   sed -e 's|'/usr/bin/pngquant'|'$TOOLCHAIN/bin/pngquant'|g' -i $PKG_BUILD/support/mkbundle
 }
 
 pre_configure_target() {
+  PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+                             --arch=$TARGET_ARCH \
+                             --cpu=$TARGET_CPU \
+                             --cc=$CC \
+                             $PKG_TVH_TRANSCODING \
+                             --enable-avahi \
+                             --enable-bundle \
+                             --disable-dbus_1 \
+                             --enable-dvbcsa \
+                             --enable-dvben50221 \
+                             --disable-dvbscan \
+                             --enable-hdhomerun_client \
+                             --disable-hdhomerun_static \
+                             --enable-epoll \
+                             --enable-inotify \
+                             --enable-pngquant \
+                             --disable-libmfx_static \
+                             --disable-nvenc \
+                             --disable-uriparser \
+                             --enable-tvhcsa \
+                             --enable-trace \
+                             --nowerror \
+                             --disable-bintray_cache \
+                             --python=$TOOLCHAIN/bin/python"
+
 # fails to build in subdirs
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -107,8 +107,8 @@ addon() {
   cp $PKG_DIR/addon.xml $ADDON_BUILD/$PKG_ADDON_ID
 
   # set only version (revision will be added by buildsystem)
-  $SED -e "s|@ADDON_VERSION@|$ADDON_VERSION|g" \
-       -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
+  sed -e "s|@ADDON_VERSION@|$ADDON_VERSION|g" \
+      -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
 
   cp -P $PKG_BUILD/build.linux/tvheadend $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P $PKG_BUILD/capmt_ca.so $ADDON_BUILD/$PKG_ADDON_ID/bin

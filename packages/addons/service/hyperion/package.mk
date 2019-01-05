@@ -3,9 +3,9 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="hyperion"
-PKG_VERSION="dc6a602"
-PKG_SHA256="d585b4e71aafd49f32ced6e27cc88db3c19278a7f258972c22a4e88cad981b0d"
-PKG_REV="107"
+PKG_VERSION="1d125d8df863ad176002f591d72dbba79ce9be63"
+PKG_SHA256="1f3bcd1422dffb7c4398b1c22c63f78151c52c9a44505d1a4ba31278290fd47c"
+PKG_REV="108"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/hyperion-project/hyperion"
@@ -36,14 +36,6 @@ elif [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_X11_SUPPORT="-DENABLE_X11=1"
 fi
 
-pre_build_target() {
-  cp -a $(get_build_dir rpi_ws281x)/* $PKG_BUILD/dependencies/external/rpi_ws281x
-}
-
-pre_configure_target() {
-  echo "" > ../cmake/FindGitVersion.cmake
-}
-
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_NO_SYSTEM_FROM_IMPORTED=ON \
                        -DHYPERION_VERSION_ID="$PKG_VERSION" \
                        $PKG_AMLOGIC_SUPPORT \
@@ -60,6 +52,14 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_NO_SYSTEM_FROM_IMPORTED=ON \
                        -DENABLE_QT5=1 \
                        -DENABLE_TESTS=0 \
                        -Wno-dev"
+
+pre_build_target() {
+  cp -a $(get_build_dir rpi_ws281x)/* $PKG_BUILD/dependencies/external/rpi_ws281x
+}
+
+pre_configure_target() {
+  echo "" > ../cmake/FindGitVersion.cmake
+}
 
 makeinstall_target() {
   : # nothing to do here

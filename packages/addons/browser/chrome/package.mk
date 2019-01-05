@@ -12,6 +12,7 @@ PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
                     libXtst libXcursor libxss nss pango scrnsaverproto unclutter libnotify re2 snappy icu"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Google Chrome Browser"
+PKG_LONGDESC="Google Chrome Browser"
 PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="yes"
