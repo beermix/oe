@@ -12,13 +12,13 @@ PKG_LONGDESC="Utility to maintain groups of programs."
 
 export CC=$LOCAL_CC
 
-export CFLAGS="-march=native -O2 -Wall"
+export CFLAGS="-march=native -O2 -fstack-protector-strong"
 export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
-  ln -sf make $TOOLCHAIN/bin/gmak
+  ln -sf make $TOOLCHAIN/bin/gmake
 
  #mkdir -p $TOOLCHAIN/bin
  #ln -sf /bin/make $TOOLCHAIN/bin/gmake
