@@ -8,8 +8,8 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.connman.net"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables wpa_supplicant"
+PKG_LONGDESC="A modular network connection manager."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --srcdir=.. \
@@ -42,8 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --enable-client \
                            --enable-datafiles \
                            --with-dbusconfdir=/etc \
-                           --with-systemdunitdir=/usr/lib/systemd/system \
-                           --disable-silent-rules"
+                           --with-systemdunitdir=/usr/lib/systemd/system"
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \
                       statedir=/run/connman"
@@ -75,7 +74,7 @@ post_makeinstall_target() {
         -e "s|^# TetheringTechnologies.*|TetheringTechnologies = wifi|g" \
         -e "s|^# AllowHostnameUpdates.*|AllowHostnameUpdates = false|g" \
         -e "s|^# PersistentTetheringMode.*|PersistentTetheringMode = true|g" \
-        -e "s|^# NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb|NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb,docker,veth|g"
+        -e "s|^# NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb|NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb,docker,veth,zt|g"
 
   mkdir -p $INSTALL/usr/config
     cp $PKG_DIR/config/hosts.conf $INSTALL/usr/config
