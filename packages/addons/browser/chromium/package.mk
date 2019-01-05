@@ -67,6 +67,7 @@ make_target() {
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
+    'use_cfi_icall=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
     'is_debug=false'
