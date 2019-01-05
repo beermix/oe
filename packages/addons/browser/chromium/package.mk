@@ -54,6 +54,7 @@ make_target() {
   export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -mzero-caller-saved-regs=used"
   export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -mzero-caller-saved-regs=used"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  export LDFLAGS="$LDFLAGS -fuse-ld=gold" 
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
