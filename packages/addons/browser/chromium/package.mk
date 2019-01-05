@@ -22,7 +22,7 @@ PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
 
-GOLD_SUPPORT="yes"
+GOLD_SUPPORT="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
@@ -105,7 +105,7 @@ make_target() {
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
-    'enable_hangout_services_extension=true'
+    'enable_hangout_services_extension=false'
     'enable_wayland_server=false'
     'enable_webrtc=false'
     "google_api_key=\"${_google_api_key}\""
