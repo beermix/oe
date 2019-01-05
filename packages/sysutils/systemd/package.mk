@@ -53,7 +53,6 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dbinfmt=false \
                        -Dcoredump=false \
                        -Dnss-resolve=false \
-                       -Dnss-mymachines=false \
                        -Dlogind=true \
                        -Dhostnamed=true \
                        -Dlocaled=false \
