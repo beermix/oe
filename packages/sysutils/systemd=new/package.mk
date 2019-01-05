@@ -69,7 +69,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dquotacheck=false \
                        -Dsysusers=false \
                        -Dtmpfiles=true \
-                       -Dhwdb=false \
+                       -Dhwdb=true \
                        -Drfkill=false \
                        -Dldconfig=false \
                        -Defi=false \
@@ -254,5 +254,5 @@ post_install() {
   enable_service userconfig.service
   enable_service usercache.service
   enable_service kernel-overlays.service
-  #enable_service hwdb.service
+  enable_service hwdb.service
 }
