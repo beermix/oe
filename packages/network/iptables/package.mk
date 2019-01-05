@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="iptables"
 PKG_VERSION="1.8.2"
@@ -8,10 +9,11 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://netfilter.org/projects/iptables/files/?C=M;O=D"
 PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl"
+PKG_LONGDESC="IP packet filter administration."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-hardening"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(kernel_path)"
+PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)"
+
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/iptables/
