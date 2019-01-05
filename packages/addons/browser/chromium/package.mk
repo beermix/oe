@@ -35,7 +35,7 @@ post_patch() {
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
-  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  # sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
 make_host() {
@@ -91,9 +91,6 @@ make_target() {
     'linux_link_libgio=true'
     'linux_link_libudev = true'
     'use_libpci = true'
-    'enable_ac3_eac3_audio_demuxing=true'
-    'enable_mse_mpeg2ts_stream_parser=true'
-    'enable_hevc_demuxing=true'
     'enable_google_now=false'
     'is_desktop_linux=false'
     'use_v8_context_snapshot=false'
@@ -107,20 +104,19 @@ make_target() {
     'enable_swiftshader=false'
     'enable_hangout_services_extension=false'
     'enable_wayland_server=false'
-    'enable_webrtc=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py ## 'enable_webrtc=false'
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
   [libdrm]=
   [icu]=icu
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libxml]=libxml2           # https://crbug.com/736026
+  [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
   [snappy]=snappy
