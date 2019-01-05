@@ -1,5 +1,5 @@
 PKG_NAME="tar"
-PKG_VERSION="1.30"
+PKG_VERSION="1.31"
 PKG_URL="http://mirrors.kernel.org/gnu/tar/tar-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 
