@@ -3,10 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libxslt"
-#PKG_VERSION="1.1.33-rc1"
-#PKG_SHA256="fe5c2cc487b010dac66529d494f220683dcc26b9c75e33518db9b37f52ee7f77"
-PKG_VERSION="1.1.32"
-PKG_SHA256="526ecd0abaf4a7789041622c3950c0e7f2c4c8835471515fd77eec684a355460"
+PKG_VERSION="1.1.33"
+PKG_SHA256="8e36605144409df979cab43d835002f63988f3dc94d5d3537c12796db90e38c8"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org/xslt/"
 PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
