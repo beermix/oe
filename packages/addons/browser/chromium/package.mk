@@ -88,7 +88,7 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'linux_link_libgio=true'
-    'inux_link_libudev=true'
+    'linux_link_libudev = true'
     'enable_google_now=false'
     'is_desktop_linux=true'
     'use_v8_context_snapshot=false'
