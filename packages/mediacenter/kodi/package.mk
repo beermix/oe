@@ -10,12 +10,11 @@ PKG_SITE="https://github.com/xbmc/xbmc/tree/Krypton"
 PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav"
-PKG_SHORTDESC="kodi: Kodi Mediacenter"
+PKG_LONGDESC="A free and open source cross-platform media player."
 #PKG_TOOLCHAIN="cmake-make"
 
 configure_package() {
   PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
-
   # Single threaded LTO is very slow so rely on Kodi for parallel LTO support
   if [ "$LTO_SUPPORT" = "yes" ] && ! build_with_debug; then
     PKG_KODI_USE_LTO="-DUSE_LTO=$CONCURRENCY_MAKE_LEVEL"
@@ -43,115 +42,118 @@ configure_package() {
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGLES"
   fi
 
-  if [ "$ALSA_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET alsa-lib"
-    KODI_ALSA="-DENABLE_ALSA=ON"
-  else
-    KODI_ALSA="-DENABLE_ALSA=OFF"
- fi
+if [ "$ALSA_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET alsa-lib"
+  KODI_ALSA="-DENABLE_ALSA=ON"
+else
+  KODI_ALSA="-DENABLE_ALSA=OFF"
+fi
 
-  if [ "$PULSEAUDIO_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pulseaudio"
-    KODI_PULSEAUDIO="-DENABLE_PULSEAUDIO=ON"
-  else
-    KODI_PULSEAUDIO="-DENABLE_PULSEAUDIO=OFF"
-  fi
+if [ "$PULSEAUDIO_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pulseaudio"
+  KODI_PULSEAUDIO="-DENABLE_PULSEAUDIO=ON"
+else
+  KODI_PULSEAUDIO="-DENABLE_PULSEAUDIO=OFF"
+fi
 
-  if [ "$ESPEAK_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET espeak"
-  fi
+if [ "$ESPEAK_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET espeak"
+fi
 
-  if [ "$CEC_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libcec"
-    KODI_CEC="-DENABLE_CEC=ON"
-  else
-    KODI_CEC="-DENABLE_CEC=OFF"
-  fi
+if [ "$CEC_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libcec"
+  KODI_CEC="-DENABLE_CEC=ON"
+else
+  KODI_CEC="-DENABLE_CEC=OFF"
+fi
 
-  if [ "$KODI_OPTICAL_SUPPORT" = yes ]; then
-    KODI_OPTICAL="-DENABLE_OPTICAL=ON"
-  else
-    KODI_OPTICAL="-DENABLE_OPTICAL=OFF"
-  fi
+if [ "$KODI_OPTICAL_SUPPORT" = yes ]; then
+  KODI_OPTICAL="-DENABLE_OPTICAL=ON"
+else
+  KODI_OPTICAL="-DENABLE_OPTICAL=OFF"
+fi
 
-  if [ "$KODI_DVDCSS_SUPPORT" = yes ]; then
-    KODI_DVDCSS="-DENABLE_DVDCSS=ON \
-                 -DLIBDVDCSS_URL=$SOURCES/libdvdcss/libdvdcss-$(get_pkg_version libdvdcss).tar.gz"
-  else
-    KODI_DVDCSS="-DENABLE_DVDCSS=OFF"
-  fi
+if [ "$KODI_NONFREE_SUPPORT" = yes ]; then
+  KODI_NONFREE="-DENABLE_NONFREE=ON"
+else
+  KODI_NONFREE="-DENABLE_NONFREE=OFF"
+fi
 
-  if [ "$KODI_BLURAY_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libbluray"
-    KODI_BLURAY="-DENABLE_BLURAY=ON"
-  else
-    KODI_BLURAY="-DENABLE_BLURAY=OFF"
-  fi
+if [ "$KODI_DVDCSS_SUPPORT" = yes ]; then
+  KODI_DVDCSS="-DENABLE_DVDCSS=ON \
+               -DLIBDVDCSS_URL=$SOURCES/libdvdcss/libdvdcss-$(get_pkg_version libdvdcss).tar.gz"
+else
+  KODI_DVDCSS="-DENABLE_DVDCSS=OFF"
+fi
 
-  if [ "$AVAHI_DAEMON" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET avahi nss-mdns"
-    KODI_AVAHI="-DENABLE_AVAHI=ON"
-  else
-    KODI_AVAHI="-DENABLE_AVAHI=OFF"
-  fi
+if [ "$KODI_BLURAY_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libbluray"
+  KODI_BLURAY="-DENABLE_BLURAY=ON"
+else
+  KODI_BLURAY="-DENABLE_BLURAY=OFF"
+fi
 
-  case "$KODI_MYSQL_SUPPORT" in
-    mysql)   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mysql"
-             KODI_MYSQL="-DENABLE_MYSQLCLIENT=ON -DENABLE_MARIADBCLIENT=OFF"
-             ;;
-    mariadb) PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mariadb-connector-c"
-             KODI_MYSQL="-DENABLE_MARIADBCLIENT=ON -DENABLE_MYSQLCLIENT=OFF"
-             ;;
-    *)       KODI_MYSQL="-DENABLE_MYSQLCLIENT=OFF -DENABLE_MARIADBCLIENT=OFF"
-  esac
+if [ "$AVAHI_DAEMON" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET avahi nss-mdns"
+  KODI_AVAHI="-DENABLE_AVAHI=ON"
+else
+  KODI_AVAHI="-DENABLE_AVAHI=OFF"
+fi
 
-  if [ "$KODI_AIRPLAY_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libplist"
-    KODI_AIRPLAY="-DENABLE_PLIST=ON"
-  else
-    KODI_AIRPLAY="-DENABLE_PLIST=OFF"
-  fi
+case "$KODI_MYSQL_SUPPORT" in
+  mysql)   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mysql"
+           KODI_MYSQL="-DENABLE_MYSQLCLIENT=ON -DENABLE_MARIADBCLIENT=OFF"
+           ;;
+  mariadb) PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mariadb-connector-c"
+           KODI_MYSQL="-DENABLE_MARIADBCLIENT=ON -DENABLE_MYSQLCLIENT=OFF"
+           ;;
+  *)       KODI_MYSQL="-DENABLE_MYSQLCLIENT=OFF -DENABLE_MARIADBCLIENT=OFF"
+esac
 
-  if [ "$KODI_AIRTUNES_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libshairplay"
-    KODI_AIRTUNES="-DENABLE_AIRTUNES=ON"
-  else
-    KODI_AIRTUNES="-DENABLE_AIRTUNES=OFF"
-  fi
+if [ "$KODI_AIRPLAY_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libplist"
+  KODI_AIRPLAY="-DENABLE_PLIST=ON"
+else
+  KODI_AIRPLAY="-DENABLE_PLIST=OFF"
+fi
 
-  if [ "$KODI_NFS_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libnfs"
-    KODI_NFS="-DENABLE_NFS=ON"
-  else
-    KODI_NFS="-DENABLE_NFS=OFF"
-  fi
+if [ "$KODI_AIRTUNES_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libshairplay"
+  KODI_AIRTUNES="-DENABLE_AIRTUNES=ON"
+else
+  KODI_AIRTUNES="-DENABLE_AIRTUNES=OFF"
+fi
 
-  if [ "$KODI_SAMBA_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET samba"
-  fi
+if [ "$KODI_NFS_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libnfs"
+  KODI_NFS="-DENABLE_NFS=ON"
+else
+  KODI_NFS="-DENABLE_NFS=OFF"
+fi
 
-  if [ "$KODI_WEBSERVER_SUPPORT" = yes ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libmicrohttpd"
-  fi
+if [ "$KODI_SAMBA_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET samba"
+  KODI_SAMBA="-DENABLE_SMBCLIENT=ON"
+else
+  KODI_SAMBA="-DENABLE_SMBCLIENT=OFF"
+fi
 
-  if [ "$KODI_UPNP_SUPPORT" = yes ]; then
-    KODI_UPNP="-DENABLE_UPNP=ON"
-  else
-    KODI_UPNP="-DENABLE_UPNP=OFF"
-  fi
+if [ "$KODI_WEBSERVER_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libmicrohttpd"
+fi
 
-  if target_has_feature neon; then
-    KODI_NEON="-DENABLE_NEON=ON"
-  else
-    KODI_NEON="-DENABLE_NEON=OFF"
-  fi
+if [ "$KODI_UPNP_SUPPORT" = yes ]; then
+  KODI_UPNP="-DENABLE_UPNP=ON"
+else
+  KODI_UPNP="-DENABLE_UPNP=OFF"
+fi
 
-  if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau"
-    KODI_VDPAU="-DENABLE_VDPAU=ON"
-  else
-    KODI_VDPAU="-DENABLE_VDPAU=OFF"
-  fi
+if [ "$KODI_SSHLIB_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libssh"
+  KODI_SSH="-DENABLE_SSH=ON"
+else
+  KODI_SSH="-DENABLE_SSH=OFF"
+fi
 
   if [ "$VAAPI_SUPPORT" = yes ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva"
