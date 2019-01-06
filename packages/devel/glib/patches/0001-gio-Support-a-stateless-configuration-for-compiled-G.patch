@@ -1,0 +1,27 @@
+From 93056063c487b60068be3d43f1d4192432cd7d37 Mon Sep 17 00:00:00 2001
+From: Ikey Doherty <michael.i.doherty@intel.com>
+Date: Thu, 11 Aug 2016 16:35:15 +0100
+Subject: [PATCH] gio: Support a stateless configuration for compiled GLib
+ schemas
+
+Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
+---
+ gio/gsettingsschema.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/gio/gsettingsschema.c b/gio/gsettingsschema.c
+index 5b90d01..a57c85a 100644
+--- a/gio/gsettingsschema.c
++++ b/gio/gsettingsschema.c
+@@ -348,6 +348,8 @@ initialise_schema_sources (void)
+           g_free (dirname);
+         }
+ 
++      /* Prepend the system stateless tree */
++      try_prepend_dir ("/var/cache/glib-2.0/schemas");
+       if ((path = g_getenv ("GSETTINGS_SCHEMA_DIR")) != NULL)
+         try_prepend_dir (path);
+ 
+-- 
+2.9.2
+
