@@ -12,7 +12,8 @@ PKG_LONGDESC="kodi-platform:"
 
 PKG_CMAKE_SCRIPT="$(get_build_dir $MEDIACENTER)/tools/depends/native/TexturePacker/CMakeLists.txt"
 
-PKG_CMAKE_OPTS_HOST="-Wno-dev"
+PKG_CMAKE_OPTS_HOST="-DCORE_SOURCE_DIR=$(get_build_dir $MEDIACENTER) \
+                     -Wno-dev"
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=c++11 -DTARGET_POSIX -DTARGET_LINUX -D_LINUX -I$(get_build_dir $MEDIACENTER)/xbmc/linux"
