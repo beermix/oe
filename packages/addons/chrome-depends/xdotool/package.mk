@@ -1,12 +1,10 @@
 PKG_NAME="xdotool"
 PKG_VERSION="2.20110530.1"
 PKG_SHA256="e7b42c8b1d391970e1c1009b256033f30e57d8e0a2a3de229fd61ecfc27baf67"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.semicomplete.com/projects/xdotool/"
 PKG_URL="http://semicomplete.googlecode.com/files/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libXinerama libXtst"
-PKG_BUILD_FLAGS="+hardening"
+#PKG_DEPENDS_TARGET="toolchain libXinerama libXtst"
 
 pre_configure_target() {
   unset CPPFLAGS
