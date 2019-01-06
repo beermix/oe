@@ -118,6 +118,7 @@ make_target() {
     'enable_swiftshader=false'
     'enable_hangout_services_extension=false'
     'enable_wayland_server=false'
+    'is_component_ffmpeg=true'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -127,12 +128,10 @@ make_target() {
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
   [icu]=icu
-  #[ffmpeg]=ffmpeg
   [libdrm]=
   [libjpeg]=libjpeg
   [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  #[libvpx]=libvpx
   [re2]=re2
   [snappy]=snappy
   [yasm]=
@@ -148,7 +147,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries ||  
+  # added benefit of not having to list all the remaining libraries
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
@@ -163,19 +162,19 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
-  ./third_party/libaddressinput/chromium/tools/update-strings.py
+ # ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  #ionice -c3 nice -n20 noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox
-  noti ninja -C out/Release chrome chrome_sandbox
+  ionice -c3 nice -n20 noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  # noti ninja -C out/Release chrome chrome_sandbox
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libffmpeg.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
