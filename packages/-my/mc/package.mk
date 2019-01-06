@@ -12,17 +12,19 @@ pre_configure_host() {
   export LIBS="$LIBS -lssh2"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/mc \
-                           --datadir=/storage/.config/mc \
-                           --libdir=/storage/.config/mc \
-                           --libexecdir=/storage/.config/mc \
-                           --sharedstatedir=/storage/.config/mc \
-                           --localstatedir=/storage/.config/mc \
-                           --includedir=/storage/.config/mc \
-                           --oldincludedir=/storage/.config/mc \
-                           --datarootdir=/storage/.config/mc \
-                           --infodir=/storage/.config/mc \     
-                           --localedir=/storage/.config/mc \
+configure_package() {
+
+ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/home/user/.bin/mcc \
+                           --datadir=/home/user/.bin/mcc \
+                           --libdir=/home/user/.bin/mcc \
+                           --libexecdir=/home/user/.bin/mcc \
+                           --sharedstatedir=/home/user/.bin/mcc \
+                           --localstatedir=/home/user/.bin/mcc \
+                           --includedir=/home/user/.bin/mcc \
+                           --oldincludedir=/home/user/.bin/mcc \
+                           --datarootdir=/home/user/.bin/mcc \
+                           --infodir=/home/user/.bin/mcc \     
+                           --localedir=/home/user/.bin/mcc \
                            --disable-doxygen-doc \
                            --disable-doxygen-rtf \
                            --disable-doxygen-xml \
@@ -42,4 +44,5 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/mc \
                            --disable-vfs-cpio \
                            --disable-vfs-smb"
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+ PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+}
