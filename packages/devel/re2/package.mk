@@ -4,8 +4,11 @@ PKG_SITE="https://github.com/google/re2/releases"
 PKG_URL="https://github.com/google/re2/archive/$PKG_VERSION.tar.gz"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="+pic"
+PKG_TOOLCHAIN="cmake-make"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=1 -DBUILD_TESTING=0 -DRE2_BUILD_TESTING=0 -DCMAKE_BUILD_TYPE=Release"
+configure_package() {
+  PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -DBUILD_TESTING=0 -DRE2_BUILD_TESTING=0 -DCMAKE_BUILD_TYPE=Release"
+}
 
 pre_build_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME

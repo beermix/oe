@@ -9,7 +9,9 @@ pre_configure_target() {
  export CXXFLAGS="$CXXFLAGS -DNDEBUG"
 }
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=1"
+configure_package() {
+  PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0"
+}
 
 post_makeinstall_target() {
  cp -r $PKG_DIR/src/snappy.pc  $SYSROOT_PREFIX/usr/lib/pkgconfig/
