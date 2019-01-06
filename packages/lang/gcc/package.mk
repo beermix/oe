@@ -6,7 +6,7 @@ PKG_NAME="gcc"
 PKG_VERSION="8.2.1-20181127"
 PKG_VERSION="8-20190104"
 PKG_LICENSE="GPL"
-#PKG_SHA256="725ec907fd7463568ec0c097802824b978a679523a2e3374bdc2e3d265cd2b6c"
+PKG_SHA256=""
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
@@ -91,8 +91,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CCACHE_DISABLE=true
-
+#  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
@@ -106,8 +105,7 @@ pre_configure_host() {
 }
 
 pre_configure_bootstrap() {
-  export CCACHE_DISABLE=true
-
+#  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
@@ -160,6 +158,7 @@ EOF
 
   # To avoid cache trashing
   touch -c -t $DATE $CROSS_CXX
+
   # install lto plugin for binutils
   mkdir -p $TOOLCHAIN/lib/bfd-plugins
     ln -sf ../gcc/$TARGET_NAME/$GCC_VERSION/liblto_plugin.so $TOOLCHAIN/lib/bfd-plugins
