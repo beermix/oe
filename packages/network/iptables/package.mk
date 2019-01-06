@@ -12,8 +12,7 @@ PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl"
 PKG_LONGDESC="IP packet filter administration."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)"
-
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6--with-kernel=$(kernel_path)"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/iptables/
