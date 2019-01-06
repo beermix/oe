@@ -11,12 +11,11 @@ PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
 #PKG_TOOLCHAIN="cmake-make"
 
-PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
-
 configure_package() {
+  PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
+
   # Single threaded LTO is very slow so rely on Kodi for parallel LTO support
   if [ "$LTO_SUPPORT" = "yes" ] && ! build_with_debug; then
     PKG_KODI_USE_LTO="-DUSE_LTO=$CONCURRENCY_MAKE_LEVEL"
