@@ -8,7 +8,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.connman.net"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://git.kernel.org/pub/scm/network/connman/connman.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
-
 PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables wpa_supplicant"
 PKG_LONGDESC="A modular network connection manager."
 PKG_TOOLCHAIN="autotools"
