@@ -1,13 +1,13 @@
 #!/bin/sh
-
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
 
 if [ -f /storage/.cache/services/samba.conf ]; then
   . /storage/.cache/services/samba.conf
 
   if [ "$SAMBA_AUTOSHARE" == "true" ] ; then
-    /usr/lib/samba/samba-config
-    [ -f /run/samba/smbd.pid ] && pkill -HUP smbd
+    systemctl restart smbd.service
   fi
 fi
