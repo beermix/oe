@@ -8,6 +8,6 @@ PKG_SHA256="294e670dd37cd23995e69aae626629d4a2dfe5708851bbc13d032401b7a3df6b"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="https://xorg.freedesktop.org/archive/individual/lib/libXcursor-$PKG_VERSION.tar.bz2"
-#PKG_DEPENDS_TARGET="toolchain libX11 libXfixes libXrender"
+PKG_DEPENDS_TARGET="toolchain libX11 libXfixes libXrender"
 
 #PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
