@@ -1,9 +1,11 @@
 PKG_NAME="snappy"
-PKG_VERSION="1.1.7"
+PKG_VERSION="ea660b5"
 PKG_LICENSE="BSD/GPLv2"
 PKG_SITE="https://github.com/google/snappy"
 PKG_URL="https://github.com/google/snappy/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
+PKG_BUILD_FLAGS="+pic"
+PKG_TOOLCHAIN="cmake-make"
 
 pre_configure_target() {
  export CXXFLAGS="$CXXFLAGS -DNDEBUG"
