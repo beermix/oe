@@ -12,15 +12,15 @@ PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="make:host"
 PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by caching."
 
-PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib=no"
 
 pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
 
-  export CFLAGS="-march=native -O2 -fstack-protector-strong"
-  export CXXFLAGS="-march=native -O2 -fstack-protector-strong"
-  export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
+  export CFLAGS="-march=native -O2 --param=ssp-buffer-size=4 -fstack-protector"
+  export CXXFLAGS="-march=native -O2 --param=ssp-buffer-size=4 -fstack-protector"
+  export LDFLAGS="-s"
 }
 
 post_makeinstall_host() {

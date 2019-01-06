@@ -94,6 +94,7 @@ make_target() {
     'linux_link_libudev = true'
     'use_libpci = true'
     'linux_link_libspeechd = false'
+    'pdf_enable_xfa=false'
     'enable_ac3_eac3_audio_demuxing=true'
     'enable_mse_mpeg2ts_stream_parser=true'
     'enable_hevc_demuxing=true'
