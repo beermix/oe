@@ -100,7 +100,7 @@ make_target() {
     'enable_mse_mpeg2ts_stream_parser=true'
     'enable_hevc_demuxing=true'
     'enable_google_now=false'
-    'is_desktop_linux=false'
+    'is_desktop_linux=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_widevine=false'
