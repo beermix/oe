@@ -120,7 +120,7 @@
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
 # mediacenter also automount internally drives at boottime via udev (yes / no)
-  UDEVIL="yes"
+  UDEVIL="no"
 
 # build and install exFAT fuse support (yes / no)
   EXFAT="no"
@@ -208,8 +208,8 @@
 
 # Configure debug groups (space delimited key=value pairs, with each value comma-delimited) and default group when DEBUG=yes
 # Use ! or - prefix to prevent a dependent package from being built with debug. Add + suffix to build dependenencies with debug.
-  DEBUG_GROUPS="kodi+=kodi+,kodi-platform+,p8-platform+,!mesa"
-  DEBUG_GROUP_YES="kodi+"
+  DEBUG_GROUPS="!kodi+=kodi,!kodi-platform,!p8-platform,!mesa"
+  DEBUG_GROUP_YES="!kodi"
 
 # Default supported get handlers (archive, git, file etc.)
   GET_HANDLER_SUPPORT="archive"
