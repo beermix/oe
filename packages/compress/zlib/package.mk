@@ -7,7 +7,7 @@ PKG_SHA256="4ff941449631ace0d4d203e3483be9dbc9da454084111f97ea0a2114e19bf066"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.zlib.net"
 PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="configure"
@@ -17,6 +17,14 @@ TARGET_CONFIGURE_OPTS="--prefix=/usr"
 HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN"
 
 pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
+}
+
+pre_configure_host() {
+  export CC=$LOCAL_CC
+  export CXX=$LOCAL_CXX
+
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math|"`
 }
