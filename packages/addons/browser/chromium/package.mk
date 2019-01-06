@@ -136,7 +136,7 @@ readonly -A _system_libs=(
   #[re2]=re2
   #[snappy]=snappy
   [yasm]=
-  #[zlib]=minizip
+  [zlib]=minizip
 )
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
