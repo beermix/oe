@@ -14,7 +14,7 @@ PKG_NAME="chromium"
 #PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="472t-glibc28.900-gcc8+re2+snappy+lbxml2+libxslt"
+PKG_REV="480-glibc26-gcc8+re2+snappy+lbxml2+libxslt"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -81,7 +81,7 @@ make_target() {
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
     'use_cups=false'
-    'use_system_freetype=true'
+    'use_system_freetype=false'
     'use_system_harfbuzz=true'
     'use_custom_libcxx=false'
     'use_gconf=false'
@@ -162,7 +162,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
- # ./third_party/libaddressinput/chromium/tools/update-strings.py
+  ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
