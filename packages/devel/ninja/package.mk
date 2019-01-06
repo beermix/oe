@@ -10,6 +10,12 @@ PKG_URL="https://github.com/ninja-build/ninja/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python2:host re2c:host"
 PKG_TOOLCHAIN="manual"
 
+pre_configure_host() {
+  export CFLAGS="-march=haswell -O2 --param=ssp-buffer-size=4 -fstack-protector -Wall"
+  export CXXFLAGS="-march=haswell -O2 --param=ssp-buffer-size=4 -fstack-protector -Wall"
+  export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
+}
+
 make_host() {
   python2 configure.py --bootstrap --verbose
 # CXX=/bin/clang++ | $TOOLCHAIN/bin/python2
@@ -17,6 +23,5 @@ make_host() {
 }
 
 makeinstall_host() {
-  strip ninja
   cp ninja $TOOLCHAIN/bin
 }
