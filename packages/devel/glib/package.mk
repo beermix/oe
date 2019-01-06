@@ -30,10 +30,10 @@ PKG_MESON_OPTS_TARGET="-Dselinux=disabled \
 			  -Dbsymbolic_functions=true \
 			  -Dforce_posix_threads=true"
 
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-#  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-#}
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
