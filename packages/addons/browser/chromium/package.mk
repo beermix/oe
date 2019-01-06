@@ -8,13 +8,13 @@
 ################################################################################## =  opus re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="68.0.3440.75"
-PKG_SHA256="dc17783267853bdc0fb726363d2b8e30a0bf43b6cc2c768e1f37c92e8eb59541"
-PKG_VERSION="66.0.3359.170"
-PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
+#PKG_VERSION="68.0.3440.75"
+#PKG_SHA256="dc17783267853bdc0fb726363d2b8e30a0bf43b6cc2c768e1f37c92e8eb59541"
+#PKG_VERSION="66.0.3359.170"
+#PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="460-glibc28.900-gcc8+re2+snappy+libxml2"
+PKG_REV="464t-glibc28.900-gcc8+re2+snappy+libxml2"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -111,7 +111,6 @@ make_target() {
     'use_system_libjpeg=true'
     'use_gio=true'
     'use_udev=true'
-    'icu_use_data_file=false'
     'enable_remoting=false'
     'enable_print_preview=false'
     'enable_vr=false'
@@ -121,6 +120,7 @@ make_target() {
     'enable_swiftshader=false'
     'enable_hangout_services_extension=false'
     'enable_wayland_server=false'
+    'enable_webrtc=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
