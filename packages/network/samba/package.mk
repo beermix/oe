@@ -108,8 +108,8 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -D__location__=\\\"\\\" -ffunction-sections -fdata-sections"
   export LDFLAGS="$LDFLAGS -fwhole-program -Wl,--gc-sections"
   
-  # export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 make_target() {
