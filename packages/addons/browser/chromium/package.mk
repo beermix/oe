@@ -15,15 +15,13 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-#PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss re2 snappy chromium:host"
-PKG_DEPENDS_TARGET="chromium:host"
+PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ libxss re2 snappy chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
 
-GOLD_SUPPORT="yes"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
@@ -122,7 +120,6 @@ readonly -A _system_libs=(
   [libdrm]=
   [icu]=icu
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
   [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
@@ -159,7 +156,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox # ionice -c3 nice -n20 
+  ionice -c3 nice -n20 ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
 
 addon() {
