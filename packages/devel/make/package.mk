@@ -13,8 +13,8 @@ PKG_LONGDESC="Utility to maintain groups of programs."
 
 pre_configure_host() {
   export CC=$LOCAL_CC
-  export CFLAGS="-march=native -O2 -fstack-protector-strong"
-  export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
+  export CFLAGS="-march=native -O2 --param=ssp-buffer-size=4 -fstack-protector"
+  export LDFLAGS="-s"
 }
 
 post_makeinstall_host() {
