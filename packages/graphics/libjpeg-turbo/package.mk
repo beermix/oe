@@ -18,7 +18,7 @@ PKG_CMAKE_OPTS_HOST="-DENABLE_STATIC=ON \
                      -DWITH_JPEG8=ON \
                      -DWITH_SIMD=OFF"
 
-PKG_CMAKE_OPTS_TARGET="-DENABLE_STATIC=ON \
+PKG_CMAKE_OPTS_TARGET="-DENABLE_STATIC=OFF \
                        -DENABLE_SHARED=ON \
                        -DWITH_JPEG8=ON"
 
