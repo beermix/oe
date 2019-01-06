@@ -14,7 +14,7 @@ PKG_NAME="chromium"
 #PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="464t-glibc28.900-gcc8+re2+snappy+libxml2"
+PKG_REV="466t-glibc28.900-gcc8+re2+snappy+libxml2"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -112,7 +112,6 @@ make_target() {
     'use_gio=true'
     'use_udev=true'
     'enable_remoting=false'
-    'enable_print_preview=false'
     'enable_vr=false'
     'enable_vulkan=false'
     'enable_nacl=false'
@@ -120,7 +119,6 @@ make_target() {
     'enable_swiftshader=false'
     'enable_hangout_services_extension=false'
     'enable_wayland_server=false'
-    'enable_webrtc=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -131,14 +129,14 @@ make_target() {
 readonly -A _system_libs=(
   [icu]=icu
   [libdrm]=
-  [icu]=icu
   [libjpeg]=libjpeg
-  [libxml]=libxml2           # https://crbug.com/736026
+  #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
+  #[libvpx]=libvpx
   [re2]=re2
   [snappy]=snappy
   [yasm]=
-  [zlib]=minizip
+  #[zlib]=minizip
 )
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
@@ -169,8 +167,8 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox
-  #noti ninja -C out/Release chrome chrome_sandbox
+  #ionice -c3 nice -n20 noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  noti ninja -C out/Release chrome chrome_sandbox
 }
 
 addon() {
