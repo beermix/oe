@@ -2,12 +2,15 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="connman"
-PKG_VERSION="1.36"
-PKG_SHA256="c789db41cc443fa41e661217ea321492ad59a004bebcd1aa013f3bc10a6e0074"
+PKG_VERSION="469e49a"
+PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.connman.net"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://git.kernel.org/pub/scm/network/connman/connman.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
+
 PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables wpa_supplicant"
+PKG_LONGDESC="A modular network connection manager."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+hardening"
 
@@ -42,7 +45,8 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --enable-client \
                            --enable-datafiles \
                            --with-dbusconfdir=/etc \
-                           --with-systemdunitdir=/usr/lib/systemd/system"
+                           --with-systemdunitdir=/usr/lib/systemd/system \
+                           --disable-silent-rules"
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \
                       statedir=/run/connman"
