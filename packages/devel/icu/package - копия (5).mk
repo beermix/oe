@@ -17,6 +17,14 @@ pre_configure_target() {
   export LIBS="-latomic"
 }
 
+PKG_ICU_OPTS="--disable-extras \
+              --disable-icuio \
+              --disable-layout \
+              --disable-renaming \
+              --disable-samples \
+              --disable-tests \
+              --disable-tools"
+
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          $PKG_ICU_OPTS"

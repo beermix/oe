@@ -3,7 +3,7 @@
 
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
-PKG_REV="151-glibc2.28.9000-gcc8"
+PKG_REV="152-glibc2.28.9000-gcc8"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
@@ -94,10 +94,10 @@ addon() {
   cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libsnappy.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # icu
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuuc.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicudata.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicui18n.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuio.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicutu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  #cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicutest.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuuc.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicudata.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicui18n.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuio.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicutu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicutest.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
