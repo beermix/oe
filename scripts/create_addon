@@ -90,7 +90,7 @@ pack_addon() {
       ADDON_JENKINS_ADDON_NAME="$ADDON_VERSION-${DEVICE:-$PROJECT}-$TARGET_ARCH-$PKG_ADDON_ID-$ADDONVER"
       mkdir -p "$ADDON_JENKINS_DIR"
       cd $ADDON_INSTALL_DIR
-      $TOOLCHAIN/bin/7za a -l -mx0 -bsp0 -bso0 -tzip $ADDON_JENKINS_DIR/$ADDON_JENKINS_ADDON_NAME.zip $PKG_ADDON_ID-$ADDONVER.zip resources/
+      7za a -l -mx0 -bsp0 -bso0 -tzip $ADDON_JENKINS_DIR/$ADDON_JENKINS_ADDON_NAME.zip $PKG_ADDON_ID-$ADDONVER.zip resources/
       ( cd $ADDON_JENKINS_DIR
         sha256sum $ADDON_JENKINS_ADDON_NAME.zip > $ADDON_JENKINS_ADDON_NAME.zip.sha256
       )
