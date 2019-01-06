@@ -165,15 +165,16 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox
-  # noti ninja -C out/Release chrome chrome_sandbox
+  noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  # ionice -c3 nice -n20 noti ninja -C out/Release chrome chrome_sandbox
 }
 
 addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config \
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin \
+           $ADDON_BUILD/$PKG_ADDON_ID/config \
            $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules \
            $ADDON_BUILD/$PKG_ADDON_ID/lib
+
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
   cp -ri $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
