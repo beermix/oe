@@ -169,7 +169,8 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  # ionice -c3 nice -n20 noti ninja $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  noti ninja -C out/Release chrome chrome_sandbox
 }
 
 addon() {
