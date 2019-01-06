@@ -8,9 +8,13 @@
 ################################################################################## =  opus re2 snappy
 
 PKG_NAME="chromium"
+PKG_VERSION="68.0.3440.75"
+PKG_SHA256="dc17783267853bdc0fb726363d2b8e30a0bf43b6cc2c768e1f37c92e8eb59541"
+PKG_VERSION="66.0.3359.170"
+PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="457-glibc28.900-gcc8+re2+snappy+libxml2"
+PKG_REV="460-glibc28.900-gcc8+re2+snappy+libxml2"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -50,10 +54,9 @@ make_target() {
 
   export CCACHE_SLOPPINESS=time_macros
 
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -mzero-caller-saved-regs=used"
-  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -mzero-caller-saved-regs=used"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-  export LDFLAGS="$LDFLAGS -fuse-ld=gold" 
+  export CFLAGS="$CFLAGS -fdiagnostics-color=always"
+  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always"
+  export LDFLAGS="$LDFLAGS -fuse-ld=gold"
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -93,6 +96,7 @@ make_target() {
     'use_libpci = true'
     'linux_link_libspeechd = false'
     'pdf_enable_xfa=false'
+    'exclude_unwind_tables=true'
     'enable_ac3_eac3_audio_demuxing=true'
     'enable_mse_mpeg2ts_stream_parser=true'
     'enable_hevc_demuxing=true'
@@ -102,6 +106,14 @@ make_target() {
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_widevine=false'
     'use_vaapi=true'
+    'use_dbus=true'
+    'use_system_zlib=true'
+    'use_system_libjpeg=true'
+    'use_gio=true'
+    'use_udev=true'
+    'icu_use_data_file=false'
+    'enable_remoting=false'
+    'enable_print_preview=false'
     'enable_vr=false'
     'enable_vulkan=false'
     'enable_nacl=false'
@@ -117,6 +129,7 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py ## 'enable_webrtc=false'
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
+  [icu]=icu
   [libdrm]=
   [icu]=icu
   [libjpeg]=libjpeg
@@ -163,7 +176,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,*.dat} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
