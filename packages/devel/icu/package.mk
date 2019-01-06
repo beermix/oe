@@ -17,18 +17,24 @@ pre_configure_target() {
   export LIBS="-latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-samples \
-			    --disable-tests \
-			    --disable-extras \
-			    --disable-icuio \
-			    --disable-layout \
-			    --disable-renaming"
+PKG_ICU_OPTS="--disable-extras \
+              --disable-icuio \
+              --disable-layout \
+              --disable-renaming \
+              --disable-samples \
+              --disable-tests \
+              --disable-tools"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			      --disable-shared \
-			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_HOST="--enable-static \
+                         --disable-shared \
+                         $PKG_ICU_OPTS"
 
-PKG_CONFIGURE_SCRIPT="source/configure"
+configure_package() {
+  PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
+                             $PKG_ICU_OPTS"
+
+  PKG_CONFIGURE_SCRIPT="${PKG_BUILD}/source/configure"
+}
 
 makeinstall_host() {
  : # nothing todo
