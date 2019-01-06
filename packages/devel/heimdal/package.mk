@@ -4,10 +4,12 @@
 
 PKG_NAME="heimdal"
 PKG_VERSION="7.5.0"
-PKG_SHA256="ad67fef994dc2268fb0b1a8164b39330d184f425057867485a178e9785a7f35a"
+#PKG_SHA256="ad67fef994dc2268fb0b1a8164b39330d184f425057867485a178e9785a7f35a"
+PKG_VERSION="9750f2d"
 PKG_LICENSE="BSD-3c"
 PKG_SITE="http://www.h5l.org/"
 PKG_URL="https://github.com/heimdal/heimdal/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/heimdal/heimdal/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="toolchain e2fsprogs:host Python2:host ncurses:host"
 PKG_LONGDESC="Kerberos 5, PKIX, CMS, GSS-API, SPNEGO, NTLM, Digest-MD5 and, SASL implementation."
 PKG_TOOLCHAIN="autotools"
