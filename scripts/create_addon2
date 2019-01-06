@@ -119,7 +119,7 @@ pack_addon() {
     fi
     cd $ADDON_BUILD
     build_msg "CLR_INFO" "*** compressing addon ${PKG_ADDON_ID} ... ***"
-    $TOOLCHAIN/bin/7za a -l -mx9 -bsp0 -bso0 -tzip $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID
+    7za a -l -mx9 -bsp0 -bso0 -tzip $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID
     cd - &>/dev/null
 
     mkdir -p $ADDON_INSTALL_DIR
@@ -154,7 +154,7 @@ pack_addon() {
       ADDON_JENKINS_ADDON_NAME="$ADDON_VERSION-${DEVICE:-$PROJECT}-$TARGET_ARCH-$PKG_ADDON_ID-$ADDONVER"
       mkdir -p "$ADDON_JENKINS_DIR"
       cd $ADDON_INSTALL_DIR
-      $TOOLCHAIN/bin/7za a -l -mx0 -bsp0 -bso0 -tzip $ADDON_JENKINS_DIR/$ADDON_JENKINS_ADDON_NAME.zip $PKG_ADDON_ID-$ADDONVER.zip resources/
+      7za a -l -mx0 -bsp0 -bso0 -tzip $ADDON_JENKINS_DIR/$ADDON_JENKINS_ADDON_NAME.zip $PKG_ADDON_ID-$ADDONVER.zip resources/
       ( cd $ADDON_JENKINS_DIR
         sha256sum $ADDON_JENKINS_ADDON_NAME.zip > $ADDON_JENKINS_ADDON_NAME.zip.sha256
       )
