@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="llvm"
-PKG_VERSION="7.0.0"
-PKG_SHA256="8bc1f844e6cbde1b652c19c1edebc1864456fd9c78b8c1bea038e51b363fe222"
+PKG_VERSION="7.0.1"
+PKG_SHA256="a38dfc4db47102ec79dcc2aa61e93722c5f6f06f0a961073bd84b78fb949419b"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
@@ -25,7 +25,7 @@ PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_INCLUDE_DOCS=OFF \
                        -DLLVM_ENABLE_DOXYGEN=OFF \
                        -DLLVM_ENABLE_SPHINX=OFF \
-                       -DLLVM_TARGETS_TO_BUILD="AMDGPU" \
+                       -DLLVM_TARGETS_TO_BUILD="X86" \
                        -DLLVM_ENABLE_TERMINFO=OFF \
                        -DLLVM_ENABLE_ASSERTIONS=OFF \
                        -DLLVM_ENABLE_WERROR=OFF \
@@ -41,7 +41,7 @@ PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_COMMON \
 
 pre_configure_target() {
   PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
-                         -DCMAKE_BUILD_TYPE=MinSizeRel \
+                         -DCMAKE_BUILD_TYPE=Release \
                          -DCMAKE_C_FLAGS="$CFLAGS" \
                          -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
                          -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
