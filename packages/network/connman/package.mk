@@ -9,10 +9,8 @@ PKG_SITE="https://git.kernel.org/pub/scm/network/connman/connman.git/log/"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://git.kernel.org/pub/scm/network/connman/connman.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables wpa_supplicant"
-PKG_DEPENDS_TARGET="toolchain glib readline dbus libmnl libnftnl wpa_supplicant"
 PKG_LONGDESC="A modular network connection manager."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --srcdir=.. \
