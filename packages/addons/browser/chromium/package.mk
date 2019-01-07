@@ -174,12 +174,12 @@ addon() {
 
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri $PKG_BUILD/out/Release/{*.pak,*.bin,*.dat} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -ri $PKG_BUILD/out/Release/libffmpeg.so $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config
+  # config - ,*.dat
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
   # atk
