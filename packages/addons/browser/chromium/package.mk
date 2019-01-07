@@ -67,6 +67,7 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'use_cfi_icall=false'
     'clang_use_chrome_plugins=false'
@@ -98,7 +99,7 @@ make_target() {
     'enable_hevc_demuxing=true'
     'enable_google_now=false'
     'is_desktop_linux=true'
-    'use_v8_context_snapshot=false'
+    'use_v8_context_snapshot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_widevine=false'
     'use_vaapi=true'
@@ -113,11 +114,48 @@ make_target() {
     'enable_swiftshader=false'
     'enable_hangout_services_extension=false'
     'enable_wayland_server=false'
+    'is_component_ffmpeg=true'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py ## 'enable_webrtc=false'
+# Keys are the names in the above script; values are the dependencies in Arch
+readonly -A _system_libs=(
+  [libdrm]=
+  [icu]=icu
+  [libjpeg]=libjpeg
+  [libxml]=libxml2           # https://crbug.com/736026
+  [libxslt]=libxslt
+  [re2]=re2
+  [snappy]=snappy
+  [yasm]=
+  [zlib]=minizip
+)
+readonly _unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+  freetype
+  harfbuzz-ng
+)
+depends+=(${_system_libs[@]} freetype2 harfbuzz)
+
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries ||  
+  local _lib
+  for _lib in ${_unwanted_bundled_libs[@]}; do
+    find -type f -path "*third_party/$_lib/*" \
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
+      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
+      \! -path './third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
+  done
+  
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
@@ -137,7 +175,7 @@ addon() {
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
   cp -ri $PKG_BUILD/out/Release/{*.pak,*.bin,*.dat} $ADDON_BUILD/$PKG_ADDON_ID/bin
-  #cp -ri $PKG_BUILD/out/Release/libffmpeg.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $PKG_BUILD/out/Release/libffmpeg.so $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
