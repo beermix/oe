@@ -10,6 +10,10 @@ PKG_URL="http://ftpmirror.gnu.org/mpc/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host gmp:host mpfr:host"
 PKG_LONGDESC="A C library for the arithmetic of complex numbers with arbitrarily high precision and correct rounding of the result."
 
+pre_configure_host() {
+  unset CFLAGS
+}
+
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
                          --with-gmp=$TOOLCHAIN \

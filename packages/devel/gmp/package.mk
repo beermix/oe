@@ -11,6 +11,10 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="A library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating point numbers."
 PKG_BUILD_FLAGS="+pic:host"
 
+pre_configure_host() {
+  unset CFLAGS
+}
+
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
