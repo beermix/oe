@@ -72,17 +72,20 @@ case $RASTER_MODE in
   'force') chrome_OPTS="$chrome_OPTS --enable-gpu-rasterization --enable-accelerated-2d-canvas --ignore-gpu-blacklist";;
 esac
 
-# flash
+# flash " /storage/.kodi/addons/browser.chrome/chrome-bin/chrome --no-sandbox --no-default-browser-check --alsa-output-device=plughw:CARD=MID,DEV=0 --ppapi-flash-path=/storage/.kodi/addons/browser.chrome/bin/PepperFlash/libpepflashplayer.so --ppapi-flash-version=32.0.0.101
 if [ "$ENABLE_FLASH" == "true" ]
 then
-  CHROMIUM_FLASH_VERSION=$(grep '"version":' "$ADDON_DIR/bin/PepperFlash/manifest.json" | awk -F\" '{ print $4 }')
-  CHROMIUM_OPTS=" --ppapi-flash-path=$ADDON_DIR/bin/PepperFlash/libpepflashplayer.so --ppapi-flash-version=$CHROMIUM_FLASH_VERSION"
+  chrome_FLASH_VERSION=$(grep '"version":' "$ADDON_DIR/bin/PepperFlash/manifest.json" | awk -F\" '{ print $4 }')
+  chrome_OPTS=" --ppapi-flash-path=$ADDON_DIR/bin/PepperFlash/libpepflashplayer.so --ppapi-flash-version=$chrome_FLASH_VERSION"
 fi
 
 # alsa
 if [ ! -z $ALSA_DEVICE ]; then
   chrome_OPTS="$chrome_OPTS --alsa-output-device=$ALSA_DEVICE"
 fi
+
+# HACK!!! to get sound at Chrome stop pulseaudio
+# systemctl stop pulseaudio
 
 # start chrome
 LD_PRELOAD=/usr/lib/libGL.so $ADDON_DIR/chrome-bin/chrome \
@@ -101,3 +104,7 @@ if [ "$HIDE_CURSOR" == "true" ]
 then
   kill $UNCLUTTER_PID
 fi
+
+# HACK!!! to get sound at Kodi start pulseaudio
+# sleep 5
+# systemctl start pulseaudio
