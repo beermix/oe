@@ -14,7 +14,7 @@ PKG_NAME="chromium"
 #PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="481-glibc26-skia-harmony"
+PKG_REV="490-glibc26-default-settings"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -94,10 +94,7 @@ make_target() {
     'linux_link_libgio=true'
     'linux_link_libudev = true'
     'use_libpci = true'
-    'pdf_enable_xfa=false'
     'exclude_unwind_tables=true'
-    'enable_ac3_eac3_audio_demuxing=true'
-    'enable_mse_mpeg2ts_stream_parser=true'
     'enable_hevc_demuxing=true'
     'enable_google_now=false'
     'is_desktop_linux=true'
@@ -109,7 +106,6 @@ make_target() {
     'use_system_zlib=true'
     'use_system_libjpeg=true'
     'use_gio=true'
-    'enable_remoting=false'
     'enable_vr=false'
     'enable_vulkan=false'
     'enable_nacl=false'
@@ -117,47 +113,10 @@ make_target() {
     'enable_swiftshader=false'
     'enable_hangout_services_extension=false'
     'enable_wayland_server=false'
-    'is_component_ffmpeg=true'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py ## 'enable_webrtc=false'
-# Keys are the names in the above script; values are the dependencies in Arch
-readonly -A _system_libs=(
-  [icu]=icu
-  [libdrm]=
-  [libjpeg]=libjpeg
-  [libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
-  [re2]=re2
-  [snappy]=snappy
-  [yasm]=
-  [zlib]=minizip
-)
-readonly _unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-  freetype
-  harfbuzz-ng
-)
-depends+=(${_system_libs[@]} freetype2 harfbuzz)
-
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find -type f -path "*third_party/$_lib/*" \
-      \! -path "*third_party/$_lib/chromium/*" \
-      \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
-      \! -path './third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
@@ -177,7 +136,7 @@ addon() {
 
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -ri $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri $PKG_BUILD/out/Release/{*.pak,*.bin,*.dat} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -ri $PKG_BUILD/out/Release/libffmpeg.so $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/

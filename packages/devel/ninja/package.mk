@@ -11,8 +11,8 @@ PKG_DEPENDS_HOST="Python2:host re2c:host"
 PKG_TOOLCHAIN="manual"
 
 pre_configure_host() {
-  export CFLAGS="-march=haswell -O3 -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-plt -Wall"
-  export CXXFLAGS="-march=haswell -O3 -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-plt -Wall"
+  export CFLAGS="-march=haswell -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-plt -Wall"
+  export CXXFLAGS="-march=haswell -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-plt -Wall"
   export LDFLAGS="-march=haswell -Wl,-z,relro -Wl,-z,now -s"
 }
 
