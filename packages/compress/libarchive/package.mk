@@ -4,7 +4,6 @@
 PKG_NAME="libarchive"
 PKG_VERSION="3.3.3"
 PKG_SHA256="ba7eb1781c9fbbae178c4c6bad1c6eb08edab9a1496c64833d1715d022b30e2e"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libarchive/libarchive/releases"
 PKG_URL="https://www.libarchive.org/downloads/$PKG_NAME-$PKG_VERSION.tar.gz"

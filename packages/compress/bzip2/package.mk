@@ -10,11 +10,12 @@ PKG_SITE="http://www.bzip.org"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
+PKG_LONGDESC="A high-quality bzip2 data compressor."
 PKG_BUILD_FLAGS="+pic +pic:host"
 
 pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-fno-semantic-interposition -ffunction-sections -O3|"`
+  export CFLAGS="$CFLAGS -O3 -fno-semantic-interposition -ffunction-sections"
+  export CXXFLAGS="$CXXFLAGS -O3 -fno-semantic-interposition -ffunction-sections"
 }
 
 pre_build_host() {

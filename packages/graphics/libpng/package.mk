@@ -15,7 +15,7 @@ PKG_BUILD_FLAGS="+pic +pic:host"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-static \
-                           --enable-shared \
+                           --disable-shared \
                            --enable-hardware-optimizations \
                            --enable-intel-sse"
 

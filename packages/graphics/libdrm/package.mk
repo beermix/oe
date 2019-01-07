@@ -13,10 +13,10 @@ PKG_DEPENDS_TARGET="toolchain libpciaccess"
 PKG_LONGDESC="The userspace interface library to kernel DRM services."
 PKG_TOOLCHAIN="meson"
 
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-#  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-#}
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+}
 
 get_graphicdrivers
 
