@@ -52,10 +52,11 @@ make_host() {
   ninja $NINJA_OPTS llvm-config llvm-tblgen
 }
 
-makeinstall_host() {
-  cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
-  cp -a bin/llvm-tblgen $TOOLCHAIN/bin
-}
+#makeinstall_host() {
+#  cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
+#  cp -a bin/llvm-config $TOOLCHAIN/bin
+#  cp -a bin/llvm-tblgen $TOOLCHAIN/bin
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
