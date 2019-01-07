@@ -13,14 +13,14 @@ PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="make:host zlib:host"
 PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by caching."
 
-PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-man --enable-more-warnings"
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib=no --disable-man --enable-more-warnings --disable-silent-rules"
 
 pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
 
-  export CFLAGS="-march=haswell -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-plt -Wall"
-  export CXXFLAGS="-march=haswell -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-plt -Wall"
+  export CFLAGS="-march=haswell -fstack-protector-strong -fno-plt -Wall"
+  export CXXFLAGS="-march=haswell -fstack-protector-strong -fno-plt -Wall"
   export LDFLAGS="-march=haswell -Wl,-z,relro -Wl,-z,now -s"
 }
 
