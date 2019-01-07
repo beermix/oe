@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --enable-datafiles \
                            --with-dbusconfdir=/etc \
                            --with-systemdunitdir=/usr/lib/systemd/system \
-                           --with-firewall=nftables \
+                           --with-firewall=nftables=no \
                            --disable-silent-rules"
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \
