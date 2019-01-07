@@ -14,7 +14,7 @@ PKG_NAME="chromium"
 #PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="490-glibc26-default-settings"
+PKG_REV="492-glibc26-snapshot"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -114,7 +114,7 @@ make_target() {
     'enable_swiftshader=false'
     'enable_hangout_services_extension=false'
     'enable_wayland_server=false'
-    'is_component_ffmpeg=true'
+    'is_component_ffmpeg=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -175,7 +175,7 @@ addon() {
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
   cp -ri $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -ri $PKG_BUILD/out/Release/libffmpeg.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -ri $PKG_BUILD/out/Release/libffmpeg.so $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
