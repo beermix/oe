@@ -14,7 +14,7 @@ PKG_NAME="chromium"
 #PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="493-glibc28.900-snapshot"
+PKG_REV="450-glibc28.900-snapshot-used"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -54,8 +54,8 @@ make_target() {
 
   export CCACHE_SLOPPINESS=time_macros
 
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always"
-  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always"
+  export CFLAGS="$CFLAGS -fdiagnostics-color=always -mzero-caller-saved-regs=used"
+  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -mzero-caller-saved-regs=used"
   export LDFLAGS="$LDFLAGS -Wl,-z,relro -Wl,-z,now"
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI

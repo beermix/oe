@@ -15,7 +15,7 @@ PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:boot
 PKG_DEPENDS_INIT="glibc"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
