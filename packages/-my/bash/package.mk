@@ -1,9 +1,10 @@
 PKG_NAME="bash"
-PKG_VERSION="6444760"
+PKG_VERSION="5.0"
 #PKG_SITE="http://ftp.gnu.org/gnu/bash/?C=M;O=D"
 #PKG_URL="http://ftp.gnu.org/gnu/bash/bash-$PKG_VERSION.tar.gz"
 PKG_URL="https://github.com/bminor/bash/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_BUILD_FLAGS="+hardening"
 

@@ -4,7 +4,6 @@
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
 PKG_REV="155-glibc28.900-gcc8"
-PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
@@ -12,7 +11,6 @@ PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
                     libXtst libXcursor libxss nss pango scrnsaverproto unclutter libnotify icu re2 snappy"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Google Chrome Browser"
-PKG_LONGDESC="Google Chrome Browser"
 PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="yes"
