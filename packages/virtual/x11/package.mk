@@ -33,6 +33,6 @@ else
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-evdev xf86-input-synaptics"
 fi
 
-#for drv in $XORG_DRIVERS; do
-#  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-$drv"
-#done
+for drv in $XORG_DRIVERS; do
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-$drv"
+done
