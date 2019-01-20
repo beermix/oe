@@ -1,5 +1,5 @@
 PKG_NAME="tig"
-PKG_VERSION="d75c510"
+PKG_VERSION="93ea970"
 PKG_URL="https://github.com/jonas/tig/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_SECTION="tools"
