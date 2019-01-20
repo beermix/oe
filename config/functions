@@ -967,7 +967,7 @@ kernel_make() {
     HOSTLDFLAGS="$HOST_LDFLAGS" \
     HOSTCXXFLAGS="$HOST_CXXFLAGS" \
     DEPMOD="$TOOLCHAIN/bin/depmod" \
-    "$@"
+    "$@" || die "$(print_color CLR_ERROR "ERROR: kernel_make for ${PKG_NAME} did not succeed!")"
 }
 
 # get kernel module dir
