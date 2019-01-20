@@ -14,7 +14,7 @@ PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
-PKG_BUILD_FLAGS="-gold +hardening"
+PKG_BUILD_FLAGS="-gold -lto +hardening"
 
 # Dependencies
 get_graphicdrivers
@@ -195,6 +195,7 @@ configure_target() {
               --disable-neon \
               --enable-yasm \
               --disable-symver \
+              --enable-lto \
               --enable-indev=x11grab_xcb
 }
 
