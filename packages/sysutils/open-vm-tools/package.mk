@@ -35,7 +35,7 @@ post_unpack() {
 }
 
 pre_configure_target() {
-  export LIBS="-ldnet"
+  export LIBS="-ldnet -ltirpc"
 }
 
 post_makeinstall_target() {
