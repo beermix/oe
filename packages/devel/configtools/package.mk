@@ -2,7 +2,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="configtools"
-PKG_VERSION="b0cc4c6"
+PKG_VERSION="286a38d"
 PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.savannah.gnu.org/cgit/config.git"
