@@ -1,9 +1,10 @@
 PKG_NAME="aria2"
-PKG_VERSION="1.34.0"
+PKG_VERSION="3736813"
 PKG_SITE="https://github.com/aria2/aria2/releases"
 PKG_URL="https://github.com/aria2/aria2/releases/download/release-$PKG_VERSION/aria2-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/aria2/aria2/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat pcre curl libev libxml2 libuv"
-PKG_SECTION="tools"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --sysconfdir=/storage/.config \
