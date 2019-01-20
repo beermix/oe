@@ -3,7 +3,6 @@ PKG_VERSION="2.20.1"
 PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain curl pcre expat zlib openssl"
 PKG_DEPENDS_HOST="zlib:host pcre:host expat:host"
-PKG_SECTION="devel"
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
