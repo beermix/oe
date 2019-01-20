@@ -7,7 +7,7 @@ PKG_LICENSE="various"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain connman iana-etc ethtool openssh iperf nuttcp"
-PKG_DEPENDS_TARGET="toolchain connman netbase ethtool openssh iperf nuttcp"
+#PKG_DEPENDS_TARGET="toolchain connman netbase ethtool openssh iperf nuttcp"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="network: Metapackage for packages to install network support"
 
