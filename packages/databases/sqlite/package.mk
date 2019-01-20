@@ -11,7 +11,7 @@ PKG_URL="https://www.sqlite.org/2018/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="An Embeddable SQL Database Engine."
 # libsqlite3.a(sqlite3.o): requires dynamic R_X86_64_PC32 reloc against 'sqlite3_stricmp' which may overflow at runtime
-PKG_BUILD_FLAGS="+pic +pic:host -parallel"
+PKG_BUILD_FLAGS="+pic +pic:host -parallel +hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-static \
                            --enable-shared \
