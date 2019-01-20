@@ -1,10 +1,7 @@
 PKG_NAME="lzlib"
-PKG_VERSION="1.9-rc1"
+PKG_VERSION="1.11"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain lzo xz"
-PKG_SECTION="network"
-
-
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 
