@@ -1,5 +1,5 @@
 PKG_NAME="libwebp"
-PKG_VERSION="1.0.1"
+PKG_VERSION="1.0.2"
 PKG_URL="https://github.com/webmproject/libwebp/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva"
 PKG_TOOLCHAIN="autotools"
