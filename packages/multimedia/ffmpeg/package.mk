@@ -7,14 +7,14 @@ PKG_NAME="ffmpeg"
 PKG_VERSION="a97ea53"
 #PKG_SHA256="5cecd158d751f4b53a68d5a9ac404974ec22308a6f2d90377638b948de7c2bfc"
 PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://ffmpeg.org/releases/?C=M;O=D"
+PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
 PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
-PKG_BUILD_FLAGS="-gold -hardening"
+PKG_BUILD_FLAGS="-gold +hardening"
 
 # Dependencies
 get_graphicdrivers
