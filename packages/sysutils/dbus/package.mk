@@ -9,6 +9,7 @@ PKG_SITE="https://dbus.freedesktop.org/releases/dbus/?C=M;O=D"
 PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat systemd"
 PKG_LONGDESC="D-Bus is a message bus, used for sending messages between applications."
+PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --with-sysroot=$SYSROOT_PREFIX \
