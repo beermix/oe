@@ -59,6 +59,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
+                           --enable-default-pie \
+                           --enable-default-ssp \
                            --with-tune=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -88,12 +90,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
-                         --enable-default-pie \
-                         --enable-default-ssp \
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CCACHE_DISABLE=true
+  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
@@ -107,7 +107,7 @@ pre_configure_host() {
 }
 
 pre_configure_bootstrap() {
-#  export CCACHE_DISABLE=true
+  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
