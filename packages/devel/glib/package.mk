@@ -13,7 +13,7 @@ PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host"
 
-PKG_MESON_OPTS_HOST="-Dselinux=disabled \
+PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dlibmount=false \
 			-Dman=false \
 			-Dgtk_doc=false \
@@ -22,7 +22,7 @@ PKG_MESON_OPTS_HOST="-Dselinux=disabled \
 			-Dforce_posix_threads=true \
 			-Ddefault_library=static"
 
-PKG_MESON_OPTS_TARGET="-Dselinux=disabled \
+PKG_MESON_OPTS_TARGET="-Dselinux=false\
 			  -Dlibmount=false \
 			  -Dman=false \
 			  -Dgtk_doc=false \
