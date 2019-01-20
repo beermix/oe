@@ -7,10 +7,11 @@ PKG_VERSION="2.3.0"
 PKG_SHA256="8d95e65c4d84d0f82097581e163d3770694c600cbb040ebd827f2d375e004f4b"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://01.org/linuxmedia"
+PKG_SITE="https://github.com/intel/libva/releases"
 PKG_URL="https://github.com/intel/libva/archive/$PKG_VERSION.tar.gz"
 PKG_LONGDESC="Libva is an implementation for VA-API (VIdeo Acceleration API)."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+hardening"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm"
