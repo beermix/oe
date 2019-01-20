@@ -11,10 +11,10 @@ PKG_URL="https://cgit.freedesktop.org/xorg/xserver/snapshot/$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/mirror/xserver/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="$PKG_VERSION*"
 #PKG_SOURCE_DIR="xserver-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper nettle libXcomposite mesa libepoxy"
+PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper nettle libXcomposite mesa libepoxy xkbcomp"
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_LONGDESC="Xorg is a full featured X server running on Intel x86 hardware."
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="meson"
 
 get_graphicdrivers
 
