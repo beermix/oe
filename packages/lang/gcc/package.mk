@@ -89,6 +89,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
+                         --enable-default-pie \
+                         --enable-default-ssp \
                          $GCC_OPTS"
 
 pre_configure_host() {
