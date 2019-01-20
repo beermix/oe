@@ -1,5 +1,5 @@
 PKG_NAME="libuv"
-PKG_VERSION="v1.24.0"
+PKG_VERSION="v1.25.0"
 PKG_SITE="https://dist.libuv.org/dist/"
 PKG_URL="http://dist.libuv.org/dist/$PKG_VERSION/libuv-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
