@@ -8,15 +8,15 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.zlib.net"
 PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain zlib:host"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="configure"
 #PKG_BUILD_FLAGS="+pic:host +pic +hardening"
 #PKG_BUILD_FLAGS="+hardening"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fprofile-generate -fprofile-dir=pgo -fprofile-update=atomic"
-  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fprofile-generate -fprofile-dir=pgo -fprofile-update=atomic"
+  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
 }
 
 pre_configure_host() {
