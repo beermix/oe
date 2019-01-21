@@ -18,6 +18,8 @@ pre_configure_host() {
   export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
 }
 
+PKG_CONFIGURE_OPTS_HOST="--without-guile"
+
 post_makeinstall_host() {
   ln -sf make $TOOLCHAIN/bin/gmake
 
