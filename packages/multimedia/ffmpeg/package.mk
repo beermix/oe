@@ -196,7 +196,7 @@ configure_target() {
               --disable-neon \
               --enable-yasm \
               --disable-symver \
-              --enable-lto \
+              --disable-lto \
               --enable-indev=x11grab_xcb
 }
 
