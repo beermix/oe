@@ -12,7 +12,7 @@ PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="configure"
-:PKG_BUILD_FLAGS="+lto-parallel"
+PKG_BUILD_FLAGS="+lto-parallel"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \
