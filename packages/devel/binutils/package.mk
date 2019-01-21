@@ -31,29 +31,27 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --enable-shared \
                          --enable-targets=x86_64-linux \
                          --disable-gdb \
                          --enable-lto \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
-			      --with-sysroot=$SYSROOT_PREFIX \
-			      --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
-			      --without-ppl \
-			      --without-cloog \
-			      --enable-static \
-			      --disable-shared \
-			      --disable-werror \
-			      --disable-multilib \
-			      --disable-libada \
-			      --disable-libssp \
-			      --disable-plugins \
-			      --disable-gold \
-			      --disable-ld \
-			      --disable-lto \
-			      --disable-nls \
-			      --disable-gdb"
+                         --with-sysroot=$SYSROOT_PREFIX \
+                         --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
+                         --without-ppl \
+                         --without-cloog \
+                         --enable-static \
+                         --disable-shared \
+                         --disable-werror \
+                         --disable-multilib \
+                         --disable-libada \
+                         --disable-libssp \
+                         --disable-plugins \
+                         --disable-gold \
+                         --disable-ld \
+                         --disable-lto \
+                         --disable-nls"
 
 pre_configure_host() {
   unset CPPFLAGS
