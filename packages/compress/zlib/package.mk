@@ -15,8 +15,8 @@ PKG_BUILD_FLAGS="+pic:host +pic +hardening"
 #PKG_BUILD_FLAGS="+hardening"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fprofile-generate -fprofile-dir=pgo -fprofile-update=atomic"
-  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fprofile-generate -fprofile-dir=pgo -fprofile-update=atomic"
+  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fprofile-generate -fprofile-dir=pgo -fprofile-update=atomic"
+  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fprofile-generate -fprofile-dir=pgo -fprofile-update=atomic"
 }
 
 pre_configure_host() {
