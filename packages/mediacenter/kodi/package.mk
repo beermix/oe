@@ -12,7 +12,7 @@ PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav"
 PKG_LONGDESC="A free and open source cross-platform media player."
 PKG_TOOLCHAIN="cmake-make"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+#PKG_BUILD_FLAGS="-lto -hardening"
 
 configure_package() {
   PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
