@@ -93,7 +93,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CCACHE_DISABLE=true
+  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
@@ -106,8 +106,8 @@ pre_configure_host() {
   unset CPP
 }
 
-#pre_configure_bootstrap() {
-#  export CCACHE_DISABLE=true
+pre_configure_bootstrap() {
+  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
@@ -115,7 +115,7 @@ pre_configure_host() {
 
 #  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
 #  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-#}
+}
 
 post_make_host() {
   # fix wrong link
