@@ -3,7 +3,7 @@ PKG_VERSION="5.29.7"
 PKG_SITE="http://www.cpan.org/src/5.0/?C=M;O=D"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.gz"
 #PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain openssl bzip2 	 db"
+PKG_DEPENDS_TARGET="toolchain openssl bzip2 gdbm db"
 #PKG_DEPENDS_TARGET="toolchain openssl bzip2 gdbm"
 PKG_TOOLCHAIN="configure"
 
@@ -17,7 +17,7 @@ configure_target() {
 	     -Dcc=$CC \
 	     -Dprefix=/usr  \
 	     -Dvendorprefix=/usr \
-	     -Dlibswanted="dl m c crypt ndbm gdbm" \
+	     -Dlibswanted="dl m c crypt ndbm gdbm db" \
 	     -des \
 	     -Dusethreads \
 	     -Dldflags="$LDFLAGS -lpthread -lrt -lm" \
