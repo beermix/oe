@@ -13,8 +13,8 @@ PKG_LONGDESC="Utility to maintain groups of programs."
 
 pre_configure_host() {
   export CC=$LOCAL_CC
-  
-  export CFLAGS="-march=haswell -O2 --param=ssp-buffer-size=4 -fstack-protector -Wall"
+
+  export CFLAGS="-march=haswell -O2 -fstack-protector -Wall"
   export LDFLAGS="-Wl,-z,relro -Wl,-z,now -s"
 }
 

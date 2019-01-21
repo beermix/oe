@@ -17,8 +17,8 @@ pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
 
-  export CFLAGS="-march=haswell -O2 -fstack-protector-strong -fno-plt -Wall"
-  export CXXFLAGS="-march=haswell -O2 -fstack-protector-strong -fno-plt -Wall"
+  export CFLAGS="-march=haswell -O2 -fstack-protector -fno-plt -Wall"
+  export CXXFLAGS="-march=haswell -O2 -fstack-protector -fno-plt -Wall"
   export LDFLAGS="-march=haswell -Wl,-z,relro -Wl,-z,now -s"
 }
 
