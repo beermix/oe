@@ -4,12 +4,12 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="8.2.1-20181127"
-PKG_VERSION="8-20190118"
+#PKG_VERSION="8-20190118"
 PKG_LICENSE="GPL"
 PKG_SHA256=""
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-#PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
+PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -58,9 +58,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --enable-gnu-indirect-function \
-                           --disable-vtable-verify \
-                           --disable-libunwind-exceptions \
                            --with-tune=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -90,15 +87,17 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
+                         --enable-gnu-indirect-function \
+                         --disable-vtable-verify \
+                         --disable-libunwind-exceptions \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CCACHE_DISABLE=true
+#  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
 #  export CXXFLAGS="-march=haswell -g -O2  -Wl,-z,max-page-size=0x1000 "
-
 #  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
 #  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 
@@ -106,8 +105,8 @@ pre_configure_host() {
   unset CPP
 }
 
-pre_configure_bootstrap() {
-  export CCACHE_DISABLE=true
+#pre_configure_bootstrap() {
+#  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
@@ -115,7 +114,7 @@ pre_configure_bootstrap() {
 
 #  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
 #  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-}
+#}
 
 post_make_host() {
   # fix wrong link

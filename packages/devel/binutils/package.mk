@@ -5,7 +5,7 @@
 PKG_NAME="binutils"
 PKG_VERSION="2.31.1"
 #PKG_SHA256="5d20086ecf5752cc7d9134246e9588fa201740d540f7eb84d795b1f7a93bca86"
-PKG_VERSION="6b53149"
+PKG_VERSION="8d87b79"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_31-branch"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -31,12 +31,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --enable-relro \
                          --enable-shared \
-                         --enable-targets=x86_64-pep \
-                         --enable-threads \
+                         --enable-targets=x86_64-linux \
                          --disable-gdb \
-                         --with-pic \
                          --enable-lto \
                          --disable-nls"
 
