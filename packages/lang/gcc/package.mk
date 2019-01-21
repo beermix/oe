@@ -48,6 +48,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-linker-hash-style=gnu \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -58,6 +59,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-vtable-verify \
+                           --disable-libunwind-exceptions \
                            --with-tune=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -87,9 +90,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
-                         --enable-gnu-indirect-function \
-                         --disable-vtable-verify \
-                         --disable-libunwind-exceptions \
                          $GCC_OPTS"
 
 pre_configure_host() {
@@ -111,7 +111,7 @@ pre_configure_host() {
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
 #  export CXXFLAGS="-march=haswell -g -O2  -Wl,-z,max-page-size=0x1000 "
-
+#
 #  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
 #  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 #}
