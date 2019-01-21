@@ -9,52 +9,113 @@ PKG_SITE="https://cgit.freedesktop.org/xorg/xserver/log/" # https://github.com/m
 PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_URL="https://cgit.freedesktop.org/xorg/xserver/snapshot/$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/mirror/xserver/archive/${PKG_VERSION}.tar.gz"
-PKG_SOURCE_DIR="$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper nettle libXcomposite mesa libepoxy xkbcomp"
+PKG_SOURCE_DIR=$PKG_VERSION*
+PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper"
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_LONGDESC="Xorg is a full featured X server running on Intel x86 hardware."
-PKG_BUILD_FLAGS="-hardening"
+PKG_TOOLCHAIN="autotools"
 
 get_graphicdrivers
 
-PKG_MESON_OPTS_TARGET="-Dos_vendor="LibreELEC.tv" \
-			  -Dipv6=false \
-			  -Ddmx=false \
-			  -Dxvfb=false \
-			  -Dxnest=false \
-			  -Dxcsecurity=false \
-			  -Dxorg=true \
-			  -Dxephyr=false \
-			  -Dxwayland_eglstream=false \
-			  -Dglamor=true \
-			  -Ddri2=true \
-			  -Ddri3=true \
-			  -Dudev=true \
-			  -Dxv=true \
-			  -Dxres=true \
-			  -Dxvmc=false \
-			  -Dpciaccess=true \
-			  -Dvbe=true \
-			  -Dvgahw=true \
-			  -Dglx=true \
-			  -Dlinux_acpi=false \
-			  -Dmitshm=true \
-			  -Dint10=x86emu \
-			  -Dxinerama=true \
-			  -Dxselinux=false \
-			  -Dsystemd_logind=false \
-			  -Dxdmcp=false \
-			  -Dmodule_dir=$XORG_PATH_MODULES \
-			  -Dlog_dir=/var/log \
-			  -Ddefault_font_path=/usr/share/fonts/misc,built-ins \
-			  -Dxkb_dir=$XORG_PATH_XKB \
-			  -Dxkb_output_dir=/var/cache/xkb"
+if [ "$COMPOSITE_SUPPORT" = "yes" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXcomposite"
+  XORG_COMPOSITE="--enable-composite"
+else
+  XORG_COMPOSITE="--disable-composite"
+fi
 
-pre_configure_target() {
-  LDFLAGS="$LDFLAGS -lm -ldl -lz -lpthread"
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
-}
+if [ ! "$OPENGL" = "no" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGL libepoxy"
+  XORG_MESA="--enable-glx --enable-dri --enable-glamor"
+else
+  XORG_MESA="--disable-glx --disable-dri --disable-glamor"
+fi
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+                           --enable-silent-rules \
+                           --disable-strict-compilation \
+                           --enable-largefile \
+                           --enable-visibility \
+                           --disable-unit-tests \
+                           --disable-sparkle \
+                           --disable-xselinux \
+                           $XORG_COMPOSITE \
+                           --enable-mitshm \
+                           --enable-xres \
+                           --enable-record \
+                           --enable-xv \
+                           --disable-xvmc \
+                           --enable-dga \
+                           --disable-screensaver \
+                           --disable-xdmcp \
+                           --disable-xdm-auth-1 \
+                           $XORG_MESA \
+                           --enable-dri2 \
+                           --enable-dri3 \
+                           --enable-present \
+                           --enable-xinerama \
+                           --enable-xf86vidmode \
+                           --disable-xace \
+                           --disable-xselinux \
+                           --disable-xcsecurity \
+                           --enable-dbe \
+                           --disable-xf86bigfont \
+                           --enable-dpms \
+                           --enable-config-udev \
+                           --enable-config-udev-kms \
+                           --disable-config-hal \
+                           --disable-config-wscons \
+                           --enable-xfree86-utils \
+                           --enable-vgahw \
+                           --enable-vbe \
+                           --enable-int10-module \
+                           --disable-windowswm \
+                           --enable-libdrm \
+                           --enable-clientids \
+                           --enable-pciaccess \
+                           --disable-linux-acpi \
+                           --disable-linux-apm \
+                           --disable-systemd-logind \
+                           --enable-xorg \
+                           --disable-dmx \
+                           --disable-xvfb \
+                           --disable-xnest \
+                           --disable-xquartz \
+                           --disable-standalone-xpbproxy \
+                           --disable-xwin \
+                           --disable-kdrive \
+                           --disable-xephyr \
+                           --disable-libunwind \
+                           --enable-xshmfence \
+                           --disable-install-setuid \
+                           --enable-unix-transport \
+                           --disable-tcp-transport \
+                           --disable-ipv6 \
+                           --disable-local-transport \
+                           --disable-secure-rpc \
+                           --enable-input-thread \
+                           --enable-xtrans-send-fds \
+                           --disable-docs \
+                           --disable-devel-docs \
+                           --with-int10=x86emu \
+                           --with-gnu-ld \
+                           --with-sha1=libcrypto \
+                           --without-systemd-daemon \
+                           --with-os-vendor=LibreELEC.tv \
+                           --with-module-dir=$XORG_PATH_MODULES \
+                           --with-xkb-path=$XORG_PATH_XKB \
+                           --with-xkb-output=/var/cache/xkb \
+                           --with-log-dir=/var/log \
+                           --with-fontrootdir=/usr/share/fonts \
+                           --with-default-font-path=/usr/share/fonts/misc,built-ins \
+                           --with-serverconfig-path=/usr/lib/xserver \
+                           --without-xmlto \
+                           --without-fop"
+
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used"
+#  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/var/cache/xkb
