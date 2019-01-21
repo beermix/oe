@@ -11,7 +11,7 @@ PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain zlib:host"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="configure"
-#PKG_BUILD_FLAGS="+pic:host +pic +hardening"
+#PKG_BUILD_FLAGS="+pic:host +pic"
 #PKG_BUILD_FLAGS="+hardening"
 
 pre_configure_target() {
@@ -22,6 +22,9 @@ pre_configure_target() {
 pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
+  
+  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
 }
 
 configure_target() {
