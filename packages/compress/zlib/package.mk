@@ -11,7 +11,7 @@ PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic:host +pic +hardening"
+#PKG_BUILD_FLAGS="+pic:host +pic +hardening"
 #PKG_BUILD_FLAGS="+hardening"
 
 pre_configure_target() {
@@ -22,6 +22,16 @@ pre_configure_target() {
 pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
+}
+
+configure_target() {
+  cd $PKG_BUILD/.$TARGET_NAME
+  ./configure --prefix=/usr --64 --libdir=/usr/lib
+}
+
+configure_host() {
+  cd $PKG_BUILD/.$HOST_NAME
+  ./configure --prefix=$TOOLCHAIN --64 --libdir=$TOOLCHAIN/lib
 }
 
 pre_build_target() {
