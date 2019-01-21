@@ -1,0 +1,636 @@
+Index: dev/gpu/command_buffer/service/texture_manager.cc
+===================================================================
+--- dev.orig/gpu/command_buffer/service/texture_manager.cc
++++ dev/gpu/command_buffer/service/texture_manager.cc
+@@ -131,130 +131,130 @@ class FormatTypeValidator {
+   FormatTypeValidator() {
+     static const FormatType kSupportedFormatTypes[] = {
+         // ES2.
+-        {GL_RGB, GL_RGB, GL_UNSIGNED_BYTE},
+-        {GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5},
+-        {GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE},
+-        {GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4},
+-        {GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1},
+-        {GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE},
+-        {GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE},
+-        {GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE},
++        std::make_tuple(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5),
++        std::make_tuple(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4),
++        std::make_tuple(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1),
++        std::make_tuple(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE),
+ 
+         // ES3.
+-        {GL_R8, GL_RED, GL_UNSIGNED_BYTE},
+-        {GL_R8_SNORM, GL_RED, GL_BYTE},
+-        {GL_R16F, GL_RED, GL_HALF_FLOAT},
+-        {GL_R16F, GL_RED, GL_FLOAT},
+-        {GL_R32F, GL_RED, GL_FLOAT},
+-        {GL_R8UI, GL_RED_INTEGER, GL_UNSIGNED_BYTE},
+-        {GL_R8I, GL_RED_INTEGER, GL_BYTE},
+-        {GL_R16UI, GL_RED_INTEGER, GL_UNSIGNED_SHORT},
+-        {GL_R16I, GL_RED_INTEGER, GL_SHORT},
+-        {GL_R32UI, GL_RED_INTEGER, GL_UNSIGNED_INT},
+-        {GL_R32I, GL_RED_INTEGER, GL_INT},
+-        {GL_RG8, GL_RG, GL_UNSIGNED_BYTE},
+-        {GL_RG8_SNORM, GL_RG, GL_BYTE},
+-        {GL_RG16F, GL_RG, GL_HALF_FLOAT},
+-        {GL_RG16F, GL_RG, GL_FLOAT},
+-        {GL_RG32F, GL_RG, GL_FLOAT},
+-        {GL_RG8UI, GL_RG_INTEGER, GL_UNSIGNED_BYTE},
+-        {GL_RG8I, GL_RG_INTEGER, GL_BYTE},
+-        {GL_RG16UI, GL_RG_INTEGER, GL_UNSIGNED_SHORT},
+-        {GL_RG16I, GL_RG_INTEGER, GL_SHORT},
+-        {GL_RG32UI, GL_RG_INTEGER, GL_UNSIGNED_INT},
+-        {GL_RG32I, GL_RG_INTEGER, GL_INT},
+-        {GL_RGB8, GL_RGB, GL_UNSIGNED_BYTE},
+-        {GL_SRGB8, GL_RGB, GL_UNSIGNED_BYTE},
+-        {GL_RGB565, GL_RGB, GL_UNSIGNED_BYTE},
+-        {GL_RGB565, GL_RGB, GL_UNSIGNED_SHORT_5_6_5},
+-        {GL_RGB8_SNORM, GL_RGB, GL_BYTE},
+-        {GL_R11F_G11F_B10F, GL_RGB, GL_UNSIGNED_INT_10F_11F_11F_REV},
+-        {GL_R11F_G11F_B10F, GL_RGB, GL_HALF_FLOAT},
+-        {GL_R11F_G11F_B10F, GL_RGB, GL_FLOAT},
+-        {GL_RGB9_E5, GL_RGB, GL_UNSIGNED_INT_5_9_9_9_REV},
+-        {GL_RGB9_E5, GL_RGB, GL_HALF_FLOAT},
+-        {GL_RGB9_E5, GL_RGB, GL_FLOAT},
+-        {GL_RGB16F, GL_RGB, GL_HALF_FLOAT},
+-        {GL_RGB16F, GL_RGB, GL_FLOAT},
+-        {GL_RGB32F, GL_RGB, GL_FLOAT},
+-        {GL_RGB8UI, GL_RGB_INTEGER, GL_UNSIGNED_BYTE},
+-        {GL_RGB8I, GL_RGB_INTEGER, GL_BYTE},
+-        {GL_RGB16UI, GL_RGB_INTEGER, GL_UNSIGNED_SHORT},
+-        {GL_RGB16I, GL_RGB_INTEGER, GL_SHORT},
+-        {GL_RGB32UI, GL_RGB_INTEGER, GL_UNSIGNED_INT},
+-        {GL_RGB32I, GL_RGB_INTEGER, GL_INT},
+-        {GL_RGBA8, GL_RGBA, GL_UNSIGNED_BYTE},
+-        {GL_SRGB8_ALPHA8, GL_RGBA, GL_UNSIGNED_BYTE},
+-        {GL_RGBA8_SNORM, GL_RGBA, GL_BYTE},
+-        {GL_RGB5_A1, GL_RGBA, GL_UNSIGNED_BYTE},
+-        {GL_RGB5_A1, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1},
+-        {GL_RGB5_A1, GL_RGBA, GL_UNSIGNED_INT_2_10_10_10_REV},
+-        {GL_RGBA4, GL_RGBA, GL_UNSIGNED_BYTE},
+-        {GL_RGBA4, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4},
+-        {GL_RGB10_A2, GL_RGBA, GL_UNSIGNED_INT_2_10_10_10_REV},
+-        {GL_RGBA16F, GL_RGBA, GL_HALF_FLOAT},
+-        {GL_RGBA16F, GL_RGBA, GL_FLOAT},
+-        {GL_RGBA32F, GL_RGBA, GL_FLOAT},
+-        {GL_RGBA8UI, GL_RGBA_INTEGER, GL_UNSIGNED_BYTE},
+-        {GL_RGBA8I, GL_RGBA_INTEGER, GL_BYTE},
+-        {GL_RGB10_A2UI, GL_RGBA_INTEGER, GL_UNSIGNED_INT_2_10_10_10_REV},
+-        {GL_RGBA16UI, GL_RGBA_INTEGER, GL_UNSIGNED_SHORT},
+-        {GL_RGBA16I, GL_RGBA_INTEGER, GL_SHORT},
+-        {GL_RGBA32I, GL_RGBA_INTEGER, GL_INT},
+-        {GL_RGBA32UI, GL_RGBA_INTEGER, GL_UNSIGNED_INT},
+-        {GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT, GL_UNSIGNED_SHORT},
+-        {GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT},
+-        {GL_DEPTH_COMPONENT24, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT},
+-        {GL_DEPTH_COMPONENT32F, GL_DEPTH_COMPONENT, GL_FLOAT},
+-        {GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8},
+-        {GL_DEPTH32F_STENCIL8, GL_DEPTH_STENCIL,
+-         GL_FLOAT_32_UNSIGNED_INT_24_8_REV},
++        std::make_tuple(GL_R8, GL_RED, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_R8_SNORM, GL_RED, GL_BYTE),
++        std::make_tuple(GL_R16F, GL_RED, GL_HALF_FLOAT),
++        std::make_tuple(GL_R16F, GL_RED, GL_FLOAT),
++        std::make_tuple(GL_R32F, GL_RED, GL_FLOAT),
++        std::make_tuple(GL_R8UI, GL_RED_INTEGER, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_R8I, GL_RED_INTEGER, GL_BYTE),
++        std::make_tuple(GL_R16UI, GL_RED_INTEGER, GL_UNSIGNED_SHORT),
++        std::make_tuple(GL_R16I, GL_RED_INTEGER, GL_SHORT),
++        std::make_tuple(GL_R32UI, GL_RED_INTEGER, GL_UNSIGNED_INT),
++        std::make_tuple(GL_R32I, GL_RED_INTEGER, GL_INT),
++        std::make_tuple(GL_RG8, GL_RG, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RG8_SNORM, GL_RG, GL_BYTE),
++        std::make_tuple(GL_RG16F, GL_RG, GL_HALF_FLOAT),
++        std::make_tuple(GL_RG16F, GL_RG, GL_FLOAT),
++        std::make_tuple(GL_RG32F, GL_RG, GL_FLOAT),
++        std::make_tuple(GL_RG8UI, GL_RG_INTEGER, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RG8I, GL_RG_INTEGER, GL_BYTE),
++        std::make_tuple(GL_RG16UI, GL_RG_INTEGER, GL_UNSIGNED_SHORT),
++        std::make_tuple(GL_RG16I, GL_RG_INTEGER, GL_SHORT),
++        std::make_tuple(GL_RG32UI, GL_RG_INTEGER, GL_UNSIGNED_INT),
++        std::make_tuple(GL_RG32I, GL_RG_INTEGER, GL_INT),
++        std::make_tuple(GL_RGB8, GL_RGB, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_SRGB8, GL_RGB, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RGB565, GL_RGB, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RGB565, GL_RGB, GL_UNSIGNED_SHORT_5_6_5),
++        std::make_tuple(GL_RGB8_SNORM, GL_RGB, GL_BYTE),
++        std::make_tuple(GL_R11F_G11F_B10F, GL_RGB, GL_UNSIGNED_INT_10F_11F_11F_REV),
++        std::make_tuple(GL_R11F_G11F_B10F, GL_RGB, GL_HALF_FLOAT),
++        std::make_tuple(GL_R11F_G11F_B10F, GL_RGB, GL_FLOAT),
++        std::make_tuple(GL_RGB9_E5, GL_RGB, GL_UNSIGNED_INT_5_9_9_9_REV),
++        std::make_tuple(GL_RGB9_E5, GL_RGB, GL_HALF_FLOAT),
++        std::make_tuple(GL_RGB9_E5, GL_RGB, GL_FLOAT),
++        std::make_tuple(GL_RGB16F, GL_RGB, GL_HALF_FLOAT),
++        std::make_tuple(GL_RGB16F, GL_RGB, GL_FLOAT),
++        std::make_tuple(GL_RGB32F, GL_RGB, GL_FLOAT),
++        std::make_tuple(GL_RGB8UI, GL_RGB_INTEGER, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RGB8I, GL_RGB_INTEGER, GL_BYTE),
++        std::make_tuple(GL_RGB16UI, GL_RGB_INTEGER, GL_UNSIGNED_SHORT),
++        std::make_tuple(GL_RGB16I, GL_RGB_INTEGER, GL_SHORT),
++        std::make_tuple(GL_RGB32UI, GL_RGB_INTEGER, GL_UNSIGNED_INT),
++        std::make_tuple(GL_RGB32I, GL_RGB_INTEGER, GL_INT),
++        std::make_tuple(GL_RGBA8, GL_RGBA, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_SRGB8_ALPHA8, GL_RGBA, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RGBA8_SNORM, GL_RGBA, GL_BYTE),
++        std::make_tuple(GL_RGB5_A1, GL_RGBA, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RGB5_A1, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1),
++        std::make_tuple(GL_RGB5_A1, GL_RGBA, GL_UNSIGNED_INT_2_10_10_10_REV),
++        std::make_tuple(GL_RGBA4, GL_RGBA, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RGBA4, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4),
++        std::make_tuple(GL_RGB10_A2, GL_RGBA, GL_UNSIGNED_INT_2_10_10_10_REV),
++        std::make_tuple(GL_RGBA16F, GL_RGBA, GL_HALF_FLOAT),
++        std::make_tuple(GL_RGBA16F, GL_RGBA, GL_FLOAT),
++        std::make_tuple(GL_RGBA32F, GL_RGBA, GL_FLOAT),
++        std::make_tuple(GL_RGBA8UI, GL_RGBA_INTEGER, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RGBA8I, GL_RGBA_INTEGER, GL_BYTE),
++        std::make_tuple(GL_RGB10_A2UI, GL_RGBA_INTEGER, GL_UNSIGNED_INT_2_10_10_10_REV),
++        std::make_tuple(GL_RGBA16UI, GL_RGBA_INTEGER, GL_UNSIGNED_SHORT),
++        std::make_tuple(GL_RGBA16I, GL_RGBA_INTEGER, GL_SHORT),
++        std::make_tuple(GL_RGBA32I, GL_RGBA_INTEGER, GL_INT),
++        std::make_tuple(GL_RGBA32UI, GL_RGBA_INTEGER, GL_UNSIGNED_INT),
++        std::make_tuple(GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT, GL_UNSIGNED_SHORT),
++        std::make_tuple(GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT),
++        std::make_tuple(GL_DEPTH_COMPONENT24, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT),
++        std::make_tuple(GL_DEPTH_COMPONENT32F, GL_DEPTH_COMPONENT, GL_FLOAT),
++        std::make_tuple(GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8),
++        std::make_tuple(GL_DEPTH32F_STENCIL8, GL_DEPTH_STENCIL,
++         GL_FLOAT_32_UNSIGNED_INT_24_8_REV),
+ 
+         // Exposed by GL_APPLE_texture_format_BGRA8888 for TexStorage*
+         // TODO(kainino): this actually exposes it for (Copy)TexImage* as well,
+         // which is incorrect. crbug.com/663086
+-        {GL_BGRA8_EXT, GL_BGRA_EXT, GL_UNSIGNED_BYTE},
++        std::make_tuple(GL_BGRA8_EXT, GL_BGRA_EXT, GL_UNSIGNED_BYTE),
+ 
+         // Exposed by GL_APPLE_texture_format_BGRA8888 and
+         // GL_EXT_texture_format_BGRA8888
+-        {GL_BGRA_EXT, GL_BGRA_EXT, GL_UNSIGNED_BYTE},
++        std::make_tuple(GL_BGRA_EXT, GL_BGRA_EXT, GL_UNSIGNED_BYTE),
+ 
+         // Exposed by GL_EXT_texture_norm16
+-        {GL_R16_EXT, GL_RED, GL_UNSIGNED_SHORT},
++        std::make_tuple(GL_R16_EXT, GL_RED, GL_UNSIGNED_SHORT),
+     };
+ 
+     static const FormatType kSupportedFormatTypesES2Only[] = {
+         // Exposed by GL_OES_texture_float and GL_OES_texture_half_float
+-        {GL_RGB, GL_RGB, GL_FLOAT},
+-        {GL_RGBA, GL_RGBA, GL_FLOAT},
+-        {GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_FLOAT},
+-        {GL_LUMINANCE, GL_LUMINANCE, GL_FLOAT},
+-        {GL_ALPHA, GL_ALPHA, GL_FLOAT},
+-        {GL_RGB, GL_RGB, GL_HALF_FLOAT_OES},
+-        {GL_RGBA, GL_RGBA, GL_HALF_FLOAT_OES},
+-        {GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_HALF_FLOAT_OES},
+-        {GL_LUMINANCE, GL_LUMINANCE, GL_HALF_FLOAT_OES},
+-        {GL_ALPHA, GL_ALPHA, GL_HALF_FLOAT_OES},
++        std::make_tuple(GL_RGB, GL_RGB, GL_FLOAT),
++        std::make_tuple(GL_RGBA, GL_RGBA, GL_FLOAT),
++        std::make_tuple(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_FLOAT),
++        std::make_tuple(GL_LUMINANCE, GL_LUMINANCE, GL_FLOAT),
++        std::make_tuple(GL_ALPHA, GL_ALPHA, GL_FLOAT),
++        std::make_tuple(GL_RGB, GL_RGB, GL_HALF_FLOAT_OES),
++        std::make_tuple(GL_RGBA, GL_RGBA, GL_HALF_FLOAT_OES),
++        std::make_tuple(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_HALF_FLOAT_OES),
++        std::make_tuple(GL_LUMINANCE, GL_LUMINANCE, GL_HALF_FLOAT_OES),
++        std::make_tuple(GL_ALPHA, GL_ALPHA, GL_HALF_FLOAT_OES),
+ 
+         // Exposed by GL_ANGLE_depth_texture
+-        {GL_DEPTH_COMPONENT, GL_DEPTH_COMPONENT, GL_UNSIGNED_SHORT},
+-        {GL_DEPTH_COMPONENT, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT},
+-        {GL_DEPTH_STENCIL, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8},
++        std::make_tuple(GL_DEPTH_COMPONENT, GL_DEPTH_COMPONENT, GL_UNSIGNED_SHORT),
++        std::make_tuple(GL_DEPTH_COMPONENT, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT),
++        std::make_tuple(GL_DEPTH_STENCIL, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8),
+ 
+         // Exposed by GL_EXT_sRGB
+-        {GL_SRGB, GL_SRGB, GL_UNSIGNED_BYTE},
+-        {GL_SRGB_ALPHA, GL_SRGB_ALPHA, GL_UNSIGNED_BYTE},
++        std::make_tuple(GL_SRGB, GL_SRGB, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_SRGB_ALPHA, GL_SRGB_ALPHA, GL_UNSIGNED_BYTE),
+ 
+         // Exposed by GL_EXT_texture_rg
+-        {GL_RED, GL_RED, GL_UNSIGNED_BYTE},
+-        {GL_RG, GL_RG, GL_UNSIGNED_BYTE},
+-        {GL_RED, GL_RED, GL_FLOAT},
+-        {GL_RG, GL_RG, GL_FLOAT},
+-        {GL_RED, GL_RED, GL_HALF_FLOAT_OES},
+-        {GL_RG, GL_RG, GL_HALF_FLOAT_OES},
++        std::make_tuple(GL_RED, GL_RED, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RG, GL_RG, GL_UNSIGNED_BYTE),
++        std::make_tuple(GL_RED, GL_RED, GL_FLOAT),
++        std::make_tuple(GL_RG, GL_RG, GL_FLOAT),
++        std::make_tuple(GL_RED, GL_RED, GL_HALF_FLOAT_OES),
++        std::make_tuple(GL_RG, GL_RG, GL_HALF_FLOAT_OES),
+ 
+         // Exposed by GL_EXT_texture_norm16
+-        {GL_RED, GL_RED, GL_UNSIGNED_SHORT},
++        std::make_tuple(GL_RED, GL_RED, GL_UNSIGNED_SHORT),
+     };
+ 
+     for (size_t ii = 0; ii < arraysize(kSupportedFormatTypes); ++ii) {
+@@ -269,7 +269,7 @@ class FormatTypeValidator {
+   // This may be accessed from multiple threads.
+   bool IsValid(ContextType context_type, GLenum internal_format, GLenum format,
+                GLenum type) const {
+-    FormatType query = { internal_format, format, type };
++    FormatType query = std::make_tuple(internal_format, format, type);
+     if (supported_combinations_.find(query) != supported_combinations_.end()) {
+       return true;
+     }
+Index: dev/chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc
+===================================================================
+--- dev.orig/chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc
++++ dev/chrome/browser/media/router/providers/wired_display/wired_display_media_route_provider.cc
+@@ -129,8 +129,10 @@ void WiredDisplayMediaRouteProvider::Cre
+   route.set_incognito(profile_->IsOffTheRecord());
+   route.set_controller_type(RouteControllerType::kGeneric);
+ 
++  Presentation new_presentation(route);
++
+   Presentation& presentation =
+-      presentations_.emplace(presentation_id, route).first->second;
++      presentations_.emplace(presentation_id, std::move(new_presentation)).first->second;
+   presentation.set_receiver(
+       CreatePresentationReceiver(presentation_id, &presentation, *display));
+   presentation.receiver()->Start(presentation_id, GURL(media_source));
+Index: dev/extensions/common/api/web_request.json
+===================================================================
+--- dev.orig/extensions/common/api/web_request.json
++++ dev/extensions/common/api/web_request.json
+@@ -204,8 +204,7 @@
+                     "description": "If the request method is POST and the body is a sequence of key-value pairs encoded in UTF8, encoded as either multipart/form-data, or application/x-www-form-urlencoded, this dictionary is present and for each key contains the list of all values for that key. If the data is of another media type, or if it is malformed, the dictionary is not present. An example value of this dictionary is {'key': ['value1', 'value2']}.",
+                     "properties": {},
+                     "additionalProperties": {
+-                      "type": "array",
+-                      "items": { "$ref": "FormDataItem" }
++                      "type": "any"
+                     }
+                   },
+                   "raw" : {
+Index: dev/third_party/blink/renderer/modules/canvas/canvas2d/base_rendering_context_2d.cc
+===================================================================
+--- dev.orig/third_party/blink/renderer/modules/canvas/canvas2d/base_rendering_context_2d.cc
++++ dev/third_party/blink/renderer/modules/canvas/canvas2d/base_rendering_context_2d.cc
+@@ -650,8 +650,8 @@ void BaseRenderingContext2D::DrawPathInt
+ 
+   SkPath sk_path = path.GetSkPath();
+   FloatRect bounds = path.BoundingRect();
+-  if (isnan(bounds.X()) || isnan(bounds.Y()) || isnan(bounds.Width()) ||
+-      isnan(bounds.Height()))
++  if (std::isnan(bounds.X()) || std::isnan(bounds.Y()) || std::isnan(bounds.Width()) ||
++      std::isnan(bounds.Height()))
+     return;
+   sk_path.setFillType(fill_type);
+ 
+Index: dev/media/base/subsample_entry.h
+===================================================================
+--- dev.orig/media/base/subsample_entry.h
++++ dev/media/base/subsample_entry.h
+@@ -36,7 +36,7 @@ struct SubsampleEntry {
+ // does not match |input_size|.
+ MEDIA_EXPORT bool VerifySubsamplesMatchSize(
+     const std::vector<SubsampleEntry>& subsamples,
+-    size_t input_size);
++    std::size_t input_size);
+ 
+ }  // namespace media
+ 
+Index: dev/device/bluetooth/dbus/bluetooth_gatt_attribute_helpers.cc
+===================================================================
+--- dev.orig/device/bluetooth/dbus/bluetooth_gatt_attribute_helpers.cc
++++ dev/device/bluetooth/dbus/bluetooth_gatt_attribute_helpers.cc
+@@ -27,8 +27,9 @@ bool ReadOptions(dbus::MessageReader* re
+       return false;
+     }
+ 
+-    options->emplace(key, nullptr);
+-    if (!dict_entry_reader.PopVariant(&options->at(key))) {
++    auto options_iterator = options->find(key);
++    if (options_iterator != options->end() &&
++            !dict_entry_reader.PopVariant(&options_iterator->second)) {
+       options->clear();
+       return false;
+     }
+Index: dev/cc/trees/layer_tree_mutator.cc
+===================================================================
+--- dev.orig/cc/trees/layer_tree_mutator.cc
++++ dev/cc/trees/layer_tree_mutator.cc
+@@ -55,8 +55,9 @@ bool MutatorInputState::IsEmpty() const
+ 
+ AnimationWorkletInput& MutatorInputState::EnsureWorkletEntry(int id) {
+   auto it = inputs_.find(id);
++  std::unique_ptr<AnimationWorkletInput> temp(new AnimationWorkletInput);
+   if (it == inputs_.end())
+-    it = inputs_.emplace_hint(it, id, new AnimationWorkletInput);
++    it = inputs_.emplace_hint(it, id, std::move(temp));
+ 
+   return *it->second;
+ }
+Index: dev/device/fido/authenticator_get_assertion_response.cc
+===================================================================
+--- dev.orig/device/fido/authenticator_get_assertion_response.cc
++++ dev/device/fido/authenticator_get_assertion_response.cc
+@@ -95,16 +95,16 @@ std::vector<uint8_t> GetSerializedCtapDe
+     const AuthenticatorGetAssertionResponse& response) {
+   cbor::CBORValue::MapValue response_map;
+   if (response.credential())
+-    response_map.emplace(1, response.credential()->ConvertToCBOR());
++    response_map.emplace(cbor::CBORValue(1), response.credential()->ConvertToCBOR());
+ 
+-  response_map.emplace(2, response.auth_data().SerializeToByteArray());
+-  response_map.emplace(3, response.signature());
++  response_map.emplace(cbor::CBORValue(2), cbor::CBORValue(response.auth_data().SerializeToByteArray()));
++  response_map.emplace(cbor::CBORValue(3), cbor::CBORValue(std::move(response.signature())));
+ 
+   if (response.user_entity())
+-    response_map.emplace(4, response.user_entity()->ConvertToCBOR());
++    response_map.emplace(cbor::CBORValue(4), response.user_entity()->ConvertToCBOR());
+ 
+   // Multiple account selection is not supported.
+-  response_map.emplace(5, 1);
++  response_map.emplace(cbor::CBORValue(5), cbor::CBORValue(1));
+   auto encoded_response =
+       cbor::CBORWriter::Write(cbor::CBORValue(std::move(response_map)));
+   DCHECK(encoded_response);
+Index: dev/device/fido/authenticator_supported_options.cc
+===================================================================
+--- dev.orig/device/fido/authenticator_supported_options.cc
++++ dev/device/fido/authenticator_supported_options.cc
+@@ -56,19 +56,19 @@ AuthenticatorSupportedOptions::SetIsPlat
+ 
+ cbor::CBORValue ConvertToCBOR(const AuthenticatorSupportedOptions& options) {
+   cbor::CBORValue::MapValue option_map;
+-  option_map.emplace(kResidentKeyMapKey, options.supports_resident_key());
+-  option_map.emplace(kUserPresenceMapKey, options.user_presence_required());
+-  option_map.emplace(kPlatformDeviceMapKey, options.is_platform_device());
++  option_map.emplace(cbor::CBORValue(kResidentKeyMapKey), cbor::CBORValue(options.supports_resident_key()));
++  option_map.emplace(cbor::CBORValue(kUserPresenceMapKey), cbor::CBORValue(options.user_presence_required()));
++  option_map.emplace(cbor::CBORValue(kPlatformDeviceMapKey), cbor::CBORValue(options.is_platform_device()));
+ 
+   using UvAvailability =
+       AuthenticatorSupportedOptions::UserVerificationAvailability;
+ 
+   switch (options.user_verification_availability()) {
+     case UvAvailability::kSupportedAndConfigured:
+-      option_map.emplace(kUserVerificationMapKey, true);
++      option_map.emplace(cbor::CBORValue(kUserVerificationMapKey), cbor::CBORValue(true));
+       break;
+     case UvAvailability::kSupportedButNotConfigured:
+-      option_map.emplace(kUserVerificationMapKey, false);
++      option_map.emplace(cbor::CBORValue(kUserVerificationMapKey), cbor::CBORValue(false));
+       break;
+     case UvAvailability::kNotSupported:
+       break;
+@@ -79,10 +79,10 @@ cbor::CBORValue ConvertToCBOR(const Auth
+ 
+   switch (options.client_pin_availability()) {
+     case ClientPinAvailability::kSupportedAndPinSet:
+-      option_map.emplace(kClientPinMapKey, true);
++      option_map.emplace(cbor::CBORValue(kClientPinMapKey), cbor::CBORValue(true));
+       break;
+     case ClientPinAvailability::kSupportedButPinNotSet:
+-      option_map.emplace(kClientPinMapKey, false);
++      option_map.emplace(cbor::CBORValue(kClientPinMapKey), cbor::CBORValue(false));
+       break;
+     case ClientPinAvailability::kNotSupported:
+       break;
+Index: dev/device/fido/attestation_object.cc
+===================================================================
+--- dev.orig/device/fido/attestation_object.cc
++++ dev/device/fido/attestation_object.cc
+@@ -73,9 +73,9 @@ std::vector<uint8_t> AttestationObject::
+ std::vector<uint8_t> SerializeToCtapStyleCborEncodedBytes(
+     const AttestationObject& object) {
+   cbor::CBORValue::MapValue map;
+-  map.emplace(1, object.attestation_statement().format_name());
+-  map.emplace(2, object.authenticator_data().SerializeToByteArray());
+-  map.emplace(3, object.attestation_statement().GetAsCBORMap());
++  map.emplace(cbor::CBORValue(1), cbor::CBORValue(object.attestation_statement().format_name()));
++  map.emplace(cbor::CBORValue(2), cbor::CBORValue(object.authenticator_data().SerializeToByteArray()));
++  map.emplace(cbor::CBORValue(3), cbor::CBORValue(object.attestation_statement().GetAsCBORMap()));
+   auto encoded_bytes = cbor::CBORWriter::Write(cbor::CBORValue(std::move(map)));
+   DCHECK(encoded_bytes);
+   return std::move(*encoded_bytes);
+Index: dev/device/fido/authenticator_get_info_response.cc
+===================================================================
+--- dev.orig/device/fido/authenticator_get_info_response.cc
++++ dev/device/fido/authenticator_get_info_response.cc
+@@ -71,21 +71,21 @@ std::vector<uint8_t> EncodeToCBOR(
+                                                                  : kU2fVersion);
+   }
+   cbor::CBORValue::MapValue device_info_map;
+-  device_info_map.emplace(1, std::move(version_array));
++  device_info_map.emplace(cbor::CBORValue(1), cbor::CBORValue(std::move(version_array)));
+ 
+   if (response.extensions())
+-    device_info_map.emplace(2, ToArrayValue(*response.extensions()));
++    device_info_map.emplace(cbor::CBORValue(2), cbor::CBORValue(ToArrayValue(*response.extensions())));
+ 
+-  device_info_map.emplace(3, response.aaguid());
+-  device_info_map.emplace(4, ConvertToCBOR(response.options()));
++  device_info_map.emplace(cbor::CBORValue(3), cbor::CBORValue(response.aaguid()));
++  device_info_map.emplace(cbor::CBORValue(4), ConvertToCBOR(response.options()));
+ 
+   if (response.max_msg_size()) {
+     device_info_map.emplace(
+-        5, base::strict_cast<int64_t>(*response.max_msg_size()));
++        cbor::CBORValue(5), cbor::CBORValue(base::strict_cast<int64_t>(*response.max_msg_size())));
+   }
+ 
+   if (response.pin_protocol()) {
+-    device_info_map.emplace(6, ToArrayValue(*response.pin_protocol()));
++    device_info_map.emplace(cbor::CBORValue(6), cbor::CBORValue(ToArrayValue(*response.pin_protocol())));
+   }
+ 
+   auto encoded_bytes =
+Index: dev/device/fido/public_key_credential_rp_entity.cc
+===================================================================
+--- dev.orig/device/fido/public_key_credential_rp_entity.cc
++++ dev/device/fido/public_key_credential_rp_entity.cc
+@@ -78,12 +78,12 @@ PublicKeyCredentialRpEntity& PublicKeyCr
+ 
+ cbor::CBORValue PublicKeyCredentialRpEntity::ConvertToCBOR() const {
+   cbor::CBORValue::MapValue rp_map;
+-  rp_map.emplace(kEntityIdMapKey, rp_id_);
++  rp_map.emplace(cbor::CBORValue(kEntityIdMapKey), cbor::CBORValue(rp_id_));
+   if (rp_name_)
+-    rp_map.emplace(kEntityNameMapKey, *rp_name_);
++    rp_map.emplace(cbor::CBORValue(kEntityNameMapKey), cbor::CBORValue(*rp_name_));
+ 
+   if (rp_icon_url_)
+-    rp_map.emplace(kIconUrlMapKey, rp_icon_url_->spec());
++    rp_map.emplace(cbor::CBORValue(kIconUrlMapKey), cbor::CBORValue(rp_icon_url_->spec()));
+ 
+   return cbor::CBORValue(std::move(rp_map));
+ }
+Index: dev/device/fido/public_key_credential_user_entity.cc
+===================================================================
+--- dev.orig/device/fido/public_key_credential_user_entity.cc
++++ dev/device/fido/public_key_credential_user_entity.cc
+@@ -64,13 +64,13 @@ PublicKeyCredentialUserEntity::~PublicKe
+ 
+ cbor::CBORValue PublicKeyCredentialUserEntity::ConvertToCBOR() const {
+   cbor::CBORValue::MapValue user_map;
+-  user_map.emplace(kEntityIdMapKey, user_id_);
++  user_map.emplace(cbor::CBORValue(kEntityIdMapKey), cbor::CBORValue(user_id_));
+   if (user_name_)
+-    user_map.emplace(kEntityNameMapKey, *user_name_);
++    user_map.emplace(cbor::CBORValue(kEntityNameMapKey), cbor::CBORValue(*user_name_));
+   if (user_icon_url_)
+-    user_map.emplace(kIconUrlMapKey, user_icon_url_->spec());
++    user_map.emplace(cbor::CBORValue(kIconUrlMapKey), cbor::CBORValue(user_icon_url_->spec()));
+   if (user_display_name_) {
+-    user_map.emplace(kDisplayNameMapKey, *user_display_name_);
++    user_map.emplace(cbor::CBORValue(kDisplayNameMapKey), cbor::CBORValue(*user_display_name_));
+   }
+   return cbor::CBORValue(std::move(user_map));
+ }
+Index: dev/device/fido/public_key_credential_params.cc
+===================================================================
+--- dev.orig/device/fido/public_key_credential_params.cc
++++ dev/device/fido/public_key_credential_params.cc
+@@ -65,10 +65,10 @@ cbor::CBORValue PublicKeyCredentialParam
+ 
+   for (const auto& credential : public_key_credential_params_) {
+     cbor::CBORValue::MapValue cbor_credential_map;
+-    cbor_credential_map.emplace(kCredentialTypeMapKey,
+-                                CredentialTypeToString(credential.type));
+-    cbor_credential_map.emplace(kCredentialAlgorithmMapKey,
+-                                credential.algorithm);
++    cbor_credential_map.emplace(cbor::CBORValue(kCredentialTypeMapKey),
++                                cbor::CBORValue(CredentialTypeToString(credential.type)));
++    cbor_credential_map.emplace(cbor::CBORValue(kCredentialAlgorithmMapKey),
++                                cbor::CBORValue(credential.algorithm));
+     credential_param_array.emplace_back(std::move(cbor_credential_map));
+   }
+   return cbor::CBORValue(std::move(credential_param_array));
+Index: dev/device/fido/virtual_ctap2_device.cc
+===================================================================
+--- dev.orig/device/fido/virtual_ctap2_device.cc
++++ dev/device/fido/virtual_ctap2_device.cc
+@@ -113,13 +113,13 @@ std::vector<uint8_t> ConstructMakeCreden
+     base::span<const uint8_t> signature,
+     AuthenticatorData authenticator_data) {
+   cbor::CBORValue::MapValue attestation_map;
+-  attestation_map.emplace("alg", -7);
+-  attestation_map.emplace("sig", fido_parsing_utils::Materialize(signature));
++  attestation_map.emplace(cbor::CBORValue("alg"), cbor::CBORValue(-7));
++  attestation_map.emplace(cbor::CBORValue("sig"), cbor::CBORValue(fido_parsing_utils::Materialize(signature)));
+ 
+   if (attestation_certificate) {
+     cbor::CBORValue::ArrayValue certificate_chain;
+     certificate_chain.emplace_back(std::move(*attestation_certificate));
+-    attestation_map.emplace("x5c", std::move(certificate_chain));
++    attestation_map.emplace(cbor::CBORValue("x5c"), cbor::CBORValue(std::move(certificate_chain)));
+   }
+ 
+   AuthenticatorMakeCredentialResponse make_credential_response(
+Index: dev/device/fido/hid/fido_hid_device.cc
+===================================================================
+--- dev.orig/device/fido/hid/fido_hid_device.cc
++++ dev/device/fido/hid/fido_hid_device.cc
+@@ -40,7 +40,7 @@ void FidoHidDevice::Cancel() {
+     return;
+ 
+   // Delete any remaining pending requests on this Channel ID.
+-  pending_transactions_ = {};
++  pending_transactions_ = base::queue<std::pair<std::vector<uint8_t>, DeviceCallback>>();
+   WriteMessage(
+       FidoHidMessage::Create(channel_id_, FidoHidDeviceCommand::kCancel,
+                              std::vector<uint8_t>()),
+Index: dev/device/fido/cable/fido_cable_handshake_handler.cc
+===================================================================
+--- dev.orig/device/fido/cable/fido_cable_handshake_handler.cc
++++ dev/device/fido/cable/fido_cable_handshake_handler.cc
+@@ -45,8 +45,8 @@ base::Optional<std::array<uint8_t, kClie
+ ConstructHandshakeMessage(base::StringPiece handshake_key,
+                           base::span<const uint8_t, 16> client_random_nonce) {
+   cbor::CBORValue::MapValue map;
+-  map.emplace(0, kCableClientHelloMessage);
+-  map.emplace(1, client_random_nonce);
++  map.emplace(cbor::CBORValue(0), cbor::CBORValue(kCableClientHelloMessage));
++  map.emplace(cbor::CBORValue(1), cbor::CBORValue(client_random_nonce));
+   auto client_hello = cbor::CBORWriter::Write(cbor::CBORValue(std::move(map)));
+   DCHECK(client_hello);
+ 
+Index: dev/components/password_manager/core/browser/http_credentials_cleaner.cc
+===================================================================
+--- dev.orig/components/password_manager/core/browser/http_credentials_cleaner.cc
++++ dev/components/password_manager/core/browser/http_credentials_cleaner.cc
+@@ -46,9 +46,9 @@ void HttpCredentialCleaner::OnGetPasswor
+ 
+   for (auto& form : results) {
+     FormKey form_key(
+-        {std::string(
++        std::make_tuple(std::string(
+              password_manager_util::GetSignonRealmWithProtocolExcluded(*form)),
+-         form->scheme, form->username_value});
++         form->scheme, form->username_value));
+     if (form->origin.SchemeIs(url::kHttpScheme)) {
+       const GURL origin = form->origin;
+       PostHSTSQueryForHostAndNetworkContext(
+@@ -134,4 +134,4 @@ void HttpCredentialCleaner::ReportMetric
+   observer_->CleaningCompleted();
+ }
+ 
+-}  // namespace password_manager
+\ No newline at end of file
++}  // namespace password_manager
+Index: dev/extensions/common/permissions/permissions_info.h
+===================================================================
+--- dev.orig/extensions/common/permissions/permissions_info.h
++++ dev/extensions/common/permissions/permissions_info.h
+@@ -21,6 +21,18 @@
+ #include "extensions/common/permissions/api_permission.h"
+ #include "extensions/common/permissions/api_permission_set.h"
+ 
++namespace std {
++	template<> class hash<extensions::APIPermission::ID> {
++		typedef extensions::APIPermission::ID argument_type;
++
++		public:
++		size_t operator()(const argument_type& e) const {
++			using type = typename std::underlying_type<argument_type>::type;
++			return std::hash<type>()(static_cast<type>(e));
++		}
++	};
++};
++
+ namespace extensions {
+ 
+ struct Alias;
+Index: dev/components/password_manager/core/browser/invalid_realm_credential_cleaner.cc
+===================================================================
+--- dev.orig/components/password_manager/core/browser/invalid_realm_credential_cleaner.cc
++++ dev/components/password_manager/core/browser/invalid_realm_credential_cleaner.cc
+@@ -54,7 +54,7 @@ std::pair<FormVector, FormVector> SplitF
+ // an invalid signon_realm with the HTTP form credentials from which HTTPS form
+ // was created.
+ FormKeyForHttpMatch GetFormKeyForHttpMatch(const autofill::PasswordForm& form) {
+-  return {form.date_created, form.origin.GetContent(), form.username_value};
++  return std::make_tuple(form.date_created, form.origin.GetContent(), form.username_value);
+ }
+ 
+ // Returns the fields from PasswordForm necessary to match an HTTPS form with an
+@@ -201,7 +201,7 @@ void InvalidRealmCredentialCleaner::OnGe
+   for (const auto& form : http_forms) {
+     http_credentials_map.emplace(
+         GetFormKeyForHttpMatch(*form),
+-        password_manager_util::GetSignonRealmWithProtocolExcluded(*form));
++        password_manager_util::GetSignonRealmWithProtocolExcluded(*form).as_string());
+   }
+ 
+   // Separate HTML and non-HTML HTTPS credentials.
+@@ -237,4 +237,4 @@ void InvalidRealmCredentialCleaner::Clea
+   observer_->CleaningCompleted();
+ }
+ 
+-}  // namespace password_manager
+\ No newline at end of file
++}  // namespace password_manager

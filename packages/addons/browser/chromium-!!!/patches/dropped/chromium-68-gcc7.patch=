@@ -1,0 +1,11 @@
+--- chromium-68.0.3440.7/ui/accessibility/platform/ax_platform_node_auralinux.cc.gcc7	2018-05-31 12:46:30.000000000 +0200
++++ chromium-68.0.3440.7/ui/accessibility/platform/ax_platform_node_auralinux.cc	2018-06-02 20:45:03.373900877 +0200
+@@ -1289,6 +1289,8 @@ AtkRole AXPlatformNodeAuraLinux::GetAtkR
+     case ax::mojom::Role::kUnknown:
+       return ATK_ROLE_REDUNDANT_OBJECT;
+   }
++  // should not be reached
++  return AtkRole(0);
+ }
+ 
+ void AXPlatformNodeAuraLinux::GetAtkState(AtkStateSet* atk_state_set) {
