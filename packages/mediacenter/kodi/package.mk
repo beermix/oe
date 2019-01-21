@@ -11,8 +11,8 @@ PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav"
 PKG_LONGDESC="A free and open source cross-platform media player."
-#PKG_TOOLCHAIN="cmake-make"
-PKG_BUILD_FLAGS="-gold -lto -hardening"
+PKG_TOOLCHAIN="cmake-make"
+PKG_BUILD_FLAGS="-hardening"
 
 configure_package() {
   PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
@@ -178,7 +178,7 @@ fi
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $KODIPLAYER_DRIVER libinput libxkbcommon"
     if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
       KODI_PLAYER="-DCORE_PLATFORM_NAME=rbpi"
-    elif [ "$KODIPLAYER_DRIVER" = mesa -o "$KODIPLAYER_DRIVER" = rkmpp ]; then
+    elif [ "$OPENGLES_SUPPORT" = yes -a "$KODIPLAYER_DRIVER" = "$OPENGLES" ]; then
       KODI_PLAYER="-DCORE_PLATFORM_NAME=gbm -DGBM_RENDER_SYSTEM=gles"
       CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
       CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
