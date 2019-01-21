@@ -12,7 +12,7 @@ PKG_DEPENDS_TARGET="toolchain flex:host"
 PKG_LONGDESC="A tool for generating programs that perform pattern-matching on text."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --disable-doc"
+PKG_CONFIGURE_OPTS_HOST="--disable-doc"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-program --disable-doc"
 
