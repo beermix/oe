@@ -14,7 +14,7 @@ PKG_NAME="chromium"
 #PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="451-glibc28.9000"
+PKG_REV="460-glibc28.9000"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -54,9 +54,9 @@ make_target() {
 
   export CCACHE_SLOPPINESS=time_macros
 
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+#export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+#export CXXFLAGS="$CXXFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+#export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -67,7 +67,6 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'use_cfi_icall=false'
     'clang_use_chrome_plugins=false'
