@@ -225,7 +225,7 @@ fi
                          -DHAVE_SSE3=TRUE \
                          -DHAVE_SSE4_1=TRUE \
                          -DHAVE_SSSE3=TRUE \
-                         -DCMAKE_VERBOSE_MAKEFILE=1 \
+                         -DCMAKE_VERBOSE_MAKEFILE=0 \
                          $PKG_KODI_USE_LTO \
                          $KODI_ARCH \
                          $KODI_NEON \
