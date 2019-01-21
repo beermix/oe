@@ -12,30 +12,16 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic:host +pic +hardening"
-PKG_BUILD_FLAGS="+hardening"
+#PKG_BUILD_FLAGS="+hardening"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fprofile-generate -fprofile-dir=pgo -fprofile-update=atomic"
+  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fprofile-generate -fprofile-dir=pgo -fprofile-update=atomic"
 }
 
 pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
-
-  export CFLAGS="$CFLAGS -O3"
-  export CXXFLAGS="$CXXFLAGS -O3"
-}
-
-post_configure_target() {
- ## configure minizip
- (
-  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-  rm Makefile
-  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
-  do_autoreconf
-  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --enable-static=no --disable-silent-rules
- )
 }
 
 pre_build_target() {
@@ -46,6 +32,17 @@ pre_build_target() {
 pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
+}
+
+post_configure_target() {
+ ## configure minizip
+ (
+  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
+  rm Makefile
+  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
+  do_autoreconf
+  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --disable-static
+ )
 }
 
 post_make_target() {
