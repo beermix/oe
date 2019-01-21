@@ -91,7 +91,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CCACHE_DISABLE=true
+#  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
@@ -105,7 +105,7 @@ pre_configure_host() {
 }
 
 pre_configure_bootstrap() {
-  export CCACHE_DISABLE=true
+#  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
