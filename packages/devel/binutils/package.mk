@@ -5,7 +5,7 @@
 PKG_NAME="binutils"
 PKG_VERSION="2.31.1"
 #PKG_SHA256="5d20086ecf5752cc7d9134246e9588fa201740d540f7eb84d795b1f7a93bca86"
-PKG_VERSION="8d87b79"
+PKG_VERSION="4ece7be"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_31-branch"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
