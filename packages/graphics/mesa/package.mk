@@ -8,21 +8,25 @@ PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/mesa/mesa/log/"
 PKG_URL="https://github.com/mesa3d/mesa/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="https://cgit.freedesktop.org/mesa/mesa/snapshot/$PKG_VERSION.tar.xz"
+#
+PKG_VERSION="18.3.1"
+PKG_SHA256="4d59968c5aca7a4bbcfdb6f7c2a4036fac3e1bdad98ac6b239b72cdbc2a9ef21"
+PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
-PKG_BUILD_FLAGS="+lto-parallel"
+PKG_BUILD_FLAGS="+lto"
 
 get_graphicdrivers
 
-PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS,swrast \
+PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
                        -Dgallium-drivers=$GALLIUM_DRIVERS \
                        -Dgallium-extra-hud=false \
                        -Dgallium-xvmc=false \
                        -Dgallium-omx=disabled \
                        -Dgallium-nine=false \
                        -Dgallium-opencl=disabled \
-                       -Dvulkan-drivers=intel \
+                       -Dvulkan-drivers= \
                        -Dshader-cache=true \
                        -Dshared-glapi=true \
                        -Dopengl=true \
@@ -35,8 +39,7 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS,swrast \
                        -Dlmsensors=false \
                        -Dbuild-tests=false \
                        -Dselinux=false \
-                       -Dosmesa=none \
-                       -Dglx-direct=true"
+                       -Dosmesa=none"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr"
