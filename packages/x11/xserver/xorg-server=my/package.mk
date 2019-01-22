@@ -3,15 +3,18 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xorg-server"
-PKG_VERSION="1.20.3"
-PKG_SHA256="1b3ce466c12cacbe2252b3ad5b0ed561972eef9d09e75900d65fb1e21f9201de"
+PKG_VERSION="709c656"
 PKG_LICENSE="OSS"
-PKG_SITE="http://www.X.org"
+PKG_SITE="https://cgit.freedesktop.org/xorg/xserver/log/" # https://github.com/mirror/xserver
 PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://cgit.freedesktop.org/xorg/xserver/snapshot/$PKG_VERSION.tar.xz"
+#PKG_URL="https://github.com/mirror/xserver/archive/${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR=$PKG_VERSION*
 PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper"
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_LONGDESC="Xorg is a full featured X server running on Intel x86 hardware."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-hardening"
 
 get_graphicdrivers
 
@@ -30,6 +33,7 @@ else
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+                           --enable-silent-rules \
                            --disable-strict-compilation \
                            --enable-largefile \
                            --enable-visibility \
@@ -109,11 +113,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --without-xmlto \
                            --without-fop"
 
-pre_configure_target() {
-# hack to prevent a build error
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used"
+#  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/var/cache/xkb
