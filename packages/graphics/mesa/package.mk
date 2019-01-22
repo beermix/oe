@@ -15,14 +15,14 @@ PKG_BUILD_FLAGS="+lto-parallel"
 
 get_graphicdrivers
 
-PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
+PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS,swrast \
                        -Dgallium-drivers=$GALLIUM_DRIVERS \
                        -Dgallium-extra-hud=false \
                        -Dgallium-xvmc=false \
                        -Dgallium-omx=disabled \
                        -Dgallium-nine=false \
                        -Dgallium-opencl=disabled \
-                       -Dvulkan-drivers= \
+                       -Dvulkan-drivers=intel \
                        -Dshader-cache=true \
                        -Dshared-glapi=true \
                        -Dopengl=true \
@@ -35,7 +35,8 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS \
                        -Dlmsensors=false \
                        -Dbuild-tests=false \
                        -Dselinux=false \
-                       -Dosmesa=none"
+                       -Dosmesa=none \
+                       -Dglx-direct=true"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr"

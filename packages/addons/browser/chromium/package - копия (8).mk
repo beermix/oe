@@ -95,6 +95,9 @@ make_target() {
     'linux_link_libudev = true'
     'use_libpci = true'
     'exclude_unwind_tables=true'
+    'enable_hevc_demuxing=true'
+    'enable_google_now=false'
+    'is_desktop_linux=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_widevine=false'
@@ -102,11 +105,15 @@ make_target() {
     'use_dbus=true'
     'use_system_zlib=true'
     'use_system_libjpeg=true'
+    'use_gio=true'
+    'enable_vr=false'
+    'enable_vulkan=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
     'enable_hangout_services_extension=false'
     'enable_wayland_server=false'
+    'is_component_ffmpeg=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
