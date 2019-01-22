@@ -4,6 +4,8 @@ GRUB_DEFAULT=0
 GRUB_TIMEOUT=1
 GRUB_DISTRIBUTOR="Arch"
 GRUB_CMDLINE_LINUX_DEFAULT="nopti l1tf=off spectre_v2=off nospectre_v2 nospec_store_bypass_disable"
+	"pti=off spectre_v2=off l1tf=off nospec_store_bypass_disable no_stf_barrier"
+
 GRUB_CMDLINE_LINUX=""
 
 # Preload both GPT and MBR modules so that they are not missed
