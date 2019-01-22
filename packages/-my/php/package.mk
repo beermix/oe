@@ -6,15 +6,10 @@
 PKG_NAME="php"
 PKG_VERSION="5.6.30"
 PKG_REV="0"
-PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libxslt libiconv libxml2 openssl libjpeg-turbo bzip2 libpng freetype sqlite mariadb rapidjson"
-PKG_SECTION="xmedia/tools"
-PKG_SHORTDESC="php: Scripting language especially suited for Web development"
-PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
-
 PKG_TOOLCHAIN="autotools"
 
 post_unpack() {
@@ -82,7 +77,6 @@ configure_target() {
                              --with-pcre-regex \
                              --with-sqlite3=no \
                              --with-mysql=$SYSROOT_PREFIX/usr \
-                             --with-mysql-sock=/tmp/mysql.sock \
                              --with-gd \
                              --enable-gd-native-ttf \
                              --enable-gd-jis-conv \
