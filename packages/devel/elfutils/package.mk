@@ -14,13 +14,6 @@ PKG_LONGDESC="A collection of utilities to handle ELF objects."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic -hardening"
 
-#pre_configure_target() {
-#  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"
-#  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-plt||"
-#  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-z,now||"`
-#  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,now||"`
-#}
-
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-nls \
                            --with-zlib \
