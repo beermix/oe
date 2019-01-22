@@ -20,6 +20,7 @@ PKG_MESON_OPTS_HOST="-Dselinux=false \
 			-Dinternal_pcre=true \
 			-Dbsymbolic_functions=true \
 			-Dforce_posix_threads=true \
+			-Dinstalled_tests=false \
 			-Ddefault_library=static"
 
 PKG_MESON_OPTS_TARGET="-Dselinux=false\
@@ -28,7 +29,9 @@ PKG_MESON_OPTS_TARGET="-Dselinux=false\
 			  -Dgtk_doc=false \
 			  -Dinternal_pcre=false \
 			  -Dbsymbolic_functions=true \
-			  -Dforce_posix_threads=true"
+			  -Dforce_posix_threads=true \
+			  -Dinstalled_tests=false \
+			  -Diconv=libc"
 
 #pre_configure_target() {
 #  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
