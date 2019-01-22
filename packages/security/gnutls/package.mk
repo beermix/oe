@@ -1,13 +1,10 @@
 PKG_NAME="gnutls"
-PKG_VERSION="3.6.4"
-PKG_ARCH="any"
+PKG_VERSION="3.6.5"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/"
 PKG_URL="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-$PKG_VERSION.tar.xz"
-#PKG_DEPENDS_TARGET="toolchain openssl libidn2 nettle libgcrypt libtasn1 libunistring"
-PKG_DEPENDS_TARGET="toolchain openssl nettle gmp libtasn1"
+PKG_DEPENDS_TARGET="toolchain openssl libidn2 nettle libgcrypt libtasn1 libunistring"
 PKG_DEPENDS_TARGET="toolchain openssl nettle gmp"
-PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="GnuTLS is a secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them."
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-doc \

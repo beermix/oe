@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="712f1167b481788ae11988c873c1bb1a5661b5d6"
+PKG_VERSION="ee4d79026da2c21c75cccd5795cb4357643f4f5c"
 PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
@@ -102,10 +102,6 @@ pre_configure_target() {
 
   # set some CFLAGS we need
   export CFLAGS="$CFLAGS -g"
-
-  # export CFLAGS="$CFLAGS -g2  -Wl,-z,max-page-size=0x1000 "
-  # unset LDFLAGS
-  # export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
