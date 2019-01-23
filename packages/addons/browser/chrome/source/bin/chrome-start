@@ -92,7 +92,6 @@ LD_PRELOAD=/usr/lib/libGL.so $ADDON_DIR/chrome-bin/chrome \
   --no-sandbox \
   --no-default-browser-check \
   --disable-smooth-scrolling \
-  --disable-printing \
   --enable-tcp-fastopen \
   --user-data-dir=$ADDON_HOME/profile \
   --test-type $@ \
