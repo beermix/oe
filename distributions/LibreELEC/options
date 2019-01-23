@@ -106,7 +106,7 @@
   NFS_SUPPORT="no"
 
 # build with Samba Client support (mounting samba shares via the OS) (yes / no)
-  SAMBA_SUPPORT="yes"
+  SAMBA_SUPPORT="no"
 
 # build and install Samba Server (yes / no)
   SAMBA_SERVER="yes"
