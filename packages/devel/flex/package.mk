@@ -8,13 +8,10 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/westes/flex/releases"
 PKG_URL="https://github.com/westes/flex/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host m4:host"
-PKG_DEPENDS_TARGET="toolchain flex:host"
 PKG_LONGDESC="A tool for generating programs that perform pattern-matching on text."
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-doc --enable-shared --enable-static"
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-program --disable-doc"
 
 post_makeinstall_host() {
   cat > $TOOLCHAIN/bin/lex << "EOF"
@@ -24,3 +21,5 @@ EOF
 
   chmod -v 755 $TOOLCHAIN/bin/lex
 }
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-program --disable-doc"
