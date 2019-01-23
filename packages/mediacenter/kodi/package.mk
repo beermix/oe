@@ -195,43 +195,44 @@ fi
                          -DENABLE_INTERNAL_FFMPEG=OFF \
                          -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                          -DENABLE_INTERNAL_CROSSGUID=OFF \
-                       -DENABLE_SDL=OFF \
-                       -DENABLE_OPENSSL=ON \
-                       -DENABLE_UDEV=ON \
-                       -DENABLE_DBUS=ON \
-                       -DENABLE_XSLT=ON \
-                       -DENABLE_CCACHE=ON \
-                       -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=ON \
-                       -DENABLE_LDGOLD=ON \
-                       -DCMAKE_VERBOSE_MAKEFILE=0 \
-                       $KODI_ARCH \
-                       $KODI_OPENGL \
-                       $KODI_OPENGLES \
-                       $KODI_OPENMAX \
-                       $KODI_VDPAU \
-                       $KODI_VAAPI \
-                       $KODI_CEC \
-                       $KODI_XORG \
-                       $KODI_SAMBA \
-                       $KODI_NFS \
-                       $KODI_LIBDVD \
-                       $KODI_AVAHI \
-                       $KODI_UPNP \
-                       $KODI_MYSQL \
-                       $KODI_SSH \
-                       $KODI_AIRPLAY \
-                       $KODI_AIRTUNES \
-                       $KODI_NONFREE \
-                       $KODI_OPTICAL \
-                       $KODI_BLURAY \
-                       $KODI_PLAYER"
+                         -DENABLE_SDL=OFF \
+                         -DENABLE_OPENSSL=ON \
+                         -DENABLE_UDEV=OFF \
+                         -DENABLE_DBUS=ON \
+                         -DENABLE_XSLT=ON \
+                         -DENABLE_CCACHE=OFF \
+                         -DENABLE_LIRC=OFF \
+                         -DENABLE_EVENTCLIENTS=ON \
+                         -DENABLE_LDGOLD=OFF \
+                         -DCMAKE_VERBOSE_MAKEFILE=0 \
+                         $KODI_ARCH \
+                         $KODI_OPENGL \
+                         $KODI_OPENGLES \
+                         $KODI_OPENMAX \
+                         $KODI_VDPAU \
+                         $KODI_VAAPI \
+                         $KODI_CEC \
+                         $KODI_XORG \
+                         $KODI_SAMBA \
+                         $KODI_NFS \
+                         $KODI_LIBDVD \
+                         $KODI_AVAHI \
+                         $KODI_UPNP \
+                         $KODI_MYSQL \
+                         $KODI_SSH \
+                         $KODI_AIRPLAY \
+                         $KODI_AIRTUNES \
+                         $KODI_NONFREE \
+                         $KODI_OPTICAL \
+                         $KODI_BLURAY \
+                         $KODI_PLAYER"
 }
 
 pre_configure_target() {
   export LIBS="$LIBS -lncurses"
-  export CFLAGS="$CFLAGS -fstack-protector -mzero-caller-saved-regs=used"
-  export CXXFLAGS="$CXXFLAGS -fstack-protector -mzero-caller-saved-regs=used"
+
+  #export CFLAGS="$CFLAGS -fstack-protector -mzero-caller-saved-regs=used"
+  #export CXXFLAGS="$CXXFLAGS -fstack-protector -mzero-caller-saved-regs=used"
 }
 
 post_makeinstall_target() {
