@@ -3,11 +3,11 @@
 
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
-PKG_REV="159-glibc28.900-gcc8"
+PKG_REV="160-glibc28.900-gcc8"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
-                    cups gdk-pixbuf gtk3 harfbuzz \
+                    cups gdk-pixbuf gtk+ gtk3 harfbuzz \
                     libXtst libXcursor libxss nss pango scrnsaverproto unclutter libnotify icu re2 snappy"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Google Chrome Browser"
@@ -44,13 +44,13 @@ addon() {
   # gdk-pixbuf modules
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
-  # gtk3 gdk3
+  # gtk3
   cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gdk/.libs/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk+
-  # cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  # cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.$TARGET_NAME/src/.libs/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
