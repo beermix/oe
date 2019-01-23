@@ -9,18 +9,13 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc/tree/Krypton"
 PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav"
+PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav"
 PKG_LONGDESC="A free and open source cross-platform media player."
-#PKG_TOOLCHAIN="cmake-make"
-PKG_BUILD_FLAGS="-lto -hardening"
+PKG_TOOLCHAIN="cmake-make"
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 configure_package() {
   PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
-
-  # Single threaded LTO is very slow so rely on Kodi for parallel LTO support
-  if [ "$LTO_SUPPORT" = "yes" ] && ! build_with_debug; then
-    PKG_KODI_USE_LTO="-DUSE_LTO=$CONCURRENCY_MAKE_LEVEL"
-  fi
 
   get_graphicdrivers
 
@@ -193,63 +188,50 @@ fi
 
   PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                          -DWITH_TEXTUREPACKER=$TOOLCHAIN/bin/TexturePacker \
-                         -DWITH_JSONSCHEMABUILDER=$TOOLCHAIN/bin/JsonSchemaBuilder \
                          -DDEPENDS_PATH=$PKG_BUILD/depends \
                          -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                          -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
                          -DGIT_VERSION=$PKG_VERSION \
-                         -DWITH_FFMPEG=$(get_build_dir ffmpeg) \
                          -DENABLE_INTERNAL_FFMPEG=OFF \
                          -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                          -DENABLE_INTERNAL_CROSSGUID=OFF \
-                         -DENABLE_UDEV=ON \
-                         -DENABLE_DBUS=ON \
-                         -DENABLE_XSLT=ON \
-                         -DENABLE_CCACHE=ON \
-                         -DENABLE_LIRCCLIENT=ON \
-                         -DENABLE_EVENTCLIENTS=ON \
-                         -DENABLE_LDGOLD=ON \
-                         -DENABLE_DEBUGFISSION=OFF \
-                         -DENABLE_APP_AUTONAME=OFF \
-                         -DENABLE_INTERNAL_FLATBUFFERS=OFF \
-                         -DENABLE_AVX=OFF \
-                         -DENABLE_AVX2=OFF \
-                         -DENABLE_SSE=ON \
-                         -DENABLE_SSE2=ON \
-                         -DENABLE_SSE3=ON \
-                         -DENABLE_SSE4_1=ON \
-                         -DENABLE_SSE4_2=ON \
-                         -DENABLE_SSSE3=ON \
-                         -DHAVE_SSE=TRUE \
-                         -DHAVE_SSE2=TRUE \
-                         -DHAVE_SSE3=TRUE \
-                         -DHAVE_SSE4_1=TRUE \
-                         -DHAVE_SSSE3=TRUE \
-                         -DCMAKE_VERBOSE_MAKEFILE=0 \
-                         $PKG_KODI_USE_LTO \
-                         $KODI_ARCH \
-                         $KODI_NEON \
-                         $KODI_VDPAU \
-                         $KODI_VAAPI \
-                         $KODI_CEC \
-                         $KODI_XORG \
-                         $KODI_SAMBA \
-                         $KODI_NFS \
-                         $KODI_LIBDVD \
-                         $KODI_AVAHI \
-                         $KODI_UPNP \
-                         $KODI_MYSQL \
-                         $KODI_AIRPLAY \
-                         $KODI_AIRTUNES \
-                         $KODI_OPTICAL \
-                         $KODI_BLURAY \
-                         $KODI_PLAYER"
+                       -DENABLE_SDL=OFF \
+                       -DENABLE_OPENSSL=ON \
+                       -DENABLE_UDEV=ON \
+                       -DENABLE_DBUS=ON \
+                       -DENABLE_XSLT=ON \
+                       -DENABLE_CCACHE=ON \
+                       -DENABLE_LIRC=ON \
+                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_LDGOLD=ON \
+                       -DCMAKE_VERBOSE_MAKEFILE=0 \
+                       $KODI_ARCH \
+                       $KODI_OPENGL \
+                       $KODI_OPENGLES \
+                       $KODI_OPENMAX \
+                       $KODI_VDPAU \
+                       $KODI_VAAPI \
+                       $KODI_CEC \
+                       $KODI_XORG \
+                       $KODI_SAMBA \
+                       $KODI_NFS \
+                       $KODI_LIBDVD \
+                       $KODI_AVAHI \
+                       $KODI_UPNP \
+                       $KODI_MYSQL \
+                       $KODI_SSH \
+                       $KODI_AIRPLAY \
+                       $KODI_AIRTUNES \
+                       $KODI_NONFREE \
+                       $KODI_OPTICAL \
+                       $KODI_BLURAY \
+                       $KODI_PLAYER"
 }
 
 pre_configure_target() {
   export LIBS="$LIBS -lncurses"
-  #export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
-  #export CXXFLAGS="$CXXFLAGS -fstack-protector-strong -mzero-caller-saved-regs=used"
+  export CFLAGS="$CFLAGS -fstack-protector -mzero-caller-saved-regs=used"
+  export CXXFLAGS="$CXXFLAGS -fstack-protector -mzero-caller-saved-regs=used"
 }
 
 post_makeinstall_target() {
@@ -358,4 +340,8 @@ post_install() {
   enable_service kodi-waitonnetwork.service
   enable_service kodi.service
   enable_service kodi-lirc-suspend.service
+# GUI switch service
+  enable_service gui-switch.service
+# Update Ace playlists service
+  enable_service aceupd-playlist.service
 }

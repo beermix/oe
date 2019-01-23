@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<advancedsettings>
+  <showexitbutton>false</showexitbutton>
+  <splash>false</splash>
+  <remotedelay>1</remotedelay>
+  <cputempcommand>cputemp</cputempcommand>
+  <gputempcommand>gputemp</gputempcommand>
+  <!-- <loglevel hide="false">2</loglevel> -->
+  <video>
+    <latency>
+      <delay>0</delay>
+      <refresh>
+        <min>23</min>
+        <max>24</max>
+        <delay>175</delay>
+      </refresh>
+    </latency>
+  </video>
+  <samba>
+    <clienttimeout>30</clienttimeout>
+  </samba>
+  <cache>
+    <memorysize>10485760</memorysize>  <!-- number of bytes used for buffering streams in memory (10MB - 30MB RAM)
+                                        When set to 0 the cache will be written to disk instead of RAM:
+                                           <memorysize>5242880</memorysize>  using 5MB of RAM for cache (which requires 15MB  of free RAM)
+                                           <memorysize>10485760</memorysize>  using 10MB of RAM for cache (which requires 30MB  of free RAM)
+                                           <memorysize>20971520</memorysize>  using 20MB of RAM for cache (which requires 60MB  of free RAM)
+                                           <memorysize>52428800</memorysize>  using 50MB of RAM for cache (which requires 150MB  of free RAM)
+                                           <memorysize>104857600</memorysize> using 100MB of RAM for cache (which requires 300MB of free RAM)
+                                           <memorysize>139460608</memorysize> using 133MB of RAM for cache (which requires 400MB of free RAM) -->
+    <buffermode>1</buffermode>         <!-- Choose what to buffer:
+                                           0) Buffer all internet filesystems (like "2" but additionally also ftp, webdav, etc.) (default)
+                                           1) Buffer all filesystems (including local)
+                                           2) Only buffer true internet filesystems (streams) (http, etc.)
+                                           3) No buffer -->
+    <readfactor>10</readfactor>        <!-- this factor determines the max readrate in terms of readbufferfactor * avg bitrate of a video file. 
+                                        This can help on bad connections to keep the cache filled. It will also greatly speed up buffering. Default value 4.0. -->
+  </cache>
+</advancedsettings>

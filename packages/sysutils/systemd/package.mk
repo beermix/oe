@@ -3,11 +3,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="systemd"
-PKG_VERSION="240"
-PKG_SHA256="8f15aec1ac926e13a21a04d0ca3fe371f7004951448142a6f8952075c5b5f0b5"
+PKG_VERSION="49a881e"
+PKG_SHA256=""
 PKG_LICENSE="LGPL2.1+"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_LONGDESC="A system and session manager for Linux, compatible with SysV and LSB init scripts."
 
@@ -87,7 +87,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dumount-path=/usr/bin/umount"
 
 pre_configure_target() {
-  #export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation -Wno-implicit-function-declaration -fstack-protector-strong -mzero-caller-saved-regs=used"
+  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation -Wno-implicit-function-declaration"
   export LC_ALL=en_US.UTF-8
 }
 
@@ -221,7 +221,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/etc/tmpfiles.d
   ln -sf /storage/.config/tmpfiles.d $INSTALL/etc/tmpfiles.d
   rm -rf $INSTALL/etc/udev/hwdb.d
-#  ln -sf /storage/.config/hwdb.d $INSTALL/etc/udev/hwdb.d
+  ln -sf /storage/.config/hwdb.d $INSTALL/etc/udev/hwdb.d
   rm -rf $INSTALL/etc/udev/rules.d
   ln -sf /storage/.config/udev.rules.d $INSTALL/etc/udev/rules.d
 }
