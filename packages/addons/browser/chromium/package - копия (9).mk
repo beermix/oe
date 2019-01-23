@@ -91,11 +91,17 @@ make_target() {
     'use_gtk3=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
+    'linux_link_libgio=true'
+    'linux_link_libudev = true'
+    'use_libpci = true'
     'exclude_unwind_tables=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_widevine=true'
     'use_vaapi=true'
+    'use_dbus=true'
+    'use_system_zlib=true'
+    'use_system_libjpeg=true'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
@@ -110,10 +116,10 @@ make_target() {
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
   [libdrm]=
-  [icu]=icu
+  #[icu]=icu
   #[libjpeg]=libjpeg
   #[libxml]=libxml2           # https://crbug.com/736026
-  #[libxslt]=libxslt
+  [libxslt]=libxslt
   #[re2]=re2
   #[snappy]=snappy
   [yasm]=
