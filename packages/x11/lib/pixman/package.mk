@@ -35,8 +35,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
 
 pre_configure_target() {
   export LIBS="$LIBS -fopenmp"
-  export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  #export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  #export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
 }
 
 post_makeinstall_target() {
