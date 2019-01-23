@@ -20,3 +20,15 @@ makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/include
     cp -PR src/libaio.h $SYSROOT_PREFIX/usr/include
 }
+
+make_host() {
+  make -C src
+}
+
+makeinstall_host() {
+  mkdir -p $TOOLCHAIN/lib
+    cp -PR src/libaio.a $TOOLCHAIN/lib
+
+  mkdir -p $TOOLCHAIN/include
+    cp -PR src/libaio.h $TOOLCHAIN/include
+}
