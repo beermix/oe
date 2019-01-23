@@ -340,8 +340,4 @@ post_install() {
   enable_service kodi-waitonnetwork.service
   enable_service kodi.service
   enable_service kodi-lirc-suspend.service
-# GUI switch service
-  enable_service gui-switch.service
-# Update Ace playlists service
-  enable_service aceupd-playlist.service
 }

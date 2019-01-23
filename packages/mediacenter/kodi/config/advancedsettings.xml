@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <advancedsettings>
   <showexitbutton>false</showexitbutton>
-  <splash>false</splash>
   <remotedelay>1</remotedelay>
   <cputempcommand>cputemp</cputempcommand>
   <gputempcommand>gputemp</gputempcommand>
