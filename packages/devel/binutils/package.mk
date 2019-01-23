@@ -32,8 +32,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-targets=x86_64-linux \
                          --disable-gdb \
                          --disable-sim \
-                         --enable-lto \
-                         --disable-nls"
+                         --enable-lto"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -49,8 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-plugins \
                          --disable-gold \
                          --disable-ld \
-                         --disable-lto \
-                         --disable-nls"
+                         --disable-lto"
 
 pre_configure_host() {
   unset CPPFLAGS
@@ -78,5 +76,5 @@ make_target() {
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
-  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C bfd install
+  make DESTDIR="$SYSROOT_PREFIX" -C bfd MAKEINFO=true install
 }
