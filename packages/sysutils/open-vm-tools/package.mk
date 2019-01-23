@@ -10,22 +10,17 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vmware/open-vm-tools/releases"
 PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.3.5/open-vm-tools-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet rpcsvc-proto:host"
+PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
-                           --disable-tests \
-                           --disable-deploypkg \
-                           --without-pam \
-                           --without-gtk2 \
-                           --without-gtkmm \
-                           --without-ssl \
-                           --without-x \
-                           --without-xerces \
-                           --without-icu \
-                           --without-procps \
-                           --without-kernel-modules \
-                           --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
-                           --with-sysroot=$SYSROOT_PREFIX"
+PKG_CONFIGURE_OPTS_TARGET="--with-dnet \
+			      --without-icu \
+			      --without-x \
+			      --without-gtk2 \
+			      --without-gtkmm \
+			      --without-kernel-modules \
+			      --disable-deploypkg \
+			      --without-xerces"
 
 post_unpack() {
  # mv $PKG_BUILD/$PKG_NAME/* $PKG_BUILD/
@@ -34,9 +29,9 @@ post_unpack() {
   mkdir -p $PKG_BUILD/common-agent/etc/config
 }
 
-pre_configure_target() {
-  export LIBS="-ldnet -ltirpc"
-}
+#pre_configure_target() {
+#  export LIBS="-ldnet -ltirpc"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/sbin
