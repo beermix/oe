@@ -3,9 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="binutils"
-PKG_VERSION="2.31.1"
-#PKG_SHA256="5d20086ecf5752cc7d9134246e9588fa201740d540f7eb84d795b1f7a93bca86"
-PKG_VERSION="e1d5734"
+PKG_VERSION="eccf574"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_32-branch"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -14,9 +12,9 @@ PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_LONGDESC="A GNU collection of binary utilities."
 
-post_unpack() {
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
-}
+#post_unpack() {
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+#}
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \

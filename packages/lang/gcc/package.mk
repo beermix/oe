@@ -5,8 +5,6 @@
 PKG_NAME="gcc"
 PKG_VERSION="8.2.1-20181127"
 #PKG_VERSION="8-20190118"
-PKG_LICENSE="GPL"
-PKG_SHA256=""
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
@@ -27,11 +25,11 @@ PKG_BUILD_FLAGS="-lto -gold -hardening"
 #  echo "install:" >> $PKG_BUILD/libstdc++-v3/testsuite/Makefile.in
 #}
 
-post_unpack() {
-  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
-}
+#post_unpack() {
+#  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
+#}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
