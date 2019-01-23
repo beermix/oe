@@ -34,7 +34,7 @@ case "$LINUX" in
     PKG_SHA256=""
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/v$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
-    PKG_PATCH_DIRS="default"
+    PKG_PATCH_DIRS="default_4.20"
     PKG_BUILD_PERF="no"
     ;;
   lts)
