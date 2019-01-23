@@ -120,13 +120,13 @@
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
 # mediacenter also automount internally drives at boottime via udev (yes / no)
-  UDEVIL="no"
+  UDEVIL="yes"
 
 # build and install exFAT fuse support (yes / no)
   EXFAT="no"
 
 # build and install NTFS-3G fuse support (yes / no)
-  NTFS3G="no"
+  NTFS3G="yes"
 
 # build and install hfs filesystem utilities (yes / no)
   HFSTOOLS="no"
