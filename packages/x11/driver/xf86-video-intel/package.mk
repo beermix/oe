@@ -3,10 +3,10 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="c37c7ee"
-PKG_SHA256="2bae3d6b3ef71e025b7795bc281e55cc6d1b83801e2c208bf46eb2b5a7461ba0"
+PKG_VERSION="33ee0c3b21ea279e08d0863fcb2e874f0974b00e"
+PKG_SHA256=""
 PKG_LICENSE="OSS"
-PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log/"
+PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log"
 PKG_URL="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-macros systemd xorg-server"
 PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G."
@@ -16,23 +16,6 @@ PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-backlight-helper \
-                           --disable-gen4asm \
-                           --enable-udev \
-                           --disable-tools \
-                           --enable-dri \
-                           --disable-dri1 \
-                           --enable-dri2 \
-                           --enable-dri3 \
-                           --enable-kms --enable-kms-only \
-                           --disable-ums --disable-ums-only \
-                           --enable-sna \
-                           --enable-uxa \
-                           --disable-xvmc \
-                           --disable-xaa \
-                           --disable-dga \
-                           --disable-tear-free \
-                           --disable-create2 \
-                           --disable-async-swap \
                            --with-default-dri=2 \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 

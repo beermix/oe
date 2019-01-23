@@ -5,4 +5,3 @@ PKG_DEPENDS_TARGET="toolchain glib libXv"
 PKG_SECTION="devel"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
-			  
