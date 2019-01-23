@@ -5,33 +5,40 @@
 
 PKG_NAME="open-vm-tools"
 PKG_VERSION="10.3.5-10430147"
-PKG_SHA256="364cd0fdfa5a05e872d08609659e6231ec99788669f7ebba24bfb8c94168daef"
+#PKG_SHA256="364cd0fdfa5a05e872d08609659e6231ec99788669f7ebba24bfb8c94168daef"
+PKG_VERSION="stable-10.3.5"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vmware/open-vm-tools/releases"
 PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.3.5/open-vm-tools-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet rpcsvc-proto:host"
-PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet"
+PKG_URL="https://github.com/vmware/open-vm-tools/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet fuse rpcsvc-proto:host"
 PKG_TOOLCHAIN="autotools"
-
-PKG_CONFIGURE_OPTS_TARGET="--with-dnet \
-			      --without-icu \
-			      --without-x \
-			      --without-gtk2 \
-			      --without-gtkmm \
-			      --without-kernel-modules \
-			      --disable-deploypkg \
-			      --without-xerces"
+			      
+PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
+                           --disable-tests \
+                           --disable-deploypkg \
+                           --without-pam \
+                           --without-gtk2 \
+                           --without-gtkmm \
+                           --without-ssl \
+                           --without-x \
+                           --without-xerces \
+                           --without-icu \
+                           --without-procps \
+                           --without-kernel-modules \
+                           --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
+                           --with-sysroot=$SYSROOT_PREFIX"
 
 post_unpack() {
- # mv $PKG_BUILD/$PKG_NAME/* $PKG_BUILD/
+  mv $PKG_BUILD/$PKG_NAME/* $PKG_BUILD/
 
   sed -i -e 's|.*common-agent/etc/config/Makefile.*||' $PKG_BUILD/configure.ac
   mkdir -p $PKG_BUILD/common-agent/etc/config
 }
 
-#pre_configure_target() {
-#  export LIBS="-ldnet -ltirpc"
-#}
+pre_configure_target() {
+  export LIBS="-ldnet -ltirpc"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/sbin
