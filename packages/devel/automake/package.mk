@@ -15,11 +15,14 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --disable-silent-rules"
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
   
-  mkdir -p $TOOLCHAIN/share/aclocal/
-  cp -r -i $PKG_DIR/gtk-doc.m4 $TOOLCHAIN/share/aclocal/
+#  mkdir -p $TOOLCHAIN/share/aclocal/
+#  cp -r -i $PKG_DIR/gtk-doc.m4 $TOOLCHAIN/share/aclocal/
   
   ln -sf automake-1.16 $TOOLCHAIN/bin/automake-1.15
   ln -sf aclocal-1.16 $TOOLCHAIN/bin/aclocal-1.15
+
+  ln -sf automake-1.16 $TOOLCHAIN/bin/automake-1.14
+  ln -sf aclocal-1.16 $TOOLCHAIN/bin/aclocal-1.14
 }
 
 

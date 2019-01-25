@@ -919,9 +919,10 @@ source_package() {
   # that we may have initialised after sourcing the package, typically
   # PKG_BUILD etc.
   if [ -n "${PKG_NAME}" ]; then
-    pkg_call_exists configure_package && pkg_call configure_package
+    if pkg_call_exists configure_package; then
+      pkg_call configure_package
+    fi
   fi
-  return 0
 }
 
 
@@ -966,7 +967,7 @@ kernel_make() {
     HOSTLDFLAGS="$HOST_LDFLAGS" \
     HOSTCXXFLAGS="$HOST_CXXFLAGS" \
     DEPMOD="$TOOLCHAIN/bin/depmod" \
-    "$@" || die "$(print_color CLR_ERROR "ERROR: kernel_make for ${PKG_NAME} did not succeed!")"
+    "$@"
 }
 
 # get kernel module dir
