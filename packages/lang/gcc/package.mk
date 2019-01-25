@@ -4,7 +4,7 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="8.2.1-20181127"
-PKG_VERSION="9-20190120"
+PKG_VERSION="8-20190118"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
@@ -51,9 +51,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-vtable-verify \
@@ -66,6 +63,9 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libsanitizer \
                               --disable-libitm \
                               --disable-libquadmath \
+                              --disable-libmudflap \
+                              --disable-libatomic \
+                              --disable-libgomp \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
