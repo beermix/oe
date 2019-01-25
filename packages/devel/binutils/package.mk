@@ -29,10 +29,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
+                         --enable-lto \
                          --enable-targets=x86_64-linux \
                          --disable-gdb \
                          --disable-sim \
-                         --enable-lto"
+                         --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -48,7 +49,8 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-plugins \
                          --disable-gold \
                          --disable-ld \
-                         --disable-lto"
+                         --disable-lto \
+                         --disable-nls"
 
 pre_configure_host() {
   unset CPPFLAGS
