@@ -17,9 +17,9 @@ pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
 
-  export CFLAGS="-march=haswell -O2 -fstack-protector -fno-plt -Wall"
-  export CXXFLAGS="-march=haswell -O2 -fstack-protector -fno-plt -Wall"
-  export LDFLAGS="-march=haswell -Wl,-z,relro -Wl,-z,now -s"
+  export CFLAGS="-march=haswell -O2 -fstack-protector"
+  export CXXFLAGS="-march=haswell -O2 -fstack-protector"
+  export LDFLAGS="-Wl,-z -Wl,now -Wl,-z -Wl,relro -s"
 }
 
 post_makeinstall_host() {

@@ -53,8 +53,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libada \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-vtable-verify \
-                           --disable-libunwind-exceptions \
                            --with-tune=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
