@@ -22,8 +22,8 @@ pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
   
-  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  export CFLAGS="$CFLAGS -O3"
+  export CXXFLAGS="$CXXFLAGS -O3"
 }
 
 configure_target() {
