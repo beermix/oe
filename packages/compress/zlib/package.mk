@@ -21,9 +21,6 @@ pre_configure_target() {
 pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
-  
-  export CFLAGS="$CFLAGS -O3"
-  export CXXFLAGS="$CXXFLAGS -O3"
 }
 
 configure_target() {
@@ -33,7 +30,7 @@ configure_target() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./configure --prefix=$TOOLCHAIN --64 --libdir=$TOOLCHAIN/lib
+  ./configure --prefix=$TOOLCHAIN --libdir=$TOOLCHAIN/lib
 }
 
 pre_build_target() {
