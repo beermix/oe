@@ -11,7 +11,7 @@ PKG_DEPENDS_HOST="nss:host"
 PKG_DEPENDS_TARGET="toolchain nss"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic:host +pic"
+#PKG_BUILD_FLAGS="+pic:host +pic"
 
 post_unpack() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
