@@ -8,7 +8,7 @@ PKG_SHA256="94fb70890143e3c6549f265cee93ec064c80a84c42ad0f23e85ee1fd6540a871"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org"
 PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="zlib:host autotools:host"
+PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 #PKG_TOOLCHAIN="autotools"
 
