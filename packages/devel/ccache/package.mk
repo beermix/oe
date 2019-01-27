@@ -16,10 +16,10 @@ PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
-
-  export CFLAGS="-march=haswell -O2 -fstack-protector"
-  export CXXFLAGS="-march=haswell -O2 -fstack-protector"
-  export LDFLAGS="-Wl,-z -Wl,now -Wl,-z -Wl,relro -s"
+	
+  #export CFLAGS="-march=haswell -O2 --param=ssp-buffer-size=4 -fstack-protector"
+  #export CXXFLAGS="-march=haswell -O2 --param=ssp-buffer-size=4 -fstack-protector"
+  export LDFLAGS="-s"
 }
 
 post_makeinstall_host() {

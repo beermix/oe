@@ -15,8 +15,8 @@ PKG_TOOLCHAIN="autotools"
 pre_configure_host() {
   export CC=$LOCAL_CC
 
-  export CFLAGS="-march=haswell -O2 -fstack-protector"
-  export LDFLAGS="-Wl,-z -Wl,now -Wl,-z -Wl,relro -s"
+  #export CFLAGS="-march=haswell -O2 -fstack-protector"
+  export LDFLAGS="-s"
 }
 
 #PKG_CONFIGURE_OPTS_HOST="--without-guile"
