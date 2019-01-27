@@ -10,6 +10,7 @@ PKG_URL="https://downloads.sourceforge.net/project/libtirpc/libtirpc/$PKG_VERSIO
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A port of Suns Transport-Independent RPC library to Linux."
 PKG_BUILD_FLAGS="+pic"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
                            --disable-ipv6 \
