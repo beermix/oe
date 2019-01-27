@@ -9,7 +9,7 @@ PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain connman iana-etc ethtool openssh iperf nuttcp"
 #PKG_DEPENDS_TARGET="toolchain connman netbase ethtool openssh iperf nuttcp"
 PKG_SECTION="virtual"
-PKG_SHORTDESC="network: Metapackage for packages to install network support"
+PKG_LONGDESC="Metapackage for various packages to install network support"
 
 if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bluez"
