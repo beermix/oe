@@ -3,11 +3,12 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="binutils"
-PKG_VERSION="0c9d744"
+PKG_VERSION="2.31.1"
+PKG_SHA256="5d20086ecf5752cc7d9134246e9588fa201740d540f7eb84d795b1f7a93bca86"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_32-branch"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_LONGDESC="A GNU collection of binary utilities."
