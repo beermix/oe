@@ -11,7 +11,7 @@ PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/telegramdesktop/zlib/archive/${PKG_VERSION}.tar.gz"
 #PKG_DEPENDS_HOST="cmake:host"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_TOOLCHAIN="cmake-make"
+#PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic:host +pic +hardening"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
@@ -22,16 +22,16 @@ pre_configure_target() {
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -Wall|"`
 }
 
-post_configure_target() {
- ## configure minizip
- (
-  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-  rm Makefile
-  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
-  do_autoreconf
-  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --enable-static --disable-shared --disable-silent-rules
- )
-}
+#post_configure_target() {
+## configure minizip
+# (
+#  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
+#  rm Makefile
+#  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
+#  do_autoreconf
+#  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --enable-static --disable-shared --disable-silent-rules
+# )
+#}
 
 pre_build_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME

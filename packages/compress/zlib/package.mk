@@ -8,7 +8,7 @@ PKG_SITE="http://www.zlib.net"
 PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/Dead2/zlib-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain zlib:host"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic:host +pic"
@@ -41,24 +41,24 @@ configure_host() {
   ./configure --prefix=$TOOLCHAIN --zlib-compat --libdir=$TOOLCHAIN/lib
 }
 
-post_configure_target() {
+#post_configure_target() {
  ## configure minizip
- (
-  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-  rm Makefile
-  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
-  do_autoreconf
-  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --disable-static
- )
-}
+# (
+#  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
+#  rm Makefile
+#  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
+#  do_autoreconf
+#  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --disable-static
+# )
+#}
 
-post_make_target() {
+#post_make_target() {
  # make minizip
- make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-}
+# make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip
+#}
 
-post_makeinstall_target() {
+#post_makeinstall_target() {
  # Install minizip
- make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
- cp -PL $PKG_BUILD/.$TARGET_NAME/contrib/minizip/.libs/libminizip.so* $INSTALL/usr/lib/
-}
+# make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
+# cp -PL $PKG_BUILD/.$TARGET_NAME/contrib/minizip/.libs/libminizip.so* $INSTALL/usr/lib/
+#}
