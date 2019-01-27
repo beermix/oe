@@ -14,11 +14,10 @@ PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 # xf86-video-intel is broken enough. dont link with LTO
 
-PKG_CONFIGURE_OPTS_TARGET="--with-default-dri=3"
-
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -D_GNU_SOURCE"
-#}
+PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
+                           --disable-backlight-helper \
+                           --with-default-dri=3 \
+                           --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/polkit-1
