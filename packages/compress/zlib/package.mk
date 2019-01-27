@@ -2,7 +2,7 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="zlib"
-PKG_VERSION="d71006d"
+PKG_VERSION="a346a9f"
 PKG_SHA256=""
 PKG_SITE="http://www.zlib.net"
 PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
