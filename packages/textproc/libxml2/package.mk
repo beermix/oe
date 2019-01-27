@@ -10,15 +10,15 @@ PKG_SITE="http://xmlsoft.org"
 PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
-#PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_ALL="--enable-static \
-			   --enable-shared \
-			   --disable-ipv6 \
-			   --without-python \
-			   --with-threads \
-			   --with-zlib=$TOOLCHAIN \
-			   --without-lzma"
+PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
+             --enable-static \
+             --enable-shared \
+             --disable-ipv6 \
+             --without-python \
+             --with-threads \
+             --with-zlib=$TOOLCHAIN \
+             --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
 
