@@ -13,7 +13,7 @@ PKG_LONGDESC="A cross-platform, open-source make system."
 PKG_TOOLCHAIN="configure"
 
 configure_host() {
-  ../configure --prefix=$TOOLCHAIN \
+  ../bootstrap --prefix=$TOOLCHAIN \
                --no-qt-gui --no-system-libs \
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
