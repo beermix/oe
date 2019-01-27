@@ -10,7 +10,6 @@ PKG_SITE="https://www.gnu.org/software/make/"
 PKG_URL="http://ftpmirror.gnu.org/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
 PKG_LONGDESC="Utility to maintain groups of programs."
-PKG_TOOLCHAIN="autotools"
 
 pre_configure_host() {
   export CC=$LOCAL_CC
@@ -18,7 +17,7 @@ pre_configure_host() {
   export LDFLAGS="-s"
 }
 
-#PKG_CONFIGURE_OPTS_HOST="--without-guile"
+PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
   ln -sf make $TOOLCHAIN/bin/gmake

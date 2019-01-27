@@ -18,5 +18,3 @@ post_makeinstall_host() {
   ln -sf automake-1.16 $TOOLCHAIN/bin/automake-1.15
   ln -sf aclocal-1.16 $TOOLCHAIN/bin/aclocal-1.15
 }
-
-

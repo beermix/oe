@@ -7,7 +7,8 @@ PKG_SITE="http://www.gnu.org/software/readline/"
 PKG_URL="http://git.savannah.gnu.org/cgit/readline.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses"
-	
+PKG_LONGDESC="The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
+
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no --with-curses"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
