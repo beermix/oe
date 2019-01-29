@@ -2,7 +2,7 @@
 # Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="nss"
-PKG_VERSION="3.41.1"
+PKG_VERSION="3.42"
 PKG_SHA256="5ac4a388b06b2785fb7f4f0ae3c909d8cbb2ab370147ff61fe2517cc5bf3c685"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="https://ftp.mozilla.org/pub/security/nss/releases/"
