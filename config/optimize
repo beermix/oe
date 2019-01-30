@@ -50,7 +50,7 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 
 # hardening support
 # TODO: basiclly copied from debian 9, should adjust for LE | -fPIE  -fno-caller-saves
-CFLAGS_OPTIM_HARDENING="-fstack-protector -fno-plt"
+CFLAGS_OPTIM_HARDENING="--param=ssp-buffer-size=4 -fstack-protector -fno-plt"
 CXXFLAGS_OPTIM_HARDENING="-fstack-protector -fno-plt"
 CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=1"
 LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
