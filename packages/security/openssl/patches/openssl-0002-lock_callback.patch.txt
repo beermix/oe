@@ -1,0 +1,12 @@
+--- a/crypto/cryptlib.c	2018-11-20 14:44:49.000000000 +0100
++++ b/crypto/cryptlib.c	2019-01-12 14:04:56.000000000 +0100
+@@ -405,6 +405,9 @@ int (*CRYPTO_get_add_lock_callback(void)
+ void CRYPTO_set_locking_callback(void (*func) (int mode, int type,
+                                                const char *file, int line))
+ {
++    /* work around error kodi plugins overwriting kodi */
++    if (func && locking_callback)
++        return;
+     /*
+      * Calling this here ensures initialisation before any threads are
+      * started.
