@@ -30,6 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.20 \
+                           --enable-stack-protector=strong \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
