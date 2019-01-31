@@ -5,7 +5,7 @@
   GOLD_SUPPORT="yes"
 
 # HARDENING (security relevant linker and compiler flags) support
-  HARDENING_SUPPORT="yes"
+  HARDENING_SUPPORT="no"
 
 # Name of the Distro to build (full name, without special characters)
   DISTRONAME="OE"

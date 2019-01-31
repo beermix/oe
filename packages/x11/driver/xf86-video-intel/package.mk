@@ -8,7 +8,7 @@ PKG_SHA256=""
 PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log"
 PKG_URL="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-macros systemd xorg-server libXvMC libXtst libxss"
+PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-macros systemd xorg-server"
 PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
@@ -16,7 +16,24 @@ PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-backlight-helper \
-                           --with-default-dri=3 \
+                           --disable-gen4asm \
+                           --enable-udev \
+                           --disable-tools \
+                           --enable-dri \
+                           --disable-dri1 \
+                           --enable-dri2 \
+                           --enable-dri3 \
+                           --enable-kms --enable-kms-only \
+                           --disable-ums --disable-ums-only \
+                           --enable-sna \
+                           --enable-uxa \
+                           --disable-xvmc \
+                           --disable-xaa \
+                           --disable-dga \
+                           --disable-tear-free \
+                           --disable-create2 \
+                           --disable-async-swap \
+                           --with-default-dri=2 \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 post_makeinstall_target() {
