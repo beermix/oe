@@ -192,18 +192,32 @@ fi
                          -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                          -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
                          -DGIT_VERSION=$PKG_VERSION \
+                         -DWITH_FFMPEG=$(get_build_dir ffmpeg) \
                          -DENABLE_INTERNAL_FFMPEG=OFF \
                          -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                          -DENABLE_INTERNAL_CROSSGUID=OFF \
                          -DENABLE_SDL=OFF \
                          -DENABLE_OPENSSL=ON \
-                         -DENABLE_UDEV=OFF \
+                         -DENABLE_UDEV=ON \
                          -DENABLE_DBUS=ON \
                          -DENABLE_XSLT=ON \
-                         -DENABLE_CCACHE=OFF \
-                         -DENABLE_LIRC=OFF \
+                         -DENABLE_CCACHE=ON \
+                         -DENABLE_LIRCCLIENT=ON \
                          -DENABLE_EVENTCLIENTS=ON \
-                         -DENABLE_LDGOLD=OFF \
+                         -DENABLE_LDGOLD=ON \
+                         -DENABLE_AVX=OFF \
+                         -DENABLE_AVX2=OFF \
+                         -DENABLE_SSE=ON \
+                         -DENABLE_SSE2=ON \
+                         -DENABLE_SSE3=ON \
+                         -DENABLE_SSE4_1=ON \
+                         -DENABLE_SSE4_2=ON \
+                         -DENABLE_SSSE3=ON \
+                         -DHAVE_SSE=TRUE \
+                         -DHAVE_SSE2=TRUE \
+                         -DHAVE_SSE3=TRUE \
+                         -DHAVE_SSE4_1=TRUE \
+                         -DHAVE_SSSE3=TRUE \
                          -DCMAKE_VERBOSE_MAKEFILE=0 \
                          $KODI_ARCH \
                          $KODI_OPENGL \
