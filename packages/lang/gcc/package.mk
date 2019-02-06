@@ -4,7 +4,7 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="8.2.1-20181127"
-PKG_VERSION="8-20190125"
+PKG_VERSION="8-20190201"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
