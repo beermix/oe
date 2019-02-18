@@ -33,7 +33,7 @@ fi
 
 cd $ADDON_BUILD
 build_msg "CLR_INFO" "*** compressing addon ${PKG_ADDON_ID} ... ***"
-$TOOLCHAIN/bin/7za a -l -mx9 -bsp0 -bso0 -tzip $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID
+7za a -l -mx9 -bsp0 -bso0 -tzip $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID
 cd - &>/dev/null
 
 mkdir -p $ADDON_INSTALL_DIR
