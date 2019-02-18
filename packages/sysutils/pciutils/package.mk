@@ -14,7 +14,7 @@ PKG_LONGDESC="Utilities for inspecting devices connected to the PCI bus and the 
 PKG_MAKE_OPTS="PREFIX=/usr SHARED=no STRIP= IDSDIR=/usr/share"
 
 make_target() {
-  make OPT="$CFLAGS -fPIC -DPIC" \
+  make OPT="$CFLAGS" \
        CROSS_COMPILE=${TARGET_PREFIX} \
        HOST=$TARGET_ARCH-linux \
        $PKG_MAKE_OPTS \
