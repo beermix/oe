@@ -1,0 +1,48 @@
+--- chromium-63.0.3239.108/third_party/webrtc/p2p/base/port.cc.gcc7	2017-12-15 02:05:40.000000000 +0100
++++ chromium-63.0.3239.108/third_party/webrtc/p2p/base/port.cc	2017-12-29 07:24:01.248851177 +0100
+@@ -15,6 +15,7 @@
+ #include <algorithm>
+ #include <utility>
+ #include <vector>
++#include <cmath>
+ 
+ #include "p2p/base/common.h"
+ #include "p2p/base/portallocator.h"
+--- chromium-63.0.3239.108/third_party/blink/renderer/core/page/focus_controller.cc.gcc7	2017-12-15 02:04:46.000000000 +0100
++++ chromium-63.0.3239.108/third_party/blink/renderer/core/page/focus_controller.cc	2017-12-29 16:48:59.462554676 +0100
+@@ -217,9 +217,6 @@
+   static ScopedFocusNavigation OwnedByIFrame(const HTMLFrameOwnerElement&,
+                                              FocusController::OwnerMap&);
+   static HTMLSlotElement* FindFallbackScopeOwnerSlot(const Element&);
+-  static bool IsSlotFallbackScoped(const Element&);
+-  static bool IsSlotFallbackScopedForThisSlot(const HTMLSlotElement&,
+-                                              const Element&);
+ 
+  private:
+   ScopedFocusNavigation(ContainerNode& scoping_root_node,
+@@ -361,25 +358,6 @@
+   return nullptr;
+ }
+ 
+-bool ScopedFocusNavigation::IsSlotFallbackScoped(const Element& element) {
+-  return ScopedFocusNavigation::FindFallbackScopeOwnerSlot(element);
+-}
+-
+-bool ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
+-    const HTMLSlotElement& slot,
+-    const Element& current) {
+-  Element* parent = current.parentElement();
+-  while (parent) {
+-    if (IsHTMLSlotElement(parent) &&
+-        ToHTMLSlotElement(parent)->AssignedNodes().IsEmpty()) {
+-      return !SlotScopedTraversal::IsSlotScoped(current) &&
+-             ToHTMLSlotElement(parent) == slot;
+-    }
+-    parent = parent->parentElement();
+-  }
+-  return false;
+-}
+-
+ inline void DispatchBlurEvent(const Document& document,
+                               Element& focused_element) {
+   focused_element.DispatchBlurEvent(nullptr, kWebFocusTypePage);

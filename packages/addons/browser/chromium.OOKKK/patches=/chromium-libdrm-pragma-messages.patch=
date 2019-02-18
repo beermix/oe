@@ -1,0 +1,13 @@
+diff --git a/third_party/libdrm/BUILD.gn b/third_party/libdrm/BUILD.gn
+index 4a199b31eb..d503914911 100644
+--- a/third_party/libdrm/BUILD.gn
++++ b/third_party/libdrm/BUILD.gn
+@@ -27,7 +27,7 @@ if (!use_system_libdrm) {
+     # <sys/sysmacros.h>.  GLIBC headers give a pragma warning in this case.
+     # Suppress this warning for now.  This may be removed once
+     # https://patchwork.kernel.org/patch/9628231/ lands.
+-    cflags = [ "-Wno-#pragma-messages" ]
++    #cflags = [ "-Wno-#pragma-messages" ]
+     if (is_clang) {
+       cflags += [ "-Wno-enum-conversion" ]
+     }

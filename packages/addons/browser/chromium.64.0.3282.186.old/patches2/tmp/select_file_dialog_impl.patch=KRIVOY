@@ -1,0 +1,12 @@
+diff --git a/chrome/browser/ui/libgtkui/gtk_ui.cc b/chrome/browser/ui/libgtkui/gtk_ui.cc
+index 2e95ea2071..46f9549035 100644
+--- a/chrome/browser/ui/libgtkui/gtk_ui.cc
++++ b/chrome/browser/ui/libgtkui/gtk_ui.cc
+@@ -37,7 +37,6 @@
+ #include "chrome/browser/ui/libgtkui/gtk_util.h"
+ #include "chrome/browser/ui/libgtkui/print_dialog_gtk.h"
+ #include "chrome/browser/ui/libgtkui/printing_gtk_util.h"
+-#include "chrome/browser/ui/libgtkui/select_file_dialog_impl.h"
+ #include "chrome/browser/ui/libgtkui/skia_utils_gtk.h"
+ #include "chrome/browser/ui/libgtkui/unity_service.h"
+ #include "chrome/browser/ui/libgtkui/x11_input_method_context_impl_gtk.h"

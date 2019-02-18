@@ -1,0 +1,47 @@
+diff -up chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/shaping/harfbuzz_face.cc.harfbuzz-2.0 chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/shaping/harfbuzz_face.cc
+--- chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/shaping/harfbuzz_face.cc.harfbuzz-2.0	2018-10-23 22:55:27.548479488 +0200
++++ chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/shaping/harfbuzz_face.cc	2018-10-23 22:56:14.078693096 +0200
+@@ -138,7 +138,7 @@ static hb_position_t HarfBuzzGetGlyphHor
+ static void HarfBuzzGetGlyphHorizontalAdvances(hb_font_t* font,
+                                                void* font_data,
+                                                unsigned count,
+-                                               hb_codepoint_t* first_glyph,
++                                               hb_codepoint_t const * first_glyph,
+                                                unsigned int glyph_stride,
+                                                hb_position_t* first_advance,
+                                                unsigned int advance_stride,
+diff -up chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/skia/skia_text_metrics.cc.harfbuzz-2.0 chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/skia/skia_text_metrics.cc
+--- chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/skia/skia_text_metrics.cc.harfbuzz-2.0	2018-10-16 21:15:09.000000000 +0200
++++ chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/skia/skia_text_metrics.cc	2018-10-23 23:04:52.845960504 +0200
+@@ -17,6 +17,10 @@ template <class T>
+ T* advance_by_byte_size(T* p, unsigned byte_size) {
+   return reinterpret_cast<T*>(reinterpret_cast<uint8_t*>(p) + byte_size);
+ }
++template <class T>
++T const * advance_by_byte_size(T const * p, unsigned byte_size) {
++  return reinterpret_cast<T const *>(reinterpret_cast<uint8_t const *>(p) + byte_size);
++}
+ 
+ }  // namespace
+ 
+@@ -39,7 +43,7 @@ void SkiaTextMetrics::GetGlyphWidthForHa
+ }
+ 
+ void SkiaTextMetrics::GetGlyphWidthForHarfBuzz(unsigned count,
+-                                               hb_codepoint_t* glyphs,
++                                               hb_codepoint_t const * glyphs,
+                                                unsigned glyph_stride,
+                                                hb_position_t* advances,
+                                                unsigned advance_stride) {
+diff -up chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/skia/skia_text_metrics.h.harfbuzz-2.0 chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/skia/skia_text_metrics.h
+--- chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/skia/skia_text_metrics.h.harfbuzz-2.0	2018-10-16 21:15:09.000000000 +0200
++++ chromium-70.0.3538.67/third_party/blink/renderer/platform/fonts/skia/skia_text_metrics.h	2018-10-23 23:01:06.173744317 +0200
+@@ -19,7 +19,7 @@ class SkiaTextMetrics final {
+ 
+   void GetGlyphWidthForHarfBuzz(hb_codepoint_t, hb_position_t* width);
+   void GetGlyphWidthForHarfBuzz(unsigned count,
+-                                hb_codepoint_t* first_glyph,
++                                hb_codepoint_t const * first_glyph,
+                                 unsigned glyph_stride,
+                                 hb_position_t* first_advance,
+                                 unsigned advance_stride);
