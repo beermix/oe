@@ -1,7 +1,0 @@
---- a/systemd/rpc-statd.service	2017-05-30 06:36:41.271954068 +0000
-+++ b/systemd/rpc-statd.service	2017-05-30 06:39:07.255286476 +0000
-@@ -12,3 +12,4 @@
- Type=forking
- PIDFile=/var/run/rpc.statd.pid
- ExecStart=/usr/sbin/rpc.statd
-+ExecStartPre=/usr/bin/mkdir -p /var/lib/nfs/sm /var/lib/nfs/sm.bak

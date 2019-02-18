@@ -58481,7 +58481,7 @@ index 0000000000..e9556f0837
 --- /dev/null
 +++ b/pi-util/ffconf.py
 @@ -0,0 +1,175 @@
-+#!/usr/bin/env python
++#!/usr/bin/env python2
 +
 +import string
 +import os
@@ -58662,7 +58662,7 @@ index 0000000000..27cc453963
 --- /dev/null
 +++ b/pi-util/ffperf.py
 @@ -0,0 +1,124 @@
-+#!/usr/bin/env python3
++#!/usr/bin/env python23
 +
 +import time
 +import string
@@ -58792,7 +58792,7 @@ index 0000000000..864fa5e704
 --- /dev/null
 +++ b/pi-util/make_array.py
 @@ -0,0 +1,19 @@
-+#!/usr/bin/env python
++#!/usr/bin/env python2
 +
 +# Usage
 +#   make_array file.bin
@@ -58832,7 +58832,7 @@ index 0000000000..5935a11ca5
 --- /dev/null
 +++ b/pi-util/v3dusage.py
 @@ -0,0 +1,128 @@
-+#!/usr/bin/env python
++#!/usr/bin/env python2
 +
 +import sys
 +import argparse

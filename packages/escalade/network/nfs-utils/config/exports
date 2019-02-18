@@ -1,5 +1,0 @@
-# use exportfs -rav to reload this file
-#
-#
-/storage *(rw,all_squash,anonuid=0,anongid=0,fsid=0,no_subtree_check,insecure)
-#/storage/mount *(rw,all_squash,anonuid=0,anongid=0,fsid=10,no_subtree_check,insecure)

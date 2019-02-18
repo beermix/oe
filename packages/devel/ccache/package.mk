@@ -4,10 +4,10 @@
 
 PKG_NAME="ccache"
 PKG_VERSION="3.6"
-PKG_SHA256="a6b129576328fcefad00cb72035bc87bc98b6a76aec0f4b59bed76d67a399b1f"
+PKG_SHA256="c23ecf1253e0d12c9da9dda9567a88a606d46f93d9982b8b1a423d6f238bd435"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.samba.org/ftp/ccache/?C=M;O=D"
-PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="make:host"
 PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by caching."
 

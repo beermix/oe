@@ -1,0 +1,8 @@
+PKG_NAME="sshfs"
+PKG_VERSION="b2d8573"
+PKG_SITE="https://github.com/libfuse/sshfs/tree/sshfs_2.x"
+PKG_URL="https://github.com/libfuse/sshfs/releases/download/sshfs-$PKG_VERSION/sshfs-$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/libfuse/sshfs/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain fuse"
+PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="autotools"

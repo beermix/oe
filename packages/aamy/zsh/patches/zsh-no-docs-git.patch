@@ -1,0 +1,26 @@
+diff --git a/Makefile.in b/Makefile.in
+old mode 100644
+new mode 100755
+index ae18855ff..90c1244f9
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -26,7 +26,7 @@
+ 
+ subdir = .
+ dir_top = .
+-SUBDIRS = Doc Etc Src Test
++SUBDIRS = Etc Src Test
+ 
+ @VERSION_MK@
+ 
+@@ -63,8 +63,8 @@ install-strip:
+ 	$(MAKE) install STRIPFLAGS="-s"
+ 
+ # install/uninstall most things
+-install: install.bin install.modules install.fns install.man install.runhelp
+-uninstall: uninstall.bin uninstall.modules uninstall.fns uninstall.man uninstall.runhelp
++install: install.bin install.modules install.fns
++uninstall: uninstall.bin uninstall.modules uninstall.fns uninstall.runhelp
+ 
+ # install/uninstall just the binary
+ install.bin uninstall.bin:

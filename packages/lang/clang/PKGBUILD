@@ -96,7 +96,7 @@ package() {
   done
 
   # Fix shebang in Python 2 scripts
-  sed -i '1s|/usr/bin/env python$|&2|' \
+  sed -i '1s|/usr/bin/env python2$|&2|' \
     "$pkgdir/usr/bin/scan-view" \
     "$pkgdir"/usr/share/$pkgname/*.py
 

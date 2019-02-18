@@ -8376,7 +8376,7 @@ index 0000000..d7f1ac8
 --- /dev/null
 +++ b/Tools/pybench/clockres.py
 @@ -0,0 +1,42 @@
-+#!/usr/bin/env python
++#!/usr/bin/env python2
 +
 +""" clockres - calculates the resolution in seconds of a given timer.
 +
@@ -9410,7 +9410,7 @@ index 0000000..5e00891
 --- /dev/null
 +++ b/Tools/pybench/systimes.py
 @@ -0,0 +1,214 @@
-+#!/usr/bin/env python
++#!/usr/bin/env python2
 +
 +""" systimes() user and system timer implementations for use by
 +    pybench.

@@ -8,7 +8,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://sources.redhat.com/autoconf/"
 PKG_URL="http://ftpmirror.gnu.org/autoconf/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host m4:host gettext:host"
-PKG_DEPENDS_HOST="ccache:host m4:host"
 PKG_LONGDESC="A GNU tool for automatically configuring source code."
 
 PKG_CONFIGURE_OPTS_HOST="EMACS=no \

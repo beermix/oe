@@ -9,11 +9,11 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://busybox.net/downloads/?C=M;O=D"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="gcc:host"
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils procps-ng gptfdisk less bash grep findutils libtirpc"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip usbutils parted procps-ng gptfdisk libtirpc less bash grep findutils"
 PKG_DEPENDS_INIT="toolchain libtirpc"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable."
 # busybox fails to build with GOLD support enabled with binutils-2.25
-PKG_BUILD_FLAGS="-gold"
+PKG_BUILD_FLAGS="-parallel -gold"
 
 # nano text editor
 if [ "$NANO_EDITOR" = "yes" ]; then
@@ -42,6 +42,7 @@ pre_build_target() {
 
 pre_build_host() {
   PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=0 install"
+
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
 }
