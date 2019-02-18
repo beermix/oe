@@ -4,17 +4,18 @@
 
 PKG_NAME="Python2"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
-PKG_VERSION="2.7.15"
-PKG_SHA256="22d9b1ac5b26135ad2b8c2901a9413537e08749a753356ee913c84dbd2df5574"
+PKG_VERSION="2.7.16rc1"
+PKG_SHA256="fd89155e38beab0c937d915b19b3dbf9075cedffec8f5d3f46d30355d6a481b2"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/Python-2.7.16rc1.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
 
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-parallel -lto +hardening"
+PKG_BUILD_FLAGS="-parallel -lto"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
