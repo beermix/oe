@@ -1,7 +1,0 @@
-PKG_NAME="sshfs"
-PKG_VERSION="3.0.0"
-PKG_SITE="https://github.com/libfuse/sshfs"
-PKG_URL="https://github.com/libfuse/sshfs/releases/download/sshfs-$PKG_VERSION/sshfs-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain fuse ncurses glib fuse3"
-PKG_SECTION="tools"
-PKG_TOOLCHAIN="autotools"

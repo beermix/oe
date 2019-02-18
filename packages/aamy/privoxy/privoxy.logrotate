@@ -1,7 +1,0 @@
-/var/log/privoxy/logfile {
-    copytruncate
-    notifempty
-    missingok
-    weekly
-    rotate 4
-}

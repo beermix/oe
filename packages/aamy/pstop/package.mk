@@ -1,5 +1,0 @@
-PKG_NAME="pstop"
-PKG_VERSION="1.3"
-PKG_URL="https://github.com/clearlinux/psstop/releases/download/v1.3/psstop-1.3.tar.gz"
-PKG_DEPENDS_TARGET="toolchain ncurses"
-PKG_TOOLCHAIN="autotools"
