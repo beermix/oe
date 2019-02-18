@@ -34,7 +34,7 @@ amlpkg-st:
 	./scripts/image_st amlpkg
 
 clean:
-	rm -rf $(BUILD_DIRS)/*
+	rm -rf build.*
 
 distclean:
 	rm -rf ./.ccache ./$(BUILD_DIRS)
