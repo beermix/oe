@@ -1,4 +1,4 @@
-#!/usr/bin/env python22
+#!/usr/bin/env python2
 
 # taken from http://stackoverflow.com/a/14879370 with minor modifications
 
