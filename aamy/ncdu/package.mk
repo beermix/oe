@@ -1,7 +1,0 @@
-PKG_NAME="ncdu"
-PKG_VERSION="1.13"
-PKG_URL="https://dev.yorhel.nl/download/ncdu-$PKG_VERSION.tar.gz"
-#PKG_VERSION="e4f211d"
-#PKG_GIT_URL="git://g.blicky.net/ncdu.git"
-PKG_DEPENDS_TARGET="toolchain ncurses"
-PKG_SECTION="tools"
