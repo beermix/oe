@@ -13,7 +13,7 @@ PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip
 PKG_DEPENDS_INIT="toolchain libtirpc"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable."
 # busybox fails to build with GOLD support enabled with binutils-2.25
-PKG_BUILD_FLAGS="-parallel -gold"
+PKG_BUILD_FLAGS="-gold"
 
 # nano text editor
 if [ "$NANO_EDITOR" = "yes" ]; then
