@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="systemd"
-PKG_VERSION="239"
-PKG_SHA256="8a11b1b07d620f4c06a16e95bba4dd2a97e90efdf2a5ba47ed0a935085787a14"
+PKG_VERSION="241"
+PKG_SHA256="b2561a8e1d10a2c248253f0dda31a85dd6d69f2b54177de55e02cd1d2778316e"
 PKG_LICENSE="LGPL2.1+"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
@@ -52,7 +52,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Denvironment-d=false \
                        -Dbinfmt=false \
                        -Dcoredump=false \
-                       -Dresolve=false \
+                       -Dnss-resolve=false \
                        -Dlogind=true \
                        -Dhostnamed=true \
                        -Dlocaled=false \
@@ -60,7 +60,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dnetworkd=false \
                        -Dtimedated=false \
                        -Dtimesyncd=true \
-                       -Dmyhostname=false \
+                       -Dnss-myhostname=false \
                        -Dfirstboot=false \
                        -Drandomseed=false \
                        -Dbacklight=false \
@@ -68,7 +68,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dquotacheck=false \
                        -Dsysusers=false \
                        -Dtmpfiles=true \
-                       -Dhwdb=true \
+                       -Dhwdb=false \
                        -Drfkill=false \
                        -Dldconfig=false \
                        -Defi=false \
@@ -82,13 +82,12 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dhtml=false \
                        -Dbashcompletiondir=no \
                        -Dzshcompletiondir=no \
-                       -Dkill-path=/usr/bin/kill \
                        -Dkmod-path=/usr/bin/kmod \
                        -Dmount-path=/usr/bin/mount \
                        -Dumount-path=/usr/bin/umount"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation -Wnested-externs -Wno-format-truncation -Wno-implicit-function-declaration -Wno-nested-externs -Wno-int-conversion"
+  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation -Wno-implicit-function-declaration -Wno-nested-externs -Wno-int-conversion"
   export LC_ALL=en_US.UTF-8
 }
 
@@ -254,5 +253,5 @@ post_install() {
   enable_service userconfig.service
   enable_service usercache.service
   enable_service kernel-overlays.service
-  enable_service hwdb.service
+  #enable_service hwdb.service
 }
