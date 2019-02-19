@@ -14,7 +14,7 @@ PKG_NAME="chromium"
 #PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_VERSION="64.0.3282.186"
 PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
-PKG_REV="462-glibc28.9000"
+PKG_REV="500-glib-gcc9"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -109,13 +109,15 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py ## 'enable_webrtc=false'
 # Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
+  #[freetype]=freetype2         # https://crbug.com/pdfium/733
+  #[harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
+  [icu]=icu                    # https://crbug.com/772655
   [libdrm]=
-  [icu]=icu
-  #[libjpeg]=libjpeg
-  #[libxml]=libxml2           # https://crbug.com/736026
-  #[libxslt]=libxslt
-  #[re2]=re2
-  #[snappy]=snappy
+  [libjpeg]=libjpeg
+  [libxml]=libxml2
+  [libxslt]=libxslt
+  [re2]=re2
+  [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
