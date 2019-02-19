@@ -2,11 +2,11 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="flex"
-PKG_VERSION="2.6.4"
-PKG_SHA256="e87aae032bf07c26f85ac0ed3250998c37621d95f8bd748b31f15b33c45ee995"
+PKG_VERSION="2.5.39"
+PKG_SHA256="add2b55f3bc38cb512b48fad7d72f43b11ef244487ff25fc00aabec1e32b617f"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/westes/flex/releases"
-PKG_URL="https://github.com/westes/flex/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_SITE="http://flex.sourceforge.net/"
+PKG_URL="$SOURCEFORGE_SRC/flex/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="A tool for generating programs that perform pattern-matching on text."
 PKG_TOOLCHAIN="autotools"
@@ -21,5 +21,3 @@ EOF
 
   chmod -v 755 $TOOLCHAIN/bin/lex
 }
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-program --disable-doc"
