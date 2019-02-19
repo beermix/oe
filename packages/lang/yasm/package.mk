@@ -17,4 +17,16 @@ pre_configure_host() {
 configure_package() {
   PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0"
   PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
+  PKG_CONFIGURE_OPTS_HOST="--disable-debug \
+  			      --disable-warnerror \
+  			      --disable-profiling \
+  			      --disable-gcov \
+  			      --disable-python-bindings \
+  			      --enable-nls \
+  			      --disable-rpath \
+  			      --without-dmalloc \
+  			      --with-gnu-ld \
+  			      --without-libiconv-prefix \
+  			      --without-libintl-prefix"
 }
+

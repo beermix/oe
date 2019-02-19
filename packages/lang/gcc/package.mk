@@ -4,7 +4,7 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="9-20190217"
-#PKG_VERSION="8-20190215"
+PKG_VERSION="8-20190215"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
@@ -94,23 +94,23 @@ pre_configure_host() {
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
 #  export CXXFLAGS="-march=haswell -g -O2  -Wl,-z,max-page-size=0x1000 "
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
-#pre_configure_bootstrap() {
+pre_configure_bootstrap() {
 #  export CCACHE_DISABLE=true
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
 #  export CXXFLAGS="-march=haswell -g -O2  -Wl,-z,max-page-size=0x1000 "
 #
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-#}
+  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+}
 
 post_make_host() {
   # fix wrong link
