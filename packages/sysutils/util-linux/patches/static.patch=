@@ -1,0 +1,24 @@
+	--- util-linux-2.33/libmount/mount.pc.in~	2018-09-20 12:38:55.000000000 +0000
++++ util-linux-2.33/libmount/mount.pc.in	2019-01-03 17:36:12.616531655 +0000
+@@ -19,4 +19,4 @@
+ Version: @LIBMOUNT_VERSION@
+ Requires.private: blkid
+ Cflags: -I${includedir}/libmount
+-Libs: -L${libdir} -lmount
++Libs: -L${libdir} -lmount.a
+--- util-linux-2.33/libuuid/uuid.pc.in~	2017-09-18 09:48:03.000000000 +0000
++++ util-linux-2.33/libuuid/uuid.pc.in	2019-01-03 17:35:54.960531901 +0000
+@@ -8,4 +8,4 @@
+ Version: @LIBUUID_VERSION@
+ Requires:
+ Cflags: -I${includedir}/uuid
+-Libs: -L${libdir} -luuid
++Libs: -L${libdir} -luuid.a
+--- util-linux-2.33/libblkid/blkid.pc.in~	2017-09-18 09:48:03.000000000 +0000
++++ util-linux-2.33/libblkid/blkid.pc.in	2019-01-03 17:36:05.336531756 +0000
+@@ -8,4 +8,4 @@
+ Version: @LIBBLKID_VERSION@
+ Requires.private: uuid
+ Cflags: -I${includedir}/blkid
+-Libs: -L${libdir} -lblkid
++Libs: -L${libdir} -lblkid.a

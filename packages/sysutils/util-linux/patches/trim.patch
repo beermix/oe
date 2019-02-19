@@ -1,0 +1,19 @@
+Don't get mounted filesystems from /etc/fstab
+
+/etc/fstab doesn't exist on Clear Linux by default. Use fstrim -av to trim all supported mounted filesystems rather than trimming filesystems from /etc/fstab.
+
+Signed-off-by: Ming Chen <ming.a.chen@intel.com>
+
+
+--- util-linux-2.33/sys-utils/fstrim.service.in~	2018-09-20 12:38:55.000000000 +0000
++++ util-linux-2.33/sys-utils/fstrim.service.in	2018-12-29 15:44:41.604639467 +0000
+@@ -1,6 +1,6 @@
+ [Unit]
+-Description=Discard unused blocks on filesystems from /etc/fstab
++Description=Discard unused blocks on filesystems
+ Documentation=man:fstrim(8)
+ 
+ [Service]
+ Type=oneshot
+-ExecStart=@sbindir@/fstrim -Av
++ExecStart=@sbindir@/fstrim -av

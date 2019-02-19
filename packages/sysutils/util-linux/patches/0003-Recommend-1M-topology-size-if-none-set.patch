@@ -1,4 +1,4 @@
-From 547dd42eb45a3ec566e8a9f02cc52e2ce44bfe94 Mon Sep 17 00:00:00 2001
+	From 547dd42eb45a3ec566e8a9f02cc52e2ce44bfe94 Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Mon, 2 Apr 2018 16:29:23 -0700
 Subject: [PATCH 3/4] Recommend 1M topology size if none set.
