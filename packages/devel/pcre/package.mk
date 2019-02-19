@@ -14,11 +14,7 @@ PKG_LONGDESC="A set of functions that implement regular expression pattern match
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+lto-parallel"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
-			      --enable-pcre16 \
-			      --enable-unicode-properties \
-			      --enable-cpp \
-			      --enable-jit"
+PKG_CONFIGURE_OPTS_TARGET="--enable-jit --enable-utf  --enable-unicode-properties --enable-pcre16 --enable-pcre32"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 

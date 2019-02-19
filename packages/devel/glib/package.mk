@@ -28,6 +28,7 @@ PKG_MESON_OPTS_TARGET="-Ddefault_library=shared \
                        -Dman=false \
                        -Ddtrace=false \
                        -Dsystemtap=false \
+                       -Diconv=libc \
                        -Dbsymbolic_functions=true \
                        -Dforce_posix_threads=true"
 
