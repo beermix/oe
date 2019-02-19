@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <advancedsettings>
+  <cputempcommand>/usr/bin/cputemp</cputempcommand>
+  <gputempcommand>/usr/bin/gputemp</gputempcommand>
+
   <showexitbutton>false</showexitbutton>
   <remotedelay>1</remotedelay>
-  <cputempcommand>cputemp</cputempcommand>
-  <gputempcommand>gputemp</gputempcommand>
   <video>
     <latency>
       <delay>0</delay>
