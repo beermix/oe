@@ -3,7 +3,7 @@
 
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
-PKG_REV="165"
+PKG_REV="167"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
