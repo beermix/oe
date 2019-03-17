@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="connman"
-PKG_VERSION="a51d7f688142c1c34642bcf158e83118a22ed5db"
-PKG_SHA256="f29db071651f3af4ea468d455f25360ced343177ceda46bd7ab0defbc81f3c25"
+PKG_VERSION="87738435bdedab8fa35a013741d7868443b263ea"
+PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/pub/scm/network/connman/connman.git/log/"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
