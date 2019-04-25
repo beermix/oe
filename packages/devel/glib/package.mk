@@ -6,7 +6,7 @@ PKG_NAME="glib"
 PKG_VERSION="2.61.0"
 PKG_SHA256="e6f794768e67060f58166234bca5dcdae4a9961f70076a5937c73cb578f2f3e7"
 PKG_LICENSE="LGPL"
-PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D" # https://github.com/GNOME/glib/tree/glib-2-58
+PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D" # https://github.com/GNOME/glib/tree/glib-2-61
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="libffi:host Python3:host"
 PKG_DEPENDS_TARGET="toolchain pcre zlib libffi Python3:host util-linux"
