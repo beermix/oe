@@ -1,5 +1,5 @@
 PKG_NAME="file"
-PKG_VERSION="5.35"
+PKG_VERSION="5.36"
 PKG_SITE="ftp://ftp.astron.com/pub/file/"
 PKG_URL="ftp://ftp.astron.com/pub/file/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib file:host"
