@@ -3,7 +3,8 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="isl"
-PKG_VERSION="0.20"
+PKG_VERSION="0.21"
+PKG_SHA256="777058852a3db9500954361e294881214f6ecd4b594c00da5eee974cd6a54960"
 PKG_URL="http://isl.gforge.inria.fr/isl-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="libtool:host intltool:host gmp:host"
 
