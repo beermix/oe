@@ -30,7 +30,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   zen)
-    PKG_VERSION="5.0.4-lqx1"
+    PKG_VERSION="5.0.9-lqx1"
     PKG_SHA256=""
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/v$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
@@ -47,7 +47,7 @@ case "$LINUX" in
   *)
     PKG_VERSION="5.1-rc6"
     PKG_SHA256=""
-    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
+    PKG_URL="https://git.kernel.org/torvalds/t/linux-5.1-rc6.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
