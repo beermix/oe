@@ -1,10 +1,11 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="lcdd"
-PKG_VERSION="466edd3"
-PKG_SHA256="786aab192a788fd09119645d60576ba258eec3de1a455aaa6d9ddea5e30e1749"
-PKG_REV="106"
+PKG_VERSION="e08546c13a4157ed98cd4a8e9086e7acd66f93c0"
+PKG_SHA256="23d0fd14e16767d4907d724404b96216c0c7338c6206760e53cf6a7662dd3af2"
+PKG_VERSION_DATE="0.5dev+2018-11-04"
+PKG_REV="107"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://lcdproc.org/"
@@ -20,7 +21,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="LCDproc"
 PKG_ADDON_TYPE="xbmc.service"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-ft-prefix=$SYSROOT_PREFIX/usr \
+PKG_CONFIGURE_OPTS_TARGET="--with-ft-prefix=/usr \
                            --enable-libusb \
                            --enable-libftdi \
                            --disable-libX11 \
@@ -30,6 +31,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-ft-prefix=$SYSROOT_PREFIX/usr \
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -O3"
+  CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/freetype2"
 }
 
 addon() {
