@@ -1,5 +1,5 @@
 PKG_NAME="iana-etc"
-PKG_VERSION="2018"
+PKG_VERSION="2019"
 PKG_ARCH="any"
 PKG_LICENSE="none"
 PKG_SITE="http://www.iana.org"
@@ -14,8 +14,8 @@ unpack() {
 }
 
 make_target() {
-  aria2c https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
-  aria2c https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
+  wget https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
+  wget https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
 }
 
 makeinstall_target() {
