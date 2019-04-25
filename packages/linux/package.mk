@@ -45,9 +45,9 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   *)
-    PKG_VERSION="4.19.12"
+    PKG_VERSION="5.1-rc6"
     PKG_SHA256=""
-    PKG_URL="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$PKG_VERSION.tar.xz"
+    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
@@ -216,8 +216,6 @@ make_target() {
       NO_LIBAUDIT=1 \
       NO_LZMA=1 \
       NO_SDT=1 \
-      LDFLAGS="$LDFLAGS -ldw -ldwfl -lebl -lelf -ldl -lz" \
-      EXTRA_PERFLIBS="-lebl" \
       CROSS_COMPILE="$TARGET_PREFIX" \
       JOBS="$CONCURRENCY_MAKE_LEVEL" \
         make $PERF_BUILD_ARGS
