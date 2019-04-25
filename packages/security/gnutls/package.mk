@@ -1,5 +1,5 @@
 PKG_NAME="gnutls"
-PKG_VERSION="3.6.6"
+PKG_VERSION="3.6.7.1"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/"
 PKG_URL="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-$PKG_VERSION.tar.xz"
