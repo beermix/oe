@@ -1,6 +1,7 @@
 PKG_NAME="openjpeg"
-PKG_VERSION="d2205ba"
+PKG_VERSION="2.3.1"
 PKG_URL="https://github.com/uclouvain/openjpeg/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libxml2 libpng libjpeg-turbo tiff"
 PKG_SECTION="graphics"
 PKG_TOOLCHAIN="cmake-make"
