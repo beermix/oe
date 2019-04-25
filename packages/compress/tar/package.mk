@@ -1,6 +1,6 @@
 PKG_NAME="tar"
-PKG_VERSION="1.31"
-PKG_SHA256="37f3ef1ceebd8b7e1ebf5b8cc6c65bb8ebf002c7d049032bf456860f25ec2dc1"
+PKG_VERSION="1.32"
+PKG_SHA256="d0d3ae07f103323be809bc3eac0dcc386d52c5262499fe05511ac4788af1fdd8"
 PKG_URL="http://mirrors.kernel.org/gnu/tar/tar-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 
