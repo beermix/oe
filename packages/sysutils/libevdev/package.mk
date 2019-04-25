@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libevdev"
-PKG_VERSION="1.5.9"
-PKG_SHA256="e1663751443bed9d3e76a4fe2caf6fa866a79705d91cacad815c04e706198a75"
+PKG_VERSION="1.6.0"
+PKG_SHA256="f5005c865987d980cc1279b9ec6131b06a89fd9892f649f2a68262b8786ef814"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/libevdev/"
 PKG_URL="http://www.freedesktop.org/software/libevdev/$PKG_NAME-$PKG_VERSION.tar.xz"
