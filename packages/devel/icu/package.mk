@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --with-data-packaging=archive \
 
 PKG_NAME="icu"
-PKG_VERSION="63.1"
-PKG_SHA256="05c490b69454fce5860b7e8e2821231674af0a11d7ef2febea9a32512998cb9d"
+PKG_VERSION="64.2"
+PKG_SHA256="627d5d8478e6d96fc8c90fed4851239079a561a6a8b9e48b0892f24e82d31d6c"
 PKG_LICENSE="Custom"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
