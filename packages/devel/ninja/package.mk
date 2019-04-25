@@ -15,7 +15,7 @@ pre_configure_host() {
 }
 
 make_host() {
-  exec_thread_safe python2 configure.py --bootstrap
+  python2 configure.py --bootstrap
 # CXX=/bin/clang++ | $TOOLCHAIN/bin/python2
 # python2 configure.py --bootstrap
 }
