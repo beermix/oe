@@ -1,5 +1,5 @@
 PKG_NAME="pcre2"
-PKG_VERSION="10.32"
+PKG_VERSION="10.33"
 PKG_SHA256=""
 PKG_SITE="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/?C=M;O=D"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"

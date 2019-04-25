@@ -17,13 +17,13 @@ make_host() {
 }
 
 makeinstall_host() {
-  python2 setup.py install --prefix=$TOOLCHAIN
-  python3 setup.py install --prefix=$TOOLCHAIN
+  exec_thread_safe python2 setup.py install --prefix=$TOOLCHAIN
+  exec_thread_safe python3 setup.py install --prefix=$TOOLCHAIN
 }
 
 makeinstall_target() {
-  python2 setup.py install --root=$INSTALL --prefix=/usr --force
-  python3 setup.py install --root=$INSTALL --prefix=/usr --force
+  exec_thread_safe python2 setup.py install --root=$INSTALL --prefix=/usr --force
+  exec_thread_safe python3 setup.py install --root=$INSTALL --prefix=/usr --force
 }
 
 post_makeinstall_target() {

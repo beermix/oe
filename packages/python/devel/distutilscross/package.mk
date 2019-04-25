@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="distutilscross"
@@ -12,5 +13,5 @@ PKG_LONGDESC="distutilscross enhances distutils to support Cross Compile of Pyth
 PKG_TOOLCHAIN="manual"
 
 makeinstall_host() {
-  python setup.py install --prefix=$TOOLCHAIN
+  exec_thread_safe python setup.py install --prefix=$TOOLCHAIN
 }

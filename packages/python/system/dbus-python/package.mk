@@ -15,8 +15,8 @@ pre_configure_target() {
   export PYTHON_CONFIG="$SYSROOT_PREFIX/usr/bin/python2-config"
   export PYTHON_INCLUDES="$($SYSROOT_PREFIX/usr/bin/python2-config --includes)"
   export PYTHON_LIBS="$($SYSROOT_PREFIX/usr/bin/python2-config --ldflags)"
-  export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+#  export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+#  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
 }
 
 post_makeinstall_target() {

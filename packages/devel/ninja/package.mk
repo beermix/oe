@@ -2,7 +2,7 @@
 # Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="ninja"
-PKG_VERSION="a683551"
+PKG_VERSION="2e64645"
 PKG_SHA256=""
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
@@ -15,7 +15,7 @@ pre_configure_host() {
 }
 
 make_host() {
-  python2 configure.py --bootstrap
+  exec_thread_safe python2 configure.py --bootstrap
 # CXX=/bin/clang++ | $TOOLCHAIN/bin/python2
 # python2 configure.py --bootstrap
 }
