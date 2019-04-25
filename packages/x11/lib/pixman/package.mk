@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="pixman"
@@ -7,6 +8,7 @@ PKG_SHA256="fd92c0cc99183977e54a278d7c595ee094a8e75724c03faf3796d1e49f7780dc"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_LONGDESC="Pixman is a generic library for manipulating pixel regions, contains low-level pixel manipulation routines."
 
@@ -32,12 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-gtk \
                            --disable-libpng \
                            --with-gnu-ld"
-
-pre_configure_target() {
-  export LIBS="$LIBS -fopenmp"
-  #export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-  #export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-}
 
 post_makeinstall_target() {
   cp $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman-1.pc \
