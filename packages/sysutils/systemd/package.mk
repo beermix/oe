@@ -88,7 +88,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dumount-path=/usr/bin/umount"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
+  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation -Wno-implicit-function-declaration -Wno-nested-externs -Wno-int-conversion -Wno-format-overflow"
   export LC_ALL=en_US.UTF-8
 }
 
