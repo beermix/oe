@@ -74,10 +74,13 @@ make_target() {
   make MAKEINFO=true configure-host
   make MAKEINFO=true -C libiberty
   make MAKEINFO=true -C bfd
+  make MAKEINFO=true -C opcodes
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
   make DESTDIR="$SYSROOT_PREFIX" -C bfd MAKEINFO=true install
+  make DESTDIR="$SYSROOT_PREFIX" -C MAKEINFO=true opcodes install
+  make 
 }
