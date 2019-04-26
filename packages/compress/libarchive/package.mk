@@ -15,4 +15,7 @@ PKG_CMAKE_OPTS_TARGET="-DENABLE_SHARED=0 -DENABLE_STATIC=1 -DCMAKE_POSITION_INDE
 
 post_makeinstall_target() {
   rm -rf $INSTALL
+
+  # delete the shared library as we only want static
+  rm $SYSROOT_PREFIX/usr/lib/libarchive.so*
 }

@@ -8,6 +8,7 @@ PKG_LICENSE="BSD/GPLv2"
 PKG_SITE="https://github.com/facebook/zstd/releases"
 PKG_URL="https://github.com/facebook/zstd/archive/v${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR=$PKG_NAME-$PKG_VERSION
+PKG_DEPENDS_HOST="gcc:host ninja:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A fast real-time compression algorithm."
 
