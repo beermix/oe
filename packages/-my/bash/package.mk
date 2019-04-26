@@ -6,7 +6,7 @@ PKG_URL="https://github.com/bminor/bash/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
-PKG_BUILD_FLAGS="+hardening"
+#PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-readline \
 			      --with-installed-readline \

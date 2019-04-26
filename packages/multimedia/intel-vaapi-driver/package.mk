@@ -11,7 +11,6 @@ PKG_URL="https://github.com/intel/intel-vaapi-driver/archive/$PKG_VERSION.tar.gz
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+hardening"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"
