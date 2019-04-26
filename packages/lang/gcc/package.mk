@@ -11,6 +11,7 @@ PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.x
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
+PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
@@ -94,8 +95,8 @@ pre_configure_host() {
 #  unset CXXFLAGS
 #  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
 #  export CXXFLAGS="-march=haswell -g -O2  -Wl,-z,max-page-size=0x1000 "
-  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
