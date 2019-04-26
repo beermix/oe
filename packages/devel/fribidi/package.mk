@@ -23,9 +23,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --without-glib \
                            --disable-docs"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
+#}
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                                                  --disable-deprecated \

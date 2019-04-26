@@ -1,8 +1,7 @@
 #!/bin/sh
-################################################################################
-#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
-################################################################################
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 
 if [ -f /sys/class/rtc/rtc0/wakealarm ]; then
   logger -t setwakeup.sh "### Setting system wakeup time ###"
