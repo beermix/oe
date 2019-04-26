@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
 
 PKG_NAME="gcc"
 PKG_VERSION="9-20190421"
@@ -8,9 +8,9 @@ PKG_VERSION="8-20190419"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
@@ -36,7 +36,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl=$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
