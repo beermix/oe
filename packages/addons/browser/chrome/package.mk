@@ -2,13 +2,13 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="chrome"
-PKG_VERSION="1.1"
-PKG_REV="167"
+PKG_VERSION="1.0"
+PKG_REV="170"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
-                    cups gdk-pixbuf gtk+ gtk3 harfbuzz \
-                    libXtst libXcursor libxss nss pango scrnsaverproto unclutter libnotify icu re2 snappy"
+                    cups gdk-pixbuf gtk3 harfbuzz \
+                    libXtst libXcursor libxss nss pango scrnsaverproto unclutter libnotify icu"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Google Chrome Browser"
 PKG_TOOLCHAIN="manual"
@@ -49,8 +49,8 @@ addon() {
   cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gdk/.libs/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk+
-  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.$TARGET_NAME/src/.libs/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -86,10 +86,10 @@ addon() {
   cp -PL $(get_build_dir libnotify)/.install_pkg/usr/lib/libnotify.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # re2
-  cp -PL $(get_build_dir re2)/.install_pkg/usr/lib/libre2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir re2)/.install_pkg/usr/lib/libre2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # snappy
-  cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libsnappy.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libsnappy.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # icu
   cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuuc.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
