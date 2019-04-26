@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="wpa_supplicant"
-PKG_VERSION="2.6"
-PKG_SHA256="b4936d34c4e6cdd44954beba74296d964bc2c9668ecaa5255e499636fe2b1450"
+PKG_VERSION="2.8"
+PKG_SHA256="a689336a12a99151b9de5e25bfccadb88438f4f4438eb8db331cd94346fd3d96"
 PKG_LICENSE="GPL"
 PKG_SITE="https://w1.fi/releases/?C=M;O=D"
 PKG_URL="https://w1.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
@@ -35,5 +35,5 @@ mkdir -p $INSTALL/usr/lib/systemd/system
 
 mkdir -p $INSTALL/usr/share/dbus-1/system-services
   cp wpa_supplicant/dbus/fi.w1.wpa_supplicant1.service $INSTALL/usr/share/dbus-1/system-services
-  cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
+  #cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
 }
