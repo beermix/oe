@@ -15,7 +15,6 @@ PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 PKG_PYTHON_VERSION=python3.7
 
 PKG_TOOLCHAIN="autotools"
-#PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          ac_cv_prog_SVNVERSION=/bin/false
