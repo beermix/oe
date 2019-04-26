@@ -1,12 +1,18 @@
-diff -Naur rpcbind-1.2.5-orig/systemd/rpcbind.service.in rpcbind-1.2.5/systemd/rpcbind.service.in
---- rpcbind-1.2.5-orig/systemd/rpcbind.service.in	2018-10-10 06:22:55.087580148 +0300
-+++ rpcbind-1.2.5/systemd/rpcbind.service.in	2018-08-15 17:51:19.000000000 +0300
-@@ -12,7 +12,7 @@
+diff -Naur a/systemd/rpcbind.service.in b/systemd/rpcbind.service.in
+--- a/systemd/rpcbind.service.in	2016-12-20 03:18:51.839794796 +0000
++++ b/systemd/rpcbind.service.in	2016-12-20 03:21:30.476854474 +0000
+@@ -6,12 +6,12 @@
+ # Make sure we use the IP addresses listed for
+ # rpcbind.socket, no matter how this unit is started.
+ Wants=rpcbind.socket
+-After=rpcbind.socket
++After=rpcbind.socket systemd-tmpfiles-setup.service
+ 
  [Service]
  Type=notify
  # distro can provide a drop-in adding EnvironmentFile=-/??? if needed.
--ExecStart=@_sbindir@/rpcbind $RPCBIND_OPTIONS -w -f
-+ExecStart=@_sbindir@/rpcbind $RPCBIND_OPTIONS -f
+-ExecStart=@_bindir@/rpcbind $RPCBIND_OPTIONS -w -f
++ExecStart=@_bindir@/rpcbind $RPCBIND_OPTIONS -f
  
  [Install]
  WantedBy=multi-user.target
