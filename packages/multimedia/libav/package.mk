@@ -3,7 +3,7 @@ PKG_VERSION="56f5018"
 PKG_URL="https://github.com/libav/libav/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ffmpeg freetype openssl"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-gold -lto +hardening"
+PKG_BUILD_FLAGS="-gold -lto"
 
 get_graphicdrivers
 
