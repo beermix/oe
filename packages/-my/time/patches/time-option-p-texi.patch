@@ -1,0 +1,29 @@
+Subject: Improve option -p documentation.
+ Improve the wording of the documentation concerning use of the
+ -p,--portability option.
+Author: Jonathan Nieder
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=511456
+ 
+--- time-1.7.orig/time.texi
++++ time-1.7/time.texi
+@@ -167,14 +167,18 @@
+ 
+ @item -p
+ @itemx --portability
+-Use the following format string, for conformance with POSIX standard
+-1003.2:
++Use the following format string:
+ 
+ @example
+ real %e
+ user %U
+ sys %S
+ @end example
++ 
++The default output format of time differs widely between
++implementations.  This option (in its short form -p) is supported by all
++POSIX-compliant 'time' implementations to retrieve basic information in
++the described format.
+ 
+ @item -q
+ @itemx --quiet

@@ -80,7 +80,6 @@ make_target() {
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
-  make DESTDIR="$SYSROOT_PREFIX" -C bfd MAKEINFO=true install
-  make DESTDIR="$SYSROOT_PREFIX" -C MAKEINFO=true opcodes install
-  make 
+  make DESTDIR="$SYSROOT_PREFIX" -C bfd install
+  make DESTDIR="$SYSROOT_PREFIX" -C opcodes install
 }

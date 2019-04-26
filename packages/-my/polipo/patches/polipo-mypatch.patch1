@@ -1,0 +1,61 @@
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index 6fbce38..15eb279
+--- a/Makefile
++++ b/Makefile
+@@ -1,9 +1,9 @@
+-PREFIX = /usr/local
++PREFIX = /usr
+ BINDIR = $(PREFIX)/bin
+ MANDIR = $(PREFIX)/man
+ INFODIR = $(PREFIX)/info
+-LOCAL_ROOT = /usr/share/polipo/www
+-DISK_CACHE_ROOT = /var/cache/polipo
++LOCAL_ROOT = /storage/.config/polipo/www
++DISK_CACHE_ROOT = /storage/.cache/polipo
+ 
+ # To compile with Unix CC:
+ 
+@@ -13,12 +13,14 @@ DISK_CACHE_ROOT = /var/cache/polipo
+ 
+ # CC = gcc
+ CDEBUGFLAGS = -Os -g -Wall -fno-strict-aliasing
+-
++# CFLAGS = -g0 -fdata-sections -ffunction-sections -Os -fno-unwind-tables -fno-asynchronous-unwind-tables -Wa,--noexecstack
++# LDFLAGS = -static
++CFLAGS = -O3
+ # To compile on a pure POSIX system:
+ 
+ # CC = c89
+-# CC = c99
+-# CDEBUGFLAGS=-O
++CC = c99
++CDEBUGFLAGS=-O
+ 
+ # To compile with icc 7, you need -restrict.  (Their bug.)
+ 
+@@ -31,7 +33,7 @@ CDEBUGFLAGS = -Os -g -Wall -fno-strict-aliasing
+ 
+ # On Solaris, you need the following:
+ 
+-# LDLIBS = -lsocket -lnsl -lresolv
++# LDLIBS = -lnsl -lresolv
+ 
+ # On mingw, you need
+ 
+@@ -39,7 +41,13 @@ CDEBUGFLAGS = -Os -g -Wall -fno-strict-aliasing
+ # LDLIBS = -lws2_32
+ 
+ FILE_DEFINES = -DLOCAL_ROOT=\"$(LOCAL_ROOT)/\" \
+-               -DDISK_CACHE_ROOT=\"$(DISK_CACHE_ROOT)/\"
++               -DDISK_CACHE_ROOT=\"$(DISK_CACHE_ROOT)/\" \
++               -DNO_IPv6 \
++               -DNO_SYSLOG \
++               -DNO_FORBIDDEN \
++
++               
++                
+ 
+ # You may optionally also add any of the following to DEFINES:
+ #

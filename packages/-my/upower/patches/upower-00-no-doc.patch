@@ -1,0 +1,129 @@
+diff --git a/Makefile.am b/Makefile.am
+old mode 100644
+new mode 100755
+index 13dc902..87f9004
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -2,7 +2,7 @@
+ 
+ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+ 
+-SUBDIRS = etc dbus libupower-glib src doc tools po
++SUBDIRS = etc dbus libupower-glib src tools po
+ 
+ if BACKEND_TYPE_LINUX
+ SUBDIRS += rules
+@@ -35,7 +35,6 @@ MAINTAINERCLEANFILES =			\
+ 	build-aux		\
+ 	ChangeLog		\
+ 	config.h.in		\
+-	gtk-doc.make		\
+ 	po/Makefile.in.in~	\
+ 	po/Makevars.template	\
+ 	po/Rules-quot		\
+diff --git a/autogen.sh b/autogen.sh
+index 4a686aa..36fbdc6 100755
+--- a/autogen.sh
++++ b/autogen.sh
+@@ -19,12 +19,6 @@ if test -z $INTLTOOLIZE; then
+         exit 1
+ fi
+ 
+-GTKDOCIZE=`which gtkdocize`
+-if test -z $GTKDOCIZE; then
+-        echo "*** No GTK-Doc found, please install it ***"
+-        exit 1
+-fi
+-
+ gtkdocize
+ autopoint --force
+ AUTOPOINT='intltoolize --automake --copy' autoreconf --force --install --verbose
+diff --git a/configure.ac b/configure.ac
+old mode 100644
+new mode 100755
+index 547776a..5dda961
+--- a/configure.ac
++++ b/configure.ac
+@@ -80,8 +80,6 @@ if test "${enable_man_page}" != no; then
+ fi
+ AM_CONDITIONAL(MAN_PAGES_ENABLED, test x$enable_man_pages = xyes)
+ 
+-GTK_DOC_CHECK([1.11],[--flavour no-tmpl])
+-
+ AC_ARG_WITH([udevrulesdir],
+             AS_HELP_STRING([--with-udevrulesdir=DIR], [Directory for udev rules]),
+             [],
+@@ -250,10 +248,6 @@ src/openbsd/Makefile
+ src/linux/Makefile
+ src/bsd/Makefile
+ tools/Makefile
+-doc/Makefile
+-doc/version.xml
+-doc/man/Makefile
+-doc/dbus/Makefile
+ rules/Makefile
+ libupower-glib/Makefile
+ libupower-glib/up-version.h
+@@ -274,7 +268,6 @@ echo "
+         datadir:                    ${datadir}
+         sysconfdir:                 ${sysconfdir}
+         localstatedir:              ${localstatedir}
+-        docdir:                     ${docdir}
+ 
+         compiler:                   ${CC}
+         cflags:                     ${CFLAGS}
+@@ -285,7 +278,5 @@ echo "
+         Backend:                    ${with_backend}
+         libimobiledevice support:   ${have_idevice}
+         Maintainer mode:            ${USE_MAINTAINER_MODE}
+-        Building api docs:          ${enable_gtk_doc}
+-        Building man pages:         ${enable_man_pages}
+         Building unit tests:        ${enable_tests}
+ "
+diff --git a/doc/Makefile.am b/doc/Makefile.am
+old mode 100644
+new mode 100755
+index 3628c6c..439f82a
+--- a/doc/Makefile.am
++++ b/doc/Makefile.am
+@@ -5,18 +5,6 @@ NULL =
+ 
+ AUTOMAKE_OPTIONS = 1.7
+ 
+-# The name of the module.
+-DOC_MODULE=UPower
+-
+-# The top-level SGML file.
+-DOC_MAIN_SGML_FILE=upower-docs.xml
+-
+-# Extra options to supply to gtkdoc-scan
+-SCAN_OPTIONS=--ignore-headers=config.h
+-
+-# The directory containing the source code. Relative to $(srcdir)
+-DOC_SOURCE_DIR=../libupower-glib
+-
+ # Used for dependencies
+ HFILE_GLOB=
+ #$(top_srcdir)/policy/*.h
+@@ -74,19 +62,9 @@ MAINTAINERCLEANFILES =		\
+ 	UPower.types		\
+ 	UPower-*.txt
+ 
+-DISTCLEANFILES =					\
+-	org.freedesktop.UPower.Device.ref.xml		\
+-	org.freedesktop.UPower.KbdBacklight.ref.xml	\
+-	org.freedesktop.UPower.ref.xml			\
+-	upowerd.xml					\
+-	upower.xml					\
+-	UPower.xml
+-
+-if ENABLE_GTK_DOC
+-include $(top_srcdir)/gtk-doc.make
+-else
++
+ EXTRA_DIST =
+-endif
++
+ 
+ # Version information for marking the documentation
+ EXTRA_DIST += version.xml.in

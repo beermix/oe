@@ -1,0 +1,34 @@
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index 6fbce38..49e1af6
+--- a/Makefile
++++ b/Makefile
+@@ -1,9 +1,9 @@
+-PREFIX = /usr/local
++PREFIX = /usr
+ BINDIR = $(PREFIX)/bin
+ MANDIR = $(PREFIX)/man
+ INFODIR = $(PREFIX)/info
+-LOCAL_ROOT = /usr/share/polipo/www
+-DISK_CACHE_ROOT = /var/cache/polipo
++LOCAL_ROOT = /storage/.config/polipo/www
++DISK_CACHE_ROOT = /storage/.cache/polipo
+ 
+ # To compile with Unix CC:
+ 
+@@ -12,11 +12,12 @@ DISK_CACHE_ROOT = /var/cache/polipo
+ # To compile with GCC:
+ 
+ # CC = gcc
+-CDEBUGFLAGS = -Os -g -Wall -fno-strict-aliasing
++# CDEBUGFLAGS = -march=ivybridge -mtune=ivybridge -m64 -O3 -g0 -pipe -Wall -fno-strict-aliasing
+ 
+ # To compile on a pure POSIX system:
+ 
+-# CC = c89
++CC = gcc
++LDFLAGS = -march=ivybridge -mtune=ivybridge -m64 -s -Wl,--as-needed -pthread
+ # CC = c99
+ # CDEBUGFLAGS=-O
+ 
