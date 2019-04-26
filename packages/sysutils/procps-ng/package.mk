@@ -25,7 +25,7 @@ PKG_MAKEINSTALL_OPTS_TARGET="install-libLTLIBRARIES install-pkgconfigDATA"
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-    cp -P $PKG_BUILD/.$TARGET_NAME/top/top $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/sbin
 
   make DESTDIR=$SYSROOT_PREFIX -j1 $PKG_MAKEINSTALL_OPTS_TARGET
 }
