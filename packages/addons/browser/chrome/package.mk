@@ -3,12 +3,12 @@
 
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
-PKG_REV="170"
+PKG_REV="171"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
                     cups gdk-pixbuf gtk3 harfbuzz \
-                    libXtst libXcursor libxss nss pango scrnsaverproto unclutter libnotify icu"
+                    libXtst libXcursor libxss nss pango scrnsaverproto unclutter icu"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Google Chrome Browser"
 PKG_TOOLCHAIN="manual"
@@ -84,12 +84,6 @@ addon() {
 
   # libnotify
   cp -PL $(get_build_dir libnotify)/.install_pkg/usr/lib/libnotify.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # re2
-  # cp -PL $(get_build_dir re2)/.install_pkg/usr/lib/libre2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # snappy
-  # cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/libsnappy.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # icu
   cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicuuc.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
