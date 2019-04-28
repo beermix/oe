@@ -37,4 +37,3 @@ post_makeinstall_target() {
   cp setfattr $INSTALL/usr/bin/
   cp getfattr $INSTALL/usr/bin/
 }
-

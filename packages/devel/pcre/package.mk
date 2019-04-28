@@ -12,7 +12,6 @@ PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+lto-parallel"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-jit --enable-utf  --enable-unicode-properties --enable-pcre16 --enable-pcre32"
 
