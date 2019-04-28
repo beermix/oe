@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="grub"
@@ -31,7 +31,7 @@ make_target() {
   make CC=$CC \
        AR=$AR \
        RANLIB=$RANLIB \
-       CFLAGS="-I$SYSROOT_PREFIX/usr/include -fomit-frame-pointer -D_FILE_OFFSET_BITS=64 -Wno-unused-value" \
+       CFLAGS="-I$SYSROOT_PREFIX/usr/include -fomit-frame-pointer -D_FILE_OFFSET_BITS=64" \
        LDFLAGS="-L$SYSROOT_PREFIX/usr/lib"
 }
 
