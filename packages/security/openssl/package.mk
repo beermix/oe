@@ -12,13 +12,15 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 
-PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
+PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
+                           --libdir=lib \
                            shared \
                            threads \
                            enable-camellia \
                            enable-mdc2 \
                            enable-unit-test \
-                           no-ssl3-method"
+                           no-ssl3-method \
+                           enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
@@ -27,37 +29,26 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-zlib no-zlib-dynamic no-static-engine linux-x86_64
+  #  "-Wa,--noexecstack $CFLAGS $LDFLAGS -ffunction-sections -fdata-sections -Wl,--gc-sections"
 }
 
 makeinstall_host() {
-  make install_sw
+  make INSTALL_PREFIX=$TOOLCHAIN install_sw -j1
 }
 
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-
-  case $TARGET_ARCH in
-    x86_64)
-      OPENSSL_TARGET=linux-x86_64
-      PLATFORM_FLAGS=enable-ec_nistp_64_gcc_128
-      ;;
-    arm)
-      OPENSSL_TARGET=linux-armv4
-      ;;
-    aarch64)
-      OPENSSL_TARGET=linux-aarch64
-      ;;
-  esac
-
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -ffunction-sections -fdata-sections"`
-  export LDFLAGS="$CXXFLAGS -Wl,--gc-sections"
+  
+#  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $PKG_BUILD/.$TARGET_NAME/Configure
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED no-static-engine linux-x86_64 "-Wa,--noexecstack $CFLAGS $CPPFLAGS $LDFLAGS"
 }
 
 makeinstall_target() {
