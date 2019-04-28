@@ -15,29 +15,10 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ec2m \
-                           no-gmp \
-                           no-jpake \
-                           no-krb5 \
-                           no-libunbound \
-                           no-md2 \
-                           no-rc5 \
-                           no-rfc3779
-                           no-sctp \
-                           no-ssl-trace \
-                           no-ssl2 \
-                           no-ssl3 \
-                           no-store \
-                           no-unit-test \
-                           no-weak-ssl-ciphers \
-                           no-zlib \
-                           no-zlib-dynamic \
-                           no-static-engine"
-
-PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
-                         --openssldir=$TOOLCHAIN/etc/ssl"
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-                           --openssldir=/etc/ssl"
+                           enable-camellia \
+                           enable-mdc2 \
+                           enable-unit-test \
+                           no-ssl3-method"
 
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
