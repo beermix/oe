@@ -16,7 +16,7 @@ PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
    mkdir -p $INSTALL/opt
-   cp -pr $PKG_BUILD/ $INSTALL/opt/
+   cp -pr $PKG_BUILD/* $INSTALL/opt/
 }
 
 post_install() {
