@@ -209,7 +209,7 @@ fi
                          -DENABLE_AVX2=OFF \
                          -DENABLE_SSE=ON \
                          -DENABLE_SSE2=ON \
-                         -DENABLE_SSE3=ON \
+                         -DENABLE_SSE3=OFF \
                          -DENABLE_SSE4_1=ON \
                          -DENABLE_SSE4_2=ON \
                          -DENABLE_SSSE3=ON \
