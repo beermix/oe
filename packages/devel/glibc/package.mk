@@ -130,9 +130,9 @@ EOF
 }
 
 # build benchmark tests
-post_make_target() {
-  make bench-build
-}
+#post_make_target() {
+#  make bench-build
+#}
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
