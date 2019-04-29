@@ -12,7 +12,7 @@ PKG_LONGDESC="A tool like GNU grep applied to the network layer."
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-pcap-includes=$SYSROOT_PREFIX/usr/include \
-                           --enable-ipv6 \
+                           --disable-ipv6 \
                            --disable-dropprivs"
 
 pre_build_target() {
