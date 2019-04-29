@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="binutils"
-PKG_VERSION="fa731fa"
+PKG_VERSION="ad99131"
 #PKG_SHA256="0ab6c55dd86a92ed561972ba15b9b70a8b9f75557f896446c82e8b36e473ee04"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_32-branch"
