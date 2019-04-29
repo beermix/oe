@@ -5,8 +5,6 @@ PKG_GIT_URL="https://github.com/ortclib/udns"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 
-
-
 configure_target() {
   cd $PKG_BUILD
   mkdir -p $INSTALL/usr/bin
