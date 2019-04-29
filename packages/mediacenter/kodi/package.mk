@@ -212,12 +212,12 @@ fi
                          -DENABLE_SSE3=OFF \
                          -DENABLE_SSE4_1=ON \
                          -DENABLE_SSE4_2=ON \
-                         -DENABLE_SSSE3=ON \
+                         -DENABLE_SSSE3=OFF \
                          -DHAVE_SSE=TRUE \
                          -DHAVE_SSE2=TRUE \
-                         -DHAVE_SSE3=TRUE \
+                         -DHAVE_SSE3=FALSE \
                          -DHAVE_SSE4_1=TRUE \
-                         -DHAVE_SSSE3=TRUE \
+                         -DHAVE_SSSE3=FALSE \
                          -DCMAKE_VERBOSE_MAKEFILE=0 \
                          $KODI_ARCH \
                          $KODI_OPENGL \
