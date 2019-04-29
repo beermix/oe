@@ -4,7 +4,7 @@
 
 PKG_NAME="gdk-pixbuf"
 PKG_VERSION="2.38.0"
-PKG_SHA256=""
+PKG_SHA256="dd50973c7757bcde15de6bcd3a6d462a445efd552604ae6435a0532fbbadae47"
 PKG_LICENSE="OSS"
 PKG_SITE="https://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/${PKG_VERSION:0:4}/gdk-pixbuf-$PKG_VERSION.tar.xz"
