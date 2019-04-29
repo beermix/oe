@@ -5,7 +5,6 @@ PKG_URL="http://pypi.python.org/packages/source/P/$PKG_NAME/$PKG_NAME-$PKG_VERSI
 PKG_DEPENDS_TARGET="toolchain distutilscross:host"
 PKG_SECTION="python/system"
 
-
 pre_configure_target() {
   export CFLAGS="-I$TOOLCHAIN/include/python2.7 $CFLAGS"
   export LDSHARED="$CC -shared"
