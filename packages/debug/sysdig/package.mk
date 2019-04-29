@@ -1,5 +1,5 @@
 PKG_NAME="sysdig"
-PKG_VERSION="0.24.1"
+PKG_VERSION="0.25"
 PKG_URL="https://github.com/draios/sysdig"
 PKG_URL="https://github.com/draios/sysdig/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
