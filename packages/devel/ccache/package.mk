@@ -3,11 +3,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="ccache"
-PKG_VERSION="3.6"
-PKG_SHA256="c23ecf1253e0d12c9da9dda9567a88a606d46f93d9982b8b1a423d6f238bd435"
+PKG_VERSION="3.7"
+PKG_SHA256="fa3558a75e13b9000ec93140295d119b8075f38bc0ce928b6faa5b34e91d3e30"
 PKG_LICENSE="GPL"
-PKG_SITE="https://www.samba.org/ftp/ccache/?C=M;O=D"
-PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_SITE="https://github.com/ccache/ccache/releases"
+PKG_URL="https://github.com/ccache/ccache/releases/download/v$PKG_VERSION/ccache-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="make:host"
 PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by caching."
 
@@ -16,8 +16,6 @@ PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
-
-  export LDFLAGS="-s"
 }
 
 post_makeinstall_host() {
