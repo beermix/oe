@@ -1,0 +1,61 @@
+#!/bin/sh
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
+SERVICE_DIR="/storage/.cache/services"
+CHROOT_DIR="/storage/.config/acestream"
+LOG_FILE="/var/log/acestream.log"
+MOUNT_STATE="$CHROOT_DIR/disk.mount"
+
+rm -f $MOUNT_STATE
+
+[ -f $SERVICE_DIR/acestream.conf ] && . $SERVICE_DIR/acestream.conf
+
+[ -z "$ACE_MOUNT_SD" ] && ACE_MOUNT_SD="none"
+[ -z "$ACE_MOUNT_USB" ] && ACE_MOUNT_USB="none"
+[ -z "$ACE_CLEAN_CACHE" ] && ACE_CLEAN_CACHE="0"
+
+mkdir -p $CHROOT_DIR/dev
+mkdir -p $CHROOT_DIR/sys
+mkdir -p $CHROOT_DIR/proc
+mkdir -p $CHROOT_DIR/media
+
+mount -o bind /dev $CHROOT_DIR/dev &>/dev/null
+mount -t proc proc $CHROOT_DIR/proc &>/dev/null
+mount -t sysfs sysfs $CHROOT_DIR/sys &>/dev/null
+
+MOUNT_DISK="none"
+IS_MOUNT_SD=$(/bin/mount | grep '/dev/mmcblk.* on /var/media')
+IS_MOUNT_USB=$(/bin/mount | grep '/dev/sd[a-z][1-9] on /var/media')
+
+if [ -n "$IS_MOUNT_USB" -a "$ACE_MOUNT_USB" != "none" ]; then
+  MOUNT_DISK=$(echo $ACE_MOUNT_USB | awk '{ print $1 }')
+elif [ -n "$IS_MOUNT_SD" -a "$ACE_MOUNT_SD" != "none" ]; then
+  MOUNT_DISK=$(echo $ACE_MOUNT_SD | awk '{ print $1 }')
+fi
+
+if [ "$MOUNT_DISK" != "none" ]; then
+  MOUNT_TYPE=$(/bin/mount | grep "$MOUNT_DISK" | sed -e "s|^.* type ||" | awk '{ print $1 }')
+
+  if [ "$MOUNT_TYPE" == "vfat" -o "$MOUNT_TYPE" == "ext4" -o "$MOUNT_TYPE" == "ext3" -o "$MOUNT_TYPE" == "ext2" ]; then
+    rm -fR $CHROOT_DIR/media/acecache &>/dev/null
+    /sbin/chroot $CHROOT_DIR /system/bin/toolbox mount -t $MOUNT_TYPE $MOUNT_DISK /media &>/dev/null
+    echo "$MOUNT_DISK" > $MOUNT_STATE
+  fi
+fi
+
+[ "$ACE_CLEAN_CACHE" == "1" ] && rm -fR $CHROOT_DIR/media/acecache &>/dev/null
+
+/sbin/chroot $CHROOT_DIR /system/bin/sh -c "cd /system/data/data/org.acestream.engine/files ; /system/bin/acestream.sh"  > $LOG_FILE 2>&1 - << EOF
+import os
+import argparse
+from acestreamengine import Core
+
+params = "$@".split(' ')
+if params == ['']:
+    params = []
+
+Core.run(params)
+EOF

@@ -1,0 +1,21 @@
+Description: use local intersphinx inventory
+ Use the offline copy under debian/ instead downloading it.
+Author: Laszlo Boszormenyi (GCS) <gcs@debian.org>
+Forwarded: not-needed
+Last-Update: 2013-03-22
+
+---
+
+Index: b/doc/conf.py
+===================================================================
+--- a/doc/conf.py
++++ b/doc/conf.py
+@@ -40,7 +40,7 @@ if not os.path.exists('changelog.rst') a
+ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.coverage', 'sphinx.ext.intersphinx', 'mysphinxext',
+               'sphinx.ext.extlinks']
+ 
+-intersphinx_mapping = {'http://docs.python.org/': None,
++intersphinx_mapping = {'http://docs.python.org/': '../debian/python.inv',
+                        'https://greenlet.readthedocs.org/en/latest/': None}
+ 
+ extlinks = {'issue': ('https://github.com/gevent/gevent/issues/%s',
