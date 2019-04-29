@@ -3,8 +3,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gdk-pixbuf"
-PKG_VERSION="2.38.1"
-PKG_SHA256="f19ff836ba991031610dcc53774e8ca436160f7d981867c8c3a37acfe493ab3a"
+PKG_VERSION="2.38.0"
+PKG_SHA256=""
 PKG_LICENSE="OSS"
 PKG_SITE="https://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/${PKG_VERSION:0:4}/gdk-pixbuf-$PKG_VERSION.tar.xz"
