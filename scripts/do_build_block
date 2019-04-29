@@ -1,0 +1,143 @@
+################################################################################
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
+#
+#  LibreELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  LibreELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+# Block concurrent builds of packages to avoid OOM
+
+ACTION="$1" #add/del
+PACKAGE="$2"
+JOB_LIMIT="$3"
+
+CALLER_PID="$PPID"
+
+# Need a system-wide lock/control file - ugly hack
+BLOCKER_DATA=/var/lock/libreelec.tv/build-blocker.lock
+BLOCKER_DEBUG=/tmp/libreelec.blocker.debug
+
+# JOB_LIMIT is the maximum number of available build slots - attempts to build
+# more than this will be blocked until a new slot becomes available. Default is 1.
+[ -z "${JOB_LIMIT}" ] && JOB_LIMIT=1
+[ ${JOB_LIMIT} -lt 1 ] && JOB_LIMIT=1
+
+THIS_JOB="${PACKAGE} <${CALLER_PID}>"
+ISNOTIFIED=N
+
+debug()
+{
+  printf "%s: <%5d> [PROJECT: %-12s ACTION %s] %s\n" \
+         "$(date +%Y-%m-%d\ %H:%M:%S.%N)" "${CALLER_PID}" "${DEVICE:-${PROJECT}}" "${ACTION}" "$1" >>${BLOCKER_DEBUG}
+}
+
+dump_blockers()
+{
+  local active jobs
+
+  active=$(grep -v "^$" ${BLOCKER_DATA} | wc -l)
+  jobs="$(cat ${BLOCKER_DATA} | tr -s '\n' ';')"
+  [ -n "${jobs}" ] && jobs="${jobs//;/; }" || jobs="; "
+  debug "SLOTINFO: (active=${active}, limit=${JOB_LIMIT}) ${jobs::-2}"
+}
+
+notify()
+{
+  if [ ${ISNOTIFIED} = N ]; then
+    echo "Project/Device ${DEVICE:-${PROJECT}} waiting on another process to avoid concurrent building of ${THIS_JOB}..."
+    [ -n "${DEBUGBLOCKED}" ] && debug "BLOCKED : ${THIS_JOB}"
+    ISNOTIFIED=Y
+  fi
+}
+
+# Verify the existing blockers are still alive
+verify_blockers()
+{
+  local pkg pid oldblockers newblockers
+
+  oldblockers="$(cat ${BLOCKER_DATA})"
+
+  while read -r pkg pid; do
+    [ -n "${pid}" ] || continue
+    if ! kill -0 ${pid:1:-1} 2>/dev/null; then
+      [ -n "${DEBUGBLOCKED}" ] && debug "Cleaning up stale blocker: ${pkg} ${pid}"
+    else
+      [ -n "${newblockers}" ] && newblockers+="\n${pkg} ${pid}" || newblockers="${pkg} ${pid}"
+    fi
+  done < ${BLOCKER_DATA}
+
+  if [ "${oldblockers}" != "$(echo -e "${newblockers}")" ]; then
+    [ -n "${newblockers}" ] && echo -e "${newblockers}" >${BLOCKER_DATA} || echo -n "" >${BLOCKER_DATA}
+  fi
+}
+
+add_blocker()
+{
+  local active res
+
+  flock --exclusive 99
+
+  verify_blockers
+
+  active=$(grep -v "^$" ${BLOCKER_DATA} | wc -l)
+
+  if [ ${active} -lt ${JOB_LIMIT} ]; then
+    [ -n "${DEBUGBLOCKED}" ] && debug "ADD SLOT: ${THIS_JOB}"
+    echo "${THIS_JOB}" >>${BLOCKER_DATA}
+    res=0
+  else
+    notify
+    res=1
+  fi
+
+  [ -n "${DEBUGBLOCKED}" ] && dump_blockers
+
+  flock --unlock 99
+
+  return ${res}
+}
+
+del_blocker()
+{
+  local oldblockers newblockers
+
+  flock --exclusive 99
+
+  oldblockers="$(cat ${BLOCKER_DATA})"
+  newblockers="$(echo "${oldblockers}" | sed -e "/^${THIS_JOB}$/d")"
+
+  if [ "${oldblockers}" != "${newblockers}" ]; then
+    [ -n "${DEBUGBLOCKED}" ] && debug "DEL SLOT: ${THIS_JOB}"
+    echo "${newblockers}" >${BLOCKER_DATA}
+    [ -n "${DEBUGBLOCKED}" ] && dump_blockers
+  fi
+
+  flock --unlock 99
+}
+
+mkdir -p $(dirname ${BLOCKER_DATA})
+exec 99>>${BLOCKER_DATA}
+
+# Remove an existing block
+if [ "${ACTION}" = "del" ]; then
+  del_blocker
+# Add a new block (and allow job to execute) if slot is available, otherwise wait
+elif [ "${ACTION}" = "add" ]; then
+  while ! add_blocker; do
+    inotifywait --quiet --quiet --event close_write --timeout 15 ${BLOCKER_DATA}
+    [ -f ${BLOCKER_DATA} ] || break
+  done
+fi
+
+exit 0

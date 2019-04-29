@@ -11,7 +11,6 @@ PKG_SITE="https://github.com/bminor/glibc/tree/release/2.29/master"
 PKG_SITE="https://github.com/bminor/glibc"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
@@ -130,9 +129,27 @@ EOF
   fi
 }
 
+# build benchmark tests
+post_make_target() {
+  make bench-build
+}
+
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+
+# install benchmark tests
+  local b
+  mkdir -p "$INSTALL/usr/lib/benchtests"
+  for b in benchtests/bench-* ; do
+    if [ -x "$b" ]; then
+      echo "installing benchmark $b"
+      cp "$b" "$INSTALL/usr/lib/benchtests"
+    fi
+  done
+# install benchmark scripts
+  mkdir -p "$INSTALL/usr/lib/benchtests"
+  cp -PR $PKG_BUILD/benchtests/scripts "$INSTALL/usr/lib/benchtests/"
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so

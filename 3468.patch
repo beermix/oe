@@ -1,0 +1,29 @@
+From 24e31c0fad21dc30e7949a80897a6425ea1c9870 Mon Sep 17 00:00:00 2001
+From: Matthias Reichl <hias@horus.com>
+Date: Mon, 29 Apr 2019 11:50:10 +0200
+Subject: [PATCH] config/functions: add C++ compiler and linker flags to
+ meson.conf
+
+Due to missing cpp_args and cpp_link_args in meson.conf ninja builds
+of projects with C++ code were performed without CPU optimization
+flags (-march, -mcpu, -mtune etc). Add these args so C++ code is
+built with proper flags.
+
+Signed-off-by: Matthias Reichl <hias@horus.com>
+---
+ config/functions | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/config/functions b/config/functions
+index 44e8e852948..405f52303c0 100644
+--- a/config/functions
++++ b/config/functions
+@@ -386,6 +386,8 @@ endian = '$endian'
+ root = '$root'
+ $(python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))")
+ $(python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
++$(python -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('CXXFLAGS').split()]))")
++$(python -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+ ${!properties}
+ EOF
+ }
