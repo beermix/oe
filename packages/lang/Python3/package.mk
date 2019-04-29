@@ -2,7 +2,7 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="Python3"
-# When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION! --with-computed-gotos
+# When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
 PKG_VERSION="3.7.3"
 PKG_SHA256="da60b54064d4cfcd9c26576f6df2690e62085123826cff2e667e72a91952d318"
 PKG_LICENSE="OSS"
@@ -41,8 +41,6 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-doc-strings
                          --without-pymalloc
                          --without-ensurepip
-                         --with-computed-gotos
-                         --with-pymalloc
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
