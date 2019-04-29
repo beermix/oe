@@ -8,10 +8,10 @@
   HARDENING_SUPPORT="no"
 
 # Name of the Distro to build (full name, without special characters)
-  DISTRONAME="OE"
+  DISTRONAME="LibreELEC"
 
 # short project description
-  DESCRIPTION="OE is a fast and user-friendly Kodi Entertainment Center distribution."
+  DESCRIPTION="LibreELEC is a fast and user-friendly Kodi Entertainment Center distribution."
 
 # Welcome Message for e.g. SSH Server (up to 5 Lines)
   GREETING0="##############################################"
