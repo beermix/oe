@@ -1,5 +1,5 @@
 PKG_NAME="libssh2"
-PKG_VERSION="31aea1e"
+PKG_VERSION="dd74f24"
 PKG_URL="https://github.com/libssh2/libssh2/archive/$PKG_VERSION.tar.gz"
 #PKG_SITE="https://www.libssh2.org/download/?C=M;O=D"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
