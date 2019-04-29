@@ -23,6 +23,12 @@ else
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET DEBUG=-DNDEBUG"
 fi
 
+pre_configure_target() {
+# attr fails to build in subdirs
+  cd $PKG_BUILD
+    rm -rf .$TARGET_NAME
+}
+
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/
     cp .libs/libattr.a $SYSROOT_PREFIX/usr/lib/
