@@ -18,11 +18,7 @@ PKG_MESON_OPTS_TARGET="-Dloongson-mmi=disabled \
 			  -Dneon=disabled \
 			  -Diwmmxt=disabled \
 			  -Dmips-dspr2=disabled \
-			  -Dgtk=disabled"
-
-#post_makeinstall_target() {
-#  cp $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman-1.pc \
-#     $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman.pc
-#  cp -rf $SYSROOT_PREFIX/usr/include/pixman-1 \
-#     $SYSROOT_PREFIX/usr/include/pixman
-#}
+			  -Dgtk=disabled \
+			  -Dmmx=enabled \
+			  -Dsse2=enabled \
+			  -Dssse3=enabled"
