@@ -139,17 +139,18 @@ post_makeinstall_target() {
  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # install benchmark tests
-  local b
-  mkdir -p "$INSTALL/usr/lib/benchtests"
-  for b in benchtests/bench-* ; do
-    if [ -x "$b" ]; then
-      echo "installing benchmark $b"
-      cp "$b" "$INSTALL/usr/lib/benchtests"
-    fi
-  done
+#  local b
+#  mkdir -p "$INSTALL/usr/lib/benchtests"
+#  for b in benchtests/bench-* ; do
+#    if [ -x "$b" ]; then
+#      echo "installing benchmark $b"
+#      cp "$b" "$INSTALL/usr/lib/benchtests"
+#    fi
+#  done
+
 # install benchmark scripts
-  mkdir -p "$INSTALL/usr/lib/benchtests"
-  cp -PR $PKG_BUILD/benchtests/scripts "$INSTALL/usr/lib/benchtests/"
+#  mkdir -p "$INSTALL/usr/lib/benchtests"
+#  cp -PR $PKG_BUILD/benchtests/scripts "$INSTALL/usr/lib/benchtests/"
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
