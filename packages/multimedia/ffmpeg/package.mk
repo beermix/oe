@@ -3,13 +3,13 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="ffmpeg"
-#PKG_VERSION="3.1.11-Krypton-17.5"
-PKG_VERSION="a06cd02"
-PKG_SHA256="9ec1e02d31aea0ee7b477855c249b3ff4a73361309712ab6649a559f50259d3f"
+PKG_VERSION="3.1.11-Krypton-17.5"
+#PKG_VERSION="a06cd02"
+PKG_SHA256="7df8bce40765b39de5766ca9d08b5b9ac1f498c65c805c989461b907cee6b7c0"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
 PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
