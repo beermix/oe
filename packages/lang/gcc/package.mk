@@ -5,14 +5,15 @@
 PKG_NAME="gcc"
 PKG_VERSION="9-20190428"
 PKG_VERSION="8-20190426"
-#PKG_VERSION="d3384d0"
+PKG_VERSION="8.3.0"
+PKG_SHA256="64baadfe6cc0f4947a84cb12d7f0dfaf45bb58b7e92461639596c21e02d97d2c"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
@@ -39,7 +40,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl=$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -93,28 +93,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CCACHE_DISABLE=true
-#  unset CFLAGS
-#  unset CXXFLAGS
-#  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
-#  export CXXFLAGS="-march=haswell -g -O2  -Wl,-z,max-page-size=0x1000 "
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
-pre_configure_bootstrap() {
-#  export CCACHE_DISABLE=true
-#  unset CFLAGS
-#  unset CXXFLAGS
-#  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 "
-#  export CXXFLAGS="-march=haswell -g -O2  -Wl,-z,max-page-size=0x1000 "
-#
-  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-}
+#pre_configure_bootstrap() {
+#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+#}
 
 post_make_host() {
   # fix wrong link
