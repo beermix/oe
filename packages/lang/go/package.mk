@@ -3,10 +3,10 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="go"
-PKG_VERSION="1.12.3"
-PKG_SHA256="b710a65982e9001ef99a167cf6e8636e46ec36a10e487e7c1c7384cdcd6fcd7c"
+PKG_VERSION="1.12.4"
+PKG_SHA256=""
 PKG_LICENSE="BSD"
-PKG_SITE="https://golang.org"
+PKG_SITE="https://github.com/golang/go/releases"
 PKG_URL="https://github.com/golang/go/archive/${PKG_NAME}${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain"
 PKG_LONGDESC="An programming language that makes it easy to build simple, reliable, and efficient software."
@@ -32,7 +32,7 @@ configure_host() {
 
 make_host() {
   cd ${PKG_BUILD}/src
-  bash make.bash --no-banner
+  bash make.bash --no-banner -v
 }
 
 pre_makeinstall_host() {
