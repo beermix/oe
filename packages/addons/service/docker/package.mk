@@ -51,9 +51,6 @@ configure_target() {
   esac
 
   export GOOS=linux
-  export CGO_ENABLED=1
-  export CGO_NO_EMULATION=1
-  export CGO_CFLAGS=${CFLAGS}
   export LDFLAGS="-w -linkmode external -extldflags -Wl,--unresolved-symbols=ignore-in-shared-libs -extld $CC"
   export GOLANG=${TOOLCHAIN}/lib/golang/bin/go
   export GOPATH=${PKG_BUILD}/.gopath_cli:${PKG_BUILD}/.gopath
