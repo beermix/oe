@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="six"
-PKG_VERSION="1.11.0"
+PKG_VERSION="1.12.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
