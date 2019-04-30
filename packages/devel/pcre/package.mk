@@ -12,15 +12,20 @@ PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-jit --enable-utf  --enable-unicode-properties --enable-pcre16 --enable-pcre32"
+PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
+             --enable-static \
+             --enable-utf8 \
+             --enable-unicode-properties \
+             --with-gnu-ld"
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
-
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-#  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-#}
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+             --enable-static \
+             --enable-utf8 \
+             --enable-pcre16 \
+             --enable-unicode-properties \
+             --enable-jit --with-gnu-ld"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
