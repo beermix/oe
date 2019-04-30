@@ -3,14 +3,13 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="go"
-PKG_VERSION="1.12.4"
-PKG_SHA256=""
+PKG_VERSION="1.12.3"
+PKG_SHA256="b710a65982e9001ef99a167cf6e8636e46ec36a10e487e7c1c7384cdcd6fcd7c"
 PKG_LICENSE="BSD"
-PKG_SITE="https://github.com/golang/go/releases"
+PKG_SITE="https://golang.org"
 PKG_URL="https://github.com/golang/go/archive/${PKG_NAME}${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain"
-PKG_SECTION="system"
-PKG_LONGDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
+PKG_LONGDESC="An programming language that makes it easy to build simple, reliable, and efficient software."
 PKG_TOOLCHAIN="manual"
 
 ####################################################################
@@ -22,26 +21,26 @@ PKG_TOOLCHAIN="manual"
 
 configure_host() {
   export GOOS=linux
-  export GOROOT_FINAL=$TOOLCHAIN/lib/golang
-#  if [ -x /usr/lib/go/bin/go ]; then
-#    export GOROOT_BOOTSTRAP=/usr/lib/go
-#  else
-#    export GOROOT_BOOTSTRAP=/usr/lib/golang
-#  fi
+  export GOROOT_FINAL=${TOOLCHAIN}/lib/golang
+  if [ -x /usr/lib/go/bin/go ]; then
+    export GOROOT_BOOTSTRAP=/usr/lib/go
+  else
+    export GOROOT_BOOTSTRAP=/usr/lib/golang
+  fi
   export GOARCH=amd64
 }
 
 make_host() {
-  cd $PKG_BUILD/src
-  bash make.bash --no-banner -v
+  cd ${PKG_BUILD}/src
+  bash make.bash --no-banner
 }
 
 pre_makeinstall_host() {
   # need to cleanup old golang version when updating to a new version
-  rm -rf $TOOLCHAIN/lib/golang
+  rm -rf ${TOOLCHAIN}/lib/golang
 }
 
 makeinstall_host() {
-  mkdir -p $TOOLCHAIN/lib/golang
-  cp -av $PKG_BUILD/* $TOOLCHAIN/lib/golang/
+  mkdir -p ${TOOLCHAIN}/lib/golang
+  cp -av ${PKG_BUILD}/* ${TOOLCHAIN}/lib/golang/
 }
