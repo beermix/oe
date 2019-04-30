@@ -93,9 +93,6 @@ else
   build_msg "CLR_BUILD" "BUILD" "${PACKAGE_NAME} $(print_color "CLR_TARGET" "(${TARGET})")" "indent"
 fi
 
-# Don't need to block if this package is not in SERIAL_BUILD_PACKAGES list
-listcontains "${SERIAL_BUILD_PACKAGES}" "${PACKAGE_NAME}" && $SCRIPTS/do_build_block add "${PACKAGE_NAME}" "${SERIAL_BUILD_PACKAGES_LIMIT}"
-
 setup_toolchain $TARGET
 
 # configure install directory
@@ -134,8 +131,7 @@ TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
                        --libexecdir=/usr/lib \
                        --localstatedir=/var \
                        --disable-static \
-                       --enable-shared \
-                       --enable-silent-rules"
+                       --enable-shared"
 
 TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
                    -DCMAKE_INSTALL_PREFIX=/usr \
@@ -160,8 +156,7 @@ HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
                      --libexecdir=$TOOLCHAIN/lib \
                      --localstatedir=$TOOLCHAIN/var \
                      --disable-static \
-                     --enable-shared \
-                     --enable-silent-rules"
+                     --enable-shared"
 
 HOST_CMAKE_OPTS="$CMAKE_GENERATOR \
                  -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
@@ -500,7 +495,5 @@ PKG_DEEPHASH=$(calculate_stamp)
 for i in PKG_NAME PKG_DEEPHASH BUILD_WITH_DEBUG; do
   echo "STAMP_$i=\"${!i}\"" >> $STAMP
 done
-
-listcontains "${SERIAL_BUILD_PACKAGES}" "${PACKAGE_NAME}" && $SCRIPTS/do_build_block del "${PACKAGE_NAME}" "${SERIAL_BUILD_PACKAGES_LIMIT}" || true
 
 pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "build" "built"
