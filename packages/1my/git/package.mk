@@ -5,6 +5,7 @@
 
 PKG_NAME="git"
 PKG_VERSION="2.9.5"
+PKG_SHA256="a4bea37ecb9a3fb5c0c8ef18c2f7eeaf8ccbcfec91f72f3bccfc6bf72a3e3902"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git-scm.com/"
 PKG_URL="https://www.kernel.org/pub/software/scm/git/$PKG_NAME-$PKG_VERSION.tar.xz"
