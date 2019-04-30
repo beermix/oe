@@ -6,7 +6,7 @@ PKG_NAME="go"
 PKG_VERSION="1.12.4"
 PKG_SHA256=""
 PKG_LICENSE="BSD"
-PKG_SITE="https://github.com/golang/go/releases"
+PKG_SITE="https://golang.org"
 PKG_URL="https://github.com/golang/go/archive/${PKG_NAME}${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain"
 PKG_LONGDESC="An programming language that makes it easy to build simple, reliable, and efficient software."
@@ -32,7 +32,7 @@ configure_host() {
 
 make_host() {
   cd ${PKG_BUILD}/src
-  bash make.bash --no-banner -v
+  bash make.bash --no-banner
 }
 
 pre_makeinstall_host() {
