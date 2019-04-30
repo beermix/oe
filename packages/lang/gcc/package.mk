@@ -3,14 +3,14 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
 
 PKG_NAME="gcc"
-PKG_VERSION="9-20190428"
-PKG_VERSION="8-20190426"
-PKG_VERSION="8.3.0"
-PKG_SHA256="64baadfe6cc0f4947a84cb12d7f0dfaf45bb58b7e92461639596c21e02d97d2c"
+PKG_VERSION="1cb30a4"
+#PKG_VERSION="8-20190426"
+#PKG_VERSION="8.3.0"
+#PKG_SHA256="64baadfe6cc0f4947a84cb12d7f0dfaf45bb58b7e92461639596c21e02d97d2c"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
-#PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -89,18 +89,12 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --enable-libgomp \
                          $GCC_OPTS"
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
-
-#pre_configure_bootstrap() {
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-#}
 
 post_make_host() {
   # fix wrong link
@@ -109,7 +103,7 @@ post_make_host() {
 
   if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
     ${TARGET_PREFIX}strip $TARGET_NAME/libgcc/libgcc_s.so*
-    ${TARGET_PREFIX}strip $TARGET_NAME/libgomp/.libs/libgomp.so*
+    #${TARGET_PREFIX}strip $TARGET_NAME/libgomp/.libs/libgomp.so*
     ${TARGET_PREFIX}strip $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so*
   fi
 }
@@ -162,7 +156,7 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/usr/lib
-    cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/usr/lib
+    #cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/usr/lib
 }

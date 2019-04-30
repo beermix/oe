@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --enable-stack-protector=strong \
 
 PKG_NAME="glibc"
-PKG_VERSION="eaea1df"
+PKG_VERSION="20aa5819586ac7ad11f711bab64feda307965191"
 #PKG_SHA256="f3eeb8d57e25ca9fc13c2af3dae97754f9f643bc69229546828e3a240e2af04b"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
@@ -30,7 +30,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=5.0 \
-                           --enable-stack-protector=strong \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
