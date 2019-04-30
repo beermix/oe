@@ -8,8 +8,8 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
-                    cups gdk-pixbuf gtk3 harfbuzz \
-                    libXtst libXcursor libxss nss pango scrnsaverproto unclutter"
+                    cups gdk-pixbuf gtk3 harfbuzz libXtst \
+                    libXcursor libxss nss pango scrnsaverproto unclutter"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Google Chrome Browser"
 PKG_LONGDESC="Google Chrome Browser"
@@ -79,4 +79,5 @@ addon() {
 
   # unclutter
   cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
+
 }
