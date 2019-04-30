@@ -50,10 +50,17 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 
 # hardening support
 # TODO: basiclly copied from debian 9, should adjust for LE | -fPIE  -fno-caller-saves
-CFLAGS_OPTIM_HARDENING="--param=ssp-buffer-size=4 -fstack-protector -fno-plt -fno-caller-saves"
-CXXFLAGS_OPTIM_HARDENING="--param=ssp-buffer-size=4 -fstack-protector -fno-plt -fno-caller-saves"
-CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=1"
-LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
+#CFLAGS_OPTIM_HARDENING="--param=ssp-buffer-size=4 -fstack-protector -fno-plt -fno-caller-saves"
+#CXXFLAGS_OPTIM_HARDENING="--param=ssp-buffer-size=4 -fstack-protector -fno-plt -fno-caller-saves"
+#CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=1"
+#LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
+
+# hardening support
+# TODO: basiclly copied from debian 9, should adjust for LE
+CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security"
+CXXFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security"
+CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
+LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now -Wl,--hash-style=gnu -Wl,--no-copy-dt-needed-entries -Wl,--as-needed"
 
 # add distro specific library dirs
 if [ -z "$HOST_LIBDIR" ]; then
