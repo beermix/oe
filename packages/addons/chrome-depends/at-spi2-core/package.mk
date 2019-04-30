@@ -5,14 +5,15 @@
 PKG_NAME="at-spi2-core"
 PKG_VERSION="2.32.1"
 PKG_SHA256=""
-PKG_LICENSE="LGPL-2.1"
+PKG_LICENSE="OSS"
 PKG_SITE="http://ftp.acc.umu.se/pub/gnome/sources/at-spi2-core/?C=M;O=D"
-PKG_URL="https://download.gnome.org/sources/$PKG_NAME/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://ftp.gnome.org/pub/gnome/sources/at-spi2-core/${PKG_VERSION:0:4}/at-spi2-core-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain atk dbus glib libXtst"
+PKG_LONGDESC="Protocol definitions and daemon for D-Bus at-spi."
 
 PKG_MESON_OPTS_TARGET="-Denable_docs=false \
                        -Denable-introspection=no"
 
-#pre_configure_target() {
-#  LDFLAGS="$LDFLAGS -lXext"
-#}
+pre_configure_target() {
+  LDFLAGS="$LDFLAGS -lXext"
+}

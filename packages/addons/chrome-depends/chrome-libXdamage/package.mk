@@ -6,12 +6,17 @@
 PKG_NAME="chrome-libXdamage"
 PKG_LONGDESC="libXdamage for chrome"
 PKG_URL=""
+PKG_DEPENDS_UNPACK+=" libXdamage"
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET \
+                           --disable-static \
+                           --enable-shared"
 
 unpack() {
   mkdir -p $PKG_BUILD
   tar --strip-components=1 -xf $SOURCES/${PKG_NAME:7}/${PKG_NAME:7}-$PKG_VERSION.tar.bz2 -C $PKG_BUILD
 }
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET \
-                           --disable-static \
-                           --enable-shared"
+makeinstall_target() {
+  :
+}

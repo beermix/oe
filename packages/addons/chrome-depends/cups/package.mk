@@ -5,18 +5,12 @@
 PKG_NAME="cups"
 PKG_VERSION="2.2.8"
 PKG_SHA256="8f87157960b9d80986f52989781d9de79235aa060e05008e4cf4c0a6ef6bca72"
-PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/apple/cups/releases"
+PKG_SITE="http://www.cups.org"
 PKG_URL="https://github.com/apple/cups/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl zlib"
-PKG_LONGDESC="CUPS printing system"
+PKG_LONGDESC="CUPS printing system."
 PKG_BUILD_FLAGS="+pic"
-
-pre_configure_target() {
-  cd ..
-  rm -rf .$TARGET_NAME
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--libdir=/usr/lib \
                            --disable-gssapi \
@@ -24,6 +18,11 @@ PKG_CONFIGURE_OPTS_TARGET="--libdir=/usr/lib \
                            --disable-systemd \
                            --disable-launchd \
                            --disable-unit-tests"
+
+pre_configure_target() {
+  cd ..
+  rm -rf .$TARGET_NAME
+}
 
 makeinstall_target() {
   make BUILDROOT="$INSTALL/../.INSTALL_PKG"

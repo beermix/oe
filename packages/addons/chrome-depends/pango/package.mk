@@ -9,7 +9,16 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://ftp.gnome.org/pub/gnome/sources/pango/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/pango/${PKG_VERSION:0:4}/pango-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain cairo freetype fontconfig fribidi glib harfbuzz libX11 libXft"
-PKG_DEPENDS_HOST="fribidi:host"
+PKG_LONGDESC="The Pango library for layout and rendering of internationalized text."
 PKG_TOOLCHAIN="meson"
 
-PKG_MESON_OPTS_TARGET="-Denable_docs=false -Dgir=false"
+PKG_MESON_OPTS_TARGET="-Denable_docs=false \
+                       -Dgir=false"
+
+pre_configure_target() {
+  export PKG_CONFIG_PATH="$(get_build_dir cairo)/.$TARGET_NAME/src":"$(get_build_dir libXft)/.$TARGET_NAME/src"
+}
+
+makeinstall_target() {
+  :
+}
