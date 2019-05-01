@@ -1,0 +1,8 @@
+[Unit]
+Description=Noxbit
+
+[Service]
+ExecStart=/opt/noxbit/./STM-Hypervisor -config=noxbit.cfg
+
+[Install]
+WantedBy=multi-user.target
