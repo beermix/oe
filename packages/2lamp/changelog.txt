@@ -1,0 +1,12 @@
+104
+- look diff
+  bumped mysql, php, httpd
+  for buildsystem without $root
+103
+- look diff
+102
+- bumped all packages
+101
+- rebuild for LibreELEC 8.0.0
+100
+- initial LibreELEC version
