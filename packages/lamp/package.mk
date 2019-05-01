@@ -15,7 +15,7 @@ PKG_REV="110"
 PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain expat httpd php mysqld ssh2 phpMyAdmin eglibc-localedef:host smbclient msmtp aria2 apcu"
+PKG_DEPENDS_TARGET="toolchain expat httpd php mysqld ssh2 phpMyAdmin eglibc-localedef:host smbclient msmtp apcu"
 PKG_LONGDESC="LAMP ($PKG_VERSION.$PKG_REV): (Linux Apache MySQL PHP) software bundle."
 PKG_TOOLCHAIN="manual"
 #PKG_TOOLCHAIN="configure"
@@ -72,7 +72,7 @@ addon() {
    
   cp $(get_build_dir php)/.install_dev/usr/bin/php $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp $(get_build_dir msmtp)/.install_pkg/usr/bin/msmtp $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $(get_build_dir aria2)/.$TARGET_NAME/src/aria2c $ADDON_BUILD/$PKG_ADDON_ID/bin
+  #cp $(get_build_dir aria2)/.$TARGET_NAME/src/aria2c $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $MYSQL_DIR/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # create lib folder and copy libraries
