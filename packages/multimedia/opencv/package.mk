@@ -1,12 +1,7 @@
 PKG_NAME="opencv"
-PKG_VERSION="2.4.13.4"
+PKG_VERSION="4.1.0"
 PKG_URL="https://github.com/opencv/opencv/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva"
-PKG_PRIORITY="optional"
-PKG_SECTION="multimedia"
-PKG_USE_CMAKE="yes"
-
-PKG_USE_NINJA="yes"
 
 PKG_CMAKE_OPTS_TARGET="-DWITH_OPENCL=OFF \
 			  -DWITH_OPENGL=ON \
