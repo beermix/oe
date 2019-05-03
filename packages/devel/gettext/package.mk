@@ -20,7 +20,6 @@ configure_package() {
                            --disable-java \
                            --disable-curses \
                            --with-included-libxml \
-                           --with-included-libunistring \
                            --disable-native-java \
                            --disable-csharp \
                            --without-emacs"
