@@ -11,7 +11,7 @@
 
 PKG_NAME="lamp"
 PKG_VERSION="1.0"
-PKG_REV="110"
+PKG_REV="105"
 PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL=""
@@ -72,7 +72,7 @@ addon() {
    
   cp $(get_build_dir php)/.install_dev/usr/bin/php $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp $(get_build_dir msmtp)/.install_pkg/usr/bin/msmtp $ADDON_BUILD/$PKG_ADDON_ID/bin
-  #cp $(get_build_dir aria2)/.$TARGET_NAME/src/aria2c $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $(get_build_dir aria2)/.$TARGET_NAME/src/aria2c $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $MYSQL_DIR/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # create lib folder and copy libraries

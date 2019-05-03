@@ -3,8 +3,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="intel-vaapi-driver"
-PKG_VERSION="ecfb0db"
-PKG_SHA256="f9ef895459d5aa2331cf597eb0093e9251340dab9a27d6094449d6ea1f795caa"
+PKG_VERSION="dc3473d"
+PKG_SHA256="f5a77574e4000f85ad79a2ca9f55e736f885a85b2ec717b22500ed347aa2a0f3"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/intel-vaapi-driver/releases"
