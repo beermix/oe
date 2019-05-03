@@ -21,6 +21,11 @@ post_configure_host() {
   sed -i 's|../LICENSE|LICENSE|' Makefile
 }
 
+post_configure_target() {
+  # we are not in source folder
+  sed -i 's|../LICENSE|LICENSE|' Makefile
+}
+
 pre_configure_target() {
   export LIBS="-latomic"
 }
