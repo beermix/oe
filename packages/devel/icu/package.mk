@@ -11,21 +11,24 @@ PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_LONGDESC="International Components for Unicode library."
 PKG_BUILD_FLAGS="+pic"
 
+post_unpack() {
+  mv $PKG_BUILD/source/* $PKG_BUILD
+  rmdir $PKG_BUILD/source
+}
+
+post_configure_host() {
+  # we are not in source folder
+  sed -i 's|../LICENSE|LICENSE|' Makefile
+}
+
 pre_configure_target() {
   export LIBS="-latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-                         --disable-shared \
-                         $PKG_ICU_OPTS"
-
 configure_package() {
   PKG_CONFIGURE_OPTS_TARGET="--enable-static \
   				 --disable-shared \
-  				 --with-cross-build=$PKG_BUILD/.$HOST_NAME \
-  				 $PKG_ICU_OPTS"
-
-  PKG_CONFIGURE_SCRIPT="${PKG_BUILD}/source/configure"
+  				 --with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME"
 }
 
 makeinstall_host() {
@@ -37,5 +40,5 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/sbin
   rm -rf $INSTALL/usr/share
   rm -rf $INSTALL/usr/lib/icu
-#  rm -rf $INSTALL
+  rm -rf $INSTALL
 }
