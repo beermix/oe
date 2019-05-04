@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="openssl"
@@ -8,19 +7,36 @@ PKG_SHA256="ae51d08bba8a83958e894946f15303ff894d75c2b8bbd44a852b64e3fe11d0d6"
 PKG_LICENSE="BSD"
 PKG_SITE="https://www.openssl.org/source/"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_HOST="ccache:host zlib:host"
+PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 
-PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
-                           --libdir=lib \
+PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
+                           no-ec2m \
+                           no-gmp \
+                           no-jpake \
+                           no-krb5 \
+                           no-libunbound \
+                           no-md2 \
+                           no-rc5 \
+                           no-rfc3779
+                           no-sctp \
+                           no-ssl-trace \
+                           no-ssl2 \
+                           no-ssl3 \
+                           no-store \
+                           no-weak-ssl-ciphers \
                            enable-camellia \
                            enable-mdc2 \
                            enable-unit-test \
-                           no-ssl3-method \
-                           enable-ec_nistp_64_gcc_128"
+                           no-static-engine"
+
+PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
+                         --openssldir=$TOOLCHAIN/etc/ssl"
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+                           --openssldir=/etc/ssl"
 
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
@@ -29,26 +45,37 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-zlib no-zlib-dynamic no-static-engine linux-x86_64
-  #  "-Wa,--noexecstack $CFLAGS $LDFLAGS -ffunction-sections -fdata-sections -Wl,--gc-sections"
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
 }
 
 makeinstall_host() {
-  make INSTALL_PREFIX=$TOOLCHAIN install_sw -j1
+  make install_sw
 }
 
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-  
-#  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $PKG_BUILD/.$TARGET_NAME/Configure
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+
+  case $TARGET_ARCH in
+    x86_64)
+      OPENSSL_TARGET=linux-x86_64
+      PLATFORM_FLAGS=enable-ec_nistp_64_gcc_128
+      ;;
+    arm)
+      OPENSSL_TARGET=linux-armv4
+      ;;
+    aarch64)
+      OPENSSL_TARGET=linux-aarch64
+      ;;
+  esac
+
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -ffunction-sections -fdata-sections"`
+  export LDFLAGS="$CXXFLAGS -Wl,--gc-sections"
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED no-static-engine linux-x86_64 "-Wa,--noexecstack $CFLAGS $CPPFLAGS $LDFLAGS"
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET "-Wa,--noexecstack $CFLAGS $LDFLAGS"
 }
 
 makeinstall_target() {
