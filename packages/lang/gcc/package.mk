@@ -91,11 +91,19 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
+                         --enable-offload-targets=nvptx-none \
+                         --without-cuda-driver \
+                         --disable-vtable-verify \
                          $GCC_OPTS"
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
+  CCACHE_DISABLE=true
+}
+
+pre_configure_bootstrap() {
+  CCACHE_DISABLE=true
 }
 
 post_make_host() {
