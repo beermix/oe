@@ -45,7 +45,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -79,8 +79,8 @@ configure_target() {
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw -j1
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw -j1
+  make INSTALL_PREFIX=$INSTALL install_sw
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }
