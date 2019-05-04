@@ -33,7 +33,10 @@ pre_configure_target() {
 configure_package() {
   PKG_CONFIGURE_OPTS_TARGET="--enable-static \
   				 --disable-shared \
-  				 --with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME"
+  				 --with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME \
+  				 --with-data-packaging=archive \
+  				 --disable-samples \
+  				 --disable-tests"
 }
 
 makeinstall_host() {
@@ -45,5 +48,5 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/sbin
   rm -rf $INSTALL/usr/share
   rm -rf $INSTALL/usr/lib/icu
-  rm -rf $INSTALL
+  #rm -rf $INSTALL
 }
