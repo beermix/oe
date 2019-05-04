@@ -14,24 +14,9 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ec2m \
-                           no-gmp \
-                           no-jpake \
-                           no-krb5 \
-                           no-libunbound \
-                           no-md2 \
-                           no-rc5 \
-                           no-rfc3779
-                           no-sctp \
-                           no-ssl-trace \
-                           no-ssl2 \
-                           no-ssl3 \
-                           no-store \
-                           no-weak-ssl-ciphers \
                            enable-camellia \
                            enable-mdc2 \
-                           enable-unit-test \
-                           no-static-engine"
+                           enable-unit-test"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
@@ -68,9 +53,6 @@ pre_configure_target() {
       OPENSSL_TARGET=linux-aarch64
       ;;
   esac
-
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -ffunction-sections -fdata-sections"`
-#  export LDFLAGS="$CXXFLAGS -Wl,--gc-sections"
 }
 
 configure_target() {
