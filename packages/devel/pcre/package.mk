@@ -25,7 +25,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
              --enable-utf8 \
              --enable-pcre16 \
              --enable-unicode-properties \
-             --enable-jit --with-gnu-ld"
+             --enable-jit \
+             --with-gnu-ld"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
