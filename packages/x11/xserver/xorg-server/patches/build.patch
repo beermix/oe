@@ -1,0 +1,20 @@
+--- xorg-server-1.18.3/configure~	2016-04-04 18:40:00.000000000 +0000
++++ xorg-server-1.18.3/configure	2016-05-15 15:36:50.545054509 +0000
+@@ -9465,7 +9465,7 @@
+ 			CFLAGS="$CFLAGS -Werror=unused-command-line-argument"
+ 		fi
+ 
+-		CFLAGS="$CFLAGS -Werror=array-bounds"
++		CFLAGS="$CFLAGS"
+ 
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if $CC supports -Werror=array-bounds" >&5
+ $as_echo_n "checking if $CC supports -Werror=array-bounds... " >&6; }
+@@ -9500,7 +9500,7 @@
+ 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $supported" >&5
+ $as_echo "$supported" >&6; }
+ 		if test "$supported" = "yes" ; then
+-			BASE_CFLAGS="$BASE_CFLAGS -Werror=array-bounds"
++			BASE_CFLAGS="$BASE_CFLAGS"
+ 			found="yes"
+ 		fi
+ 	fi

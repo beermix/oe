@@ -1,0 +1,34 @@
+--- glib-2.56.1/gmodule/gmodule.c~	2018-01-08 21:34:19.000000000 +0000
++++ glib-2.56.1/gmodule/gmodule.c	2018-05-26 23:18:06.606226418 +0000
+@@ -542,8 +542,30 @@
+       return module;
+     }
+ 
++  name = NULL;
++
++  if (!name && __builtin_cpu_supports("avx512cd"))
++    {
++      name = g_strconcat (file_name, ".avx512", NULL);
++      if (!g_file_test (name, G_FILE_TEST_IS_REGULAR))
++	{
++	  g_free (name);
++	  name = NULL;
++	}
++    }
++
++  if (!name && __builtin_cpu_supports("avx2"))
++    {
++      name = g_strconcat (file_name, ".avx2", NULL);
++      if (!g_file_test (name, G_FILE_TEST_IS_REGULAR))
++	{
++	  g_free (name);
++	  name = NULL;
++	}
++    }
++
+   /* check whether we have a readable file right away */
+-  if (g_file_test (file_name, G_FILE_TEST_IS_REGULAR))
++  if (!name && g_file_test (file_name, G_FILE_TEST_IS_REGULAR))
+     name = g_strdup (file_name);
+   /* try completing file name with standard library suffix */
+   if (!name)

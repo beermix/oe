@@ -1,0 +1,43 @@
+From 0a03c8b72cc1ccba81aa4dccbe12888c42b6079b Mon Sep 17 00:00:00 2001
+From: Thiago Macieira <thiago.macieira@intel.com>
+Date: Wed, 19 Sep 2018 14:09:25 -0700
+Subject: [PATCH] Remove debugging in gspawn.c
+
+They were added in commit 61f54591acdfe69315cef6d1aa6d3bf1ff763082. I
+don't believe this was intended.
+---
+ glib/gspawn.c | 11 -----------
+ 1 file changed, 11 deletions(-)
+
+diff --git a/glib/gspawn.c b/glib/gspawn.c
+index 5d0c29d70..78fff5324 100644
+--- a/glib/gspawn.c
++++ b/glib/gspawn.c
+@@ -1590,7 +1590,6 @@ fork_exec_with_fds (gboolean              intermediate_child,
+   if (!intermediate_child && working_directory == NULL && !close_descriptors &&
+       !search_path_from_envp && child_setup == NULL)
+     {
+-      g_debug ("Launching with posix_spawn");
+       status = do_posix_spawn (argv,
+                                envp,
+                                search_path,
+@@ -1622,16 +1621,6 @@ fork_exec_with_fds (gboolean              intermediate_child,
+        * So if it fails with ENOEXEC, we fall through to the regular
+        * gspawn codepath so that script execution can be attempted,
+        * per standard gspawn behaviour. */
+-      g_debug ("posix_spawn failed (ENOEXEC), fall back to regular gspawn");
+-    }
+-  else
+-    {
+-      g_debug ("posix_spawn avoided %s%s%s%s%s",
+-               !intermediate_child ? "" : "(automatic reaping requested) ",
+-               working_directory == NULL ? "" : "(workdir specified) ",
+-               !close_descriptors ? "" : "(fd close requested) ",
+-               !search_path_from_envp ? "" : "(using envp for search path) ",
+-               child_setup == NULL ? "" : "(child_setup specified) ");
+     }
+ #endif /* POSIX_SPAWN_AVAILABLE */
+ 
+-- 
+2.19.0
+
