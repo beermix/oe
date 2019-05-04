@@ -23,6 +23,10 @@ configure_package() {
   			      --disable-profiling \
   			      --disable-gcov \
   			      --disable-python-bindings \
+  			      --enable-nls \
+  			      --disable-rpath \
+  			      --without-dmalloc \
+  			      --with-gnu-ld \
   			      --without-libiconv-prefix \
   			      --without-libintl-prefix"
 }
