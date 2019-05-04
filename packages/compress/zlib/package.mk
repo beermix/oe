@@ -2,11 +2,11 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="zlib"
-PKG_VERSION="1.2.11"
-PKG_SHA256="4ff941449631ace0d4d203e3483be9dbc9da454084111f97ea0a2114e19bf066"
+PKG_VERSION="1.2.11.1_jtkv6.3"
+PKG_SHA256="897980569aa46d20a4ed9fd63e2e7ce9465e0dd4742a135603db397f168f7f01"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.zlib.net"
-PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/jtkukunas/zlib/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain zlib:host"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
