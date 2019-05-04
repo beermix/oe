@@ -27,6 +27,9 @@ pre_build_target() {
   export NO_NSEC="YesPlease"
   export NO_TCLTK="YesPlease"
   export NO_INSTALL_HARDLINKS="yes"
+
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 configure_target() {

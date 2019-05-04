@@ -25,7 +25,7 @@ PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
 # add some other libraries which are need by php extensions
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libxslt libiconv httpd libjpeg-turbo"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libxslt libiconv mysqld httpd icu4c libjpeg-turbo"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
 PKG_TOOLCHAIN="autotools"
 #PKG_BUILD_FLAGS="+pic"
@@ -55,7 +55,7 @@ configure_target() {
   MYSQL_DIR_TARGET=$(get_build_dir mysqld)/.install_dev
   LIBMCRYPT_DIR_TARGET=$(get_build_dir libmcrypt)/.install_dev
   HTTPD_DIR=$(get_build_dir httpd)/.install_dev
-  ICU_DIR=$(get_build_dir icu)/.install_pkg
+  ICU_DIR=$(get_build_dir icu4c)/.install_pkg
 
   CFLAGS+=" -DSQLITE_OMIT_LOAD_EXTENSION"
   CFLAGS+=" -I$HTTPD_DIR/usr/include"
