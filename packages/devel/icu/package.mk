@@ -31,12 +31,7 @@ pre_configure_target() {
 }
 
 configure_package() {
-  PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-  				 --disable-shared \
-  				 --with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME \
-  				 --with-data-packaging=archive \
-  				 --disable-samples \
-  				 --disable-tests"
+  PKG_CONFIGURE_OPTS_TARGET="--with-data-packaging=archive --with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME"
 }
 
 makeinstall_host() {
