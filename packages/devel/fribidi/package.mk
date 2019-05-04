@@ -28,11 +28,11 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
-                                                 --disable-deprecated \
-                                                 --enable-charsets \
-                                                 --with-gnu-ld \
-                                                 --without-glib \
-                                                 --disable-docs"
+			    --disable-deprecated \
+			    --enable-charsets \
+			    --with-gnu-ld \
+			    --without-glib \
+			    --disable-docs"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
