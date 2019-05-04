@@ -12,11 +12,14 @@ PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_LONGDESC="An Embeddable SQL Database Engine."
 # libsqlite3.a(sqlite3.o): requires dynamic R_X86_64_PC32 reloc against 'sqlite3_stricmp' which may overflow at runtime
-PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="+pic +pic:host -parallel"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-readline \
+PKG_CONFIGURE_OPTS_TARGET="--disable-static \
+                           --enable-shared \
+                           --disable-readline \
                            --enable-threadsafe \
-                           --enable-dynamic-extensions"
+                           --enable-dynamic-extensions \
+                           --with-gnu-ld"
 
 pre_configure_target() {
 # sqlite fails to compile with fast-math link time optimization.

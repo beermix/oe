@@ -17,7 +17,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-hardware-optimizations \
                            --enable-intel-sse \
                            --enable-static \
-                           --enable-shared"
+                           --disable-shared"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
