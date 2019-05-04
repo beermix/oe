@@ -60,6 +60,7 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
+  CCACHE_DISABLE=true
 }
 
 make_host() {
