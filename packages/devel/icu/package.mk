@@ -31,7 +31,9 @@ pre_configure_target() {
 }
 
 configure_package() {
-  PKG_CONFIGURE_OPTS_TARGET="--with-data-packaging=archive --with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME"
+  PKG_CONFIGURE_OPTS_TARGET="--disable-samples \
+  				 --disable-tests \
+  				 --with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME"
 }
 
 makeinstall_host() {
