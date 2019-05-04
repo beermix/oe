@@ -2,10 +2,10 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="wpa_supplicant"
-PKG_VERSION="2.8"
-PKG_SHA256="a689336a12a99151b9de5e25bfccadb88438f4f4438eb8db331cd94346fd3d96"
+PKG_VERSION="2.6"
+PKG_SHA256="b4936d34c4e6cdd44954beba74296d964bc2c9668ecaa5255e499636fe2b1450"
 PKG_LICENSE="GPL"
-PKG_SITE="https://w1.fi/releases/?C=M;O=D"
+PKG_SITE="https://w1.fi/wpa_supplicant/"
 PKG_URL="https://w1.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
@@ -16,7 +16,7 @@ PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  export LIBS="$LIBS -lpthread -lrt -lm"
+  LDFLAGS="$LDFLAGS -lpthread -lm"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 
@@ -35,5 +35,5 @@ mkdir -p $INSTALL/usr/lib/systemd/system
 
 mkdir -p $INSTALL/usr/share/dbus-1/system-services
   cp wpa_supplicant/dbus/fi.w1.wpa_supplicant1.service $INSTALL/usr/share/dbus-1/system-services
-  #cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
+  cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
 }
