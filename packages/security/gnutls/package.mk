@@ -4,7 +4,7 @@
 
 PKG_NAME="gnutls"
 PKG_VERSION="3.6.7.1"
-PKG_SHA256=""
+PKG_SHA256="881b26409ecd8ea4c514fd3fbdb6fae5fab422ca7b71116260e263940a4bbbad"
 PKG_LICENSE="LGPL2.1"
 PKG_SITE="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/"
 PKG_URL="https://www.gnupg.org/ftp/gcrypt/gnutls/v${PKG_VERSION%.*}/gnutls-$PKG_VERSION.tar.xz"
@@ -25,6 +25,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
                            --with-included-unistring \
                            --without-p11-kit \
                            --without-tpm"
-makeinstall_target() {
-  make install DESTDIR="$INSTALL/../.INSTALL_PKG"
-}
+
+#makeinstall_target() {
+#  make install DESTDIR="$INSTALL/../.INSTALL_PKG"
+#}

@@ -9,7 +9,7 @@ PKG_SITE="http://rtmpdump.mplayerhq.hu/"
 PKG_URL="http://repo.or.cz/rtmpdump.git/snapshot/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_LONGDESC="rtmpdump is a toolkit for RTMP streams."
-PKG_BUILD_FLAGS="+pic"
+#PKG_BUILD_FLAGS="+pic"
 
 make_target() {
   make prefix=/usr \
@@ -19,7 +19,7 @@ make_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
-       SHARED=no \
+       SHARED=yes \
        CRYPTO="OPENSSL" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
@@ -37,7 +37,7 @@ makeinstall_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
-       SHARED=no \
+       SHARED=yes \
        CRYPTO="OPENSSL" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
@@ -53,7 +53,7 @@ makeinstall_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
-       SHARED=no \
+       SHARED=yes \
        CRYPTO="OPENSSL" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
@@ -66,6 +66,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/sbin
 
 #  # to be removed: hack for "compatibility"
-#  mkdir -p $INSTALL/usr/lib
-#    ln -sf librtmp.so.1 $INSTALL/usr/lib/librtmp.so.0
+  mkdir -p $INSTALL/usr/lib
+    ln -sf librtmp.so.1 $INSTALL/usr/lib/librtmp.so.0
 }
