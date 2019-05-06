@@ -1,7 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2014 ultraman
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,32 +16,33 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="apcu"
-# PHP 5.3.0 or newer
-PKG_VERSION="4.0.11"
-# Release 5.1.5:  PHP Version: PHP 7.0.0-dev or newer
-PKG_LICENSE=""
-PKG_SITE="https://pecl.php.net/package/APCu"
-PKG_URL="https://pecl.php.net/get/$PKG_NAME-$PKG_VERSION.tgz"
-#PKG_DEPENDS_TARGET="toolchain libssh2 php"
-PKG_DEPENDS_TARGET="toolchain php"
-PKG_LONGDESC="APC User Caching"
-PKG_TOOLCHAIN="configure"
+PKG_NAME="aria2"
+PKG_VERSION="1.34.0"
+PKG_LICENSE="GPL"
+PKG_SITE="https://aria2.github.io/"
+PKG_URL="https://github.com/tatsuhiro-t/aria2/releases/download/release-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain zlib openssl libxml2"
+PKG_LONGDESC="aria2 is a lightweight multi-protocol & multi-source command-line download utility. It supports HTTP/HTTPS, FTP, BitTorrent and Metalink. aria2 can be manipulated via built-in JSON-RPC and XML-RPC interfaces"
+PKG_TOOLCHAIN="autotools"
 
-pre_configure_target() {
-  PHP_DIR=$(get_build_dir php)/.install_dev
-
-  PKG_CONFIGURE_OPTS_TARGET="--with-php-config=$PHP_DIR/usr/bin/php-config"
-
-  PHP_AUTOCONF=$TOOLCHAIN/bin/autoconf \
-  PHP_AUTOHEADER=$TOOLCHAIN/bin/autoheader \
-  $PHP_DIR/usr/bin/phpize
-
-  rm aclocal.m4
-  mkdir m4
-  do_autoreconf .
-}
+PKG_CONFIGURE_OPTS_TARGET="
+  XML2_CONFIG=$SYSROOT_PREFIX/usr/bin/xml2-config \
+  --without-libuv \
+  --without-appletls \
+  --without-wintls \
+  --without-gnutls \
+  --without-libnettle \
+  --without-libgcrypt \
+  --with-openssl \
+  --without-sqlite3 \
+  --disable-xmltest \
+  --without-libexpat \
+  --with-libxml2 \
+  --without-libcares \
+  --with-ca-bundle=$SSL_CERTIFICATES/cacert.pem \
+  --with-gnu-ld \
+"
 
 makeinstall_target() {
-  : # nothing to install
+  : # meh
 }
