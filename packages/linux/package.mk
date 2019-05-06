@@ -46,9 +46,9 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   *)
-    PKG_VERSION="5.1-rc6"
+    PKG_VERSION="5.1"
     PKG_SHA256=""
-    PKG_URL="https://git.kernel.org/torvalds/t/linux-5.1-rc6.tar.gz"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
