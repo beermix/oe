@@ -60,7 +60,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --enable-offload-targets=nvptx-none \
                            --without-cuda-driver \
                            --disable-vtable-verify \
                            --with-tune=westmere"
@@ -69,7 +68,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
-                              --enable-cloog-backend=isl \
                               --disable-libmudflap \
                               --disable-libitm \
                               --disable-libquadmath \
