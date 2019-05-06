@@ -33,6 +33,7 @@ pre_configure_target() {
 configure_package() {
   PKG_CONFIGURE_OPTS_TARGET="--disable-samples \
   				 --disable-tests \
+  				 --disable-shared \
   				 --with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME"
 }
 
