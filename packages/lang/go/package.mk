@@ -25,7 +25,7 @@ configure_host() {
   if [ -x /usr/lib/go/bin/go ]; then
     export GOROOT_BOOTSTRAP=/usr/lib/go
   else
-    export GOROOT_BOOTSTRAP=/usr/lib/golang
+    export GOROOT_BOOTSTRAP=~/go1.4
   fi
   export GOARCH=amd64
 }

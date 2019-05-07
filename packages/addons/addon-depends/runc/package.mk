@@ -4,7 +4,7 @@
 
 PKG_NAME="runc"
 PKG_VERSION="v1.0.0-rc8"
-PKG_SHA256=""
+PKG_SHA256="efe4ff9bbe49b19074346d65c914d809c0a3e90d062ea9619fe240f931f0b700"
 PKG_LICENSE="APL"
 PKG_SITE="https://github.com/opencontainers/runc"
 PKG_URL="https://github.com/opencontainers/runc/archive/${PKG_VERSION}.tar.gz"
@@ -35,6 +35,9 @@ pre_make_target() {
   esac
 
   export GOOS=linux
+  export CGO_ENABLED=1
+  export CGO_NO_EMULATION=1
+  export CGO_CFLAGS=$CFLAGS
   export LDFLAGS="-w -extldflags -static -X main.gitCommit=${PKG_VERSION} -X main.version=$(cat ./VERSION) -extld $CC"
   export GOLANG=$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$PKG_BUILD/.gopath
