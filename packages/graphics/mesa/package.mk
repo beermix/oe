@@ -15,6 +15,8 @@ PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
 PKG_BUILD_FLAGS="+lto"
+#LTO_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 get_graphicdrivers
 
@@ -92,8 +94,9 @@ fi
 pre_configure_target() {
   if [ "$DISPLAYSERVER" = "x11" ]; then
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
-    #export CFLAGS="$CFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-    #export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+    export CFLAGS="$CFLAGS -O3 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+    export CXXFLAGS="$CXXFLAGS -O3 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+    unset LDFLAGS
   fi
 }
 
