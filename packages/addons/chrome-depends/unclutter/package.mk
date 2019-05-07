@@ -9,8 +9,11 @@ PKG_SITE="https://sourceforge.net/projects/unclutter/"
 PKG_URL="https://sourceforge.net/projects/unclutter/unclutter/source_$PKG_VERSION/unclutter-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_LONGDESC="Unclutter runs in the background of an X11 session and hides the X11 Cursor."
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 make_target() {
+
   rm -f Makefile
   LDFLAGS="$LDFLAGS -lX11" $MAKE unclutter
 }
