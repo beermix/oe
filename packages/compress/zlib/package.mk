@@ -41,24 +41,24 @@ configure_host() {
   ./configure --prefix=$TOOLCHAIN --libdir=$TOOLCHAIN/lib --static --shared
 }
 
-post_configure_target() {
+#post_configure_target() {
  ## configure minizip
- (
-  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-  rm Makefile
-  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
-  do_autoreconf
-  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --disable-static
- )
-}
+# (
+#  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
+#  rm Makefile
+#  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
+#  do_autoreconf
+  #./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --disable-static
+# )
+#}
 
-post_make_target() {
+#post_make_target() {
  # make minizip
- make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-}
+# make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip
+#}
 
-post_makeinstall_target() {
+#post_makeinstall_target() {
  # Install minizip
- make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
- cp -PL $PKG_BUILD/.$TARGET_NAME/contrib/minizip/.libs/libminizip.so* $INSTALL/usr/lib/
-}
+# make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
+# cp -PL $PKG_BUILD/.$TARGET_NAME/contrib/minizip/.libs/libminizip.so* $INSTALL/usr/lib/
+#}
