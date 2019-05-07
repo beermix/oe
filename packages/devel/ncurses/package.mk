@@ -11,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
-PKG_BUILD_FLAGS="-lto +pic:host +pic"
+PKG_BUILD_FLAGS="-lto"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --disable-termcap \
