@@ -4,7 +4,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://gitlab.com/procps-ng/procps"
 PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/Production/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain ncurses"
+PKG_DEPENDS_TARGET="toolchain ncurses systemd"
 #PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic"
 
