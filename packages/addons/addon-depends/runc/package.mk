@@ -35,7 +35,6 @@ pre_make_target() {
   esac
 
   export GOOS=linux
-  
   export LDFLAGS="-w -extldflags -static -X main.gitCommit=${PKG_VERSION} -X main.version=$(cat ./VERSION) -extld $CC"
   export GOLANG=$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$PKG_BUILD/.gopath
