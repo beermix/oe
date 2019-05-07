@@ -4,31 +4,20 @@
 
 PKG_NAME="gcc"
 #PKG_VERSION="69da420"
-PKG_VERSION="9-20190504"
-#PKG_VERSION="9.1.0"
-#PKG_SHA256="79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0"
+#PKG_VERSION="9-20190504"
+PKG_VERSION="9.1.0"
+PKG_SHA256="79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
 PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
-
-#post_unpack() {
-#  rm -rf $PKG_BUILD/libjava/*
-#  rm -rf $PKG_BUILD/libgo/*
-#  rm -rf $PKG_BUILD/libgo/*
-#  rm -rf $PKG_BUILD/libstdc++-v3/testsuite/*
-#
-#  mkdir -p $PKG_BUILD/libstdc++-v3/testsuite/
-#  echo "all:" > $PKG_BUILD/libstdc++-v3/testsuite/Makefile.in
-#  echo "install:" >> $PKG_BUILD/libstdc++-v3/testsuite/Makefile.in
-#}
 
 post_unpack() {
   sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
