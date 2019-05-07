@@ -3,10 +3,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.33.2"
-PKG_SHA256="631be8eac6cf6230ba478de211941d526808dba3cd436380793334496013ce97"
+PKG_VERSION="2.34-rc1"
+PKG_SHA256="7f2d0f409202f7deda5a2a58f069c951331c978b7dec1f2b0e39314273399fe2"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="gcc:host pkg-config:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain"
