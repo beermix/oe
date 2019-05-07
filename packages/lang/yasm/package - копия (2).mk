@@ -11,8 +11,13 @@ PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
 PKG_TOOLCHAIN="autotools"
 #PKG_TOOLCHAIN="cmake-make"
 
-configure_package() {
+pre_configure_host() {
   export CCACHE_DISABLE=true
+}
+
+configure_package() {
+  PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0"
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
   PKG_CONFIGURE_OPTS_HOST="--disable-debug \
   			      --disable-warnerror \
   			      --disable-profiling \
