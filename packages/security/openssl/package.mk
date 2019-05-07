@@ -19,12 +19,8 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            threads \
                            no-ssl3-method \
                            no-tests \
-                           no-rc5 \
                            enable-camellia \
-                           enable-mdc2 \
-                           no-fuzz-libfuzzer \
-                           no-fuzz-afl \
-                           no-static-engine"
+                           enable-mdc2"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
