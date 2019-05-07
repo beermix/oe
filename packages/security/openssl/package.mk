@@ -17,7 +17,11 @@ PKG_BUILD_FLAGS="-parallel"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ssl3-method"
+                           no-ssl \
+                           zlib-dynamic \
+                           no-rc4 \
+                           no-ssl2 \
+                           no-ssl3"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
