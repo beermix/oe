@@ -50,7 +50,6 @@ PKG_CMAKE_OPTS_HOST="
   -DWITH_EDITLINE=bundled \
   -DWITH_LIBEVENT=bundled \
   -DDOWNLOAD_BOOST=0 \
-  -DWITH_BOOST=$SOURCES/boost_1_59_0.tar.gz \
   -DWITH_UNIT_TESTS=OFF \
   -DWITH_PROTOBUF=bundled \
   -DWITH_ZLIB=bundled \

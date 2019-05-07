@@ -3,15 +3,15 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="ncurses"
-PKG_VERSION="6.1"
-PKG_SHA256="aa057eeeb4a14d470101eff4597d5833dcef5965331be3528c08d99cebaa0d17"
+PKG_VERSION="6.0"
+PKG_SHA256="f551c24b30ce8bfb6e96d9f59b42fbea30fa3a6123384172f9e7284bcf647260"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="gcc:host"
-PKG_DEPENDS_TARGET="toolchain zlib ncurses:host"
-PKG_LONGDESC="A library is a free software emulation of curses in System V Release 4.0, and more."
-# causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
-PKG_BUILD_FLAGS="+pic"
+PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_HOST="zlib:host"
+PKG_SECTION="devel"
+PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
+PKG_BUILD_FLAGS="-lto +pic:host +pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --disable-termcap \
@@ -29,13 +29,25 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --with-progs \
 			      --enable-pc-files \
 			      --enable-widec \
-			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
-
-PKG_CONFIGURE_OPTS_HOST="--without-ada \
+			      --with-pkg-config-libdir=/usr/lib/pkgconfig \
+			      --with-build-cppflags=-D_GNU_SOURCE"
+			      
+PKG_CONFIGURE_OPTS_HOST="--enable-overwrite \
+			    --disable-termcap \
+			    --disable-warnings \
+			    --without-ncursesw \
+			    --disable-rpath \
+			    --without-ada \
 			    --without-tests \
 			    --without-debug \
 			    --without-manpages \
-			    --with-pkg-config-libdir=$TOOLCHAIN/lib/pkgconfig"
+			    --without-shared \
+			    --enable-static \
+			    --without-progs \
+			    --enable-pc-files \
+			    --enable-widec \
+			    --with-pkg-config-libdir=$TOOLCHAIN/lib/pkgconfig \
+			    --with-build-cppflags=-D_GNU_SOURCE"
 
 post_makeinstall_target() {
   cp misc/ncurses-config $TOOLCHAIN/bin
