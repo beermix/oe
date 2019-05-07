@@ -1,12 +1,9 @@
 PKG_NAME="iana-etc"
 PKG_VERSION="2019"
-PKG_ARCH="any"
 PKG_LICENSE="none"
 PKG_SITE="http://www.iana.org"
 #PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="network"
 PKG_SHORTDESC="iana-etc: The Iana-Etc package provides data for network services and protocols."
-PKG_LONGDESC="The Iana-Etc package provides data for network services and protocols."
 PKG_TOOLCHAIN="manual"
 
 unpack() {
