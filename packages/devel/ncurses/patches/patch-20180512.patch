@@ -1,0 +1,797 @@
+From 9208e1bde56ebb9cc550fd93034f1d4650518b11 Mon Sep 17 00:00:00 2001
+From: "Thomas E. Dickey" <dickey@invisible-island.net>
+Date: Sat, 12 May 2018 23:58:52 +0000
+Subject: [PATCH] ncurses 6.1 - patch 20180512
+
++ remove trailing ';' from GCC_DEPRECATED definition.
++ repair a change from 20110730 which left an error-check/warning dead.
++ fix several minor Coverity warnings.
+---
+ NEWS                             |  9 +++--
+ VERSION                          |  2 +-
+ dist.mk                          |  4 +--
+ include/curses.h.in              |  4 +--
+ ncurses/tinfo/captoinfo.c        |  8 +++--
+ ncurses/tinfo/make_hash.c        | 20 ++++++-----
+ ncurses/tinfo/read_termcap.c     | 26 +++++++-------
+ package/debian-mingw/changelog   |  4 +--
+ package/debian-mingw64/changelog |  4 +--
+ package/debian/changelog         |  4 +--
+ package/mingw-ncurses.nsi        |  4 +--
+ package/mingw-ncurses.spec       |  2 +-
+ package/ncurses.spec             |  2 +-
+ test/bs.c                        | 62 +++++++++++++++++---------------
+ test/demo_new_pair.c             |  6 ++--
+ test/dots_xcurses.c              |  6 ++--
+ test/knight.c                    |  6 ++--
+ test/ncurses.c                   | 18 ++++++----
+ test/picsmap.c                   | 10 ++++--
+ test/popup_msg.c                 |  8 +++--
+ test/savescreen.c                |  8 +++--
+ 21 files changed, 124 insertions(+), 93 deletions(-)
+
+diff --git a/NEWS b/NEWS
+index c02a0947..da3b1d26 100644
+--- a/NEWS
++++ b/NEWS
+@@ -25,7 +25,7 @@
+ -- sale, use or other dealings in this Software without prior written        --
+ -- authorization.                                                            --
+ -------------------------------------------------------------------------------
+--- $Id: NEWS,v 1.3124 2018/05/05 21:05:04 tom Exp $
++-- $Id: NEWS,v 1.3127 2018/05/12 23:36:35 tom Exp $
+ -------------------------------------------------------------------------------
+ 
+ This is a log of changes that ncurses has gone through since Zeyd started
+@@ -45,6 +45,11 @@ See the AUTHORS file for the corresponding full names.
+ Changes through 1.9.9e did not credit all contributions;
+ it is not possible to add this information.
+ 
++20180512
++	+ remove trailing ';' from GCC_DEPRECATED definition.
++	+ repair a change from 20110730 which left an error-check/warning dead.
++	+ fix several minor Coverity warnings.
++
+ 20180505
+ 	+ add deprecation warnings for internal functions called by older
+ 	  versions of tack.
+@@ -2582,7 +2587,7 @@ it is not possible to add this information.
+ 	  Waterlander regarding screen flicker).
+ 
+ 20121229
+-	+ fix coverity warnings regarding copying into fixed-size buffers.
++	+ fix Coverity warnings regarding copying into fixed-size buffers.
+ 	+ add throw-declarations in the c++ binding per Coverity warning.
+ 	+ minor changes to new-items for consistent reference to bug-report
+ 	  numbers.
+diff --git a/VERSION b/VERSION
+index 89ec7d77..fc22197b 100644
+--- a/VERSION
++++ b/VERSION
+@@ -1 +1 @@
+-5:0:10	6.1	20180505
++5:0:10	6.1	20180512
+diff --git a/dist.mk b/dist.mk
+index 409c37c7..8752e197 100644
+--- a/dist.mk
++++ b/dist.mk
+@@ -25,7 +25,7 @@
+ # use or other dealings in this Software without prior written               #
+ # authorization.                                                             #
+ ##############################################################################
+-# $Id: dist.mk,v 1.1222 2018/05/02 00:12:25 tom Exp $
++# $Id: dist.mk,v 1.1223 2018/05/12 10:58:29 tom Exp $
+ # Makefile for creating ncurses distributions.
+ #
+ # This only needs to be used directly as a makefile by developers, but
+@@ -37,7 +37,7 @@ SHELL = /bin/sh
+ # These define the major/minor/patch versions of ncurses.
+ NCURSES_MAJOR = 6
+ NCURSES_MINOR = 1
+-NCURSES_PATCH = 20180505
++NCURSES_PATCH = 20180512
+ 
+ # We don't append the patch to the version, since this only applies to releases
+ VERSION = $(NCURSES_MAJOR).$(NCURSES_MINOR)
+diff --git a/include/curses.h.in b/include/curses.h.in
+index 0f95c8fe..223f15df 100644
+--- a/include/curses.h.in
++++ b/include/curses.h.in
+@@ -32,7 +32,7 @@
+  *     and: Thomas E. Dickey                        1996-on                 *
+  ****************************************************************************/
+ 
+-/* $Id: curses.h.in,v 1.259 2018/05/05 21:28:04 tom Exp $ */
++/* $Id: curses.h.in,v 1.260 2018/05/12 23:35:35 tom Exp $ */
+ 
+ #ifndef __NCURSES_H
+ #define __NCURSES_H
+@@ -582,7 +582,7 @@ extern NCURSES_EXPORT(int) wgetnstr_events (WINDOW *,char *,int,_nc_eventlist *)
+ 
+ #undef  GCC_DEPRECATED
+ #if (__GNUC__ - 0 > 3 || (__GNUC__ - 0 == 3 && __GNUC_MINOR__ - 0 >= 2))
+-#define GCC_DEPRECATED(msg) __attribute__((deprecated));
++#define GCC_DEPRECATED(msg) __attribute__((deprecated))
+ #else
+ #define GCC_DEPRECATED(msg) /* nothing */
+ #endif
+diff --git a/ncurses/tinfo/captoinfo.c b/ncurses/tinfo/captoinfo.c
+index e552a8b6..6a2252ee 100644
+--- a/ncurses/tinfo/captoinfo.c
++++ b/ncurses/tinfo/captoinfo.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2016,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -97,7 +97,7 @@
+ #include <ctype.h>
+ #include <tic.h>
+ 
+-MODULE_ID("$Id: captoinfo.c,v 1.95 2017/06/23 22:40:22 tom Exp $")
++MODULE_ID("$Id: captoinfo.c,v 1.96 2018/05/12 16:46:55 tom Exp $")
+ 
+ #if 0
+ #define DEBUG_THIS(p) DEBUG(9, p)
+@@ -246,6 +246,8 @@ static void
+ getparm(int parm, int n)
+ /* push n copies of param on the terminfo stack if not already there */
+ {
++    int nn;
++
+     if (seenr) {
+ 	if (parm == 1)
+ 	    parm = 2;
+@@ -253,7 +255,7 @@ getparm(int parm, int n)
+ 	    parm = 1;
+     }
+ 
+-    while (n-- > 0) {
++    for (nn = 0; nn < n; ++nn) {
+ 	dp = save_string(dp, "%p");
+ 	dp = save_char(dp, '0' + parm);
+     }
+diff --git a/ncurses/tinfo/make_hash.c b/ncurses/tinfo/make_hash.c
+index 26d9b834..c8bf911f 100644
+--- a/ncurses/tinfo/make_hash.c
++++ b/ncurses/tinfo/make_hash.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2013,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -34,7 +34,6 @@
+ 
+ /*
+  *	make_hash.c --- build-time program for constructing comp_captab.c
+- *
+  */
+ 
+ #include <build.priv.h>
+@@ -44,7 +43,7 @@
+ 
+ #include <ctype.h>
+ 
+-MODULE_ID("$Id: make_hash.c,v 1.15 2017/10/23 21:19:54 tom Exp $")
++MODULE_ID("$Id: make_hash.c,v 1.17 2018/05/12 15:58:31 tom Exp $")
+ 
+ /*
+  *	_nc_make_hash_table()
+@@ -156,10 +155,12 @@ parse_columns(char *buffer)
+ 
+     int col = 0;
+ 
+-    if (list == 0 && (list = typeCalloc(char *, (MAX_COLUMNS + 1))) == 0)
+-	  return (0);
+-
+     if (*buffer != '#') {
++	if (list == 0) {
++	    list = typeCalloc(char *, (MAX_COLUMNS + 1));
++	    if (list == 0)
++		return (0);
++	}
+ 	while (*buffer != '\0') {
+ 	    char *s;
+ 	    for (s = buffer; (*s != '\0') && !isspace(UChar(*s)); s++)
+@@ -225,13 +226,16 @@ main(int argc, char **argv)
+      * Read the table into our arrays.
+      */
+     for (n = 0; (n < CAPTABSIZE) && fgets(buffer, BUFSIZ, stdin);) {
+-	char **list, *nlp = strchr(buffer, '\n');
++	char **list;
++	char *nlp = strchr(buffer, '\n');
+ 	if (nlp)
+ 	    *nlp = '\0';
++	else
++	    buffer[sizeof(buffer) - 2] = '\0';
+ 	list = parse_columns(buffer);
+ 	if (list == 0)		/* blank or comment */
+ 	    continue;
+-	if (column > count_columns(list)) {
++	if (column < 0 || column > count_columns(list)) {
+ 	    fprintf(stderr, "expected %d columns, have %d:\n%s\n",
+ 		    column,
+ 		    count_columns(list),
+diff --git a/ncurses/tinfo/read_termcap.c b/ncurses/tinfo/read_termcap.c
+index 5e8d85ed..6aafcb5e 100644
+--- a/ncurses/tinfo/read_termcap.c
++++ b/ncurses/tinfo/read_termcap.c
+@@ -56,7 +56,7 @@
+ #include <sys/types.h>
+ #include <tic.h>
+ 
+-MODULE_ID("$Id: read_termcap.c,v 1.95 2018/04/07 21:12:50 tom Exp $")
++MODULE_ID("$Id: read_termcap.c,v 1.96 2018/05/12 18:52:02 tom Exp $")
+ 
+ #if !PURE_TERMINFO
+ 
+@@ -364,7 +364,7 @@ _nc_getent(
+ 			if (bp >= b_end) {
+ 			    int n;
+ 
+-			    n = read(fd, buf, sizeof(buf));
++			    n = (int) read(fd, buf, sizeof(buf));
+ 			    if (n <= 0) {
+ 				if (myfd)
+ 				    (void) close(fd);
+@@ -393,7 +393,7 @@ _nc_getent(
+ 				|| *(rp - 1) != '\\')
+ 				break;
+ 			}
+-			*rp++ = c;
++			*rp++ = (char) c;
+ 
+ 			/*
+ 			 * Enforce loop invariant: if no room
+@@ -404,8 +404,8 @@ _nc_getent(
+ 			    unsigned pos;
+ 			    size_t newsize;
+ 
+-			    pos = rp - record;
+-			    newsize = r_end - record + BFRAG;
++			    pos = (unsigned) (rp - record);
++			    newsize = (size_t) (r_end - record + BFRAG);
+ 			    record = DOALLOC(newsize);
+ 			    if (record == 0) {
+ 				if (myfd)
+@@ -492,14 +492,14 @@ _nc_getent(
+ 		}
+ 	    }
+ 	    tcstart = tc - 3;
+-	    tclen = s - tcstart;
++	    tclen = (int) (s - tcstart);
+ 	    tcend = s;
+ 
+ 	    icap = 0;
+ 	    iret = _nc_getent(&icap, &ilen, &oline, current, db_array, fd,
+ 			      tc, depth + 1, 0);
+ 	    newicap = icap;	/* Put into a register. */
+-	    newilen = ilen;
++	    newilen = (int) ilen;
+ 	    if (iret != TC_SUCCESS) {
+ 		/* an error */
+ 		if (iret < TC_NOT_FOUND) {
+@@ -523,7 +523,7 @@ _nc_getent(
+ 	    /* not interested in name field of tc'ed record */
+ 	    s = newicap;
+ 	    while (*s != '\0' && *s++ != ':') ;
+-	    newilen -= s - newicap;
++	    newilen -= (int) (s - newicap);
+ 	    newicap = s;
+ 
+ 	    /* make sure interpolated record is `:'-terminated */
+@@ -542,10 +542,10 @@ _nc_getent(
+ 		unsigned pos, tcpos, tcposend;
+ 		size_t newsize;
+ 
+-		pos = rp - record;
+-		newsize = r_end - record + diff + BFRAG;
+-		tcpos = tcstart - record;
+-		tcposend = tcend - record;
++		pos = (unsigned) (rp - record);
++		newsize = (size_t) (r_end - record + diff + BFRAG);
++		tcpos = (unsigned) (tcstart - record);
++		tcposend = (unsigned) (tcend - record);
+ 		record = DOALLOC(newsize);
+ 		if (record == 0) {
+ 		    if (myfd)
+@@ -583,7 +583,7 @@ _nc_getent(
+      */
+     if (myfd)
+ 	(void) close(fd);
+-    *len = rp - record - 1;	/* don't count NUL */
++    *len = (unsigned) (rp - record - 1);	/* don't count NUL */
+     if (r_end > rp) {
+ 	if ((record = DOALLOC((size_t) (rp - record))) == 0) {
+ 	    errno = ENOMEM;
+diff --git a/package/debian-mingw/changelog b/package/debian-mingw/changelog
+index b8426442..c81517c7 100644
+--- a/package/debian-mingw/changelog
++++ b/package/debian-mingw/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180505) unstable; urgency=low
++ncurses6 (6.1+20180512) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 01 May 2018 20:12:25 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 12 May 2018 06:58:29 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian-mingw64/changelog b/package/debian-mingw64/changelog
+index b8426442..c81517c7 100644
+--- a/package/debian-mingw64/changelog
++++ b/package/debian-mingw64/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180505) unstable; urgency=low
++ncurses6 (6.1+20180512) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 01 May 2018 20:12:25 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 12 May 2018 06:58:29 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian/changelog b/package/debian/changelog
+index 1fdb7675..fa12a818 100644
+--- a/package/debian/changelog
++++ b/package/debian/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180505) unstable; urgency=low
++ncurses6 (6.1+20180512) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 01 May 2018 20:12:25 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 12 May 2018 06:58:29 -0400
+ 
+ ncurses6 (5.9-20120608) unstable; urgency=low
+ 
+diff --git a/package/mingw-ncurses.nsi b/package/mingw-ncurses.nsi
+index 4391cb08..459bc6d8 100644
+--- a/package/mingw-ncurses.nsi
++++ b/package/mingw-ncurses.nsi
+@@ -1,4 +1,4 @@
+-; $Id: mingw-ncurses.nsi,v 1.269 2018/05/02 00:12:25 tom Exp $
++; $Id: mingw-ncurses.nsi,v 1.270 2018/05/12 10:58:29 tom Exp $
+ 
+ ; TODO add examples
+ ; TODO bump ABI to 6
+@@ -10,7 +10,7 @@
+ !define VERSION_MAJOR "6"
+ !define VERSION_MINOR "1"
+ !define VERSION_YYYY  "2018"
+-!define VERSION_MMDD  "0505"
++!define VERSION_MMDD  "0512"
+ !define VERSION_PATCH ${VERSION_YYYY}${VERSION_MMDD}
+ 
+ !define MY_ABI   "5"
+diff --git a/package/mingw-ncurses.spec b/package/mingw-ncurses.spec
+index 12a749b7..519b9913 100644
+--- a/package/mingw-ncurses.spec
++++ b/package/mingw-ncurses.spec
+@@ -3,7 +3,7 @@
+ Summary: shared libraries for terminal handling
+ Name: mingw32-ncurses6
+ Version: 6.1
+-Release: 20180505
++Release: 20180512
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+diff --git a/package/ncurses.spec b/package/ncurses.spec
+index 08b2dee4..291eba5e 100644
+--- a/package/ncurses.spec
++++ b/package/ncurses.spec
+@@ -1,7 +1,7 @@
+ Summary: shared libraries for terminal handling
+ Name: ncurses6
+ Version: 6.1
+-Release: 20180505
++Release: 20180512
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+diff --git a/test/bs.c b/test/bs.c
+index 31f98bb8..b8893e62 100644
+--- a/test/bs.c
++++ b/test/bs.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2016,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -34,7 +34,7 @@
+  * v2.0 featuring strict ANSI/POSIX conformance, November 1993.
+  * v2.1 with ncurses mouse support, September 1995
+  *
+- * $Id: bs.c,v 1.71 2017/10/18 23:03:07 tom Exp $
++ * $Id: bs.c,v 1.73 2018/05/12 15:07:51 tom Exp $
+  */
+ 
+ #include <test.priv.h>
+@@ -116,17 +116,20 @@ static char *your_name;
+ static char dftname[] = "stranger";
+ 
+ /* direction constants */
+-#define E	0
+-#define SE	1
+-#define S	2
+-#define SW	3
+-#define W	4
+-#define NW	5
+-#define N	6
+-#define NE	7
+-static int xincr[8] =
++typedef enum {
++    dir_E = 0
++    ,dir_SE
++    ,dir_S
++    ,dir_SW
++    ,dir_W
++    ,dir_NW
++    ,dir_N
++    ,dir_NE
++    ,dir_MAX
++} DIRECTIONS;
++static int xincr[dir_MAX + 2] =
+ {1, 1, 0, -1, -1, -1, 0, 1};
+-static int yincr[8] =
++static int yincr[dir_MAX + 2] =
+ {0, 1, 1, 1, 0, -1, -1, -1};
+ 
+ /* current ship position and direction */
+@@ -327,9 +330,9 @@ randomplace(int b, ship_t * ss)
+ {
+ 
+     do {
+-	ss->dir = rnd(2) ? E : S;
+-	ss->x = rnd(BWIDTH - (ss->dir == E ? ss->length : 0));
+-	ss->y = rnd(BDEPTH - (ss->dir == S ? ss->length : 0));
++	ss->dir = rnd(2) ? dir_E : dir_S;
++	ss->x = rnd(BWIDTH - (ss->dir == dir_E ? ss->length : 0));
++	ss->y = rnd(BDEPTH - (ss->dir == dir_S ? ss->length : 0));
+     } while
+ 	(!checkplace(b, ss, FALSE));
+ }
+@@ -495,19 +498,19 @@ initgame(void)
+ 	    switch (c) {
+ 	    case 'k':
+ 	    case '8':
+-		ss->dir = N;
++		ss->dir = dir_N;
+ 		break;
+ 	    case 'j':
+ 	    case '2':
+-		ss->dir = S;
++		ss->dir = dir_S;
+ 		break;
+ 	    case 'h':
+ 	    case '4':
+-		ss->dir = W;
++		ss->dir = dir_W;
+ 		break;
+ 	    case 'l':
+ 	    case '6':
+-		ss->dir = E;
++		ss->dir = dir_E;
+ 		break;
+ 	    }
+ 
+@@ -665,7 +668,7 @@ collidecheck(int b, int y, int x)
+     if (!closepack) {
+ 	int i;
+ 
+-	for (i = 0; i < 8; i++) {
++	for (i = 0; i < dir_MAX; i++) {
+ 	    int xend, yend;
+ 
+ 	    yend = y + yincr[i];
+@@ -762,8 +765,8 @@ hitship(int x, int y)
+ 
+ 		if (!closepack)
+ 		    for (j = -1; j <= 1; j++) {
+-			int bx = ss->x + j * xincr[(ss->dir + 2) % 8];
+-			int by = ss->y + j * yincr[(ss->dir + 2) % 8];
++			int bx = ss->x + j * xincr[(ss->dir + 2) % dir_MAX];
++			int by = ss->y + j * yincr[(ss->dir + 2) % dir_MAX];
+ 
+ 			for (i = -1; i <= ss->length; ++i) {
+ 			    int x1, y1;
+@@ -1027,11 +1030,14 @@ cputurn(void)
+ 	break;
+ 
+     case RANDOM_HIT:		/* last shot was random and hit */
+-	used[E / 2] = used[S / 2] = used[W / 2] = used[N / 2] = FALSE;
++	used[dir_E / 2] =
++	    used[dir_S / 2] =
++	    used[dir_W / 2] =
++	    used[dir_N / 2] = FALSE;
+ 	/* FALLTHROUGH */
+ 
+     case HUNT_DIRECT:		/* last shot hit, we're looking for ship's long axis */
+-	for (d = navail = 0; d < 4; d++) {
++	for (d = navail = 0; d < (dir_MAX) / 2; d++) {
+ 	    x = ts.x + xincr[d * 2];
+ 	    y = ts.y + yincr[d * 2];
+ 	    if (!used[d] && POSSIBLE(x, y))
+@@ -1043,13 +1049,13 @@ cputurn(void)
+ 	    goto refire;	/* ...so we must random-fire */
+ 	else {
+ 	    n = rnd(navail) + 1;
+-	    for (d = 0; d < 4 && used[d]; d++) ;
++	    for (d = 0; d < (dir_MAX) / 2 && used[d]; d++) ;
+ 	    /* used[d] is first that == 0 */
+ 	    for (; n > 1; n--)
+-		while (d < 4 && used[++d]) ;
++		while (d < (dir_MAX) / 2 && used[++d]) ;
+ 	    /* used[d] is next that == 0 */
+ 
+-	    assert(d < 4);
++	    assert(d < (dir_MAX) / 2);
+ 	    assert(used[d] == FALSE);
+ 
+ 	    used[d] = TRUE;
+@@ -1083,7 +1089,7 @@ cputurn(void)
+ 	break;
+ 
+     case REVERSE_JUMP:		/* nail down the ship's other end */
+-	d = (ts.dir + 4) % 8;
++	d = (ts.dir + (dir_MAX) / 2) % dir_MAX;
+ 	x = ts.x + ts.hits * xincr[d];
+ 	y = ts.y + ts.hits * yincr[d];
+ 	if (POSSIBLE(x, y) && (hit = cpufire(x, y))) {
+diff --git a/test/demo_new_pair.c b/test/demo_new_pair.c
+index 4067c881..a4cbb537 100644
+--- a/test/demo_new_pair.c
++++ b/test/demo_new_pair.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 2017 Free Software Foundation, Inc.                        *
++ * Copyright (c) 2017,2018 Free Software Foundation, Inc.                   *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -26,7 +26,7 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: demo_new_pair.c,v 1.18 2017/10/11 22:16:14 tom Exp $
++ * $Id: demo_new_pair.c,v 1.19 2018/05/12 14:30:04 tom Exp $
+  *
+  * Demonstrate the alloc_pair() function.
+  */
+@@ -223,7 +223,7 @@ main(int argc, char *argv[])
+ 
+     if (isatty(fileno(stderr))) {
+ 	output = stderr;
+-    } else if ((ch = open("/dev/tty", O_WRONLY)) != 0) {
++    } else if ((ch = open("/dev/tty", O_WRONLY)) >= 0) {
+ 	output = fdopen(ch, "w");
+     } else {
+ 	fprintf(stderr, "cannot open terminal for output\n");
+diff --git a/test/dots_xcurses.c b/test/dots_xcurses.c
+index f86cd8d1..c9fb5b6e 100644
+--- a/test/dots_xcurses.c
++++ b/test/dots_xcurses.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 2017 Free Software Foundation, Inc.                        *
++ * Copyright (c) 2017,2018 Free Software Foundation, Inc.                   *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -29,7 +29,7 @@
+ /*
+  * Author: Thomas E. Dickey
+  *
+- * $Id: dots_xcurses.c,v 1.14 2017/12/09 21:04:41 tom Exp $
++ * $Id: dots_xcurses.c,v 1.15 2018/05/12 16:08:07 tom Exp $
+  *
+  * A simple demo of the wide-curses interface used for comparison with termcap.
+  */
+@@ -103,7 +103,7 @@ set_colors(int fg, int bg)
+ {
+     int pair = mypair(fg, bg);
+     if (pair > 0) {
+-	color_set((short) pair, NewPair(pair));
++	(void) color_set((short) pair, NewPair(pair));
+     }
+ }
+ 
+diff --git a/test/knight.c b/test/knight.c
+index b95996c6..0d6675e5 100644
+--- a/test/knight.c
++++ b/test/knight.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2013,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -33,7 +33,7 @@
+  * Eric S. Raymond <esr@snark.thyrsus.com> July 22 1995.  Mouse support
+  * added September 20th 1995.
+  *
+- * $Id: knight.c,v 1.43 2017/09/10 00:13:02 tom Exp $
++ * $Id: knight.c,v 1.44 2018/05/12 13:23:24 tom Exp $
+  */
+ 
+ #include <test.priv.h>
+@@ -417,7 +417,7 @@ drawMove(SQUARES squares, int count_moves, chtype tchar, int oldy, int oldx, int
+ 		} else {
+ 		    cellmove(i, j);
+ 		    if (winch(boardwin) == minus)
+-			waddch(boardwin, count_moves ? ' ' : minus);
++			waddch(boardwin, ' ');
+ 		}
+ 	    }
+ 	}
+diff --git a/test/ncurses.c b/test/ncurses.c
+index 86a842c3..ff46265f 100644
+--- a/test/ncurses.c
++++ b/test/ncurses.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2016,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -40,7 +40,7 @@ AUTHOR
+    Author: Eric S. Raymond <esr@snark.thyrsus.com> 1993
+            Thomas E. Dickey (beginning revision 1.27 in 1996).
+ 
+-$Id: ncurses.c,v 1.504 2017/11/24 20:51:18 tom Exp $
++$Id: ncurses.c,v 1.506 2018/05/12 16:00:22 tom Exp $
+ 
+ ***************************************************************************/
+ 
+@@ -7170,9 +7170,12 @@ overlap_test(bool recur GCC_UNUSED)
+     int shift = 0, last_refresh = -1;
+     int state, flavor[OVERLAP_FLAVORS];
+ 
+-    if ((win1 = make_overlap(0)) == 0
+-	|| (win2 = make_overlap(1)) == 0)
++    if ((win1 = make_overlap(0)) == 0) {
+ 	return ERR;
++    } else if ((win2 = make_overlap(1)) == 0) {
++	delwin(win1);
++	return ERR;
++    }
+ 
+     curs_set(0);
+     raw();
+@@ -7367,9 +7370,12 @@ x_overlap_test(bool recur GCC_UNUSED)
+     int shift = 0, last_refresh = -1;
+     int state, flavor[OVERLAP_FLAVORS];
+ 
+-    if ((win1 = make_overlap(0)) == 0
+-	|| (win2 = make_overlap(1)) == 0)
++    if ((win1 = make_overlap(0)) == 0) {
+ 	return ERR;
++    } else if ((win2 = make_overlap(1)) == 0) {
++	delwin(win1);
++	return ERR;
++    }
+ 
+     curs_set(0);
+     raw();
+diff --git a/test/picsmap.c b/test/picsmap.c
+index 4e5b2634..303bc404 100644
+--- a/test/picsmap.c
++++ b/test/picsmap.c
+@@ -26,7 +26,7 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: picsmap.c,v 1.118 2018/03/24 22:37:42 tom Exp $
++ * $Id: picsmap.c,v 1.121 2018/05/12 16:28:46 tom Exp $
+  *
+  * Author: Thomas E. Dickey
+  *
+@@ -584,6 +584,7 @@ read_palette(const char *filename)
+ 	    strcpy(s, filename);
+ 	    if (tries & 4) {
+ 		char *t = s;
++		char *tc;
+ 		int num;
+ 		char chr;
+ 		int found = 0;
+@@ -591,7 +592,8 @@ read_palette(const char *filename)
+ 		    if (*t == '-') {
+ 			if (sscanf(t, "-%d%c", &num, &chr) == 2 &&
+ 			    chr == 'c' &&
+-			    !(strncmp) (strchr(t, chr), "color", 5)) {
++			    (tc = strchr(t, chr)) != 0 &&
++			    !(strncmp) (tc, "color", 5)) {
+ 			    found = 1;
+ 			}
+ 			break;
+@@ -1009,6 +1011,8 @@ parse_xbm(char **data)
+ 		} else if ((t = strstr(buf, "_height")) != 0) {
+ 		    state |= 2;
+ 		    result->high = (short) num;
++		} else {
++		    break;
+ 		}
+ 		*t = '\0';
+ 		if (result->name) {
+@@ -1190,7 +1194,7 @@ parse_xpm(char **data)
+ 	    if (num_colors >= result->colors) {
+ 		finish_c_values(result);
+ 		state = 4;
+-		if (list != 0 && list[0] == 0)
++		if (list[0] == 0)
+ 		    list[0] = strdup("\033");
+ 	    }
+ 	    break;
+diff --git a/test/popup_msg.c b/test/popup_msg.c
+index 5a351731..4acfe851 100644
+--- a/test/popup_msg.c
++++ b/test/popup_msg.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 2017 Free Software Foundation, Inc.                        *
++ * Copyright (c) 2017,2018 Free Software Foundation, Inc.                   *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -26,7 +26,7 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: popup_msg.c,v 1.8 2017/09/03 21:05:01 tom Exp $
++ * $Id: popup_msg.c,v 1.9 2018/05/12 15:08:45 tom Exp $
+  *
+  * Show a multi-line message in a window which may extend beyond the screen.
+  *
+@@ -86,8 +86,10 @@ popup_msg(WINDOW *parent, const char *const *msg)
+ 
+     if ((help = newwin(high, wide, y0, x0)) == 0)
+ 	return;
+-    if ((data = newpad(length + 1, width)) == 0)
++    if ((data = newpad(length + 1, width)) == 0) {
++	delwin(help);
+ 	return;
++    }
+ 
+     begin_popup();
+ 
+diff --git a/test/savescreen.c b/test/savescreen.c
+index 610b86d0..9d88079f 100644
+--- a/test/savescreen.c
++++ b/test/savescreen.c
+@@ -26,7 +26,7 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: savescreen.c,v 1.52 2018/02/03 23:18:50 tom Exp $
++ * $Id: savescreen.c,v 1.53 2018/05/12 15:11:16 tom Exp $
+  *
+  * Demonstrate save/restore functions from the curses library.
+  * Thomas Dickey - 2007/7/14
+@@ -69,10 +69,12 @@ static wchar_t
+ BaseChar(cchar_t data)
+ {
+     wchar_t my_wchar[CCHARW_MAX];
++    wchar_t result = 0;
+     attr_t my_attr;
+     short my_pair;
+-    getcchar(&data, my_wchar, &my_attr, &my_pair, NULL);
+-    return my_wchar[0];
++    if (getcchar(&data, my_wchar, &my_attr, &my_pair, NULL) == OK)
++	result = my_wchar[0];
++    return result;
+ }
+ #endif
+ 

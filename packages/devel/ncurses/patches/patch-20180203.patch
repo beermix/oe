@@ -1,0 +1,844 @@
+From 9da7d09296c1b625afd18567a6828d8e7ec2ee01 Mon Sep 17 00:00:00 2001
+From: "Thomas E. Dickey" <dickey@invisible-island.net>
+Date: Sun, 4 Feb 2018 02:13:47 +0000
+Subject: [PATCH] ncurses 6.1 - patch 20180203
+
++ minor fixes to test/*.h to make them idempotent.
++ add/use test/parse_rgb.h to show how the "RGB" capability works.
++ add a clarification in user_caps.5 regarding "RGB" capability.
++ add extended_slk_color{,_sp} symbols to the appropriate
+  package/*.{map,sym} files (report by Sven Joachim, cf: 20170401).
+---
+ MANIFEST                              |  1 +
+ NEWS                                  |  9 ++-
+ VERSION                               |  2 +-
+ dist.mk                               |  4 +-
+ doc/html/man/adacurses6-config.1.html |  2 +-
+ doc/html/man/captoinfo.1m.html        |  2 +-
+ doc/html/man/clear.1.html             |  2 +-
+ doc/html/man/form.3x.html             |  2 +-
+ doc/html/man/infocmp.1m.html          |  2 +-
+ doc/html/man/infotocap.1m.html        |  2 +-
+ doc/html/man/menu.3x.html             |  2 +-
+ doc/html/man/ncurses.3x.html          |  2 +-
+ doc/html/man/ncurses6-config.1.html   |  2 +-
+ doc/html/man/panel.3x.html            |  2 +-
+ doc/html/man/tabs.1.html              |  2 +-
+ doc/html/man/terminfo.5.html          |  2 +-
+ doc/html/man/tic.1m.html              |  2 +-
+ doc/html/man/toe.1m.html              |  2 +-
+ doc/html/man/tput.1.html              |  2 +-
+ doc/html/man/tset.1.html              |  2 +-
+ doc/html/man/user_caps.5.html         | 12 +++-
+ man/user_caps.5                       | 10 ++-
+ package/debian-mingw/changelog        |  4 +-
+ package/debian-mingw64/changelog      |  4 +-
+ package/debian/changelog              |  4 +-
+ package/mingw-ncurses.nsi             |  4 +-
+ package/mingw-ncurses.spec            |  2 +-
+ package/ncurses.spec                  |  2 +-
+ package/ncursestw.map                 |  4 +-
+ package/ncursestw.sym                 |  4 +-
+ package/ncursesw.map                  |  4 +-
+ package/ncursesw.sym                  |  4 +-
+ test/linedata.h                       | 14 +++-
+ test/modules                          |  6 +-
+ test/parse_rgb.h                      | 98 +++++++++++++++++++++++++++
+ test/popup_msg.h                      |  6 +-
+ test/savescreen.c                     | 57 ++++++++--------
+ 37 files changed, 213 insertions(+), 74 deletions(-)
+ create mode 100644 test/parse_rgb.h
+
+diff --git a/MANIFEST b/MANIFEST
+index 7a785cda..cfa2e748 100644
+--- a/MANIFEST
++++ b/MANIFEST
+@@ -1172,6 +1172,7 @@
+ ./test/package/mingw-ncurses-examples.spec
+ ./test/package/ncurses-examples.spec
+ ./test/padview.c
++./test/parse_rgb.h
+ ./test/picsmap.c
+ ./test/picsmap.h
+ ./test/popup_msg.c
+diff --git a/NEWS b/NEWS
+index 2964fb97..352a788e 100644
+--- a/NEWS
++++ b/NEWS
+@@ -25,7 +25,7 @@
+ -- sale, use or other dealings in this Software without prior written        --
+ -- authorization.                                                            --
+ -------------------------------------------------------------------------------
+--- $Id: NEWS,v 1.3071 2018/01/30 00:35:11 tom Exp $
++-- $Id: NEWS,v 1.3076 2018/02/04 01:14:28 tom Exp $
+ -------------------------------------------------------------------------------
+ 
+ This is a log of changes that ncurses has gone through since Zeyd started
+@@ -45,6 +45,13 @@ See the AUTHORS file for the corresponding full names.
+ Changes through 1.9.9e did not credit all contributions;
+ it is not possible to add this information.
+ 
++20180203
++	+ minor fixes to test/*.h to make them idempotent.
++	+ add/use test/parse_rgb.h to show how the "RGB" capability works.
++	+ add a clarification in user_caps.5 regarding "RGB" capability.
++	+ add extended_slk_color{,_sp} symbols to the appropriate
++	  package/*.{map,sym} files (report by Sven Joachim, cf: 20170401).
++
+ 20180129
+ 	+ update "VERSION" file, used in shared-library naming.
+ 
+diff --git a/VERSION b/VERSION
+index dd18f9b0..ff7c464c 100644
+--- a/VERSION
++++ b/VERSION
+@@ -1 +1 @@
+-5:0:10	6.1	20180129
++5:0:10	6.1	20180203
+diff --git a/dist.mk b/dist.mk
+index 7a82fd04..205628bb 100644
+--- a/dist.mk
++++ b/dist.mk
+@@ -25,7 +25,7 @@
+ # use or other dealings in this Software without prior written               #
+ # authorization.                                                             #
+ ##############################################################################
+-# $Id: dist.mk,v 1.1208 2018/01/30 00:32:36 tom Exp $
++# $Id: dist.mk,v 1.1209 2018/01/31 20:55:08 tom Exp $
+ # Makefile for creating ncurses distributions.
+ #
+ # This only needs to be used directly as a makefile by developers, but
+@@ -37,7 +37,7 @@ SHELL = /bin/sh
+ # These define the major/minor/patch versions of ncurses.
+ NCURSES_MAJOR = 6
+ NCURSES_MINOR = 1
+-NCURSES_PATCH = 20180129
++NCURSES_PATCH = 20180203
+ 
+ # We don't append the patch to the version, since this only applies to releases
+ VERSION = $(NCURSES_MAJOR).$(NCURSES_MINOR)
+diff --git a/doc/html/man/adacurses6-config.1.html b/doc/html/man/adacurses6-config.1.html
+index d74c2a8a..d65c0490 100644
+--- a/doc/html/man/adacurses6-config.1.html
++++ b/doc/html/man/adacurses6-config.1.html
+@@ -125,7 +125,7 @@ <H1 class="no-header">ADACURSES 1   User Commands</H1>
+ </PRE><H2><a name="h2-SEE-ALSO">SEE ALSO</a></H2><PRE>
+        <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ 
+diff --git a/doc/html/man/captoinfo.1m.html b/doc/html/man/captoinfo.1m.html
+index bdff8230..3ff6cd89 100644
+--- a/doc/html/man/captoinfo.1m.html
++++ b/doc/html/man/captoinfo.1m.html
+@@ -190,7 +190,7 @@ <H1 class="no-header">captoinfo 1m</H1>
+ </PRE><H2><a name="h2-SEE-ALSO">SEE ALSO</a></H2><PRE>
+        <STRONG><A HREF="infocmp.1m.html">infocmp(1m)</A></STRONG>, <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>, <STRONG><A HREF="terminfo.5.html">terminfo(5)</A></STRONG>
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ </PRE><H2><a name="h2-AUTHOR">AUTHOR</a></H2><PRE>
+diff --git a/doc/html/man/clear.1.html b/doc/html/man/clear.1.html
+index 66563a05..c52afa80 100644
+--- a/doc/html/man/clear.1.html
++++ b/doc/html/man/clear.1.html
+@@ -148,7 +148,7 @@ <H1 class="no-header">clear 1</H1>
+ </PRE><H2><a name="h2-SEE-ALSO">SEE ALSO</a></H2><PRE>
+        <STRONG><A HREF="tput.1.html">tput(1)</A></STRONG>, <STRONG><A HREF="terminfo.5.html">terminfo(5)</A></STRONG>
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ 
+diff --git a/doc/html/man/form.3x.html b/doc/html/man/form.3x.html
+index 48ebfd41..950e3388 100644
+--- a/doc/html/man/form.3x.html
++++ b/doc/html/man/form.3x.html
+@@ -246,7 +246,7 @@ <H1 class="no-header">form 3x</H1>
+        <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>  and  related  pages  whose names begin "form_" for detailed
+        descriptions of the entry points.
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ 
+diff --git a/doc/html/man/infocmp.1m.html b/doc/html/man/infocmp.1m.html
+index dfafeedb..caf4d0df 100644
+--- a/doc/html/man/infocmp.1m.html
++++ b/doc/html/man/infocmp.1m.html
+@@ -481,7 +481,7 @@ <H1 class="no-header">infocmp 1m</H1>
+ 
+        https://invisible-island.net/ncurses/tctest.html
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ </PRE><H2><a name="h2-AUTHOR">AUTHOR</a></H2><PRE>
+diff --git a/doc/html/man/infotocap.1m.html b/doc/html/man/infotocap.1m.html
+index ff52c19f..3d72bfdf 100644
+--- a/doc/html/man/infotocap.1m.html
++++ b/doc/html/man/infotocap.1m.html
+@@ -85,7 +85,7 @@ <H1 class="no-header">infotocap 1m</H1>
+ </PRE><H2><a name="h2-SEE-ALSO">SEE ALSO</a></H2><PRE>
+        <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>, <STRONG><A HREF="tic.1m.html">tic(1m)</A></STRONG>, <STRONG><A HREF="infocmp.1m.html">infocmp(1m)</A></STRONG>, <STRONG><A HREF="terminfo.5.html">terminfo(5)</A></STRONG>
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ </PRE><H2><a name="h2-AUTHOR">AUTHOR</a></H2><PRE>
+diff --git a/doc/html/man/menu.3x.html b/doc/html/man/menu.3x.html
+index b51a2601..cc5f570f 100644
+--- a/doc/html/man/menu.3x.html
++++ b/doc/html/man/menu.3x.html
+@@ -221,7 +221,7 @@ <H1 class="no-header">menu 3x</H1>
+        <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>  and  related  pages  whose names begin "menu_" for detailed
+        descriptions of the entry points.
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ 
+diff --git a/doc/html/man/ncurses.3x.html b/doc/html/man/ncurses.3x.html
+index 1e1a8af6..5ccd68d7 100644
+--- a/doc/html/man/ncurses.3x.html
++++ b/doc/html/man/ncurses.3x.html
+@@ -59,7 +59,7 @@ <H1 class="no-header">ncurses 3x</H1>
+        method of updating  character  screens  with  reasonable  optimization.
+        This  implementation  is  "new  curses"  (ncurses)  and is the approved
+        replacement for 4.4BSD classic curses,  which  has  been  discontinued.
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+        The  <STRONG>ncurses</STRONG>  library emulates the curses library of System V Release 4
+        UNIX, and XPG4 (X/Open Portability Guide) curses  (also  known  as  XSI
+diff --git a/doc/html/man/ncurses6-config.1.html b/doc/html/man/ncurses6-config.1.html
+index 3ae08423..0e1d2a49 100644
+--- a/doc/html/man/ncurses6-config.1.html
++++ b/doc/html/man/ncurses6-config.1.html
+@@ -112,7 +112,7 @@ <H1 class="no-header">ncurses6-config 1</H1>
+ </PRE><H2><a name="h2-SEE-ALSO">SEE ALSO</a></H2><PRE>
+        <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ 
+diff --git a/doc/html/man/panel.3x.html b/doc/html/man/panel.3x.html
+index 30b3ef05..d18346f2 100644
+--- a/doc/html/man/panel.3x.html
++++ b/doc/html/man/panel.3x.html
+@@ -204,7 +204,7 @@ <H1 class="no-header">panel 3x</H1>
+ </PRE><H2><a name="h2-SEE-ALSO">SEE ALSO</a></H2><PRE>
+        <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>, <STRONG><A HREF="curs_variables.3x.html">curs_variables(3x)</A></STRONG>,
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ </PRE><H2><a name="h2-AUTHOR">AUTHOR</a></H2><PRE>
+diff --git a/doc/html/man/tabs.1.html b/doc/html/man/tabs.1.html
+index f957805c..dbf8b2da 100644
+--- a/doc/html/man/tabs.1.html
++++ b/doc/html/man/tabs.1.html
+@@ -164,7 +164,7 @@ <H1 class="no-header">tabs 1</H1>
+ </PRE><H2><a name="h2-SEE-ALSO">SEE ALSO</a></H2><PRE>
+        <STRONG><A HREF="tset.1.html">tset(1)</A></STRONG>, <STRONG><A HREF="infocmp.1m.html">infocmp(1m)</A></STRONG>, <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>, <STRONG><A HREF="terminfo.5.html">terminfo(5)</A></STRONG>.
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ 
+diff --git a/doc/html/man/terminfo.5.html b/doc/html/man/terminfo.5.html
+index 9e06e2ba..1516b738 100644
+--- a/doc/html/man/terminfo.5.html
++++ b/doc/html/man/terminfo.5.html
+@@ -74,7 +74,7 @@ <H1 class="no-header">terminfo 5   File Formats</H1>
+        <EM>Terminfo</EM> describes terminals by giving a set of capabilities which they
+        have, by specifying how to perform screen operations, and by specifying
+        padding  requirements  and  initialization  sequences.   This describes
+-       <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ </PRE><H3><a name="h3-Terminfo-Entry-Syntax">Terminfo Entry Syntax</a></H3><PRE>
+diff --git a/doc/html/man/tic.1m.html b/doc/html/man/tic.1m.html
+index 686ab158..24b5b58a 100644
+--- a/doc/html/man/tic.1m.html
++++ b/doc/html/man/tic.1m.html
+@@ -364,7 +364,7 @@ <H1 class="no-header">tic 1m</H1>
+        <STRONG><A HREF="infocmp.1m.html">infocmp(1m)</A></STRONG>,   <STRONG><A HREF="captoinfo.1m.html">captoinfo(1m)</A></STRONG>,   <STRONG><A HREF="infotocap.1m.html">infotocap(1m)</A></STRONG>,   <STRONG><A HREF="toe.1m.html">toe(1m)</A></STRONG>,   <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>,
+        <STRONG><A HREF="term.5.html">term(5)</A></STRONG>.  <STRONG><A HREF="terminfo.5.html">terminfo(5)</A></STRONG>.
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ </PRE><H2><a name="h2-AUTHOR">AUTHOR</a></H2><PRE>
+diff --git a/doc/html/man/toe.1m.html b/doc/html/man/toe.1m.html
+index 37012457..c0e5090a 100644
+--- a/doc/html/man/toe.1m.html
++++ b/doc/html/man/toe.1m.html
+@@ -113,7 +113,7 @@ <H1 class="no-header">toe 1m</H1>
+        <STRONG><A HREF="tic.1m.html">tic(1m)</A></STRONG>, <STRONG><A HREF="infocmp.1m.html">infocmp(1m)</A></STRONG>, <STRONG><A HREF="captoinfo.1m.html">captoinfo(1m)</A></STRONG>,  <STRONG><A HREF="infotocap.1m.html">infotocap(1m)</A></STRONG>,  <STRONG><A HREF="ncurses.3x.html">curses(3x)</A></STRONG>,  <STRONG>ter-</STRONG>
+        <STRONG><A HREF="terminfo.5.html">minfo(5)</A></STRONG>.
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ 
+diff --git a/doc/html/man/tput.1.html b/doc/html/man/tput.1.html
+index f28f36af..8d307419 100644
+--- a/doc/html/man/tput.1.html
++++ b/doc/html/man/tput.1.html
+@@ -482,7 +482,7 @@ <H1 class="no-header">tput 1</H1>
+ </PRE><H2><a name="h2-SEE-ALSO">SEE ALSO</a></H2><PRE>
+        <STRONG><A HREF="clear.1.html">clear(1)</A></STRONG>, <STRONG>stty(1)</STRONG>, <STRONG><A HREF="tabs.1.html">tabs(1)</A></STRONG>, <STRONG><A HREF="tset.1.html">tset(1)</A></STRONG>, <STRONG><A HREF="terminfo.5.html">terminfo(5)</A></STRONG>, <STRONG><A HREF="curs_termcap.3x.html">curs_termcap(3x)</A></STRONG>.
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ 
+diff --git a/doc/html/man/tset.1.html b/doc/html/man/tset.1.html
+index 36882224..2c54029f 100644
+--- a/doc/html/man/tset.1.html
++++ b/doc/html/man/tset.1.html
+@@ -389,7 +389,7 @@ <H1 class="no-header">tset 1</H1>
+        <STRONG>csh(1)</STRONG>,  <STRONG>sh(1)</STRONG>,  <STRONG>stty(1)</STRONG>,   <STRONG><A HREF="curs_terminfo.3x.html">curs_terminfo(3x)</A></STRONG>,   <STRONG>tty(4)</STRONG>,   <STRONG><A HREF="terminfo.5.html">terminfo(5)</A></STRONG>,
+        <STRONG>ttys(5)</STRONG>, <STRONG>environ(7)</STRONG>
+ 
+-       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180127).
++       This describes <STRONG>ncurses</STRONG> version 6.1 (patch 20180203).
+ 
+ 
+ 
+diff --git a/doc/html/man/user_caps.5.html b/doc/html/man/user_caps.5.html
+index 3ce74fbb..5495defb 100644
+--- a/doc/html/man/user_caps.5.html
++++ b/doc/html/man/user_caps.5.html
+@@ -1,6 +1,6 @@
+ <!-- 
+   ****************************************************************************
+-  * Copyright (c) 2017 Free Software Foundation, Inc.                        *
++  * Copyright (c) 2017,2018 Free Software Foundation, Inc.                   *
+   *                                                                          *
+   * Permission is hereby granted, free of charge, to any person obtaining a  *
+   * copy of this software and associated documentation files (the            *
+@@ -26,7 +26,7 @@
+   * sale, use or other dealings in this Software without prior written       *
+   * authorization.                                                           *
+   ****************************************************************************
+-  * @Id: user_caps.5,v 1.4 2017/11/25 20:13:12 tom Exp @
++  * @Id: user_caps.5,v 1.6 2018/02/03 22:38:17 tom Exp @
+ -->
+ <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+ <HTML>
+@@ -194,6 +194,12 @@ <H1 class="no-header">user_caps 5</H1>
+                 explicitly list the number of bits used  for  red,  green  and
+                 blue components as a slash-separated list of decimal integers.
+ 
++             Because  there  are  several  RGB  encodings in use, applications
++             which make assumptions about the number of  bits  per  color  are
++             unlikely  to  work reliably.  As a trivial case, for example, one
++             could define <STRONG>RGB#1</STRONG> to represent the standard eight  ANSI  colors,
++             i.e., one bit per color.
++
+           U8 <EM>boolean</EM>,  asserts  that ncurses must use Unicode values for line-
+              drawing characters, and that it should ignore the alternate char-
+              acter  set capabilities when the locale uses UTF-8 encoding.  For
+@@ -239,13 +245,13 @@ <H1 class="no-header">user_caps 5</H1>
+             ----------------------------------
+             2       Shift
+             3       Alt
++
+             4       Shift + Alt
+             5       Control
+             6       Shift + Control
+             7       Alt + Control
+             8       Shift + Alt + Control
+             9       Meta
+-
+             10      Meta + Shift
+             11      Meta + Alt
+             12      Meta + Alt + Shift
+diff --git a/man/user_caps.5 b/man/user_caps.5
+index fc2e0c3b..04830cb8 100644
+--- a/man/user_caps.5
++++ b/man/user_caps.5
+@@ -1,5 +1,5 @@
+ .\"***************************************************************************
+-.\" Copyright (c) 2017 Free Software Foundation, Inc.                        *
++.\" Copyright (c) 2017,2018 Free Software Foundation, Inc.                   *
+ .\"                                                                          *
+ .\" Permission is hereby granted, free of charge, to any person obtaining a  *
+ .\" copy of this software and associated documentation files (the            *
+@@ -26,7 +26,7 @@
+ .\" authorization.                                                           *
+ .\"***************************************************************************
+ .\"
+-.\" $Id: user_caps.5,v 1.4 2017/11/25 20:13:12 tom Exp $
++.\" $Id: user_caps.5,v 1.6 2018/02/03 22:38:17 tom Exp $
+ .TH user_caps 5
+ .ie \n(.g .ds `` \(lq
+ .el       .ds `` ``
+@@ -203,6 +203,12 @@ blue (and green) lose just as in the \fIboolean\fP case.
+ explicitly list the number of bits used for red, green and blue components
+ as a slash-separated list of decimal integers.
+ .RE
++.IP
++Because there are several RGB encodings in use,
++applications which make assumptions about the number of bits per color
++are unlikely to work reliably.
++As a trivial case, for example, one could define \fBRGB#1\fP
++to represent the standard eight ANSI colors, i.e., one bit per color.
+ .TP 3
+ U8
+ \fIboolean\fP,
+diff --git a/package/debian-mingw/changelog b/package/debian-mingw/changelog
+index b9b3881c..c71a1d50 100644
+--- a/package/debian-mingw/changelog
++++ b/package/debian-mingw/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180129) unstable; urgency=low
++ncurses6 (6.1+20180203) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Mon, 29 Jan 2018 19:32:37 -0500
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Wed, 31 Jan 2018 15:55:08 -0500
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian-mingw64/changelog b/package/debian-mingw64/changelog
+index b9b3881c..c71a1d50 100644
+--- a/package/debian-mingw64/changelog
++++ b/package/debian-mingw64/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180129) unstable; urgency=low
++ncurses6 (6.1+20180203) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Mon, 29 Jan 2018 19:32:37 -0500
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Wed, 31 Jan 2018 15:55:08 -0500
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian/changelog b/package/debian/changelog
+index 6abeab30..ac78dd13 100644
+--- a/package/debian/changelog
++++ b/package/debian/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180129) unstable; urgency=low
++ncurses6 (6.1+20180203) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Mon, 29 Jan 2018 19:32:37 -0500
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Wed, 31 Jan 2018 15:55:08 -0500
+ 
+ ncurses6 (5.9-20120608) unstable; urgency=low
+ 
+diff --git a/package/mingw-ncurses.nsi b/package/mingw-ncurses.nsi
+index 1cb40539..08adc733 100644
+--- a/package/mingw-ncurses.nsi
++++ b/package/mingw-ncurses.nsi
+@@ -1,4 +1,4 @@
+-; $Id: mingw-ncurses.nsi,v 1.255 2018/01/30 00:32:37 tom Exp $
++; $Id: mingw-ncurses.nsi,v 1.256 2018/01/31 20:55:08 tom Exp $
+ 
+ ; TODO add examples
+ ; TODO bump ABI to 6
+@@ -10,7 +10,7 @@
+ !define VERSION_MAJOR "6"
+ !define VERSION_MINOR "1"
+ !define VERSION_YYYY  "2018"
+-!define VERSION_MMDD  "0129"
++!define VERSION_MMDD  "0203"
+ !define VERSION_PATCH ${VERSION_YYYY}${VERSION_MMDD}
+ 
+ !define MY_ABI   "5"
+diff --git a/package/mingw-ncurses.spec b/package/mingw-ncurses.spec
+index 5a1d8379..72decc14 100644
+--- a/package/mingw-ncurses.spec
++++ b/package/mingw-ncurses.spec
+@@ -3,7 +3,7 @@
+ Summary: shared libraries for terminal handling
+ Name: mingw32-ncurses6
+ Version: 6.1
+-Release: 20180129
++Release: 20180203
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+diff --git a/package/ncurses.spec b/package/ncurses.spec
+index 59cccf34..8d8a3de3 100644
+--- a/package/ncurses.spec
++++ b/package/ncurses.spec
+@@ -1,7 +1,7 @@
+ Summary: shared libraries for terminal handling
+ Name: ncurses6
+ Version: 6.1
+-Release: 20180129
++Release: 20180203
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+diff --git a/package/ncursestw.map b/package/ncursestw.map
+index 8d27873f..8d17422b 100644
+--- a/package/ncursestw.map
++++ b/package/ncursestw.map
+@@ -1,4 +1,4 @@
+-# $Id: ncursestw.map,v 1.42 2017/12/30 20:51:38 tom Exp $
++# $Id: ncursestw.map,v 1.43 2018/01/31 23:58:06 tom Exp $
+ # script for shared library symbol-versioning using ld
+ #
+ # This file was generated by ncu-mapsyms
+@@ -1255,6 +1255,8 @@ NCURSESTW_6.1.20171230 {
+ 		extended_color_content_sp;
+ 		extended_pair_content;
+ 		extended_pair_content_sp;
++		extended_slk_color;
++		extended_slk_color_sp;
+ 		find_pair;
+ 		find_pair_sp;
+ 		free_pair;
+diff --git a/package/ncursestw.sym b/package/ncursestw.sym
+index 8f245f08..20e5f5c2 100644
+--- a/package/ncursestw.sym
++++ b/package/ncursestw.sym
+@@ -1,4 +1,4 @@
+-# $Id: ncursestw.sym,v 1.32 2017/08/11 17:33:23 tom Exp $
++# $Id: ncursestw.sym,v 1.33 2018/01/31 23:58:56 tom Exp $
+ # script for shared library symbol-visibility using libtool
+ #
+ # This file was generated by ncu-mapsyms
+@@ -343,6 +343,8 @@ extended_color_content
+ extended_color_content_sp
+ extended_pair_content
+ extended_pair_content_sp
++extended_slk_color
++extended_slk_color_sp
+ field_arg
+ field_back
+ field_buffer
+diff --git a/package/ncursesw.map b/package/ncursesw.map
+index 7d31437d..d4861825 100644
+--- a/package/ncursesw.map
++++ b/package/ncursesw.map
+@@ -1,4 +1,4 @@
+-# $Id: ncursesw.map,v 1.46 2017/12/30 20:51:38 tom Exp $
++# $Id: ncursesw.map,v 1.47 2018/01/31 23:58:25 tom Exp $
+ # script for shared library symbol-versioning using ld
+ #
+ # This file was generated by ncu-mapsyms
+@@ -1278,6 +1278,8 @@ NCURSESW_6.1.20171230 {
+ 		extended_color_content_sp;
+ 		extended_pair_content;
+ 		extended_pair_content_sp;
++		extended_slk_color;
++		extended_slk_color_sp;
+ 		find_pair;
+ 		find_pair_sp;
+ 		free_pair;
+diff --git a/package/ncursesw.sym b/package/ncursesw.sym
+index 889cfa0e..3dce4da2 100644
+--- a/package/ncursesw.sym
++++ b/package/ncursesw.sym
+@@ -1,4 +1,4 @@
+-# $Id: ncursesw.sym,v 1.32 2017/08/12 21:34:38 tom Exp $
++# $Id: ncursesw.sym,v 1.33 2018/01/31 23:58:44 tom Exp $
+ # script for shared library symbol-visibility using libtool
+ #
+ # This file was generated by ncu-mapsyms
+@@ -343,6 +343,8 @@ extended_color_content
+ extended_color_content_sp
+ extended_pair_content
+ extended_pair_content_sp
++extended_slk_color
++extended_slk_color_sp
+ field_arg
+ field_back
+ field_buffer
+diff --git a/test/linedata.h b/test/linedata.h
+index 751bc6b5..b97f1c97 100644
+--- a/test/linedata.h
++++ b/test/linedata.h
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 2009-2010,2012 Free Software Foundation, Inc.              *
++ * Copyright (c) 2009-2012,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -26,6 +26,16 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ 
++/*
++ * $Id: linedata.h,v 1.7 2018/02/03 22:51:43 tom Exp $
++ *
++ * Utility functions for reading a line of text from a file.
++ */
++#ifndef LINEDATA_H_incl
++#define LINEDATA_H_incl 1
++
++#include <test.priv.h>
++
+ #define isQUIT(c)     ((c) == QUIT || (c) == ESCAPE)
+ 
+ #define key_RECUR     CTRL('W')
+@@ -96,3 +106,5 @@ read_linedata(WINDOW *work)
+     }
+     return result;
+ }
++
++#endif /* LINEDATA_H_incl */
+diff --git a/test/modules b/test/modules
+index 7dde8b2e..1995b5b9 100644
+--- a/test/modules
++++ b/test/modules
+@@ -1,6 +1,6 @@
+-# $Id: modules,v 1.66 2017/10/22 16:06:33 tom Exp $
++# $Id: modules,v 1.67 2018/02/03 23:45:16 tom Exp $
+ ##############################################################################
+-# Copyright (c) 1998-2016,2017 Free Software Foundation, Inc.                #
++# Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.                #
+ #                                                                            #
+ # Permission is hereby granted, free of charge, to any person obtaining a    #
+ # copy of this software and associated documentation files (the "Software"), #
+@@ -84,7 +84,7 @@ popup_msg	progs		$(srcdir)	$(HEADER_DEPS)	$(srcdir)/popup_msg.h
+ railroad	progs		$(srcdir)	$(HEADER_DEPS)
+ rain		progs		$(srcdir)	$(HEADER_DEPS)	$(srcdir)/popup_msg.h
+ redraw		progs		$(srcdir)	$(HEADER_DEPS)	$(srcdir)/popup_msg.h
+-savescreen	progs		$(srcdir)	$(HEADER_DEPS)	$(srcdir)/popup_msg.h
++savescreen	progs		$(srcdir)	$(HEADER_DEPS)	$(srcdir)/popup_msg.h $(srcdir)/parse_rgb.h
+ sp_tinfo	progs		$(srcdir)	$(HEADER_DEPS)
+ tclock		progs		$(srcdir)	$(HEADER_DEPS)
+ test_add_wchstr	progs		$(srcdir)	$(HEADER_DEPS)	$(srcdir)/linedata.h
+diff --git a/test/parse_rgb.h b/test/parse_rgb.h
+new file mode 100644
+index 00000000..a0d093fe
+--- /dev/null
++++ b/test/parse_rgb.h
+@@ -0,0 +1,98 @@
++/****************************************************************************
++ * Copyright (c) 2018 Free Software Foundation, Inc.                        *
++ *                                                                          *
++ * Permission is hereby granted, free of charge, to any person obtaining a  *
++ * copy of this software and associated documentation files (the            *
++ * "Software"), to deal in the Software without restriction, including      *
++ * without limitation the rights to use, copy, modify, merge, publish,      *
++ * distribute, distribute with modifications, sublicense, and/or sell       *
++ * copies of the Software, and to permit persons to whom the Software is    *
++ * furnished to do so, subject to the following conditions:                 *
++ *                                                                          *
++ * The above copyright notice and this permission notice shall be included  *
++ * in all copies or substantial portions of the Software.                   *
++ *                                                                          *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS  *
++ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF               *
++ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.   *
++ * IN NO EVENT SHALL THE ABOVE COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,   *
++ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR    *
++ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR    *
++ * THE USE OR OTHER DEALINGS IN THE SOFTWARE.                               *
++ *                                                                          *
++ * Except as contained in this notice, the name(s) of the above copyright   *
++ * holders shall not be used in advertising or otherwise to promote the     *
++ * sale, use or other dealings in this Software without prior written       *
++ * authorization.                                                           *
++ ****************************************************************************/
++/*
++ * $Id: parse_rgb.h,v 1.4 2018/02/03 23:40:53 tom Exp $
++ *
++ * Sample implementation of ncurses RGB extension from user_caps(5).
++ */
++#ifndef PARSE_RBG_H_incl
++#define PARSE_RBG_H_incl 1
++
++#include <test.priv.h>
++
++#if HAVE_TIGETSTR && USE_WIDEC_SUPPORT
++static int
++parse_rgb(int *r_max, int *g_max, int *b_max)
++{
++    int colors = tigetnum("colors");
++    int result = ERR;
++
++    *r_max = *g_max = *b_max = 0;
++
++    if (colors > 0) {
++	int max_bits;
++	int bits;
++	int pwr2;
++	int r = 0, g = 0, b = 0;
++	char *data;
++	char ch;
++
++	for (max_bits = 0, pwr2 = 1;
++	     pwr2 < colors;
++	     ++max_bits, pwr2 <<= 1) {
++	    ;
++	}
++
++	if (tigetflag("RGB") > 0) {
++	    result = OK;
++	    r = g = b = (max_bits + 2) / 3;
++	} else if ((bits = tigetnum("RGB")) > 0) {
++	    result = OK;
++	    r = g = b = bits;
++	} else if ((data = tigetstr("RGB")) != ABSENT_STRING
++		   && data != CANCELLED_STRING
++		   && sscanf(data, "%d/%d/%d%c", &r, &g, &b, &ch) == 3) {
++	    result = OK;
++	}
++
++	if ((r + g + b) < max_bits) {
++	    result = ERR;
++	} else if (result == 0) {
++	    if (r > max_bits) {
++		r = max_bits;
++		g = b = 0;
++	    }
++	    *r_max = r;
++	    if (g > (max_bits -= r)) {
++		g = max_bits;
++		b = 0;
++	    }
++	    *g_max = g;
++	    if (b > (max_bits -= g)) {
++		b = max_bits;
++	    }
++	    *b_max = b;
++	}
++    }
++    return result;
++}
++#else
++#define parse_rgb(r,g,b) (ERR)
++#endif
++
++#endif /* PARSE_RBG_H_incl */
+diff --git a/test/popup_msg.h b/test/popup_msg.h
+index 1b0ef1ed..b728f21b 100644
+--- a/test/popup_msg.h
++++ b/test/popup_msg.h
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 2003-2013,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 2003-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -26,9 +26,9 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: popup_msg.h,v 1.3 2017/04/15 19:16:35 tom Exp $
++ * $Id: popup_msg.h,v 1.4 2018/02/03 21:07:55 tom Exp $
+  *
+- * Interface of edit_field.c
++ * Utility functions for a popup-message or help-screen.
+  */
+ 
+ #ifndef POPUP_MSG_H_incl
+diff --git a/test/savescreen.c b/test/savescreen.c
+index 722e4bb5..610b86d0 100644
+--- a/test/savescreen.c
++++ b/test/savescreen.c
+@@ -26,7 +26,7 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: savescreen.c,v 1.51 2018/01/14 17:39:47 tom Exp $
++ * $Id: savescreen.c,v 1.52 2018/02/03 23:18:50 tom Exp $
+  *
+  * Demonstrate save/restore functions from the curses library.
+  * Thomas Dickey - 2007/7/14
+@@ -34,6 +34,7 @@
+ 
+ #include <test.priv.h>
+ #include <popup_msg.h>
++#include <parse_rgb.h>
+ 
+ #if HAVE_SCR_DUMP
+ 
+@@ -374,37 +375,37 @@ main(int argc, char *argv[])
+ 		    init_pair((short) (n + MAX_ANSI), (short) n, (short) n);
+ 	    }
+ #if HAVE_TIGETSTR && USE_WIDEC_SUPPORT
+-	    else if (tigetflag("RGB") > 0) {
+-		int rows = LINES - 1;
+-		int cols = COLS - 1;
+-		/* FIXME: test all 3 types of capability */
+-		int b_max = 255;
+-		int r_max = 255;
+-		int g_max = 255;
+-		int b_delta = (b_max / rows);
+-		int r_delta = (r_max / cols);
+-		int g_delta = (g_max / cols);
+-		int row = 0;
+-
+-		b = 0;
+-		using_rgb = TRUE;
+-		while (row++ < rows) {
+-		    int col = 0;
+-		    r = 0;
+-		    g = g_max;
+-		    while (col++ < cols) {
+-			int color = (((r * (g_max + 1)) + g) * (b_max + 1)
+-				     + b + MAX_ANSI);
++	    else {
++		int r_max, g_max, b_max;
++
++		if (parse_rgb(&r_max, &g_max, &b_max) > 0) {
++		    int rows = LINES - 1;
++		    int cols = COLS - 1;
++		    int b_delta = (b_max / rows);
++		    int r_delta = (r_max / cols);
++		    int g_delta = (g_max / cols);
++		    int row = 0;
++
++		    b = 0;
++		    using_rgb = TRUE;
++		    while (row++ < rows) {
++			int col = 0;
++			r = 0;
++			g = g_max;
++			while (col++ < cols) {
++			    int color = (((r * (g_max + 1)) + g) * (b_max + 1)
++					 + b + MAX_ANSI);
+ #if HAVE_INIT_EXTENDED_COLOR
+-			init_extended_pair(pair, color, color);
++			    init_extended_pair(pair, color, color);
+ #else
+-			init_pair(pair, color, color);
++			    init_pair(pair, color, color);
+ #endif
+-			pair++;
+-			r += r_delta;
+-			g -= g_delta;
++			    pair++;
++			    r += r_delta;
++			    g -= g_delta;
++			}
++			b += b_delta;
+ 		    }
+-		    b += b_delta;
+ 		}
+ 	    }
+ #endif

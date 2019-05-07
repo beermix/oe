@@ -1,0 +1,516 @@
+From 61d8ae54ff6acd69e9dab2afb21591d44c46ee1f Mon Sep 17 00:00:00 2001
+From: "Thomas E. Dickey" <dickey@invisible-island.net>
+Date: Sun, 6 May 2018 00:58:46 +0000
+Subject: [PATCH] ncurses 6.1 - patch 20180505
+
++ add deprecation warnings for internal functions called by older
+  versions of tack.
++ fix a special case in PutAttrChar() where a cell is marked as
+  alternate-character set, but the terminal does not actually support
+  the given graphic character.  This would happen in an older terminal
+  such as vt52, which lacks most line-drawing capability.
++ use configure --with-config-suffix option to work around filename
+  conflict with Debian packages versus test-packages.
++ update tracemunch to work with perl 5.26.2, which changed the rules
+  for escaping regular expressions.
+---
+ NEWS                             | 14 +++++++++++++-
+ VERSION                          |  2 +-
+ dist.mk                          |  4 ++--
+ include/curses.h.in              |  9 ++++++++-
+ include/term_entry.h             | 17 ++++++++++++-----
+ include/tic.h                    | 21 ++++++++++++++-------
+ ncurses/tinfo/lib_acs.c          | 11 ++++++++---
+ ncurses/trace/lib_traceatr.c     | 10 ++++++----
+ ncurses/tty/tty_update.c         | 14 +++++++++++---
+ ncurses/widechar/lib_wacs.c      |  8 ++++----
+ package/debian-mingw/changelog   |  4 ++--
+ package/debian-mingw64/changelog |  4 ++--
+ package/debian/changelog         |  4 ++--
+ package/debian/rules             |  1 +
+ package/mingw-ncurses.nsi        |  4 ++--
+ package/mingw-ncurses.spec       |  2 +-
+ package/ncurses.spec             |  2 +-
+ test/tracemunch                  | 11 ++++++-----
+ 18 files changed, 96 insertions(+), 46 deletions(-)
+
+diff --git a/NEWS b/NEWS
+index 4ce3258f..c02a0947 100644
+--- a/NEWS
++++ b/NEWS
+@@ -25,7 +25,7 @@
+ -- sale, use or other dealings in this Software without prior written        --
+ -- authorization.                                                            --
+ -------------------------------------------------------------------------------
+--- $Id: NEWS,v 1.3119 2018/04/28 21:26:58 tom Exp $
++-- $Id: NEWS,v 1.3124 2018/05/05 21:05:04 tom Exp $
+ -------------------------------------------------------------------------------
+ 
+ This is a log of changes that ncurses has gone through since Zeyd started
+@@ -45,6 +45,18 @@ See the AUTHORS file for the corresponding full names.
+ Changes through 1.9.9e did not credit all contributions;
+ it is not possible to add this information.
+ 
++20180505
++	+ add deprecation warnings for internal functions called by older
++	  versions of tack.
++	+ fix a special case in PutAttrChar() where a cell is marked as
++	  alternate-character set, but the terminal does not actually support
++	  the given graphic character.  This would happen in an older terminal
++	  such as vt52, which lacks most line-drawing capability.
++	+ use configure --with-config-suffix option to work around filename
++	  conflict with Debian packages versus test-packages.
++	+ update tracemunch to work with perl 5.26.2, which changed the rules
++	  for escaping regular expressions.
++
+ 20180428
+ 	+ document new form-extension O_EDGE_INSERT_STAY (report by Leon
+ 	  Winter).
+diff --git a/VERSION b/VERSION
+index b5aa960b..89ec7d77 100644
+--- a/VERSION
++++ b/VERSION
+@@ -1 +1 @@
+-5:0:10	6.1	20180428
++5:0:10	6.1	20180505
+diff --git a/dist.mk b/dist.mk
+index 05ba0a0b..409c37c7 100644
+--- a/dist.mk
++++ b/dist.mk
+@@ -25,7 +25,7 @@
+ # use or other dealings in this Software without prior written               #
+ # authorization.                                                             #
+ ##############################################################################
+-# $Id: dist.mk,v 1.1221 2018/04/28 14:18:55 tom Exp $
++# $Id: dist.mk,v 1.1222 2018/05/02 00:12:25 tom Exp $
+ # Makefile for creating ncurses distributions.
+ #
+ # This only needs to be used directly as a makefile by developers, but
+@@ -37,7 +37,7 @@ SHELL = /bin/sh
+ # These define the major/minor/patch versions of ncurses.
+ NCURSES_MAJOR = 6
+ NCURSES_MINOR = 1
+-NCURSES_PATCH = 20180428
++NCURSES_PATCH = 20180505
+ 
+ # We don't append the patch to the version, since this only applies to releases
+ VERSION = $(NCURSES_MAJOR).$(NCURSES_MINOR)
+diff --git a/include/curses.h.in b/include/curses.h.in
+index c7d80a90..0f95c8fe 100644
+--- a/include/curses.h.in
++++ b/include/curses.h.in
+@@ -32,7 +32,7 @@
+  *     and: Thomas E. Dickey                        1996-on                 *
+  ****************************************************************************/
+ 
+-/* $Id: curses.h.in,v 1.258 2018/04/07 20:36:11 tom Exp $ */
++/* $Id: curses.h.in,v 1.259 2018/05/05 21:28:04 tom Exp $ */
+ 
+ #ifndef __NCURSES_H
+ #define __NCURSES_H
+@@ -580,6 +580,13 @@ extern NCURSES_EXPORT(int) wgetnstr_events (WINDOW *,char *,int,_nc_eventlist *)
+ #define	GCC_UNUSED /* nothing */
+ #endif
+ 
++#undef  GCC_DEPRECATED
++#if (__GNUC__ - 0 > 3 || (__GNUC__ - 0 == 3 && __GNUC_MINOR__ - 0 >= 2))
++#define GCC_DEPRECATED(msg) __attribute__((deprecated));
++#else
++#define GCC_DEPRECATED(msg) /* nothing */
++#endif
++
+ /*
+  * Curses uses a helper function.  Define our type for this to simplify
+  * extending it for the sp-funcs feature.
+diff --git a/include/term_entry.h b/include/term_entry.h
+index b97cc12b..b98b80e4 100644
+--- a/include/term_entry.h
++++ b/include/term_entry.h
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2015,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -32,7 +32,7 @@
+  *     and: Thomas E. Dickey                        1998-on                 *
+  ****************************************************************************/
+ 
+-/* $Id: term_entry.h,v 1.55 2017/04/06 22:45:34 tom Exp $ */
++/* $Id: term_entry.h,v 1.56 2018/05/06 00:19:41 tom Exp $ */
+ 
+ /*
+  *	term_entry.h -- interface to entry-manipulation code
+@@ -210,14 +210,21 @@ extern NCURSES_EXPORT(void) _nc_trace_xnames (TERMTYPE *);
+  * These entrypoints are used by tack.
+  */
+ 
++#undef  NCURSES_TACK_1_08
++#ifdef  NCURSES_INTERNALS
++#define NCURSES_TACK_1_08 /* nothing */
++#else
++#define NCURSES_TACK_1_08 GCC_DEPRECATED("upgrade to tack 1.08")
++#endif
++
+ /* alloc_ttype.c: elementary allocation code */
+-extern NCURSES_EXPORT(void) _nc_copy_termtype (TERMTYPE *, const TERMTYPE *);
++extern NCURSES_EXPORT(void) _nc_copy_termtype (TERMTYPE *, const TERMTYPE *) NCURSES_TACK_1_08;
+ 
+ /* lib_acs.c */
+-extern NCURSES_EXPORT(void) _nc_init_acs (void);	/* corresponds to traditional 'init_acs()' */
++extern NCURSES_EXPORT(void) _nc_init_acs (void) NCURSES_TACK_1_08;	/* corresponds to traditional 'init_acs()' */
+ 
+ /* free_ttype.c: elementary allocation code */
+-extern NCURSES_EXPORT(void) _nc_free_termtype (TERMTYPE *);
++extern NCURSES_EXPORT(void) _nc_free_termtype (TERMTYPE *) NCURSES_TACK_1_08;
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/include/tic.h b/include/tic.h
+index ec03f75a..fe7c2969 100644
+--- a/include/tic.h
++++ b/include/tic.h
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2012,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -33,7 +33,7 @@
+  ****************************************************************************/
+ 
+ /*
+- * $Id: tic.h,v 1.75 2017/07/29 23:21:06 tom Exp $
++ * $Id: tic.h,v 1.76 2018/05/06 00:19:34 tom Exp $
+  *	tic.h - Global variables and structures for the terminfo compiler.
+  */
+ 
+@@ -343,19 +343,26 @@ extern NCURSES_EXPORT(int) _nc_tic_written (void);
+  * These entrypoints are used by tack.
+  */
+ 
++#undef  NCURSES_TACK_1_08
++#ifdef  NCURSES_INTERNALS
++#define NCURSES_TACK_1_08 /* nothing */
++#else
++#define NCURSES_TACK_1_08 GCC_DEPRECATED("upgrade to tack 1.08")
++#endif
++
+ /* comp_hash.c: name lookup */
+ extern NCURSES_EXPORT(struct name_table_entry const *) _nc_find_entry
+-	(const char *, const HashValue *);
+-extern NCURSES_EXPORT(const HashValue *) _nc_get_hash_table (bool);
++	(const char *, const HashValue *) NCURSES_TACK_1_08;
++extern NCURSES_EXPORT(const HashValue *) _nc_get_hash_table (bool) NCURSES_TACK_1_08;
+ 
+ /* comp_scan.c: lexical analysis */
+-extern NCURSES_EXPORT(void) _nc_reset_input (FILE *, char *);
++extern NCURSES_EXPORT(void) _nc_reset_input (FILE *, char *) NCURSES_TACK_1_08;
+ 
+ /* comp_expand.c: expand string into readable form */
+-extern NCURSES_EXPORT(char *) _nc_tic_expand (const char *, bool, int);
++extern NCURSES_EXPORT(char *) _nc_tic_expand (const char *, bool, int) NCURSES_TACK_1_08;
+ 
+ /* comp_scan.c: decode string from readable form */
+-extern NCURSES_EXPORT(int) _nc_trans_string (char *, char *);
++extern NCURSES_EXPORT(int) _nc_trans_string (char *, char *) NCURSES_TACK_1_08;
+ 
+ #endif /* NCURSES_TERM_ENTRY_H_incl */
+ 
+diff --git a/ncurses/tinfo/lib_acs.c b/ncurses/tinfo/lib_acs.c
+index 221b1acc..c552f253 100644
+--- a/ncurses/tinfo/lib_acs.c
++++ b/ncurses/tinfo/lib_acs.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2014,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -39,7 +39,7 @@
+ #define CUR SP_TERMTYPE
+ #endif
+ 
+-MODULE_ID("$Id: lib_acs.c,v 1.46 2017/09/20 00:48:55 tom Exp $")
++MODULE_ID("$Id: lib_acs.c,v 1.47 2018/05/05 17:35:53 tom Exp $")
+ 
+ #if BROKEN_LINKER || USE_REENTRANT
+ #define MyBuffer _nc_prescreen.real_acs_map
+@@ -205,8 +205,13 @@ NCURSES_SP_NAME(_nc_init_acs) (NCURSES_SP_DCL0)
+ 	while (i + 1 < length) {
+ 	    if (acs_chars[i] != 0 && UChar(acs_chars[i]) < ACS_LEN) {
+ 		real_map[UChar(acs_chars[i])] = UChar(acs_chars[i + 1]) | A_ALTCHARSET;
+-		if (SP != 0)
++		T(("#%d real_map[%s] = %s",
++		   (int) i,
++		   _tracechar(UChar(acs_chars[i])),
++		   _tracechtype(real_map[UChar(acs_chars[i])])));
++		if (SP != 0) {
+ 		    SP->_screen_acs_map[UChar(acs_chars[i])] = TRUE;
++		}
+ 	    }
+ 	    i += 2;
+ 	}
+diff --git a/ncurses/trace/lib_traceatr.c b/ncurses/trace/lib_traceatr.c
+index 688c4e72..a4144ab5 100644
+--- a/ncurses/trace/lib_traceatr.c
++++ b/ncurses/trace/lib_traceatr.c
+@@ -43,7 +43,7 @@
+ #define CUR SP_TERMTYPE
+ #endif
+ 
+-MODULE_ID("$Id: lib_traceatr.c,v 1.91 2018/01/07 02:22:01 tom Exp $")
++MODULE_ID("$Id: lib_traceatr.c,v 1.92 2018/05/05 17:49:17 tom Exp $")
+ 
+ #define COLOR_OF(c) ((c < 0) ? "default" : (c > 7 ? color_of(c) : colors[c].name))
+ 
+@@ -285,19 +285,21 @@ _tracechtype2(int bufnum, chtype ch)
+ 
+     if (result != 0) {
+ 	const char *found;
++	attr_t attr = ChAttrOf(ch);
+ 
+ 	_nc_STRCPY(result, l_brace, TRACE_BUF_SIZE(bufnum));
+-	if ((found = _nc_altcharset_name(ChAttrOf(ch), ch)) != 0) {
++	if ((found = _nc_altcharset_name(attr, ch)) != 0) {
+ 	    (void) _nc_trace_bufcat(bufnum, found);
++	    attr &= ~A_ALTCHARSET;
+ 	} else
+ 	    (void) _nc_trace_bufcat(bufnum,
+ 				    _nc_tracechar(CURRENT_SCREEN,
+ 						  (int) ChCharOf(ch)));
+ 
+-	if (ChAttrOf(ch) != A_NORMAL) {
++	if (attr != A_NORMAL) {
+ 	    (void) _nc_trace_bufcat(bufnum, " | ");
+ 	    (void) _nc_trace_bufcat(bufnum,
+-				    _traceattr2(bufnum + 20, ChAttrOf(ch)));
++				    _traceattr2(bufnum + 20, attr));
+ 	}
+ 
+ 	result = _nc_trace_bufcat(bufnum, r_brace);
+diff --git a/ncurses/tty/tty_update.c b/ncurses/tty/tty_update.c
+index b5151b94..fd35c47b 100644
+--- a/ncurses/tty/tty_update.c
++++ b/ncurses/tty/tty_update.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2016,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -84,7 +84,7 @@
+ 
+ #include <ctype.h>
+ 
+-MODULE_ID("$Id: tty_update.c,v 1.297 2017/09/02 21:45:44 Jeb.Rosen Exp $")
++MODULE_ID("$Id: tty_update.c,v 1.298 2018/05/05 19:11:55 tom Exp $")
+ 
+ /*
+  * This define controls the line-breakout optimization.  Every once in a
+@@ -344,7 +344,9 @@ PutAttrChar(NCURSES_SP_DCLx CARG_CH_T ch)
+ 	    || is_wacs_value(CharOfD(ch))
+ #endif
+ 	)) {
++	int c8;
+ 	my_ch = CHDEREF(ch);	/* work around const param */
++	c8 = CharOf(my_ch);
+ #if USE_WIDEC_SUPPORT
+ 	/*
+ 	 * This is crude & ugly, but works most of the time.  It checks if the
+@@ -368,8 +370,14 @@ PutAttrChar(NCURSES_SP_DCLx CARG_CH_T ch)
+ 		chlen = 1;
+ 	    }
+ #endif /* !NCURSES_WCWIDTH_GRAPHICS */
+-	}
++	} else
+ #endif
++	if (!SP_PARM->_screen_acs_map[c8]) {
++	    chtype temp = UChar(SP_PARM->_acs_map[c8]);
++	    RemAttr(attr, A_ALTCHARSET);
++	    SetChar(my_ch, temp, AttrOf(attr));
++	}
++
+ 	/*
+ 	 * If we (still) have alternate character set, it is the normal 8bit
+ 	 * flavor.  The _screen_acs_map[] array tells if the character was
+diff --git a/ncurses/widechar/lib_wacs.c b/ncurses/widechar/lib_wacs.c
+index 8b91a735..da5b93e5 100644
+--- a/ncurses/widechar/lib_wacs.c
++++ b/ncurses/widechar/lib_wacs.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 2002-2015,2016 Free Software Foundation, Inc.              *
++ * Copyright (c) 2002-2016,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -32,7 +32,7 @@
+ 
+ #include <curses.priv.h>
+ 
+-MODULE_ID("$Id: lib_wacs.c,v 1.18 2016/05/28 23:09:20 tom Exp $")
++MODULE_ID("$Id: lib_wacs.c,v 1.19 2018/05/05 17:26:44 tom Exp $")
+ 
+ NCURSES_EXPORT_VAR(cchar_t) * _nc_wacs = 0;
+ 
+@@ -138,9 +138,9 @@ _nc_init_wacs(void)
+ 		SetChar(_nc_wacs[m], table[n].value[0], A_NORMAL);
+ 	    }
+ 
+-	    T(("#%d, wide:%d SetChar(%c, %#04x) = %s",
++	    T(("#%d, width:%d SetChar(%c, %s) = %s",
+ 	       n, wide, m,
+-	       table[n].value[active],
++	       _tracechar(table[n].value[active]),
+ 	       _tracecchar_t(&_nc_wacs[m])));
+ 	}
+     }
+diff --git a/package/debian-mingw/changelog b/package/debian-mingw/changelog
+index 7bfef6df..b8426442 100644
+--- a/package/debian-mingw/changelog
++++ b/package/debian-mingw/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180428) unstable; urgency=low
++ncurses6 (6.1+20180505) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 28 Apr 2018 10:18:56 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 01 May 2018 20:12:25 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian-mingw64/changelog b/package/debian-mingw64/changelog
+index 7bfef6df..b8426442 100644
+--- a/package/debian-mingw64/changelog
++++ b/package/debian-mingw64/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180428) unstable; urgency=low
++ncurses6 (6.1+20180505) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 28 Apr 2018 10:18:56 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 01 May 2018 20:12:25 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian/changelog b/package/debian/changelog
+index a31019e1..1fdb7675 100644
+--- a/package/debian/changelog
++++ b/package/debian/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180428) unstable; urgency=low
++ncurses6 (6.1+20180505) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 28 Apr 2018 10:18:56 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 01 May 2018 20:12:25 -0400
+ 
+ ncurses6 (5.9-20120608) unstable; urgency=low
+ 
+diff --git a/package/debian/rules b/package/debian/rules
+index 6dd38f78..7927f437 100755
+--- a/package/debian/rules
++++ b/package/debian/rules
+@@ -75,6 +75,7 @@ configure = \
+ 		--program-suffix=$(MY_ABI) \
+ 		--verbose \
+ 		--with-abi-version=$(MY_ABI) \
++		--with-config-suffix=dev \
+ 		--with-cxx-shared \
+ 		--with-default-terminfo-dir=$(MYDATA) \
+ 		--with-develop \
+diff --git a/package/mingw-ncurses.nsi b/package/mingw-ncurses.nsi
+index e105da1d..4391cb08 100644
+--- a/package/mingw-ncurses.nsi
++++ b/package/mingw-ncurses.nsi
+@@ -1,4 +1,4 @@
+-; $Id: mingw-ncurses.nsi,v 1.268 2018/04/28 14:18:55 tom Exp $
++; $Id: mingw-ncurses.nsi,v 1.269 2018/05/02 00:12:25 tom Exp $
+ 
+ ; TODO add examples
+ ; TODO bump ABI to 6
+@@ -10,7 +10,7 @@
+ !define VERSION_MAJOR "6"
+ !define VERSION_MINOR "1"
+ !define VERSION_YYYY  "2018"
+-!define VERSION_MMDD  "0428"
++!define VERSION_MMDD  "0505"
+ !define VERSION_PATCH ${VERSION_YYYY}${VERSION_MMDD}
+ 
+ !define MY_ABI   "5"
+diff --git a/package/mingw-ncurses.spec b/package/mingw-ncurses.spec
+index 48a645b3..12a749b7 100644
+--- a/package/mingw-ncurses.spec
++++ b/package/mingw-ncurses.spec
+@@ -3,7 +3,7 @@
+ Summary: shared libraries for terminal handling
+ Name: mingw32-ncurses6
+ Version: 6.1
+-Release: 20180428
++Release: 20180505
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+diff --git a/package/ncurses.spec b/package/ncurses.spec
+index d83ff220..08b2dee4 100644
+--- a/package/ncurses.spec
++++ b/package/ncurses.spec
+@@ -1,7 +1,7 @@
+ Summary: shared libraries for terminal handling
+ Name: ncurses6
+ Version: 6.1
+-Release: 20180428
++Release: 20180505
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+diff --git a/test/tracemunch b/test/tracemunch
+index cdb91bc8..0e05aaee 100755
+--- a/test/tracemunch
++++ b/test/tracemunch
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env perl
+-# $Id: tracemunch,v 1.19 2018/04/07 20:37:08 tom Exp $
++# $Id: tracemunch,v 1.20 2018/05/02 00:14:29 tom Exp $
+ ##############################################################################
+ # Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.                #
+ #                                                                            #
+@@ -37,9 +37,10 @@ use strict;
+ use warnings;
+ 
+ our $putattr =
+-  "PutAttrChar\\({{ '(.)' = 0[0-7]+ }}\\) at \\(([0-9]+), ([0-9]+)\\)";
++    'PutAttrChar\(\{\{ ' . "'(.)'"
++  . ' = 0[0-7]+ \}\}\) at \(([0-9]+), ([0-9]+)\)';
+ our $waddnstr =
+-  "waddnstr\\(0x([[:xdigit:]]+),\"([^\"]+)\",[0-9]+\\) called {A_NORMAL}";
++  'waddnstr\(0x([[:xdigit:]]+),"([^\"]+)",[0-9]+\) called \{A_NORMAL\}';
+ 
+ our $scr_nums = 0;
+ our $thr_nums = 0;
+@@ -107,7 +108,7 @@ while (<STDIN>) {
+         $awaiting = "curscr" if ( $_ =~ /creating curscr/ );
+         $awaiting = "newscr" if ( $_ =~ /creating newscr/ );
+         $awaiting = "stdscr" if ( $_ =~ /creating stdscr/ );
+-        $awaiting = "screen" if ( $_ =~ /^(\+ )*called {new_prescr\(\)/ );
++        $awaiting = "screen" if ( $_ =~ /^(\+ )*called \{new_prescr\(\)/ );
+         if ( $_ =~ /^create :window 0x([[:xdigit:]]+)/ ) {
+             $addr = "0x$1";
+             if ( $awaiting eq "curscr" ) {
+@@ -124,7 +125,7 @@ while (<STDIN>) {
+             }
+             $awaiting = "";
+         }
+-        elsif ( $_ =~ /^(\+ )*called {_nc_add_to_try\((0x[[:xdigit:]]+),/ ) {
++        elsif ( $_ =~ /^(\+ )*called \{_nc_add_to_try\((0x[[:xdigit:]]+),/ ) {
+             $try_addr{$2} = ++$try_nums unless defined $try_addr{$2};
+         }
+         elsif ( $_ =~ /^(\+ )*_nc_alloc_screen_sp 0x([[:xdigit:]]+)/ ) {

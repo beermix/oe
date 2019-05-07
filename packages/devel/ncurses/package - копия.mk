@@ -13,29 +13,17 @@ PKG_LONGDESC="A library is a free software emulation of curses in System V Relea
 # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
 PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
-			      --disable-termcap \
-			      --disable-warnings \
-			      --with-termlib=tinfo \
-			      --with-ticlib \
-			      --with-ncursesw \
-			      --disable-rpath \
-			      --without-ada \
-			      --without-tests \
-			      --without-debug \
-			      --without-manpages \
-			      --with-shared \
-			      --enable-static \
+PKG_CONFIGURE_OPTS_TARGET="--with-shared \
+			      --with-termlib \
+			      --enable-widec \
 			      --with-progs \
 			      --enable-pc-files \
-			      --enable-widec \
+			      --with-abi-version=6 \
+			      --enable-const \
+			      --enable-ext-colors \
+			      --with-versioned-syms \
+			      --with-progs \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
-
-PKG_CONFIGURE_OPTS_HOST="--without-ada \
-			    --without-tests \
-			    --without-debug \
-			    --without-manpages \
-			    --with-pkg-config-libdir=$TOOLCHAIN/lib/pkgconfig"
 
 post_makeinstall_target() {
   cp misc/ncurses-config $TOOLCHAIN/bin
@@ -47,13 +35,13 @@ post_makeinstall_target() {
   ln -sf menuw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
   ln -sf panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
   ln -sf tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
-  
-  echo "INPUT(-lncursesw -ltinfo)" > $INSTALL/usr/lib/libncurses.so
-  echo "INPUT(-lncursesw -ltinfo)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
 
-  echo "INPUT(-lncursesw -ltinfo)" > $INSTALL/usr/lib/libcursesw.so
-  echo "INPUT(-lncursesw -ltinfo)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
-  
+  echo "INPUT(-lncurses -ltinfo)" > $INSTALL/usr/lib/libncurses.so
+  echo "INPUT(-lncurses -ltinfo)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
+
+  echo "INPUT(-lncursesw -ltinfo)" > $INSTALL/usr/lib/libncursesw.so
+  echo "INPUT(-lncursesw -ltinfo)" > $SYSROOT_PREFIX/usr/lib/libncursesw.so
+
   ln -s libncurses.so $INSTALL/usr/lib/libcurses.so
   ln -sf libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
 

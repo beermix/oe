@@ -1,0 +1,364 @@
+From b86393354bb86154b7b860989e5ed8655611d30b Mon Sep 17 00:00:00 2001
+From: "Thomas E. Dickey" <dickey@invisible-island.net>
+Date: Sun, 18 Mar 2018 01:26:15 +0000
+Subject: [PATCH] ncurses 6.1 - patch 20180317
+
++ fix a check in infotocap which may not have detected a problem when
+  it should have.
++ add a check in tic for the case where setf/setb are given using
+  different strings, but provide identical results to setaf/setab.
++ further improve fix for terminfo.5 (patch by Kir Kolyshkin).
++ reorder loop-limit checks in winsnstr() in case the string has no
+  terminating null and only the number of characters is used (patch
+  by Gyorgy Jeney).
+---
+ NEWS                             | 12 ++++++-
+ VERSION                          |  2 +-
+ dist.mk                          |  4 +--
+ include/nc_tparm.h               |  5 ++-
+ man/MKterminfo.sh                |  4 +--
+ ncurses/base/lib_insnstr.c       |  6 ++--
+ package/debian-mingw/changelog   |  4 +--
+ package/debian-mingw64/changelog |  4 +--
+ package/debian/changelog         |  4 +--
+ package/mingw-ncurses.nsi        |  4 +--
+ package/mingw-ncurses.spec       |  2 +-
+ package/ncurses.spec             |  2 +-
+ progs/tic.c                      | 58 +++++++++++++++++++++++++-------
+ 13 files changed, 76 insertions(+), 35 deletions(-)
+
+diff --git a/NEWS b/NEWS
+index d714ecc0..d9a731f8 100644
+--- a/NEWS
++++ b/NEWS
+@@ -25,7 +25,7 @@
+ -- sale, use or other dealings in this Software without prior written        --
+ -- authorization.                                                            --
+ -------------------------------------------------------------------------------
+--- $Id: NEWS,v 1.3096 2018/03/03 22:07:39 tom Exp $
++-- $Id: NEWS,v 1.3102 2018/03/17 19:47:51 tom Exp $
+ -------------------------------------------------------------------------------
+ 
+ This is a log of changes that ncurses has gone through since Zeyd started
+@@ -45,6 +45,16 @@ See the AUTHORS file for the corresponding full names.
+ Changes through 1.9.9e did not credit all contributions;
+ it is not possible to add this information.
+ 
++20180317
++	+ fix a check in infotocap which may not have detected a problem when
++	  it should have.
++	+ add a check in tic for the case where setf/setb are given using
++	  different strings, but provide identical results to setaf/setab.
++	+ further improve fix for terminfo.5 (patch by Kir Kolyshkin).
++	+ reorder loop-limit checks in winsnstr() in case the string has no
++	  terminating null and only the number of characters is used (patch
++	  by Gyorgy Jeney).
++
+ 20180303
+ 	+ modify TurnOn/TurnOff macros in lib_vidattr.c and lib_vid_attr.c to
+ 	  avoid expansion of "CUR" in trace.
+diff --git a/VERSION b/VERSION
+index 8ef25560..533a2416 100644
+--- a/VERSION
++++ b/VERSION
+@@ -1 +1 @@
+-5:0:10	6.1	20180303
++5:0:10	6.1	20180317
+diff --git a/dist.mk b/dist.mk
+index ea719189..e084cb36 100644
+--- a/dist.mk
++++ b/dist.mk
+@@ -25,7 +25,7 @@
+ # use or other dealings in this Software without prior written               #
+ # authorization.                                                             #
+ ##############################################################################
+-# $Id: dist.mk,v 1.1213 2018/02/26 23:33:42 tom Exp $
++# $Id: dist.mk,v 1.1215 2018/03/17 16:49:57 tom Exp $
+ # Makefile for creating ncurses distributions.
+ #
+ # This only needs to be used directly as a makefile by developers, but
+@@ -37,7 +37,7 @@ SHELL = /bin/sh
+ # These define the major/minor/patch versions of ncurses.
+ NCURSES_MAJOR = 6
+ NCURSES_MINOR = 1
+-NCURSES_PATCH = 20180303
++NCURSES_PATCH = 20180317
+ 
+ # We don't append the patch to the version, since this only applies to releases
+ VERSION = $(NCURSES_MAJOR).$(NCURSES_MINOR)
+diff --git a/include/nc_tparm.h b/include/nc_tparm.h
+index ed10173a..d2670a2b 100644
+--- a/include/nc_tparm.h
++++ b/include/nc_tparm.h
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 2006-2012,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 2006-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -30,7 +30,7 @@
+  *  Author: Thomas E. Dickey                        2006                    *
+  ****************************************************************************/
+ 
+-/* $Id: nc_tparm.h,v 1.8 2017/07/22 17:09:46 tom Exp $ */
++/* $Id: nc_tparm.h,v 1.9 2018/03/17 19:19:58 tom Exp $ */
+ 
+ #ifndef NC_TPARM_included
+ #define NC_TPARM_included 1
+@@ -73,7 +73,6 @@
+ #define TPARM_3(a,b,c,d) TPARM_4(a,b,c,d,0)
+ #define TPARM_2(a,b,c) TPARM_3(a,b,c,0)
+ #define TPARM_1(a,b) TPARM_2(a,b,0)
+-#define TPARM_1(a,b) TPARM_2(a,b,0)
+ #define TPARM_0(a) TPARM_1(a,0)
+ #endif
+ 
+diff --git a/man/MKterminfo.sh b/man/MKterminfo.sh
+index 1b6f8945..4d9ae18c 100755
+--- a/man/MKterminfo.sh
++++ b/man/MKterminfo.sh
+@@ -1,5 +1,5 @@
+ #!/bin/sh
+-# $Id: MKterminfo.sh,v 1.15 2018/03/03 19:25:58 tom Exp $
++# $Id: MKterminfo.sh,v 1.16 2018/03/17 18:03:51 Kir.Kolyshkin Exp $
+ #
+ # MKterminfo.sh -- generate terminfo.5 from Caps tabular data
+ #
+@@ -71,7 +71,7 @@ rm -f $sorted $temp $unsorted
+ sed -n <$caps "\
+ /%%-STOP-HERE-%%/q
+ /^#%center/s, expand,,
+-/^#%lw[1-9]/s, lw[1-9][0-9]*\., l.,
++/^#%lw25/s, lw6 , lw7 ,
+ /^#%/s/#%//p
+ /^#/d
+ s/[	][	]*/	/g
+diff --git a/ncurses/base/lib_insnstr.c b/ncurses/base/lib_insnstr.c
+index d1478710..8ee26a80 100644
+--- a/ncurses/base/lib_insnstr.c
++++ b/ncurses/base/lib_insnstr.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 2004-2009,2016 Free Software Foundation, Inc.              *
++ * Copyright (c) 2004-2016,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -40,7 +40,7 @@
+ #include <curses.priv.h>
+ #include <ctype.h>
+ 
+-MODULE_ID("$Id: lib_insnstr.c,v 1.5 2016/05/28 21:03:33 tom Exp $")
++MODULE_ID("$Id: lib_insnstr.c,v 1.6 2018/03/10 20:13:59 Gyorgy.Jeney Exp $")
+ 
+ NCURSES_EXPORT(int)
+ winsnstr(WINDOW *win, const char *s, int n)
+@@ -81,7 +81,7 @@ winsnstr(WINDOW *win, const char *s, int n)
+ 	    NCURSES_SIZE_T ox = win->_curx;
+ 	    const unsigned char *cp;
+ 
+-	    for (cp = str; *cp && (n <= 0 || (cp - str) < n); cp++) {
++	    for (cp = str; (n <= 0 || (cp - str) < n) && *cp; cp++) {
+ 		_nc_insert_ch(sp, win, (chtype) UChar(*cp));
+ 	    }
+ 	    win->_curx = ox;
+diff --git a/package/debian-mingw/changelog b/package/debian-mingw/changelog
+index 5c3da74f..500b2464 100644
+--- a/package/debian-mingw/changelog
++++ b/package/debian-mingw/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180303) unstable; urgency=low
++ncurses6 (6.1+20180317) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Mon, 26 Feb 2018 18:33:42 -0500
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 17 Mar 2018 12:49:57 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian-mingw64/changelog b/package/debian-mingw64/changelog
+index 5c3da74f..500b2464 100644
+--- a/package/debian-mingw64/changelog
++++ b/package/debian-mingw64/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180303) unstable; urgency=low
++ncurses6 (6.1+20180317) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Mon, 26 Feb 2018 18:33:42 -0500
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 17 Mar 2018 12:49:57 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian/changelog b/package/debian/changelog
+index bd7084fa..b4cdb231 100644
+--- a/package/debian/changelog
++++ b/package/debian/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180303) unstable; urgency=low
++ncurses6 (6.1+20180317) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Mon, 26 Feb 2018 18:33:42 -0500
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sat, 17 Mar 2018 12:49:57 -0400
+ 
+ ncurses6 (5.9-20120608) unstable; urgency=low
+ 
+diff --git a/package/mingw-ncurses.nsi b/package/mingw-ncurses.nsi
+index 8309f998..7128fedc 100644
+--- a/package/mingw-ncurses.nsi
++++ b/package/mingw-ncurses.nsi
+@@ -1,4 +1,4 @@
+-; $Id: mingw-ncurses.nsi,v 1.260 2018/02/26 23:33:42 tom Exp $
++; $Id: mingw-ncurses.nsi,v 1.262 2018/03/17 16:49:57 tom Exp $
+ 
+ ; TODO add examples
+ ; TODO bump ABI to 6
+@@ -10,7 +10,7 @@
+ !define VERSION_MAJOR "6"
+ !define VERSION_MINOR "1"
+ !define VERSION_YYYY  "2018"
+-!define VERSION_MMDD  "0303"
++!define VERSION_MMDD  "0317"
+ !define VERSION_PATCH ${VERSION_YYYY}${VERSION_MMDD}
+ 
+ !define MY_ABI   "5"
+diff --git a/package/mingw-ncurses.spec b/package/mingw-ncurses.spec
+index 3cec4c85..39799961 100644
+--- a/package/mingw-ncurses.spec
++++ b/package/mingw-ncurses.spec
+@@ -3,7 +3,7 @@
+ Summary: shared libraries for terminal handling
+ Name: mingw32-ncurses6
+ Version: 6.1
+-Release: 20180303
++Release: 20180317
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+diff --git a/package/ncurses.spec b/package/ncurses.spec
+index 364a2dfa..0866fd36 100644
+--- a/package/ncurses.spec
++++ b/package/ncurses.spec
+@@ -1,7 +1,7 @@
+ Summary: shared libraries for terminal handling
+ Name: ncurses6
+ Version: 6.1
+-Release: 20180303
++Release: 20180317
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+diff --git a/progs/tic.c b/progs/tic.c
+index da227c32..711ed11b 100644
+--- a/progs/tic.c
++++ b/progs/tic.c
+@@ -48,7 +48,7 @@
+ #include <parametrized.h>
+ #include <transform.h>
+ 
+-MODULE_ID("$Id: tic.c,v 1.252 2018/01/25 19:16:50 tom Exp $")
++MODULE_ID("$Id: tic.c,v 1.256 2018/03/18 00:05:10 tom Exp $")
+ 
+ #define STDIN_NAME "<stdin>"
+ 
+@@ -1129,6 +1129,27 @@ check_acs(TERMTYPE2 *tp)
+     }
+ }
+ 
++static bool
++same_color(NCURSES_CONST char *oldcap, NCURSES_CONST char *newcap, int limit)
++{
++    bool result = FALSE;
++    if (limit > 16)
++	limit = 16;
++    if (limit >= 8) {
++	int n;
++	int same;
++	for (n = same = 0; n < limit; ++n) {
++	    char *oldvalue = strdup(TPARM_1(oldcap, n));
++	    char *newvalue = strdup(TPARM_1(newcap, n));
++	    same += !strcmp(oldvalue, newvalue);
++	    free(oldvalue);
++	    free(newvalue);
++	}
++	result = (same == limit);
++    }
++    return result;
++}
++
+ /*
+  * Check if the color capabilities are consistent
+  */
+@@ -1145,21 +1166,29 @@ check_colors(TERMTYPE2 *tp)
+     PAIRED(set_color_pair, initialize_pair);
+ 
+     if (VALID_STRING(set_foreground)
+-	&& VALID_STRING(set_a_foreground)
+-	&& !_nc_capcmp(set_foreground, set_a_foreground))
+-	_nc_warning("expected setf/setaf to be different");
++	&& VALID_STRING(set_a_foreground)) {
++	if (!_nc_capcmp(set_foreground, set_a_foreground)) {
++	    _nc_warning("expected setf/setaf to be different");
++	} else if (same_color(set_foreground, set_a_foreground, max_colors)) {
++	    _nc_warning("setf/setaf are equivalent");
++	}
++    }
+ 
+     if (VALID_STRING(set_background)
+-	&& VALID_STRING(set_a_background)
+-	&& !_nc_capcmp(set_background, set_a_background))
+-	_nc_warning("expected setb/setab to be different");
++	&& VALID_STRING(set_a_background)) {
++	if (!_nc_capcmp(set_background, set_a_background)) {
++	    _nc_warning("expected setb/setab to be different");
++	} else if (same_color(set_background, set_a_background, max_colors)) {
++	    _nc_warning("setb/setab are equivalent");
++	}
++    }
+ 
+     /* see: has_colors() */
+     if (VALID_NUMERIC(max_colors) && VALID_NUMERIC(max_pairs)
+-	&& (((set_foreground != NULL)
+-	     && (set_background != NULL))
+-	    || ((set_a_foreground != NULL)
+-		&& (set_a_background != NULL))
++	&& ((VALID_STRING(set_foreground)
++	     && VALID_STRING(set_background))
++	    || (VALID_STRING(set_a_foreground)
++		&& VALID_STRING(set_a_background))
+ 	    || set_color_pair)) {
+ 	if (!VALID_STRING(orig_pair) && !VALID_STRING(orig_colors))
+ 	    _nc_warning("expected either op/oc string for resetting colors");
+@@ -2075,7 +2104,7 @@ check_1_infotocap(const char *name, NCURSES_CONST char *value, int count)
+ 			 myParam(9));
+ 	break;
+     }
+-    return result;
++    return strdup(result);
+ }
+ 
+ #define IsDelay(ch) ((ch) == '.' || isdigit(UChar(ch)))
+@@ -2227,7 +2256,8 @@ check_infotocap(TERMTYPE2 *tp, int i, const char *value)
+ 	    || !strcmp(name, "setb")
+ 	    || !strcmp(name, "setaf")
+ 	    || !strcmp(name, "setab")) {
+-	    limit = max_colors;
++	    if ((limit = max_colors) > 16)
++		limit = 16;
+ 	}
+ 	for (count = 0; count < limit; ++count) {
+ 	    char *ti_check = check_1_infotocap(name, ti_value, count);
+@@ -2243,6 +2273,8 @@ check_infotocap(TERMTYPE2 *tp, int i, const char *value)
+ 		_nc_warning("tparm-conversion of %s(%d) differs between\n\tterminfo %s\n\ttermcap  %s",
+ 			    name, count, ti_check, tc_check);
+ 	    }
++	    free(ti_check);
++	    free(tc_check);
+ 	}
+     } else if (params == 0 && !same_ti_tc(ti_value, tc_value, &embedded)) {
+ 	if (embedded) {

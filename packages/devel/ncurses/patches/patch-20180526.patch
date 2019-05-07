@@ -1,0 +1,3845 @@
+From 0237f10a296593d54fd8b2aa144921983085e002 Mon Sep 17 00:00:00 2001
+From: "Thomas E. Dickey" <dickey@invisible-island.net>
+Date: Sun, 27 May 2018 01:00:14 +0000
+Subject: [PATCH] ncurses 6.1 - patch 20180526
+
++ add note in curs_util.3x about unctrl.h
++ review/improve header files to ensure that those include necessary
+  files except for the previously-documented cases (report by Isaac
+  Pascual Monells).
++ improved test-package scripts, adapted from byacc 1.9 20180525.
++ fix some gcc8 warnings seen in Redhat package build, but
+  work around bug in gcc8 compiler warnings in comp_parse.c
+---
+ Ada95/package/AdaCurses-doc.spec |   12 +-
+ NEWS                             |   11 +-
+ VERSION                          |    2 +-
+ c++/etip.h.in                    |    6 +-
+ configure                        | 2516 +++++++++++++++---------------
+ configure.in                     |   64 +-
+ dist.mk                          |    4 +-
+ include/term_entry.h             |    3 +-
+ man/curs_util.3x                 |   14 +-
+ ncurses/curses.priv.h            |   22 +-
+ ncurses/tinfo/comp_parse.c       |    4 +-
+ ncurses/tinfo/write_entry.c      |    6 +-
+ package/debian-mingw/changelog   |    4 +-
+ package/debian-mingw64/changelog |    4 +-
+ package/debian/changelog         |    4 +-
+ package/mingw-ncurses.nsi        |    4 +-
+ package/mingw-ncurses.spec       |    2 +-
+ package/ncurses.spec             |   49 +-
+ progs/dump_entry.h               |    9 +-
+ test/demo_panels.c               |   28 +-
+ test/ditto.c                     |    7 +-
+ test/list_keys.c                 |    6 +-
+ test/picsmap.c                   |    4 +-
+ test/rain.c                      |   14 +-
+ test/test.priv.h                 |    6 +-
+ test/worm.c                      |   27 +-
+ 26 files changed, 1455 insertions(+), 1377 deletions(-)
+
+diff --git a/Ada95/package/AdaCurses-doc.spec b/Ada95/package/AdaCurses-doc.spec
+index c8d11338..42c9ad9d 100644
+--- a/Ada95/package/AdaCurses-doc.spec
++++ b/Ada95/package/AdaCurses-doc.spec
+@@ -3,7 +3,7 @@ Summary: AdaCurses - Ada95 binding documentation for ncurses
+ %define AppVersion MAJOR.MINOR
+ %define AppRelease YYYYMMDD
+ %define AppPackage %{AppProgram}-doc
+-# $Id: AdaCurses-doc.spec,v 1.4 2017/12/09 20:41:39 tom Exp $
++# $Id: AdaCurses-doc.spec,v 1.5 2018/05/26 20:26:20 tom Exp $
+ Name: %{AppPackage}
+ Version: %{AppVersion}
+ Release: %{AppRelease}
+@@ -25,11 +25,11 @@ distribution, for patch-date YYYYMMDD.
+ %build
+ 
+ INSTALL_PROGRAM='${INSTALL}' \
+-	./configure \
+-		--target %{_target_platform} \
+-		--prefix=%{_prefix} \
+-		--datadir=%{_datadir} \
+-		--with-ada-sharedlib
++%configure \
++	--target %{_target_platform} \
++	--prefix=%{_prefix} \
++	--datadir=%{_datadir} \
++	--with-ada-sharedlib
+ 
+ %install
+ [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
+diff --git a/NEWS b/NEWS
+index f01ae31e..1df56e55 100644
+--- a/NEWS
++++ b/NEWS
+@@ -25,7 +25,7 @@
+ -- sale, use or other dealings in this Software without prior written        --
+ -- authorization.                                                            --
+ -------------------------------------------------------------------------------
+--- $Id: NEWS,v 1.3131 2018/05/19 21:17:03 tom Exp $
++-- $Id: NEWS,v 1.3134 2018/05/26 20:27:35 tom Exp $
+ -------------------------------------------------------------------------------
+ 
+ This is a log of changes that ncurses has gone through since Zeyd started
+@@ -45,6 +45,15 @@ See the AUTHORS file for the corresponding full names.
+ Changes through 1.9.9e did not credit all contributions;
+ it is not possible to add this information.
+ 
++20180526
++	+ add note in curs_util.3x about unctrl.h
++	+ review/improve header files to ensure that those include necessary
++	  files except for the previously-documented cases (report by Isaac
++	  Pascual Monells).
++	+ improved test-package scripts, adapted from byacc 1.9 20180525.
++	+ fix some gcc8 warnings seen in Redhat package build, but
++	  work around bug in gcc8 compiler warnings in comp_parse.c
++
+ 20180519
+ 	+ formatting fixes for manpages, regenerate man-html documentation.
+ 	+ trim spurious whitespace from tmux in 2018-02-24 changes;
+diff --git a/VERSION b/VERSION
+index ea756714..b5635be0 100644
+--- a/VERSION
++++ b/VERSION
+@@ -1 +1 @@
+-5:0:10	6.1	20180519
++5:0:10	6.1	20180526
+diff --git a/c++/etip.h.in b/c++/etip.h.in
+index fbef3589..222d0666 100644
+--- a/c++/etip.h.in
++++ b/c++/etip.h.in
+@@ -1,6 +1,6 @@
+ // * This makes emacs happy -*-Mode: C++;-*-
+ /****************************************************************************
+- * Copyright (c) 1998-2012,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -31,7 +31,7 @@
+  *   Author: Juergen Pfeifer, 1997                                          *
+  ****************************************************************************/
+ 
+-// $Id: etip.h.in,v 1.41 2017/06/24 21:57:16 tom Exp $
++// $Id: etip.h.in,v 1.42 2018/05/26 14:47:47 tom Exp $
+ 
+ #ifndef NCURSES_ETIP_H_incl
+ #define NCURSES_ETIP_H_incl 1
+@@ -113,7 +113,7 @@
+ #  include <generic.h>
+ #endif
+ 
+-#include <ncurses_dll.h>
++#include <curses.h>
+ 
+ extern "C" {
+ #if HAVE_VALUES_H
+diff --git a/configure b/configure
+index ee076131..7fc2fbaf 100755
+--- a/configure
++++ b/configure
+@@ -737,15 +737,15 @@ Options to Specify the Libraries Built/Used:
+   --with-lib-prefix       override library-prefix
+   --with-termlib          generate separate terminfo library
+   --with-ticlib           generate separate tic library
+-  --with-gpm              use Alessandro Rubini's GPM library
+-  --without-dlsym         do not use dlsym() to load GPM dynamically
+-  --with-sysmouse         use sysmouse (FreeBSD console)
+   --enable-rpath          use rpath option when generating shared libraries
+   --disable-relink        relink shared libraries during install
+   --with-shlib-version=X  Specify rel or abi version for shared libs
+   --with-libtool-opts=XXX specify additional libtool options
+   --with-export-syms=XXX  limit exported symbols using libtool
+   --with-versioned-syms=X markup versioned symbols using ld
++  --with-gpm              use Alessandro Rubini's GPM library
++  --without-dlsym         do not use dlsym() to load GPM dynamically
++  --with-sysmouse         use sysmouse (FreeBSD console)
+   --disable-lib-suffixes  disable library suffixes
+   --disable-rpath-hack    don't add rpath options for additional libraries
+ Fine-Tuning Your Configuration:
+@@ -5279,1565 +5279,1565 @@ fi;
+ echo "$as_me:5279: result: $with_ticlib" >&5
+ echo "${ECHO_T}$with_ticlib" >&6
+ 
+-### Checks for special libraries, must be done up-front.
+-SHLIB_LIST=""
++if test X"$CC_G_OPT" = X"" ; then
++	CC_G_OPT='-g'
++	test -n "$GCC" && test "x${ac_cv_prog_cc_g}" != xyes && CC_G_OPT=''
++fi
+ 
+-echo "$as_me:5285: checking if you want to link with the GPM mouse library" >&5
+-echo $ECHO_N "checking if you want to link with the GPM mouse library... $ECHO_C" >&6
++if test X"$CXX_G_OPT" = X"" ; then
++	CXX_G_OPT='-g'
++	test -n "$GXX" && test "x${ac_cv_prog_cxx_g}" != xyes && CXX_G_OPT=''
++fi
+ 
+-# Check whether --with-gpm or --without-gpm was given.
+-if test "${with_gpm+set}" = set; then
+-  withval="$with_gpm"
+-  with_gpm=$withval
++echo "$as_me:5292: checking for default loader flags" >&5
++echo $ECHO_N "checking for default loader flags... $ECHO_C" >&6
++case $DFT_LWR_MODEL in
++(libtool) LD_MODEL=''   ;;
++(normal)  LD_MODEL=''   ;;
++(debug)   LD_MODEL=$CC_G_OPT ;;
++(profile) LD_MODEL='-pg';;
++(shared)  LD_MODEL=''   ;;
++esac
++echo "$as_me:5301: result: $LD_MODEL" >&5
++echo "${ECHO_T}$LD_MODEL" >&6
++
++case $DFT_LWR_MODEL in
++(shared)
++
++echo "$as_me:5307: checking if rpath option should be used" >&5
++echo $ECHO_N "checking if rpath option should be used... $ECHO_C" >&6
++
++# Check whether --enable-rpath or --disable-rpath was given.
++if test "${enable_rpath+set}" = set; then
++  enableval="$enable_rpath"
++  cf_cv_enable_rpath=$enableval
+ else
+-  with_gpm=maybe
++  cf_cv_enable_rpath=no
+ fi;
+-echo "$as_me:5295: result: $with_gpm" >&5
+-echo "${ECHO_T}$with_gpm" >&6
++echo "$as_me:5317: result: $cf_cv_enable_rpath" >&5
++echo "${ECHO_T}$cf_cv_enable_rpath" >&6
+ 
+-if test "$with_gpm" != no ; then
+-	echo "$as_me:5299: checking for gpm.h" >&5
+-echo $ECHO_N "checking for gpm.h... $ECHO_C" >&6
+-if test "${ac_cv_header_gpm_h+set}" = set; then
+-  echo $ECHO_N "(cached) $ECHO_C" >&6
+-else
+-  cat >conftest.$ac_ext <<_ACEOF
+-#line 5305 "configure"
+-#include "confdefs.h"
+-#include <gpm.h>
+-_ACEOF
+-if { (eval echo "$as_me:5309: \"$ac_cpp conftest.$ac_ext\"") >&5
+-  (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
+-  ac_status=$?
+-  egrep -v '^ *\+' conftest.er1 >conftest.err
+-  rm -f conftest.er1
+-  cat conftest.err >&5
+-  echo "$as_me:5315: \$? = $ac_status" >&5
+-  (exit $ac_status); } >/dev/null; then
+-  if test -s conftest.err; then
+-    ac_cpp_err=$ac_c_preproc_warn_flag
+-  else
+-    ac_cpp_err=
+-  fi
+-else
+-  ac_cpp_err=yes
+-fi
+-if test -z "$ac_cpp_err"; then
+-  ac_cv_header_gpm_h=yes
++echo "$as_me:5320: checking if shared libraries should be relinked during install" >&5
++echo $ECHO_N "checking if shared libraries should be relinked during install... $ECHO_C" >&6
++
++# Check whether --enable-relink or --disable-relink was given.
++if test "${enable_relink+set}" = set; then
++  enableval="$enable_relink"
++  cf_cv_do_relink=$enableval
+ else
+-  echo "$as_me: failed program was:" >&5
+-  cat conftest.$ac_ext >&5
+-  ac_cv_header_gpm_h=no
+-fi
+-rm -f conftest.err conftest.$ac_ext
+-fi
+-echo "$as_me:5334: result: $ac_cv_header_gpm_h" >&5
+-echo "${ECHO_T}$ac_cv_header_gpm_h" >&6
+-if test $ac_cv_header_gpm_h = yes; then
++  cf_cv_do_relink=yes
++fi;
++echo "$as_me:5330: result: $cf_cv_do_relink" >&5
++echo "${ECHO_T}$cf_cv_do_relink" >&6
++	;;
++esac
+ 
+-cat >>confdefs.h <<\EOF
+-#define HAVE_GPM_H 1
+-EOF
++# we will build libraries one-level down.
++rel_builddir=..
+ 
+-		if test "$with_gpm" != yes && test "$with_gpm" != maybe ; then
+-			test -n "$verbose" && echo "	assuming we really have GPM library" 1>&6
++LD_RPATH_OPT=
++echo "$as_me:5339: checking for an rpath option" >&5
++echo $ECHO_N "checking for an rpath option... $ECHO_C" >&6
++case $cf_cv_system_name in
++(irix*)
++	if test "$GCC" = yes; then
++		LD_RPATH_OPT="-Wl,-rpath,"
++	else
++		LD_RPATH_OPT="-rpath "
++	fi
++	;;
++(linux*|gnu*|k*bsd*-gnu|freebsd*)
++	LD_RPATH_OPT="-Wl,-rpath,"
++	;;
++(openbsd[2-9].*|mirbsd*)
++	LD_RPATH_OPT="-Wl,-rpath,"
++	;;
++(dragonfly*)
++	LD_RPATH_OPT="-rpath "
++	;;
++(netbsd*)
++	LD_RPATH_OPT="-Wl,-rpath,"
++	;;
++(osf*|mls+*)
++	LD_RPATH_OPT="-rpath "
++	;;
++(solaris2*)
++	LD_RPATH_OPT="-R"
++	;;
++(*)
++	;;
++esac
++echo "$as_me:5370: result: $LD_RPATH_OPT" >&5
++echo "${ECHO_T}$LD_RPATH_OPT" >&6
+ 
+-echo "${as_me:-configure}:5345: testing assuming we really have GPM library ..." 1>&5
++case "x$LD_RPATH_OPT" in
++(x-R*)
++	echo "$as_me:5375: checking if we need a space after rpath option" >&5
++echo $ECHO_N "checking if we need a space after rpath option... $ECHO_C" >&6
++	cf_save_LIBS="$LIBS"
+ 
+-cat >>confdefs.h <<\EOF
+-#define HAVE_LIBGPM 1
+-EOF
++cf_add_libs="${LD_RPATH_OPT}$libdir"
++# Filter out duplicates - this happens with badly-designed ".pc" files...
++for cf_add_1lib in $LIBS
++do
++	for cf_add_2lib in $cf_add_libs
++	do
++		if test "x$cf_add_1lib" = "x$cf_add_2lib"
++		then
++			cf_add_1lib=
++			break
++		fi
++	done
++	test -n "$cf_add_1lib" && cf_add_libs="$cf_add_libs $cf_add_1lib"
++done
++LIBS="$cf_add_libs"
+ 
+-			with_gpm=yes
+-		else
+-			echo "$as_me:5353: checking for Gpm_Open in -lgpm" >&5
+-echo $ECHO_N "checking for Gpm_Open in -lgpm... $ECHO_C" >&6
+-if test "${ac_cv_lib_gpm_Gpm_Open+set}" = set; then
+-  echo $ECHO_N "(cached) $ECHO_C" >&6
+-else
+-  ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lgpm  $LIBS"
+-cat >conftest.$ac_ext <<_ACEOF
+-#line 5361 "configure"
++	cat >conftest.$ac_ext <<_ACEOF
++#line 5396 "configure"
+ #include "confdefs.h"
+ 
+-/* Override any gcc2 internal prototype to avoid an error.  */
+-#ifdef __cplusplus
+-extern "C"
+-#endif
+-/* We use char because int might match the return type of a gcc2
+-   builtin and then its argument prototype would still apply.  */
+-char Gpm_Open ();
+ int
+ main (void)
+ {
+-Gpm_Open ();
++
+   ;
+   return 0;
+ }
+ _ACEOF
+ rm -f conftest.$ac_objext conftest$ac_exeext
+-if { (eval echo "$as_me:5380: \"$ac_link\"") >&5
++if { (eval echo "$as_me:5408: \"$ac_link\"") >&5
+   (eval $ac_link) 2>&5
+   ac_status=$?
+-  echo "$as_me:5383: \$? = $ac_status" >&5
++  echo "$as_me:5411: \$? = $ac_status" >&5
+   (exit $ac_status); } &&
+          { ac_try='test -s conftest$ac_exeext'
+-  { (eval echo "$as_me:5386: \"$ac_try\"") >&5
++  { (eval echo "$as_me:5414: \"$ac_try\"") >&5
+   (eval $ac_try) 2>&5
+   ac_status=$?
+-  echo "$as_me:5389: \$? = $ac_status" >&5
++  echo "$as_me:5417: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-  ac_cv_lib_gpm_Gpm_Open=yes
++  cf_rpath_space=no
+ else
+   echo "$as_me: failed program was:" >&5
+ cat conftest.$ac_ext >&5
+-ac_cv_lib_gpm_Gpm_Open=no
++cf_rpath_space=yes
+ fi
+ rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+-LIBS=$ac_check_lib_save_LIBS
+-fi
+-echo "$as_me:5400: result: $ac_cv_lib_gpm_Gpm_Open" >&5
+-echo "${ECHO_T}$ac_cv_lib_gpm_Gpm_Open" >&6
+-if test $ac_cv_lib_gpm_Gpm_Open = yes; then
+-  with_gpm=yes
+-else
+-
+-				if test "$with_gpm" = maybe; then
+-					{ echo "$as_me:5407: WARNING: Cannot link with GPM library" >&5
+-echo "$as_me: WARNING: Cannot link with GPM library" >&2;}
+-					with_gpm=no
+-				else
+-					{ { echo "$as_me:5411: error: Cannot link with GPM library" >&5
+-echo "$as_me: error: Cannot link with GPM library" >&2;}
+-   { (exit 1); exit 1; }; }
+-				fi
+-
+-fi
++	LIBS="$cf_save_LIBS"
++	echo "$as_me:5427: result: $cf_rpath_space" >&5
++echo "${ECHO_T}$cf_rpath_space" >&6
++	test "$cf_rpath_space" = yes && LD_RPATH_OPT="$LD_RPATH_OPT "
++	;;
++esac
+ 
+-		fi
++	RM_SHARED_OPTS=
++	LOCAL_LDFLAGS=
++	LOCAL_LDFLAGS2=
++	LD_SHARED_OPTS=
++	INSTALL_LIB="-m 644"
++	: ${rel_builddir:=.}
+ 
+-else
++	shlibdir=$libdir
+ 
+-		test "$with_gpm" != maybe && { echo "$as_me:5422: WARNING: Cannot find GPM header" >&5
+-echo "$as_me: WARNING: Cannot find GPM header" >&2;}
+-		with_gpm=no
++	MAKE_DLLS="#"
+ 
+-fi
++	cf_cv_do_symlinks=no
++	cf_ld_rpath_opt=
++	test "$cf_cv_enable_rpath" = yes && cf_ld_rpath_opt="$LD_RPATH_OPT"
+ 
+-fi
++	echo "$as_me:5448: checking if release/abi version should be used for shared libs" >&5
++echo $ECHO_N "checking if release/abi version should be used for shared libs... $ECHO_C" >&6
+ 
+-if test "$with_gpm" != no ; then
+-	echo "$as_me:5431: checking if you want to load GPM dynamically" >&5
+-echo $ECHO_N "checking if you want to load GPM dynamically... $ECHO_C" >&6
++# Check whether --with-shlib-version or --without-shlib-version was given.
++if test "${with_shlib_version+set}" = set; then
++  withval="$with_shlib_version"
++  test -z "$withval" && withval=auto
++	case $withval in
++	(yes)
++		cf_cv_shlib_version=auto
++		;;
++	(rel|abi|auto)
++		cf_cv_shlib_version=$withval
++		;;
++	(*)
++		echo "$as_me:5463: result: $withval" >&5
++echo "${ECHO_T}$withval" >&6
++		{ { echo "$as_me:5465: error: option value must be one of: rel, abi, or auto" >&5
++echo "$as_me: error: option value must be one of: rel, abi, or auto" >&2;}
++   { (exit 1); exit 1; }; }
++		;;
++	esac
+ 
+-# Check whether --with-dlsym or --without-dlsym was given.
+-if test "${with_dlsym+set}" = set; then
+-  withval="$with_dlsym"
+-  with_dlsym=$withval
+ else
+-  with_dlsym=yes
++  cf_cv_shlib_version=auto
+ fi;
+-	echo "$as_me:5441: result: $with_dlsym" >&5
+-echo "${ECHO_T}$with_dlsym" >&6
+-	if test "x$with_dlsym" = xyes ; then
++	echo "$as_me:5474: result: $cf_cv_shlib_version" >&5
++echo "${ECHO_T}$cf_cv_shlib_version" >&6
+ 
+-cf_have_dlsym=no
+-echo "$as_me:5446: checking for dlsym" >&5
+-echo $ECHO_N "checking for dlsym... $ECHO_C" >&6
+-if test "${ac_cv_func_dlsym+set}" = set; then
+-  echo $ECHO_N "(cached) $ECHO_C" >&6
+-else
+-  cat >conftest.$ac_ext <<_ACEOF
+-#line 5452 "configure"
+-#include "confdefs.h"
+-/* System header to define __stub macros and hopefully few prototypes,
+-    which can conflict with char dlsym (); below.  */
+-#include <assert.h>
+-/* Override any gcc2 internal prototype to avoid an error.  */
+-#ifdef __cplusplus
+-extern "C"
+-#endif
+-/* We use char because int might match the return type of a gcc2
+-   builtin and then its argument prototype would still apply.  */
+-char dlsym ();
+-char (*f) ();
++	cf_cv_rm_so_locs=no
++	cf_try_cflags=
+ 
+-int
+-main (void)
+-{
+-/* The GNU C library defines this for functions which it implements
+-    to always fail with ENOSYS.  Some functions are actually named
+-    something starting with __ and the normal name is an alias.  */
+-#if defined (__stub_dlsym) || defined (__stub___dlsym)
+-choke me
+-#else
+-f = dlsym; /* workaround for ICC 12.0.3 */ if (f == 0) return 1;
+-#endif
++	# Some less-capable ports of gcc support only -fpic
++	CC_SHARED_OPTS=
+ 
+-  ;
+-  return 0;
+-}
+-_ACEOF
+-rm -f conftest.$ac_objext conftest$ac_exeext
+-if { (eval echo "$as_me:5483: \"$ac_link\"") >&5
+-  (eval $ac_link) 2>&5
+-  ac_status=$?
+-  echo "$as_me:5486: \$? = $ac_status" >&5
+-  (exit $ac_status); } &&
+-         { ac_try='test -s conftest$ac_exeext'
+-  { (eval echo "$as_me:5489: \"$ac_try\"") >&5
+-  (eval $ac_try) 2>&5
+-  ac_status=$?
+-  echo "$as_me:5492: \$? = $ac_status" >&5
+-  (exit $ac_status); }; }; then
+-  ac_cv_func_dlsym=yes
+-else
+-  echo "$as_me: failed program was:" >&5
+-cat conftest.$ac_ext >&5
+-ac_cv_func_dlsym=no
+-fi
+-rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+-fi
+-echo "$as_me:5502: result: $ac_cv_func_dlsym" >&5
+-echo "${ECHO_T}$ac_cv_func_dlsym" >&6
+-if test $ac_cv_func_dlsym = yes; then
+-  cf_have_dlsym=yes
+-else
++	cf_try_fPIC=no
++	if test "$GCC" = yes
++	then
++		cf_try_fPIC=yes
++	else
++		case $cf_cv_system_name in
++		(*linux*)	# e.g., PGI compiler
++			cf_try_fPIC=yes
++			;;
++		esac
++	fi
+ 
+-cf_have_libdl=no
+-echo "$as_me:5509: checking for dlsym in -ldl" >&5
+-echo $ECHO_N "checking for dlsym in -ldl... $ECHO_C" >&6
+-if test "${ac_cv_lib_dl_dlsym+set}" = set; then
+-  echo $ECHO_N "(cached) $ECHO_C" >&6
+-else
+-  ac_check_lib_save_LIBS=$LIBS
+-LIBS="-ldl  $LIBS"
+-cat >conftest.$ac_ext <<_ACEOF
+-#line 5517 "configure"
++	if test "$cf_try_fPIC" = yes
++	then
++		echo "$as_me:5497: checking which $CC option to use" >&5
++echo $ECHO_N "checking which $CC option to use... $ECHO_C" >&6
++		cf_save_CFLAGS="$CFLAGS"
++		for CC_SHARED_OPTS in -fPIC -fpic ''
++		do
++			CFLAGS="$cf_save_CFLAGS $CC_SHARED_OPTS"
++			cat >conftest.$ac_ext <<_ACEOF
++#line 5504 "configure"
+ #include "confdefs.h"
+-
+-/* Override any gcc2 internal prototype to avoid an error.  */
+-#ifdef __cplusplus
+-extern "C"
+-#endif
+-/* We use char because int might match the return type of a gcc2
+-   builtin and then its argument prototype would still apply.  */
+-char dlsym ();
++#include <stdio.h>
+ int
+ main (void)
+ {
+-dlsym ();
++int x = 1
+   ;
+   return 0;
+ }
+ _ACEOF
+-rm -f conftest.$ac_objext conftest$ac_exeext
+-if { (eval echo "$as_me:5536: \"$ac_link\"") >&5
+-  (eval $ac_link) 2>&5
++rm -f conftest.$ac_objext
++if { (eval echo "$as_me:5516: \"$ac_compile\"") >&5
++  (eval $ac_compile) 2>&5
+   ac_status=$?
+-  echo "$as_me:5539: \$? = $ac_status" >&5
++  echo "$as_me:5519: \$? = $ac_status" >&5
+   (exit $ac_status); } &&
+-         { ac_try='test -s conftest$ac_exeext'
+-  { (eval echo "$as_me:5542: \"$ac_try\"") >&5
++         { ac_try='test -s conftest.$ac_objext'
++  { (eval echo "$as_me:5522: \"$ac_try\"") >&5
+   (eval $ac_try) 2>&5
+   ac_status=$?
+-  echo "$as_me:5545: \$? = $ac_status" >&5
++  echo "$as_me:5525: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-  ac_cv_lib_dl_dlsym=yes
++  break
+ else
+   echo "$as_me: failed program was:" >&5
+ cat conftest.$ac_ext >&5
+-ac_cv_lib_dl_dlsym=no
+-fi
+-rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+-LIBS=$ac_check_lib_save_LIBS
+-fi
+-echo "$as_me:5556: result: $ac_cv_lib_dl_dlsym" >&5
+-echo "${ECHO_T}$ac_cv_lib_dl_dlsym" >&6
+-if test $ac_cv_lib_dl_dlsym = yes; then
+-
+-	cf_have_dlsym=yes
+-	cf_have_libdl=yes
+ fi
++rm -f conftest.$ac_objext conftest.$ac_ext
++		done
++		echo "$as_me:5534: result: $CC_SHARED_OPTS" >&5
++echo "${ECHO_T}$CC_SHARED_OPTS" >&6
++		CFLAGS="$cf_save_CFLAGS"
++	fi
+ 
+-fi
++	cf_cv_shlib_version_infix=no
+ 
+-if test "$cf_have_dlsym" = yes ; then
+-	test "$cf_have_libdl" = yes && {
+-cf_add_libs="-ldl"
+-# Filter out duplicates - this happens with badly-designed ".pc" files...
+-for cf_add_1lib in $LIBS
+-do
+-	for cf_add_2lib in $cf_add_libs
+-	do
+-		if test "x$cf_add_1lib" = "x$cf_add_2lib"
+-		then
+-			cf_add_1lib=
+-			break
++	case $cf_cv_system_name in
++	(aix4.3-9*|aix[5-7]*)
++		if test "$GCC" = yes; then
++			CC_SHARED_OPTS='-Wl,-brtl'
++			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-brtl -Wl,-blibpath:${RPATH_LIST}:/usr/lib -o $@'
++		else
++			CC_SHARED_OPTS='-brtl'
++			# as well as '-qpic=large -G' or perhaps "-bM:SRE -bnoentry -bexpall"
++			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -G -Wl,-brtl -Wl,-blibpath:${RPATH_LIST}:/usr/lib -o $@'
+ 		fi
+-	done
+-	test -n "$cf_add_1lib" && cf_add_libs="$cf_add_libs $cf_add_1lib"
+-done
+-LIBS="$cf_add_libs"
+- }
++		;;
++	(beos*)
++		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -o $@ -Xlinker -soname=`basename $@` -nostart -e 0'
++		;;
++	(cygwin*)
++		CC_SHARED_OPTS=
++		MK_SHARED_LIB=$SHELL' '$rel_builddir'/mk_shared_lib.sh $@ ${CC} ${CFLAGS}'
++		RM_SHARED_OPTS="$RM_SHARED_OPTS $rel_builddir/mk_shared_lib.sh *.dll.a"
++		cf_cv_shlib_version=cygdll
++		cf_cv_shlib_version_infix=cygdll
++		shlibdir=$bindir
++		MAKE_DLLS=
++		cat >mk_shared_lib.sh <<-CF_EOF
++		#!$SHELL
++		SHARED_LIB=\$1
++		IMPORT_LIB=\`echo "\$1" | sed -e 's/cyg/lib/' -e 's/[0-9]*\.dll$/.dll.a/'\`
++		shift
++		cat <<-EOF
++		Linking shared library
++		** SHARED_LIB \$SHARED_LIB
++		** IMPORT_LIB \$IMPORT_LIB
++EOF
++		exec \$* ${LDFLAGS} -shared -Wl,--out-implib=\${IMPORT_LIB} -Wl,--export-all-symbols -o \${SHARED_LIB}
++CF_EOF
++		chmod +x mk_shared_lib.sh
++		;;
++	(msys*)
++		CC_SHARED_OPTS=
++		MK_SHARED_LIB=$SHELL' '$rel_builddir'/mk_shared_lib.sh $@ ${CC} ${CFLAGS}'
++		RM_SHARED_OPTS="$RM_SHARED_OPTS $rel_builddir/mk_shared_lib.sh *.dll.a"
++		cf_cv_shlib_version=msysdll
++		cf_cv_shlib_version_infix=msysdll
++		shlibdir=$bindir
++		MAKE_DLLS=
++		cat >mk_shared_lib.sh <<-CF_EOF
++		#!$SHELL
++		SHARED_LIB=\$1
++		IMPORT_LIB=\`echo "\$1" | sed -e 's/msys-/lib/' -e 's/[0-9]*\.dll$/.dll.a/'\`
++		shift
++		cat <<-EOF
++		Linking shared library
++		** SHARED_LIB \$SHARED_LIB
++		** IMPORT_LIB \$IMPORT_LIB
++EOF
++		exec \$* ${LDFLAGS} -shared -Wl,--out-implib=\${IMPORT_LIB} -Wl,--export-all-symbols -o \${SHARED_LIB}
++CF_EOF
++		chmod +x mk_shared_lib.sh
++		;;
++	(darwin*)
++		cf_try_cflags="no-cpp-precomp"
++		CC_SHARED_OPTS="-dynamic"
++		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -dynamiclib -install_name ${libdir}/`basename $@` -compatibility_version ${ABI_VERSION} -current_version ${ABI_VERSION} -o $@'
++		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=abi
++		cf_cv_shlib_version_infix=yes
++		echo "$as_me:5605: checking if ld -search_paths_first works" >&5
++echo $ECHO_N "checking if ld -search_paths_first works... $ECHO_C" >&6
++if test "${cf_cv_ldflags_search_paths_first+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
+ 
+-	echo "$as_me:5585: checking whether able to link to dl*() functions" >&5
+-echo $ECHO_N "checking whether able to link to dl*() functions... $ECHO_C" >&6
+-	cat >conftest.$ac_ext <<_ACEOF
+-#line 5588 "configure"
++			cf_save_LDFLAGS=$LDFLAGS
++			LDFLAGS="$LDFLAGS -Wl,-search_paths_first"
++			cat >conftest.$ac_ext <<_ACEOF
++#line 5614 "configure"
+ #include "confdefs.h"
+-#include <dlfcn.h>
++
+ int
+ main (void)
+ {
+-
+-		void *obj;
+-		if ((obj = dlopen("filename", 0)) != 0) {
+-			if (dlsym(obj, "symbolname") == 0) {
+-			dlclose(obj);
+-			}
+-		}
++int i;
+   ;
+   return 0;
+ }
+ _ACEOF
+ rm -f conftest.$ac_objext conftest$ac_exeext
+-if { (eval echo "$as_me:5606: \"$ac_link\"") >&5
++if { (eval echo "$as_me:5626: \"$ac_link\"") >&5
+   (eval $ac_link) 2>&5
+   ac_status=$?
+-  echo "$as_me:5609: \$? = $ac_status" >&5
++  echo "$as_me:5629: \$? = $ac_status" >&5
+   (exit $ac_status); } &&
+          { ac_try='test -s conftest$ac_exeext'
+-  { (eval echo "$as_me:5612: \"$ac_try\"") >&5
++  { (eval echo "$as_me:5632: \"$ac_try\"") >&5
+   (eval $ac_try) 2>&5
+   ac_status=$?
+-  echo "$as_me:5615: \$? = $ac_status" >&5
++  echo "$as_me:5635: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-
+-cat >>confdefs.h <<\EOF
+-#define HAVE_LIBDL 1
+-EOF
+-
++  cf_cv_ldflags_search_paths_first=yes
+ else
+   echo "$as_me: failed program was:" >&5
+ cat conftest.$ac_ext >&5
+-
+-		{ { echo "$as_me:5626: error: Cannot link test program for libdl" >&5
+-echo "$as_me: error: Cannot link test program for libdl" >&2;}
+-   { (exit 1); exit 1; }; }
++cf_cv_ldflags_search_paths_first=no
+ fi
+ rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+-	echo "$as_me:5631: result: ok" >&5
+-echo "${ECHO_T}ok" >&6
+-else
+-	{ { echo "$as_me:5634: error: Cannot find dlsym function" >&5
+-echo "$as_me: error: Cannot find dlsym function" >&2;}
+-   { (exit 1); exit 1; }; }
++				LDFLAGS=$cf_save_LDFLAGS
+ fi
+-
+-		if test "x$with_gpm" != xyes ; then
+-			test -n "$verbose" && echo "	assuming soname for gpm is $with_gpm" 1>&6
+-
+-echo "${as_me:-configure}:5642: testing assuming soname for gpm is $with_gpm ..." 1>&5
+-
+-			cf_cv_gpm_soname="$with_gpm"
+-		else
+-
+-echo "$as_me:5647: checking for soname of gpm library" >&5
+-echo $ECHO_N "checking for soname of gpm library... $ECHO_C" >&6
+-if test "${cf_cv_gpm_soname+set}" = set; then
+-  echo $ECHO_N "(cached) $ECHO_C" >&6
+-else
+-
+-cf_cv_gpm_soname=unknown
+-if test "$cross_compiling" != yes ; then
+-cat >conftest.$ac_ext <<CF_EOF
+-#include <gpm.h>
+-int main(void)
+-{
+-if (Gpm_Open(0,0)) Gpm_Close();
+-	${cf_cv_main_return:-return}(0);
+-}
+-CF_EOF
+-cf_save_LIBS="$LIBS"
+-
+-cf_add_libs="-lgpm"
+-# Filter out duplicates - this happens with badly-designed ".pc" files...
+-for cf_add_1lib in $LIBS
+-do
+-	for cf_add_2lib in $cf_add_libs
+-	do
+-		if test "x$cf_add_1lib" = "x$cf_add_2lib"
+-		then
+-			cf_add_1lib=
+-			break
++echo "$as_me:5646: result: $cf_cv_ldflags_search_paths_first" >&5
++echo "${ECHO_T}$cf_cv_ldflags_search_paths_first" >&6
++		if test $cf_cv_ldflags_search_paths_first = yes; then
++			LDFLAGS="$LDFLAGS -Wl,-search_paths_first"
+ 		fi
+-	done
+-	test -n "$cf_add_1lib" && cf_add_libs="$cf_add_libs $cf_add_1lib"
+-done
+-LIBS="$cf_add_libs"
+-
+-	if { (eval echo "$as_me:5681: \"$ac_compile\"") >&5
+-  (eval $ac_compile) 2>&5
+-  ac_status=$?
+-  echo "$as_me:5684: \$? = $ac_status" >&5
+-  (exit $ac_status); } ; then
+-		if { (eval echo "$as_me:5686: \"$ac_link\"") >&5
+-  (eval $ac_link) 2>&5
+-  ac_status=$?
+-  echo "$as_me:5689: \$? = $ac_status" >&5
+-  (exit $ac_status); } ; then
+-			cf_cv_gpm_soname=`ldd conftest$ac_exeext 2>/dev/null | sed -e 's,^.*/,,' -e 's, .*$,,' | fgrep libgpm.`
+-			test -z "$cf_cv_gpm_soname" && cf_cv_gpm_soname=unknown
++		;;
++	(hpux[7-8]*)
++		# HP-UX 8.07 ld lacks "+b" option used for libdir search-list
++		if test "$GCC" != yes; then
++			CC_SHARED_OPTS='+Z'
++		fi
++		MK_SHARED_LIB='${LD} ${LDFLAGS} -b -o $@'
++		INSTALL_LIB="-m 555"
++		;;
++	(hpux*)
++		# (tested with gcc 2.7.2 -- I don't have c89)
++		if test "$GCC" = yes; then
++			LD_SHARED_OPTS='-Xlinker +b -Xlinker ${libdir}'
++		else
++			CC_SHARED_OPTS='+Z'
++			LD_SHARED_OPTS='-Wl,+b,${libdir}'
++		fi
++		MK_SHARED_LIB='${LD} ${LDFLAGS} +b ${libdir} -b -o $@'
++		# HP-UX shared libraries must be executable, and should be
++		# readonly to exploit a quirk in the memory manager.
++		INSTALL_LIB="-m 555"
++		;;
++	(interix*)
++		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
++		if test "$cf_cv_shlib_version" = rel; then
++			cf_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
++		else
++			cf_shared_soname='`basename $@`'
++		fi
++		CC_SHARED_OPTS=
++		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-rpath,${RPATH_LIST} -Wl,-h,'$cf_shared_soname' -o $@'
++		;;
++	(irix*)
++		if test "$cf_cv_enable_rpath" = yes ; then
++			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
++		fi
++		# tested with IRIX 5.2 and 'cc'.
++		if test "$GCC" != yes; then
++			CC_SHARED_OPTS='-KPIC'
++			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -rdata_shared -soname `basename $@` -o $@'
++		else
++			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-soname,`basename $@` -o $@'
++		fi
++		cf_cv_rm_so_locs=yes
++		;;
++	(linux*|gnu*|k*bsd*-gnu)
++		if test "$DFT_LWR_MODEL" = "shared" ; then
++			LOCAL_LDFLAGS="${LD_RPATH_OPT}\$(LOCAL_LIBDIR)"
++			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
++		fi
++		if test "$cf_cv_enable_rpath" = yes ; then
++			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
+ 		fi
+-	fi
+-rm -rf conftest*
+-LIBS="$cf_save_LIBS"
+-fi
+ 
+-fi
+-echo "$as_me:5700: result: $cf_cv_gpm_soname" >&5
+-echo "${ECHO_T}$cf_cv_gpm_soname" >&6
++	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
++	if test "$cf_cv_shlib_version" = rel; then
++		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
++	else
++		cf_cv_shared_soname='`basename $@`'
++	fi
+ 
++		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-soname,'$cf_cv_shared_soname',-stats,-lc -o $@'
++		;;
++	(mingw*)
++		cf_cv_shlib_version=mingw
++		cf_cv_shlib_version_infix=mingw
++		shlibdir=$bindir
++		MAKE_DLLS=
++		if test "$DFT_LWR_MODEL" = "shared" ; then
++			LOCAL_LDFLAGS="-Wl,--enable-auto-import"
++			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
++			EXTRA_LDFLAGS="-Wl,--enable-auto-import $EXTRA_LDFLAGS"
+ 		fi
+-		test "$cf_cv_gpm_soname" != "unknown" &&
+-cat >>confdefs.h <<EOF
+-#define LIBGPM_SONAME "$cf_cv_gpm_soname"
++		CC_SHARED_OPTS=
++		MK_SHARED_LIB=$SHELL' '$rel_builddir'/mk_shared_lib.sh $@ ${CC} ${CFLAGS}'
++		RM_SHARED_OPTS="$RM_SHARED_OPTS $rel_builddir/mk_shared_lib.sh *.dll.a"
++		cat >mk_shared_lib.sh <<-CF_EOF
++		#!$SHELL
++		SHARED_LIB=\$1
++		IMPORT_LIB=\`echo "\$1" | sed -e 's/[0-9]*\.dll$/.dll.a/'\`
++		shift
++		cat <<-EOF
++		Linking shared library
++		** SHARED_LIB \$SHARED_LIB
++		** IMPORT_LIB \$IMPORT_LIB
+ EOF
++		exec \$* ${LDFLAGS} -shared -Wl,--enable-auto-import,--out-implib=\${IMPORT_LIB} -Wl,--export-all-symbols -o \${SHARED_LIB}
++CF_EOF
++		chmod +x mk_shared_lib.sh
++		;;
++	(openbsd[2-9].*|mirbsd*)
++		if test "$DFT_LWR_MODEL" = "shared" ; then
++			LOCAL_LDFLAGS="${LD_RPATH_OPT}\$(LOCAL_LIBDIR)"
++			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
++		fi
++		if test "$cf_cv_enable_rpath" = yes ; then
++			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
++		fi
++		CC_SHARED_OPTS="$CC_SHARED_OPTS -DPIC"
+ 
+-		SHLIB_LIST="-ldl $SHLIB_LIST"
++	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
++	if test "$cf_cv_shlib_version" = rel; then
++		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
+ 	else
+-		SHLIB_LIST="-lgpm $SHLIB_LIST"
++		cf_cv_shared_soname='`basename $@`'
++	fi
+ 
+-cf_add_libs="-lgpm"
+-# Filter out duplicates - this happens with badly-designed ".pc" files...
+-for cf_add_1lib in $TEST_LIBS
+-do
+-	for cf_add_2lib in $cf_add_libs
+-	do
+-		if test "x$cf_add_1lib" = "x$cf_add_2lib"
+-		then
+-			cf_add_1lib=
+-			break
++		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-Bshareable,-soname,'$cf_cv_shared_soname',-stats,-lc -o $@'
++		;;
++	(nto-qnx*|openbsd*|freebsd[12].*)
++		CC_SHARED_OPTS="$CC_SHARED_OPTS -DPIC"
++		MK_SHARED_LIB='${LD} ${LDFLAGS} -Bshareable -o $@'
++		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
++		;;
++	(dragonfly*|freebsd*)
++		CC_SHARED_OPTS="$CC_SHARED_OPTS -DPIC"
++		if test "$DFT_LWR_MODEL" = "shared" && test "$cf_cv_enable_rpath" = yes ; then
++			LOCAL_LDFLAGS="${cf_ld_rpath_opt}\$(LOCAL_LIBDIR)"
++			LOCAL_LDFLAGS2="${cf_ld_rpath_opt}\${RPATH_LIST} $LOCAL_LDFLAGS"
++			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
+ 		fi
+-	done
+-	test -n "$cf_add_1lib" && cf_add_libs="$cf_add_libs $cf_add_1lib"
+-done
+-TEST_LIBS="$cf_add_libs"
+ 
++	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
++	if test "$cf_cv_shlib_version" = rel; then
++		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
++	else
++		cf_cv_shared_soname='`basename $@`'
+ 	fi
+ 
+-cat >>confdefs.h <<\EOF
+-#define HAVE_LIBGPM 1
+-EOF
++		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-soname,'$cf_cv_shared_soname',-stats,-lc -o $@'
++		;;
++	(netbsd*)
++		CC_SHARED_OPTS="$CC_SHARED_OPTS -DPIC"
++		if test "$DFT_LWR_MODEL" = "shared" && test "$cf_cv_enable_rpath" = yes ; then
++			LOCAL_LDFLAGS="${cf_ld_rpath_opt}\$(LOCAL_LIBDIR)"
++			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
++			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
++			if test "$cf_cv_shlib_version" = auto; then
++			if test -f /usr/libexec/ld.elf_so; then
++				cf_cv_shlib_version=abi
++			else
++				cf_cv_shlib_version=rel
++			fi
++			fi
+ 
+-echo "$as_me:5735: checking for Gpm_Wgetch in -lgpm" >&5
+-echo $ECHO_N "checking for Gpm_Wgetch in -lgpm... $ECHO_C" >&6
+-if test "${ac_cv_lib_gpm_Gpm_Wgetch+set}" = set; then
+-  echo $ECHO_N "(cached) $ECHO_C" >&6
+-else
+-  ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lgpm  $LIBS"
+-cat >conftest.$ac_ext <<_ACEOF
+-#line 5743 "configure"
+-#include "confdefs.h"
++	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
++	if test "$cf_cv_shlib_version" = rel; then
++		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
++	else
++		cf_cv_shared_soname='`basename $@`'
++	fi
+ 
+-/* Override any gcc2 internal prototype to avoid an error.  */
+-#ifdef __cplusplus
+-extern "C"
+-#endif
+-/* We use char because int might match the return type of a gcc2
+-   builtin and then its argument prototype would still apply.  */
+-char Gpm_Wgetch ();
++			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-soname,'$cf_cv_shared_soname' -o $@'
++		else
++			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -Wl,-shared -Wl,-Bshareable -o $@'
++		fi
++		;;
++	(osf*|mls+*)
++		# tested with OSF/1 V3.2 and 'cc'
++		# tested with OSF/1 V3.2 and gcc 2.6.3 (but the c++ demo didn't
++		# link with shared libs).
++		MK_SHARED_LIB='${LD} ${LDFLAGS} -set_version ${REL_VERSION}:${ABI_VERSION} -expect_unresolved "*" -shared -soname `basename $@`'
++		case $host_os in
++		(osf4*)
++			MK_SHARED_LIB="${MK_SHARED_LIB} -msym"
++			;;
++		esac
++		MK_SHARED_LIB="${MK_SHARED_LIB}"' -o $@'
++		if test "$DFT_LWR_MODEL" = "shared" ; then
++			LOCAL_LDFLAGS="${LD_RPATH_OPT}\$(LOCAL_LIBDIR)"
++			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
++		fi
++		cf_cv_rm_so_locs=yes
++		;;
++	(sco3.2v5*)  # also uw2* and UW7: hops 13-Apr-98
++		# tested with osr5.0.5
++		if test "$GCC" != yes; then
++			CC_SHARED_OPTS='-belf -KPIC'
++		fi
++		MK_SHARED_LIB='${LD} ${LDFLAGS} -dy -G -h `basename $@ .${REL_VERSION}`.${ABI_VERSION} -o $@'
++		if test "$cf_cv_enable_rpath" = yes ; then
++			# only way is to set LD_RUN_PATH but no switch for it
++			RUN_PATH=$libdir
++		fi
++		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
++		LINK_PROGS='LD_RUN_PATH=${libdir}'
++		LINK_TESTS='Pwd=`pwd`;LD_RUN_PATH=`dirname $${Pwd}`/lib'
++		;;
++	(sunos4*)
++		# tested with SunOS 4.1.1 and gcc 2.7.0
++		if test "$GCC" != yes; then
++			CC_SHARED_OPTS='-KPIC'
++		fi
++		MK_SHARED_LIB='${LD} ${LDFLAGS} -assert pure-text -o $@'
++		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
++		;;
++	(solaris2*)
++		# tested with SunOS 5.5.1 (solaris 2.5.1) and gcc 2.7.2
++		# tested with SunOS 5.10 (solaris 10) and gcc 3.4.3
++		if test "$DFT_LWR_MODEL" = "shared" ; then
++			LOCAL_LDFLAGS="-R \$(LOCAL_LIBDIR):\${libdir}"
++			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
++		fi
++		if test "$cf_cv_enable_rpath" = yes ; then
++			EXTRA_LDFLAGS="-R \${libdir} $EXTRA_LDFLAGS"
++		fi
++
++	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
++	if test "$cf_cv_shlib_version" = rel; then
++		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
++	else
++		cf_cv_shared_soname='`basename $@`'
++	fi
++
++		if test "$GCC" != yes; then
++			cf_save_CFLAGS="$CFLAGS"
++			for cf_shared_opts in -xcode=pic32 -xcode=pic13 -KPIC -Kpic -O
++			do
++				CFLAGS="$cf_shared_opts $cf_save_CFLAGS"
++				cat >conftest.$ac_ext <<_ACEOF
++#line 5871 "configure"
++#include "confdefs.h"
++#include <stdio.h>
+ int
+ main (void)
+ {
+-Gpm_Wgetch ();
++printf("Hello\n");
+   ;
+   return 0;
+ }
+ _ACEOF
+-rm -f conftest.$ac_objext conftest$ac_exeext
+-if { (eval echo "$as_me:5762: \"$ac_link\"") >&5
+-  (eval $ac_link) 2>&5
++rm -f conftest.$ac_objext
++if { (eval echo "$as_me:5883: \"$ac_compile\"") >&5
++  (eval $ac_compile) 2>&5
+   ac_status=$?
+-  echo "$as_me:5765: \$? = $ac_status" >&5
++  echo "$as_me:5886: \$? = $ac_status" >&5
+   (exit $ac_status); } &&
+-         { ac_try='test -s conftest$ac_exeext'
+-  { (eval echo "$as_me:5768: \"$ac_try\"") >&5
++         { ac_try='test -s conftest.$ac_objext'
++  { (eval echo "$as_me:5889: \"$ac_try\"") >&5
+   (eval $ac_try) 2>&5
+   ac_status=$?
+-  echo "$as_me:5771: \$? = $ac_status" >&5
++  echo "$as_me:5892: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-  ac_cv_lib_gpm_Gpm_Wgetch=yes
++  break
+ else
+   echo "$as_me: failed program was:" >&5
+ cat conftest.$ac_ext >&5
+-ac_cv_lib_gpm_Gpm_Wgetch=no
+-fi
+-rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+-LIBS=$ac_check_lib_save_LIBS
+ fi
+-echo "$as_me:5782: result: $ac_cv_lib_gpm_Gpm_Wgetch" >&5
+-echo "${ECHO_T}$ac_cv_lib_gpm_Gpm_Wgetch" >&6
+-if test $ac_cv_lib_gpm_Gpm_Wgetch = yes; then
+-
+-echo "$as_me:5786: checking if GPM is weakly bound to curses library" >&5
+-echo $ECHO_N "checking if GPM is weakly bound to curses library... $ECHO_C" >&6
+-if test "${cf_cv_check_gpm_wgetch+set}" = set; then
+-  echo $ECHO_N "(cached) $ECHO_C" >&6
+-else
++rm -f conftest.$ac_objext conftest.$ac_ext
++			done
++			CFLAGS="$cf_save_CFLAGS"
++			CC_SHARED_OPTS=$cf_shared_opts
++			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -dy -G -h '$cf_cv_shared_soname' -o $@'
++		else
++			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -dy -G -h '$cf_cv_shared_soname' -o $@'
++		fi
++		;;
++	(sysv5uw7*|unix_sv*)
++		# tested with UnixWare 7.1.0 (gcc 2.95.2 and cc)
++		if test "$GCC" != yes; then
++			CC_SHARED_OPTS='-KPIC'
++		fi
++		MK_SHARED_LIB='${LD} ${LDFLAGS} -d y -G -o $@'
++		;;
++	(*)
++		CC_SHARED_OPTS='unknown'
++		MK_SHARED_LIB='echo unknown'
++		;;
++	esac
+ 
+-cf_cv_check_gpm_wgetch=unknown
+-if test "$cross_compiling" != yes ; then
++	# This works if the last tokens in $MK_SHARED_LIB are the -o target.
++	case "$cf_cv_shlib_version" in
++	(rel|abi)
++		case "$MK_SHARED_LIB" in
++		(*'-o $@')
++			test "$cf_cv_do_symlinks" = no && cf_cv_do_symlinks=yes
++			;;
++		(*)
++			{ echo "$as_me:5929: WARNING: ignored --with-shlib-version" >&5
++echo "$as_me: WARNING: ignored --with-shlib-version" >&2;}
++			;;
++		esac
++		;;
++	esac
+ 
+-cat >conftest.$ac_ext <<CF_EOF
+-#include <gpm.h>
+-int main(void)
++	if test -n "$cf_try_cflags"
++	then
++cat > conftest.$ac_ext <<EOF
++#line 5939 "${as_me:-configure}"
++#include <stdio.h>
++int main(int argc, char *argv[])
+ {
+-	Gpm_Wgetch();
+-	${cf_cv_main_return:-return}(0);
++	printf("hello\n");
++	return (argv[argc-1] == 0) ;
+ }
+-CF_EOF
+-
+-	cf_save_LIBS="$LIBS"
+-	# This only works if we can look at the symbol table.  If a shared
+-	# library is stripped for install, we cannot use that.  So we're forced
+-	# to rely on the static library, noting that some packagers may not
+-	# include it.
+-	LIBS="-static -lgpm -dynamic $LIBS"
+-	if { (eval echo "$as_me:5810: \"$ac_compile\"") >&5
++EOF
++		cf_save_CFLAGS="$CFLAGS"
++		for cf_opt in $cf_try_cflags
++		do
++			CFLAGS="$cf_save_CFLAGS -$cf_opt"
++			echo "$as_me:5951: checking if CFLAGS option -$cf_opt works" >&5
++echo $ECHO_N "checking if CFLAGS option -$cf_opt works... $ECHO_C" >&6
++			if { (eval echo "$as_me:5953: \"$ac_compile\"") >&5
+   (eval $ac_compile) 2>&5
+   ac_status=$?
+-  echo "$as_me:5813: \$? = $ac_status" >&5
+-  (exit $ac_status); } ; then
+-		if { (eval echo "$as_me:5815: \"$ac_link\"") >&5
+-  (eval $ac_link) 2>&5
+-  ac_status=$?
+-  echo "$as_me:5818: \$? = $ac_status" >&5
+-  (exit $ac_status); } ; then
+-			cf_cv_check_gpm_wgetch=`nm conftest$ac_exeext | egrep '\<wgetch\>' | egrep '\<[vVwW]\>'`
+-			test -n "$cf_cv_check_gpm_wgetch" && cf_cv_check_gpm_wgetch=yes
+-			test -z "$cf_cv_check_gpm_wgetch" && cf_cv_check_gpm_wgetch=no
+-		fi
++  echo "$as_me:5956: \$? = $ac_status" >&5
++  (exit $ac_status); }; then
++				echo "$as_me:5958: result: yes" >&5
++echo "${ECHO_T}yes" >&6
++				cf_save_CFLAGS="$CFLAGS"
++			else
++				echo "$as_me:5962: result: no" >&5
++echo "${ECHO_T}no" >&6
++			fi
++		done
++		CFLAGS="$cf_save_CFLAGS"
+ 	fi
+-	rm -rf conftest*
+-	LIBS="$cf_save_LIBS"
+-fi
+ 
+-fi
+-echo "$as_me:5830: result: $cf_cv_check_gpm_wgetch" >&5
+-echo "${ECHO_T}$cf_cv_check_gpm_wgetch" >&6
++	# RPATH_LIST is a colon-separated list of directories
++	test -n "$cf_ld_rpath_opt" && MK_SHARED_LIB="$MK_SHARED_LIB $cf_ld_rpath_opt\${RPATH_LIST}"
++	test -z "$RPATH_LIST" && RPATH_LIST="\${libdir}"
+ 
+-if test "$cf_cv_check_gpm_wgetch" != yes ; then
+-	{ echo "$as_me:5834: WARNING: GPM library is already linked with curses - read the FAQ" >&5
+-echo "$as_me: WARNING: GPM library is already linked with curses - read the FAQ" >&2;}
+-fi
++	test $cf_cv_rm_so_locs = yes && RM_SHARED_OPTS="$RM_SHARED_OPTS so_locations"
+ 
+-fi
++	test -n "$verbose" && echo "	CC_SHARED_OPTS: $CC_SHARED_OPTS" 1>&6
+ 
+-fi
++echo "${as_me:-configure}:5977: testing CC_SHARED_OPTS: $CC_SHARED_OPTS ..." 1>&5
+ 
+-# not everyone has "test -c"
+-if test -c /dev/sysmouse 2>/dev/null ; then
+-echo "$as_me:5844: checking if you want to use sysmouse" >&5
+-echo $ECHO_N "checking if you want to use sysmouse... $ECHO_C" >&6
++	test -n "$verbose" && echo "	MK_SHARED_LIB:  $MK_SHARED_LIB" 1>&6
+ 
+-# Check whether --with-sysmouse or --without-sysmouse was given.
+-if test "${with_sysmouse+set}" = set; then
+-  withval="$with_sysmouse"
+-  cf_with_sysmouse=$withval
++echo "${as_me:-configure}:5981: testing MK_SHARED_LIB:  $MK_SHARED_LIB ..." 1>&5
++
++for model in $cf_list_models; do
++	case $model in
++	(libtool)
++
++echo "$as_me:5987: checking for additional libtool options" >&5
++echo $ECHO_N "checking for additional libtool options... $ECHO_C" >&6
++
++# Check whether --with-libtool-opts or --without-libtool-opts was given.
++if test "${with_libtool_opts+set}" = set; then
++  withval="$with_libtool_opts"
++  with_libtool_opts=$withval
+ else
+-  cf_with_sysmouse=maybe
++  with_libtool_opts=no
+ fi;
+-	if test "$cf_with_sysmouse" != no ; then
+-	cat >conftest.$ac_ext <<_ACEOF
+-#line 5856 "configure"
+-#include "confdefs.h"
++echo "$as_me:5997: result: $with_libtool_opts" >&5
++echo "${ECHO_T}$with_libtool_opts" >&6
+ 
+-#include <osreldate.h>
+-#if (__FreeBSD_version >= 400017)
+-#include <sys/consio.h>
+-#include <sys/fbio.h>
+-#else
+-#include <machine/console.h>
+-#endif
++case .$with_libtool_opts in
++(.yes|.no|.)
++	;;
++(*)
++	LIBTOOL_OPTS="$LIBTOOL_OPTS $with_libtool_opts"
++	;;
++esac
++
++echo "$as_me:6008: checking if exported-symbols file should be used" >&5
++echo $ECHO_N "checking if exported-symbols file should be used... $ECHO_C" >&6
++
++# Check whether --with-export-syms or --without-export-syms was given.
++if test "${with_export_syms+set}" = set; then
++  withval="$with_export_syms"
++  with_export_syms=$withval
++else
++  with_export_syms=no
++fi;
++if test "x$with_export_syms" = xyes
++then
++	with_export_syms='${top_srcdir}/package/${PACKAGE}.sym'
++
++fi
++echo "$as_me:6023: result: $with_export_syms" >&5
++echo "${ECHO_T}$with_export_syms" >&6
++if test "x$with_export_syms" != xno
++then
++	EXPORT_SYMS="-export-symbols $with_export_syms"
++
++fi
+ 
++		;;
++	(shared)
++		if test "$CC_SHARED_OPTS" = "unknown"; then
++			{ { echo "$as_me:6034: error: Shared libraries are not supported in this version" >&5
++echo "$as_me: error: Shared libraries are not supported in this version" >&2;}
++   { (exit 1); exit 1; }; }
++		fi
++		# workaround for inept transition to PIE vs PIC...
++		echo "$as_me:6039: checking if current CFLAGS link properly" >&5
++echo $ECHO_N "checking if current CFLAGS link properly... $ECHO_C" >&6
++		cat >conftest.$ac_ext <<_ACEOF
++#line 6042 "configure"
++#include "confdefs.h"
++#include <stdio.h>
+ int
+ main (void)
+ {
+-
+-	struct mouse_info the_mouse;
+-	ioctl(0, CONS_MOUSECTL, &the_mouse);
+-
++printf("Hello work\n");
+   ;
+   return 0;
+ }
+ _ACEOF
+-rm -f conftest.$ac_objext
+-if { (eval echo "$as_me:5879: \"$ac_compile\"") >&5
+-  (eval $ac_compile) 2>&5
++rm -f conftest.$ac_objext conftest$ac_exeext
++if { (eval echo "$as_me:6054: \"$ac_link\"") >&5
++  (eval $ac_link) 2>&5
+   ac_status=$?
+-  echo "$as_me:5882: \$? = $ac_status" >&5
++  echo "$as_me:6057: \$? = $ac_status" >&5
+   (exit $ac_status); } &&
+-         { ac_try='test -s conftest.$ac_objext'
+-  { (eval echo "$as_me:5885: \"$ac_try\"") >&5
++         { ac_try='test -s conftest$ac_exeext'
++  { (eval echo "$as_me:6060: \"$ac_try\"") >&5
+   (eval $ac_try) 2>&5
+   ac_status=$?
+-  echo "$as_me:5888: \$? = $ac_status" >&5
++  echo "$as_me:6063: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-  cf_with_sysmouse=yes
++  cf_cflags_work=yes
+ else
+   echo "$as_me: failed program was:" >&5
+ cat conftest.$ac_ext >&5
+-cf_with_sysmouse=no
++cf_cflags_work=no
+ fi
+-rm -f conftest.$ac_objext conftest.$ac_ext
+-	fi
+-echo "$as_me:5898: result: $cf_with_sysmouse" >&5
+-echo "${ECHO_T}$cf_with_sysmouse" >&6
+-test "$cf_with_sysmouse" = yes &&
+-cat >>confdefs.h <<\EOF
+-#define USE_SYSMOUSE 1
+-EOF
++rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
++		echo "$as_me:6072: result: $cf_cflags_work" >&5
++echo "${ECHO_T}$cf_cflags_work" >&6
++		if test "$cf_cflags_work" = no
++		then
++			test -n "$verbose" && echo "	try to work around by appending shared-options" 1>&6
+ 
+-fi
++echo "${as_me:-configure}:6078: testing try to work around by appending shared-options ..." 1>&5
+ 
+-if test X"$CC_G_OPT" = X"" ; then
+-	CC_G_OPT='-g'
+-	test -n "$GCC" && test "x${ac_cv_prog_cc_g}" != xyes && CC_G_OPT=''
+-fi
++			CFLAGS="$CFLAGS $CC_SHARED_OPTS"
++		fi
++
++echo "$as_me:6083: checking if versioned-symbols file should be used" >&5
++echo $ECHO_N "checking if versioned-symbols file should be used... $ECHO_C" >&6
++
++# Check whether --with-versioned-syms or --without-versioned-syms was given.
++if test "${with_versioned_syms+set}" = set; then
++  withval="$with_versioned_syms"
++  with_versioned_syms=$withval
++else
++  with_versioned_syms=no
++fi;
++if test "x$with_versioned_syms" = xyes
++then
++	with_versioned_syms='${top_srcdir}/package/${PACKAGE}.map'
+ 
+-if test X"$CXX_G_OPT" = X"" ; then
+-	CXX_G_OPT='-g'
+-	test -n "$GXX" && test "x${ac_cv_prog_cxx_g}" != xyes && CXX_G_OPT=''
+ fi
++echo "$as_me:6098: result: $with_versioned_syms" >&5
++echo "${ECHO_T}$with_versioned_syms" >&6
+ 
+-echo "$as_me:5917: checking for default loader flags" >&5
+-echo $ECHO_N "checking for default loader flags... $ECHO_C" >&6
+-case $DFT_LWR_MODEL in
+-(libtool) LD_MODEL=''   ;;
+-(normal)  LD_MODEL=''   ;;
+-(debug)   LD_MODEL=$CC_G_OPT ;;
+-(profile) LD_MODEL='-pg';;
+-(shared)  LD_MODEL=''   ;;
+-esac
+-echo "$as_me:5926: result: $LD_MODEL" >&5
+-echo "${ECHO_T}$LD_MODEL" >&6
++RESULTING_SYMS=
++VERSIONED_SYMS=
++WILDCARD_SYMS=
+ 
+-case $DFT_LWR_MODEL in
+-(shared)
++if test "x$with_versioned_syms" != xno
++then
++	RESULTING_SYMS=$with_versioned_syms
++	case "x$MK_SHARED_LIB" in
++	(*-Wl,*)
++		VERSIONED_SYMS="-Wl,--version-script,\${RESULTING_SYMS}"
++		MK_SHARED_LIB=`echo "$MK_SHARED_LIB" | sed -e "s%-Wl,%\\${VERSIONED_SYMS} -Wl,%"`
++		test -n "$verbose" && echo "	MK_SHARED_LIB:  $MK_SHARED_LIB" 1>&6
+ 
+-echo "$as_me:5932: checking if rpath option should be used" >&5
+-echo $ECHO_N "checking if rpath option should be used... $ECHO_C" >&6
++echo "${as_me:-configure}:6114: testing MK_SHARED_LIB:  $MK_SHARED_LIB ..." 1>&5
+ 
+-# Check whether --enable-rpath or --disable-rpath was given.
+-if test "${enable_rpath+set}" = set; then
+-  enableval="$enable_rpath"
+-  cf_cv_enable_rpath=$enableval
+-else
+-  cf_cv_enable_rpath=no
+-fi;
+-echo "$as_me:5942: result: $cf_cv_enable_rpath" >&5
+-echo "${ECHO_T}$cf_cv_enable_rpath" >&6
++		;;
++	(*-dy\ *)
++		VERSIONED_SYMS="-Wl,-M,\${RESULTING_SYMS}"
++		MK_SHARED_LIB=`echo "$MK_SHARED_LIB" | sed -e "s%-dy%\\${VERSIONED_SYMS} -dy%"`
++		test -n "$verbose" && echo "	MK_SHARED_LIB:  $MK_SHARED_LIB" 1>&6
+ 
+-echo "$as_me:5945: checking if shared libraries should be relinked during install" >&5
+-echo $ECHO_N "checking if shared libraries should be relinked during install... $ECHO_C" >&6
++echo "${as_me:-configure}:6122: testing MK_SHARED_LIB:  $MK_SHARED_LIB ..." 1>&5
+ 
+-# Check whether --enable-relink or --disable-relink was given.
+-if test "${enable_relink+set}" = set; then
+-  enableval="$enable_relink"
+-  cf_cv_do_relink=$enableval
+-else
+-  cf_cv_do_relink=yes
+-fi;
+-echo "$as_me:5955: result: $cf_cv_do_relink" >&5
+-echo "${ECHO_T}$cf_cv_do_relink" >&6
+-	;;
+-esac
++		;;
++	(*)
++		{ echo "$as_me:6126: WARNING: this system does not support versioned-symbols" >&5
++echo "$as_me: WARNING: this system does not support versioned-symbols" >&2;}
++		;;
++	esac
+ 
+-# we will build libraries one-level down.
+-rel_builddir=..
++	# Linux ld can selectively override scope, e.g., of symbols beginning with
++	# "_" by first declaring some as global, and then using a wildcard to
++	# declare the others as local.  Some other loaders cannot do this.  Check
++	# by constructing a (very) simple shared library and inspecting its
++	# symbols.
++	if test "x$VERSIONED_SYMS" != "x"
++	then
++		echo "$as_me:6138: checking if wildcards can be used to selectively omit symbols" >&5
++echo $ECHO_N "checking if wildcards can be used to selectively omit symbols... $ECHO_C" >&6
++		WILDCARD_SYMS=no
+ 
+-LD_RPATH_OPT=
+-echo "$as_me:5964: checking for an rpath option" >&5
+-echo $ECHO_N "checking for an rpath option... $ECHO_C" >&6
+-case $cf_cv_system_name in
+-(irix*)
+-	if test "$GCC" = yes; then
+-		LD_RPATH_OPT="-Wl,-rpath,"
+-	else
+-		LD_RPATH_OPT="-rpath "
++		# make sources
++		rm -f conftest.*
++
++		cat >conftest.ver <<EOF
++module_1.0 {
++global:
++	globalf1;
++local:
++	localf1;
++};
++module_2.0 {
++global:
++	globalf2;
++local:
++	localf2;
++	_*;
++} module_1.0;
++submodule_1.0 {
++global:
++	subglobalf1;
++	_ismissing;
++local:
++	sublocalf1;
++};
++submodule_2.0 {
++global:
++	subglobalf2;
++local:
++	sublocalf2;
++	_*;
++} submodule_1.0;
++EOF
++		cat >conftest.$ac_ext <<EOF
++#line 6175 "configure"
++int	_ismissing(void) { return 1; }
++int	_localf1(void) { return 1; }
++int	_localf2(void) { return 2; }
++int	globalf1(void) { return 1; }
++int	globalf2(void) { return 2; }
++int	_sublocalf1(void) { return 1; }
++int	_sublocalf2(void) { return 2; }
++int	subglobalf1(void) { return 1; }
++int	subglobalf2(void) { return 2; }
++EOF
++		cat >conftest.mk <<EOF
++CC=${CC}
++CFLAGS=${CFLAGS}
++CPPFLAGS=${CPPFLAGS}
++LDFLAGS=${LDFLAGS}
++LIBS=${LIBS}
++VERSIONED_SYMS=${VERSIONED_SYMS}
++RESULTING_SYMS=conftest.ver
++MK_SHARED_LIB=${MK_SHARED_LIB}
++conftest.so: conftest.$ac_cv_objext
++		\$(MK_SHARED_LIB) conftest.$ac_cv_objext
++EOF
++
++		# compile source, make library
++		if make -f conftest.mk 2>&5 >/dev/null
++		then
++			# test for missing symbol in either Data or Text section
++			cf_missing=`nm -P conftest.so 2>&5 |fgrep _ismissing | egrep '[ 	][DT][ 	]'`
++			test -n "$cf_missing" && WILDCARD_SYMS=yes
++		fi
++		echo "$as_me:6206: result: $WILDCARD_SYMS" >&5
++echo "${ECHO_T}$WILDCARD_SYMS" >&6
++		rm -f conftest.*
+ 	fi
+-	;;
+-(linux*|gnu*|k*bsd*-gnu|freebsd*)
+-	LD_RPATH_OPT="-Wl,-rpath,"
+-	;;
+-(openbsd[2-9].*|mirbsd*)
+-	LD_RPATH_OPT="-Wl,-rpath,"
+-	;;
+-(dragonfly*)
+-	LD_RPATH_OPT="-rpath "
+-	;;
+-(netbsd*)
+-	LD_RPATH_OPT="-Wl,-rpath,"
+-	;;
+-(osf*|mls+*)
+-	LD_RPATH_OPT="-rpath "
+-	;;
+-(solaris2*)
+-	LD_RPATH_OPT="-R"
+-	;;
+-(*)
+-	;;
+-esac
+-echo "$as_me:5995: result: $LD_RPATH_OPT" >&5
+-echo "${ECHO_T}$LD_RPATH_OPT" >&6
++fi
++
++		;;
++	esac
++done
++
++### Checks for special libraries, must be done up-front.
++SHLIB_LIST=""
++
++echo "$as_me:6219: checking if you want to link with the GPM mouse library" >&5
++echo $ECHO_N "checking if you want to link with the GPM mouse library... $ECHO_C" >&6
++
++# Check whether --with-gpm or --without-gpm was given.
++if test "${with_gpm+set}" = set; then
++  withval="$with_gpm"
++  with_gpm=$withval
++else
++  with_gpm=maybe
++fi;
++echo "$as_me:6229: result: $with_gpm" >&5
++echo "${ECHO_T}$with_gpm" >&6
++
++if test "$with_gpm" != no ; then
++	echo "$as_me:6233: checking for gpm.h" >&5
++echo $ECHO_N "checking for gpm.h... $ECHO_C" >&6
++if test "${ac_cv_header_gpm_h+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  cat >conftest.$ac_ext <<_ACEOF
++#line 6239 "configure"
++#include "confdefs.h"
++#include <gpm.h>
++_ACEOF
++if { (eval echo "$as_me:6243: \"$ac_cpp conftest.$ac_ext\"") >&5
++  (eval $ac_cpp conftest.$ac_ext) 2>conftest.er1
++  ac_status=$?
++  egrep -v '^ *\+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  echo "$as_me:6249: \$? = $ac_status" >&5
++  (exit $ac_status); } >/dev/null; then
++  if test -s conftest.err; then
++    ac_cpp_err=$ac_c_preproc_warn_flag
++  else
++    ac_cpp_err=
++  fi
++else
++  ac_cpp_err=yes
++fi
++if test -z "$ac_cpp_err"; then
++  ac_cv_header_gpm_h=yes
++else
++  echo "$as_me: failed program was:" >&5
++  cat conftest.$ac_ext >&5
++  ac_cv_header_gpm_h=no
++fi
++rm -f conftest.err conftest.$ac_ext
++fi
++echo "$as_me:6268: result: $ac_cv_header_gpm_h" >&5
++echo "${ECHO_T}$ac_cv_header_gpm_h" >&6
++if test $ac_cv_header_gpm_h = yes; then
+ 
+-case "x$LD_RPATH_OPT" in
+-(x-R*)
+-	echo "$as_me:6000: checking if we need a space after rpath option" >&5
+-echo $ECHO_N "checking if we need a space after rpath option... $ECHO_C" >&6
+-	cf_save_LIBS="$LIBS"
++cat >>confdefs.h <<\EOF
++#define HAVE_GPM_H 1
++EOF
+ 
+-cf_add_libs="${LD_RPATH_OPT}$libdir"
+-# Filter out duplicates - this happens with badly-designed ".pc" files...
+-for cf_add_1lib in $LIBS
+-do
+-	for cf_add_2lib in $cf_add_libs
+-	do
+-		if test "x$cf_add_1lib" = "x$cf_add_2lib"
+-		then
+-			cf_add_1lib=
+-			break
+-		fi
+-	done
+-	test -n "$cf_add_1lib" && cf_add_libs="$cf_add_libs $cf_add_1lib"
+-done
+-LIBS="$cf_add_libs"
++		if test "$with_gpm" != yes && test "$with_gpm" != maybe ; then
++			test -n "$verbose" && echo "	assuming we really have GPM library" 1>&6
+ 
+-	cat >conftest.$ac_ext <<_ACEOF
+-#line 6021 "configure"
++echo "${as_me:-configure}:6279: testing assuming we really have GPM library ..." 1>&5
++
++cat >>confdefs.h <<\EOF
++#define HAVE_LIBGPM 1
++EOF
++
++			with_gpm=yes
++		else
++			echo "$as_me:6287: checking for Gpm_Open in -lgpm" >&5
++echo $ECHO_N "checking for Gpm_Open in -lgpm... $ECHO_C" >&6
++if test "${ac_cv_lib_gpm_Gpm_Open+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  ac_check_lib_save_LIBS=$LIBS
++LIBS="-lgpm  $LIBS"
++cat >conftest.$ac_ext <<_ACEOF
++#line 6295 "configure"
+ #include "confdefs.h"
+ 
++/* Override any gcc2 internal prototype to avoid an error.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++/* We use char because int might match the return type of a gcc2
++   builtin and then its argument prototype would still apply.  */
++char Gpm_Open ();
+ int
+ main (void)
+ {
+-
++Gpm_Open ();
+   ;
+   return 0;
+ }
+ _ACEOF
+ rm -f conftest.$ac_objext conftest$ac_exeext
+-if { (eval echo "$as_me:6033: \"$ac_link\"") >&5
++if { (eval echo "$as_me:6314: \"$ac_link\"") >&5
+   (eval $ac_link) 2>&5
+   ac_status=$?
+-  echo "$as_me:6036: \$? = $ac_status" >&5
++  echo "$as_me:6317: \$? = $ac_status" >&5
+   (exit $ac_status); } &&
+          { ac_try='test -s conftest$ac_exeext'
+-  { (eval echo "$as_me:6039: \"$ac_try\"") >&5
++  { (eval echo "$as_me:6320: \"$ac_try\"") >&5
+   (eval $ac_try) 2>&5
+   ac_status=$?
+-  echo "$as_me:6042: \$? = $ac_status" >&5
++  echo "$as_me:6323: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-  cf_rpath_space=no
++  ac_cv_lib_gpm_Gpm_Open=yes
+ else
+   echo "$as_me: failed program was:" >&5
+ cat conftest.$ac_ext >&5
+-cf_rpath_space=yes
++ac_cv_lib_gpm_Gpm_Open=no
+ fi
+ rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+-	LIBS="$cf_save_LIBS"
+-	echo "$as_me:6052: result: $cf_rpath_space" >&5
+-echo "${ECHO_T}$cf_rpath_space" >&6
+-	test "$cf_rpath_space" = yes && LD_RPATH_OPT="$LD_RPATH_OPT "
+-	;;
+-esac
+-
+-	RM_SHARED_OPTS=
+-	LOCAL_LDFLAGS=
+-	LOCAL_LDFLAGS2=
+-	LD_SHARED_OPTS=
+-	INSTALL_LIB="-m 644"
+-	: ${rel_builddir:=.}
+-
+-	shlibdir=$libdir
+-
+-	MAKE_DLLS="#"
++LIBS=$ac_check_lib_save_LIBS
++fi
++echo "$as_me:6334: result: $ac_cv_lib_gpm_Gpm_Open" >&5
++echo "${ECHO_T}$ac_cv_lib_gpm_Gpm_Open" >&6
++if test $ac_cv_lib_gpm_Gpm_Open = yes; then
++  with_gpm=yes
++else
+ 
+-	cf_cv_do_symlinks=no
+-	cf_ld_rpath_opt=
+-	test "$cf_cv_enable_rpath" = yes && cf_ld_rpath_opt="$LD_RPATH_OPT"
++				if test "$with_gpm" = maybe; then
++					{ echo "$as_me:6341: WARNING: Cannot link with GPM library" >&5
++echo "$as_me: WARNING: Cannot link with GPM library" >&2;}
++					with_gpm=no
++				else
++					{ { echo "$as_me:6345: error: Cannot link with GPM library" >&5
++echo "$as_me: error: Cannot link with GPM library" >&2;}
++   { (exit 1); exit 1; }; }
++				fi
+ 
+-	echo "$as_me:6073: checking if release/abi version should be used for shared libs" >&5
+-echo $ECHO_N "checking if release/abi version should be used for shared libs... $ECHO_C" >&6
++fi
+ 
+-# Check whether --with-shlib-version or --without-shlib-version was given.
+-if test "${with_shlib_version+set}" = set; then
+-  withval="$with_shlib_version"
+-  test -z "$withval" && withval=auto
+-	case $withval in
+-	(yes)
+-		cf_cv_shlib_version=auto
+-		;;
+-	(rel|abi|auto)
+-		cf_cv_shlib_version=$withval
+-		;;
+-	(*)
+-		echo "$as_me:6088: result: $withval" >&5
+-echo "${ECHO_T}$withval" >&6
+-		{ { echo "$as_me:6090: error: option value must be one of: rel, abi, or auto" >&5
+-echo "$as_me: error: option value must be one of: rel, abi, or auto" >&2;}
+-   { (exit 1); exit 1; }; }
+-		;;
+-	esac
++		fi
+ 
+ else
+-  cf_cv_shlib_version=auto
+-fi;
+-	echo "$as_me:6099: result: $cf_cv_shlib_version" >&5
+-echo "${ECHO_T}$cf_cv_shlib_version" >&6
+ 
+-	cf_cv_rm_so_locs=no
+-	cf_try_cflags=
+-
+-	# Some less-capable ports of gcc support only -fpic
+-	CC_SHARED_OPTS=
++		test "$with_gpm" != maybe && { echo "$as_me:6356: WARNING: Cannot find GPM header" >&5
++echo "$as_me: WARNING: Cannot find GPM header" >&2;}
++		with_gpm=no
+ 
+-	cf_try_fPIC=no
+-	if test "$GCC" = yes
+-	then
+-		cf_try_fPIC=yes
+-	else
+-		case $cf_cv_system_name in
+-		(*linux*)	# e.g., PGI compiler
+-			cf_try_fPIC=yes
+-			;;
+-		esac
+-	fi
++fi
+ 
+-	if test "$cf_try_fPIC" = yes
+-	then
+-		echo "$as_me:6122: checking which $CC option to use" >&5
+-echo $ECHO_N "checking which $CC option to use... $ECHO_C" >&6
+-		cf_save_CFLAGS="$CFLAGS"
+-		for CC_SHARED_OPTS in -fPIC -fpic ''
+-		do
+-			CFLAGS="$cf_save_CFLAGS $CC_SHARED_OPTS"
+-			cat >conftest.$ac_ext <<_ACEOF
+-#line 6129 "configure"
+-#include "confdefs.h"
+-#include <stdio.h>
+-int
+-main (void)
+-{
+-int x = 1
+-  ;
+-  return 0;
+-}
+-_ACEOF
+-rm -f conftest.$ac_objext
+-if { (eval echo "$as_me:6141: \"$ac_compile\"") >&5
+-  (eval $ac_compile) 2>&5
+-  ac_status=$?
+-  echo "$as_me:6144: \$? = $ac_status" >&5
+-  (exit $ac_status); } &&
+-         { ac_try='test -s conftest.$ac_objext'
+-  { (eval echo "$as_me:6147: \"$ac_try\"") >&5
+-  (eval $ac_try) 2>&5
+-  ac_status=$?
+-  echo "$as_me:6150: \$? = $ac_status" >&5
+-  (exit $ac_status); }; }; then
+-  break
+-else
+-  echo "$as_me: failed program was:" >&5
+-cat conftest.$ac_ext >&5
+ fi
+-rm -f conftest.$ac_objext conftest.$ac_ext
+-		done
+-		echo "$as_me:6159: result: $CC_SHARED_OPTS" >&5
+-echo "${ECHO_T}$CC_SHARED_OPTS" >&6
+-		CFLAGS="$cf_save_CFLAGS"
+-	fi
+ 
+-	cf_cv_shlib_version_infix=no
++if test "$with_gpm" != no ; then
++	echo "$as_me:6365: checking if you want to load GPM dynamically" >&5
++echo $ECHO_N "checking if you want to load GPM dynamically... $ECHO_C" >&6
+ 
+-	case $cf_cv_system_name in
+-	(aix4.3-9*|aix[5-7]*)
+-		if test "$GCC" = yes; then
+-			CC_SHARED_OPTS='-Wl,-brtl'
+-			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-brtl -Wl,-blibpath:${RPATH_LIST}:/usr/lib -o $@'
+-		else
+-			CC_SHARED_OPTS='-brtl'
+-			# as well as '-qpic=large -G' or perhaps "-bM:SRE -bnoentry -bexpall"
+-			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -G -Wl,-brtl -Wl,-blibpath:${RPATH_LIST}:/usr/lib -o $@'
+-		fi
+-		;;
+-	(beos*)
+-		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -o $@ -Xlinker -soname=`basename $@` -nostart -e 0'
+-		;;
+-	(cygwin*)
+-		CC_SHARED_OPTS=
+-		MK_SHARED_LIB=$SHELL' '$rel_builddir'/mk_shared_lib.sh $@ ${CC} ${CFLAGS}'
+-		RM_SHARED_OPTS="$RM_SHARED_OPTS $rel_builddir/mk_shared_lib.sh *.dll.a"
+-		cf_cv_shlib_version=cygdll
+-		cf_cv_shlib_version_infix=cygdll
+-		shlibdir=$bindir
+-		MAKE_DLLS=
+-		cat >mk_shared_lib.sh <<-CF_EOF
+-		#!$SHELL
+-		SHARED_LIB=\$1
+-		IMPORT_LIB=\`echo "\$1" | sed -e 's/cyg/lib/' -e 's/[0-9]*\.dll$/.dll.a/'\`
+-		shift
+-		cat <<-EOF
+-		Linking shared library
+-		** SHARED_LIB \$SHARED_LIB
+-		** IMPORT_LIB \$IMPORT_LIB
+-EOF
+-		exec \$* ${LDFLAGS} -shared -Wl,--out-implib=\${IMPORT_LIB} -Wl,--export-all-symbols -o \${SHARED_LIB}
+-CF_EOF
+-		chmod +x mk_shared_lib.sh
+-		;;
+-	(msys*)
+-		CC_SHARED_OPTS=
+-		MK_SHARED_LIB=$SHELL' '$rel_builddir'/mk_shared_lib.sh $@ ${CC} ${CFLAGS}'
+-		RM_SHARED_OPTS="$RM_SHARED_OPTS $rel_builddir/mk_shared_lib.sh *.dll.a"
+-		cf_cv_shlib_version=msysdll
+-		cf_cv_shlib_version_infix=msysdll
+-		shlibdir=$bindir
+-		MAKE_DLLS=
+-		cat >mk_shared_lib.sh <<-CF_EOF
+-		#!$SHELL
+-		SHARED_LIB=\$1
+-		IMPORT_LIB=\`echo "\$1" | sed -e 's/msys-/lib/' -e 's/[0-9]*\.dll$/.dll.a/'\`
+-		shift
+-		cat <<-EOF
+-		Linking shared library
+-		** SHARED_LIB \$SHARED_LIB
+-		** IMPORT_LIB \$IMPORT_LIB
+-EOF
+-		exec \$* ${LDFLAGS} -shared -Wl,--out-implib=\${IMPORT_LIB} -Wl,--export-all-symbols -o \${SHARED_LIB}
+-CF_EOF
+-		chmod +x mk_shared_lib.sh
+-		;;
+-	(darwin*)
+-		cf_try_cflags="no-cpp-precomp"
+-		CC_SHARED_OPTS="-dynamic"
+-		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -dynamiclib -install_name ${libdir}/`basename $@` -compatibility_version ${ABI_VERSION} -current_version ${ABI_VERSION} -o $@'
+-		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=abi
+-		cf_cv_shlib_version_infix=yes
+-		echo "$as_me:6230: checking if ld -search_paths_first works" >&5
+-echo $ECHO_N "checking if ld -search_paths_first works... $ECHO_C" >&6
+-if test "${cf_cv_ldflags_search_paths_first+set}" = set; then
+-  echo $ECHO_N "(cached) $ECHO_C" >&6
++# Check whether --with-dlsym or --without-dlsym was given.
++if test "${with_dlsym+set}" = set; then
++  withval="$with_dlsym"
++  with_dlsym=$withval
+ else
++  with_dlsym=yes
++fi;
++	echo "$as_me:6375: result: $with_dlsym" >&5
++echo "${ECHO_T}$with_dlsym" >&6
++	if test "x$with_dlsym" = xyes ; then
+ 
+-			cf_save_LDFLAGS=$LDFLAGS
+-			LDFLAGS="$LDFLAGS -Wl,-search_paths_first"
+-			cat >conftest.$ac_ext <<_ACEOF
+-#line 6239 "configure"
++cf_have_dlsym=no
++echo "$as_me:6380: checking for dlsym" >&5
++echo $ECHO_N "checking for dlsym... $ECHO_C" >&6
++if test "${ac_cv_func_dlsym+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  cat >conftest.$ac_ext <<_ACEOF
++#line 6386 "configure"
+ #include "confdefs.h"
++/* System header to define __stub macros and hopefully few prototypes,
++    which can conflict with char dlsym (); below.  */
++#include <assert.h>
++/* Override any gcc2 internal prototype to avoid an error.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++/* We use char because int might match the return type of a gcc2
++   builtin and then its argument prototype would still apply.  */
++char dlsym ();
++char (*f) ();
+ 
+ int
+ main (void)
+ {
+-int i;
++/* The GNU C library defines this for functions which it implements
++    to always fail with ENOSYS.  Some functions are actually named
++    something starting with __ and the normal name is an alias.  */
++#if defined (__stub_dlsym) || defined (__stub___dlsym)
++choke me
++#else
++f = dlsym; /* workaround for ICC 12.0.3 */ if (f == 0) return 1;
++#endif
++
+   ;
+   return 0;
+ }
+ _ACEOF
+ rm -f conftest.$ac_objext conftest$ac_exeext
+-if { (eval echo "$as_me:6251: \"$ac_link\"") >&5
++if { (eval echo "$as_me:6417: \"$ac_link\"") >&5
+   (eval $ac_link) 2>&5
+   ac_status=$?
+-  echo "$as_me:6254: \$? = $ac_status" >&5
++  echo "$as_me:6420: \$? = $ac_status" >&5
+   (exit $ac_status); } &&
+          { ac_try='test -s conftest$ac_exeext'
+-  { (eval echo "$as_me:6257: \"$ac_try\"") >&5
++  { (eval echo "$as_me:6423: \"$ac_try\"") >&5
+   (eval $ac_try) 2>&5
+   ac_status=$?
+-  echo "$as_me:6260: \$? = $ac_status" >&5
++  echo "$as_me:6426: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-  cf_cv_ldflags_search_paths_first=yes
++  ac_cv_func_dlsym=yes
+ else
+   echo "$as_me: failed program was:" >&5
+ cat conftest.$ac_ext >&5
+-cf_cv_ldflags_search_paths_first=no
++ac_cv_func_dlsym=no
+ fi
+ rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+-				LDFLAGS=$cf_save_LDFLAGS
+ fi
+-echo "$as_me:6271: result: $cf_cv_ldflags_search_paths_first" >&5
+-echo "${ECHO_T}$cf_cv_ldflags_search_paths_first" >&6
+-		if test $cf_cv_ldflags_search_paths_first = yes; then
+-			LDFLAGS="$LDFLAGS -Wl,-search_paths_first"
+-		fi
+-		;;
+-	(hpux[7-8]*)
+-		# HP-UX 8.07 ld lacks "+b" option used for libdir search-list
+-		if test "$GCC" != yes; then
+-			CC_SHARED_OPTS='+Z'
+-		fi
+-		MK_SHARED_LIB='${LD} ${LDFLAGS} -b -o $@'
+-		INSTALL_LIB="-m 555"
+-		;;
+-	(hpux*)
+-		# (tested with gcc 2.7.2 -- I don't have c89)
+-		if test "$GCC" = yes; then
+-			LD_SHARED_OPTS='-Xlinker +b -Xlinker ${libdir}'
+-		else
+-			CC_SHARED_OPTS='+Z'
+-			LD_SHARED_OPTS='-Wl,+b,${libdir}'
+-		fi
+-		MK_SHARED_LIB='${LD} ${LDFLAGS} +b ${libdir} -b -o $@'
+-		# HP-UX shared libraries must be executable, and should be
+-		# readonly to exploit a quirk in the memory manager.
+-		INSTALL_LIB="-m 555"
+-		;;
+-	(interix*)
+-		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
+-		if test "$cf_cv_shlib_version" = rel; then
+-			cf_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
+-		else
+-			cf_shared_soname='`basename $@`'
+-		fi
+-		CC_SHARED_OPTS=
+-		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-rpath,${RPATH_LIST} -Wl,-h,'$cf_shared_soname' -o $@'
+-		;;
+-	(irix*)
+-		if test "$cf_cv_enable_rpath" = yes ; then
+-			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
+-		fi
+-		# tested with IRIX 5.2 and 'cc'.
+-		if test "$GCC" != yes; then
+-			CC_SHARED_OPTS='-KPIC'
+-			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -rdata_shared -soname `basename $@` -o $@'
+-		else
+-			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-soname,`basename $@` -o $@'
+-		fi
+-		cf_cv_rm_so_locs=yes
+-		;;
+-	(linux*|gnu*|k*bsd*-gnu)
+-		if test "$DFT_LWR_MODEL" = "shared" ; then
+-			LOCAL_LDFLAGS="${LD_RPATH_OPT}\$(LOCAL_LIBDIR)"
+-			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
+-		fi
+-		if test "$cf_cv_enable_rpath" = yes ; then
+-			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
+-		fi
+-
+-	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
+-	if test "$cf_cv_shlib_version" = rel; then
+-		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
+-	else
+-		cf_cv_shared_soname='`basename $@`'
+-	fi
+-
+-		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-soname,'$cf_cv_shared_soname',-stats,-lc -o $@'
+-		;;
+-	(mingw*)
+-		cf_cv_shlib_version=mingw
+-		cf_cv_shlib_version_infix=mingw
+-		shlibdir=$bindir
+-		MAKE_DLLS=
+-		if test "$DFT_LWR_MODEL" = "shared" ; then
+-			LOCAL_LDFLAGS="-Wl,--enable-auto-import"
+-			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
+-			EXTRA_LDFLAGS="-Wl,--enable-auto-import $EXTRA_LDFLAGS"
+-		fi
+-		CC_SHARED_OPTS=
+-		MK_SHARED_LIB=$SHELL' '$rel_builddir'/mk_shared_lib.sh $@ ${CC} ${CFLAGS}'
+-		RM_SHARED_OPTS="$RM_SHARED_OPTS $rel_builddir/mk_shared_lib.sh *.dll.a"
+-		cat >mk_shared_lib.sh <<-CF_EOF
+-		#!$SHELL
+-		SHARED_LIB=\$1
+-		IMPORT_LIB=\`echo "\$1" | sed -e 's/[0-9]*\.dll$/.dll.a/'\`
+-		shift
+-		cat <<-EOF
+-		Linking shared library
+-		** SHARED_LIB \$SHARED_LIB
+-		** IMPORT_LIB \$IMPORT_LIB
+-EOF
+-		exec \$* ${LDFLAGS} -shared -Wl,--enable-auto-import,--out-implib=\${IMPORT_LIB} -Wl,--export-all-symbols -o \${SHARED_LIB}
+-CF_EOF
+-		chmod +x mk_shared_lib.sh
+-		;;
+-	(openbsd[2-9].*|mirbsd*)
+-		if test "$DFT_LWR_MODEL" = "shared" ; then
+-			LOCAL_LDFLAGS="${LD_RPATH_OPT}\$(LOCAL_LIBDIR)"
+-			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
+-		fi
+-		if test "$cf_cv_enable_rpath" = yes ; then
+-			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
+-		fi
+-		CC_SHARED_OPTS="$CC_SHARED_OPTS -DPIC"
+-
+-	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
+-	if test "$cf_cv_shlib_version" = rel; then
+-		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
+-	else
+-		cf_cv_shared_soname='`basename $@`'
+-	fi
+-
+-		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-Bshareable,-soname,'$cf_cv_shared_soname',-stats,-lc -o $@'
+-		;;
+-	(nto-qnx*|openbsd*|freebsd[12].*)
+-		CC_SHARED_OPTS="$CC_SHARED_OPTS -DPIC"
+-		MK_SHARED_LIB='${LD} ${LDFLAGS} -Bshareable -o $@'
+-		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
+-		;;
+-	(dragonfly*|freebsd*)
+-		CC_SHARED_OPTS="$CC_SHARED_OPTS -DPIC"
+-		if test "$DFT_LWR_MODEL" = "shared" && test "$cf_cv_enable_rpath" = yes ; then
+-			LOCAL_LDFLAGS="${cf_ld_rpath_opt}\$(LOCAL_LIBDIR)"
+-			LOCAL_LDFLAGS2="${cf_ld_rpath_opt}\${RPATH_LIST} $LOCAL_LDFLAGS"
+-			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
+-		fi
+-
+-	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
+-	if test "$cf_cv_shlib_version" = rel; then
+-		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
+-	else
+-		cf_cv_shared_soname='`basename $@`'
+-	fi
+-
+-		MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-soname,'$cf_cv_shared_soname',-stats,-lc -o $@'
+-		;;
+-	(netbsd*)
+-		CC_SHARED_OPTS="$CC_SHARED_OPTS -DPIC"
+-		if test "$DFT_LWR_MODEL" = "shared" && test "$cf_cv_enable_rpath" = yes ; then
+-			LOCAL_LDFLAGS="${cf_ld_rpath_opt}\$(LOCAL_LIBDIR)"
+-			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
+-			EXTRA_LDFLAGS="${cf_ld_rpath_opt}\${RPATH_LIST} $EXTRA_LDFLAGS"
+-			if test "$cf_cv_shlib_version" = auto; then
+-			if test -f /usr/libexec/ld.elf_so; then
+-				cf_cv_shlib_version=abi
+-			else
+-				cf_cv_shlib_version=rel
+-			fi
+-			fi
+-
+-	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
+-	if test "$cf_cv_shlib_version" = rel; then
+-		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
+-	else
+-		cf_cv_shared_soname='`basename $@`'
+-	fi
+-
+-			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -Wl,-soname,'$cf_cv_shared_soname' -o $@'
+-		else
+-			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -Wl,-shared -Wl,-Bshareable -o $@'
+-		fi
+-		;;
+-	(osf*|mls+*)
+-		# tested with OSF/1 V3.2 and 'cc'
+-		# tested with OSF/1 V3.2 and gcc 2.6.3 (but the c++ demo didn't
+-		# link with shared libs).
+-		MK_SHARED_LIB='${LD} ${LDFLAGS} -set_version ${REL_VERSION}:${ABI_VERSION} -expect_unresolved "*" -shared -soname `basename $@`'
+-		case $host_os in
+-		(osf4*)
+-			MK_SHARED_LIB="${MK_SHARED_LIB} -msym"
+-			;;
+-		esac
+-		MK_SHARED_LIB="${MK_SHARED_LIB}"' -o $@'
+-		if test "$DFT_LWR_MODEL" = "shared" ; then
+-			LOCAL_LDFLAGS="${LD_RPATH_OPT}\$(LOCAL_LIBDIR)"
+-			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
+-		fi
+-		cf_cv_rm_so_locs=yes
+-		;;
+-	(sco3.2v5*)  # also uw2* and UW7: hops 13-Apr-98
+-		# tested with osr5.0.5
+-		if test "$GCC" != yes; then
+-			CC_SHARED_OPTS='-belf -KPIC'
+-		fi
+-		MK_SHARED_LIB='${LD} ${LDFLAGS} -dy -G -h `basename $@ .${REL_VERSION}`.${ABI_VERSION} -o $@'
+-		if test "$cf_cv_enable_rpath" = yes ; then
+-			# only way is to set LD_RUN_PATH but no switch for it
+-			RUN_PATH=$libdir
+-		fi
+-		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
+-		LINK_PROGS='LD_RUN_PATH=${libdir}'
+-		LINK_TESTS='Pwd=`pwd`;LD_RUN_PATH=`dirname $${Pwd}`/lib'
+-		;;
+-	(sunos4*)
+-		# tested with SunOS 4.1.1 and gcc 2.7.0
+-		if test "$GCC" != yes; then
+-			CC_SHARED_OPTS='-KPIC'
+-		fi
+-		MK_SHARED_LIB='${LD} ${LDFLAGS} -assert pure-text -o $@'
+-		test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
+-		;;
+-	(solaris2*)
+-		# tested with SunOS 5.5.1 (solaris 2.5.1) and gcc 2.7.2
+-		# tested with SunOS 5.10 (solaris 10) and gcc 3.4.3
+-		if test "$DFT_LWR_MODEL" = "shared" ; then
+-			LOCAL_LDFLAGS="-R \$(LOCAL_LIBDIR):\${libdir}"
+-			LOCAL_LDFLAGS2="$LOCAL_LDFLAGS"
+-		fi
+-		if test "$cf_cv_enable_rpath" = yes ; then
+-			EXTRA_LDFLAGS="-R \${libdir} $EXTRA_LDFLAGS"
+-		fi
+-
+-	test "$cf_cv_shlib_version" = auto && cf_cv_shlib_version=rel
+-	if test "$cf_cv_shlib_version" = rel; then
+-		cf_cv_shared_soname='`basename $@ .${REL_VERSION}`.${ABI_VERSION}'
+-	else
+-		cf_cv_shared_soname='`basename $@`'
+-	fi
+-
+-		if test "$GCC" != yes; then
+-			cf_save_CFLAGS="$CFLAGS"
+-			for cf_shared_opts in -xcode=pic32 -xcode=pic13 -KPIC -Kpic -O
+-			do
+-				CFLAGS="$cf_shared_opts $cf_save_CFLAGS"
+-				cat >conftest.$ac_ext <<_ACEOF
+-#line 6496 "configure"
++echo "$as_me:6436: result: $ac_cv_func_dlsym" >&5
++echo "${ECHO_T}$ac_cv_func_dlsym" >&6
++if test $ac_cv_func_dlsym = yes; then
++  cf_have_dlsym=yes
++else
++
++cf_have_libdl=no
++echo "$as_me:6443: checking for dlsym in -ldl" >&5
++echo $ECHO_N "checking for dlsym in -ldl... $ECHO_C" >&6
++if test "${ac_cv_lib_dl_dlsym+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  ac_check_lib_save_LIBS=$LIBS
++LIBS="-ldl  $LIBS"
++cat >conftest.$ac_ext <<_ACEOF
++#line 6451 "configure"
+ #include "confdefs.h"
+-#include <stdio.h>
++
++/* Override any gcc2 internal prototype to avoid an error.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++/* We use char because int might match the return type of a gcc2
++   builtin and then its argument prototype would still apply.  */
++char dlsym ();
+ int
+ main (void)
+ {
+-printf("Hello\n");
++dlsym ();
+   ;
+   return 0;
+ }
+ _ACEOF
+-rm -f conftest.$ac_objext
+-if { (eval echo "$as_me:6508: \"$ac_compile\"") >&5
+-  (eval $ac_compile) 2>&5
++rm -f conftest.$ac_objext conftest$ac_exeext
++if { (eval echo "$as_me:6470: \"$ac_link\"") >&5
++  (eval $ac_link) 2>&5
+   ac_status=$?
+-  echo "$as_me:6511: \$? = $ac_status" >&5
++  echo "$as_me:6473: \$? = $ac_status" >&5
+   (exit $ac_status); } &&
+-         { ac_try='test -s conftest.$ac_objext'
+-  { (eval echo "$as_me:6514: \"$ac_try\"") >&5
++         { ac_try='test -s conftest$ac_exeext'
++  { (eval echo "$as_me:6476: \"$ac_try\"") >&5
+   (eval $ac_try) 2>&5
+   ac_status=$?
+-  echo "$as_me:6517: \$? = $ac_status" >&5
++  echo "$as_me:6479: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-  break
++  ac_cv_lib_dl_dlsym=yes
+ else
+   echo "$as_me: failed program was:" >&5
+ cat conftest.$ac_ext >&5
++ac_cv_lib_dl_dlsym=no
+ fi
+-rm -f conftest.$ac_objext conftest.$ac_ext
+-			done
+-			CFLAGS="$cf_save_CFLAGS"
+-			CC_SHARED_OPTS=$cf_shared_opts
+-			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -dy -G -h '$cf_cv_shared_soname' -o $@'
+-		else
+-			MK_SHARED_LIB='${CC} ${LDFLAGS} ${CFLAGS} -shared -dy -G -h '$cf_cv_shared_soname' -o $@'
+-		fi
+-		;;
+-	(sysv5uw7*|unix_sv*)
+-		# tested with UnixWare 7.1.0 (gcc 2.95.2 and cc)
+-		if test "$GCC" != yes; then
+-			CC_SHARED_OPTS='-KPIC'
+-		fi
+-		MK_SHARED_LIB='${LD} ${LDFLAGS} -d y -G -o $@'
+-		;;
+-	(*)
+-		CC_SHARED_OPTS='unknown'
+-		MK_SHARED_LIB='echo unknown'
+-		;;
+-	esac
++rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
++LIBS=$ac_check_lib_save_LIBS
++fi
++echo "$as_me:6490: result: $ac_cv_lib_dl_dlsym" >&5
++echo "${ECHO_T}$ac_cv_lib_dl_dlsym" >&6
++if test $ac_cv_lib_dl_dlsym = yes; then
+ 
+-	# This works if the last tokens in $MK_SHARED_LIB are the -o target.
+-	case "$cf_cv_shlib_version" in
+-	(rel|abi)
+-		case "$MK_SHARED_LIB" in
+-		(*'-o $@')
+-			test "$cf_cv_do_symlinks" = no && cf_cv_do_symlinks=yes
+-			;;
+-		(*)
+-			{ echo "$as_me:6554: WARNING: ignored --with-shlib-version" >&5
+-echo "$as_me: WARNING: ignored --with-shlib-version" >&2;}
+-			;;
+-		esac
+-		;;
+-	esac
++	cf_have_dlsym=yes
++	cf_have_libdl=yes
++fi
+ 
+-	if test -n "$cf_try_cflags"
+-	then
+-cat > conftest.$ac_ext <<EOF
+-#line 6564 "${as_me:-configure}"
+-#include <stdio.h>
+-int main(int argc, char *argv[])
++fi
++
++if test "$cf_have_dlsym" = yes ; then
++	test "$cf_have_libdl" = yes && {
++cf_add_libs="-ldl"
++# Filter out duplicates - this happens with badly-designed ".pc" files...
++for cf_add_1lib in $LIBS
++do
++	for cf_add_2lib in $cf_add_libs
++	do
++		if test "x$cf_add_1lib" = "x$cf_add_2lib"
++		then
++			cf_add_1lib=
++			break
++		fi
++	done
++	test -n "$cf_add_1lib" && cf_add_libs="$cf_add_libs $cf_add_1lib"
++done
++LIBS="$cf_add_libs"
++ }
++
++	echo "$as_me:6519: checking whether able to link to dl*() functions" >&5
++echo $ECHO_N "checking whether able to link to dl*() functions... $ECHO_C" >&6
++	cat >conftest.$ac_ext <<_ACEOF
++#line 6522 "configure"
++#include "confdefs.h"
++#include <dlfcn.h>
++int
++main (void)
+ {
+-	printf("hello\n");
+-	return (argv[argc-1] == 0) ;
++
++		void *obj;
++		if ((obj = dlopen("filename", 0)) != 0) {
++			if (dlsym(obj, "symbolname") == 0) {
++			dlclose(obj);
++			}
++		}
++  ;
++  return 0;
+ }
+-EOF
+-		cf_save_CFLAGS="$CFLAGS"
+-		for cf_opt in $cf_try_cflags
+-		do
+-			CFLAGS="$cf_save_CFLAGS -$cf_opt"
+-			echo "$as_me:6576: checking if CFLAGS option -$cf_opt works" >&5
+-echo $ECHO_N "checking if CFLAGS option -$cf_opt works... $ECHO_C" >&6
+-			if { (eval echo "$as_me:6578: \"$ac_compile\"") >&5
+-  (eval $ac_compile) 2>&5
++_ACEOF
++rm -f conftest.$ac_objext conftest$ac_exeext
++if { (eval echo "$as_me:6540: \"$ac_link\"") >&5
++  (eval $ac_link) 2>&5
+   ac_status=$?
+-  echo "$as_me:6581: \$? = $ac_status" >&5
+-  (exit $ac_status); }; then
+-				echo "$as_me:6583: result: yes" >&5
+-echo "${ECHO_T}yes" >&6
+-				cf_save_CFLAGS="$CFLAGS"
+-			else
+-				echo "$as_me:6587: result: no" >&5
+-echo "${ECHO_T}no" >&6
+-			fi
+-		done
+-		CFLAGS="$cf_save_CFLAGS"
+-	fi
++  echo "$as_me:6543: \$? = $ac_status" >&5
++  (exit $ac_status); } &&
++         { ac_try='test -s conftest$ac_exeext'
++  { (eval echo "$as_me:6546: \"$ac_try\"") >&5
++  (eval $ac_try) 2>&5
++  ac_status=$?
++  echo "$as_me:6549: \$? = $ac_status" >&5
++  (exit $ac_status); }; }; then
+ 
+-	# RPATH_LIST is a colon-separated list of directories
+-	test -n "$cf_ld_rpath_opt" && MK_SHARED_LIB="$MK_SHARED_LIB $cf_ld_rpath_opt\${RPATH_LIST}"
+-	test -z "$RPATH_LIST" && RPATH_LIST="\${libdir}"
++cat >>confdefs.h <<\EOF
++#define HAVE_LIBDL 1
++EOF
+ 
+-	test $cf_cv_rm_so_locs = yes && RM_SHARED_OPTS="$RM_SHARED_OPTS so_locations"
++else
++  echo "$as_me: failed program was:" >&5
++cat conftest.$ac_ext >&5
+ 
+-	test -n "$verbose" && echo "	CC_SHARED_OPTS: $CC_SHARED_OPTS" 1>&6
++		{ { echo "$as_me:6560: error: Cannot link test program for libdl" >&5
++echo "$as_me: error: Cannot link test program for libdl" >&2;}
++   { (exit 1); exit 1; }; }
++fi
++rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
++	echo "$as_me:6565: result: ok" >&5
++echo "${ECHO_T}ok" >&6
++else
++	{ { echo "$as_me:6568: error: Cannot find dlsym function" >&5
++echo "$as_me: error: Cannot find dlsym function" >&2;}
++   { (exit 1); exit 1; }; }
++fi
+ 
+-echo "${as_me:-configure}:6602: testing CC_SHARED_OPTS: $CC_SHARED_OPTS ..." 1>&5
++		if test "x$with_gpm" != xyes ; then
++			test -n "$verbose" && echo "	assuming soname for gpm is $with_gpm" 1>&6
+ 
+-	test -n "$verbose" && echo "	MK_SHARED_LIB:  $MK_SHARED_LIB" 1>&6
++echo "${as_me:-configure}:6576: testing assuming soname for gpm is $with_gpm ..." 1>&5
+ 
+-echo "${as_me:-configure}:6606: testing MK_SHARED_LIB:  $MK_SHARED_LIB ..." 1>&5
++			cf_cv_gpm_soname="$with_gpm"
++		else
+ 
+-for model in $cf_list_models; do
+-	case $model in
+-	(libtool)
++echo "$as_me:6581: checking for soname of gpm library" >&5
++echo $ECHO_N "checking for soname of gpm library... $ECHO_C" >&6
++if test "${cf_cv_gpm_soname+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
+ 
+-echo "$as_me:6612: checking for additional libtool options" >&5
+-echo $ECHO_N "checking for additional libtool options... $ECHO_C" >&6
++cf_cv_gpm_soname=unknown
++if test "$cross_compiling" != yes ; then
++cat >conftest.$ac_ext <<CF_EOF
++#include <gpm.h>
++int main(void)
++{
++if (Gpm_Open(0,0)) Gpm_Close();
++	${cf_cv_main_return:-return}(0);
++}
++CF_EOF
++cf_save_LIBS="$LIBS"
+ 
+-# Check whether --with-libtool-opts or --without-libtool-opts was given.
+-if test "${with_libtool_opts+set}" = set; then
+-  withval="$with_libtool_opts"
+-  with_libtool_opts=$withval
+-else
+-  with_libtool_opts=no
+-fi;
+-echo "$as_me:6622: result: $with_libtool_opts" >&5
+-echo "${ECHO_T}$with_libtool_opts" >&6
++cf_add_libs="-lgpm"
++# Filter out duplicates - this happens with badly-designed ".pc" files...
++for cf_add_1lib in $LIBS
++do
++	for cf_add_2lib in $cf_add_libs
++	do
++		if test "x$cf_add_1lib" = "x$cf_add_2lib"
++		then
++			cf_add_1lib=
++			break
++		fi
++	done
++	test -n "$cf_add_1lib" && cf_add_libs="$cf_add_libs $cf_add_1lib"
++done
++LIBS="$cf_add_libs"
+ 
+-case .$with_libtool_opts in
+-(.yes|.no|.)
+-	;;
+-(*)
+-	LIBTOOL_OPTS="$LIBTOOL_OPTS $with_libtool_opts"
+-	;;
+-esac
++	if { (eval echo "$as_me:6615: \"$ac_compile\"") >&5
++  (eval $ac_compile) 2>&5
++  ac_status=$?
++  echo "$as_me:6618: \$? = $ac_status" >&5
++  (exit $ac_status); } ; then
++		if { (eval echo "$as_me:6620: \"$ac_link\"") >&5
++  (eval $ac_link) 2>&5
++  ac_status=$?
++  echo "$as_me:6623: \$? = $ac_status" >&5
++  (exit $ac_status); } ; then
++			cf_cv_gpm_soname=`ldd conftest$ac_exeext 2>/dev/null | sed -e 's,^.*/,,' -e 's, .*$,,' | fgrep libgpm.`
++			test -z "$cf_cv_gpm_soname" && cf_cv_gpm_soname=unknown
++		fi
++	fi
++rm -rf conftest*
++LIBS="$cf_save_LIBS"
++fi
+ 
+-echo "$as_me:6633: checking if exported-symbols file should be used" >&5
+-echo $ECHO_N "checking if exported-symbols file should be used... $ECHO_C" >&6
++fi
++echo "$as_me:6634: result: $cf_cv_gpm_soname" >&5
++echo "${ECHO_T}$cf_cv_gpm_soname" >&6
+ 
+-# Check whether --with-export-syms or --without-export-syms was given.
+-if test "${with_export_syms+set}" = set; then
+-  withval="$with_export_syms"
+-  with_export_syms=$withval
+-else
+-  with_export_syms=no
+-fi;
+-if test "x$with_export_syms" = xyes
+-then
+-	with_export_syms='${top_srcdir}/package/${PACKAGE}.sym'
++		fi
++		test "$cf_cv_gpm_soname" != "unknown" &&
++cat >>confdefs.h <<EOF
++#define LIBGPM_SONAME "$cf_cv_gpm_soname"
++EOF
++
++		SHLIB_LIST="-ldl $SHLIB_LIST"
++	else
++		SHLIB_LIST="-lgpm $SHLIB_LIST"
++
++cf_add_libs="-lgpm"
++# Filter out duplicates - this happens with badly-designed ".pc" files...
++for cf_add_1lib in $TEST_LIBS
++do
++	for cf_add_2lib in $cf_add_libs
++	do
++		if test "x$cf_add_1lib" = "x$cf_add_2lib"
++		then
++			cf_add_1lib=
++			break
++		fi
++	done
++	test -n "$cf_add_1lib" && cf_add_libs="$cf_add_libs $cf_add_1lib"
++done
++TEST_LIBS="$cf_add_libs"
+ 
+-fi
+-echo "$as_me:6648: result: $with_export_syms" >&5
+-echo "${ECHO_T}$with_export_syms" >&6
+-if test "x$with_export_syms" != xno
+-then
+-	EXPORT_SYMS="-export-symbols $with_export_syms"
++	fi
+ 
+-fi
++cat >>confdefs.h <<\EOF
++#define HAVE_LIBGPM 1
++EOF
+ 
+-		;;
+-	(shared)
+-		if test "$CC_SHARED_OPTS" = "unknown"; then
+-			{ { echo "$as_me:6659: error: Shared libraries are not supported in this version" >&5
+-echo "$as_me: error: Shared libraries are not supported in this version" >&2;}
+-   { (exit 1); exit 1; }; }
+-		fi
+-		# workaround for inept transition to PIE vs PIC...
+-		echo "$as_me:6664: checking if current CFLAGS link properly" >&5
+-echo $ECHO_N "checking if current CFLAGS link properly... $ECHO_C" >&6
+-		cat >conftest.$ac_ext <<_ACEOF
+-#line 6667 "configure"
++echo "$as_me:6669: checking for Gpm_Wgetch in -lgpm" >&5
++echo $ECHO_N "checking for Gpm_Wgetch in -lgpm... $ECHO_C" >&6
++if test "${ac_cv_lib_gpm_Gpm_Wgetch+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
++  ac_check_lib_save_LIBS=$LIBS
++LIBS="-lgpm  $LIBS"
++cat >conftest.$ac_ext <<_ACEOF
++#line 6677 "configure"
+ #include "confdefs.h"
+-#include <stdio.h>
++
++/* Override any gcc2 internal prototype to avoid an error.  */
++#ifdef __cplusplus
++extern "C"
++#endif
++/* We use char because int might match the return type of a gcc2
++   builtin and then its argument prototype would still apply.  */
++char Gpm_Wgetch ();
+ int
+ main (void)
+ {
+-printf("Hello work\n");
++Gpm_Wgetch ();
+   ;
+   return 0;
+ }
+ _ACEOF
+ rm -f conftest.$ac_objext conftest$ac_exeext
+-if { (eval echo "$as_me:6679: \"$ac_link\"") >&5
++if { (eval echo "$as_me:6696: \"$ac_link\"") >&5
+   (eval $ac_link) 2>&5
+   ac_status=$?
+-  echo "$as_me:6682: \$? = $ac_status" >&5
++  echo "$as_me:6699: \$? = $ac_status" >&5
+   (exit $ac_status); } &&
+          { ac_try='test -s conftest$ac_exeext'
+-  { (eval echo "$as_me:6685: \"$ac_try\"") >&5
++  { (eval echo "$as_me:6702: \"$ac_try\"") >&5
+   (eval $ac_try) 2>&5
+   ac_status=$?
+-  echo "$as_me:6688: \$? = $ac_status" >&5
++  echo "$as_me:6705: \$? = $ac_status" >&5
+   (exit $ac_status); }; }; then
+-  cf_cflags_work=yes
++  ac_cv_lib_gpm_Gpm_Wgetch=yes
+ else
+   echo "$as_me: failed program was:" >&5
+ cat conftest.$ac_ext >&5
+-cf_cflags_work=no
++ac_cv_lib_gpm_Gpm_Wgetch=no
+ fi
+ rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
+-		echo "$as_me:6697: result: $cf_cflags_work" >&5
+-echo "${ECHO_T}$cf_cflags_work" >&6
+-		if test "$cf_cflags_work" = no
+-		then
+-			test -n "$verbose" && echo "	try to work around by appending shared-options" 1>&6
++LIBS=$ac_check_lib_save_LIBS
++fi
++echo "$as_me:6716: result: $ac_cv_lib_gpm_Gpm_Wgetch" >&5
++echo "${ECHO_T}$ac_cv_lib_gpm_Gpm_Wgetch" >&6
++if test $ac_cv_lib_gpm_Gpm_Wgetch = yes; then
+ 
+-echo "${as_me:-configure}:6703: testing try to work around by appending shared-options ..." 1>&5
++echo "$as_me:6720: checking if GPM is weakly bound to curses library" >&5
++echo $ECHO_N "checking if GPM is weakly bound to curses library... $ECHO_C" >&6
++if test "${cf_cv_check_gpm_wgetch+set}" = set; then
++  echo $ECHO_N "(cached) $ECHO_C" >&6
++else
+ 
+-			CFLAGS="$CFLAGS $CC_SHARED_OPTS"
+-		fi
++cf_cv_check_gpm_wgetch=unknown
++if test "$cross_compiling" != yes ; then
+ 
+-echo "$as_me:6708: checking if versioned-symbols file should be used" >&5
+-echo $ECHO_N "checking if versioned-symbols file should be used... $ECHO_C" >&6
++cat >conftest.$ac_ext <<CF_EOF
++#include <gpm.h>
++int main(void)
++{
++	Gpm_Wgetch();
++	${cf_cv_main_return:-return}(0);
++}
++CF_EOF
+ 
+-# Check whether --with-versioned-syms or --without-versioned-syms was given.
+-if test "${with_versioned_syms+set}" = set; then
+-  withval="$with_versioned_syms"
+-  with_versioned_syms=$withval
+-else
+-  with_versioned_syms=no
+-fi;
+-if test "x$with_versioned_syms" = xyes
+-then
+-	with_versioned_syms='${top_srcdir}/package/${PACKAGE}.map'
++	cf_save_LIBS="$LIBS"
++	# This only works if we can look at the symbol table.  If a shared
++	# library is stripped for install, we cannot use that.  So we're forced
++	# to rely on the static library, noting that some packagers may not
++	# include it.
++	LIBS="-static -lgpm -dynamic $LIBS"
++	if { (eval echo "$as_me:6744: \"$ac_compile\"") >&5
++  (eval $ac_compile) 2>&5
++  ac_status=$?
++  echo "$as_me:6747: \$? = $ac_status" >&5
++  (exit $ac_status); } ; then
++		if { (eval echo "$as_me:6749: \"$ac_link\"") >&5
++  (eval $ac_link) 2>&5
++  ac_status=$?
++  echo "$as_me:6752: \$? = $ac_status" >&5
++  (exit $ac_status); } ; then
++			cf_cv_check_gpm_wgetch=`nm conftest$ac_exeext | egrep '\<wgetch\>' | egrep '\<[vVwW]\>'`
++			test -n "$cf_cv_check_gpm_wgetch" && cf_cv_check_gpm_wgetch=yes
++			test -z "$cf_cv_check_gpm_wgetch" && cf_cv_check_gpm_wgetch=no
++		fi
++	fi
++	rm -rf conftest*
++	LIBS="$cf_save_LIBS"
++fi
+ 
+ fi
+-echo "$as_me:6723: result: $with_versioned_syms" >&5
+-echo "${ECHO_T}$with_versioned_syms" >&6
++echo "$as_me:6764: result: $cf_cv_check_gpm_wgetch" >&5
++echo "${ECHO_T}$cf_cv_check_gpm_wgetch" >&6
+ 
+-RESULTING_SYMS=
+-VERSIONED_SYMS=
+-WILDCARD_SYMS=
++if test "$cf_cv_check_gpm_wgetch" != yes ; then
++	{ echo "$as_me:6768: WARNING: GPM library is already linked with curses - read the FAQ" >&5
++echo "$as_me: WARNING: GPM library is already linked with curses - read the FAQ" >&2;}
++fi
+ 
+-if test "x$with_versioned_syms" != xno
+-then
+-	RESULTING_SYMS=$with_versioned_syms
+-	case "x$MK_SHARED_LIB" in
+-	(*-Wl,*)
+-		VERSIONED_SYMS="-Wl,--version-script,\${RESULTING_SYMS}"
+-		MK_SHARED_LIB=`echo "$MK_SHARED_LIB" | sed -e "s%-Wl,%\\${VERSIONED_SYMS} -Wl,%"`
+-		test -n "$verbose" && echo "	MK_SHARED_LIB:  $MK_SHARED_LIB" 1>&6
++fi
+ 
+-echo "${as_me:-configure}:6739: testing MK_SHARED_LIB:  $MK_SHARED_LIB ..." 1>&5
++fi
+ 
+-		;;
+-	(*-dy\ *)
+-		VERSIONED_SYMS="-Wl,-M,\${RESULTING_SYMS}"
+-		MK_SHARED_LIB=`echo "$MK_SHARED_LIB" | sed -e "s%-dy%\\${VERSIONED_SYMS} -dy%"`
+-		test -n "$verbose" && echo "	MK_SHARED_LIB:  $MK_SHARED_LIB" 1>&6
++# not everyone has "test -c"
++if test -c /dev/sysmouse 2>/dev/null ; then
++echo "$as_me:6778: checking if you want to use sysmouse" >&5
++echo $ECHO_N "checking if you want to use sysmouse... $ECHO_C" >&6
+ 
+-echo "${as_me:-configure}:6747: testing MK_SHARED_LIB:  $MK_SHARED_LIB ..." 1>&5
++# Check whether --with-sysmouse or --without-sysmouse was given.
++if test "${with_sysmouse+set}" = set; then
++  withval="$with_sysmouse"
++  cf_with_sysmouse=$withval
++else
++  cf_with_sysmouse=maybe
++fi;
++	if test "$cf_with_sysmouse" != no ; then
++	cat >conftest.$ac_ext <<_ACEOF
++#line 6790 "configure"
++#include "confdefs.h"
+ 
+-		;;
+-	(*)
+-		{ echo "$as_me:6751: WARNING: this system does not support versioned-symbols" >&5
+-echo "$as_me: WARNING: this system does not support versioned-symbols" >&2;}
+-		;;
+-	esac
++#include <osreldate.h>
++#if (__FreeBSD_version >= 400017)
++#include <sys/consio.h>
++#include <sys/fbio.h>
++#else
++#include <machine/console.h>
++#endif
+ 
+-	# Linux ld can selectively override scope, e.g., of symbols beginning with
+-	# "_" by first declaring some as global, and then using a wildcard to
+-	# declare the others as local.  Some other loaders cannot do this.  Check
+-	# by constructing a (very) simple shared library and inspecting its
+-	# symbols.
+-	if test "x$VERSIONED_SYMS" != "x"
+-	then
+-		echo "$as_me:6763: checking if wildcards can be used to selectively omit symbols" >&5
+-echo $ECHO_N "checking if wildcards can be used to selectively omit symbols... $ECHO_C" >&6
+-		WILDCARD_SYMS=no
++int
++main (void)
++{
+ 
+-		# make sources
+-		rm -f conftest.*
++	struct mouse_info the_mouse;
++	ioctl(0, CONS_MOUSECTL, &the_mouse);
+ 
+-		cat >conftest.ver <<EOF
+-module_1.0 {
+-global:
+-	globalf1;
+-local:
+-	localf1;
+-};
+-module_2.0 {
+-global:
+-	globalf2;
+-local:
+-	localf2;
+-	_*;
+-} module_1.0;
+-submodule_1.0 {
+-global:
+-	subglobalf1;
+-	_ismissing;
+-local:
+-	sublocalf1;
+-};
+-submodule_2.0 {
+-global:
+-	subglobalf2;
+-local:
+-	sublocalf2;
+-	_*;
+-} submodule_1.0;
+-EOF
+-		cat >conftest.$ac_ext <<EOF
+-#line 6800 "configure"
+-int	_ismissing(void) { return 1; }
+-int	_localf1(void) { return 1; }
+-int	_localf2(void) { return 2; }
+-int	globalf1(void) { return 1; }
+-int	globalf2(void) { return 2; }
+-int	_sublocalf1(void) { return 1; }
+-int	_sublocalf2(void) { return 2; }
+-int	subglobalf1(void) { return 1; }
+-int	subglobalf2(void) { return 2; }
+-EOF
+-		cat >conftest.mk <<EOF
+-CC=${CC}
+-CFLAGS=${CFLAGS}
+-CPPFLAGS=${CPPFLAGS}
+-LDFLAGS=${LDFLAGS}
+-LIBS=${LIBS}
+-VERSIONED_SYMS=${VERSIONED_SYMS}
+-RESULTING_SYMS=conftest.ver
+-MK_SHARED_LIB=${MK_SHARED_LIB}
+-conftest.so: conftest.$ac_cv_objext
+-		\$(MK_SHARED_LIB) conftest.$ac_cv_objext
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext
++if { (eval echo "$as_me:6813: \"$ac_compile\"") >&5
++  (eval $ac_compile) 2>&5
++  ac_status=$?
++  echo "$as_me:6816: \$? = $ac_status" >&5
++  (exit $ac_status); } &&
++         { ac_try='test -s conftest.$ac_objext'
++  { (eval echo "$as_me:6819: \"$ac_try\"") >&5
++  (eval $ac_try) 2>&5
++  ac_status=$?
++  echo "$as_me:6822: \$? = $ac_status" >&5
++  (exit $ac_status); }; }; then
++  cf_with_sysmouse=yes
++else
++  echo "$as_me: failed program was:" >&5
++cat conftest.$ac_ext >&5
++cf_with_sysmouse=no
++fi
++rm -f conftest.$ac_objext conftest.$ac_ext
++	fi
++echo "$as_me:6832: result: $cf_with_sysmouse" >&5
++echo "${ECHO_T}$cf_with_sysmouse" >&6
++test "$cf_with_sysmouse" = yes &&
++cat >>confdefs.h <<\EOF
++#define USE_SYSMOUSE 1
+ EOF
+ 
+-		# compile source, make library
+-		if make -f conftest.mk 2>&5 >/dev/null
+-		then
+-			# test for missing symbol in either Data or Text section
+-			cf_missing=`nm -P conftest.so 2>&5 |fgrep _ismissing | egrep '[ 	][DT][ 	]'`
+-			test -n "$cf_missing" && WILDCARD_SYMS=yes
+-		fi
+-		echo "$as_me:6831: result: $WILDCARD_SYMS" >&5
+-echo "${ECHO_T}$WILDCARD_SYMS" >&6
+-		rm -f conftest.*
+-	fi
+ fi
+ 
+-		;;
+-	esac
+-done
+-
+ # pretend that ncurses==ncursesw==ncursest
+ echo "$as_me:6842: checking if you want to disable library suffixes" >&5
+ echo $ECHO_N "checking if you want to disable library suffixes... $ECHO_C" >&6
+diff --git a/configure.in b/configure.in
+index 191d7d7a..61368d66 100644
+--- a/configure.in
++++ b/configure.in
+@@ -28,14 +28,14 @@ dnl***************************************************************************
+ dnl
+ dnl Author: Thomas E. Dickey 1995-on
+ dnl
+-dnl $Id: configure.in,v 1.656 2018/02/10 18:19:38 tom Exp $
++dnl $Id: configure.in,v 1.657 2018/05/26 16:43:27 tom Exp $
+ dnl Process this file with autoconf to produce a configure script.
+ dnl
+ dnl See https://invisible-island.net/autoconf/ for additional information.
+ dnl
+ dnl ---------------------------------------------------------------------------
+ AC_PREREQ(2.52.20170501)
+-AC_REVISION($Revision: 1.656 $)
++AC_REVISION($Revision: 1.657 $)
+ AC_INIT(ncurses/base/lib_initscr.c)
+ AC_CONFIG_HEADER(include/ncurses_cfg.h:include/ncurses_cfg.hin)
+ 
+@@ -423,36 +423,6 @@ AC_ARG_WITH(ticlib,
+ 	[with_ticlib=no])
+ AC_MSG_RESULT($with_ticlib)
+ 
+-### Checks for special libraries, must be done up-front.
+-SHLIB_LIST=""
+-CF_WITH_GPM
+-if test "$with_gpm" != no ; then
+-	AC_MSG_CHECKING(if you want to load GPM dynamically)
+-	AC_ARG_WITH(dlsym,
+-		[  --without-dlsym         do not use dlsym() to load GPM dynamically],
+-		[with_dlsym=$withval],
+-		[with_dlsym=yes])
+-	AC_MSG_RESULT($with_dlsym)
+-	if test "x$with_dlsym" = xyes ; then
+-		CF_FUNC_DLSYM
+-		if test "x$with_gpm" != xyes ; then
+-			CF_VERBOSE(assuming soname for gpm is $with_gpm)
+-			cf_cv_gpm_soname="$with_gpm"
+-		else
+-			CF_LIB_SONAME([#include <gpm.h>],[if (Gpm_Open(0,0)) Gpm_Close();],gpm)
+-		fi
+-		test "$cf_cv_gpm_soname" != "unknown" && AC_DEFINE_UNQUOTED(LIBGPM_SONAME,"$cf_cv_gpm_soname",[Define as needed to set the gpm share library soname])
+-		SHLIB_LIST="-ldl $SHLIB_LIST"
+-	else
+-		SHLIB_LIST="-lgpm $SHLIB_LIST"
+-		CF_ADD_LIB(gpm,TEST_LIBS)
+-	fi
+-	AC_DEFINE(HAVE_LIBGPM,1,[Define to 1 if we have the gpm library])
+-	CF_CHECK_GPM_WGETCH
+-fi
+-
+-CF_WITH_SYSMOUSE
+-
+ dnl Not all ports of gcc support the -g option
+ 
+ if test X"$CC_G_OPT" = X"" ; then
+@@ -521,6 +491,36 @@ for model in $cf_list_models; do
+ 	esac
+ done
+ 
++### Checks for special libraries, must be done up-front.
++SHLIB_LIST=""
++CF_WITH_GPM
++if test "$with_gpm" != no ; then
++	AC_MSG_CHECKING(if you want to load GPM dynamically)
++	AC_ARG_WITH(dlsym,
++		[  --without-dlsym         do not use dlsym() to load GPM dynamically],
++		[with_dlsym=$withval],
++		[with_dlsym=yes])
++	AC_MSG_RESULT($with_dlsym)
++	if test "x$with_dlsym" = xyes ; then
++		CF_FUNC_DLSYM
++		if test "x$with_gpm" != xyes ; then
++			CF_VERBOSE(assuming soname for gpm is $with_gpm)
++			cf_cv_gpm_soname="$with_gpm"
++		else
++			CF_LIB_SONAME([#include <gpm.h>],[if (Gpm_Open(0,0)) Gpm_Close();],gpm)
++		fi
++		test "$cf_cv_gpm_soname" != "unknown" && AC_DEFINE_UNQUOTED(LIBGPM_SONAME,"$cf_cv_gpm_soname",[Define as needed to set the gpm share library soname])
++		SHLIB_LIST="-ldl $SHLIB_LIST"
++	else
++		SHLIB_LIST="-lgpm $SHLIB_LIST"
++		CF_ADD_LIB(gpm,TEST_LIBS)
++	fi
++	AC_DEFINE(HAVE_LIBGPM,1,[Define to 1 if we have the gpm library])
++	CF_CHECK_GPM_WGETCH
++fi
++
++CF_WITH_SYSMOUSE
++
+ # pretend that ncurses==ncursesw==ncursest
+ AC_MSG_CHECKING(if you want to disable library suffixes)
+ CF_ARG_DISABLE(lib-suffixes,
+diff --git a/dist.mk b/dist.mk
+index a09a0f90..4cfe5226 100644
+--- a/dist.mk
++++ b/dist.mk
+@@ -25,7 +25,7 @@
+ # use or other dealings in this Software without prior written               #
+ # authorization.                                                             #
+ ##############################################################################
+-# $Id: dist.mk,v 1.1224 2018/05/16 00:44:03 tom Exp $
++# $Id: dist.mk,v 1.1225 2018/05/20 18:12:00 tom Exp $
+ # Makefile for creating ncurses distributions.
+ #
+ # This only needs to be used directly as a makefile by developers, but
+@@ -37,7 +37,7 @@ SHELL = /bin/sh
+ # These define the major/minor/patch versions of ncurses.
+ NCURSES_MAJOR = 6
+ NCURSES_MINOR = 1
+-NCURSES_PATCH = 20180519
++NCURSES_PATCH = 20180526
+ 
+ # We don't append the patch to the version, since this only applies to releases
+ VERSION = $(NCURSES_MAJOR).$(NCURSES_MINOR)
+diff --git a/include/term_entry.h b/include/term_entry.h
+index b98b80e4..1571b17f 100644
+--- a/include/term_entry.h
++++ b/include/term_entry.h
+@@ -32,7 +32,7 @@
+  *     and: Thomas E. Dickey                        1998-on                 *
+  ****************************************************************************/
+ 
+-/* $Id: term_entry.h,v 1.56 2018/05/06 00:19:41 tom Exp $ */
++/* $Id: term_entry.h,v 1.57 2018/05/26 13:50:53 tom Exp $ */
+ 
+ /*
+  *	term_entry.h -- interface to entry-manipulation code
+@@ -46,6 +46,7 @@
+ extern "C" {
+ #endif
+ 
++#include <curses.h>
+ #include <term.h>
+ 
+ /*
+diff --git a/man/curs_util.3x b/man/curs_util.3x
+index 1f22dff1..b98560fd 100644
+--- a/man/curs_util.3x
++++ b/man/curs_util.3x
+@@ -1,6 +1,6 @@
+ '\" t
+ .\"***************************************************************************
+-.\" Copyright (c) 1998-2015,2017 Free Software Foundation, Inc.              *
++.\" Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+ .\"                                                                          *
+ .\" Permission is hereby granted, free of charge, to any person obtaining a  *
+ .\" copy of this software and associated documentation files (the            *
+@@ -27,7 +27,7 @@
+ .\" authorization.                                                           *
+ .\"***************************************************************************
+ .\"
+-.\" $Id: curs_util.3x,v 1.52 2017/11/18 23:47:37 tom Exp $
++.\" $Id: curs_util.3x,v 1.53 2018/05/26 13:39:03 tom Exp $
+ .TH curs_util 3X ""
+ .ie \n(.g .ds `` \(lq
+ .el       .ds `` ``
+@@ -233,8 +233,8 @@ There are a few caveats:
+ .bP
+ the data written is a copy of the \fBWINDOW\fP structure,
+ and its associated character cells.
+-The format differs between the wide-character (ncursesw) and
+-non-wide (ncurses) libraries.
++The format differs between the wide-character (\fBncursesw\fP) and
++non-wide (\fBncurses\fP) libraries.
+ You can transfer data between the two, however.
+ .bP
+ the retrieved window is always created as a top-level window (or pad),
+@@ -376,6 +376,12 @@ X/Open Curses does not document the treatment of codes 128 to 159.
+ When treating them as \*(``meta\*('' keys
+ (or if \fBkeyname\fP is called before initializing curses),
+ this implementation returns strings \*(``M\-^@\*('', \*(``M\-^A\*('', etc.
++.PP
++X/Open Curses documents \fBunctrl\fP as declared in \fB<unctrl.h>\fP,
++which \fBncurses\fP does.
++However, \fBncurses\fP' \fB<curses.h>\fP includes \fB<unctrl.h>\fP,
++matching the behavior of SVr4 curses.
++Other implementations may not do that.
+ .SS use_env/use_tioctl
+ .PP
+ If \fBncurses\fP is configured to provide the sp-functions extension,
+diff --git a/ncurses/curses.priv.h b/ncurses/curses.priv.h
+index 0186578d..9f309c86 100644
+--- a/ncurses/curses.priv.h
++++ b/ncurses/curses.priv.h
+@@ -34,7 +34,7 @@
+  ****************************************************************************/
+ 
+ /*
+- * $Id: curses.priv.h,v 1.600 2018/04/14 19:28:44 tom Exp $
++ * $Id: curses.priv.h,v 1.601 2018/05/20 19:21:56 tom Exp $
+  *
+  *	curses.priv.h
+  *
+@@ -1658,7 +1658,7 @@ extern NCURSES_EXPORT_VAR(SIG_ATOMIC_T) _nc_have_sigwinch;
+ /* FreeAndNull() is not a comma-separated expression because some compilers
+  * do not accept a mixture of void with values.
+  */
+-#define FreeAndNull(p)   free(p); p = 0
++#define FreeAndNull(p)   do { free(p); p = 0; } while (0)
+ 
+ #include <nc_alloc.h>
+ 
+@@ -1667,14 +1667,18 @@ extern NCURSES_EXPORT_VAR(SIG_ATOMIC_T) _nc_have_sigwinch;
+  * tries to limp along after a failure.
+  */
+ #define TYPE_MALLOC(type, size, name) \
+-	name = typeMalloc(type, size); \
+-	if (name == 0) \
+-	    _nc_err_abort(MSG_NO_MEMORY)
++	do { \
++	    name = typeMalloc(type, size); \
++	    if (name == 0) \
++		_nc_err_abort(MSG_NO_MEMORY); \
++	} while (0)
+ 
+ #define TYPE_REALLOC(type, size, name) \
+-	name = typeRealloc(type, size, name); \
+-	if (name == 0) \
+-	    _nc_err_abort(MSG_NO_MEMORY)
++	do { \
++	    name = typeRealloc(type, size, name); \
++	    if (name == 0) \
++		_nc_err_abort(MSG_NO_MEMORY); \
++	} while (0)
+ 
+ /*
+  * TTY bit definition for converting tabs to spaces.
+@@ -1747,7 +1751,7 @@ extern NCURSES_EXPORT(void)	_nc_locked_tracef (const char *, ...) GCC_PRINTFLIKE
+ typedef void VoidFunc(void);
+ 
+ #define TR_FUNC(value)          ((const char*) (value))
+-#define NonNull(s)	        ((s) != 0 ? s : "<null>")
++#define NonNull(s)              ((s) != 0 ? s : "<null>")
+ 
+ #define returnAttr(code)	TRACE_RETURN(code,attr_t)
+ #define returnBits(code)	TRACE_RETURN(code,unsigned)
+diff --git a/ncurses/tinfo/comp_parse.c b/ncurses/tinfo/comp_parse.c
+index b97332eb..24c4852d 100644
+--- a/ncurses/tinfo/comp_parse.c
++++ b/ncurses/tinfo/comp_parse.c
+@@ -47,7 +47,7 @@
+ 
+ #include <tic.h>
+ 
+-MODULE_ID("$Id: comp_parse.c,v 1.105 2018/04/14 20:33:44 tom Exp $")
++MODULE_ID("$Id: comp_parse.c,v 1.106 2018/05/26 14:16:46 tom Exp $")
+ 
+ static void sanity_check2(TERMTYPE2 *, bool);
+ NCURSES_IMPEXP void NCURSES_API(*_nc_check_termtype2) (TERMTYPE2 *, bool) = sanity_check2;
+@@ -80,7 +80,7 @@ force_bar(char *dst, char *src)
+ 	size_t len = strlen(src);
+ 	if (len > MAX_NAME_SIZE)
+ 	    len = MAX_NAME_SIZE;
+-	_nc_STRNCPY(dst, src, len);
++	_nc_STRNCPY(dst, src, MAX_NAME_SIZE);
+ 	_nc_STRCPY(dst + len, "|", NAMEBUFFER_SIZE - len);
+ 	src = dst;
+     }
+diff --git a/ncurses/tinfo/write_entry.c b/ncurses/tinfo/write_entry.c
+index 843cc2ea..d8dc062d 100644
+--- a/ncurses/tinfo/write_entry.c
++++ b/ncurses/tinfo/write_entry.c
+@@ -50,7 +50,7 @@
+ #define TRACE_NUM(n)		/* nothing */
+ #endif
+ 
+-MODULE_ID("$Id: write_entry.c,v 1.104 2018/04/01 00:51:04 tom Exp $")
++MODULE_ID("$Id: write_entry.c,v 1.105 2018/05/20 18:38:08 tom Exp $")
+ 
+ static int total_written;
+ static int total_parts;
+@@ -384,7 +384,9 @@ _nc_write_entry(TERMTYPE2 *const tp)
+     }
+ 
+     _nc_SPRINTF(filename, _nc_SLIMIT(sizeof(filename))
+-		LEAF_FMT "/%s", first_name[0], first_name);
++		LEAF_FMT "/%.*s", UChar(first_name[0]),
++		(int) (sizeof(filename) - LEAF_LEN - 2),
++		first_name);
+ 
+     if (saved)
+ 	first_name[limit2] = saved;
+diff --git a/package/debian-mingw/changelog b/package/debian-mingw/changelog
+index 70dc3e7c..7162c2ea 100644
+--- a/package/debian-mingw/changelog
++++ b/package/debian-mingw/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180519) unstable; urgency=low
++ncurses6 (6.1+20180526) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 15 May 2018 20:44:03 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 20 May 2018 14:12:00 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian-mingw64/changelog b/package/debian-mingw64/changelog
+index 70dc3e7c..7162c2ea 100644
+--- a/package/debian-mingw64/changelog
++++ b/package/debian-mingw64/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180519) unstable; urgency=low
++ncurses6 (6.1+20180526) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 15 May 2018 20:44:03 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 20 May 2018 14:12:00 -0400
+ 
+ ncurses6 (5.9-20131005) unstable; urgency=low
+ 
+diff --git a/package/debian/changelog b/package/debian/changelog
+index 57c6d410..47b7c9cf 100644
+--- a/package/debian/changelog
++++ b/package/debian/changelog
+@@ -1,8 +1,8 @@
+-ncurses6 (6.1+20180519) unstable; urgency=low
++ncurses6 (6.1+20180526) unstable; urgency=low
+ 
+   * latest weekly patch
+ 
+- -- Thomas E. Dickey <dickey@invisible-island.net>  Tue, 15 May 2018 20:44:03 -0400
++ -- Thomas E. Dickey <dickey@invisible-island.net>  Sun, 20 May 2018 14:12:00 -0400
+ 
+ ncurses6 (5.9-20120608) unstable; urgency=low
+ 
+diff --git a/package/mingw-ncurses.nsi b/package/mingw-ncurses.nsi
+index a417834c..9e607c27 100644
+--- a/package/mingw-ncurses.nsi
++++ b/package/mingw-ncurses.nsi
+@@ -1,4 +1,4 @@
+-; $Id: mingw-ncurses.nsi,v 1.271 2018/05/16 00:44:03 tom Exp $
++; $Id: mingw-ncurses.nsi,v 1.272 2018/05/20 18:12:00 tom Exp $
+ 
+ ; TODO add examples
+ ; TODO bump ABI to 6
+@@ -10,7 +10,7 @@
+ !define VERSION_MAJOR "6"
+ !define VERSION_MINOR "1"
+ !define VERSION_YYYY  "2018"
+-!define VERSION_MMDD  "0519"
++!define VERSION_MMDD  "0526"
+ !define VERSION_PATCH ${VERSION_YYYY}${VERSION_MMDD}
+ 
+ !define MY_ABI   "5"
+diff --git a/package/mingw-ncurses.spec b/package/mingw-ncurses.spec
+index 75266735..d5aa075d 100644
+--- a/package/mingw-ncurses.spec
++++ b/package/mingw-ncurses.spec
+@@ -3,7 +3,7 @@
+ Summary: shared libraries for terminal handling
+ Name: mingw32-ncurses6
+ Version: 6.1
+-Release: 20180519
++Release: 20180526
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+diff --git a/package/ncurses.spec b/package/ncurses.spec
+index d8555f05..6b99d784 100644
+--- a/package/ncurses.spec
++++ b/package/ncurses.spec
+@@ -1,7 +1,7 @@
+ Summary: shared libraries for terminal handling
+ Name: ncurses6
+ Version: 6.1
+-Release: 20180519
++Release: 20180526
+ License: X11
+ Group: Development/Libraries
+ Source: ncurses-%{version}-%{release}.tgz
+@@ -38,6 +38,11 @@ This package is used for testing ABI %{MY_ABI} with POSIX threads.
+ 
+ %prep
+ 
++%define debug_package %{nil}
++%setup -q -n ncurses-%{version}-%{release}
++
++%build
++%define my_srcdir ..
+ %define CFG_OPTS \\\
+ 	--target %{_target_platform} \\\
+ 	--prefix=%{_prefix} \\\
+@@ -83,24 +88,23 @@ This package is used for testing ABI %{MY_ABI} with POSIX threads.
+ 	--without-debug \\\
+ 	--without-normal
+ 
+-%define debug_package %{nil}
+-%setup -q -n ncurses-%{version}-%{release}
+-
+-%build
++%global _configure ../configure
+ 
+ mkdir BUILD-ncurses6
+ pushd BUILD-ncurses6
+ CFLAGS="%{CC_NORMAL}" \
+-RPATH_LIST=../lib:%{_prefix}/lib \
+-../configure %{CFG_OPTS}
++RPATH_LIST=../lib:%{_libdir} \
++CONFIGURE_TOP=%{my_srcdir} \
++%configure %{CFG_OPTS}
+ make
+ popd
+ 
+ mkdir BUILD-ncursest6
+ pushd BUILD-ncursest6
+ CFLAGS="%{CC_NORMAL}" \
+-RPATH_LIST=../lib:%{_prefix}/lib \
+-../configure %{CFG_OPTS} \
++RPATH_LIST=../lib:%{_libdir} \
++CONFIGURE_TOP=%{my_srcdir} \
++%configure %{CFG_OPTS} \
+ 	--enable-interop \
+ 	--enable-sp-funcs \
+ 	--program-suffix=t%{MY_ABI} \
+@@ -131,15 +135,36 @@ rm -rf $RPM_BUILD_ROOT
+ %{_bindir}/*
+ %{_includedir}/*
+ %{_libdir}/*
++%exclude %{_bindir}/tict6
++%exclude %{_bindir}/toet6
++%exclude %{_bindir}/tabst6
++%exclude %{_bindir}/resett6
++%exclude %{_bindir}/???*tt6
++%exclude %{_bindir}/?????*t6
++%exclude %{_bindir}/*tw6*
++%exclude %dir %{_includedir}/*tw6*
++%exclude %{_includedir}/*tw6*/*
++%exclude %{_libdir}/*tw6*
++%exclude %{_libdir}/pkgconfig/*tw6*
+ 
+ %files -n ncursest6
+ %defattr(-,root,root,-)
+-%{_bindir}/*
+-%{_includedir}/*
+-%{_libdir}/*
++%{_bindir}/tict6
++%{_bindir}/toet6
++%{_bindir}/tabst6
++%{_bindir}/???*tt6
++%{_bindir}/?????*t6
++%{_bindir}/*tw6*
++%{_includedir}/*tw6*
++%{_libdir}/*tw6*
++%{_libdir}/pkgconfig/*tw6*
+ 
+ %changelog
+ 
++* Sat May 26 2018 Thomas E. Dickey
++- use predefined configure-macro
++- separate ncurses6/ncursest6 packages
++
+ * Sat Feb 10 2018 Thomas E. Dickey
+ - add ncursest6 package
+ - add several development features
+diff --git a/progs/dump_entry.h b/progs/dump_entry.h
+index f93f7aae..1d0b01d8 100644
+--- a/progs/dump_entry.h
++++ b/progs/dump_entry.h
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2016,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -33,7 +33,7 @@
+  ****************************************************************************/
+ 
+ /*
+- * $Id: dump_entry.h,v 1.40 2017/04/05 22:33:07 tom Exp $
++ * $Id: dump_entry.h,v 1.41 2018/05/26 15:22:30 tom Exp $
+  *
+  * Dump control definitions and variables
+  */
+@@ -41,6 +41,11 @@
+ #ifndef DUMP_ENTRY_H
+ #define DUMP_ENTRY_H 1
+ 
++#define NCURSES_OPAQUE    0
++#define NCURSES_INTERNALS 1
++#include <curses.h>
++#include <term.h>
++
+ /* capability output formats */
+ #define F_TERMINFO	0	/* use terminfo names */
+ #define F_VARIABLE	1	/* use C variable names */
+diff --git a/test/demo_panels.c b/test/demo_panels.c
+index d2859251..a2509eb7 100644
+--- a/test/demo_panels.c
++++ b/test/demo_panels.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 2007-2016,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 2007-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -26,7 +26,7 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: demo_panels.c,v 1.41 2017/04/15 18:39:29 tom Exp $
++ * $Id: demo_panels.c,v 1.42 2018/05/20 19:21:18 tom Exp $
+  *
+  * Demonstrate a variety of functions from the panel library.
+  */
+@@ -204,7 +204,7 @@ mkpanel(short color, int rows, int cols, int tly, int tlx)
+ {
+     WINDOW *win;
+     PANEL *pan = 0;
+-    char *userdata = typeMalloc(char, 3);
++    char *userdata = typeMalloc(char, 5);
+ 
+     if ((win = newwin(rows, cols, tly, tlx)) != 0) {
+ 	keypad(win, TRUE);
+@@ -228,7 +228,7 @@ mkpanel(short color, int rows, int cols, int tly, int tlx)
+ }
+ 
+ static void
+-my_remove_panel(PANEL ** pans, int which)
++my_remove_panel(PANEL **pans, int which)
+ {
+     if (pans[which] != 0) {
+ 	PANEL *pan = pans[which];
+@@ -248,7 +248,7 @@ my_remove_panel(PANEL ** pans, int which)
+ #define ABS(a)   ((a) < 0 ? -(a) : (a))
+ 
+ static void
+-my_create_panel(PANEL ** pans, int which, FillPanel myFill)
++my_create_panel(PANEL **pans, int which, FillPanel myFill)
+ {
+     PANEL *pan = 0;
+     int code;
+@@ -292,7 +292,7 @@ my_create_panel(PANEL ** pans, int which, FillPanel myFill)
+ }
+ 
+ static void
+-my_move_panel(PANEL ** pans, int which, bool continuous)
++my_move_panel(PANEL **pans, int which, bool continuous)
+ {
+     if (pans[which] != 0) {
+ 	int code;
+@@ -317,7 +317,7 @@ my_move_panel(PANEL ** pans, int which, bool continuous)
+ }
+ 
+ static void
+-my_resize_panel(PANEL ** pans, int which, FillPanel myFill)
++my_resize_panel(PANEL **pans, int which, FillPanel myFill)
+ {
+     if (pans[which] != 0) {
+ 	int code;
+@@ -365,7 +365,7 @@ init_panel(void)
+ }
+ 
+ static void
+-fill_panel(PANEL * pan)
++fill_panel(PANEL *pan)
+ {
+     WINDOW *win = panel_window(pan);
+     const char *userptr = (const char *) panel_userptr(pan);
+@@ -385,7 +385,7 @@ fill_panel(PANEL * pan)
+ }
+ 
+ static void
+-fill_unboxed(PANEL * pan)
++fill_unboxed(PANEL *pan)
+ {
+     WINDOW *win = panel_window(pan);
+     const char *userptr = (const char *) panel_userptr(pan);
+@@ -428,7 +428,7 @@ init_wide_panel(void)
+ }
+ 
+ static void
+-fill_wide_panel(PANEL * pan)
++fill_wide_panel(PANEL *pan)
+ {
+     WINDOW *win = panel_window(pan);
+     int num = ((const char *) panel_userptr(pan))[1];
+@@ -450,7 +450,7 @@ fill_wide_panel(PANEL * pan)
+ #define MAX_PANELS 5
+ 
+ static int
+-which_panel(PANEL * px[MAX_PANELS + 1], PANEL * pan)
++which_panel(PANEL *px[MAX_PANELS + 1], PANEL *pan)
+ {
+     int result = 0;
+     int j;
+@@ -465,7 +465,7 @@ which_panel(PANEL * px[MAX_PANELS + 1], PANEL * pan)
+ }
+ 
+ static void
+-show_panels(PANEL * px[MAX_PANELS + 1])
++show_panels(PANEL *px[MAX_PANELS + 1])
+ {
+     static const char *help[] =
+     {
+@@ -556,7 +556,7 @@ wrapper(top_panel)
+ /* *INDENT-ON* */
+ 
+ static void
+-do_panel(PANEL * px[MAX_PANELS + 1],
++do_panel(PANEL *px[MAX_PANELS + 1],
+ 	 NCURSES_CONST char *cmd,
+ 	 FillPanel myFill)
+ {
+@@ -622,7 +622,7 @@ ok_digit(int ch)
+  * End the command with a newline.  Reject other characters.
+  */
+ static bool
+-get_command(PANEL * px[MAX_PANELS + 1], char *buffer, int limit)
++get_command(PANEL *px[MAX_PANELS + 1], char *buffer, int limit)
+ {
+     int length = 0;
+     int y0, x0;
+diff --git a/test/ditto.c b/test/ditto.c
+index aff426f8..a6b8ac3f 100644
+--- a/test/ditto.c
++++ b/test/ditto.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2016,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -29,7 +29,7 @@
+ /*
+  * Author: Thomas E. Dickey (1998-on)
+  *
+- * $Id: ditto.c,v 1.47 2017/10/18 23:04:42 tom Exp $
++ * $Id: ditto.c,v 1.48 2018/05/20 19:19:10 tom Exp $
+  *
+  * The program illustrates how to set up multiple screens from a single
+  * program.
+@@ -196,7 +196,7 @@ open_tty(char *path)
+     return fp;
+ }
+ 
+-static void
++static int
+ init_screen(
+ #if HAVE_USE_WINDOW
+ 	       SCREEN *sp GCC_UNUSED,
+@@ -236,6 +236,7 @@ init_screen(
+ 	target->windows[k] = inner;
+     }
+     doupdate();
++    return TRUE;
+ }
+ 
+ static void
+diff --git a/test/list_keys.c b/test/list_keys.c
+index 2000a44e..92c8ba4f 100644
+--- a/test/list_keys.c
++++ b/test/list_keys.c
+@@ -26,7 +26,7 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: list_keys.c,v 1.23 2018/02/12 09:57:31 tom Exp $
++ * $Id: list_keys.c,v 1.24 2018/05/20 18:56:56 tom Exp $
+  *
+  * Author: Thomas E Dickey
+  *
+@@ -209,8 +209,8 @@ draw_line(int width)
+ static const char *
+ modified_key(const char *name)
+ {
+-    static char result[80];
+-    char buffer[sizeof(result)];
++    static char result[100];
++    char buffer[sizeof(result) - 10];
+     int value;
+     char chr;
+     static const char *modifiers[][2] =
+diff --git a/test/picsmap.c b/test/picsmap.c
+index 303bc404..2a95a751 100644
+--- a/test/picsmap.c
++++ b/test/picsmap.c
+@@ -26,7 +26,7 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: picsmap.c,v 1.121 2018/05/12 16:28:46 tom Exp $
++ * $Id: picsmap.c,v 1.122 2018/05/20 19:43:40 tom Exp $
+  *
+  * Author: Thomas E. Dickey
+  *
+@@ -1583,6 +1583,8 @@ report_colors(PICS_HEAD * pics)
+ 	    if (j < 10)
+ 		++digits;
+ 	}
++	if (digits > 8)
++	    digits = 8;
+ 	logmsg("These colors were used:");
+ 	high = (pics->colors + wide - 1) / wide;
+ 	for (j = 0; j < high && j < pics->colors; ++j) {
+diff --git a/test/rain.c b/test/rain.c
+index cd51336e..6fe897c8 100644
+--- a/test/rain.c
++++ b/test/rain.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2014,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -26,7 +26,7 @@
+  * authorization.                                                           *
+  ****************************************************************************/
+ /*
+- * $Id: rain.c,v 1.47 2017/09/30 18:10:05 tom Exp $
++ * $Id: rain.c,v 1.48 2018/05/20 19:55:30 tom Exp $
+  */
+ #include <test.priv.h>
+ #include <popup_msg.h>
+@@ -67,6 +67,14 @@ typedef struct {
+ static STATS drop_threads[MAX_THREADS];
+ #endif
+ 
++#if HAVE_USE_WINDOW
++static int
++safe_wgetch(WINDOW *w, void *data GCC_UNUSED)
++{
++    return wgetch(w);
++}
++#endif
++
+ static void
+ onsig(int n GCC_UNUSED)
+ {
+@@ -285,7 +293,7 @@ start_drop(DATA * data)
+ static int
+ get_input(void)
+ {
+-    return USING_WINDOW(stdscr, wgetch);
++    return USING_WINDOW1(stdscr, wgetch, safe_wgetch);
+ }
+ 
+ static void
+diff --git a/test/test.priv.h b/test/test.priv.h
+index e9966129..ac60ac15 100644
+--- a/test/test.priv.h
++++ b/test/test.priv.h
+@@ -29,7 +29,7 @@
+ /****************************************************************************
+  *  Author: Thomas E. Dickey                    1996-on                     *
+  ****************************************************************************/
+-/* $Id: test.priv.h,v 1.164 2018/01/27 20:27:16 tom Exp $ */
++/* $Id: test.priv.h,v 1.165 2018/05/20 19:55:18 tom Exp $ */
+ 
+ #ifndef __TEST_PRIV_H
+ #define __TEST_PRIV_H 1
+@@ -903,7 +903,7 @@ extern char *strnames[], *strcodes[], *strfnames[];
+  */
+ #ifndef NCURSES_CONST
+ #ifdef PDCURSES
+-#define NCURSES_CONST		const /* close enough */
++#define NCURSES_CONST		const	/* close enough */
+ #else
+ #define NCURSES_CONST		/* nothing */
+ #endif
+@@ -1005,10 +1005,12 @@ extern char *tgoto(char *, int, int);	/* available, but not prototyped */
+ 
+ #if HAVE_USE_WINDOW
+ #define USING_WINDOW(w,func) use_window(w, (NCURSES_WINDOW_CB) func, w)
++#define USING_WINDOW1(w,func,safe) use_window(w, (NCURSES_WINDOW_CB) safe, NULL)
+ #define USING_WINDOW2(w,func,data) use_window(w, (NCURSES_WINDOW_CB) func, data)
+ #define WANT_USE_WINDOW() extern void _nc_want_use_window(void)
+ #else
+ #define USING_WINDOW(w,func) func(w)
++#define USING_WINDOW1(w,func,safe) func(w,func)
+ #define USING_WINDOW2(w,func,data) func(w,data)
+ #define WANT_USE_WINDOW() extern void _nc_want_use_window(void)
+ #endif
+diff --git a/test/worm.c b/test/worm.c
+index 2e31638d..e91637ba 100644
+--- a/test/worm.c
++++ b/test/worm.c
+@@ -1,5 +1,5 @@
+ /****************************************************************************
+- * Copyright (c) 1998-2016,2017 Free Software Foundation, Inc.              *
++ * Copyright (c) 1998-2017,2018 Free Software Foundation, Inc.              *
+  *                                                                          *
+  * Permission is hereby granted, free of charge, to any person obtaining a  *
+  * copy of this software and associated documentation files (the            *
+@@ -52,7 +52,7 @@
+   traces will be dumped.  The program stops and waits for one character of
+   input at the beginning and end of the interval.
+ 
+-  $Id: worm.c,v 1.76 2017/11/18 22:41:08 tom Exp $
++  $Id: worm.c,v 1.77 2018/05/20 19:55:42 tom Exp $
+ */
+ 
+ #include <test.priv.h>
+@@ -197,6 +197,19 @@ static const struct options {
+ };
+ /* *INDENT-ON* */
+ 
++#if HAVE_USE_WINDOW
++static int
++safe_wgetch(WINDOW *w, void *data GCC_UNUSED)
++{
++    return wgetch(w);
++}
++static int
++safe_wrefresh(WINDOW *w, void *data GCC_UNUSED)
++{
++    return wrefresh(w);
++}
++#endif
++
+ #ifdef KEY_RESIZE
+ static void
+ failed(const char *s)
+@@ -210,7 +223,7 @@ failed(const char *s)
+ static void
+ cleanup(void)
+ {
+-    USING_WINDOW(stdscr, wrefresh);
++    USING_WINDOW1(stdscr, wrefresh, safe_wrefresh);
+     exit_curses();
+ }
+ 
+@@ -382,13 +395,13 @@ static int
+ get_input(void)
+ {
+     int ch;
+-    ch = USING_WINDOW(stdscr, wgetch);
++    ch = USING_WINDOW1(stdscr, wgetch, safe_wgetch);
+     return ch;
+ }
+ 
+ #ifdef KEY_RESIZE
+ static int
+-update_refs(WINDOW *win)
++update_refs(WINDOW *win, void *data GCC_UNUSED)
+ {
+     int x, y;
+ 
+@@ -585,7 +598,7 @@ main(int argc, char *argv[])
+ 	    }
+ 	}
+     }
+-    USING_WINDOW(stdscr, wrefresh);
++    USING_WINDOW1(stdscr, wrefresh, safe_wrefresh);
+     nodelay(stdscr, TRUE);
+ 
+     while (!done) {
+@@ -629,7 +642,7 @@ main(int argc, char *argv[])
+ 
+ 	done = draw_all_worms();
+ 	napms(10);
+-	USING_WINDOW(stdscr, wrefresh);
++	USING_WINDOW1(stdscr, wrefresh, safe_wrefresh);
+     }
+ 
+     Trace(("Cleanup"));
