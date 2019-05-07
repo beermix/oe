@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="boost"
-PKG_VERSION="1_65_1"
-PKG_SHA256="9807a5d16566c57fd74fb522764e0b134a8bbe6b6e8967b83afefd30dcd3be81"
+PKG_VERSION="1_59_0"
+PKG_SHA256="727a932322d94287b62abb1bd2d41723eec4356a7728909e38adb65ca25241ca"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
 PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.65.1/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
@@ -53,6 +53,6 @@ makeinstall_target() {
                           --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                           --with-serialization \
                           --with-system \
-                          --with-thread \
+                          --with-thread -j4 \
                           install
 }
