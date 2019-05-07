@@ -10,3 +10,10 @@ PKG_URL="http://mirrors.xbmc.org/build-deps/sources/$PKG_NAME-$PKG_VERSION.tar.g
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="TinyXML is a simple, small, C++ XML parser."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr
+}
