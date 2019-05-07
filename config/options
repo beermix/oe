@@ -74,7 +74,7 @@ VERBOSE="${VERBOSE:-yes}"
 # Concurrency make level (-j option)
 #  Try values between 1 and number of processor cores present.
 #  default: use all cores
-[ -z "${CONCURRENCY_MAKE_LEVEL}" ] && export CONCURRENCY_MAKE_LEVEL=7
+[ -z "${CONCURRENCY_MAKE_LEVEL}" ] && export CONCURRENCY_MAKE_LEVEL=$(nproc)
 
 # cache size for ccache
 # Set the maximum size of the files stored in the cache. You can specify a
