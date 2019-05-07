@@ -29,7 +29,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   fi
 
 # other packages
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet pvr.iptvsimple"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet pvr.iptvsimple pvr.iptvsimple.multi"
 
   if [ "$JOYSTICK_SUPPORT" = "yes" ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
