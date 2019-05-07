@@ -34,8 +34,12 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --without-gd \
                            --disable-build-nscd \
                            --disable-nscd \
-                           --enable-lock-elision \
+                           --enable-lock-elision=yes \
+                           --enable-tunables \
+                           --without-selinux \
                            --enable-obsolete-rpc \
+                           --enable-obsolete-nsl \
+                           --enable-cet \
                            --disable-debug \
                            --disable-timezone-tools"
 
@@ -57,7 +61,7 @@ pre_build_target() {
 }
 
 pre_configure_target() {
-# export CCACHE_DISABLE=true
+ export CCACHE_DISABLE=true
 # Filter out some problematic *FLAGS
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`

@@ -52,13 +52,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --without-cuda-driver \
-                           --disable-vtable-verify \
                            --with-tune=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -85,12 +85,12 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-  #export CCACHE_DISABLE=true
+  export CCACHE_DISABLE=true
 }
 
-#pre_configure_bootstrap() {
-#  export CCACHE_DISABLE=true
-#}
+pre_configure_bootstrap() {
+  export CCACHE_DISABLE=true
+}
 
 post_make_host() {
   # fix wrong link
