@@ -19,7 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
 pre_configure_host() {
   export CPPFLAGS="$CPPFLAGS -fexceptions"
-  unset CFLAGS
+  #unset CFLAGS
 }
 
 pre_configure_target() {
