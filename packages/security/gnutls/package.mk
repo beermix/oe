@@ -24,7 +24,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
                            --with-included-libtasn1 \
                            --with-included-unistring \
                            --without-p11-kit \
-                           --without-tpm"
+                           --without-tpm \
+                           --with-nettle-mini"
 
 #makeinstall_target() {
 #  make install DESTDIR="$INSTALL/../.INSTALL_PKG"
