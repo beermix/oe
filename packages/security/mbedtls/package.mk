@@ -1,8 +1,7 @@
 PKG_NAME="mbedtls"
-PKG_VERSION="2.14.1"
+PKG_VERSION="2.16.1"
 PKG_URL="https://tls.mbed.org/download/mbedtls-$PKG_VERSION-gpl.tgz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="security"
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic"
 
