@@ -10,7 +10,7 @@ Type=notify
 # the default is not to use systemd for cgroups because the delegate issues still
 # exists and systemd currently does not support the cgroup feature set required
 # for containers run by docker
-ExecStart=/usr/bin/dockerd --data-root=/home/user/.aa/.docker_data --host=unix:///var/run/docker.sock -H fd:// --storage-driver=overlay2
+ExecStart=/usr/bin/dockerd -H fd:// --data-root=/home/user/.aa/.docker_data
 ExecReload=/bin/kill -s HUP $MAINPID
 LimitNOFILE=1048576
 # Having non-zero Limit*s causes performance problems due to accounting overhead
@@ -19,19 +19,16 @@ LimitNPROC=infinity
 LimitCORE=infinity
 # Uncomment TasksMax if your systemd version supports it.
 # Only systemd 226 and above support this version.
-#TasksMax=infinity
+TasksMax=infinity
 TimeoutStartSec=0
 # set delegate yes so that systemd does not reset the cgroups of docker containers
 Delegate=yes
 # kill only the docker process, not all processes in the cgroup
 KillMode=process
 # restart the docker process if it exits prematurely
-#Environment="HTTP_PROXY=http://192.168.1.2:999"
-#Environment="NO_PROXY=localhost,127.0.0.0/8,192.168.1.0/24,docker-registry.somecorporation.com"
 Restart=on-failure
-
-#StartLimitBurst=3
-#StartLimitInterval=60s
+StartLimitBurst=3
+StartLimitInterval=60s
 
 [Install]
 WantedBy=multi-user.target
