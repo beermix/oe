@@ -35,17 +35,19 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --enable-obsolete-rpc \
+                           --disable-debug \
                            --disable-timezone-tools"
 
 # busybox:init needs it
 # testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
-PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
+#PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
 
-if build_with_debug; then
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
-else
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
-fi
+#if build_with_debug; then
+#  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
+#else
+#  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
+#fi
 
 pre_build_target() {
   cd $PKG_BUILD
