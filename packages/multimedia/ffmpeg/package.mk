@@ -174,7 +174,6 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
