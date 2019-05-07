@@ -39,5 +39,5 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./configure --prefix=$TOOLCHAIN --libdir=$TOOLCHAIN/lib --shared
+  ./configure --prefix=$TOOLCHAIN --libdir=$TOOLCHAIN/lib --static --shared
 }
