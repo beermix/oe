@@ -1,5 +1,5 @@
 PKG_NAME="intel-gpu-tools"
-PKG_VERSION="a75429544f5721316b04a36551c57573e0c79486"
+PKG_VERSION="f052e49a43cc9704ea5f240df15dd9d3dfed68ab"
 PKG_SITE="https://www.x.org/releases/individual/app/?C=M;O=D" # https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/
 PKG_URL="https://www.x.org/releases/individual/app/intel-gpu-tools-$PKG_VERSION.tar.xz"
 PKG_URL="https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/snapshot/$PKG_VERSION.tar.xz"
