@@ -61,7 +61,7 @@ pre_build_target() {
 }
 
 pre_configure_target() {
- export CCACHE_DISABLE=true
+# export CCACHE_DISABLE=true
 # Filter out some problematic *FLAGS
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
