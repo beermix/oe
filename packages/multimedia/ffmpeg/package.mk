@@ -127,6 +127,7 @@ configure_target() {
               --enable-swscale \
               --enable-postproc \
               --enable-avfilter \
+              --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
@@ -143,7 +144,8 @@ configure_target() {
               --disable-vdpau \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
-              --disable-hardcoded-tables \
+              $FFMPEG_TABLES \
+              --disable-memalign-hack \
               --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
@@ -172,6 +174,7 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
