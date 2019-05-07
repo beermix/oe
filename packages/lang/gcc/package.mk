@@ -89,9 +89,9 @@ pre_configure_host() {
   export CCACHE_DISABLE=true
 }
 
-pre_configure_bootstrap() {
-  export CCACHE_DISABLE=true
-}
+#pre_configure_bootstrap() {
+#  export CCACHE_DISABLE=true
+#}
 
 post_make_host() {
   # fix wrong link
