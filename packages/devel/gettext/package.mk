@@ -11,6 +11,11 @@ PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="A program internationalization library and tools."
 
+post_unpack() {
+  sed -i '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/examples$$//' $PKG_BUILD/gettext-tools/Makefile.in
+  sed -i '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/tests$$//' $PKG_BUILD/gettext-runtime/Makefile.in
+}
+
 configure_package() {
   PKG_CONFIGURE_SCRIPT="${PKG_BUILD}/gettext-tools/configure"
 
