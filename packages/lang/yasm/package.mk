@@ -11,10 +11,10 @@ PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
 PKG_TOOLCHAIN="autotools"
 #PKG_TOOLCHAIN="cmake-make"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-debug \
-		           --disable-warnerror \
-		           --disable-profiling \
-		           --disable-gcov \
-		           --disable-python-bindings \
-		           --without-libiconv-prefix \
-		           --without-libintl-prefix"
+#PKG_CONFIGURE_OPTS_HOST="--disable-debug \
+#		           --disable-warnerror \
+#		           --disable-profiling \
+#		           --disable-gcov \
+#		           --disable-python-bindings \
+#		           --without-libiconv-prefix \
+#		           --without-libintl-prefix"
