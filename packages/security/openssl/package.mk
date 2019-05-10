@@ -6,20 +6,18 @@ PKG_NAME="openssl"
 PKG_VERSION="1.1.1b"
 PKG_SHA256="5c557b023230413dfb0756f3137a13e6d726838ccd1430888ad15bfb2b43ea4b"
 PKG_LICENSE="BSD"
-PKG_SITE="https://www.openssl.org"
+PKG_SITE="https://www.openssl.org/source"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host zlib:host"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_TARGET="zlib"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="-parallel"
+#PKG_BUILD_FLAGS="-parallel"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ssl3 \
-                           zlib-dynamic \
-                           no-static-engine"
+                           no-ssl3"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
