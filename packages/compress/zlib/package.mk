@@ -37,10 +37,10 @@ configure_target() {
 }
 
 
-pre_configure_host() {
-  export CC=$LOCAL_CC
-  export CXX=$LOCAL_CXX
-}
+#pre_configure_host() {
+#  export CC=$LOCAL_CC
+#  export CXX=$LOCAL_CXX
+#}
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
