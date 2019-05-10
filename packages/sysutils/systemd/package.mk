@@ -8,7 +8,7 @@ PKG_SHA256="ec22be9a5dd94c9640e6348ed8391d1499af8ca2c2f01109198a414cff6c6cba"
 PKG_LICENSE="LGPL2.1+"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
+PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy libidn2"
 PKG_LONGDESC="A system and session manager for Linux, compatible with SysV and LSB init scripts."
 
 PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
@@ -31,7 +31,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dlibcryptsetup=false \
                        -Dlibcurl=false \
                        -Dlibidn=false \
-                       -Dlibidn2=false \
+                       -Dlibidn2=true \
                        -Dlibiptc=false \
                        -Dqrencode=false \
                        -Dgcrypt=false \
@@ -88,10 +88,11 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dzshcompletiondir=no \
                        -Dkmod-path=/usr/bin/kmod \
                        -Dmount-path=/usr/bin/mount \
-                       -Dumount-path=/usr/bin/umount"
+                       -Dumount-path=/usr/bin/umount \
+                       -Ddebug-tty=$DEBUG_TTY"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation -Wno-implicit-function-declaration -Wno-nested-externs -Wno-int-conversion -Wno-format-overflow"
+  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
   export LC_ALL=en_US.UTF-8
 }
 
@@ -126,9 +127,6 @@ post_makeinstall_target() {
   safe_remove $INSTALL/usr/lib/udev/rules.d/70-uaccess.rules
   safe_remove $INSTALL/usr/lib/udev/rules.d/71-seat.rules
   safe_remove $INSTALL/usr/lib/udev/rules.d/73-seat-late.rules
-
-  # remove debug-shell.service, we install our own
-  safe_remove $INSTALL/usr/lib/systemd/system/debug-shell.service
 
   # remove getty units, we dont want a console
   safe_remove $INSTALL/usr/lib/systemd/system/autovt@.service
@@ -258,4 +256,5 @@ post_install() {
   enable_service usercache.service
   enable_service kernel-overlays.service
   enable_service hwdb.service
+  enable_service debug-shell.service
 }
