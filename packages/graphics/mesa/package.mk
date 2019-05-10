@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="98b852cd07a80fa42336031f089bdac6e7c617d3"
+PKG_VERSION="3f60810de0a2960ec15118ef9888d9efc9ea605a"
 #PKG_VERSION="19.0.4"
 #PKG_SHA256="a0154c436e3e040b3a2c528554cd52b6ef724fea1906c0a862401c4fc641147d"
 PKG_LICENSE="OSS"
@@ -96,7 +96,7 @@ pre_configure_target() {
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
     export CFLAGS="$CFLAGS -O3 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
     export CXXFLAGS="$CXXFLAGS -O3 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-    unset LD_AS_NEEDED
+    export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   fi
 }
 
