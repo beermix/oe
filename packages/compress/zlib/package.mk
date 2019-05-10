@@ -28,7 +28,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./configure --prefix=/usr --libdir=/usr/lib --shared
+  ./configure --prefix=/usr --libdir=/usr/lib --static --shared
 }
 
 
