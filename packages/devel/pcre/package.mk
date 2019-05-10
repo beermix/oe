@@ -12,7 +12,7 @@ PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="configure"
-#PKG_BUILD_FLAGS="+pic"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
              --enable-static \
@@ -23,7 +23,9 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
              --enable-pcre16 \
              --enable-unicode-properties \
-             --enable-jit"
+             --enable-jit \
+             --disable-shared \
+             --with-gnu-ld"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
