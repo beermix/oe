@@ -51,7 +51,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --with-gcc-major-version-only \
                            --enable-default-pie \
                            --with-tune=haswell \
                            --with-arch=westmere"
