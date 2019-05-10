@@ -1,0 +1,77 @@
+--- bash-4.4/configure~	2016-09-07 20:57:01.000000000 +0000
++++ bash-4.4/configure	2017-06-03 15:49:34.650424095 +0000
+@@ -5079,13 +5079,13 @@
+ if test "x$ac_cv_lib_termcap_tgetent" = xyes; then :
+   bash_cv_termcap_lib=libtermcap
+ else
+-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for tgetent in -ltinfo" >&5
+-$as_echo_n "checking for tgetent in -ltinfo... " >&6; }
+-if ${ac_cv_lib_tinfo_tgetent+:} false; then :
++  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for tgetent in -ltinfow" >&5
++$as_echo_n "checking for tgetent in -ltinfow... " >&6; }
++if ${ac_cv_lib_tinfow_tgetent+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-ltinfo  $LIBS"
++LIBS="-ltinfow  $LIBS"
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -5116,7 +5116,7 @@
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_tinfo_tgetent" >&5
+ $as_echo "$ac_cv_lib_tinfo_tgetent" >&6; }
+ if test "x$ac_cv_lib_tinfo_tgetent" = xyes; then :
+-  bash_cv_termcap_lib=libtinfo
++  bash_cv_termcap_lib=libtinfow
+ else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for tgetent in -lcurses" >&5
+ $as_echo_n "checking for tgetent in -lcurses... " >&6; }
+@@ -5222,8 +5222,8 @@
+ elif test $bash_cv_termcap_lib = libtermcap && test -z "$prefer_curses"; then
+ TERMCAP_LIB=-ltermcap
+ TERMCAP_DEP=
+-elif test $bash_cv_termcap_lib = libtinfo; then
+-TERMCAP_LIB=-ltinfo
++elif test $bash_cv_termcap_lib = libtinfow; then
++TERMCAP_LIB=-ltinfow
+ TERMCAP_DEP=
+ elif test $bash_cv_termcap_lib = libncurses; then
+ TERMCAP_LIB=-lncurses
+@@ -15772,13 +15772,13 @@
+ if test "x$ac_cv_lib_termcap_tgetent" = xyes; then :
+   bash_cv_termcap_lib=libtermcap
+ else
+-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for tgetent in -ltinfo" >&5
+-$as_echo_n "checking for tgetent in -ltinfo... " >&6; }
++  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for tgetent in -ltinfow" >&5
++$as_echo_n "checking for tgetent in -ltinfow... " >&6; }
+ if ${ac_cv_lib_tinfo_tgetent+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-ltinfo  $LIBS"
++LIBS="-ltinfow  $LIBS"
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -15809,7 +15809,7 @@
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_tinfo_tgetent" >&5
+ $as_echo "$ac_cv_lib_tinfo_tgetent" >&6; }
+ if test "x$ac_cv_lib_tinfo_tgetent" = xyes; then :
+-  bash_cv_termcap_lib=libtinfo
++  bash_cv_termcap_lib=libtinfow
+ else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for tgetent in -lcurses" >&5
+ $as_echo_n "checking for tgetent in -lcurses... " >&6; }
+@@ -15915,8 +15915,8 @@
+ elif test $bash_cv_termcap_lib = libtermcap && test -z "$prefer_curses"; then
+ TERMCAP_LIB=-ltermcap
+ TERMCAP_DEP=
+-elif test $bash_cv_termcap_lib = libtinfo; then
+-TERMCAP_LIB=-ltinfo
++elif test $bash_cv_termcap_lib = libtinfow; then
++TERMCAP_LIB=-ltinfow
+ TERMCAP_DEP=
+ elif test $bash_cv_termcap_lib = libncurses; then
+ TERMCAP_LIB=-lncurses
