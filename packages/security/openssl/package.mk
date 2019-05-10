@@ -17,11 +17,6 @@ PKG_BUILD_FLAGS="-parallel"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ec2m \
-                           no-md2 \
-                           no-rc5 \
-                           no-rfc3779 \
-                           no-sctp \
                            no-ssl3 \
                            zlib-dynamic \
                            no-static-engine"
