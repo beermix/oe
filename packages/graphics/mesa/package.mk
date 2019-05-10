@@ -96,7 +96,7 @@ pre_configure_target() {
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
     export CFLAGS="$CFLAGS -O3 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
     export CXXFLAGS="$CXXFLAGS -O3 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-    export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+    unset LD_AS_NEEDED
   fi
 }
 

@@ -1,6 +1,6 @@
 GCC_OPTIM="-O2 -pipe"
 # Linker hash-style is set to gnu via gcc default
-LD_OPTIM="-Wl,--as-needed"
+LD_OPTIM=""
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
