@@ -11,6 +11,8 @@ PKG_DEPENDS_TARGET="toolchain dbus glib readline systemd"
 PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+lto"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 if build_with_debug; then
   BLUEZ_CONFIG="--enable-debug"
