@@ -17,19 +17,20 @@ post_unpack() {
   sed -i '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/tests$$//' $PKG_BUILD/gettext-runtime/Makefile.in
 }
 
-pre_configure_host() {
-  cd $PKG_BUILD
-  rm -rf .$HOST_NAME
-}
+#pre_configure_host() {
+#  cd $PKG_BUILD
+#  rm -rf .$HOST_NAME
+#}
 
 configure_package() {
-  PKG_CONFIGURE_SCRIPT="$PKG_BUILD/gettext-tools/configure"
+  PKG_CONFIGURE_SCRIPT="${PKG_BUILD}/gettext-tools/configure"
 
   PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                            --disable-rpath \
                            --with-gnu-ld \
                            --disable-java \
                            --disable-curses \
+                           --with-included-libxml=no \
                            --disable-native-java \
                            --disable-csharp \
                            --without-emacs"
