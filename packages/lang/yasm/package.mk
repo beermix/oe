@@ -12,7 +12,7 @@ PKG_TOOLCHAIN="autotools"
 #PKG_TOOLCHAIN="cmake-make"
 
 configure_package() {
-  export CCACHE_DISABLE=true
+  #export CCACHE_DISABLE=true
   PKG_CONFIGURE_OPTS_HOST="--disable-debug \
   			      --disable-warnerror \
   			      --disable-profiling \
