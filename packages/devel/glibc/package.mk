@@ -3,13 +3,13 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --enable-stack-protector=strong \
 
 PKG_NAME="glibc"
-PKG_VERSION="52b7cd6"
-PKG_SHA256="f947a6bb36cd5bcf882e2bb6eb435ef5add4c37a1c1078099cc274080399238d"
+PKG_VERSION="2.29"
+PKG_SHA256="f3eeb8d57e25ca9fc13c2af3dae97754f9f643bc69229546828e3a240e2af04b"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.29/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
@@ -34,24 +34,18 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --without-gd \
                            --disable-build-nscd \
                            --disable-nscd \
-                           --enable-lock-elision=yes \
-                           --enable-tunables \
-                           --without-selinux \
-                           --enable-obsolete-rpc \
-                           --enable-obsolete-nsl \
-                           --enable-cet \
-                           --disable-debug \
+                           --enable-lock-elision \
                            --disable-timezone-tools"
 
 # busybox:init needs it
 # testcase: boot with /storage as nfs-share (set cmdline.txt -> "ip=dhcp boot=UUID=2407-5145 disk=NFS=[nfs-share] quiet")
-#PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
+PKG_CONFIGURE_OPTS_TARGET+=" --enable-obsolete-rpc"
 
-#if build_with_debug; then
-#  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
-#else
-#  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
-#fi
+if build_with_debug; then
+  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
+else
+  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
+fi
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -142,7 +136,7 @@ EOF
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
- ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+# ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # install benchmark tests
 #  local b
