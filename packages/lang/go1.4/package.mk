@@ -1,11 +1,8 @@
 PKG_NAME="go1.4"
-PKG_VERSION="182bdbb"
+PKG_VERSION="bdd4b95"
+PKG_SHA256="452bebf72e540b4e59c7e40aca751c1dc7bbac39da8d4cea6f5871351072befd"
 PKG_URL="https://github.com/golang/go/archive/${PKG_VERSION}.tar.gz"
-PKG_SOURCE_DIR="go-${PKG_VERSION}*"
 PKG_DEPENDS_HOST="toolchain"
-PKG_SECTION="system"
-PKG_SHORTDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
-PKG_LONGDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
 PKG_TOOLCHAIN="manual"
 
 ####################################################################
