@@ -11,14 +11,19 @@ PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="+lto-parallel"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  export LIBS="$LIBS -lpthread -lrt -lm"
+  LDFLAGS="$LDFLAGS -lpthread -lm"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
+
+# echo "CONFIG_TLS=gnutls" >> .config
+# echo "CONFIG_GNUTLS_EXTRA=y" >> .config
 }
 
 post_makeinstall_target() {
