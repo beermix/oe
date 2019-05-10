@@ -19,7 +19,3 @@ pre_make_target() {
   export CFLAGS="$TARGET_CFLAGS"
   export CPPFLAGS="$TARGET_CPPFLAGS"
 }
-
-#makeinstall_target() {
-#  :
-#}
