@@ -2,14 +2,14 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="rtmpdump"
-PKG_VERSION="fa8646d"
-PKG_SHA256="dba4d4d2e1c7de6884b01d98194b83cab6784669089fa3c919152087a3a38fd2"
+PKG_VERSION="2.4.r96.fa8646d"
+PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://rtmpdump.mplayerhq.hu/"
-PKG_URL="http://repo.or.cz/rtmpdump.git/snapshot/$PKG_VERSION.tar.gz"
+PKG_URL="https://dl.dropboxusercontent.com/s/5z1qp77v0drc06s/rtmpdump-2.4.r96.fa8646d.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_LONGDESC="rtmpdump is a toolkit for RTMP streams."
-#PKG_BUILD_FLAGS="+pic"
+PKG_BUILD_FLAGS="+pic"
 
 make_target() {
   make prefix=/usr \
@@ -66,6 +66,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/sbin
 
 #  # to be removed: hack for "compatibility"
-  mkdir -p $INSTALL/usr/lib
-    ln -sf librtmp.so.1 $INSTALL/usr/lib/librtmp.so.0
+#  mkdir -p $INSTALL/usr/lib
+#    ln -sf librtmp.so.1 $INSTALL/usr/lib/librtmp.so.0
 }

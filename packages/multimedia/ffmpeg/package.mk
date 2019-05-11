@@ -12,7 +12,7 @@ PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl gnutls speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 gmp openssl libgcrypt speex"
 PKG_BUILD_FLAGS="-gold -lto"
 
 # Dependencies
@@ -108,7 +108,7 @@ configure_target() {
               --disable-static \
               --enable-shared \
               --enable-gpl \
-              --disable-version3 \
+              --enable-version3 \
               --enable-nonfree \
               --enable-logging \
               --disable-doc \
@@ -131,7 +131,7 @@ configure_target() {
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
-              --enable-gnutls --disable-openssl \
+              --disable-gnutls --enable-openssl \
               --disable-gray \
               --enable-swscale-alpha \
               --disable-small \
@@ -180,6 +180,8 @@ configure_target() {
               --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
+              --enable-gcrypt \
+              --enable-gmp \
               --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
