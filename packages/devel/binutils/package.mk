@@ -32,9 +32,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --enable-targets=i386-linux,x86_64-linux \
-                         --disable-gdb \
-                         --disable-sim \
+                         --enable-targets=x86_64-linux \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
