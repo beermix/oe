@@ -17,9 +17,7 @@ PKG_BUILD_FLAGS="-parallel"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ssl2 \
                            no-ssl3 \
-                           no-rc5 \
                            zlib-dynamic"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
