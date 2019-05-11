@@ -9,7 +9,6 @@ PKG_CONFIGURE_OPTS_TARGET="PERL=missing \
 			      --without-selinux \
 			      --enable-no-install-program=kill,groups \
 			      --enable-single-binary=symlinks \
-			      --enable-single-binary-exceptions=expr,factor,rm \
-			      --disable-shared"
-			      
+			      --enable-single-binary-exceptions=expr,factor,rm"
+      
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
