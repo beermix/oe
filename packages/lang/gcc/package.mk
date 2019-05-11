@@ -35,20 +35,22 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-plugin \
                            --enable-lto \
                            --enable-gold \
-                           --with-ppl=yes \
                            --enable-ld=default \
                            --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --enable-cet \
+                           --without-ppl \
+                           --without-cloog \
+                           --disable-libada \
+                           --disable-libmudflap \
                            --disable-libatomic \
                            --disable-libitm \
+                           --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-libunwind-exceptions \
                            --enable-default-pie \
                            --with-tune=haswell \
                            --with-arch=westmere"
@@ -58,8 +60,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
-                              --disable-libquadmath \
-                              --disable-libmudflap \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
