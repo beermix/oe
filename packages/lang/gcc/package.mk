@@ -43,11 +43,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-cet \
-                           --disable-libada \
-                           --disable-libmudflap \
                            --disable-libatomic \
                            --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
@@ -61,6 +58,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
+                              --disable-libquadmath \
+                              --disable-libmudflap \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
