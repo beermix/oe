@@ -24,6 +24,10 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-rc5 \
                            enable-camellia \
                            enable-mdc2 \
+                           no-async no-comp no-idea no-ec2m \
+                           no-sm2 no-sm4 no-seed \
+                           no-weak-ssl-ciphers \
+                           no-zlib \
                            zlib-dynamic"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
