@@ -15,12 +15,3 @@ post_unpack() {
   sed -i '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/examples$$//' $PKG_BUILD/gettext-tools/Makefile.in
   sed -i '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/tests$$//' $PKG_BUILD/gettext-runtime/Makefile.in
 }
-
-PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
-			    --disable-java \
-			    --with-gnu-ld \
-			    --disable-curses \
-			    --with-included-libxml \
-			    --disable-native-java \
-			    --disable-csharp \
-			    --without-emacs"

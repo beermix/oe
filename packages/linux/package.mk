@@ -39,10 +39,10 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   lts)
-    PKG_VERSION="4.14.90"
-    #PKG_SHA256="4b36dfd053844ef0617799d432eed67aa4795d3403216d6789288aa7a0e75bde"
-    PKG_URL="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="lts-4.14"
+    PKG_VERSION="5.0.15"
+    #PKG_SHA256=""
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_PATCH_DIRS="5.0"
     PKG_BUILD_PERF="no"
     ;;
   *)
