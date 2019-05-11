@@ -18,6 +18,12 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            no-ssl3 \
+                           no-tests \
+                           no-fuzz-libfuzzer \
+                           no-fuzz-afl \
+                           no-rc5 \
+                           enable-camellia \
+                           enable-mdc2 \
                            zlib-dynamic"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
