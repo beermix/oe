@@ -18,11 +18,9 @@ post_unpack() {
 
 PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
 			    --disable-java \
+			    --with-gnu-ld \
 			    --disable-curses \
 			    --with-included-libxml \
-			    --with-included-libunistring \
 			    --disable-native-java \
-			    --disable-openmp \
 			    --disable-csharp \
-			    --disable-relocatable \
 			    --without-emacs"
