@@ -19,7 +19,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            threads \
                            no-ssl2 \
                            no-ssl3 \
-                           no-rc4 \
+                           no-rc5 \
                            zlib-dynamic"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
