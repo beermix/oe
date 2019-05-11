@@ -103,7 +103,7 @@ configure_target() {
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
-              --extra-ldflags="$LDFLAGS -fPIC" \
+              --extra-ldflags="$LDFLAGS" \
               --extra-libs="$PKG_FFMPEG_LIBS" \
               --disable-static \
               --enable-shared \
