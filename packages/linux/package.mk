@@ -31,11 +31,11 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   zen)
-    PKG_VERSION="5.1-zen1"
+    PKG_VERSION="5.0.15-lqx1"
     PKG_SHA256=""
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/v$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
-    PKG_PATCH_DIRS="default"
+    PKG_PATCH_DIRS="5.0"
     PKG_BUILD_PERF="no"
     ;;
   lts)
