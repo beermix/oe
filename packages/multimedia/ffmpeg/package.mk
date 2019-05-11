@@ -4,10 +4,10 @@
 
 PKG_NAME="ffmpeg"
 PKG_VERSION="3.1.11-Krypton-17.5"
-PKG_VERSION="a06cd02"
-#PKG_SHA256="7df8bce40765b39de5766ca9d08b5b9ac1f498c65c805c989461b907cee6b7c0"
+PKG_VERSION="e38fc0a"
+PKG_SHA256="e0edd3c83af64d28791668a0c00569e554ced334ceefeacd1af125d85b897207"
 PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
+PKG_SITE="https://github.com/FFmpeg/FFmpeg/tree/release/3.2"
 PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
