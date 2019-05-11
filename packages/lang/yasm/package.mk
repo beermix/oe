@@ -6,11 +6,11 @@ PKG_VERSION="80bc804"
 PKG_SHA256="d9f828a2e059012c697154a054a87f344a5d8c479c5eb59fed81bbc52ef7205f"
 PKG_SITE="https://github.com/yasm/yasm"
 PKG_URL="https://github.com/yasm/yasm/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_HOST="ccache:host autotools:host autoconf:host gperf:host re2c:host nasm:host"
+PKG_DEPENDS_HOST="ccache:host autotools:host autoconf:host re2c:host nasm:host"
 PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
-PKG_DEPENDS_HOST="cmake:host ninja:host"
+PKG_DEPENDS_HOST="cmake:host"
 #PKG_TOOLCHAIN="autotools"
-#PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="cmake-make"
 
 #PKG_CONFIGURE_OPTS_HOST="--disable-debug \
 #		           --disable-warnerror \
