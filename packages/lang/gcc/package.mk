@@ -35,14 +35,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-plugin \
                            --enable-lto \
                            --enable-gold \
+                           --with-ppl=yes \
                            --enable-ld=default \
                            --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
-                           --without-cloog \
+                           --enable-cet \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libatomic \
