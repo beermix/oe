@@ -2,10 +2,10 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xorg-intel-gpu-tools"
-PKG_VERSION="f052e49"
+PKG_VERSION="709bd6869e2aff01a67eef729f9dc330f404387e"
 PKG_SHA256=""
 PKG_LICENSE="GPL"
-PKG_DEPENDS_TARGET="toolchain cairo procps-ng elfutils libXv"
+PKG_DEPENDS_TARGET="toolchain cairo procps-ng elfutils libXv peg:host"
 PKG_SITE="https://github.com/freedesktop/xorg-intel-gpu-tools"
 PKG_URL="https://github.com/freedesktop/xorg-intel-gpu-tools/archive/$PKG_VERSION.tar.gz"
 PKG_LONGDESC="Test suite and tools for DRM/KMS drivers"
