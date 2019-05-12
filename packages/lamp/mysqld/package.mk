@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mysqld"
-PKG_VERSION="5.7.20"
-PKG_SHA256="5397549bb7c238f396c123db2df4cad2191b11adf8986de7fe63bff8e2786487"
+PKG_VERSION="5.7.26"
+PKG_SHA256=""
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.mysql.com"
 PKG_URL="https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-$PKG_VERSION.tar.gz"
