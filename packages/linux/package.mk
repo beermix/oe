@@ -24,12 +24,6 @@ case "$LINUX" in
     PKG_PATCH_DIRS="4.16"
     PKG_BUILD_PERF="no"
   ;;
-  4.19zen)
-    PKG_VERSION="05d2f46"
-    PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
-    PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="no"
-    ;;
   zen)
     PKG_VERSION="5.0.15-lqx1"
     PKG_SHA256=""
@@ -38,11 +32,17 @@ case "$LINUX" in
     PKG_PATCH_DIRS="5.0"
     PKG_BUILD_PERF="no"
     ;;
-  lts)
-    PKG_VERSION="5.0.15"
+  arch-git)
+    PKG_VERSION="1fb3b526df3bd7647e7854915ae6b22299408baf"
+    PKG_URL="https://git.archlinux.org/linux.git/snapshot/linux-1fb3b526df3bd7647e7854915ae6b22299408baf.tar.gz"
+    PKG_PATCH_DIRS="default"
+    PKG_BUILD_PERF="no"
+    ;;
+  arch)
+    PKG_VERSION="5.1.1-arch1"
     #PKG_SHA256=""
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="5.0"
+    PKG_URL="https://git.archlinux.org/linux.git/snapshot/linux-$PKG_VERSION.tar.gz"
+    PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
   *)
