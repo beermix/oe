@@ -8,25 +8,21 @@ PKG_SHA256="5c557b023230413dfb0756f3137a13e6d726838ccd1430888ad15bfb2b43ea4b"
 PKG_LICENSE="BSD"
 PKG_SITE="https://www.openssl.org/source"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host zlib:host"
-PKG_DEPENDS_TARGET="zlib"
+PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_TOOLCHAIN="configure"
-#PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="-parallel"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            no-ssl3 \
-                           no-tests \
-                           no-fuzz-libfuzzer \
-                           no-fuzz-afl \
                            no-rc5 \
                            enable-camellia \
                            enable-mdc2 \
-                           no-weak-ssl-ciphers \
-                           no-zlib \
-                           zlib-dynamic"
+                           no-ssl3-method \
+                           enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
@@ -40,11 +36,13 @@ post_unpack() {
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
+
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3"`
 }
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CPPFLAGS $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -55,23 +53,12 @@ pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
 
-  case $TARGET_ARCH in
-    x86_64)
-      OPENSSL_TARGET=linux-x86_64
-      PLATFORM_FLAGS=enable-ec_nistp_64_gcc_128
-      ;;
-    arm)
-      OPENSSL_TARGET=linux-armv4
-      ;;
-    aarch64)
-      OPENSSL_TARGET=linux-aarch64
-      ;;
-  esac
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3"`
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $OPENSSL_TARGET $CPPFLAGS $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {

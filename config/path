@@ -74,7 +74,7 @@ XORG_PATH_DRIVERS=/usr/lib/xorg/modules/drivers
 . config/optimize
 
 if [ -z "$CCACHE_DIR" ]; then
-  export CCACHE_DIR=$HOME/.ccache_oe
+  export CCACHE_DIR=$HOME/-f2fs/.ccache_oe
 fi
 
 if [[ -z "$PATH" || ( "$PATH" != "$TOOLCHAIN/bin:$TOOLCHAIN/sbin" && "$PATH" = "${PATH#$TOOLCHAIN/bin:$TOOLCHAIN/sbin:}" ) ]]; then
