@@ -47,8 +47,8 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   *)
-    PKG_VERSION="5.1.1"
-    PKG_SHA256="a04d991416e780c229d62a11e36aa936f132027ca8d4fa73006cc96caf058ddd"
+    PKG_VERSION="5.1.3"
+    PKG_SHA256="b0f53e12daf8e710992151333edeb7d7da3d935a6aa3db8360681f7d05a6aaa2"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"

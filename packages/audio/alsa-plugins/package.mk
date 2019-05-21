@@ -1,5 +1,5 @@
 PKG_NAME="alsa-plugins"
-PKG_VERSION="1.1.7"
+PKG_VERSION="1.1.9"
 PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.alsa-project.org/"
