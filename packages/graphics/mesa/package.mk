@@ -3,14 +3,14 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="7b2468bf6e58b0b178f8f498fca92c9cc0a71edb"
-PKG_VERSION="19.0.5"
-PKG_SHA256="c0b760b0bdc4f65e0df0a74a59a6af5bbd1ddd401317a0343bb38ab8e6258c2d"
+PKG_VERSION="47a10edefb3510d1cae071037dac78a46b31949b"
+#PKG_VERSION="19.0.5"
+#PKG_SHA256="c0b760b0bdc4f65e0df0a74a59a6af5bbd1ddd401317a0343bb38ab8e6258c2d"
 PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/mesa/mesa/log"
 PKG_URL="https://github.com/mesa3d/mesa/archive/$PKG_VERSION.tar.gz"
 PKG_URL="https://cgit.freedesktop.org/mesa/mesa/snapshot/$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"
+#PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
@@ -94,8 +94,8 @@ fi
 pre_configure_target() {
   if [ "$DISPLAYSERVER" = "x11" ]; then
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
-    export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-    export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+    export CFLAGS="$CFLAGS -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+    export CXXFLAGS="$CXXFLAGS -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
     export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   fi
 }
