@@ -32,10 +32,9 @@ case "$LINUX" in
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
-  arch-git)
-    PKG_VERSION="e290e6af1d22c3f5225c9d46faabdde80e27aef2"
-    PKG_SITE="https://git.archlinux.org/linux.git/log/"
-    PKG_URL="https://git.archlinux.org/linux.git/snapshot/linux-$PKG_VERSION.tar.gz"
+  rc)
+    PKG_VERSION="5.2-rc2"
+    PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
