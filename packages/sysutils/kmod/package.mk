@@ -7,6 +7,7 @@ PKG_SHA256="57bb22c8bb56435991f6b0810a042b0a65e2f1e217551efa58235b7034cdbb9d"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.profusion.mobi/cgit.cgi/kmod.git/"
 PKG_URL="https://www.kernel.org/pub/linux/utils/kernel/kmod/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_INIT="kmod"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="kmod offers the needed flexibility and fine grained control over insertion, removal, configuration and listing of kernel modules."
@@ -33,6 +34,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-tools \
                            --without-xz \
                            --without-zlib"
 
+PKG_CONFIGURE_OPTS_INIT="$PKG_CONFIGURE_OPTS_TARGET"
+
 post_makeinstall_host() {
   ln -sf kmod $TOOLCHAIN/bin/depmod
 }
@@ -52,4 +55,8 @@ post_makeinstall_target() {
 
 # add user modprobe.d dir
   mkdir -p $INSTALL/usr/config/modprobe.d
+}
+
+post_makeinstall_init() {
+  post_makeinstall_target
 }

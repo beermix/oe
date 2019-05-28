@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libidn2"
@@ -13,6 +13,12 @@ PKG_LONGDESC="Free software implementation of IDNA2008, Punycode and TR46."
 PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
                            --enable-shared \
                            --disable-static"
+
+PKG_CONFIGURE_OPTS_INIT="$PKG_CONFIGURE_OPTS_TARGET"
+
+post_makeinstall_init() {
+  safe_remove ${INSTALL}/usr/bin
+}
 
 post_makeinstall_target() {
   safe_remove ${INSTALL}/usr/bin
