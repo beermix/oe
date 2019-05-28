@@ -1,5 +1,5 @@
 PKG_NAME="aria2"
-PKG_VERSION="ecba262"
+PKG_VERSION="0abde36"
 PKG_SITE="https://github.com/aria2/aria2/releases"
 PKG_URL="https://github.com/aria2/aria2/releases/download/release-$PKG_VERSION/aria2-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/aria2/aria2/archive/${PKG_VERSION}.tar.gz"
