@@ -31,8 +31,8 @@
     KERNEL_EXTRA_DEPENDS_TARGET=""
 
   # Kernel to use. values can be:
-  # default:  default mainline kernel zen lts pf
-    LINUX="rc"
+  # default: default mainline kernel zen lts pf
+    LINUX="default"
 
 
 ################################################################################
