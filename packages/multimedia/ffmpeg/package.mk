@@ -72,9 +72,6 @@ pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 
-  export CFLAGS="$CFLAGS -Wno-attributes"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes"
-
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
     CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux $CFLAGS"
     FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
@@ -117,7 +114,7 @@ configure_target() {
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
-              --disable-ffprobe \
+              --enable-ffprobe \
               --disable-ffplay \
               --disable-ffserver \
               --enable-ffmpeg \
@@ -146,7 +143,8 @@ configure_target() {
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
-              --disable-encoders \
+              --disable-hardcoded-tables \
+              --enable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
