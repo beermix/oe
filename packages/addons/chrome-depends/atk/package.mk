@@ -3,9 +3,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="atk"
-PKG_VERSION="2.32.0"
-#PKG_VERSION="2.29.1"
-#PKG_SHA256="1aa7707c6297c1797fe4d79a22a57ede4d5586b0f7a3b30e886d7ca9d75f20da"
+PKG_VERSION="2.33.1"
+PKG_SHA256="ada1585d0867f233599cd18cbc0fda6e84855f99f9073ef39ab51f4f38f10671"
 PKG_LICENSE="GPL"
 PKG_SITE="https://ftp.gnome.org/pub/gnome/sources/atk/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/atk/${PKG_VERSION:0:4}/atk-$PKG_VERSION.tar.xz"
