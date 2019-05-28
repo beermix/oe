@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="yasm"
-PKG_VERSION="80bc804"
-PKG_SHA256="d9f828a2e059012c697154a054a87f344a5d8c479c5eb59fed81bbc52ef7205f"
+PKG_VERSION="bcc01c5"
+PKG_SHA256="8f56152f5997eef9e1980e6133c0c3da6feed154f02bd04e8ef1253f0aae38c8"
 PKG_SITE="https://github.com/yasm/yasm"
 PKG_URL="https://github.com/yasm/yasm/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host autotools:host autoconf:host re2c:host nasm:host"
