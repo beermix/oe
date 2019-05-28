@@ -12,7 +12,7 @@ PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvorbis"
 PKG_BUILD_FLAGS="-gold -lto"
 
 # Dependencies
@@ -108,7 +108,7 @@ configure_target() {
               --disable-static \
               --enable-shared \
               --enable-gpl \
-              --enable-version3 \
+              --disable-version3 \
               --enable-nonfree \
               --enable-logging \
               --disable-doc \
@@ -180,13 +180,11 @@ configure_target() {
               --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
-              --enable-gcrypt \
-              --enable-gmp \
               --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --disable-libvorbis \
+              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
               --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
@@ -197,7 +195,6 @@ configure_target() {
               --disable-neon \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
               --enable-indev=x11grab_xcb
 }
 
