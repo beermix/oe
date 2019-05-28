@@ -83,13 +83,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CCACHE_DISABLE=true
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-}
-
-pre_configure_bootstrap() {
-  export CCACHE_DISABLE=true
 }
 
 post_make_host() {
