@@ -10,8 +10,9 @@ PKG_SITE="https://ftp.gnu.org/gnu/bison/?C=M;O=D"
 PKG_URL="http://ftpmirror.gnu.org/bison/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host m4:host"
 PKG_LONGDESC="A general-purpose parser generator."
+PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-rpath --enable-threads=pth"
+PKG_CONFIGURE_OPTS_HOST="--disable-rpath --with-gnu-ld"
 
 post_configure_host() {
 # The configure system causes Bison to be built without support for
