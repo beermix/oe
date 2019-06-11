@@ -9,6 +9,8 @@ PKG_SITE="https://cgit.freedesktop.org/xorg/app/edid-decode/"
 PKG_URL="https://cgit.freedesktop.org/xorg/app/edid-decode/snapshot/$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Decode EDID data in human-readable format"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 make_target() {
   echo "$CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c"
