@@ -16,8 +16,8 @@ PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-silent-rules"
 pre_configure_host() {
   export CC=$LOCAL_CC
   export CXX=$LOCAL_CXX
-  export CFLAGS="$CFLAGS -march=native -pipe -O3"
-  export CXXFLAGS="$CXXFLAGS -march=native -pipe -O3"
+  #export CFLAGS="$CFLAGS -march=native -pipe -O3"
+  #export CXXFLAGS="$CXXFLAGS -march=native -pipe -O3"
 }
 
 post_makeinstall_host() {
