@@ -15,7 +15,7 @@
 
 # Welcome Message for e.g. SSH Server (up to 5 Lines)
   GREETING0="##############################################"
-  GREETING1="#                    OE                      #"
+  GREETING1="#                 LibreELEC                  #"
   GREETING2="#            https://libreelec.tv            #"
   GREETING3="##############################################"
   GREETING4=""
@@ -70,7 +70,7 @@
 # for a list of additional drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-# ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU"
+  ADDITIONAL_DRIVERS=""
 
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="no"
@@ -162,7 +162,7 @@
   INITRAMFS_PARTED_SUPPORT="no"
 
 # build with swap support (yes / no)
-  SWAP_SUPPORT="no"
+  SWAP_SUPPORT="yes"
 
 # swap support enabled per default (yes / no)
   SWAP_ENABLED_DEFAULT="no"
@@ -208,8 +208,8 @@
 
 # Configure debug groups (space delimited key=value pairs, with each value comma-delimited) and default group when DEBUG=yes
 # Use ! or - prefix to prevent a dependent package from being built with debug. Add + suffix to build dependenencies with debug.
-#  DEBUG_GROUPS="!kodi+=kodi,!kodi-platform,!p8-platform,!mesa"
-#  DEBUG_GROUP_YES="!kodi"
+  DEBUG_GROUPS="kodi+=kodi+,kodi-platform+,p8-platform+,!mesa"
+  DEBUG_GROUP_YES="kodi+"
 
 # Default supported get handlers (archive, git, file etc.)
   GET_HANDLER_SUPPORT="archive"
@@ -227,3 +227,5 @@
 # IR remote keymaps supported in default config
 # IR_REMOTE_KEYMAPS="rc6_mce xbox_360 xbox_one"
 
+# debug tty path
+  DEBUG_TTY="/dev/tty3"

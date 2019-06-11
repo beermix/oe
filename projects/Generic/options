@@ -31,8 +31,8 @@
     KERNEL_EXTRA_DEPENDS_TARGET=""
 
   # Kernel to use. values can be:
-  # default: default mainline kernel zen lts pf
-    LINUX="zen"
+  # default:  default mainline kernel zen lts pf
+    LINUX="rc"
 
 
 ################################################################################
@@ -74,10 +74,10 @@
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  # ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
+    ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta intel_nuc_led"
 
   # build and install driver addons (yes / no)
-    DRIVER_ADDONS_SUPPORT="no"
+    DRIVER_ADDONS_SUPPORT="yes"
 
   # driver addons to install:
   # for a list of additional drivers see packages/linux-driver-addons

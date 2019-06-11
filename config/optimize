@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -pipe --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072"
+GCC_OPTIM="-O2"
 # Linker hash-style is set to gnu via gcc default
 LD_OPTIM="-Wl,--as-needed"
 
@@ -15,14 +15,14 @@ fi
 NINJA_OPTS=""
 
 TARGET_CPPFLAGS=""
-TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $PROJECT_CFLAGS"
+TARGET_CFLAGS="$TARGET_CFLAGS -Wall -pipe $GCC_OPTIM $PROJECT_CFLAGS"
 TARGET_CXXFLAGS="$TARGET_CFLAGS"
 TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
 HOST_CPPFLAGS=""
-HOST_CFLAGS="-march=haswell -O2 -I$TOOLCHAIN/include"
+HOST_CFLAGS="-march=native -O2 -Wall -pipe -I$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"
@@ -47,13 +47,6 @@ LDFLAGS_OPTIM_GOLD="-fuse-ld=gold"
 CFLAGS_OPTIM_PIC="-fPIC -DPIC"
 CXXFLAGS_OPTIM_PIC="-fPIC -DPIC"
 LDFLAGS_OPTIM_PIC="-fPIC"
-
-# hardening support
-# TODO: basiclly copied from debian 9, should adjust for LE | -fPIE  -fno-caller-saves
-# CFLAGS_OPTIM_HARDENING="--param=ssp-buffer-size=4 -fstack-protector -fno-plt -fno-caller-saves"
-# CXXFLAGS_OPTIM_HARDENING="--param=ssp-buffer-size=4 -fstack-protector -fno-plt -fno-caller-saves"
-# CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=1"
-# LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
 
 # hardening support
 # TODO: basiclly copied from debian 9, should adjust for LE

@@ -62,7 +62,6 @@ INSTALL_INIT=$BUILD/image/initramfs/root-image
 . config/sources
 
 MAKE="$TOOLCHAIN/bin/make"
-#MAKEINSTALL="$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
 
 XORG_PATH_DRI=/usr/lib/dri
 XORG_PATH_XKB=/usr/share/X11/xkb
@@ -74,7 +73,7 @@ XORG_PATH_DRIVERS=/usr/lib/xorg/modules/drivers
 . config/optimize
 
 if [ -z "$CCACHE_DIR" ]; then
-  export CCACHE_DIR=$HOME/-f2fs/.ccache_oe
+  export CCACHE_DIR=$BUILD/.ccache
 fi
 
 if [[ -z "$PATH" || ( "$PATH" != "$TOOLCHAIN/bin:$TOOLCHAIN/sbin" && "$PATH" = "${PATH#$TOOLCHAIN/bin:$TOOLCHAIN/sbin:}" ) ]]; then

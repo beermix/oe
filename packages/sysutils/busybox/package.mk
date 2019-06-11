@@ -33,7 +33,7 @@ pre_build_target() {
   PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
                         HOSTCC=$HOST_CC \
                         CROSS_COMPILE=$TARGET_PREFIX \
-                        KBUILD_VERBOSE=0 \
+                        KBUILD_VERBOSE=1 \
                         install"
 
   mkdir -p $PKG_BUILD/.$TARGET_NAME
@@ -41,7 +41,7 @@ pre_build_target() {
 }
 
 pre_build_host() {
-  PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=0 install"
+  PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
 
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
@@ -51,7 +51,7 @@ pre_build_init() {
   PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
                       HOSTCC=$HOST_CC \
                       CROSS_COMPILE=$TARGET_PREFIX \
-                      KBUILD_VERBOSE=0 \
+                      KBUILD_VERBOSE=1 \
                       install"
 
   mkdir -p $PKG_BUILD/.$TARGET_NAME-init
