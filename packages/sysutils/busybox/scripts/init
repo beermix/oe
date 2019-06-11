@@ -374,12 +374,6 @@ load_splash() {
   if [ ! "$SPLASH" = "no" ]; then
     progress "Loading bootsplash"
 
-    # load uvesafb module if needed
-    if [ -f "$MODULE_DIR/uvesafb.ko" -a ! -e /dev/fb0 ]; then
-      progress "Loading kernel module uvesafb.ko"
-      insmod "$MODULE_DIR/uvesafb.ko" && set_default_res=yes || progress "... Failed to load kernel module uvesafb, skipping"
-    fi
-
     if [ -e /dev/fb0 ]; then
       # Set framebuffer to a custom resolution and/or fallback to default resolution (1024x768-32), if required.
       if [ ! "$SWITCH_FRAMEBUFFER" = "no" ]; then
@@ -930,13 +924,14 @@ prepare_sysroot() {
 # hide kernel log messages on console
 echo '1 4 1 7' > /proc/sys/kernel/printk
 
-# Configure frequency scaling properties
-for policy in $(find /sys/devices/system/cpu/cpufreq -name ondemand 2>/dev/null) ; do
-  echo 1 > $policy/io_is_busy
-  echo 50 > $policy/up_threshold
-  echo 100000 > $policy/sampling_rate
-  echo 50 > $policy/sampling_down_factor
-done
+# set ondemand up_threshold
+if [ -e /sys/devices/system/cpu/cpufreq/ondemand/up_threshold ]; then
+  echo 50 > /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
+else
+  for f in $(ls /sys/devices/system/cpu/cpufreq/policy*/ondemand/up_threshold 2>/dev/null) ; do
+    echo 50 > $f
+  done
+fi
 
 # run platform_init script if exists
 if [ -f "./platform_init" ]; then
