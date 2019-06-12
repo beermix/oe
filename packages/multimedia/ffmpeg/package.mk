@@ -99,7 +99,7 @@ configure_target() {
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
-              --extra-cflags="$CFLAGS" \
+              --extra-cflags="$CFLAGS -Wno-attributes -Wno-deprecated-declarations" \
               --extra-ldflags="$LDFLAGS" \
               --extra-libs="$PKG_FFMPEG_LIBS" \
               --disable-static \
