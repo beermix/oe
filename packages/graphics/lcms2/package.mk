@@ -1,5 +1,5 @@
 PKG_NAME="lcms2"
-PKG_VERSION="65c63bf"
+PKG_VERSION="9632a05"
 PKG_SITE="https://github.com/mm2/Little-CMS/releases"
 PKG_URL="https://github.com/mm2/Little-CMS/archive/${PKG_VERSION}.tar.gz"
 #PKG_SOURCE_DIR="Little-CMS-$PKG_VERSION*"
