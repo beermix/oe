@@ -934,7 +934,7 @@ else
 fi
 
 # Configure frequency scaling properties
-#for policy in /sys/devices/system/cpu/cpufreq/conservative /sys/devices/system/cpu/cpufreq/policy*/conservative ; do
+#for policy in /sys/devices/system/cpu/cpufreq/ondemand /sys/devices/system/cpu/cpufreq/policy*/ondemand ; do
 #  if [ -d $policy ] ; then
 #    echo 1 > $policy/io_is_busy
 #    echo 50 > $policy/up_threshold
