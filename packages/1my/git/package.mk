@@ -28,8 +28,8 @@ pre_build_target() {
   export NO_TCLTK="YesPlease"
   export NO_INSTALL_HARDLINKS="yes"
 
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+# export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+# export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 configure_target() {
@@ -38,7 +38,7 @@ ac_cv_snprintf_returns_bogus=no \
   ./configure --host=$TARGET_NAME \
               --build=$HOST_NAME \
               --prefix=/usr \
-			  --libexecdir=/usr/lib \
+              --libexecdir=/usr/lib \
               --with-gitconfig=/etc/gitconfig
 }
 
