@@ -8,11 +8,9 @@ PKG_SHA256="802f7ee309dcc547d65a68d61ebd6526762d26c3051f52caebe2189ac1ffd72e"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
 PKG_URL="http://ftpmirror.gnu.org/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib ncurses expat"
 PKG_LONGDESC="GNU Project debugger, allows you to see what is going on inside another program while it executes."
-# gdb could fail on runtime if build with LTO support
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+PKG_BUILD_FLAGS="+size"
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --disable-shared \
