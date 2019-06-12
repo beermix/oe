@@ -25,6 +25,10 @@ make_host() {
      NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
      SKIP_SHLIBSIGN=1 \
+     NSS_DISABLE_GTESTS=1 \
+     NSS_USE_SYSTEM_SQLITE=1 \
+     NSS_ENABLE_ECC=1 \
+     NSS_ENABLE_WERROR=0 \
      NSS_TESTS="dummy" \
      CC=$CC LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
      V=1
@@ -51,11 +55,13 @@ make_target() {
   rm -rf $PKG_BUILD/dist
 
   make BUILD_OPT=1 $TARGET_USE_64 \
-     NSS_USE_SYSTEM_SQLITE=1 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
      NSS_USE_SYSTEM_SQLITE=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      SKIP_SHLIBSIGN=1 \
+     NSS_DISABLE_GTESTS=1 \
+     NSS_ENABLE_ECC=1 \
+     NSS_ENABLE_WERROR=0 \
      OS_TEST=$TARGET_ARCH \
      NSS_TESTS="dummy" \
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \

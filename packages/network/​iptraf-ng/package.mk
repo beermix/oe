@@ -2,9 +2,6 @@ PKG_NAME="​iptraf-ng"
 PKG_VERSION="8b9c12a"
 PKG_GIT_URL="git://repo.or.cz/iptraf-ng.git"
 PKG_DEPENDS_TARGET="toolchain libpcap readline"
-PKG_SECTION="my"
-
-
 
 #pre_configure_target() {
 #  export LIBS="-lterminfo -ltinfo"
