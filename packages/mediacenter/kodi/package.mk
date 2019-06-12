@@ -202,21 +202,8 @@ fi
                          -DENABLE_CCACHE=ON \
                          -DENABLE_LIRCCLIENT=ON \
                          -DENABLE_EVENTCLIENTS=ON \
-                         -DENABLE_LDGOLD=ON \
+                         -DENABLE_LDGOLD=OFF \
                          -DCMAKE_VERBOSE_MAKEFILE=0 \
-                         -DENABLE_AVX=OFF \
-                         -DENABLE_AVX2=OFF \
-                         -DENABLE_SSE=ON \
-                         -DENABLE_SSE2=ON \
-                         -DENABLE_SSE3=ON \
-                         -DENABLE_SSE4_1=ON \
-                         -DENABLE_SSE4_2=ON \
-                         -DENABLE_SSSE3=ON \
-                         -DHAVE_SSE=TRUE \
-                         -DHAVE_SSE2=TRUE \
-                         -DHAVE_SSE3=TRUE \
-                         -DHAVE_SSE4_1=TRUE \
-                         -DHAVE_SSSE3=TRUE \
                          $KODI_ARCH \
                          $KODI_OPENGL \
                          $KODI_OPENGLES \
