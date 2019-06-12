@@ -15,8 +15,6 @@ PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
 PKG_BUILD_FLAGS="+lto"
-#LTO_SUPPORT="yes"
-#GOLD_SUPPORT="yes"
 
 get_graphicdrivers
 
