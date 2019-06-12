@@ -68,7 +68,7 @@ if [ "$PKG_BUILD_PERF" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= $PKG_KERNEL_CFG
 fi
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-ucode:host kernel-firmware elfutils:host pciutils"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kernel-firmware elfutils:host pciutils"
 fi
 
 if [[ "$KERNEL_TARGET" = uImage* ]]; then
@@ -155,7 +155,7 @@ pre_make_target() {
     mkdir -p $PKG_BUILD/external-firmware
       cp -a $(get_build_dir kernel-firmware)/i915 $PKG_BUILD/external-firmware
 
-    cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
+    # cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
 
     FW_LIST="$(find $PKG_BUILD/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' -o -path '*/intel-ucode/*' \) | sed 's|.*external-firmware/||' | sort | xargs)"
     sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" $PKG_BUILD/.config
