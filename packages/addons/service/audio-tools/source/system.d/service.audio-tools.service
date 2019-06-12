@@ -1,0 +1,13 @@
+[Unit]
+Description=Audio tools
+After=pulseaudio.service
+Before=kodi.service
+Wants=kodi.service pulseaudio.service
+
+[Service]
+ExecStart=/bin/sh /storage/.kodi/addons/service.audio-tools/bin/audio-tools.start
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=kodi.service pulseaudio.service

@@ -1,0 +1,15 @@
+# ----- Audio Tools Pulse -----
+
+pcm_type.pulse {
+  lib "/storage/.kodi/addons/service.audio-tools/lib/libasound_module_pcm_pulse.so"
+}
+
+pcm.!pulse {
+  type pulse
+}
+
+ctl.!pulse {
+  type pulse
+}
+
+# ----- Audio Tools Pulse -----

@@ -1,0 +1,40 @@
+# Kodi Media Center language file
+# Addon Name: service.audio-tools
+msgid ""
+msgstr ""
+
+msgctxt "#30000"
+msgid "Shared device"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Select card"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Card"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Disable PulseAudio timer-based scheduling"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Raspberry"
+msgstr ""
+
+msgctxt "#30005"
+msgid "Raspberry Pi onboard audio playback route"
+msgstr ""
+
+msgctxt "#30006"
+msgid "automatic"
+msgstr ""
+
+msgctxt "#30007"
+msgid "analogue"
+msgstr ""
+
+msgctxt "#30008"
+msgid "HDMI"
+msgstr ""

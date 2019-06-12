@@ -16,6 +16,10 @@ if [ "$PULSEAUDIO_SUPPORT" = yes ]; then
   SUBDIR_PULSEAUDIO="pulse"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--with-plugindir=/usr/lib/alsa"
-PKG_MAKE_OPTS_TARGET="SUBDIRS=$SUBDIR_PULSEAUDIO"
-PKG_MAKEINSTALL_OPTS_TARGET="SUBDIRS=$SUBDIR_PULSEAUDIO"
+pre_configure_target() {
+  PKG_CONFIGURE_OPTS_TARGET="--with-plugindir=/usr/lib/alsa"
+}
+
+makeinstall_target() {
+  make install DESTDIR=$INSTALL
+}

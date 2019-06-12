@@ -1,3 +1,8 @@
+103
+- Use shared device
+- Remove audio settings
+- Rework Python
+
 102
 - Update to 0.15.0
 - Add alsa-plugins

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category  label="30000">
+    <setting label="30001" type="action" action="RunAddon(service.audio-tools)" />
+    <setting label="30002" type="text"   id="at_card"    default="" enable="false" />
+    <setting label="30003" type="bool"   id="at_tsched"  default="false" visible="!eq(-1,PULSE: Default)" />
+    <setting label="30004" type="bool"   id="at_rpi"     default="false" visible="false" />
+    <setting label="30005" type="select" id="at_rpi_ppr" lvalues="30006|30007|30008" visible="eq(-3,ALSA)+eq(-1,true)" />
+  </category>
+</settings>

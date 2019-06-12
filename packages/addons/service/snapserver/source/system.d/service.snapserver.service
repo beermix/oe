@@ -1,11 +1,12 @@
 [Unit]
 Description=Snapserver
-After=kodi.service network-online.target sound.target
-Requires=kodi.service network-online.target sound.target
+After=multi-user.target
+Before=kodi.service
+Wants=multi-user.target kodi.service
 
 [Service]
 ExecStart=/bin/sh /storage/.kodi/addons/service.snapserver/bin/snapserver.start
 Restart=always
 
 [Install]
-WantedBy=kodi.target
+WantedBy=multi-user.target kodi.service

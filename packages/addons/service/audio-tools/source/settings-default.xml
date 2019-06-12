@@ -1,0 +1,5 @@
+<settings version="2">
+    <setting id="at_card"    default="true"></setting>
+    <setting id="at_rpi_ppr" default="true">0</setting>
+    <setting id="at_tsched"  default="true">false</setting>
+</settings>

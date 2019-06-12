@@ -21,6 +21,6 @@ msgctxt "#30003"
 msgid "Priority"
 msgstr ""
 
-msgctxt "#30004"
-msgid "Stream"
+msgctxt "#30010"
+msgid "Restart Kodi to enable Snapcast for Kodi?"
 msgstr ""
