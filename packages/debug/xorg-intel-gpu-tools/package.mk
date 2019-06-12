@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xorg-intel-gpu-tools"
-PKG_VERSION="709bd6869e2aff01a67eef729f9dc330f404387e"
+PKG_VERSION="ff711b343c06a25ac4995ab8bd9a8bcb5ce1eb10"
 PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_DEPENDS_TARGET="toolchain cairo procps-ng elfutils libXv peg:host"
@@ -11,14 +11,14 @@ PKG_URL="https://github.com/freedesktop/xorg-intel-gpu-tools/archive/$PKG_VERSIO
 PKG_LONGDESC="Test suite and tools for DRM/KMS drivers"
 PKG_TOOLCHAIN="meson"
 
-PKG_MESON_OPTS_TARGET="-Dbuild_overlay=true \
+PKG_MESON_OPTS_TARGET="-Dbuild_overlay=enabled \
                        -Doverlay_backends=x,xv \
-                       -Dwith_valgrind=false \
-                       -Dbuild_man=false \
+                       -Dwith_valgrind=disabled \
+                       -Dbuild_man=disabled \
                        -Dbuild_audio=false \
-                       -Dbuild_chamelium=false \
-                       -Dbuild_docs=false \
-                       -Dbuild_tests=true
+                       -Dbuild_chamelium=disabled \
+                       -Dbuild_docs=disabled \
+                       -Dbuild_tests=disabled \
                        -Dwith_libdrm=intel \
-                       -Dwith_libunwind=false \
-                       -Dbuild_runner=false"
+                       -Dwith_libunwind=disabled \
+                       -Dbuild_runner=disabled"
