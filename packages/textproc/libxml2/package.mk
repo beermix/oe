@@ -15,6 +15,7 @@ PKG_LONGDESC="The libxml package contains an XML library, which allows you to ma
 PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --enable-static \
              --enable-shared \
+             --disable-silent-rules \
              --disable-ipv6 \
              --without-python \
              --with-zlib=$TOOLCHAIN \

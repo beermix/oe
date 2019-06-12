@@ -1,5 +1,5 @@
 diff --git a/setup.py b/setup.py
-index 8eb0b3c6..277e44aa 100755
+index 8eb0b3c..277e44a 100755
 --- a/setup.py
 +++ b/setup.py
 @@ -253,7 +253,7 @@ class pil_build_ext(build_ext):

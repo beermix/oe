@@ -32,7 +32,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --enable-targets=i386-linux,x86_64-linux \
+                         --enable-targets=x86_64-linux \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
@@ -57,7 +57,6 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-#  export CCACHE_DISABLE=true
 }
 
 make_host() {
