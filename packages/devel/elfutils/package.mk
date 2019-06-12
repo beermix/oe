@@ -21,7 +21,7 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="utrace_cv_cc_biarch=false \
-                           --disable-nls \
-                           --with-zlib \
-                           --without-bzlib \
-                           --without-lzma"
+                         --disable-nls \
+                         --with-zlib \
+                         --without-bzlib \
+                         --without-lzma"
