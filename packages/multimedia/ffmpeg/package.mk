@@ -12,7 +12,7 @@ PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvorbis"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_BUILD_FLAGS="-gold -lto"
 
 # Dependencies
@@ -182,7 +182,7 @@ configure_target() {
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
+              --disable-libvorbis \
               --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
