@@ -33,8 +33,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   git)
-    PKG_VERSION="35110e3"
-    PKG_SHA256=""
+    PKG_VERSION="c11fb13"
     PKG_URL="https://github.com/torvalds/linux/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
