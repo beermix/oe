@@ -31,8 +31,8 @@
     KERNEL_EXTRA_DEPENDS_TARGET=""
 
   # Kernel to use. values can be:
-  # default:  default mainline kernel zen lts pf
-    LINUX="git"
+  # default:  default mainline kernel zen lts pf arch git
+    LINUX="arch"
 
 
 ################################################################################
