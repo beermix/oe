@@ -28,7 +28,3 @@ fi
 if [ "$DISPLAYSERVER" != "x11" ]; then
   PKG_CONFIGURE_OPTS_TARGET="--disable-glx"
 fi
-
-PKG_MESON_OPTS_TARGET="-Ddocs=false \
-			  -Dx11=true \
-			  -Dglx=yes"
