@@ -13,8 +13,6 @@ PKG_LONGDESC="The GNU Readline library provides a set of functions for use by ap
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no --with-curses"
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
-
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/readline
 }
