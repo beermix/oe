@@ -26,7 +26,7 @@ configure_package() {
 }
 
 pre_configure_target() {
-  PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+  PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                              --enable-shared \
                              --disable-static \
                              --disable-gtk-doc \
