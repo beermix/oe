@@ -13,5 +13,7 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="The Netwide Assembler, NASM, is an 80x86 and x86-64 assembler designed for portability and modularity."
 
 pre_configure_host() {
-  export CCACHE_DISABLE=true make
+  export CCACHE_DISABLE=true
 }
+
+PKG_CONFIGURE_OPTS_HOST="--disable-lto --disable-werror --disable-gdb"
