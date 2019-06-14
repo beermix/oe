@@ -10,6 +10,7 @@ PKG_URL="https://github.com/mdadams/jasper/archive/version-${PKG_VERSION}.tar.gz
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"
 PKG_SHORTDESC="jasper: JPEG-2000 Part-1 standard (i.e., ISO/IEC 15444-1) implementation"
 PKG_BUILD_FLAGS="+pic"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_DISABLE_FIND_PACKAGE_DOXYGEN=TRUE \
 			  -DCMAKE_DISABLE_FIND_PACKAGE_LATEX=TRUE \
