@@ -1,0 +1,1 @@
+/usr/bin/find . -name "*.service" -exec chmod 0644 {} \;
