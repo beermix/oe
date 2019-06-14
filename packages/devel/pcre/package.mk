@@ -14,6 +14,7 @@ PKG_LONGDESC="A set of functions that implement regular expression pattern match
 PKG_TOOLCHAIN="cmake-make"
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic:host"
+PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 			    --enable-utf8 \
