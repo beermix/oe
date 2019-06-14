@@ -22,7 +22,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
-                           --disable-dependency-tracking \
+                           --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
                            --with-elf \
