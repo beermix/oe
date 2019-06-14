@@ -6,8 +6,6 @@ PKG_SITE="https://github.com/llvm-mirror/lld/tree/release_70"
 PKG_URL="http://releases.llvm.org/$PKG_VERSION/lld-$PKG_VERSION.src.tar.xz"
 #PKG_URL="https://github.com/llvm-mirror/lld/archive/${PKG_VERSION}.tar.gz"
 PKG_URL="http://llvm.org/releases/$PKG_VERSION/${PKG_NAME}-${PKG_VERSION}.src.tar.xz"
-#PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-PKG_SECTION="lang"
 PKG_SHORTDESC="C language family frontend for LLVM"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
