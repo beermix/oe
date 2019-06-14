@@ -39,7 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-nscd \
                            --enable-lock-elision=yes \
                            --enable-tunables \
-                           --enable-cet \
+                           --disable-cet \
                            --disable-timezone-tools"
 
 # busybox:init needs it
