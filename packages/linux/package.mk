@@ -17,11 +17,11 @@ PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
   pf)
-    PKG_VERSION="4.16-pf7"
+    PKG_VERSION="5.1-pf5 "
     PKG_SITE="https://github.com/pfactum/pf-kernel/releases"
     PKG_URL="https://github.com/pfactum/pf-kernel/archive/v$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="pf-kernel-$PKG_VERSION*"
-    PKG_PATCH_DIRS="4.16"
+    PKG_PATCH_DIRS="default"
+    PKG_BUILD_PERF="no"
     PKG_BUILD_PERF="no"
   ;;
   zen)
@@ -34,6 +34,7 @@ case "$LINUX" in
     ;;
   git)
     PKG_VERSION="c11fb13"
+    PKG_SITE="https://github.com/torvalds/linux"
     PKG_URL="https://github.com/torvalds/linux/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
@@ -45,8 +46,8 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   arch)
-    PKG_VERSION="01ccc3ad44130458769646204449e2e4124f15da"
-    PKG_SITE="https://git.archlinux.org/linux.git/log/"
+    PKG_VERSION="01ccc3a"
+    PKG_SITE="https://git.archlinux.org/linux.git/log"
     PKG_URL="https://git.archlinux.org/linux.git/snapshot/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
