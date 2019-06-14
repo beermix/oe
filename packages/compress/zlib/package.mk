@@ -1,12 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# PKG_VERSION="af9ef2e"
+# $PKG_SHA256="625b1c4dfaeac5d470bebb55d00a49d1e8db2299750fd00548191b9994a39b72"
+# PKG_URL="https://github.com/cloudflare/zlib/archive/$PKG_VERSION.tar.gz"
 
 PKG_NAME="zlib"
-PKG_VERSION="af9ef2e"
-PKG_SHA256="625b1c4dfaeac5d470bebb55d00a49d1e8db2299750fd00548191b9994a39b72"
+PKG_VERSION="1.2.11.1_jtkv6.3"
+PKG_SHA256="897980569aa46d20a4ed9fd63e2e7ce9465e0dd4742a135603db397f168f7f01"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/jtkukunas/zlib/releases"
-PKG_URL="https://github.com/cloudflare/zlib/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/jtkukunas/zlib/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET=""
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
@@ -33,5 +36,5 @@ configure_target() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./configure --prefix=$TOOLCHAIN --libdir=$TOOLCHAIN/lib --static --shared --const --64
+  ./configure --prefix=$TOOLCHAIN --libdir=$TOOLCHAIN/lib --static --shared
 }
