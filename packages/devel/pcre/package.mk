@@ -11,7 +11,7 @@ PKG_URL="https://ftp.pcre.org/pub/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="gcc:host cmake:host zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
-PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic:host"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
@@ -31,7 +31,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-unicode-properties \
 			      --enable-jit"
 
-
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=1 \
 			  -DCMAKE_BUILD_TYPE=Release \
 			  -DPCRE_BUILD_PCRE16=1 \
@@ -40,7 +39,7 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=1 \
 			  -DPCRE_SUPPORT_JIT=1 \
 			  -DPCRE_BUILD_TESTS=0"
 
-#post_makeinstall_target() {
-#  rm -rf $INSTALL/usr/bin
-#  sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/$PKG_NAME-config
-#}
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
+  sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/$PKG_NAME-config
+}
