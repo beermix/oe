@@ -17,8 +17,6 @@ pre_configure_host() {
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
 		           --disable-warnerror \
-		           --disable-profiling \
-		           --disable-gcov \
 		           --disable-python-bindings"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF"
