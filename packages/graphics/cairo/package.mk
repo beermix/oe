@@ -3,11 +3,12 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="cairo"
-PKG_VERSION="1.16.0"
-PKG_SHA256="5e7b29b3f113ef870d1e3ecf8adf21f923396401604bda16d44be45e66052331"
+PKG_VERSION="1.17.2"
+PKG_SHA256="6b70d4655e2a47a22b101c666f4b29ba746eda4aa8a0f7255b32b2e9408801df"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://cairographics.org/snapshots/?C=M;O=D"
 PKG_URL="http://cairographics.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_URL="http://cairographics.org/snapshots/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig glib libpng pixman"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support."
 PKG_TOOLCHAIN="configure"
