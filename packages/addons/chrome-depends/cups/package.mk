@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="cups"
-PKG_VERSION="2.2.8"
-PKG_SHA256="8f87157960b9d80986f52989781d9de79235aa060e05008e4cf4c0a6ef6bca72"
+PKG_VERSION="2.2.11"
+PKG_SHA256="23e2014f3ae653b8d6d2bb15ba7569a86bc381045f3c7ed2d1876c57dc112312"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.cups.org"
 PKG_URL="https://github.com/apple/cups/archive/v$PKG_VERSION.tar.gz"

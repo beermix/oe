@@ -35,6 +35,7 @@ configure_package() {
   				 --disable-tests \
   				 --disable-shared \
   				 --enable-static \
+  				 --with-data-packaging=archive \
   				 --with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME"
 }
 
