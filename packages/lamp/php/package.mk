@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="php"
-PKG_VERSION="5.6.39"
+PKG_VERSION="7.3.6"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
 # add some other libraries which are need by php extensions
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libxslt libiconv mysqld httpd icu libjpeg-turbo"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libxslt libiconv mariadb httpd icu libjpeg-turbo"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
 PKG_TOOLCHAIN="autotools"
 #PKG_BUILD_FLAGS="+pic"
@@ -52,10 +52,10 @@ configure_target() {
   # not for new
   #sed -i "s|freetype2/freetype/freetype.h|freetype2/freetype.h|g" configure
   
-  MYSQL_DIR_TARGET=$(get_build_dir mysqld)/.install_dev
+  #MYSQL_DIR_TARGET=$(get_build_dir mariadb)/.install_dev
   LIBMCRYPT_DIR_TARGET=$(get_build_dir libmcrypt)/.install_dev
   HTTPD_DIR=$(get_build_dir httpd)/.install_dev
-  ICU_DIR=$(get_build_dir icu4c)/.install_pkg
+  ICU_DIR=$(get_build_dir icu)/.install_pkg
 
   CFLAGS+=" -DSQLITE_OMIT_LOAD_EXTENSION"
   CFLAGS+=" -I$HTTPD_DIR/usr/include"
@@ -70,7 +70,7 @@ configure_target() {
   LDFLAGS+=" -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
 
   # overwrite mysql library location
-  CFLAGS+=" -L$MYSQL_DIR_TARGET/usr/lib -lmysqlclient"
+  #CFLAGS+=" -L$MYSQL_DIR_TARGET/usr/lib -lmariadb"
   
   export CFLAGS="$CFLAGS"
   export CXXFLAGS="$CFLAGS"
@@ -124,10 +124,7 @@ configure_target() {
     --with-pdo-sqlite=$SYSROOT_PREFIX/usr \
     --enable-pdo \
     --with-mcrypt=$LIBMCRYPT_DIR_TARGET/usr \
-    --with-mysqli=$MYSQL_DIR_TARGET/usr/bin/mysql_config \
-    --with-mysql=$MYSQL_DIR_TARGET/usr \
-    --with-pdo-mysql=$MYSQL_DIR_TARGET/usr \
-    --with-mysql-sock=/run/mysql.sock \
+    --disable-libcrypto \
     --with-gd \
     --enable-gd-native-ttf \
     --enable-gd-jis-conv \
