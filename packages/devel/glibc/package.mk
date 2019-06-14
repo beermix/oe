@@ -31,6 +31,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.4.0 \
+                           --enable-stack-protector=strong \
+                           --enable-stackguard-randomization \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
@@ -99,7 +101,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+  export CFLAGS="$CFLAGS -g"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
