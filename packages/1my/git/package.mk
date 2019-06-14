@@ -1,14 +1,21 @@
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
 PKG_NAME="git"
-PKG_VERSION="2.20.0"
-PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain curl pcre expat zlib openssl"
-PKG_DEPENDS_HOST="zlib:host pcre:host expat:host"
+PKG_VERSION="2.9.5"
+PKG_SHA256="a4bea37ecb9a3fb5c0c8ef18c2f7eeaf8ccbcfec91f72f3bccfc6bf72a3e3902"
+PKG_LICENSE="GPL"
+PKG_SITE="http://git-scm.com/"
+PKG_URL="https://www.kernel.org/pub/software/scm/git/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain curl openssl"
+PKG_SHORTDESC="git: the fast distributed version control system"
 PKG_TOOLCHAIN="autotools"
 
-pre_configure_target() {
-  cd $PKG_BUILD
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  #export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+pre_build_target() {
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
 
   #export NO_EXPAT="YesPlease"
   export NO_ICONV="YesPlease"
@@ -20,15 +27,18 @@ pre_configure_target() {
   export NO_NSEC="YesPlease"
   export NO_TCLTK="YesPlease"
   export NO_INSTALL_HARDLINKS="yes"
+
+# export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+# export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 configure_target() {
+ac_cv_fread_reads_directories=no \
+ac_cv_snprintf_returns_bogus=no \
   ./configure --host=$TARGET_NAME \
               --build=$HOST_NAME \
               --prefix=/usr \
               --libexecdir=/usr/lib \
-              ac_cv_snprintf_returns_bogus=no \
-              ac_cv_fread_reads_directories=no \
               --with-gitconfig=/etc/gitconfig
 }
 

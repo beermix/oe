@@ -8,8 +8,8 @@ PKG_SHA256="91e762520003013834ac1adb4a938d53b22a216341c061b0cf05603b290faf6b"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/svn2github/pcre/"
 PKG_URL="https://ftp.pcre.org/pub/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="gcc:host cmake:host zlib:host"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_HOST="gcc:host cmake:host zlib:host bzip2:host"
+PKG_DEPENDS_TARGET="toolchain zlib bzip2"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic:host"
@@ -19,27 +19,27 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 			    --enable-unicode-properties \
 			    --enable-jit"
 
-PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=0 \
+PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
 			-DCMAKE_BUILD_TYPE=Release \
-			-DPCRE_BUILD_PCRECPP=1 \
-			-DPCRE_SUPPORT_UNICODE_PROPERTIES=1 \
-			-DPCRE_SUPPORT_UTF=1 \
-			-DPCRE_SUPPORT_JIT=1 \
-			-DPCRE_BUILD_TESTS=0"
+			-DPCRE_BUILD_PCRECPP=ON \
+			-DPCRE_SUPPORT_UNICODE_PROPERTIES=ON \
+			-DPCRE_SUPPORT_UTF=ON \
+			-DPCRE_SUPPORT_JIT=ON \
+			-DPCRE_BUILD_TESTS=OFF"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \
 			      --enable-unicode-properties \
 			      --enable-jit"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=1 \
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON \
 			  -DCMAKE_BUILD_TYPE=Release \
-			  -DPCRE_BUILD_PCRE16=1 \
-			  -DPCRE_BUILD_PCRECPP=1 \
-			  -DPCRE_SUPPORT_UNICODE_PROPERTIES=1 \
-			  -DPCRE_SUPPORT_UTF=1 \
-			  -DPCRE_SUPPORT_JIT=1 \
-			  -DPCRE_BUILD_TESTS=0"
+			  -DPCRE_BUILD_PCRE16=ON \
+			  -DPCRE_BUILD_PCRECPP=ON \
+			  -DPCRE_SUPPORT_UNICODE_PROPERTIES=ON \
+			  -DPCRE_SUPPORT_UTF=ON \
+			  -DPCRE_SUPPORT_JIT=ON \
+			  -DPCRE_BUILD_TESTS=OFF"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
