@@ -17,7 +17,7 @@ PKG_BUILD_FLAGS="+pic:host +pic"
 #PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
-			    --enable-utf \
+			    --enable-utf8 \
 			    --enable-unicode-properties \
 			    --enable-jit \
 			    --with-gnu-ld"
@@ -30,7 +30,7 @@ PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
 			-DPCRE_SUPPORT_JIT=ON \
 			-DPCRE_BUILD_TESTS=OFF"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-utf \
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \
 			      --enable-unicode-properties \
 			      --enable-jit \
