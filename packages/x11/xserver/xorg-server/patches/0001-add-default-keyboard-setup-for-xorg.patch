@@ -1,0 +1,25 @@
+From 90c1319d177d4febcf5e479827bc51fce74b3855 Mon Sep 17 00:00:00 2001
+From: Josue David Hernandez Gutierrez <josue.d.hernandez.gutierrez@intel.com>
+Date: Fri, 9 Nov 2018 15:22:35 -0600
+Subject: [PATCH] add default keyboard setup for xorg
+
+Signed-off-by: Josue David Hernandez Gutierrez <josue.d.hernandez.gutierrez@intel.com>
+---
+ 00-keyboard.conf | 5 +++++
+ 1 file changed, 5 insertions(+)
+ create mode 100644 00-keyboard.conf
+
+diff --git a/00-keyboard.conf b/00-keyboard.conf
+new file mode 100644
+index 0000000..7de48c4
+--- /dev/null
++++ b/00-keyboard.conf
+@@ -0,0 +1,5 @@
++Section "InputClass"
++        Identifier "system-keyboard"
++        MatchIsKeyboard "on"
++        Option "XkbLayout" "us"
++EndSection
+-- 
+2.19.1
+
