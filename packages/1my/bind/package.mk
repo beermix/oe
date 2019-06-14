@@ -8,12 +8,9 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --with-randomdev="/dev/urandom" \
-			      --disable-threads \
-			      --disable-linux-caps \
 			      --with-openssl=$SYSROOT_PREFIX/usr \
-			      --with-libjson=no \
-			      --with-libtool \
-			      --with-libxml2=no \
+			      --without-libjson \
+			      --with-libxml2 \
 			      --without-lmdb \
 			      --with-eddsa=no \
 			      --enable-epoll \
@@ -21,7 +18,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --without-gssapi \
 			      --with-ecdsa=yes \
 			      --with-libtool \
-			      --without-readline \
+			      --with-readline \
 			      --without-python \
 			      --sysconfdir=/storage/.config"
 
