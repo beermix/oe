@@ -22,7 +22,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
-                           --disable-sanity-checks \
                            --disable-dependency-tracking \
                            --enable-add-ons \
                            --enable-bind-now \
@@ -39,6 +38,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision=yes \
+                           --enable-tunables \
+                           --enable-cet \
                            --disable-timezone-tools"
 
 # busybox:init needs it
