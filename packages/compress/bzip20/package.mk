@@ -11,16 +11,12 @@ PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A high-quality bzip2 data compressor."
-#PKG_BUILD_FLAGS="+pic +pic:host"
+PKG_BUILD_FLAGS="+pic +pic:host"
+PKG_BUILD_FLAGS="+speed"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections -O3  -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -ffunction-sections -O3  -fPIC"
-}
-
-pre_configure_host() {
-  export CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections -O3  -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -ffunction-sections -O3  -fPIC"
+  export CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections"
+  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -ffunction-sections"
 }
 
 pre_build_host() {

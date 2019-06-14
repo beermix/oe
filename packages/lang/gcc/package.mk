@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
 
 PKG_NAME="gcc"
-PKG_VERSION="fa4a6ac"
+PKG_VERSION="32e6b6c"
 PKG_SHA256=""
 #PKG_VERSION="10-20190609"
 PKG_SITE="http://gcc.gnu.org/"
