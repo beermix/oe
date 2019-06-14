@@ -8,11 +8,10 @@ PKG_DEPENDS_TARGET="toolchain bzip2:host"
 PKG_TOOLCHAIN="cmake-make"
 #PKG_BUILD_FLAGS="+pic:host +pic"
 
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share
-  ln -s libbz2.so $INSTALL/usr/lib/libbz2.so.1.0
-  ln -s libbz2.so $INSTALL/usr/lib/libbz2.so.1.0.4
+  ln -snf libbz2.so $INSTALL/usr/lib/libbz2.so.1.0
+  ln -snf libbz2.so $INSTALL/usr/lib/libbz2.so.1.0.4
 }
