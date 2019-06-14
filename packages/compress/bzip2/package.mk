@@ -11,6 +11,7 @@ PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A high-quality bzip2 data compressor."
 PKG_BUILD_FLAGS="+speed"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections -fPIC"
