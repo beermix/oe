@@ -19,7 +19,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            enable-camellia \
                            enable-mdc2 \
                            enable-unit-test \
-                           no-zlib"
+                           zlib-dynamic"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
