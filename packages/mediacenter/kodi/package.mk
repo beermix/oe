@@ -229,7 +229,6 @@ fi
 
 pre_configure_target() {
   export LIBS="$LIBS -lncurses"
-
 }
 
 post_makeinstall_target() {
