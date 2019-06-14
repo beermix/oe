@@ -23,6 +23,7 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --with-threads \
                          --enable-unicode=ucs4 \
                          --with-pymalloc \
+                         --disable-ipv6 \
                          --with-computed-gotos"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
