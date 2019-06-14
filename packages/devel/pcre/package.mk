@@ -20,7 +20,9 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 			    --enable-utf \
 			    --enable-unicode-properties \
 			    --enable-jit \
-			    --disable-shared"
+			    --enable-static \
+			    --disable-shared \
+			    --with-gnu-ld"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
 			-DCMAKE_BUILD_TYPE= \
@@ -34,7 +36,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-utf \
 			      --enable-pcre16 \
 			      --enable-unicode-properties \
 			      --enable-jit \
-			      --enable-shared"
+			      --enable-static \
+			      --disable-shared \
+			      --with-gnu-ld"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON \
 			  -DCMAKE_BUILD_TYPE= \
