@@ -9,13 +9,12 @@ PKG_URL="https://github.com/yasm/yasm/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host autotools:host autoconf:host re2c:host nasm:host cmake:host"
 PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
 PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="autotools"
 
-#PKG_CONFIGURE_OPTS_HOST="--disable-debug \
-#		           --disable-warnerror \
-#		           --disable-profiling \
-#		           --disable-gcov \
-#		           --disable-python-bindings \
-#		           --without-libiconv-prefix \
-#		           --without-libintl-prefix"
+PKG_CONFIGURE_OPTS_HOST="--disable-debug \
+		           --disable-warnerror \
+		           --disable-profiling \
+		           --disable-gcov \
+		           --disable-python-bindings"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF"
