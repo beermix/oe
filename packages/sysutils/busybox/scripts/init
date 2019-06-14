@@ -936,7 +936,7 @@ echo '1 4 1 7' > /proc/sys/kernel/printk
 
 ## Configure frequency scaling properties
 
-for policy in /sys/devices/system/cpu/cpufreq/conservative /sys/devices/system/cpu/cpufreq/policy*/conservative ; do
+for policy in /sys/devices/system/cpu/cpufreq/schedutil /sys/devices/system/cpu/cpufreq/policy*/schedutil ; do
   if [ -d $policy ] ; then
    echo 1 > $policy/io_is_busy
    echo 50 > $policy/up_threshold
