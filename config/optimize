@@ -21,7 +21,7 @@ TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
 HOST_CPPFLAGS=""
-HOST_CFLAGS="-march=native -g1 -O2 -I$TOOLCHAIN/include -fdiagnostics-color=always"
+HOST_CFLAGS="-march=native -g1 -O2 -I$TOOLCHAIN/include -fno-stack-protector -fdiagnostics-color=always"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"
