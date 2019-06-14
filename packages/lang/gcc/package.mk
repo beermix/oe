@@ -53,8 +53,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libunwind-exceptions \
                            --disable-cet \
-                           --with-tune=haswell \
-                           --with-arch=westmere"
+                           --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
