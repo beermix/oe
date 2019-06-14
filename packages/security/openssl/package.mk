@@ -17,6 +17,9 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            enable-camellia \
+                           enable-idea \
+                           enable-tlsext \
+                           enable-rfc3779 \
                            enable-mdc2 \
                            enable-unit-test \
                            zlib-dynamic"
