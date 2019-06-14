@@ -3,8 +3,8 @@ PKG_VERSION="2.22.0"
 PKG_VERSION="2.9.5"
 PKG_SHA256="a4bea37ecb9a3fb5c0c8ef18c2f7eeaf8ccbcfec91f72f3bccfc6bf72a3e3902"
 PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain curl pcre expat zlib openssl"
-PKG_DEPENDS_HOST="zlib:host pcre:host expat:host"
+PKG_DEPENDS_TARGET="toolchain curl pcre zlib openssl"
+PKG_DEPENDS_HOST="zlib:host pcre:host"
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
@@ -12,7 +12,7 @@ pre_configure_target() {
   #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
   #export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 
-  #export NO_EXPAT="YesPlease"
+  export NO_EXPAT="YesPlease"
   export NO_ICONV="YesPlease"
   export NO_PYTHON="YesPlease"
   export NO_UNIX_SOCKETS="YesPlease"
