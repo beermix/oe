@@ -12,7 +12,7 @@ PKG_DEPENDS_HOST="gcc:host cmake:host zlib:host bzip2:host"
 PKG_DEPENDS_TARGET="toolchain zlib bzip2"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="cmake-make"
-#PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic:host +pic"
 #PKG_BUILD_FLAGS="+speed"
 
@@ -47,5 +47,5 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON \
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
- # sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/$PKG_NAME-config
+  sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/$PKG_NAME-config
 }
