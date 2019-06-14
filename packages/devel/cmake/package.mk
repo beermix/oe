@@ -16,8 +16,8 @@ configure_host() {
   ../configure --prefix=$TOOLCHAIN \
                --no-qt-gui --no-system-libs \
                -- \
-               -DCMAKE_C_FLAGS="-O2 -Wall -pipe -fno-stack-protector -U_FORTIFY_SOURCE -Wno-format-security" \
-               -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -fno-stack-protector -U_FORTIFY_SOURCE -Wno-format-security" \
+               -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
+               -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -s" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0
