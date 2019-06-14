@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv) -Dssse3=enabled
 
 PKG_NAME="pixman"
 PKG_VERSION="0.38.4"
@@ -20,5 +20,4 @@ PKG_MESON_OPTS_TARGET="-Dloongson-mmi=disabled \
 			  -Dmips-dspr2=disabled \
 			  -Dgtk=disabled \
 			  -Dmmx=enabled \
-			  -Dsse2=enabled \
-			  -Dssse3=enabled"
+			  -Dsse2=enabled"

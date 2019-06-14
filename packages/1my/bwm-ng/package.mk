@@ -1,6 +1,5 @@
 PKG_NAME="bwm-ng"
 PKG_VERSION="059e028"
-PKG_URL="https://github.com/virtualboots/bwm-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_URL="https://github.com/vgropp/bwm-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses libstatgrab"
 PKG_TOOLCHAIN="autotools"
