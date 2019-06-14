@@ -11,7 +11,7 @@ PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav"
 PKG_LONGDESC="A free and open source cross-platform media player."
-PKG_BUILD_FLAGS="+speed"
+#PKG_BUILD_FLAGS="+speed"
 PKG_BUILD_FLAGS="-lto -gold"
 
 configure_package() {
