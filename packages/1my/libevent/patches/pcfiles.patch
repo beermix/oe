@@ -1,0 +1,11 @@
+--- libevent-2.1.8-stable/libevent_extra.pc.in~	2016-10-04 19:55:31.000000000 +0000
++++ libevent-2.1.8-stable/libevent_extra.pc.in	2019-04-11 15:18:22.431759576 +0000
+@@ -10,7 +10,7 @@
+ Version: @VERSION@
+ Requires:
+ Conflicts:
+-Libs: -L${libdir} -levent_extra
++Libs: -L${libdir} -levent_extra  -levent
+ Libs.private: @LIBS@
+ Cflags: -I${includedir}
+ 
