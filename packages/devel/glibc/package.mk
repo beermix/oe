@@ -23,6 +23,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --cache-file=config.cache \
                            --disable-profile \
                            --disable-sanity-checks \
+                           --disable-dependency-tracking \
                            --enable-add-ons \
                            --enable-bind-now \
                            --with-elf \
@@ -101,7 +102,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g2"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
