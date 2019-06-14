@@ -68,7 +68,6 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe -fno-caller-saves||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-g0|-O2|g"`
@@ -86,7 +85,7 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
