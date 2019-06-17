@@ -10,11 +10,8 @@ PKG_URL="https://github.com/nghttp2/nghttp2/releases/download/v$PKG_VERSION/nght
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="nghttp2 is an implementation of HTTP/2 and its header compression algorithm, HPACK."
 PKG_TOOLCHAIN="configure"
-PKG_TOOLCHAIN="cmake-make"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-lib-only"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DENABLE_LIB_ONLY=1"
 
 post_makeinstall_target() {
   rm -r "${INSTALL}/usr/share"
