@@ -40,7 +40,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   rc)
-    PKG_VERSION="5.2-rc4"
+    PKG_VERSION="5.2-rc5"
     PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
