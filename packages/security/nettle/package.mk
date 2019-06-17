@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --enable-mini-gmp
 
 PKG_NAME="nettle"
 PKG_VERSION="3.4.1"
@@ -12,8 +12,7 @@ PKG_DEPENDS_TARGET="toolchain gmp"
 PKG_LONGDESC="A low-level cryptographic library."
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-documentation \
-                           --disable-openssl \
-                           --enable-mini-gmp"
+                           --disable-openssl"
 
 if target_has_feature neon; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-arm-neon"
