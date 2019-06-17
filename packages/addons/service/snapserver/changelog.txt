@@ -1,7 +1,3 @@
-103
-- Only stream Kodi
-- Use ALSA for streaming Kodi
-
 102
 - Update to 0.15.0
 
