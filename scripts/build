@@ -454,6 +454,15 @@ rm -rf "${SYSROOT_PREFIX}"
 
 export SYSROOT_PREFIX="${PKG_ORIG_SYSROOT_PREFIX}"
 
+# Bump addon version to prevent online updates
+if [ "$TARGET" = "target" -a "$PKG_IS_ADDON" = "yes" ]; then
+  mhaddonxml="$(find $INSTALL -type f -name addon.xml 2>/dev/null | head -1 || true)"
+  if [[ -n "${mhaddonxml}" ]] && [[ -f "${mhaddonxml}" ]]; then
+    mhaddonver="$(xmlstarlet sel -t -m "/addon" -m "@version" -v . -n ${mhaddonxml})"
+    [ -n "${mhaddonver}" ] && xmlstarlet edit --inplace --update "/addon/@version" --value "999.${mhaddonver}" ${mhaddonxml}
+  fi
+fi
+
 if [ "$TARGET" = "target" -o "$TARGET" = "init" ]; then
   if [ -d $INSTALL ]; then
     rm -rf $INSTALL/{usr/,}include
@@ -468,7 +477,6 @@ if [ "$TARGET" = "target" -o "$TARGET" = "init" ]; then
     rm -rf $INSTALL/{usr/,}share/locale
     rm -rf $INSTALL/{usr/,}share/man
     rm -rf $INSTALL/{usr/,}share/pkgconfig
-    rm -rf $INSTALL/{usr/,}share/zsh
     rm -rf $INSTALL/{usr/,}var
     find $INSTALL \( -name "*.orig" \
                   -o -name "*.rej" \

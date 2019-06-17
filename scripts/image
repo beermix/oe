@@ -161,11 +161,6 @@ echo -e "LIBREELEC_PROJECT=\"$PROJECT\"" >> $INSTALL/etc/os-release
 [ -n "$BUILDER_VERSION" ] && echo -e "BUILDER_VERSION=\"$BUILDER_VERSION\"" >> $INSTALL/etc/os-release
 
 # Create /etc/issue
-echo "$GREETING0" >  $INSTALL/etc/issue
-echo "$GREETING1" >> $INSTALL/etc/issue
-echo "$GREETING2" >> $INSTALL/etc/issue
-echo "$GREETING3" >> $INSTALL/etc/issue
-echo "$GREETING4" >> $INSTALL/etc/issue
 echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION ($LIBREELEC_ARCH)" >> $INSTALL/etc/issue
 
 ln -sf /etc/issue $INSTALL/etc/motd
