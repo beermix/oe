@@ -1,0 +1,2764 @@
+From 2e3a2dab67176bf57634eb2de2238f7d142989d1 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Sun, 16 Jun 2019 01:13:39 +0100
+Subject: [PATCH 1/5] buildsystem: cleanup - PACKAGE_NAME is redundant
+
+---
+ scripts/build   | 16 +++++++---------
+ scripts/install | 16 +++++++---------
+ 2 files changed, 14 insertions(+), 18 deletions(-)
+
+diff --git a/scripts/build b/scripts/build
+index 1d068051c77..de70458d0ba 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -29,19 +29,17 @@ if [ -n "$PKG_ARCH" ]; then
+ fi
+ 
+ if [ "${1//:/}" != "${1}" ]; then
+-  PACKAGE_NAME="${1%:*}"
+   TARGET="${1#*:}"
+ else
+-  PACKAGE_NAME="${1}"
+   TARGET=
+ fi
+ TARGET="${TARGET:-target}"
+ PARENT_PKG="${2:-${PKG_NAME}:${TARGET}}"
+ 
+-pkg_lock "${PACKAGE_NAME}:${TARGET}" "build" "${PARENT_PKG}"
++pkg_lock "${PKG_NAME}:${TARGET}" "build" "${PARENT_PKG}"
+ 
+-mkdir -p $STAMPS/$PACKAGE_NAME
+-STAMP=$STAMPS/$PACKAGE_NAME/build_$TARGET
++mkdir -p $STAMPS/$PKG_NAME
++STAMP=$STAMPS/$PKG_NAME/build_$TARGET
+ if [ -f $STAMP ]; then
+   . $STAMP
+   PKG_DEEPHASH=$(calculate_stamp)
+@@ -61,7 +59,7 @@ if [ -n "${PKG_DEPENDS_UNPACK}" ]; then
+     $SCRIPTS/unpack "${p}" "${PARENT_PKG}"
+   done
+ fi
+-$SCRIPTS/unpack "${PACKAGE_NAME}" "${PARENT_PKG}"
++$SCRIPTS/unpack "${PKG_NAME}" "${PARENT_PKG}"
+ 
+ # build dependencies, only when PKG_DEPENDS_? is filled
+ unset _pkg_depends
+@@ -88,9 +86,9 @@ fi
+ 
+ # build this package
+ if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
+-  build_msg "CLR_BUILD" "BUILD" "${PACKAGE_NAME} $(print_color "CLR_TARGET" "(${TARGET})") [DEBUG]" "indent"
++  build_msg "CLR_BUILD" "BUILD" "${PKG_NAME} $(print_color "CLR_TARGET" "(${TARGET})") [DEBUG]" "indent"
+ else
+-  build_msg "CLR_BUILD" "BUILD" "${PACKAGE_NAME} $(print_color "CLR_TARGET" "(${TARGET})")" "indent"
++  build_msg "CLR_BUILD" "BUILD" "${PKG_NAME} $(print_color "CLR_TARGET" "(${TARGET})")" "indent"
+ fi
+ 
+ setup_toolchain $TARGET
+@@ -209,7 +207,7 @@ build_msg "CLR_TOOLCHAIN" "TOOLCHAIN" "${PKG_TOOLCHAIN}${_auto_toolchain}"
+ 
+ # make autoreconf
+ if [ "$PKG_TOOLCHAIN" = "autotools" ]; then
+-  $SCRIPTS/autoreconf "${PACKAGE_NAME}" "${PARENT_PKG}"
++  $SCRIPTS/autoreconf "${PKG_NAME}" "${PARENT_PKG}"
+ fi
+ 
+ pkg_lock_status "ACTIVE" "${PKG_NAME}:${TARGET}" "build"
+diff --git a/scripts/install b/scripts/install
+index 375bb4c4687..e06613cdbf9 100755
+--- a/scripts/install
++++ b/scripts/install
+@@ -26,22 +26,20 @@ fi
+ 
+ # set defaults
+ if [ "${1//:/}" != "${1}" ]; then
+-  PACKAGE_NAME="${1%:*}"
+   TARGET="${1#*:}"
+ else
+-  PACKAGE_NAME="${1}"
+   TARGET=
+ fi
+ [ -z "$TARGET" ] && TARGET="target"
+ PARENT_PKG="${2:-${PKG_NAME}:${TARGET}}"
+ 
+-pkg_lock "${PACKAGE_NAME}:${TARGET}" "install" "${PARENT_PKG}"
++pkg_lock "${PKG_NAME}:${TARGET}" "install" "${PARENT_PKG}"
+ 
+-STAMP=$STAMPS_INSTALL/$PACKAGE_NAME/install_$TARGET
+-[ -f $STAMP ] && pkg_lock_status "UNLOCK" "${PACKAGE_NAME}:${TARGET}" "install" "already installed"
++STAMP=$STAMPS_INSTALL/$PKG_NAME/install_$TARGET
++[ -f $STAMP ] && pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "install" "already installed"
+ [ -f $STAMP ] && exit 0
+ 
+-mkdir -p $STAMPS_INSTALL/$PACKAGE_NAME
++mkdir -p $STAMPS_INSTALL/$PKG_NAME
+ 
+ $SCRIPTS/build "${1}" "${PARENT_PKG}"
+ 
+@@ -56,9 +54,9 @@ elif [ "$TARGET" = init ] ; then
+   INSTALL=$BUILD/initramfs
+ fi
+ 
+-pkg_lock_status "ACTIVE" "${PACKAGE_NAME}:${TARGET}" "install"
++pkg_lock_status "ACTIVE" "${PKG_NAME}:${TARGET}" "install"
+ 
+-build_msg "CLR_INSTALL" "INSTALL" "${PACKAGE_NAME} $(print_color CLR_TARGET "(${TARGET})")" "indent"
++build_msg "CLR_INSTALL" "INSTALL" "${PKG_NAME} $(print_color CLR_TARGET "(${TARGET})")" "indent"
+ 
+ mkdir -p $INSTALL
+ 
+@@ -144,4 +142,4 @@ fi
+ 
+ touch $STAMP
+ 
+-pkg_lock_status "UNLOCK" "${PACKAGE_NAME}:${TARGET}" "install" "installed"
++pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "install" "installed"
+
+From 90be11322a0c9e1f695e5f52338c8d137af7d6b1 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Sun, 16 Jun 2019 02:45:52 +0100
+Subject: [PATCH 2/5] buildsystem: consistently use braces
+
+---
+ scripts/build                 | 378 ++++++++++++++---------------
+ scripts/ccache_stats          |   5 +-
+ scripts/checkdeps             |  63 ++---
+ scripts/create_addon          |  18 +-
+ scripts/create_docker_package | 112 ++++-----
+ scripts/extract               |  54 ++---
+ scripts/image                 | 444 +++++++++++++++++-----------------
+ scripts/install               | 136 +++++------
+ scripts/install_addon         |  72 +++---
+ scripts/mkimage               |  10 +-
+ scripts/unpack                | 142 +++++------
+ 11 files changed, 718 insertions(+), 716 deletions(-)
+
+diff --git a/scripts/build b/scripts/build
+index de70458d0ba..71ec2b9da9e 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -4,16 +4,16 @@
+ # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+ # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+ 
+-. config/options "$1"
++. config/options "${1}"
+ 
+-if [ -z "$1" ]; then
+-  die "usage: $0 package_name[:<host|target|init|bootstrap>] [parent_pkg]"
++if [ -z "${1}" ]; then
++  die "usage: ${0} package_name[:<host|target|init|bootstrap>] [parent_pkg]"
+ fi
+ 
+-if [ "$1" = "--all" ]; then
+-  if [ -n "$2" ]; then
++if [ "${1}" = "--all" ]; then
++  if [ -n "${2}" ]; then
+     for build_dir in $(ls -1d ${ROOT}/build.*); do
+-      load_build_config ${build_dir} && ${SCRIPTS}/build "$2"
++      load_build_config ${build_dir} && ${SCRIPTS}/build "${2}"
+     done
+   fi
+   exit 0
+@@ -23,9 +23,9 @@ if [ -z "${PKG_NAME}" ]; then
+   die "$(print_color CLR_ERROR "${1}: no package.mk file found")"
+ fi
+ 
+-if [ -n "$PKG_ARCH" ]; then
+-  listcontains "$PKG_ARCH" "!$TARGET_ARCH" && exit 0
+-  listcontains "$PKG_ARCH" "$TARGET_ARCH" || listcontains "$PKG_ARCH" "any" || exit 0
++if [ -n "${PKG_ARCH}" ]; then
++  listcontains "${PKG_ARCH}" "!${TARGET_ARCH}" && exit 0
++  listcontains "${PKG_ARCH}" "${TARGET_ARCH}" || listcontains "${PKG_ARCH}" "any" || exit 0
+ fi
+ 
+ if [ "${1//:/}" != "${1}" ]; then
+@@ -38,15 +38,15 @@ PARENT_PKG="${2:-${PKG_NAME}:${TARGET}}"
+ 
+ pkg_lock "${PKG_NAME}:${TARGET}" "build" "${PARENT_PKG}"
+ 
+-mkdir -p $STAMPS/$PKG_NAME
+-STAMP=$STAMPS/$PKG_NAME/build_$TARGET
+-if [ -f $STAMP ]; then
+-  . $STAMP
++mkdir -p ${STAMPS}/${PKG_NAME}
++STAMP=${STAMPS}/${PKG_NAME}/build_${TARGET}
++if [ -f ${STAMP} ]; then
++  . ${STAMP}
+   PKG_DEEPHASH=$(calculate_stamp)
+-  if [ ! "$PKG_DEEPHASH" = "$STAMP_PKG_DEEPHASH" ]; then
+-    rm -f $STAMP
+-  elif [ ! "$BUILD_WITH_DEBUG" = "$STAMP_BUILD_WITH_DEBUG" ]; then
+-    rm -f $STAMP
++  if [ ! "${PKG_DEEPHASH}" = "${STAMP_PKG_DEEPHASH}" ]; then
++    rm -f ${STAMP}
++  elif [ ! "${BUILD_WITH_DEBUG}" = "${STAMP_BUILD_WITH_DEBUG}" ]; then
++    rm -f ${STAMP}
+   else
+     # stamp matched: already built, do nothing
+     pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "build" "already built"
+@@ -56,28 +56,28 @@ fi
+ 
+ if [ -n "${PKG_DEPENDS_UNPACK}" ]; then
+   for p in ${PKG_DEPENDS_UNPACK}; do
+-    $SCRIPTS/unpack "${p}" "${PARENT_PKG}"
++    ${SCRIPTS}/unpack "${p}" "${PARENT_PKG}"
+   done
+ fi
+-$SCRIPTS/unpack "${PKG_NAME}" "${PARENT_PKG}"
++${SCRIPTS}/unpack "${PKG_NAME}" "${PARENT_PKG}"
+ 
+ # build dependencies, only when PKG_DEPENDS_? is filled
+ unset _pkg_depends
+-case "$TARGET" in
+-  "target") _pkg_depends="$PKG_DEPENDS_TARGET";;
+-  "host") _pkg_depends="$PKG_DEPENDS_HOST";;
+-  "init") _pkg_depends="$PKG_DEPENDS_INIT";;
+-  "bootstrap") _pkg_depends="$PKG_DEPENDS_BOOTSTRAP";;
++case "${TARGET}" in
++  "target") _pkg_depends="${PKG_DEPENDS_TARGET}";;
++  "host") _pkg_depends="${PKG_DEPENDS_HOST}";;
++  "init") _pkg_depends="${PKG_DEPENDS_INIT}";;
++  "bootstrap") _pkg_depends="${PKG_DEPENDS_BOOTSTRAP}";;
+ esac
+-for p in $_pkg_depends; do
+-  $SCRIPTS/build "${p}" "${PARENT_PKG}"
++for p in ${_pkg_depends}; do
++  ${SCRIPTS}/build "${p}" "${PARENT_PKG}"
+ done
+ 
+ # virtual packages are not built as they only contain dependencies, so dont go further here
+-if [ "$PKG_SECTION" = "virtual" ]; then
++if [ "${PKG_SECTION}" = "virtual" ]; then
+   PKG_DEEPHASH=$(calculate_stamp)
+   for i in PKG_NAME PKG_DEEPHASH BUILD_WITH_DEBUG; do
+-    echo "STAMP_$i=\"${!i}\"" >> $STAMP
++    echo "STAMP_${i}=\"${!i}\"" >> ${STAMP}
+   done
+ 
+   pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "build" "built"
+@@ -91,19 +91,19 @@ else
+   build_msg "CLR_BUILD" "BUILD" "${PKG_NAME} $(print_color "CLR_TARGET" "(${TARGET})")" "indent"
+ fi
+ 
+-setup_toolchain $TARGET
++setup_toolchain ${TARGET}
+ 
+ # configure install directory
+-if [ "$TARGET" = "target" ]; then
+-  INSTALL="$PKG_BUILD/.install_pkg"
+-elif [ "$TARGET" = "init" ]; then
+-  INSTALL="$PKG_BUILD/.install_init"
++if [ "${TARGET}" = "target" ]; then
++  INSTALL="${PKG_BUILD}/.install_pkg"
++elif [ "${TARGET}" = "init" ]; then
++  INSTALL="${PKG_BUILD}/.install_init"
+ else
+   unset INSTALL
+ fi
+ # remove previous install files
+-if [ -n "$INSTALL" -a -d "$INSTALL" ]; then
+-  rm -rf "$INSTALL"
++if [ -n "${INSTALL}" -a -d "${INSTALL}" ]; then
++  rm -rf "${INSTALL}"
+ fi
+ 
+ # configure debug build defaults
+@@ -119,8 +119,8 @@ CMAKE_GENERATOR_NINJA="-GNinja \
+                        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+ 
+ # configure TARGET build defaults
+-TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
+-                       --build=$HOST_NAME \
++TARGET_CONFIGURE_OPTS="--host=${TARGET_NAME} \
++                       --build=${HOST_NAME} \
+                        --prefix=/usr \
+                        --bindir=/usr/bin \
+                        --sbindir=/usr/sbin \
+@@ -131,9 +131,9 @@ TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
+                        --disable-static \
+                        --enable-shared"
+ 
+-TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
++TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=${CMAKE_CONF} \
+                    -DCMAKE_INSTALL_PREFIX=/usr \
+-                   -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE"
++                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+ 
+ TARGET_MESON_OPTS="--prefix=/usr \
+                    --bindir=/usr/bin \
+@@ -142,42 +142,42 @@ TARGET_MESON_OPTS="--prefix=/usr \
+                    --libdir=/usr/lib \
+                    --libexecdir=/usr/lib \
+                    --localstatedir=/var \
+-                   --buildtype=$MESON_BUILD_TYPE"
++                   --buildtype=${MESON_BUILD_TYPE}"
+ 
+ # configure HOST build defaults
+-HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
+-                     --build=$HOST_NAME \
+-                     --prefix=$TOOLCHAIN \
+-                     --bindir=$TOOLCHAIN/bin \
+-                     --sbindir=$TOOLCHAIN/sbin \
+-                     --sysconfdir=$TOOLCHAIN/etc \
+-                     --libexecdir=$TOOLCHAIN/lib \
+-                     --localstatedir=$TOOLCHAIN/var \
++HOST_CONFIGURE_OPTS="--host=${HOST_NAME} \
++                     --build=${HOST_NAME} \
++                     --prefix=${TOOLCHAIN} \
++                     --bindir=${TOOLCHAIN}/bin \
++                     --sbindir=${TOOLCHAIN}/sbin \
++                     --sysconfdir=${TOOLCHAIN}/etc \
++                     --libexecdir=${TOOLCHAIN}/lib \
++                     --localstatedir=${TOOLCHAIN}/var \
+                      --disable-static \
+                      --enable-shared"
+ 
+-HOST_CMAKE_OPTS="$CMAKE_GENERATOR \
+-                 -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+-                 -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN"
+-
+-HOST_MESON_OPTS="--prefix=$TOOLCHAIN \
+-                 --bindir=$TOOLCHAIN/bin \
+-                 --sbindir=$TOOLCHAIN/sbin \
+-                 --sysconfdir=$TOOLCHAIN/etc \
+-                 --libdir=$TOOLCHAIN/lib \
+-                 --libexecdir=$TOOLCHAIN/lib \
+-                 --localstatedir=$TOOLCHAIN/var \
++HOST_CMAKE_OPTS="${CMAKE_GENERATOR} \
++                 -DCMAKE_TOOLCHAIN_FILE=${CMAKE_CONF} \
++                 -DCMAKE_INSTALL_PREFIX=${TOOLCHAIN}"
++
++HOST_MESON_OPTS="--prefix=${TOOLCHAIN} \
++                 --bindir=${TOOLCHAIN}/bin \
++                 --sbindir=${TOOLCHAIN}/sbin \
++                 --sysconfdir=${TOOLCHAIN}/etc \
++                 --libdir=${TOOLCHAIN}/lib \
++                 --libexecdir=${TOOLCHAIN}/lib \
++                 --localstatedir=${TOOLCHAIN}/var \
+                  --buildtype=plain"
+ 
+ # configure INIT build defaults
+-INIT_CONFIGURE_OPTS="$TARGET_CONFIGURE_OPTS"
+-INIT_CMAKE_OPTS="$TARGET_CMAKE_OPTS"
+-INIT_MESON_OPTS="$TARGET_MESON_OPTS"
++INIT_CONFIGURE_OPTS="${TARGET_CONFIGURE_OPTS}"
++INIT_CMAKE_OPTS="${TARGET_CMAKE_OPTS}"
++INIT_MESON_OPTS="${TARGET_MESON_OPTS}"
+ 
+ # configure BOOTSTRAP build defaults
+-BOOTSTRAP_CONFIGURE_OPTS="$HOST_CONFIGURE_OPTS"
+-BOOTSTRAP_CMAKE_OPTS="$HOST_CMAKE_OPTS"
+-BOOTSTRAP_MESON_OPTS="$HOST_MESON_OPTS"
++BOOTSTRAP_CONFIGURE_OPTS="${HOST_CONFIGURE_OPTS}"
++BOOTSTRAP_CMAKE_OPTS="${HOST_CMAKE_OPTS}"
++BOOTSTRAP_MESON_OPTS="${HOST_MESON_OPTS}"
+ 
+ # setup configure scripts
+ PKG_CONFIGURE_SCRIPT="${PKG_CONFIGURE_SCRIPT:-${PKG_BUILD}/configure}"
+@@ -186,189 +186,189 @@ PKG_MESON_SCRIPT="${PKG_MESON_SCRIPT:-${PKG_BUILD}/meson.build}"
+ 
+ # auto detect toolchain
+ _auto_toolchain=""
+-if [ -z "$PKG_TOOLCHAIN" -o "$PKG_TOOLCHAIN" = "auto" ]; then
+-  if [ -f "$PKG_MESON_SCRIPT" ]; then
++if [ -z "${PKG_TOOLCHAIN}" -o "${PKG_TOOLCHAIN}" = "auto" ]; then
++  if [ -f "${PKG_MESON_SCRIPT}" ]; then
+     PKG_TOOLCHAIN="meson"
+-  elif [ -f "$PKG_CMAKE_SCRIPT" ]; then
++  elif [ -f "${PKG_CMAKE_SCRIPT}" ]; then
+     PKG_TOOLCHAIN="cmake"
+-  elif [ -f "$PKG_CONFIGURE_SCRIPT" ]; then
++  elif [ -f "${PKG_CONFIGURE_SCRIPT}" ]; then
+     PKG_TOOLCHAIN="configure"
+-  elif [ -f "$PKG_BUILD/Makefile" ]; then
++  elif [ -f "${PKG_BUILD}/Makefile" ]; then
+     PKG_TOOLCHAIN="make"
+   else
+     die "Not possible to detect toolchain automatically. Add PKG_TOOLCHAIN= to package.mk"
+   fi
+   _auto_toolchain=" (auto-detect)"
+ fi
+-if ! listcontains "meson cmake cmake-make configure ninja make autotools manual" "$PKG_TOOLCHAIN"; then
+-  die "$(print_color "CLR_ERROR" "ERROR:") unknown toolchain $PKG_TOOLCHAIN"
++if ! listcontains "meson cmake cmake-make configure ninja make autotools manual" "${PKG_TOOLCHAIN}"; then
++  die "$(print_color "CLR_ERROR" "ERROR:") unknown toolchain ${PKG_TOOLCHAIN}"
+ fi
+ build_msg "CLR_TOOLCHAIN" "TOOLCHAIN" "${PKG_TOOLCHAIN}${_auto_toolchain}"
+ 
+ # make autoreconf
+-if [ "$PKG_TOOLCHAIN" = "autotools" ]; then
+-  $SCRIPTS/autoreconf "${PKG_NAME}" "${PARENT_PKG}"
++if [ "${PKG_TOOLCHAIN}" = "autotools" ]; then
++  ${SCRIPTS}/autoreconf "${PKG_NAME}" "${PARENT_PKG}"
+ fi
+ 
+ pkg_lock_status "ACTIVE" "${PKG_NAME}:${TARGET}" "build"
+ 
+ # include build template and build
+-pkg_call_exists pre_build_$TARGET && pkg_call pre_build_$TARGET
++pkg_call_exists pre_build_${TARGET} && pkg_call pre_build_${TARGET}
+ 
+-# ensure $PKG_BUILD is there. (installer? PKG_URL="")
+-if [ ! -d "$PKG_BUILD" ] ; then
+-  mkdir -p "$PKG_BUILD"
++# ensure ${PKG_BUILD} is there. (installer? PKG_URL="")
++if [ ! -d "${PKG_BUILD}" ] ; then
++  mkdir -p "${PKG_BUILD}"
+ fi
+ 
+-cd "$PKG_BUILD"
++cd "${PKG_BUILD}"
+ 
+-if [ -f "$PKG_CONFIGURE_SCRIPT" -o -f "$PKG_CMAKE_SCRIPT" -o -f "$PKG_MESON_SCRIPT" ]; then
+-  case "$TARGET" in
+-    "target")    PKG_REAL_BUILD="$PKG_BUILD/.$TARGET_NAME" ;;
+-    "host")      PKG_REAL_BUILD="$PKG_BUILD/.$HOST_NAME" ;;
+-    "init")      PKG_REAL_BUILD="$PKG_BUILD/.$TARGET_NAME-$TARGET" ;;
+-    "bootstrap") PKG_REAL_BUILD="$PKG_BUILD/.$HOST_NAME-$TARGET" ;;
++if [ -f "${PKG_CONFIGURE_SCRIPT}" -o -f "${PKG_CMAKE_SCRIPT}" -o -f "${PKG_MESON_SCRIPT}" ]; then
++  case "${TARGET}" in
++    "target")    PKG_REAL_BUILD="${PKG_BUILD}/.${TARGET_NAME}" ;;
++    "host")      PKG_REAL_BUILD="${PKG_BUILD}/.${HOST_NAME}" ;;
++    "init")      PKG_REAL_BUILD="${PKG_BUILD}/.${TARGET_NAME}-${TARGET}" ;;
++    "bootstrap") PKG_REAL_BUILD="${PKG_BUILD}/.${HOST_NAME}-${TARGET}" ;;
+   esac
+-  mkdir -p "$PKG_REAL_BUILD"
+-  cd "$PKG_REAL_BUILD"
++  mkdir -p "${PKG_REAL_BUILD}"
++  cd "${PKG_REAL_BUILD}"
+ 
+-  MESON_CONF="$PKG_REAL_BUILD/meson.conf"
++  MESON_CONF="${PKG_REAL_BUILD}/meson.conf"
+ fi
+ 
+ # configure
+ pkg_call_exists pre_configure && pkg_call pre_configure
+-pkg_call_exists pre_configure_$TARGET && pkg_call pre_configure_$TARGET
++pkg_call_exists pre_configure_${TARGET} && pkg_call pre_configure_${TARGET}
+ 
+-if pkg_call_exists configure_$TARGET; then
+-  pkg_call configure_$TARGET
++if pkg_call_exists configure_${TARGET}; then
++  pkg_call configure_${TARGET}
+ else
+-  case "$PKG_TOOLCHAIN:$TARGET" in
++  case "${PKG_TOOLCHAIN}:${TARGET}" in
+     # meson builds
+     "meson:target")
+-      create_meson_conf $TARGET $MESON_CONF
+-      echo "Executing (target): meson $TARGET_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_TARGET $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
+-      CC="$HOST_CC" CXX="$HOST_CXX" meson $TARGET_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_TARGET $(dirname $PKG_MESON_SCRIPT)
++      create_meson_conf ${TARGET} ${MESON_CONF}
++      echo "Executing (target): meson ${TARGET_MESON_OPTS} --cross-file=${MESON_CONF} ${PKG_MESON_OPTS_TARGET} $(dirname ${PKG_MESON_SCRIPT})" | tr -s " "
++      CC="${HOST_CC}" CXX="${HOST_CXX}" meson ${TARGET_MESON_OPTS} --cross-file=${MESON_CONF} ${PKG_MESON_OPTS_TARGET} $(dirname ${PKG_MESON_SCRIPT})
+       ;;
+     "meson:host")
+-      create_meson_conf $TARGET $MESON_CONF
+-      echo "Executing (host): meson $HOST_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_HOST $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
+-      meson $HOST_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_HOST $(dirname $PKG_MESON_SCRIPT)
++      create_meson_conf ${TARGET} ${MESON_CONF}
++      echo "Executing (host): meson ${HOST_MESON_OPTS} --cross-file=${MESON_CONF} ${PKG_MESON_OPTS_HOST} $(dirname ${PKG_MESON_SCRIPT})" | tr -s " "
++      meson ${HOST_MESON_OPTS} --cross-file=${MESON_CONF} ${PKG_MESON_OPTS_HOST} $(dirname ${PKG_MESON_SCRIPT})
+       ;;
+     "meson:init")
+-      create_meson_conf $TARGET $MESON_CONF
+-      echo "Executing (init): meson $INIT_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_INIT $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
+-      meson $INIT_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_INIT $(dirname $PKG_MESON_SCRIPT)
++      create_meson_conf ${TARGET} ${MESON_CONF}
++      echo "Executing (init): meson ${INIT_MESON_OPTS} --cross-file=${MESON_CONF} ${PKG_MESON_OPTS_INIT} $(dirname ${PKG_MESON_SCRIPT})" | tr -s " "
++      meson ${INIT_MESON_OPTS} --cross-file=${MESON_CONF} ${PKG_MESON_OPTS_INIT} $(dirname ${PKG_MESON_SCRIPT})
+       ;;
+     "meson:bootstrap")
+-      create_meson_conf $TARGET $MESON_CONF
+-      echo "Executing (bootstrap): meson $BOOTSTRAP_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_BOOTSTRAP $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
+-      meson $BOOTSTRAP_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_BOOTSTRAP $(dirname $PKG_MESON_SCRIPT)
++      create_meson_conf ${TARGET} ${MESON_CONF}
++      echo "Executing (bootstrap): meson ${BOOTSTRAP_MESON_OPTS} --cross-file=${MESON_CONF} ${PKG_MESON_OPTS_BOOTSTRAP} $(dirname ${PKG_MESON_SCRIPT})" | tr -s " "
++      meson ${BOOTSTRAP_MESON_OPTS} --cross-file=${MESON_CONF} ${PKG_MESON_OPTS_BOOTSTRAP} $(dirname ${PKG_MESON_SCRIPT})
+       ;;
+ 
+     # cmake builds with ninja
+     "cmake:target")
+-      echo "Executing (target): cmake $CMAKE_GENERATOR_NINJA $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+-      cmake $CMAKE_GENERATOR_NINJA $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)
++      echo "Executing (target): cmake ${CMAKE_GENERATOR_NINJA} ${TARGET_CMAKE_OPTS} ${PKG_CMAKE_OPTS_TARGET} $(dirname ${PKG_CMAKE_SCRIPT})" | tr -s " "
++      cmake ${CMAKE_GENERATOR_NINJA} ${TARGET_CMAKE_OPTS} ${PKG_CMAKE_OPTS_TARGET} $(dirname ${PKG_CMAKE_SCRIPT})
+       ;;
+     "cmake:host")
+-      echo "Executing (host): cmake $CMAKE_GENERATOR_NINJA $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+-      cmake $CMAKE_GENERATOR_NINJA $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)
++      echo "Executing (host): cmake ${CMAKE_GENERATOR_NINJA} ${HOST_CMAKE_OPTS} ${PKG_CMAKE_OPTS_HOST} $(dirname ${PKG_CMAKE_SCRIPT})" | tr -s " "
++      cmake ${CMAKE_GENERATOR_NINJA} ${HOST_CMAKE_OPTS} ${PKG_CMAKE_OPTS_HOST} $(dirname ${PKG_CMAKE_SCRIPT})
+       ;;
+     "cmake:init")
+-      echo "Executing (init): cmake $CMAKE_GENERATOR_NINJA $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+-      cmake $CMAKE_GENERATOR_NINJA $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)
++      echo "Executing (init): cmake ${CMAKE_GENERATOR_NINJA} ${INIT_CMAKE_OPTS} ${PKG_CMAKE_OPTS_INIT} $(dirname ${PKG_CMAKE_SCRIPT})" | tr -s " "
++      cmake ${CMAKE_GENERATOR_NINJA} ${INIT_CMAKE_OPTS} ${PKG_CMAKE_OPTS_INIT} $(dirname ${PKG_CMAKE_SCRIPT})
+       ;;
+     "cmake:bootstrap")
+-      echo "Executing (bootstrap): cmake $CMAKE_GENERATOR_NINJA $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+-      cmake $CMAKE_GENERATOR_NINJA $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)
++      echo "Executing (bootstrap): cmake ${CMAKE_GENERATOR_NINJA} ${BOOTSTRAP_CMAKE_OPTS} ${PKG_CMAKE_OPTS_BOOTSTRAP} $(dirname ${PKG_CMAKE_SCRIPT})" | tr -s " "
++      cmake ${CMAKE_GENERATOR_NINJA} ${BOOTSTRAP_CMAKE_OPTS} ${PKG_CMAKE_OPTS_BOOTSTRAP} $(dirname ${PKG_CMAKE_SCRIPT})
+       ;;
+ 
+     # cmake builds with make
+     "cmake-make:target")
+-      echo "Executing (target): cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+-      cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)
++      echo "Executing (target): cmake ${TARGET_CMAKE_OPTS} ${PKG_CMAKE_OPTS_TARGET} $(dirname ${PKG_CMAKE_SCRIPT})" | tr -s " "
++      cmake ${TARGET_CMAKE_OPTS} ${PKG_CMAKE_OPTS_TARGET} $(dirname ${PKG_CMAKE_SCRIPT})
+       ;;
+     "cmake-make:host")
+-      echo "Executing (host): cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+-      cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)
++      echo "Executing (host): cmake ${HOST_CMAKE_OPTS} ${PKG_CMAKE_OPTS_HOST} $(dirname ${PKG_CMAKE_SCRIPT})" | tr -s " "
++      cmake ${HOST_CMAKE_OPTS} ${PKG_CMAKE_OPTS_HOST} $(dirname ${PKG_CMAKE_SCRIPT})
+       ;;
+     "cmake-make:init")
+-      echo "Executing (init): cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+-      cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)
++      echo "Executing (init): cmake ${INIT_CMAKE_OPTS} ${PKG_CMAKE_OPTS_INIT} $(dirname ${PKG_CMAKE_SCRIPT})" | tr -s " "
++      cmake ${INIT_CMAKE_OPTS} ${PKG_CMAKE_OPTS_INIT} $(dirname ${PKG_CMAKE_SCRIPT})
+       ;;
+     "cmake-make:bootstrap")
+-      echo "Executing (bootstrap): cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+-      cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)
++      echo "Executing (bootstrap): cmake ${BOOTSTRAP_CMAKE_OPTS} ${PKG_CMAKE_OPTS_BOOTSTRAP} $(dirname ${PKG_CMAKE_SCRIPT})" | tr -s " "
++      cmake ${BOOTSTRAP_CMAKE_OPTS} ${PKG_CMAKE_OPTS_BOOTSTRAP} $(dirname ${PKG_CMAKE_SCRIPT})
+       ;;
+ 
+     # configure builds
+     "configure:target"|"autotools:target")
+-      echo "Executing (target): $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET" | tr -s " "
+-      $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
++      echo "Executing (target): ${PKG_CONFIGURE_SCRIPT} ${TARGET_CONFIGURE_OPTS} ${PKG_CONFIGURE_OPTS_TARGET}" | tr -s " "
++      ${PKG_CONFIGURE_SCRIPT} ${TARGET_CONFIGURE_OPTS} ${PKG_CONFIGURE_OPTS_TARGET}
+       ;;
+     "configure:host"|"autotools:host")
+-      echo "Executing (host): $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST" | tr -s " "
+-      $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST
++      echo "Executing (host): ${PKG_CONFIGURE_SCRIPT} ${HOST_CONFIGURE_OPTS} ${PKG_CONFIGURE_OPTS_HOST}" | tr -s " "
++      ${PKG_CONFIGURE_SCRIPT} ${HOST_CONFIGURE_OPTS} ${PKG_CONFIGURE_OPTS_HOST}
+       ;;
+     "configure:init"|"autotools:init")
+-      echo "Executing (init): $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT" | tr -s " "
+-      $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT
++      echo "Executing (init): ${PKG_CONFIGURE_SCRIPT} ${INIT_CONFIGURE_OPTS} ${PKG_CONFIGURE_OPTS_INIT}" | tr -s " "
++      ${PKG_CONFIGURE_SCRIPT} ${INIT_CONFIGURE_OPTS} ${PKG_CONFIGURE_OPTS_INIT}
+       ;;
+     "configure:bootstrap"|"autotools:bootstrap")
+-      echo "Executing (bootstrap): $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP" | tr -s " "
+-      $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP
++      echo "Executing (bootstrap): ${PKG_CONFIGURE_SCRIPT} ${BOOTSTRAP_CONFIGURE_OPTS} ${PKG_CONFIGURE_OPTS_BOOTSTRAP}" | tr -s " "
++      ${PKG_CONFIGURE_SCRIPT} ${BOOTSTRAP_CONFIGURE_OPTS} ${PKG_CONFIGURE_OPTS_BOOTSTRAP}
+       ;;
+   esac
+ fi
+ 
+-pkg_call_exists post_configure_$TARGET && pkg_call post_configure_$TARGET
++pkg_call_exists post_configure_${TARGET} && pkg_call post_configure_${TARGET}
+ 
+ # make
+-pkg_call_exists pre_make_$TARGET && pkg_call pre_make_$TARGET
++pkg_call_exists pre_make_${TARGET} && pkg_call pre_make_${TARGET}
+ 
+-if pkg_call_exists make_$TARGET; then
+-  pkg_call make_$TARGET
++if pkg_call_exists make_${TARGET}; then
++  pkg_call make_${TARGET}
+ else
+-  case "$PKG_TOOLCHAIN:$TARGET" in
++  case "${PKG_TOOLCHAIN}:${TARGET}" in
+     # ninja based builds
+     "meson:target"|"cmake:target"|"ninja:target")
+-      echo "Executing (target): ninja $PKG_MAKE_OPTS_TARGET" | tr -s " "
+-      ninja $NINJA_OPTS $PKG_MAKE_OPTS_TARGET
++      echo "Executing (target): ninja ${PKG_MAKE_OPTS_TARGET}" | tr -s " "
++      ninja ${NINJA_OPTS} ${PKG_MAKE_OPTS_TARGET}
+       ;;
+     "meson:host"|"cmake:host"|"ninja:host")
+-      echo "Executing (host): ninja $PKG_MAKE_OPTS_HOST" | tr -s " "
+-      ninja $NINJA_OPTS $PKG_MAKE_OPTS_HOST
++      echo "Executing (host): ninja ${PKG_MAKE_OPTS_HOST}" | tr -s " "
++      ninja ${NINJA_OPTS} ${PKG_MAKE_OPTS_HOST}
+       ;;
+     "meson:init"|"cmake:init"|"ninja:init")
+-      echo "Executing (init): ninja $PKG_MAKE_OPTS_INIT" | tr -s " "
+-      ninja $NINJA_OPTS $PKG_MAKE_OPTS_INIT
++      echo "Executing (init): ninja ${PKG_MAKE_OPTS_INIT}" | tr -s " "
++      ninja ${NINJA_OPTS} ${PKG_MAKE_OPTS_INIT}
+       ;;
+     "meson:bootstrap"|"cmake:bootstrap"|"ninja:bootstrap")
+-      echo "Executing (bootstrap): ninja $PKG_MAKE_OPTS_BOOTSTRAP" | tr -s " "
+-      ninja $NINJA_OPTS $PKG_MAKE_OPTS_BOOTSTRAP
++      echo "Executing (bootstrap): ninja ${PKG_MAKE_OPTS_BOOTSTRAP}" | tr -s " "
++      ninja ${NINJA_OPTS} ${PKG_MAKE_OPTS_BOOTSTRAP}
+       ;;
+ 
+     # make based builds
+     "configure:target"|"cmake-make:target"|"autotools:target"|"make:target")
+-      echo "Executing (target): make $PKG_MAKE_OPTS_TARGET" | tr -s " "
+-      make $PKG_MAKE_OPTS_TARGET
++      echo "Executing (target): make ${PKG_MAKE_OPTS_TARGET}" | tr -s " "
++      make ${PKG_MAKE_OPTS_TARGET}
+       ;;
+     "configure:host"|"cmake-make:host"|"autotools:host"|"make:host")
+-      echo "Executing (host): make $PKG_MAKE_OPTS_HOST" | tr -s " "
+-      make $PKG_MAKE_OPTS_HOST
++      echo "Executing (host): make ${PKG_MAKE_OPTS_HOST}" | tr -s " "
++      make ${PKG_MAKE_OPTS_HOST}
+       ;;
+     "configure:init"|"cmake-make:init"|"autotools:init"|"make:init")
+-      echo "Executing (init): make $PKG_MAKE_OPTS_INIT" | tr -s " "
+-      make $PKG_MAKE_OPTS_INIT
++      echo "Executing (init): make ${PKG_MAKE_OPTS_INIT}" | tr -s " "
++      make ${PKG_MAKE_OPTS_INIT}
+       ;;
+     "configure:bootstrap"|"cmake-make:bootstrap"|"autotools:bootstrap"|"make:bootstrap")
+-      echo "Executing (bootstrap): make $PKG_MAKE_OPTS_BOOTSTRAP" | tr -s " "
+-      make $PKG_MAKE_OPTS_BOOTSTRAP
++      echo "Executing (bootstrap): make ${PKG_MAKE_OPTS_BOOTSTRAP}" | tr -s " "
++      make ${PKG_MAKE_OPTS_BOOTSTRAP}
+       ;;
+   esac
+ fi
+ 
+-pkg_call_exists post_make_$TARGET && pkg_call post_make_$TARGET
++pkg_call_exists post_make_${TARGET} && pkg_call post_make_${TARGET}
+ 
+ # Hack around directly writing/modifying the content of a shared sysroot
+ # by temporarily installing new files to a package specific sysroot
+@@ -383,45 +383,45 @@ for d in /usr/lib /usr/include /usr/bin /usr/lib/pkgconfig; do
+ done
+ 
+ # make install
+-pkg_call_exists pre_makeinstall_$TARGET && pkg_call pre_makeinstall_$TARGET
++pkg_call_exists pre_makeinstall_${TARGET} && pkg_call pre_makeinstall_${TARGET}
+ 
+-if pkg_call_exists makeinstall_$TARGET; then
+-  pkg_call makeinstall_$TARGET
++if pkg_call_exists makeinstall_${TARGET}; then
++  pkg_call makeinstall_${TARGET}
+ else
+-  case "$PKG_TOOLCHAIN:$TARGET" in
++  case "${PKG_TOOLCHAIN}:${TARGET}" in
+     # ninja based builds
+     "meson:target"|"cmake:target")
+-      DESTDIR=$SYSROOT_PREFIX ninja install $PKG_MAKEINSTALL_OPTS_TARGET
+-      DESTDIR=$INSTALL ninja install $PKG_MAKEINSTALL_OPTS_TARGET
++      DESTDIR=${SYSROOT_PREFIX} ninja install ${PKG_MAKEINSTALL_OPTS_TARGET}
++      DESTDIR=${INSTALL} ninja install ${PKG_MAKEINSTALL_OPTS_TARGET}
+       ;;
+     "meson:host"|"cmake:host")
+-      ninja install $PKG_MAKEINSTALL_OPTS_HOST
++      ninja install ${PKG_MAKEINSTALL_OPTS_HOST}
+       ;;
+     "meson:init"|"cmake:init")
+-      DESTDIR=$INSTALL ninja install $PKG_MAKEINSTALL_OPTS_INIT
++      DESTDIR=${INSTALL} ninja install ${PKG_MAKEINSTALL_OPTS_INIT}
+       ;;
+     "meson:bootstrap"|"cmake:bootstrap")
+-      ninja install $PKG_MAKEINSTALL_OPTS_BOOTSTRAP
++      ninja install ${PKG_MAKEINSTALL_OPTS_BOOTSTRAP}
+       ;;
+ 
+     # make based builds
+     "configure:target"|"cmake-make:target"|"autotools:target"|"make:target")
+-      make install DESTDIR=$SYSROOT_PREFIX -j1 $PKG_MAKEINSTALL_OPTS_TARGET
+-      make install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_TARGET
++      make install DESTDIR=${SYSROOT_PREFIX} -j1 ${PKG_MAKEINSTALL_OPTS_TARGET}
++      make install DESTDIR=${INSTALL} ${PKG_MAKEINSTALL_OPTS_TARGET}
+       ;;
+     "configure:host"|"cmake-make:host"|"autotools:host"|"make:host")
+-      make install $PKG_MAKEINSTALL_OPTS_HOST
++      make install ${PKG_MAKEINSTALL_OPTS_HOST}
+       ;;
+     "configure:init"|"cmake-make:init"|"autotools:init"|"make:init")
+-      make install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_INIT
++      make install DESTDIR=${INSTALL} ${PKG_MAKEINSTALL_OPTS_INIT}
+       ;;
+     "configure:bootstrap"|"cmake-make:bootstrap"|"autotools:bootstrap"|"make:bootstrap")
+-      make install $PKG_MAKEINSTALL_OPTS_BOOTSTRAP
++      make install ${PKG_MAKEINSTALL_OPTS_BOOTSTRAP}
+       ;;
+   esac
+ fi
+ 
+-pkg_call_exists post_makeinstall_$TARGET && pkg_call post_makeinstall_$TARGET
++pkg_call_exists post_makeinstall_${TARGET} && pkg_call post_makeinstall_${TARGET}
+ 
+ # Fixup temporary sysroot references to the shared sysroot
+ for i in $(find "${SYSROOT_PREFIX}/usr/lib" -type f -name "*.la" 2>/dev/null); do
+@@ -450,23 +450,23 @@ rm -rf "${SYSROOT_PREFIX}"
+ 
+ export SYSROOT_PREFIX="${PKG_ORIG_SYSROOT_PREFIX}"
+ 
+-if [ "$TARGET" = "target" -o "$TARGET" = "init" ]; then
+-  if [ -d $INSTALL ]; then
+-    rm -rf $INSTALL/{usr/,}include
+-    rm -rf $INSTALL/{usr/,}lib/cmake
+-    rm -rf $INSTALL/{usr/,}lib/pkgconfig
+-    rm -rf $INSTALL/{usr/,}man
+-    rm -rf $INSTALL/{usr/,}share/aclocal
+-    rm -rf $INSTALL/{usr/,}share/bash-completion
+-    rm -rf $INSTALL/{usr/,}share/doc
+-    rm -rf $INSTALL/{usr/,}share/gtk-doc
+-    rm -rf $INSTALL/{usr/,}share/info
+-    rm -rf $INSTALL/{usr/,}share/locale
+-    rm -rf $INSTALL/{usr/,}share/man
+-    rm -rf $INSTALL/{usr/,}share/pkgconfig
+-    rm -rf $INSTALL/{usr/,}share/zsh
+-    rm -rf $INSTALL/{usr/,}var
+-    find $INSTALL \( -name "*.orig" \
++if [ "${TARGET}" = "target" -o "${TARGET}" = "init" ]; then
++  if [ -d ${INSTALL} ]; then
++    rm -rf ${INSTALL}/{usr/,}include
++    rm -rf ${INSTALL}/{usr/,}lib/cmake
++    rm -rf ${INSTALL}/{usr/,}lib/pkgconfig
++    rm -rf ${INSTALL}/{usr/,}man
++    rm -rf ${INSTALL}/{usr/,}share/aclocal
++    rm -rf ${INSTALL}/{usr/,}share/bash-completion
++    rm -rf ${INSTALL}/{usr/,}share/doc
++    rm -rf ${INSTALL}/{usr/,}share/gtk-doc
++    rm -rf ${INSTALL}/{usr/,}share/info
++    rm -rf ${INSTALL}/{usr/,}share/locale
++    rm -rf ${INSTALL}/{usr/,}share/man
++    rm -rf ${INSTALL}/{usr/,}share/pkgconfig
++    rm -rf ${INSTALL}/{usr/,}share/zsh
++    rm -rf ${INSTALL}/{usr/,}var
++    find ${INSTALL} \( -name "*.orig" \
+                   -o -name "*.rej" \
+                   -o -name "*.a" \
+                   -o -name "*.la" \
+@@ -474,30 +474,30 @@ if [ "$TARGET" = "target" -o "$TARGET" = "init" ]; then
+                   -o -name "*.in" \
+                   -o -name ".git*" \) \
+         -exec rm -f {} \; 2>/dev/null || :
+-    find $INSTALL -type d -exec rmdir -p {} \; 2>/dev/null || :
++    find ${INSTALL} -type d -exec rmdir -p {} \; 2>/dev/null || :
+ 
+     if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
+-      $STRIP $(find $INSTALL \
++      ${STRIP} $(find ${INSTALL} \
+         -type f -name "*.so*" \
+         ! -name "ld-*.so" \
+         ! -name "libc-*.so" \
+         ! -name "libpthread-*.so" \
+         ! -name "libthread_db-*so" \
+         2>/dev/null) 2>/dev/null || :
+-        if [ "$TARGET" = "init" ]; then
+-          $STRIP $(find $INSTALL -type f -name "*.so*" 2>/dev/null) 2>/dev/null || :
++        if [ "${TARGET}" = "init" ]; then
++          ${STRIP} $(find ${INSTALL} -type f -name "*.so*" 2>/dev/null) 2>/dev/null || :
+         fi
+-        $STRIP $(find $INSTALL ! -name "*.so*" ! -name "*.ko" \
++        ${STRIP} $(find ${INSTALL} ! -name "*.so*" ! -name "*.ko" \
+           -type f -executable 2>/dev/null) 2>/dev/null || :
+     fi
+   fi
+ fi
+ 
+-cd $ROOT
++cd ${ROOT}
+ 
+ PKG_DEEPHASH=$(calculate_stamp)
+ for i in PKG_NAME PKG_DEEPHASH BUILD_WITH_DEBUG; do
+-  echo "STAMP_$i=\"${!i}\"" >> $STAMP
++  echo "STAMP_${i}=\"${!i}\"" >> ${STAMP}
+ done
+ 
+ pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "build" "built"
+diff --git a/scripts/ccache_stats b/scripts/ccache_stats
+index 2c02bbb2e25..8aadc614950 100755
+--- a/scripts/ccache_stats
++++ b/scripts/ccache_stats
+@@ -2,7 +2,8 @@
+ 
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
++# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
+ 
+-. config/options
++. config/options ""
+ 
+-$TOOLCHAIN/bin/ccache -s
++${TOOLCHAIN}/bin/ccache -s
+diff --git a/scripts/checkdeps b/scripts/checkdeps
+index fcff945cca2..4e3ccb1ceb5 100755
+--- a/scripts/checkdeps
++++ b/scripts/checkdeps
+@@ -2,6 +2,7 @@
+ 
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
++# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+ 
+ . config/options ""
+ 
+@@ -10,30 +11,30 @@ get_deps() {
+   need_pkg=()
+ 
+   for i in "${!deps[@]}"; do
+-    dep=${deps[$i]}
+-    dep_pkg=${deps_pkg[$i]}
+-    if ! command -v "$dep" >/dev/null; then
+-      need+=($dep)
+-      need_pkg+=("$dep_pkg")
++    dep=${deps[${i}]}
++    dep_pkg=${deps_pkg[${i}]}
++    if ! command -v "${dep}" >/dev/null; then
++      need+=(${dep})
++      need_pkg+=("${dep_pkg}")
+     fi
+   done
+ 
+   for i in "${!files[@]}"; do
+-    file=${files[$i]}
+-    file_pkg=${files_pkg[$i]}
+-    if [ ! -f "$file" ]; then
+-      need+=($file)
+-      need_pkg+=("$file_pkg")
++    file=${files[${i}]}
++    file_pkg=${files_pkg[${i}]}
++    if [ ! -f "${file}" ]; then
++      need+=(${file})
++      need_pkg+=("${file_pkg}")
+     fi
+   done
+ 
+   for i in "${!perl_mod[@]}"; do
+-    mod=${perl_mod[$i]}
+-    pkg=${perl_pkg[$i]}
++    mod=${perl_mod[${i}]}
++    pkg=${perl_pkg[${i}]}
+ 
+-    if ! perl -M"$mod" -e exit 2>/dev/null; then
+-      need+=(perl::$mod)
+-      need_pkg+=($pkg)
++    if ! perl -M"${mod}" -e exit 2>/dev/null; then
++      need+=(perl::${mod})
++      need_pkg+=(${pkg})
+     fi
+   done
+ }
+@@ -65,7 +66,7 @@ files_pkg=(libc6-dev libncurses5-dev)
+ 
+ perl_mod=(JSON XML::Parser)
+ 
+-case "$DISTRO" in
++case "${DISTRO}" in
+     fedora|centos|rhel)
+       deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python)
+       deps_pkg+=(gcc-c++ xorg-x11-font-utils xorg-x11-font-utils xorg-x11-font-utils libxslt java-1.7.0-openjdk python2)
+@@ -108,38 +109,38 @@ case "$DISTRO" in
+ esac
+ 
+ # project specific dependencies
+-if [ -n "$EXTRA_DEPS" ] ; then
+-  deps+=($EXTRA_DEPS)
++if [ -n "${EXTRA_DEPS}" ] ; then
++  deps+=(${EXTRA_DEPS})
+ fi
+-if [ -n "$EXTRA_DEPS_PKG" ] ; then
+-  deps_pkg+=($EXTRA_DEPS_PKG)
++if [ -n "${EXTRA_DEPS_PKG}" ] ; then
++  deps_pkg+=(${EXTRA_DEPS_PKG})
+ fi
+ 
+ # distro specific dependencies
+-if [ -n "$DISTRO_DEPS" ] ; then
+-  deps+=($DISTRO_DEPS)
++if [ -n "${DISTRO_DEPS}" ] ; then
++  deps+=(${DISTRO_DEPS})
+ fi
+-if [ -n "$DISTRO_DEPS_PKG" ] ; then
+-  deps_pkg+=($DISTRO_DEPS_PKG)
++if [ -n "${DISTRO_DEPS_PKG}" ] ; then
++  deps_pkg+=(${DISTRO_DEPS_PKG})
+ fi
+ 
+ get_deps
+ 
+ if [ "${#need[@]}" -gt 0 ]; then
+-  echo "**** Your system lacks the following tools needed to build $DISTRONAME ****"
++  echo "**** Your system lacks the following tools needed to build ${DISTRONAME} ****"
+   for i in "${!need[@]}"; do
+-    echo "${need[$i]} provided by ${need_pkg[$i]}"
++    echo "${need[${i}]} provided by ${need_pkg[${i}]}"
+   done
+-  echo "**** You seem to use a $DISTRO system ****"
++  echo "**** You seem to use a ${DISTRO} system ****"
+ 
+   if command -v sudo >/dev/null; then
+-    case "$DISTRO" in
++    case "${DISTRO}" in
+       ubuntu|debian|linuxmint|\"elementary\")
+         get_yes_no && sudo apt-get install "${need_pkg[@]}"
+         ;;
+       fedora|centos|rhel)
+         command -v dnf >/dev/null && YUM=dnf || YUM=yum
+-        get_yes_no && sudo $YUM install "${need_pkg[@]}"
++        get_yes_no && sudo ${YUM} install "${need_pkg[@]}"
+         ;;
+       gentoo)
+         get_yes_no && sudo emerge --ask --deep "${need_pkg[@]}"
+@@ -157,7 +158,7 @@ if [ "${#need[@]}" -gt 0 ]; then
+         get_yes_no && sudo zypper install -y --no-recommends "${need_pkg[@]}"
+         ;;
+       *)
+-        echo "**** unsupported distro $DISTRO ****"
++        echo "**** unsupported distro ${DISTRO} ****"
+         exit 1
+         ;;
+     esac
+@@ -171,7 +172,7 @@ get_deps
+ if [ "${#need[@]}" -gt 0 ]; then
+   echo "**** The following packages were not installed correctly ****"
+   for i in "${!need[@]}"; do
+-    echo "${need[$i]} provided by ${need_pkg[$i]}"
++    echo "${need[${i}]} provided by ${need_pkg[${i}]}"
+   done
+   echo "********"
+   exit 1
+diff --git a/scripts/create_addon b/scripts/create_addon
+index fe5f771f280..4dbea27608d 100755
+--- a/scripts/create_addon
++++ b/scripts/create_addon
+@@ -50,11 +50,11 @@ get_addons() {
+   local pkgpath exited
+   local count=0 validpkg
+ 
+-  case $1 in
+-    binary)   paths="^$ROOT/packages/mediacenter/kodi-binary-addons/";;
+-    official) paths="^$ROOT/packages/addons/";;
+-    all)      paths="^$ROOT/packages/|^$ROOT/projects/.*/packages/";;
+-    *)        paths="^$ROOT/packages/|^$ROOT/projects/.*/packages/"; filter="$1";;
++  case ${1} in
++    binary)   paths="^${ROOT}/packages/mediacenter/kodi-binary-addons/";;
++    official) paths="^${ROOT}/packages/addons/";;
++    all)      paths="^${ROOT}/packages/|^${ROOT}/projects/.*/packages/";;
++    *)        paths="^${ROOT}/packages/|^${ROOT}/projects/.*/packages/"; filter="${1}";;
+   esac
+ 
+   exit() { exited=1; }
+@@ -109,12 +109,12 @@ verify_addon() {
+ 
+     VERIFY_FAIL="Incompatible project or device: \"${_DEVICE:-${PROJECT}}\" not in [ ${PKG_ADDON_PROJECTS} ]"
+ 
+-    if listcontains "${PKG_ADDON_PROJECTS}" "!${_DEVICE:-$PROJECT}" ||
++    if listcontains "${PKG_ADDON_PROJECTS}" "!${_DEVICE:-${PROJECT}}" ||
+        listcontains "${PKG_ADDON_PROJECTS}" "!${PROJECT}"; then
+       return 1
+     fi
+ 
+-    if ! listcontains "${PKG_ADDON_PROJECTS}" "${_DEVICE:-$PROJECT}" &&
++    if ! listcontains "${PKG_ADDON_PROJECTS}" "${_DEVICE:-${PROJECT}}" &&
+        ! listcontains "${PKG_ADDON_PROJECTS}" "${PROJECT}" &&
+        ! listcontains "${PKG_ADDON_PROJECTS}" "any"; then
+       return 1
+@@ -142,12 +142,12 @@ show_only="no"
+ 
+ # read addons from parameter list
+ while [ $# -gt 0 ]; do
+-  case $1 in
++  case ${1} in
+     --help)         usage 0;;
+     --show-only)    show_only="yes";;
+     --*)            usage 1;;
+     -*)             addons_drop+=" $(get_addons ${1:1})";;
+-    *)              addons+=" $(get_addons $1)";;
++    *)              addons+=" $(get_addons ${1})";;
+   esac
+   shift
+ done
+diff --git a/scripts/create_docker_package b/scripts/create_docker_package
+index 0bd841e086f..14c87769c12 100755
+--- a/scripts/create_docker_package
++++ b/scripts/create_docker_package
+@@ -13,44 +13,44 @@ STRING_PORT="-p "
+ STRING_VOLUME="-v "
+ 
+ add_default() {
+-    defaults="$defaults    <setting id=\"$1\" value=\"$2\" />\n"
++    defaults="${defaults}    <setting id=\"${1}\" value=\"${2}\" />\n"
+ }
+ 
+ add_device() {
+     add_label
+     default="${1%:*}"
+     docker="${1#*:}"
+-    id="$LABEL_DEVICE${docker//\//_}"
+-    add_default "$id" "$default"
+-    add_option "--device=\"\$$id\""
+-    add_setting "<setting label=\"$label\" type=\"folder\" id=\"$id\" default=\"$default\" />"
+-    add_string "$STRING_DEVICE$docker"
++    id="${LABEL_DEVICE}${docker//\//_}"
++    add_default "${id}" "${default}"
++    add_option "--device=\"\$${id}\""
++    add_setting "<setting label=\"${label}\" type=\"folder\" id=\"${id}\" default=\"${default}\" />"
++    add_string "${STRING_DEVICE}${docker}"
+ }
+ 
+ add_env() {
+     add_label
+     default="${1#*=}"
+     docker="${1%%=*}"
+-    id="$LABEL_ENV$docker"
+-    add_default "$id" "$default"
+-    add_option "-e $docker=\"$id\""
+-    add_setting "<setting label=\"$label\" type=\"text\"   id=\"$id\" default=\"$default\" />"
+-    add_string "$STRING_ENV$docker"
++    id="${LABEL_ENV}${docker}"
++    add_default "${id}" "${default}"
++    add_option "-e ${docker}=\"${id}\""
++    add_setting "<setting label=\"${label}\" type=\"text\"   id=\"${id}\" default=\"${default}\" />"
++    add_string "${STRING_ENV}${docker}"
+ }
+ 
+ add_label() {
+-    if [ -z $label ]; then
+-      label=$FIRST_LABEL
++    if [ -z ${label} ]; then
++      label=${FIRST_LABEL}
+     else
+       label=$((label+1))
+     fi
+ }
+ 
+ add_option() {
+-    if [ ! -z "$options" ]; then
+-        options="$options "'\\\n'
++    if [ ! -z "${options}" ]; then
++        options="${options} "'\\\n'
+     fi
+-    options="$options           $1"
++    options="${options}           ${1}"
+ }
+ 
+ add_port() {
+@@ -58,34 +58,34 @@ add_port() {
+     default="${1%:*}"
+     docker="${1#*:}"
+     port="${docker%/*}"
+-    id="$LABEL_PORT$port"
+-    add_default "$id" "$default"
+-    add_option "-p \"\$$id\":$docker"
+-    add_setting "<setting label=\"$label\" type=\"number\" id=\"$id\" default=\"$default\" />"
+-    add_string "$STRING_PORT$port"
++    id="${LABEL_PORT}${port}"
++    add_default "${id}" "${default}"
++    add_option "-p \"\$${id}\":${docker}"
++    add_setting "<setting label=\"${label}\" type=\"number\" id=\"${id}\" default=\"${default}\" />"
++    add_string "${STRING_PORT}${port}"
+ }
+ 
+ add_setting() {
+-    settings="$settings      $1\n"
++    settings="${settings}      ${1}\n"
+ }
+ 
+ add_string() {
+-    strings="$strings\nmsgctxt \"$label\"\nmsgid   \"$1\"\nmsgstr  \"\"\n"
++    strings="${strings}\nmsgctxt \"${label}\"\nmsgid   \"${1}\"\nmsgstr  \"\"\n"
+ }
+ 
+ add_volume() {
+     add_label
+     default="${1%:*}"
+     docker="${1#*:}"
+-    id="$LABEL_VOLUME${docker//\//_}"
+-    add_default "$id" "$default"
+-    add_option "-v \"\$$id\":$docker"
+-    add_setting "<setting label=\"$label\" type=\"folder\" id=\"$id\" default=\"$default\" />"
+-    add_string "$STRING_VOLUME$docker"
++    id="${LABEL_VOLUME}${docker//\//_}"
++    add_default "${id}" "${default}"
++    add_option "-v \"\$${id}\":${docker}"
++    add_setting "<setting label=\"${label}\" type=\"folder\" id=\"${id}\" default=\"${default}\" />"
++    add_string "${STRING_VOLUME}${docker}"
+ }
+ 
+ 
+-case "$ARCH" in
++case "${ARCH}" in
+     arm)
+         projects="imx6 RPi RPi2"
+         ;;
+@@ -99,9 +99,9 @@ case "$ARCH" in
+ esac
+ 
+ while [[ $# -gt 0 ]]; do
+-    option="$1"
++    option="${1}"
+     shift
+-    case "$option" in
++    case "${option}" in
+         --device=*)
+             add_device "${option#--device=}"
+             ;;
+@@ -114,26 +114,26 @@ while [[ $# -gt 0 ]]; do
+             add_volume "${option#--volume=}"
+             ;;
+         -e)
+-            add_env "$1"
++            add_env "${1}"
+             shift
+             ;;
+ 
+         -p)
+-            add_port "$1"
++            add_port "${1}"
+             shift
+             ;;
+         -v)
+-            add_volume "$1"
++            add_volume "${1}"
+             shift
+             ;;
+         -*)
+-            add_option "$option"
++            add_option "${option}"
+             ;;
+         */*)
+-            add_option "$option"
++            add_option "${option}"
+             image="${option%:*}"
+             version="${option#*:}"
+-            if [ "$version" = "$option" ]; then
++            if [ "${version}" = "${option}" ]; then
+                 version="latest"
+             fi
+             if [ ! -z "$*" ]; then
+@@ -142,43 +142,43 @@ while [[ $# -gt 0 ]]; do
+             break
+             ;;
+         *)
+-            add_option "$option"
++            add_option "${option}"
+             ;;
+     esac    
+ done
+ 
+-if [ -z "$image" ]; then
++if [ -z "${image}" ]; then
+     echo "Failed to parse image"
+     exit 1
+ fi
+ 
+ name="${image//\//.}"
+-dir="packages/addons/docker/$name"
++dir="packages/addons/docker/${name}"
+ 
+-if [ -d "$dir" ]; then
++if [ -d "${dir}" ]; then
+     echo "Package already exists"
+     exit 1
+ fi
+ 
+-cp -R config/docker "$dir"
++cp -R config/docker "${dir}"
+ 
+-sed -e "s|@NAME@|$name|g" \
+-    -e "s|@VERSION@|$version|g" \
+-    -e "s|@ARCH@|$arch|g" \
+-    -e "s|@IMAGE@|$image|g" \
+-    -e "s|@PROJECTS@|$projects|g" \
+-    -i "$dir/package.mk"
++sed -e "s|@NAME@|${name}|g" \
++    -e "s|@VERSION@|${version}|g" \
++    -e "s|@ARCH@|${arch}|g" \
++    -e "s|@IMAGE@|${image}|g" \
++    -e "s|@PROJECTS@|${projects}|g" \
++    -i "${dir}/package.mk"
+ 
+ 
+-defaults="$(echo -en "$defaults" | sort)"
+-echo -en "<settings>\n$defaults\n</settings>" > "$dir/source/settings-default.xml"
++defaults="$(echo -en "${defaults}" | sort)"
++echo -en "<settings>\n${defaults}\n</settings>" > "${dir}/source/settings-default.xml"
+ 
+-echo -en "$options" >> "$dir/source/bin/docker"
++echo -en "${options}" >> "${dir}/source/bin/docker"
+ 
+-sed -e "s|@SETTINGS@|$settings|g" \
+-    -i "$dir/source/resources/settings.xml"
++sed -e "s|@SETTINGS@|${settings}|g" \
++    -i "${dir}/source/resources/settings.xml"
+ 
+-echo -en "$strings" >> "$dir/source/resources/language/English/strings.po"
++echo -en "${strings}" >> "${dir}/source/resources/language/English/strings.po"
+ 
+-mv "$dir/source/bin/docker" "$dir/source/bin/docker.$name"
+-mv "$dir/source/system.d/docker.service" "$dir/source/system.d/docker.$name.service"
++mv "${dir}/source/bin/docker" "${dir}/source/bin/docker.${name}"
++mv "${dir}/source/system.d/docker.service" "${dir}/source/system.d/docker.${name}.service"
+diff --git a/scripts/extract b/scripts/extract
+index c48bbfa5b0e..aa7dc8e3de6 100755
+--- a/scripts/extract
++++ b/scripts/extract
+@@ -4,30 +4,30 @@
+ # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+ # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+ 
+-. config/options $1
++. config/options "${1}"
+ 
+-if [ -z "$2" ]; then
+-  die "usage: $0 package_name target_dir"
++if [ -z "${2}" ]; then
++  die "usage: ${0} package_name target_dir"
+ fi
+ 
+-[ -z "$PKG_URL" -o -z "$PKG_SOURCE_NAME" ] && die "$PKG_NAME: PKG_URL or PKG_SOURCE_NAME undefined"
+-[ ! -d "$SOURCES/$1" ] && die "$PKG_NAME: $SOURCES/$1 not found"
+-[ ! -d "$2" ] && die "$PKG_NAME: target $2 not found"
++[ -z "${PKG_URL}" -o -z "${PKG_SOURCE_NAME}" ] && die "${PKG_NAME}: PKG_URL or PKG_SOURCE_NAME undefined"
++[ ! -d "${SOURCES}/${1}" ] && die "${PKG_NAME}: ${SOURCES}/${1} not found"
++[ ! -d "${2}" ] && die "${PKG_NAME}: target ${2} not found"
+ 
+ if [[ ${PKG_URL} =~ ^file:// ]]; then
+-  FULL_SOURCE_PATH="$PKG_SOURCE_NAME"
++  FULL_SOURCE_PATH="${PKG_SOURCE_NAME}"
+ else
+-  FULL_SOURCE_PATH="$SOURCES/$1/$PKG_SOURCE_NAME"
++  FULL_SOURCE_PATH="${SOURCES}/${1}/${PKG_SOURCE_NAME}"
+ fi
+ 
+-if [ ! -f "$FULL_SOURCE_PATH" -a ! -d "$FULL_SOURCE_PATH" ]; then
+-  echo "error: File $PKG_SOURCE_NAME doesn't exist for package $1"
++if [ ! -f "${FULL_SOURCE_PATH}" -a ! -d "${FULL_SOURCE_PATH}" ]; then
++  echo "error: File ${PKG_SOURCE_NAME} doesn't exist for package ${1}"
+   echo "Have you called scripts/extract before scripts/get ?"
+   die
+ fi
+ 
+ # The build system expects packages to be extracted to
+-# $PKG_BUILD.
++# ${PKG_BUILD.}
+ # Try to strip the top level dir from the archive and extract to
+ # the correct directory if possible so packages don't need to
+ # set PKG_SOURCE_DIR and scripts/unpack doesn't need to rename
+@@ -36,39 +36,39 @@ fi
+ # If PKG_SOURCE_DIR is set don't apply any directory mangling
+ # so advanced renaming (eg stripping more than one directory level)
+ # can be performed by scripts/unpack.
+-if [ -z "$PKG_SOURCE_DIR" ]; then
++if [ -z "${PKG_SOURCE_DIR}" ]; then
+   TAR_OPTS="--strip-components=1"
+-  DESTDIR="$2/$PKG_NAME-$PKG_VERSION"
++  DESTDIR="${2}/${PKG_NAME}-${PKG_VERSION}"
+ else
+   TAR_OPTS=""
+-  DESTDIR="$2"
++  DESTDIR="${2}"
+ fi
+ 
+-case $PKG_SOURCE_NAME in
++case ${PKG_SOURCE_NAME} in
+   *.tar | *.tar.bz2 | *.tbz | *.tar.gz | *.tgz | *.tar.xz | *.txz)
+-    mkdir -p "$DESTDIR"
+-    tar xf $FULL_SOURCE_PATH $TAR_OPTS -C "$DESTDIR"
++    mkdir -p "${DESTDIR}"
++    tar xf ${FULL_SOURCE_PATH} ${TAR_OPTS} -C "${DESTDIR}"
+     ;;
+   *.7z)
+-    mkdir -p $2/$1
+-    7z x -o$2/$1 $FULL_SOURCE_PATH
++    mkdir -p ${2}/${1}
++    7z x -o${2}/${1} ${FULL_SOURCE_PATH}
+     ;;
+   *.zip)
+-    unzip -q $FULL_SOURCE_PATH -d $2
++    unzip -q ${FULL_SOURCE_PATH} -d ${2}
+     ;;
+   *.diff | *.patch)
+-    cat $FULL_SOURCE_PATH | patch -d $2 -p1
++    cat ${FULL_SOURCE_PATH} | patch -d ${2} -p1
+     ;;
+   *.diff.bz2 | *.patch.bz2 | patch-*.bz2)
+-    bzcat $FULL_SOURCE_PATH | patch -d $2 -p1
++    bzcat ${FULL_SOURCE_PATH} | patch -d ${2} -p1
+     ;;
+   *.diff.gz | *.patch.gz | patch-*.gz)
+-    zcat $FULL_SOURCE_PATH | patch -d $2 -p1
++    zcat ${FULL_SOURCE_PATH} | patch -d ${2} -p1
+     ;;
+   *)
+-    FULL_DEST_PATH="$2/$PKG_NAME-$PKG_VERSION"
+-    mkdir $FULL_DEST_PATH
+-    tar cf - -C $FULL_SOURCE_PATH $PKG_TAR_COPY_OPTS . | \
+-      tar xf - -C $FULL_DEST_PATH
++    FULL_DEST_PATH="${2}/${PKG_NAME}-${PKG_VERSION}"
++    mkdir ${FULL_DEST_PATH}
++    tar cf - -C ${FULL_SOURCE_PATH} ${PKG_TAR_COPY_OPTS} . | \
++      tar xf - -C ${FULL_DEST_PATH}
+     ;;
+ esac
+diff --git a/scripts/image b/scripts/image
+index 47171fd8f1f..c15169a8dd6 100755
+--- a/scripts/image
++++ b/scripts/image
+@@ -23,49 +23,49 @@ setup_toolchain target
+ function do_mkimage() {
+   # Variables used in mkimage script must be passed
+   env \
+-    PATH="$PATH:/sbin" \
+-    ROOT="$ROOT" \
+-    SCRIPTS="$SCRIPTS" \
+-    TOOLCHAIN="$TOOLCHAIN" \
+-    PROJECT_DIR="$PROJECT_DIR" \
+-    PROJECT="$PROJECT" \
+-    DEVICE="$DEVICE" \
+-    DISTRO="$DISTRO" \
+-    TARGET_IMG="$TARGET_IMG" \
+-    BUILD_NAME="$IMAGE_NAME" \
+-    IMAGE_NAME="${1:-$IMAGE_NAME}" \
+-    BOOTLOADER="$BOOTLOADER" \
+-    KERNEL_NAME="$KERNEL_NAME" \
+-    TARGET_KERNEL_ARCH="$TARGET_KERNEL_ARCH" \
+-    RELEASE_DIR="$RELEASE_DIR" \
+-    UUID_SYSTEM="$UUID_SYSTEM" \
+-    UUID_STORAGE="$UUID_STORAGE" \
+-    DISTRO_BOOTLABEL="$DISTRO_BOOTLABEL" \
+-    DISTRO_DISKLABEL="$DISTRO_DISKLABEL" \
+-    UBOOT_SYSTEM="$UBOOT_SYSTEM" \
+-    UBOOT_VERSION="$UBOOT_VERSION" \
+-    EXTRA_CMDLINE="$EXTRA_CMDLINE" \
+-    SYSTEM_SIZE="$SYSTEM_SIZE" \
+-    SYSTEM_PART_START="$SYSTEM_PART_START" \
+-    OVA_SIZE="$OVA_SIZE" \
+-    $SCRIPTS/mkimage
++    PATH="${PATH}:/sbin" \
++    ROOT="${ROOT}" \
++    SCRIPTS="${SCRIPTS}" \
++    TOOLCHAIN="${TOOLCHAIN}" \
++    PROJECT_DIR="${PROJECT_DIR}" \
++    PROJECT="${PROJECT}" \
++    DEVICE="${DEVICE}" \
++    DISTRO="${DISTRO}" \
++    TARGET_IMG="${TARGET_IMG}" \
++    BUILD_NAME="${IMAGE_NAME}" \
++    IMAGE_NAME="${1:-${IMAGE_NAME}}" \
++    BOOTLOADER="${BOOTLOADER}" \
++    KERNEL_NAME="${KERNEL_NAME}" \
++    TARGET_KERNEL_ARCH="${TARGET_KERNEL_ARCH}" \
++    RELEASE_DIR="${RELEASE_DIR}" \
++    UUID_SYSTEM="${UUID_SYSTEM}" \
++    UUID_STORAGE="${UUID_STORAGE}" \
++    DISTRO_BOOTLABEL="${DISTRO_BOOTLABEL}" \
++    DISTRO_DISKLABEL="${DISTRO_DISKLABEL}" \
++    UBOOT_SYSTEM="${UBOOT_SYSTEM}" \
++    UBOOT_VERSION="${UBOOT_VERSION}" \
++    EXTRA_CMDLINE="${EXTRA_CMDLINE}" \
++    SYSTEM_SIZE="${SYSTEM_SIZE}" \
++    SYSTEM_PART_START="${SYSTEM_PART_START}" \
++    OVA_SIZE="${OVA_SIZE}" \
++    ${SCRIPTS}/mkimage
+ }
+ 
+-if [ -n "$CUSTOM_GIT_HASH" ]; then
+-  GIT_HASH="$CUSTOM_GIT_HASH"
++if [ -n "${CUSTOM_GIT_HASH}" ]; then
++  GIT_HASH="${CUSTOM_GIT_HASH}"
+ else
+   GIT_HASH=$(git rev-parse HEAD)
+ fi
+ 
+-if [ "$LIBREELEC_VERSION" = "devel" ]; then
++if [ "${LIBREELEC_VERSION}" = "devel" ]; then
+   GIT_ABBREV=${GIT_HASH:0:7}
+-  DEVEL_VERSION=$LIBREELEC_VERSION
+-  case "$BUILD_PERIODIC" in
+-    nightly) LIBREELEC_VERSION=nightly-$(date +%Y%m%d)-$GIT_ABBREV;;
+-    daily)   LIBREELEC_VERSION=daily-$(date +%Y%j)-$GIT_ABBREV;;
+-    weekly)  LIBREELEC_VERSION=weekly-$(date +%G%V)-$GIT_ABBREV;;
+-    monthly) LIBREELEC_VERSION=monthly-$(date +%Y%m)-$GIT_ABBREV;;
+-    *)       LIBREELEC_VERSION=devel-$(date +%Y%m%d%H%M%S)-$GIT_ABBREV;;
++  DEVEL_VERSION=${LIBREELEC_VERSION}
++  case "${BUILD_PERIODIC}" in
++    nightly) LIBREELEC_VERSION=nightly-$(date +%Y%m%d)-${GIT_ABBREV};;
++    daily)   LIBREELEC_VERSION=daily-$(date +%Y%j)-${GIT_ABBREV};;
++    weekly)  LIBREELEC_VERSION=weekly-$(date +%G%V)-${GIT_ABBREV};;
++    monthly) LIBREELEC_VERSION=monthly-$(date +%Y%m)-${GIT_ABBREV};;
++    *)       LIBREELEC_VERSION=devel-$(date +%Y%m%d%H%M%S)-${GIT_ABBREV};;
+   esac
+ fi
+ 
+@@ -73,57 +73,57 @@ fi
+ ORIGIN_URL="$(git remote -v | awk '$1 == "origin" { print $2 }' | head -1 | sed 's#\.git$##;s#^git:#https:#;s#^git@github\.com:#https://github.com/#')"
+ 
+ [ "${BUILDER_NAME,,}" = "official" ] && BUILDER_NAME=
+-if [ "$OFFICIAL" = "yes" ]; then
++if [ "${OFFICIAL}" = "yes" ]; then
+   LIBREELEC_BUILD="official"
+ else
+-  if [ -n "$BUILDER_NAME" ]; then
+-    LIBREELEC_BUILD="$BUILDER_NAME"
++  if [ -n "${BUILDER_NAME}" ]; then
++    LIBREELEC_BUILD="${BUILDER_NAME}"
+   else
+     LIBREELEC_BUILD="community"
+   fi
+ fi
+ 
+-if [ -n "$CUSTOM_VERSION" ]; then
+-  LIBREELEC_VERSION="$CUSTOM_VERSION"
++if [ -n "${CUSTOM_VERSION}" ]; then
++  LIBREELEC_VERSION="${CUSTOM_VERSION}"
+ fi
+ 
+-LIBREELEC_ARCH="${DEVICE:-$PROJECT}.$TARGET_ARCH"
+-TARGET_VERSION="$LIBREELEC_ARCH-$LIBREELEC_VERSION"
++LIBREELEC_ARCH="${DEVICE:-${PROJECT}}.${TARGET_ARCH}"
++TARGET_VERSION="${LIBREELEC_ARCH}-${LIBREELEC_VERSION}"
+ 
+-if [ -n "$CUSTOM_IMAGE_NAME" ]; then
+-  IMAGE_NAME="$CUSTOM_IMAGE_NAME"
++if [ -n "${CUSTOM_IMAGE_NAME}" ]; then
++  IMAGE_NAME="${CUSTOM_IMAGE_NAME}"
+ else
+-  if [ "$DEVEL_VERSION" = "devel" ]; then
+-    IMAGE_NAME="$DISTRONAME-$LIBREELEC_ARCH-$OS_VERSION-$LIBREELEC_VERSION"
++  if [ "${DEVEL_VERSION}" = "devel" ]; then
++    IMAGE_NAME="${DISTRONAME}-${LIBREELEC_ARCH}-${OS_VERSION}-${LIBREELEC_VERSION}"
+   else
+-    IMAGE_NAME="$DISTRONAME-$TARGET_VERSION"
++    IMAGE_NAME="${DISTRONAME}-${TARGET_VERSION}"
+   fi
+ 
+-  if [ -n "$UBOOT_SYSTEM" ] && [ "$UBOOT_SYSTEM" != "${DEVICE:-$PROJECT}" ]; then
+-    IMAGE_NAME="$IMAGE_NAME-$UBOOT_SYSTEM"
++  if [ -n "${UBOOT_SYSTEM}" ] && [ "${UBOOT_SYSTEM}" != "${DEVICE:-${PROJECT}}" ]; then
++    IMAGE_NAME="${IMAGE_NAME}-${UBOOT_SYSTEM}"
+   fi
+ fi
+ 
+-if [ -n "$IMAGE_SUFFIX" ]; then
+-  IMAGE_NAME="$IMAGE_NAME-$IMAGE_SUFFIX"
++if [ -n "${IMAGE_SUFFIX}" ]; then
++  IMAGE_NAME="${IMAGE_NAME}-${IMAGE_SUFFIX}"
+ fi
+ 
+-echo "$IMAGE_NAME" > $BUILD/BUILD_FILENAME
++echo "${IMAGE_NAME}" > ${BUILD}/BUILD_FILENAME
+ 
+ # Setup fakeroot
+-rm -rf $FAKEROOT_SCRIPT   # remove $FAKEROOT_SCRIPT if it exist
+-touch $FAKEROOT_SCRIPT    # create an empty $FAKEROOT_SCRIPT
+-chmod +x $FAKEROOT_SCRIPT # make $FAKEROOT_SCRIPT executable
+-echo "chown -R 0:0 $INSTALL" >> $FAKEROOT_SCRIPT
++rm -rf ${FAKEROOT_SCRIPT}   # remove ${FAKEROOT_SCRIPT} if it exist
++touch ${FAKEROOT_SCRIPT}    # create an empty ${FAKEROOT_SCRIPT}
++chmod +x ${FAKEROOT_SCRIPT} # make ${FAKEROOT_SCRIPT} executable
++echo "chown -R 0:0 ${INSTALL}" >> ${FAKEROOT_SCRIPT}
+ 
+ # Clean old install dirs
+-rm -rf $INSTALL
+-rm -rf $STAMPS_INSTALL
+-mkdir -p $INSTALL
++rm -rf ${INSTALL}
++rm -rf ${STAMPS_INSTALL}
++mkdir -p ${INSTALL}
+ 
+ # Create base layout of LibreELEC read-only file system
+ for directory in etc dev proc run sys tmp usr var flash storage; do
+-  mkdir -p $INSTALL/$directory
++  mkdir -p ${INSTALL}/${directory}
+ done
+ 
+ # Build image contents
+@@ -132,197 +132,197 @@ MTADDONBUILD=no start_multithread_build image || die "Parallel build failure - s
+ echo "Successful build, creating image..." >&2
+ 
+ # Create legacy sym links
+-ln -sfn /var/media $INSTALL/media
+-ln -sfn /usr/lib $INSTALL/lib
+-ln -sfn /usr/bin $INSTALL/bin
+-ln -sfn /usr/sbin $INSTALL/sbin
+-
+-if [ "$TARGET_ARCH" = "x86_64" ]; then
+-  ln -sfn /usr/lib $INSTALL/lib64
+-  ln -sfn /usr/lib $INSTALL/usr/lib64
++ln -sfn /var/media ${INSTALL}/media
++ln -sfn /usr/lib ${INSTALL}/lib
++ln -sfn /usr/bin ${INSTALL}/bin
++ln -sfn /usr/sbin ${INSTALL}/sbin
++
++if [ "${TARGET_ARCH}" = "x86_64" ]; then
++  ln -sfn /usr/lib ${INSTALL}/lib64
++  ln -sfn /usr/lib ${INSTALL}/usr/lib64
+ fi
+ 
+-echo "$TARGET_VERSION" > $INSTALL/etc/release
++echo "${TARGET_VERSION}" > ${INSTALL}/etc/release
+ 
+ # Create /etc/os-release
+-echo -e "NAME=\"$DISTRONAME\"" > $INSTALL/etc/os-release
+-echo -e "VERSION=\"$LIBREELEC_VERSION\"" >> $INSTALL/etc/os-release
+-echo -e "ID=\"libreelec\"" >> $INSTALL/etc/os-release
+-echo -e "VERSION_ID=\"$OS_VERSION\"" >> $INSTALL/etc/os-release
+-echo -e "PRETTY_NAME=\"$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION\"" >> $INSTALL/etc/os-release
+-echo -e "HOME_URL=\"https://libreelec.tv\"" >> $INSTALL/etc/os-release
+-echo -e "BUG_REPORT_URL=\"$ORIGIN_URL\"" >> $INSTALL/etc/os-release
+-echo -e "BUILD_ID=\"$GIT_HASH\"" >> $INSTALL/etc/os-release
+-echo -e "LIBREELEC_ARCH=\"$LIBREELEC_ARCH\"" >> $INSTALL/etc/os-release
+-echo -e "LIBREELEC_BUILD=\"$LIBREELEC_BUILD\"" >> $INSTALL/etc/os-release
+-echo -e "LIBREELEC_PROJECT=\"$PROJECT\"" >> $INSTALL/etc/os-release
+-[ -n "$DEVICE" ] && echo -e "LIBREELEC_DEVICE=\"$DEVICE\"" >> $INSTALL/etc/os-release
+-[ -n "$BUILDER_NAME" ] && echo -e "BUILDER_NAME=\"$BUILDER_NAME\"" >> $INSTALL/etc/os-release
+-[ -n "$BUILDER_VERSION" ] && echo -e "BUILDER_VERSION=\"$BUILDER_VERSION\"" >> $INSTALL/etc/os-release
++echo -e "NAME=\"${DISTRONAME}\"" > ${INSTALL}/etc/os-release
++echo -e "VERSION=\"${LIBREELEC_VERSION}\"" >> ${INSTALL}/etc/os-release
++echo -e "ID=\"libreelec\"" >> ${INSTALL}/etc/os-release
++echo -e "VERSION_ID=\"${OS_VERSION}\"" >> ${INSTALL}/etc/os-release
++echo -e "PRETTY_NAME=\"${DISTRONAME} (${LIBREELEC_BUILD}): ${LIBREELEC_VERSION}\"" >> ${INSTALL}/etc/os-release
++echo -e "HOME_URL=\"https://libreelec.tv\"" >> ${INSTALL}/etc/os-release
++echo -e "BUG_REPORT_URL=\"${ORIGIN_URL}\"" >> ${INSTALL}/etc/os-release
++echo -e "BUILD_ID=\"${GIT_HASH}\"" >> ${INSTALL}/etc/os-release
++echo -e "LIBREELEC_ARCH=\"${LIBREELEC_ARCH}\"" >> ${INSTALL}/etc/os-release
++echo -e "LIBREELEC_BUILD=\"${LIBREELEC_BUILD}\"" >> ${INSTALL}/etc/os-release
++echo -e "LIBREELEC_PROJECT=\"${PROJECT}\"" >> ${INSTALL}/etc/os-release
++[ -n "${DEVICE}" ] && echo -e "LIBREELEC_DEVICE=\"${DEVICE}\"" >> ${INSTALL}/etc/os-release
++[ -n "${BUILDER_NAME}" ] && echo -e "BUILDER_NAME=\"${BUILDER_NAME}\"" >> ${INSTALL}/etc/os-release
++[ -n "${BUILDER_VERSION}" ] && echo -e "BUILDER_VERSION=\"${BUILDER_VERSION}\"" >> ${INSTALL}/etc/os-release
+ 
+ # Create /etc/issue
+-echo "$GREETING0" >  $INSTALL/etc/issue
+-echo "$GREETING1" >> $INSTALL/etc/issue
+-echo "$GREETING2" >> $INSTALL/etc/issue
+-echo "$GREETING3" >> $INSTALL/etc/issue
+-echo "$GREETING4" >> $INSTALL/etc/issue
+-echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION ($LIBREELEC_ARCH)" >> $INSTALL/etc/issue
++echo "${GREETING0}" >  ${INSTALL}/etc/issue
++echo "${GREETING1}" >> ${INSTALL}/etc/issue
++echo "${GREETING2}" >> ${INSTALL}/etc/issue
++echo "${GREETING3}" >> ${INSTALL}/etc/issue
++echo "${GREETING4}" >> ${INSTALL}/etc/issue
++echo "${DISTRONAME} (${LIBREELEC_BUILD}): ${LIBREELEC_VERSION} (${LIBREELEC_ARCH})" >> ${INSTALL}/etc/issue
+ 
+-ln -sf /etc/issue $INSTALL/etc/motd
++ln -sf /etc/issue ${INSTALL}/etc/motd
+ 
+ # Copy PROJECT related files to filesystem
+-if [ -d "$PROJECT_DIR/$PROJECT/filesystem" ]; then
+-  cp -PR $PROJECT_DIR/$PROJECT/filesystem/* $INSTALL
++if [ -d "${PROJECT_DIR}/${PROJECT}/filesystem" ]; then
++  cp -PR ${PROJECT_DIR}/${PROJECT}/filesystem/* ${INSTALL}
+   # Install project specific systemd services
+-  for service in $PROJECT_DIR/$PROJECT/filesystem/usr/lib/systemd/system/*.service; do
+-    if [ -f "$service" ]; then
+-      enable_service $(basename $service)
++  for service in ${PROJECT_DIR}/${PROJECT}/filesystem/usr/lib/systemd/system/*.service; do
++    if [ -f "${service}" ]; then
++      enable_service $(basename ${service})
+     fi
+   done
+ fi
+ 
+ # Copy DEVICE related files to filesystem
+-if [ -n "$DEVICE" -a -d "$PROJECT_DIR/$PROJECT/devices/$DEVICE/filesystem" ]; then
+-  cp -PR $PROJECT_DIR/$PROJECT/devices/$DEVICE/filesystem/* $INSTALL
++if [ -n "${DEVICE}" -a -d "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/filesystem" ]; then
++  cp -PR ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/filesystem/* ${INSTALL}
+   # Install device specific systemd services
+-  for service in $PROJECT_DIR/$PROJECT/devices/$DEVICE/filesystem/usr/lib/systemd/system/*.service; do
+-    if [ -f "$service" ]; then
+-      enable_service $(basename $service)
++  for service in ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/filesystem/usr/lib/systemd/system/*.service; do
++    if [ -f "${service}" ]; then
++      enable_service $(basename ${service})
+     fi
+   done
+ fi
+ 
+ # Run depmod for base overlay modules
+-MODVER=$(basename $(ls -d $INSTALL/usr/lib/kernel-overlays/base/lib/modules/*))
+-find $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$MODVER/ -name *.ko | \
+-  sed -e "s,$INSTALL/usr/lib/kernel-overlays/base/lib/modules/$MODVER/,," \
+-    > $INSTALL/usr/lib/kernel-overlays/base/lib/modules/$MODVER/modules.order
+-$TOOLCHAIN/bin/depmod -b $INSTALL/usr/lib/kernel-overlays/base -a -e -F "$BUILD/linux-$(kernel_version)/System.map" $MODVER 2>&1
++MODVER=$(basename $(ls -d ${INSTALL}/usr/lib/kernel-overlays/base/lib/modules/*))
++find ${INSTALL}/usr/lib/kernel-overlays/base/lib/modules/${MODVER}/ -name *.ko | \
++  sed -e "s,${INSTALL}/usr/lib/kernel-overlays/base/lib/modules/${MODVER}/,," \
++    > ${INSTALL}/usr/lib/kernel-overlays/base/lib/modules/${MODVER}/modules.order
++${TOOLCHAIN}/bin/depmod -b ${INSTALL}/usr/lib/kernel-overlays/base -a -e -F "${BUILD}/linux-$(kernel_version)/System.map" ${MODVER} 2>&1
+ 
+ # Strip kernel modules
+-for MOD in $(find $INSTALL/usr/lib/kernel-overlays/ -type f -name *.ko); do
+-  ${TARGET_KERNEL_PREFIX}strip --strip-debug $MOD
++for MOD in $(find ${INSTALL}/usr/lib/kernel-overlays/ -type f -name *.ko); do
++  ${TARGET_KERNEL_PREFIX}strip --strip-debug ${MOD}
+ done
+ 
+ # Symlink overlayed modules to /usr/lib/modules
+-ln -sT /var/lib/modules $INSTALL/usr/lib/modules
++ln -sT /var/lib/modules ${INSTALL}/usr/lib/modules
+ 
+ # Symlink overlayed firmware to /usr/lib/firmware
+-ln -sT /var/lib/firmware $INSTALL/usr/lib/firmware
++ln -sT /var/lib/firmware ${INSTALL}/usr/lib/firmware
+ 
+ # Make target dir
+-mkdir -p $TARGET_IMG
+-rm -rf $TARGET_IMG/$IMAGE_NAME.kernel
++mkdir -p ${TARGET_IMG}
++rm -rf ${TARGET_IMG}/${IMAGE_NAME}.kernel
+ 
+ # Copy kernel to target dir
+-cp -PR $BUILD/linux-$(kernel_version)/arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET $TARGET_IMG/$IMAGE_NAME.kernel
+-chmod 0644 $TARGET_IMG/$IMAGE_NAME.kernel
++cp -PR ${BUILD}/linux-$(kernel_version)/arch/${TARGET_KERNEL_ARCH}/boot/${KERNEL_TARGET} ${TARGET_IMG}/${IMAGE_NAME}.kernel
++chmod 0644 ${TARGET_IMG}/${IMAGE_NAME}.kernel
+ 
+ # Set mksquashfs options for each compression method
+-if [ -z "$SQUASHFS_COMPRESSION_OPTION" ]; then
++if [ -z "${SQUASHFS_COMPRESSION_OPTION}" ]; then
+   if [ "${SQUASHFS_COMPRESSION:-gzip}" = "gzip" ]; then
+     SQUASHFS_COMPRESSION_OPTION="-Xcompression-level 9 -b 262144"
+-  elif [ "$SQUASHFS_COMPRESSION" = "lzo" ]; then
++  elif [ "${SQUASHFS_COMPRESSION}" = "lzo" ]; then
+     SQUASHFS_COMPRESSION_OPTION="-Xcompression-level 9 -b 524288"
+-  elif [ "$SQUASHFS_COMPRESSION" = "zstd" ]; then
++  elif [ "${SQUASHFS_COMPRESSION}" = "zstd" ]; then
+     SQUASHFS_COMPRESSION_OPTION="-Xcompression-level 22 -b 1048576"
+   fi
+ fi
+ 
+ # Create squashfs file, default to gzip if no compression configured
+-echo "rm -rf \"$TARGET_IMG/$IMAGE_NAME.system\"" >> $FAKEROOT_SCRIPT
+-echo "$TOOLCHAIN/bin/mksquashfs \"$BUILD/image/system\" \"$TARGET_IMG/$IMAGE_NAME.system\" -noappend -comp ${SQUASHFS_COMPRESSION:-gzip} ${SQUASHFS_COMPRESSION_OPTION}" >> $FAKEROOT_SCRIPT
++echo "rm -rf \"${TARGET_IMG}/${IMAGE_NAME}.system\"" >> ${FAKEROOT_SCRIPT}
++echo "${TOOLCHAIN}/bin/mksquashfs \"${BUILD}/image/system\" \"${TARGET_IMG}/${IMAGE_NAME}.system\" -noappend -comp ${SQUASHFS_COMPRESSION:-gzip} ${SQUASHFS_COMPRESSION_OPTION}" >> ${FAKEROOT_SCRIPT}
+ 
+ # Run fakeroot
+-$TOOLCHAIN/bin/fakeroot -- $FAKEROOT_SCRIPT
+-rm -rf $FAKEROOT_SCRIPT
++${TOOLCHAIN}/bin/fakeroot -- ${FAKEROOT_SCRIPT}
++rm -rf ${FAKEROOT_SCRIPT}
+ 
+ # Set permissions
+-chmod 0644 $TARGET_IMG/$IMAGE_NAME.system
++chmod 0644 ${TARGET_IMG}/${IMAGE_NAME}.system
+ 
+-if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "noobs" ]; then
++if [ "${1}" = "release" -o "${1}" = "mkimage" -o "${1}" = "noobs" ]; then
+ 
+-  RELEASE_DIR="target/$IMAGE_NAME"
++  RELEASE_DIR="target/${IMAGE_NAME}"
+ 
+   # Cleanup
+-  rm -rf $RELEASE_DIR
++  rm -rf ${RELEASE_DIR}
+ 
+   # Create release dir
+-  mkdir -p $RELEASE_DIR
++  mkdir -p ${RELEASE_DIR}
+ 
+   # Remove any previously created release images
+-  rm -rf $TARGET_IMG/$IMAGE_NAME.img.gz
++  rm -rf ${TARGET_IMG}/${IMAGE_NAME}.img.gz
+ 
+-  if [ -n "$BOOTLOADER" ]; then
++  if [ -n "${BOOTLOADER}" ]; then
+ 
+-    BOOTLOADER_DIR="$(get_pkg_directory "$BOOTLOADER")"
++    BOOTLOADER_DIR="$(get_pkg_directory "${BOOTLOADER}")"
+ 
+-    if [ -d $BOOTLOADER_DIR/files ]; then
+-      cp -R $BOOTLOADER_DIR/files/* $RELEASE_DIR
++    if [ -d ${BOOTLOADER_DIR}/files ]; then
++      cp -R ${BOOTLOADER_DIR}/files/* ${RELEASE_DIR}
+     fi
+ 
+-    if find_file_path bootloader/release $BOOTLOADER_DIR/release; then
+-      echo "Running $FOUND_PATH"
+-      . $FOUND_PATH
++    if find_file_path bootloader/release ${BOOTLOADER_DIR}/release; then
++      echo "Running ${FOUND_PATH}"
++      . ${FOUND_PATH}
+     fi
+   fi
+ 
+-  cp $ROOT/README* $RELEASE_DIR
+-  cp $ROOT/CHANGELOG* $RELEASE_DIR
+-  echo "$TARGET_VERSION" > $RELEASE_DIR/RELEASE
++  cp ${ROOT}/README* ${RELEASE_DIR}
++  cp ${ROOT}/CHANGELOG* ${RELEASE_DIR}
++  echo "${TARGET_VERSION}" > ${RELEASE_DIR}/RELEASE
+ 
+-  if [ ! "$MEDIACENTER" = "no" ]; then
+-    echo "Kodi commit: $(get_pkg_version $MEDIACENTER)" >> $RELEASE_DIR/RELEASE
++  if [ ! "${MEDIACENTER}" = "no" ]; then
++    echo "Kodi commit: $(get_pkg_version ${MEDIACENTER})" >> ${RELEASE_DIR}/RELEASE
+   fi
+ 
+-  mkdir -p $RELEASE_DIR/licenses
+-  cp $ROOT/licenses/* $RELEASE_DIR/licenses
++  mkdir -p ${RELEASE_DIR}/licenses
++  cp ${ROOT}/licenses/* ${RELEASE_DIR}/licenses
+ 
+-  mkdir -p $RELEASE_DIR/target
+-  cp $TARGET_IMG/$IMAGE_NAME.system $RELEASE_DIR/target/SYSTEM
+-  cp $TARGET_IMG/$IMAGE_NAME.kernel $RELEASE_DIR/target/KERNEL
++  mkdir -p ${RELEASE_DIR}/target
++  cp ${TARGET_IMG}/${IMAGE_NAME}.system ${RELEASE_DIR}/target/SYSTEM
++  cp ${TARGET_IMG}/${IMAGE_NAME}.kernel ${RELEASE_DIR}/target/KERNEL
+ 
+   # Create md5sum's
+-  ( cd $RELEASE_DIR;
++  ( cd ${RELEASE_DIR};
+     md5sum -t target/SYSTEM > target/SYSTEM.md5;
+     md5sum -t target/KERNEL > target/KERNEL.md5;
+   )
+ 
+   # Create target directory
+-  mkdir -p $TARGET_IMG
++  mkdir -p ${TARGET_IMG}
+ 
+   # Remove any previously created release tarballs
+-  rm -rf $TARGET_IMG/$IMAGE_NAME.tar
++  rm -rf ${TARGET_IMG}/${IMAGE_NAME}.tar
+ 
+   # Create release tarball
+-  tar cf $TARGET_IMG/$IMAGE_NAME.tar -C target $IMAGE_NAME
++  tar cf ${TARGET_IMG}/${IMAGE_NAME}.tar -C target ${IMAGE_NAME}
+ 
+   # Create sha256 checksum of tarball
+-  ( cd $TARGET_IMG
++  ( cd ${TARGET_IMG}
+     sha256sum ${IMAGE_NAME}.tar > ${IMAGE_NAME}.tar.sha256
+   )
+ 
+   # Create image files if requested
+-  if [[ ( "$1" = "noobs" || "$1" = "mkimage" ) && -n "$BOOTLOADER" ]]; then
++  if [[ ( "${1}" = "noobs" || "${1}" = "mkimage" ) && -n "${BOOTLOADER}" ]]; then
+     UUID_SYSTEM="$(date '+%d%m')-$(date '+%M%S')"
+     UUID_STORAGE="$(uuidgen)"
+ 
+-    DEVICE_BOARDS=$($SCRIPTS/uboot_helper "$PROJECT" "$DEVICE")
++    DEVICE_BOARDS=$(${SCRIPTS}/uboot_helper "${PROJECT}" "${DEVICE}")
+ 
+-    if [ "$BOOTLOADER" = "u-boot" -a -z "$UBOOT_SYSTEM" -a -n "$DEVICE" -a -n "$DEVICE_BOARDS" ]; then
+-      for UBOOT_SYSTEM in $DEVICE_BOARDS; do
++    if [ "${BOOTLOADER}" = "u-boot" -a -z "${UBOOT_SYSTEM}" -a -n "${DEVICE}" -a -n "${DEVICE_BOARDS}" ]; then
++      for UBOOT_SYSTEM in ${DEVICE_BOARDS}; do
+ 
+         # Re-install u-boot package
+-        rm $STAMPS_INSTALL/u-boot/install_target
+-        UBOOT_SYSTEM="$UBOOT_SYSTEM" $SCRIPTS/install u-boot
++        rm ${STAMPS_INSTALL}/u-boot/install_target
++        UBOOT_SYSTEM="${UBOOT_SYSTEM}" ${SCRIPTS}/install u-boot
+ 
+         # Re-run bootloader/release
+-        if find_file_path bootloader/release $BOOTLOADER_DIR/release; then
+-          echo "Running $FOUND_PATH"
+-          . $FOUND_PATH
++        if find_file_path bootloader/release ${BOOTLOADER_DIR}/release; then
++          echo "Running ${FOUND_PATH}"
++          . ${FOUND_PATH}
+         fi
+ 
+-        do_mkimage "$IMAGE_NAME-$UBOOT_SYSTEM"
++        do_mkimage "${IMAGE_NAME}-${UBOOT_SYSTEM}"
+       done
+     else
+       do_mkimage
+@@ -330,122 +330,122 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "noobs" ]; then
+   fi
+ 
+   # Cleanup release dir
+-  rm -rf $RELEASE_DIR
++  rm -rf ${RELEASE_DIR}
+ 
+-  if [ "$1" = "noobs" ]; then
+-    echo "Creating \"$1\" release tarball..."
++  if [ "${1}" = "noobs" ]; then
++    echo "Creating \"${1}\" release tarball..."
+ 
+-    RELEASE_DIR="$TARGET_IMG/${IMAGE_NAME}-$1"
++    RELEASE_DIR="${TARGET_IMG}/${IMAGE_NAME}-${1}"
+ 
+     # eg. LibreELEC_RPi, LibreELEC_RPi2 etc.
+-    NOOBS_DISTRO="${DISTRONAME}_${DEVICE:-$PROJECT}"
++    NOOBS_DISTRO="${DISTRONAME}_${DEVICE:-${PROJECT}}"
+ 
+     # Create release dir
+-    mkdir -p $RELEASE_DIR/${NOOBS_DISTRO}
++    mkdir -p ${RELEASE_DIR}/${NOOBS_DISTRO}
+ 
+-    if [ -f $DISTRO_DIR/$DISTRO/${DISTRONAME}_40x40.png ]; then
+-      cp -PR $DISTRO_DIR/$DISTRO/${DISTRONAME}_40x40.png $RELEASE_DIR/${NOOBS_DISTRO}/${NOOBS_DISTRO}.png
++    if [ -f ${DISTRO_DIR}/${DISTRO}/${DISTRONAME}_40x40.png ]; then
++      cp -PR ${DISTRO_DIR}/${DISTRO}/${DISTRONAME}_40x40.png ${RELEASE_DIR}/${NOOBS_DISTRO}/${NOOBS_DISTRO}.png
+     else
+-      cp -PR $DISTRO_DIR/$DISTRO/${DISTRONAME}.png $RELEASE_DIR/${NOOBS_DISTRO}/${NOOBS_DISTRO}.png
++      cp -PR ${DISTRO_DIR}/${DISTRO}/${DISTRONAME}.png ${RELEASE_DIR}/${NOOBS_DISTRO}/${NOOBS_DISTRO}.png
+     fi
+-    cp -PR $ROOT/config/noobs/os.json $RELEASE_DIR/${NOOBS_DISTRO}
+-    cp -PR $ROOT/config/noobs/partition_setup.sh $RELEASE_DIR/${NOOBS_DISTRO}
+-    cp -PR $ROOT/config/noobs/partitions.json $RELEASE_DIR/${NOOBS_DISTRO}
+-    if [ -d $DISTRO_DIR/$DISTRO/noobs/marketing ]; then
+-      tar cf $RELEASE_DIR/${NOOBS_DISTRO}/marketing.tar -C $DISTRO_DIR/$DISTRO/noobs/marketing .
++    cp -PR ${ROOT}/config/noobs/os.json ${RELEASE_DIR}/${NOOBS_DISTRO}
++    cp -PR ${ROOT}/config/noobs/partition_setup.sh ${RELEASE_DIR}/${NOOBS_DISTRO}
++    cp -PR ${ROOT}/config/noobs/partitions.json ${RELEASE_DIR}/${NOOBS_DISTRO}
++    if [ -d ${DISTRO_DIR}/${DISTRO}/noobs/marketing ]; then
++      tar cf ${RELEASE_DIR}/${NOOBS_DISTRO}/marketing.tar -C ${DISTRO_DIR}/${DISTRO}/noobs/marketing .
+     else
+-      tar cf $RELEASE_DIR/${NOOBS_DISTRO}/marketing.tar -C $ROOT/config/noobs/marketing .
++      tar cf ${RELEASE_DIR}/${NOOBS_DISTRO}/marketing.tar -C ${ROOT}/config/noobs/marketing .
+     fi
+-    cp $ROOT/README* $RELEASE_DIR/${NOOBS_DISTRO}
+-    cp $ROOT/CHANGELOG $RELEASE_DIR/${NOOBS_DISTRO}/release_notes.txt
++    cp ${ROOT}/README* ${RELEASE_DIR}/${NOOBS_DISTRO}
++    cp ${ROOT}/CHANGELOG ${RELEASE_DIR}/${NOOBS_DISTRO}/release_notes.txt
+ 
+-    sed -e "s%@DISTRONAME@%$DISTRONAME%g" \
+-        -e "s%@PROJECT@%${DEVICE:-$PROJECT}%g" \
+-        -e "s%@LIBREELEC_VERSION@%$LIBREELEC_VERSION%g" \
++    sed -e "s%@DISTRONAME@%${DISTRONAME}%g" \
++        -e "s%@PROJECT@%${DEVICE:-${PROJECT}}%g" \
++        -e "s%@LIBREELEC_VERSION@%${LIBREELEC_VERSION}%g" \
+         -e "s%@RELEASE_DATE@%$(date +%F)%g" \
+         -e "s%@KERNEL_VERSION@%$(kernel_version)%g" \
+-        -e "s%@DESCRIPTION@%$DESCRIPTION%g" \
+-        -e "s%@ROOT_PASSWORD@%$ROOT_PASSWORD%g" \
+-        -e "s%@NOOBS_SUPPORTED_MODELS@%$NOOBS_SUPPORTED_MODELS%g" \
+-        -e "s%@NOOBS_HEX@%$NOOBS_HEX%g" \
+-        -i $RELEASE_DIR/${NOOBS_DISTRO}/os.json
++        -e "s%@DESCRIPTION@%${DESCRIPTION}%g" \
++        -e "s%@ROOT_PASSWORD@%${ROOT_PASSWORD}%g" \
++        -e "s%@NOOBS_SUPPORTED_MODELS@%${NOOBS_SUPPORTED_MODELS}%g" \
++        -e "s%@NOOBS_HEX@%${NOOBS_HEX}%g" \
++        -i ${RELEASE_DIR}/${NOOBS_DISTRO}/os.json
+ 
+-    sed -e "s%@DISTRONAME@%$DISTRONAME%g" \
+-        -e "s%@PROJECT@%${DEVICE:-$PROJECT}%g" \
+-        -e "s%@SYSTEM_SIZE@%$SYSTEM_SIZE%g" \
+-        -i $RELEASE_DIR/${NOOBS_DISTRO}/partitions.json
++    sed -e "s%@DISTRONAME@%${DISTRONAME}%g" \
++        -e "s%@PROJECT@%${DEVICE:-${PROJECT}}%g" \
++        -e "s%@SYSTEM_SIZE@%${SYSTEM_SIZE}%g" \
++        -i ${RELEASE_DIR}/${NOOBS_DISTRO}/partitions.json
+ 
+     # Create System dir
+-    mkdir -p $RELEASE_DIR/${NOOBS_DISTRO}/System
++    mkdir -p ${RELEASE_DIR}/${NOOBS_DISTRO}/System
+ 
+-    BOOTLOADER_DIR="$(get_pkg_directory "$BOOTLOADER")"
+-    if [ -d $BOOTLOADER_DIR/files/3rdparty/bootloader/ ]; then
+-      cp -PR $BOOTLOADER_DIR/files/3rdparty/bootloader/* $RELEASE_DIR/${NOOBS_DISTRO}/System
++    BOOTLOADER_DIR="$(get_pkg_directory "${BOOTLOADER}")"
++    if [ -d ${BOOTLOADER_DIR}/files/3rdparty/bootloader/ ]; then
++      cp -PR ${BOOTLOADER_DIR}/files/3rdparty/bootloader/* ${RELEASE_DIR}/${NOOBS_DISTRO}/System
+     fi
+ 
+     # Copy Bootloader
+-    cp -PR $BUILD/bcm2835-bootloader-*/LICENCE* $RELEASE_DIR/${NOOBS_DISTRO}/System/
+-    cp -PR $BUILD/bcm2835-bootloader-*/bootcode.bin $RELEASE_DIR/${NOOBS_DISTRO}/System/
+-    cp -PR $BUILD/bcm2835-bootloader-*/fixup_x.dat $RELEASE_DIR/${NOOBS_DISTRO}/System/fixup.dat
+-    cp -PR $BUILD/bcm2835-bootloader-*/start_x.elf $RELEASE_DIR/${NOOBS_DISTRO}/System/start.elf
+-    [ -f $BUILD/bcm2835-bootloader-*/dt-blob.bin ] && cp -PR $BUILD/bcm2835-bootloader-*/dt-blob.bin $RELEASE_DIR/${NOOBS_DISTRO}/System/dt-blob.bin
++    cp -PR ${BUILD}/bcm2835-bootloader-*/LICENCE* ${RELEASE_DIR}/${NOOBS_DISTRO}/System/
++    cp -PR ${BUILD}/bcm2835-bootloader-*/bootcode.bin ${RELEASE_DIR}/${NOOBS_DISTRO}/System/
++    cp -PR ${BUILD}/bcm2835-bootloader-*/fixup_x.dat ${RELEASE_DIR}/${NOOBS_DISTRO}/System/fixup.dat
++    cp -PR ${BUILD}/bcm2835-bootloader-*/start_x.elf ${RELEASE_DIR}/${NOOBS_DISTRO}/System/start.elf
++    [ -f ${BUILD}/bcm2835-bootloader-*/dt-blob.bin ] && cp -PR ${BUILD}/bcm2835-bootloader-*/dt-blob.bin ${RELEASE_DIR}/${NOOBS_DISTRO}/System/dt-blob.bin
+ 
+     # Copy system files
+-    cp $TARGET_IMG/$IMAGE_NAME.system $RELEASE_DIR/${NOOBS_DISTRO}/System/SYSTEM
+-    cp $TARGET_IMG/$IMAGE_NAME.kernel $RELEASE_DIR/${NOOBS_DISTRO}/System/kernel.img
++    cp ${TARGET_IMG}/${IMAGE_NAME}.system ${RELEASE_DIR}/${NOOBS_DISTRO}/System/SYSTEM
++    cp ${TARGET_IMG}/${IMAGE_NAME}.kernel ${RELEASE_DIR}/${NOOBS_DISTRO}/System/kernel.img
+ 
+-    for dtb in $INSTALL/usr/share/bootloader/*.dtb; do
+-      if [ -f $dtb ]; then
+-        cp -PR $dtb $RELEASE_DIR/${NOOBS_DISTRO}/System
++    for dtb in ${INSTALL}/usr/share/bootloader/*.dtb; do
++      if [ -f ${dtb} ]; then
++        cp -PR ${dtb} ${RELEASE_DIR}/${NOOBS_DISTRO}/System
+       fi
+     done
+ 
+-    for overlay in $INSTALL/usr/share/bootloader/overlays/*; do
+-      if [ -f $overlay ]; then
+-        mkdir -p $RELEASE_DIR/${NOOBS_DISTRO}/System/overlays
+-        cp -PR $overlay $RELEASE_DIR/${NOOBS_DISTRO}/System/overlays
++    for overlay in ${INSTALL}/usr/share/bootloader/overlays/*; do
++      if [ -f ${overlay} ]; then
++        mkdir -p ${RELEASE_DIR}/${NOOBS_DISTRO}/System/overlays
++        cp -PR ${overlay} ${RELEASE_DIR}/${NOOBS_DISTRO}/System/overlays
+       fi
+     done
+ 
+     # Create md5sum's
+-    ( cd $RELEASE_DIR/${NOOBS_DISTRO}/System;
++    ( cd ${RELEASE_DIR}/${NOOBS_DISTRO}/System;
+       md5sum -t SYSTEM > SYSTEM.md5;
+       md5sum -t kernel.img > kernel.img.md5;
+     )
+ 
+     # Copy additional files
+-    mkdir -p $RELEASE_DIR/${NOOBS_DISTRO}/System/licenses
+-    cp $ROOT/licenses/* $RELEASE_DIR/${NOOBS_DISTRO}/System/licenses
++    mkdir -p ${RELEASE_DIR}/${NOOBS_DISTRO}/System/licenses
++    cp ${ROOT}/licenses/* ${RELEASE_DIR}/${NOOBS_DISTRO}/System/licenses
+ 
+     # Create Storage dir
+-    mkdir -p $RELEASE_DIR/${NOOBS_DISTRO}/Storage
++    mkdir -p ${RELEASE_DIR}/${NOOBS_DISTRO}/Storage
+ 
+     # Remove any previously created release tarball
+-    rm -rf $RELEASE_DIR/${NOOBS_DISTRO}/System.tar.xz
+-    rm -rf $RELEASE_DIR/${NOOBS_DISTRO}/Storage.tar.xz
++    rm -rf ${RELEASE_DIR}/${NOOBS_DISTRO}/System.tar.xz
++    rm -rf ${RELEASE_DIR}/${NOOBS_DISTRO}/Storage.tar.xz
+ 
+     # Create filesystem tarballs
+-    tar cJf $RELEASE_DIR/${NOOBS_DISTRO}/System.tar.xz -C $RELEASE_DIR/${NOOBS_DISTRO}/System/ .
+-    tar cJf $RELEASE_DIR/${NOOBS_DISTRO}/Storage.tar.xz -C $RELEASE_DIR/${NOOBS_DISTRO}/Storage/ .
++    tar cJf ${RELEASE_DIR}/${NOOBS_DISTRO}/System.tar.xz -C ${RELEASE_DIR}/${NOOBS_DISTRO}/System/ .
++    tar cJf ${RELEASE_DIR}/${NOOBS_DISTRO}/Storage.tar.xz -C ${RELEASE_DIR}/${NOOBS_DISTRO}/Storage/ .
+ 
+     # Remove filesystem dirs
+-    rm -rf $RELEASE_DIR/${NOOBS_DISTRO}/System
+-    rm -rf $RELEASE_DIR/${NOOBS_DISTRO}/Storage
++    rm -rf ${RELEASE_DIR}/${NOOBS_DISTRO}/System
++    rm -rf ${RELEASE_DIR}/${NOOBS_DISTRO}/Storage
+ 
+     # Remove any previously created release tarball
+-    rm -rf $TARGET_IMG/${IMAGE_NAME}-$1.tar
++    rm -rf ${TARGET_IMG}/${IMAGE_NAME}-${1}.tar
+ 
+     # Create release tarball
+-    tar cf $TARGET_IMG/${IMAGE_NAME}-$1.tar -C $TARGET_IMG ${IMAGE_NAME}-$1
++    tar cf ${TARGET_IMG}/${IMAGE_NAME}-${1}.tar -C ${TARGET_IMG} ${IMAGE_NAME}-${1}
+ 
+     # Create sha256 checksum of tarball
+-    ( cd $TARGET_IMG
+-      sha256sum ${IMAGE_NAME}-$1.tar > ${IMAGE_NAME}-$1.tar.sha256
++    ( cd ${TARGET_IMG}
++      sha256sum ${IMAGE_NAME}-${1}.tar > ${IMAGE_NAME}-${1}.tar.sha256
+     )
+   fi
+ 
+-  if [ -d $RELEASE_DIR ]; then
++  if [ -d ${RELEASE_DIR} ]; then
+     # Cleanup release dir
+-    rm -rf $RELEASE_DIR
++    rm -rf ${RELEASE_DIR}
+   fi
+ fi
+diff --git a/scripts/install b/scripts/install
+index e06613cdbf9..a2fdcf6a169 100755
+--- a/scripts/install
++++ b/scripts/install
+@@ -5,23 +5,23 @@
+ # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+ # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+ 
+-. config/options "$1"
++. config/options "${1}"
+ 
+-if [ -z "$1" ]; then
+-  die "usage: $0 package_name [parent_pkg]"
++if [ -z "${1}" ]; then
++  die "usage: ${0} package_name [parent_pkg]"
+ fi
+ 
+ if [ -z "${PKG_NAME}" ]; then
+   die "$(print_color CLR_ERROR "${1}: no package.mk file found")"
+ fi
+ 
+-if [ -z "$INSTALL" ] ; then
+-  die "error: '\$INSTALL' not set! this script is not intended to be run manually"
++if [ -z "${INSTALL}" ] ; then
++  die "error: '\${INSTALL}' not set! this script is not intended to be run manually"
+ fi
+ 
+-if [ -n "$PKG_ARCH" ]; then
+-  listcontains "$PKG_ARCH" "!$TARGET_ARCH" && exit 0
+-  listcontains "$PKG_ARCH" "$TARGET_ARCH" || listcontains "$PKG_ARCH" "any" || exit 0
++if [ -n "${PKG_ARCH}" ]; then
++  listcontains "${PKG_ARCH}" "!${TARGET_ARCH}" && exit 0
++  listcontains "${PKG_ARCH}" "${TARGET_ARCH}" || listcontains "${PKG_ARCH}" "any" || exit 0
+ fi
+ 
+ # set defaults
+@@ -30,116 +30,116 @@ if [ "${1//:/}" != "${1}" ]; then
+ else
+   TARGET=
+ fi
+-[ -z "$TARGET" ] && TARGET="target"
++[ -z "${TARGET}" ] && TARGET="target"
+ PARENT_PKG="${2:-${PKG_NAME}:${TARGET}}"
+ 
+ pkg_lock "${PKG_NAME}:${TARGET}" "install" "${PARENT_PKG}"
+ 
+-STAMP=$STAMPS_INSTALL/$PKG_NAME/install_$TARGET
+-[ -f $STAMP ] && pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "install" "already installed"
+-[ -f $STAMP ] && exit 0
++STAMP=${STAMPS_INSTALL}/${PKG_NAME}/install_${TARGET}
++[ -f ${STAMP} ] && pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "install" "already installed"
++[ -f ${STAMP} ] && exit 0
+ 
+-mkdir -p $STAMPS_INSTALL/$PKG_NAME
++mkdir -p ${STAMPS_INSTALL}/${PKG_NAME}
+ 
+-$SCRIPTS/build "${1}" "${PARENT_PKG}"
++${SCRIPTS}/build "${1}" "${PARENT_PKG}"
+ 
+-if [ "$TARGET" = target ] ; then
+-  for p in $PKG_DEPENDS_TARGET; do
+-    $SCRIPTS/install "${p}" "${PARENT_PKG}"
++if [ "${TARGET}" = target ] ; then
++  for p in ${PKG_DEPENDS_TARGET}; do
++    ${SCRIPTS}/install "${p}" "${PARENT_PKG}"
+   done
+-elif [ "$TARGET" = init ] ; then
+-  for p in $PKG_DEPENDS_INIT; do
+-    $SCRIPTS/install "${p}" "${PARENT_PKG}"
++elif [ "${TARGET}" = init ] ; then
++  for p in ${PKG_DEPENDS_INIT}; do
++    ${SCRIPTS}/install "${p}" "${PARENT_PKG}"
+   done
+-  INSTALL=$BUILD/initramfs
++  INSTALL=${BUILD}/initramfs
+ fi
+ 
+ pkg_lock_status "ACTIVE" "${PKG_NAME}:${TARGET}" "install"
+ 
+ build_msg "CLR_INSTALL" "INSTALL" "${PKG_NAME} $(print_color CLR_TARGET "(${TARGET})")" "indent"
+ 
+-mkdir -p $INSTALL
++mkdir -p ${INSTALL}
+ 
+-if [ "$TARGET" = target ] ; then
+-  for PKG_TMP_DIR in $PKG_DIR \
+-                      $PROJECT_DIR/$PROJECT/packages/$PKG_NAME \
+-                      $PROJECT_DIR/$PROJECT/devices/$DEVICE/packages/$PKG_NAME \
+-                      ; do
++if [ "${TARGET}" = target ] ; then
++  for PKG_TMP_DIR in ${PKG_DIR} \
++                     ${PROJECT_DIR}/${PROJECT}/packages/${PKG_NAME} \
++                     ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/packages/${PKG_NAME} \
++                     ; do
+ 
+-    [ -d $PKG_TMP_DIR ] || continue
++    [ -d ${PKG_TMP_DIR} ] || continue
+ 
+-    if [ -d $PKG_TMP_DIR/profile.d ]; then
+-      mkdir -p $INSTALL/etc/profile.d
+-      cp $PKG_TMP_DIR/profile.d/*.conf $INSTALL/etc/profile.d
++    if [ -d ${PKG_TMP_DIR}/profile.d ]; then
++      mkdir -p ${INSTALL}/etc/profile.d
++      cp ${PKG_TMP_DIR}/profile.d/*.conf ${INSTALL}/etc/profile.d
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/tmpfiles.d ]; then
+-      mkdir -p $INSTALL/usr/lib/tmpfiles.d
+-      cp $PKG_TMP_DIR/tmpfiles.d/*.conf $INSTALL/usr/lib/tmpfiles.d
++    if [ -d ${PKG_TMP_DIR}/tmpfiles.d ]; then
++      mkdir -p ${INSTALL}/usr/lib/tmpfiles.d
++      cp ${PKG_TMP_DIR}/tmpfiles.d/*.conf ${INSTALL}/usr/lib/tmpfiles.d
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/system.d ]; then
+-      mkdir -p $INSTALL/usr/lib/systemd/system
+-      cp $PKG_TMP_DIR/system.d/*.* $INSTALL/usr/lib/systemd/system
++    if [ -d ${PKG_TMP_DIR}/system.d ]; then
++      mkdir -p ${INSTALL}/usr/lib/systemd/system
++      cp ${PKG_TMP_DIR}/system.d/*.* ${INSTALL}/usr/lib/systemd/system
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/udev.d ]; then
+-      mkdir -p $INSTALL/usr/lib/udev/rules.d
+-      cp $PKG_TMP_DIR/udev.d/*.rules $INSTALL/usr/lib/udev/rules.d
++    if [ -d ${PKG_TMP_DIR}/udev.d ]; then
++      mkdir -p ${INSTALL}/usr/lib/udev/rules.d
++      cp ${PKG_TMP_DIR}/udev.d/*.rules ${INSTALL}/usr/lib/udev/rules.d
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/sleep.d ]; then
+-      mkdir -p $INSTALL/usr/lib/systemd/system-sleep
+-      cp $PKG_TMP_DIR/sleep.d/* $INSTALL/usr/lib/systemd/system-sleep
++    if [ -d ${PKG_TMP_DIR}/sleep.d ]; then
++      mkdir -p ${INSTALL}/usr/lib/systemd/system-sleep
++      cp ${PKG_TMP_DIR}/sleep.d/* ${INSTALL}/usr/lib/systemd/system-sleep
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/sleep.d.serial ]; then
+-      mkdir -p $INSTALL/usr/lib/systemd/system-sleep.serial
+-      cp $PKG_TMP_DIR/sleep.d.serial/* $INSTALL/usr/lib/systemd/system-sleep.serial
++    if [ -d ${PKG_TMP_DIR}/sleep.d.serial ]; then
++      mkdir -p ${INSTALL}/usr/lib/systemd/system-sleep.serial
++      cp ${PKG_TMP_DIR}/sleep.d.serial/* ${INSTALL}/usr/lib/systemd/system-sleep.serial
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/sysctl.d ]; then
+-      mkdir -p $INSTALL/usr/lib/sysctl.d
+-      cp $PKG_TMP_DIR/sysctl.d/*.conf $INSTALL/usr/lib/sysctl.d
++    if [ -d ${PKG_TMP_DIR}/sysctl.d ]; then
++      mkdir -p ${INSTALL}/usr/lib/sysctl.d
++      cp ${PKG_TMP_DIR}/sysctl.d/*.conf ${INSTALL}/usr/lib/sysctl.d
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/modules-load.d ]; then
+-      mkdir -p $INSTALL/usr/lib/modules-load.d
+-      cp $PKG_TMP_DIR/modules-load.d/*.conf $INSTALL/usr/lib/modules-load.d
++    if [ -d ${PKG_TMP_DIR}/modules-load.d ]; then
++      mkdir -p ${INSTALL}/usr/lib/modules-load.d
++      cp ${PKG_TMP_DIR}/modules-load.d/*.conf ${INSTALL}/usr/lib/modules-load.d
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/sysconf.d ]; then
+-      mkdir -p $INSTALL/etc/sysconf.d
+-      cp $PKG_TMP_DIR/sysconf.d/*.conf $INSTALL/etc/sysconf.d
++    if [ -d ${PKG_TMP_DIR}/sysconf.d ]; then
++      mkdir -p ${INSTALL}/etc/sysconf.d
++      cp ${PKG_TMP_DIR}/sysconf.d/*.conf ${INSTALL}/etc/sysconf.d
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/debug.d ]; then
+-      mkdir -p $INSTALL/usr/share/debugconf
+-      cp $PKG_TMP_DIR/debug.d/*.conf $INSTALL/usr/share/debugconf
++    if [ -d ${PKG_TMP_DIR}/debug.d ]; then
++      mkdir -p ${INSTALL}/usr/share/debugconf
++      cp ${PKG_TMP_DIR}/debug.d/*.conf ${INSTALL}/usr/share/debugconf
+     fi
+ 
+-    if [ -d $PKG_TMP_DIR/modprobe.d ]; then
+-      mkdir -p $INSTALL/usr/lib/modprobe.d
+-      cp $PKG_TMP_DIR/modprobe.d/*.conf $INSTALL/usr/lib/modprobe.d
++    if [ -d ${PKG_TMP_DIR}/modprobe.d ]; then
++      mkdir -p ${INSTALL}/usr/lib/modprobe.d
++      cp ${PKG_TMP_DIR}/modprobe.d/*.conf ${INSTALL}/usr/lib/modprobe.d
+     fi
+   done
+ fi
+ 
+ # install
+-if [ "$TARGET" = target ] ; then
++if [ "${TARGET}" = target ] ; then
+   pkg_call_exists pre_install && pkg_call pre_install
+ fi
+ 
+-if [ "$TARGET" = "target" -a -d $PKG_BUILD/.install_pkg ]; then
+-  cp -PR $PKG_BUILD/.install_pkg/* $INSTALL
+-elif [ "$TARGET" = "init" -a -d $PKG_BUILD/.install_init ]; then
+-  cp -PR $PKG_BUILD/.install_init/* $INSTALL
++if [ "${TARGET}" = "target" -a -d ${PKG_BUILD}/.install_pkg ]; then
++  cp -PR ${PKG_BUILD}/.install_pkg/* ${INSTALL}
++elif [ "${TARGET}" = "init" -a -d ${PKG_BUILD}/.install_init ]; then
++  cp -PR ${PKG_BUILD}/.install_init/* ${INSTALL}
+ fi
+ 
+-if [ "$TARGET" = target ] ; then
++if [ "${TARGET}" = target ] ; then
+   pkg_call_exists post_install && pkg_call post_install
+ fi
+ 
+-touch $STAMP
++touch ${STAMP}
+ 
+ pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "install" "installed"
+diff --git a/scripts/install_addon b/scripts/install_addon
+index 0a6220328ac..c6d006676eb 100755
+--- a/scripts/install_addon
++++ b/scripts/install_addon
+@@ -3,72 +3,72 @@
+ # SPDX-License-Identifier: GPL-2.0
+ # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
+ 
+-. config/options $1
++. config/options "${1}"
+ 
+ # Make sure we have a value for STRIP
+ setup_toolchain target
+ 
+-[ -n "$2" ] && PKG_ADDON_ID=$2
++[ -n "${2}" ] && PKG_ADDON_ID=${2}
+ 
+-ADDON_DIRECTORY="$ADDON_BUILD/$PKG_ADDON_ID"
++ADDON_DIRECTORY="${ADDON_BUILD}/${PKG_ADDON_ID}"
+ 
+-install_addon_files "$ADDON_DIRECTORY"
++install_addon_files "${ADDON_DIRECTORY}"
+ 
+-debug_strip "$ADDON_DIRECTORY"
++debug_strip "${ADDON_DIRECTORY}"
+ 
+ # pack_addon()
+-ADDON_INSTALL_DIR="$TARGET_IMG/$ADDONS/$ADDON_VERSION/${DEVICE:-$PROJECT}/$TARGET_ARCH/$PKG_ADDON_ID"
+-ADDONVER="$(xmlstarlet sel -t -v "/addon/@version" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)"
++ADDON_INSTALL_DIR="${TARGET_IMG}/${ADDONS}/${ADDON_VERSION}/${DEVICE:-${PROJECT}}/${TARGET_ARCH}/${PKG_ADDON_ID}"
++ADDONVER="$(xmlstarlet sel -t -v "/addon/@version" ${ADDON_BUILD}/${PKG_ADDON_ID}/addon.xml)"
+ 
+-if [ -f $ADDON_INSTALL_DIR/$PKG_ADDON_ID-$ADDONVER.zip ]; then
+-  if [ "$ADDON_OVERWRITE" = "yes" ]; then
+-    rm $ADDON_INSTALL_DIR/$PKG_ADDON_ID-$ADDONVER.zip
++if [ -f ${ADDON_INSTALL_DIR}/${PKG_ADDON_ID}-${ADDONVER}.zip ]; then
++  if [ "${ADDON_OVERWRITE}" = "yes" ]; then
++    rm ${ADDON_INSTALL_DIR}/${PKG_ADDON_ID}-${ADDONVER}.zip
+   else
+     build_msg "CLR_WARNING" "*** WARNING: ${PKG_ADDON_ID}-${ADDONVER}.zip already exists. Not overwriting it. ***"
+     exit 0
+   fi
+ fi
+ 
+-cd $ADDON_BUILD
++cd ${ADDON_BUILD}
+ build_msg "CLR_INFO" "*** compressing addon ${PKG_ADDON_ID} ... ***"
+-$TOOLCHAIN/bin/7za a -l -mx9 -bsp0 -bso0 -tzip $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID
++${TOOLCHAIN}/bin/7za a -l -mx9 -bsp0 -bso0 -tzip ${PKG_ADDON_ID}-${ADDONVER}.zip ${PKG_ADDON_ID}
+ cd - &>/dev/null
+ 
+-mkdir -p $ADDON_INSTALL_DIR
+-cp $ADDON_BUILD/$PKG_ADDON_ID-$ADDONVER.zip $ADDON_INSTALL_DIR
+-if [ -f $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt ]; then
+-  cp $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt $ADDON_INSTALL_DIR/changelog-$ADDONVER.txt
++mkdir -p ${ADDON_INSTALL_DIR}
++cp ${ADDON_BUILD}/${PKG_ADDON_ID}-${ADDONVER}.zip ${ADDON_INSTALL_DIR}
++if [ -f ${ADDON_BUILD}/${PKG_ADDON_ID}/changelog.txt ]; then
++  cp ${ADDON_BUILD}/${PKG_ADDON_ID}/changelog.txt ${ADDON_INSTALL_DIR}/changelog-${ADDONVER}.txt
+ fi
+-if [ -f $ADDON_BUILD/$PKG_ADDON_ID/resources/icon.png ]; then
+-  mkdir -p $ADDON_INSTALL_DIR/resources
+-  cp $ADDON_BUILD/$PKG_ADDON_ID/resources/icon.png $ADDON_INSTALL_DIR/resources/icon.png
++if [ -f ${ADDON_BUILD}/${PKG_ADDON_ID}/resources/icon.png ]; then
++  mkdir -p ${ADDON_INSTALL_DIR}/resources
++  cp ${ADDON_BUILD}/${PKG_ADDON_ID}/resources/icon.png ${ADDON_INSTALL_DIR}/resources/icon.png
+ fi
+ 
+ # workaround for kodi pvr addons
+-if [ -f $ADDON_BUILD/$PKG_ADDON_ID/icon.png ]; then
+-  cp $ADDON_BUILD/$PKG_ADDON_ID/icon.png $ADDON_INSTALL_DIR/icon.png
++if [ -f ${ADDON_BUILD}/${PKG_ADDON_ID}/icon.png ]; then
++  cp ${ADDON_BUILD}/${PKG_ADDON_ID}/icon.png ${ADDON_INSTALL_DIR}/icon.png
+ fi
+ 
+-if [ -f $ADDON_BUILD/$PKG_ADDON_ID/resources/fanart.png ]; then
+-  mkdir -p $ADDON_INSTALL_DIR/resources
+-  cp $ADDON_BUILD/$PKG_ADDON_ID/resources/fanart.png $ADDON_INSTALL_DIR/resources/fanart.png
++if [ -f ${ADDON_BUILD}/${PKG_ADDON_ID}/resources/fanart.png ]; then
++  mkdir -p ${ADDON_INSTALL_DIR}/resources
++  cp ${ADDON_BUILD}/${PKG_ADDON_ID}/resources/fanart.png ${ADDON_INSTALL_DIR}/resources/fanart.png
+ fi
+-for f in $ADDON_BUILD/$PKG_ADDON_ID/resources/screenshot-*.{jpg,png}; do
+-  if [ -f "$f" ]; then
+-    mkdir -p $ADDON_INSTALL_DIR/resources
+-    cp $f $ADDON_INSTALL_DIR/resources
++for f in ${ADDON_BUILD}/${PKG_ADDON_ID}/resources/screenshot-*.{jpg,png}; do
++  if [ -f "${f}" ]; then
++    mkdir -p ${ADDON_INSTALL_DIR}/resources
++    cp ${f} ${ADDON_INSTALL_DIR}/resources
+   fi
+ done
+ 
+ # Jenkins add-on build
+-if [ "$ADDON_JENKINS" = "yes" ]; then
+-  ADDON_JENKINS_DIR="$TARGET_IMG/jenkins"
+-  ADDON_JENKINS_ADDON_NAME="$ADDON_VERSION-${DEVICE:-$PROJECT}-$TARGET_ARCH-$PKG_ADDON_ID-$ADDONVER"
+-  mkdir -p "$ADDON_JENKINS_DIR"
+-  cd $ADDON_INSTALL_DIR
+-  $TOOLCHAIN/bin/7za a -l -mx0 -bsp0 -bso0 -tzip $ADDON_JENKINS_DIR/$ADDON_JENKINS_ADDON_NAME.zip $PKG_ADDON_ID-$ADDONVER.zip resources/
+-  ( cd $ADDON_JENKINS_DIR
+-    sha256sum $ADDON_JENKINS_ADDON_NAME.zip > $ADDON_JENKINS_ADDON_NAME.zip.sha256
++if [ "${ADDON_JENKINS}" = "yes" ]; then
++  ADDON_JENKINS_DIR="${TARGET_IMG}/jenkins"
++  ADDON_JENKINS_ADDON_NAME="${ADDON_VERSION}-${DEVICE:-${PROJECT}}-${TARGET_ARCH}-${PKG_ADDON_ID}-${ADDONVER}"
++  mkdir -p "${ADDON_JENKINS_DIR}"
++  cd ${ADDON_INSTALL_DIR}
++  ${TOOLCHAIN}/bin/7za a -l -mx0 -bsp0 -bso0 -tzip ${ADDON_JENKINS_DIR}/${ADDON_JENKINS_ADDON_NAME}.zip ${PKG_ADDON_ID}-${ADDONVER}.zip resources/
++  ( cd ${ADDON_JENKINS_DIR}
++    sha256sum ${ADDON_JENKINS_ADDON_NAME}.zip > ${ADDON_JENKINS_ADDON_NAME}.zip.sha256
+   )
+   build_msg "CLR_INFO" "*** creating ${ADDON_JENKINS_ADDON_NAME}.zip for Jenkins complete ***"
+ else
+diff --git a/scripts/mkimage b/scripts/mkimage
+index 6e9ef996ce1..6198fb7aa6b 100755
+--- a/scripts/mkimage
++++ b/scripts/mkimage
+@@ -5,7 +5,7 @@
+ # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+ 
+ ################################################################################
+-# variables such as $ROOT $PATH etc... that are required for this
++# variables such as ${ROOT} ${PATH} etc... that are required for this
+ # script to work must be passed via env ... in scripts/image
+ ################################################################################
+ 
+@@ -284,7 +284,7 @@ fsck -n "${LE_TMP}/part1.fat" >"${SAVE_ERROR}" 2>&1 || show_error
+ # create virtual image
+ if [ "${PROJECT}" = "Generic" ]; then
+   echo "image: creating open virtual appliance..."
+-  # duplicate $DISK so anything we do to it directly doesn't effect original
++  # duplicate ${DISK} so anything we do to it directly doesn't effect original
+   dd if="${DISK}" of="${DISK_BASENAME}.tmp" bs=1M >"${SAVE_ERROR}" 2>&1 || show_error
+   # change syslinux default to 'run'
+   echo "image: modifying fs on part1 for open virtual appliance..."
+@@ -297,11 +297,11 @@ if [ "${PROJECT}" = "Generic" ]; then
+   # merge modified part1 back to tmp disk image
+   echo "image: merging part1 back to open virtual appliance..."
+   dd if="${LE_TMP}/part1.fat" of="${DISK_BASENAME}.tmp" bs=512 seek="${SYSTEM_PART_START}" conv=fsync,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+-  # create vmdk from tmp $DISK
++  # create vmdk from tmp ${DISK}
+   qemu-img convert -O vmdk -o subformat=streamOptimized "${DISK_BASENAME}.tmp" "${DISK_BASENAME}.vmdk"
+   # generate ovf from template
+   sed -e "s,@DISTRO@,${DISTRO},g" -e "s,@DISK@,${IMAGE_NAME},g" \
+-      -e "s,@OVA_SIZE@,$(($OVA_SIZE*1024*1024)),g" \
++      -e "s,@OVA_SIZE@,$((${OVA_SIZE}*1024*1024)),g" \
+       "${PROJECT_DIR}/${PROJECT}/config/ovf.template" > "${DISK_BASENAME}.ovf"
+   # combine ovf and vmdk into official ova
+   tar -C "${TARGET_IMG}" -cf "${DISK_BASENAME}.ova" "${IMAGE_NAME}.ovf" "${IMAGE_NAME}.vmdk"
+@@ -310,7 +310,7 @@ if [ "${PROJECT}" = "Generic" ]; then
+     sha256sum "${IMAGE_NAME}.ova" > "${IMAGE_NAME}.ova.sha256"
+   )
+   echo "image: cleaning up..."
+-  # remove tmp $DISK, vmdk and ovf
++  # remove tmp ${DISK}, vmdk and ovf
+   rm "${DISK_BASENAME}.tmp" "${DISK_BASENAME}.vmdk" "${DISK_BASENAME}.ovf"
+   # set owner
+   [ -n "${SUDO_USER}" ] && chown "${SUDO_USER}:" "${DISK_BASENAME}.ova"
+diff --git a/scripts/unpack b/scripts/unpack
+index 1f4342a5f4b..a428f254c72 100755
+--- a/scripts/unpack
++++ b/scripts/unpack
+@@ -4,10 +4,10 @@
+ # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+ # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+ 
+-. config/options "$1"
++. config/options "${1}"
+ 
+-if [ -z "$1" ]; then
+-  die "usage: $0 package_name [parent_pkg]"
++if [ -z "${1}" ]; then
++  die "usage: ${0} package_name [parent_pkg]"
+ fi
+ 
+ if [ -z "${PKG_NAME}" ]; then
+@@ -19,37 +19,37 @@ pkg_lock "${PKG_NAME}" "unpack" "${PARENT_PKG}"
+ 
+ pkg_lock_status "ACTIVE" "${PKG_NAME}" "unpack"
+ 
+-$SCRIPTS/get "${PKG_NAME}"
++${SCRIPTS}/get "${PKG_NAME}"
+ 
+-STAMP="$PKG_BUILD/.libreelec-unpack"
++STAMP="${PKG_BUILD}/.libreelec-unpack"
+ 
+-mkdir -p $BUILD
++mkdir -p ${BUILD}
+ 
+ # Perform a wildcard match on the package to ensure old versions are cleaned too
+ PKG_DEEPHASH=
+-for i in $BUILD/${PKG_NAME}-*; do
+-  if [ -d $i -a -f "$i/.libreelec-unpack" ] ; then
+-    . "$i/.libreelec-unpack"
+-    if [ "$STAMP_PKG_NAME" = "${PKG_NAME}" ]; then
++for i in ${BUILD}/${PKG_NAME}-*; do
++  if [ -d ${i} -a -f "${i}/.libreelec-unpack" ] ; then
++    . "${i}/.libreelec-unpack"
++    if [ "${STAMP_PKG_NAME}" = "${PKG_NAME}" ]; then
+       [ -z "${PKG_DEEPHASH}" ] && PKG_DEEPHASH=$(calculate_stamp)
+-      if [ ! "$PKG_DEEPHASH" = "$STAMP_PKG_DEEPHASH" ] ; then
+-        $SCRIPTS/clean "${PKG_NAME}"
++      if [ ! "${PKG_DEEPHASH}" = "${STAMP_PKG_DEEPHASH}" ] ; then
++        ${SCRIPTS}/clean "${PKG_NAME}"
+       fi
+     fi
+   fi
+ done
+ 
+-if [ -d "$PKG_BUILD" -a ! -f "$STAMP" ]; then
++if [ -d "${PKG_BUILD}" -a ! -f "${STAMP}" ]; then
+   # stale pkg build dir
+-  $SCRIPTS/clean "${PKG_NAME}"
++  ${SCRIPTS}/clean "${PKG_NAME}"
+ fi
+ 
+-if [ -f "$STAMP" ]; then
++if [ -f "${STAMP}" ]; then
+   pkg_lock_status "UNLOCK" "${PKG_NAME}" "unpack" "already unpacked"
+   exit 0
+ fi
+ 
+-if [ -d "$SOURCES/${PKG_NAME}" -o -d "$PKG_DIR/sources" ]; then
++if [ -d "${SOURCES}/${PKG_NAME}" -o -d "${PKG_DIR}/sources" ]; then
+   build_msg "CLR_UNPACK" "UNPACK" "${PKG_NAME}" "indent"
+ 
+   # unpack into a unique location as unpacking into a single ${BUILD} directory is not thread-safe
+@@ -65,7 +65,7 @@ if [ -d "$SOURCES/${PKG_NAME}" -o -d "$PKG_DIR/sources" ]; then
+       pkg_call unpack
+     )
+   else
+-    if [ -n "$PKG_URL" ]; then
++    if [ -n "${PKG_URL}" ]; then
+       ${SCRIPTS}/extract "${PKG_NAME}" "${PKG_UNPACK_DIR}"
+     fi
+   fi
+@@ -89,8 +89,8 @@ if [ -d "$SOURCES/${PKG_NAME}" -o -d "$PKG_DIR/sources" ]; then
+ 
+   [ ! -d "${PKG_UNPACK_DIR}/.intermediate" ] && mkdir -p "${PKG_UNPACK_DIR}/.intermediate"
+ 
+-  if [ -d "$PKG_DIR/sources" ]; then
+-    cp -PRf "$PKG_DIR/sources/"* "${PKG_UNPACK_DIR}/.intermediate"
++  if [ -d "${PKG_DIR}/sources" ]; then
++    cp -PRf "${PKG_DIR}/sources/"* "${PKG_UNPACK_DIR}/.intermediate"
+   fi
+ 
+   echo "INFO_PKG_NAME=\"${PKG_NAME}\"" > "${PKG_UNPACK_DIR}/.intermediate/.libreelec-package"
+@@ -106,69 +106,69 @@ if [ -d "$SOURCES/${PKG_NAME}" -o -d "$PKG_DIR/sources" ]; then
+   if [ "${PKG_SKIP_PATCHES}" != "yes" ]; then
+     pkg_call_exists pre_patch && pkg_call pre_patch
+ 
+-    if [ "$TARGET_ARCH" = "x86_64" ]; then
++    if [ "${TARGET_ARCH}" = "x86_64" ]; then
+       PATCH_ARCH="x86"
+     else
+-      PATCH_ARCH="${TARGET_PATCH_ARCH:-$TARGET_ARCH}"
++      PATCH_ARCH="${TARGET_PATCH_ARCH:-${TARGET_ARCH}}"
+     fi
+ 
+     PATCH_DIRS_PKG=""
+     PATCH_DIRS_PRJ=""
+-    if [ -n "$PKG_PATCH_DIRS" ]; then
+-      for patch_dir in $PKG_PATCH_DIRS; do
+-        [ -d $PKG_DIR/patches/$patch_dir ] && PATCH_DIRS_PKG="$PATCH_DIRS_PKG $PKG_DIR/patches/$patch_dir/*.patch"
+-        [ -d $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$patch_dir ] && PATCH_DIRS_PRJ="$PATCH_DIRS_PRJ $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$patch_dir/*.patch"
+-        [ -d $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME/$patch_dir ] && PATCH_DIRS_PRJ="$PATCH_DIRS_PRJ $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME/$patch_dir/*.patch"
++    if [ -n "${PKG_PATCH_DIRS}" ]; then
++      for patch_dir in ${PKG_PATCH_DIRS}; do
++        [ -d ${PKG_DIR}/patches/${patch_dir} ] && PATCH_DIRS_PKG+="${PATCH_DIRS_PKG} ${PKG_DIR}/patches/${patch_dir}/*.patch"
++        [ -d ${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${patch_dir} ] && PATCH_DIRS_PRJ="${PATCH_DIRS_PRJ} ${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${patch_dir}/*.patch"
++        [ -d ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/${PKG_NAME}/${patch_dir} ] && PATCH_DIRS_PRJ="${PATCH_DIRS_PRJ} ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/${PKG_NAME}/${patch_dir}/*.patch"
+       done
+     fi
+ 
+-    for i in $PKG_DIR/patches/*.patch \
+-             $PKG_DIR/patches/$PATCH_ARCH/*.patch \
+-             $PATCH_DIRS_PKG \
+-             $PKG_DIR/patches/$PKG_VERSION/*.patch \
+-             $PKG_DIR/patches/$PKG_VERSION/$PATCH_ARCH/*.patch \
+-             $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/*.patch \
+-             $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PATCH_ARCH/*.patch \
+-             $PATCH_DIRS_PRJ \
+-             $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PKG_VERSION/*.patch \
+-             $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME/*.patch; do
++    for i in ${PKG_DIR}/patches/*.patch \
++             ${PKG_DIR}/patches/${PATCH_ARCH}/*.patch \
++             ${PATCH_DIRS_PKG} \
++             ${PKG_DIR}/patches/${PKG_VERSION}/*.patch \
++             ${PKG_DIR}/patches/${PKG_VERSION}/${PATCH_ARCH}/*.patch \
++             ${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/*.patch \
++             ${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${PATCH_ARCH}/*.patch \
++             ${PATCH_DIRS_PRJ} \
++             ${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${PKG_VERSION}/*.patch \
++             ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/${PKG_NAME}/*.patch; do
+ 
+-      thisdir="$(dirname "$i")"
++      thisdir="$(dirname "${i}")"
+ 
+-      if [ "$thisdir" = "$PKG_DIR/patches" ]; then
++      if [ "${thisdir}" = "${PKG_DIR}/patches" ]; then
+         PATCH_DESC="(common)"
+-      elif [ "$thisdir" = "$PKG_DIR/patches/$PATCH_ARCH" ]; then
+-        PATCH_DESC="(common - $PATCH_ARCH)"
+-      elif [ "$thisdir" = "$PKG_DIR/patches/$PKG_VERSION" ]; then
+-        PATCH_DESC="(common - $PKG_VERSION)"
+-      elif [ "$thisdir" = "$PKG_DIR/patches/$PKG_VERSION/$PATCH_ARCH" ]; then
+-        PATCH_DESC="($PKG_VERSION - $PATCH_ARCH)"
+-      elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME" ]; then
++      elif [ "${thisdir}" = "${PKG_DIR}/patches/${PATCH_ARCH}" ]; then
++        PATCH_DESC="(common - ${PATCH_ARCH})"
++      elif [ "${thisdir}" = "${PKG_DIR}/patches/${PKG_VERSION}" ]; then
++        PATCH_DESC="(common - ${PKG_VERSION})"
++      elif [ "${thisdir}" = "${PKG_DIR}/patches/${PKG_VERSION}/${PATCH_ARCH}" ]; then
++        PATCH_DESC="(${PKG_VERSION} - ${PATCH_ARCH})"
++      elif [ "${thisdir}" = "${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}" ]; then
+         PATCH_DESC="(project)"
+-      elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PATCH_ARCH" ]; then
+-        PATCH_DESC="(project - $PATCH_ARCH)"
+-      elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PKG_VERSION" ]; then
+-        PATCH_DESC="(project - $PKG_VERSION)"
+-      elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME" ]; then
++      elif [ "${thisdir}" = "${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${PATCH_ARCH}" ]; then
++        PATCH_DESC="(project - ${PATCH_ARCH})"
++      elif [ "${thisdir}" = "${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${PKG_VERSION}" ]; then
++        PATCH_DESC="(project - ${PKG_VERSION})"
++      elif [ "${thisdir}" = "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/${PKG_NAME}" ]; then
+         PATCH_DESC="(device)"
+       else
+-        if [[ "$thisdir" =~ ^$PKG_DIR/.* ]]; then
+-          PATCH_DESC="(common - $(basename "$thisdir"))"
+-        elif [[ "$thisdir" =~ ^$PROJECT_DIR/.*/devices/.* ]]; then
+-          PATCH_DESC="(device - $(basename "$thisdir"))"
+-        elif [[ "$thisdir" =~ ^$PROJECT_DIR/.* ]]; then
+-          PATCH_DESC="(project - $(basename "$thisdir"))"
++        if [[ "${thisdir}" =~ ^${PKG_DIR}/.* ]]; then
++          PATCH_DESC="(common - $(basename "${thisdir}"))"
++        elif [[ "${thisdir}" =~ ^${PROJECT_DIR}/.*/devices/.* ]]; then
++          PATCH_DESC="(device - $(basename "${thisdir}"))"
++        elif [[ "${thisdir}" =~ ^${PROJECT_DIR}/.* ]]; then
++          PATCH_DESC="(project - $(basename "${thisdir}"))"
+         else
+-          PATCH_DESC="(unknown - $(basename "$thisdir"))"
++          PATCH_DESC="(unknown - $(basename "${thisdir}"))"
+         fi
+       fi
+ 
+-      if [ -f "$i" ]; then
++      if [ -f "${i}" ]; then
+         build_msg "CLR_APPLY_PATCH" "APPLY PATCH $(print_color "CLR_PATCH_DESC" "${PATCH_DESC}")" "${i#${ROOT}/}"
+-        if grep -qE '^GIT binary patch$|^rename from|^rename to' $i; then
+-          cat $i | git apply --directory=$(echo "$PKG_BUILD" | cut -f1 -d\ ) -p1 --verbose --whitespace=nowarn --unsafe-paths >&$VERBOSE_OUT
++        if grep -qE '^GIT binary patch$|^rename from|^rename to' ${i}; then
++          cat ${i} | git apply --directory=$(echo "${PKG_BUILD}" | cut -f1 -d\ ) -p1 --verbose --whitespace=nowarn --unsafe-paths >&${VERBOSE_OUT}
+         else
+-          cat $i | patch -d $(echo "$PKG_BUILD" | cut -f1 -d\ ) -p1 >&$VERBOSE_OUT
++          cat ${i} | patch -d $(echo "${PKG_BUILD}" | cut -f1 -d\ ) -p1 >&${VERBOSE_OUT}
+         fi
+       fi
+     done
+@@ -176,27 +176,27 @@ if [ -d "$SOURCES/${PKG_NAME}" -o -d "$PKG_DIR/sources" ]; then
+     pkg_call_exists post_patch && pkg_call post_patch
+   fi
+ 
+-  if [ ! "$PKG_NAME" = "configtools" ] ; then
+-    for config in $(find "$PKG_BUILD" -name config.guess | sed 's/config.guess//'); do
++  if [ ! "${PKG_NAME}" = "configtools" ] ; then
++    for config in $(find "${PKG_BUILD}" -name config.guess | sed 's/config.guess//'); do
+       build_msg "CLR_FIXCONFIG" "FIXCONFIG" "${config}"
+ 
+-      [ -f "$config/config.guess" -a -f $TOOLCHAIN/configtools/config.guess ] && \
+-        cp -f $TOOLCHAIN/configtools/config.guess $config
+-      [ -f "$config/config.sub" -a -f $TOOLCHAIN/configtools/config.sub ] && \
+-        cp -f $TOOLCHAIN/configtools/config.sub $config
++      [ -f "${config}/config.guess" -a -f ${TOOLCHAIN}/configtools/config.guess ] && \
++        cp -f ${TOOLCHAIN}/configtools/config.guess ${config}
++      [ -f "${config}/config.sub" -a -f ${TOOLCHAIN}/configtools/config.sub ] && \
++        cp -f ${TOOLCHAIN}/configtools/config.sub ${config}
+     done
+   fi
+ fi
+ 
+-if [ "$PKG_SECTION" != "virtual" ]; then
+-  mkdir -p "$PKG_BUILD"
++if [ "${PKG_SECTION}" != "virtual" ]; then
++  mkdir -p "${PKG_BUILD}"
+   echo "INFO_PKG_NAME=\"${PKG_NAME}\"" > "${PKG_BUILD}/.libreelec-package"
+ 
+-  rm -f $STAMPS/${PKG_NAME}/build_*
++  rm -f ${STAMPS}/${PKG_NAME}/build_*
+ 
+   PKG_DEEPHASH=$(calculate_stamp)
+   for i in PKG_NAME PKG_DEEPHASH; do
+-    echo "STAMP_$i=\"${!i}\"" >> $STAMP
++    echo "STAMP_${i}=\"${!i}\"" >> ${STAMP}
+   done
+ fi
+ 
+
+From cd71230bdb4341d8cbbc26b4de244aacbcced928 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Sun, 16 Jun 2019 02:51:23 +0100
+Subject: [PATCH 3/5] buildsystem: image - use HERE docs
+
+---
+ scripts/image | 44 ++++++++++++++++++++++++--------------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
+
+diff --git a/scripts/image b/scripts/image
+index c15169a8dd6..0955afea1c5 100755
+--- a/scripts/image
++++ b/scripts/image
+@@ -145,28 +145,32 @@ fi
+ echo "${TARGET_VERSION}" > ${INSTALL}/etc/release
+ 
+ # Create /etc/os-release
+-echo -e "NAME=\"${DISTRONAME}\"" > ${INSTALL}/etc/os-release
+-echo -e "VERSION=\"${LIBREELEC_VERSION}\"" >> ${INSTALL}/etc/os-release
+-echo -e "ID=\"libreelec\"" >> ${INSTALL}/etc/os-release
+-echo -e "VERSION_ID=\"${OS_VERSION}\"" >> ${INSTALL}/etc/os-release
+-echo -e "PRETTY_NAME=\"${DISTRONAME} (${LIBREELEC_BUILD}): ${LIBREELEC_VERSION}\"" >> ${INSTALL}/etc/os-release
+-echo -e "HOME_URL=\"https://libreelec.tv\"" >> ${INSTALL}/etc/os-release
+-echo -e "BUG_REPORT_URL=\"${ORIGIN_URL}\"" >> ${INSTALL}/etc/os-release
+-echo -e "BUILD_ID=\"${GIT_HASH}\"" >> ${INSTALL}/etc/os-release
+-echo -e "LIBREELEC_ARCH=\"${LIBREELEC_ARCH}\"" >> ${INSTALL}/etc/os-release
+-echo -e "LIBREELEC_BUILD=\"${LIBREELEC_BUILD}\"" >> ${INSTALL}/etc/os-release
+-echo -e "LIBREELEC_PROJECT=\"${PROJECT}\"" >> ${INSTALL}/etc/os-release
+-[ -n "${DEVICE}" ] && echo -e "LIBREELEC_DEVICE=\"${DEVICE}\"" >> ${INSTALL}/etc/os-release
+-[ -n "${BUILDER_NAME}" ] && echo -e "BUILDER_NAME=\"${BUILDER_NAME}\"" >> ${INSTALL}/etc/os-release
+-[ -n "${BUILDER_VERSION}" ] && echo -e "BUILDER_VERSION=\"${BUILDER_VERSION}\"" >> ${INSTALL}/etc/os-release
++cat <<EOF >${INSTALL}/etc/os-release
++NAME="${DISTRONAME}"
++VERSION="${LIBREELEC_VERSION}"
++ID="libreelec"
++VERSION_ID="${OS_VERSION}"
++PRETTY_NAME="${DISTRONAME} (${LIBREELEC_BUILD}): ${LIBREELEC_VERSION}"
++HOME_URL="https://libreelec.tv"
++BUG_REPORT_URL="${ORIGIN_URL}"
++BUILD_ID="${GIT_HASH}"
++LIBREELEC_ARCH="${LIBREELEC_ARCH}"
++LIBREELEC_BUILD="${LIBREELEC_BUILD}"
++LIBREELEC_PROJECT="${PROJECT}"
++EOF
++[ -n "${DEVICE}" ] && echo "LIBREELEC_DEVICE=\"${DEVICE}\"" >> ${INSTALL}/etc/os-release
++[ -n "${BUILDER_NAME}" ] && echo "BUILDER_NAME=\"${BUILDER_NAME}\"" >> ${INSTALL}/etc/os-release
++[ -n "${BUILDER_VERSION}" ] && echo "BUILDER_VERSION=\"${BUILDER_VERSION}\"" >> ${INSTALL}/etc/os-release
+ 
+ # Create /etc/issue
+-echo "${GREETING0}" >  ${INSTALL}/etc/issue
+-echo "${GREETING1}" >> ${INSTALL}/etc/issue
+-echo "${GREETING2}" >> ${INSTALL}/etc/issue
+-echo "${GREETING3}" >> ${INSTALL}/etc/issue
+-echo "${GREETING4}" >> ${INSTALL}/etc/issue
+-echo "${DISTRONAME} (${LIBREELEC_BUILD}): ${LIBREELEC_VERSION} (${LIBREELEC_ARCH})" >> ${INSTALL}/etc/issue
++cat <<EOF >${INSTALL}/etc/issue
++${GREETING0}
++${GREETING1}
++${GREETING2}
++${GREETING3}
++${GREETING4}
++${DISTRONAME} (${LIBREELEC_BUILD}): ${LIBREELEC_VERSION} (${LIBREELEC_ARCH})
++EOF
+ 
+ ln -sf /etc/issue ${INSTALL}/etc/motd
+ 
+
+From f9a2623d063bbe94b14cdcaf1bbd3d57d8fea9f9 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Sun, 16 Jun 2019 02:56:30 +0100
+Subject: [PATCH 4/5] buildsystem: build/unpack - simplify some logic
+
+---
+ scripts/build   | 13 +++++--------
+ scripts/install |  6 ++++--
+ 2 files changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/scripts/build b/scripts/build
+index 71ec2b9da9e..c8592f6717f 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -43,15 +43,14 @@ STAMP=${STAMPS}/${PKG_NAME}/build_${TARGET}
+ if [ -f ${STAMP} ]; then
+   . ${STAMP}
+   PKG_DEEPHASH=$(calculate_stamp)
+-  if [ ! "${PKG_DEEPHASH}" = "${STAMP_PKG_DEEPHASH}" ]; then
+-    rm -f ${STAMP}
+-  elif [ ! "${BUILD_WITH_DEBUG}" = "${STAMP_BUILD_WITH_DEBUG}" ]; then
+-    rm -f ${STAMP}
+-  else
++
++  if [ "${PKG_DEEPHASH}" = "${STAMP_PKG_DEEPHASH}" -a "${BUILD_WITH_DEBUG}" = "${STAMP_BUILD_WITH_DEBUG}" ]; then
+     # stamp matched: already built, do nothing
+     pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "build" "already built"
+     exit 0
+   fi
++
++  rm -f ${STAMP}
+ fi
+ 
+ if [ -n "${PKG_DEPENDS_UNPACK}" ]; then
+@@ -216,9 +215,7 @@ pkg_lock_status "ACTIVE" "${PKG_NAME}:${TARGET}" "build"
+ pkg_call_exists pre_build_${TARGET} && pkg_call pre_build_${TARGET}
+ 
+ # ensure ${PKG_BUILD} is there. (installer? PKG_URL="")
+-if [ ! -d "${PKG_BUILD}" ] ; then
+-  mkdir -p "${PKG_BUILD}"
+-fi
++mkdir -p "${PKG_BUILD}"
+ 
+ cd "${PKG_BUILD}"
+ 
+diff --git a/scripts/install b/scripts/install
+index a2fdcf6a169..187dcc34cc5 100755
+--- a/scripts/install
++++ b/scripts/install
+@@ -36,8 +36,10 @@ PARENT_PKG="${2:-${PKG_NAME}:${TARGET}}"
+ pkg_lock "${PKG_NAME}:${TARGET}" "install" "${PARENT_PKG}"
+ 
+ STAMP=${STAMPS_INSTALL}/${PKG_NAME}/install_${TARGET}
+-[ -f ${STAMP} ] && pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "install" "already installed"
+-[ -f ${STAMP} ] && exit 0
++if [ -f ${STAMP} ]; then
++  pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "install" "already installed"
++  exit 0
++fi
+ 
+ mkdir -p ${STAMPS_INSTALL}/${PKG_NAME}
+ 
+
+From 4e214471bf9331d945b2facc3a27093a59a37557 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Sun, 16 Jun 2019 16:43:07 +0100
+Subject: [PATCH 5/5] buildsystem: clean/install - dquote both sides
+
+---
+ scripts/clean   |  2 +-
+ scripts/install | 10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/scripts/clean b/scripts/clean
+index 9097af794d9..36ac2394d19 100755
+--- a/scripts/clean
++++ b/scripts/clean
+@@ -9,7 +9,7 @@
+ clean_package() {
+   build_msg "CLR_CLEAN" "CLEAN" "${1}" "indent"
+ 
+-  if [ "${CLEAN_SOURCES}" = true ]; then
++  if [ "${CLEAN_SOURCES}" = "true" ]; then
+     rm -rf "${SOURCES}/${1}"
+     return
+   fi
+diff --git a/scripts/install b/scripts/install
+index 187dcc34cc5..8323fc84ecd 100755
+--- a/scripts/install
++++ b/scripts/install
+@@ -45,11 +45,11 @@ mkdir -p ${STAMPS_INSTALL}/${PKG_NAME}
+ 
+ ${SCRIPTS}/build "${1}" "${PARENT_PKG}"
+ 
+-if [ "${TARGET}" = target ] ; then
++if [ "${TARGET}" = "target" ] ; then
+   for p in ${PKG_DEPENDS_TARGET}; do
+     ${SCRIPTS}/install "${p}" "${PARENT_PKG}"
+   done
+-elif [ "${TARGET}" = init ] ; then
++elif [ "${TARGET}" = "init" ] ; then
+   for p in ${PKG_DEPENDS_INIT}; do
+     ${SCRIPTS}/install "${p}" "${PARENT_PKG}"
+   done
+@@ -62,7 +62,7 @@ build_msg "CLR_INSTALL" "INSTALL" "${PKG_NAME} $(print_color CLR_TARGET "(${TARG
+ 
+ mkdir -p ${INSTALL}
+ 
+-if [ "${TARGET}" = target ] ; then
++if [ "${TARGET}" = "target" ] ; then
+   for PKG_TMP_DIR in ${PKG_DIR} \
+                      ${PROJECT_DIR}/${PROJECT}/packages/${PKG_NAME} \
+                      ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/packages/${PKG_NAME} \
+@@ -128,7 +128,7 @@ if [ "${TARGET}" = target ] ; then
+ fi
+ 
+ # install
+-if [ "${TARGET}" = target ] ; then
++if [ "${TARGET}" = "target" ] ; then
+   pkg_call_exists pre_install && pkg_call pre_install
+ fi
+ 
+@@ -138,7 +138,7 @@ elif [ "${TARGET}" = "init" -a -d ${PKG_BUILD}/.install_init ]; then
+   cp -PR ${PKG_BUILD}/.install_init/* ${INSTALL}
+ fi
+ 
+-if [ "${TARGET}" = target ] ; then
++if [ "${TARGET}" = "target" ] ; then
+   pkg_call_exists post_install && pkg_call post_install
+ fi
+ 
