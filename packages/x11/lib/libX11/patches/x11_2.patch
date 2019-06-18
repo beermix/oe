@@ -1,0 +1,12 @@
+diff --git a/src/util/Makefile.am b/src/util/Makefile.am
+index 37314370..ba2dd370 100644
+--- a/src/util/Makefile.am
++++ b/src/util/Makefile.am
+@@ -2,6 +2,7 @@
+ noinst_PROGRAMS=makekeys
+ 
+ AM_CFLAGS = \
++	$(X11_CFLAGS) \
+ 	$(CWARNFLAGS)
+ 
+ AM_CPPFLAGS = \
