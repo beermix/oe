@@ -10,15 +10,11 @@ PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/zlib-ng/zlib-ng"
 PKG_URL="https://github.com/zlib-ng/zlib-ng/archive/$PKG_VERSION.tar.gz"
 PKG_URL="https://github.com//jtkukunas/zlib/archive/v$PKG_VERSION.tar.gz"
-#PKG_DEPENDS_HOST="cmake:host"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
-#PKG_TOOLCHAIN="cmake-make"
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+speed"
-
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=ON"
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=ON"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
@@ -42,3 +38,8 @@ configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
   ./configure --prefix=$TOOLCHAIN --libdir=$TOOLCHAIN/lib --static --shared
 }
+
+#post_makeinstall_target() {
+#  cd $PKG_BUILD/.$TARGET_NAME
+#  make test all
+#}
