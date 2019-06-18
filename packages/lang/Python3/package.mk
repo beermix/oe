@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv) +lto-parallel --with-lto=8 
 
 PKG_NAME="Python3"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
@@ -15,7 +15,7 @@ PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 PKG_PYTHON_VERSION=python3.7
 
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+lto-parallel +speed"
+PKG_BUILD_FLAGS="+speed +lto-parallel"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          ac_cv_prog_SVNVERSION=/bin/false
@@ -84,6 +84,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --with-threads
                            --disable-ipv6
                            --with-computed-gotos
+                           --enable-optimizations
 "
 
 pre_configure_host() {
