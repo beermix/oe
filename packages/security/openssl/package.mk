@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) no-ssl3-method \ 
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) no-ssl3-method no-ssl2 no-ssl3
 
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2s"
@@ -27,8 +27,6 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-libunbound \
                            no-md2 \
                            no-rfc377no-sctp \
-                           no-ssl2 \
-                           no-ssl3 \
                            no-ssl3-method \
                            no-static-engine \
                            no-zlib-dynamic \
@@ -42,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
-  export LDFLAGS="-s"
 }
 
 configure_host() {
