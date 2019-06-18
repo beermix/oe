@@ -202,7 +202,7 @@ fi
                          -DENABLE_CCACHE=ON \
                          -DENABLE_LIRCCLIENT=ON \
                          -DENABLE_EVENTCLIENTS=ON \
-                         -DENABLE_LDGOLD=OFF \
+                         -DENABLE_LDGOLD=ON \
                          -DCMAKE_VERBOSE_MAKEFILE=0 \
                          $KODI_ARCH \
                          $KODI_OPENGL \
