@@ -42,6 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
+  export LDFLAGS="-s"
 }
 
 configure_host() {

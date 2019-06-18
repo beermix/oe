@@ -89,10 +89,10 @@ pre_configure_target() {
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
-#pre_configure_host() {
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
-#}
+pre_configure_host() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+}
 
 post_unpack() {
   # This is needed to make sure the Python build process doesn't try to
