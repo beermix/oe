@@ -22,10 +22,9 @@ PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
-  ln -sf /home/user/.bin/make $TOOLCHAIN/bin/gmake
-  ln -sf /home/user/.bin/make $TOOLCHAIN/bin/make
+  cp /home/user/.bin/make $TOOLCHAIN/bin/gmake
+  ln -sf make $TOOLCHAIN/bin/gmake
 
- #ln -sf /bin/make $TOOLCHAIN/bin/gmake
  #ln -sf /bin/make $TOOLCHAIN/bin/make
 
  #cp -r $PKG_DIR/src/bin/help2man $TOOLCHAIN/bin/

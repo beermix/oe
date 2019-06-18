@@ -11,7 +11,6 @@ PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_URL="https://github.com/mirror/libX11/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-macros xextproto xtrans inputproto libXau libxcb"
-PKG_DEPENDS_TARGET="toolchain util-macros xextproto xtrans inputproto"
 PKG_LONGDESC="LibX11 is the main X11 library containing all the client-side code to access the X11 windowing system."
 PKG_TOOLCHAIN="autotools"
 
