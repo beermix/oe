@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --enable-stack-protector=strong \
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --enable-stack-protector=strong \--enable-stackguard-randomization \
 
 PKG_NAME="glibc"
 PKG_VERSION="2.29"
@@ -31,8 +31,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.4.0 \
-                           --enable-stack-protector=strong \
-                           --enable-stackguard-randomization \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
