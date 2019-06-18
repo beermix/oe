@@ -12,6 +12,7 @@ PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A high-speed version of libjpeg for x86 and x86-64 processors which uses SIMD."
 PKG_BUILD_FLAGS="+pic +pic:host"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_HOST="-DENABLE_STATIC=ON \
                      -DENABLE_SHARED=OFF \
