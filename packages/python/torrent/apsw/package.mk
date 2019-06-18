@@ -1,12 +1,10 @@
 PKG_NAME="apsw"
-PKG_VERSION="3.27.2"
-PKG_LICENSE="GPL"
+PKG_VERSION="3.28.0"
+PKG_SHA256="9e7204f139b9da4c8e57945b524d85b4ebc07ebbfd894958e68fc142c928c274"
 PKG_SITE="https://github.com/rogerbinns/apsw/releases"
 #PKG_URL="https://github.com/rogerbinns/apsw/archive/${PKG_VERSION}.tar.gz"
 PKG_URL="https://github.com/rogerbinns/apsw/releases/download/$PKG_VERSION-r1/apsw-$PKG_VERSION-r1.zip"
 PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host expat sqlite"
-PKG_SHORTDESC="Mako: A super-fast templating language that borrows the best ideas from the existing templating languages."
-PKG_LONGDESC="Mako is a super-fast templating language that borrows the best ideas from the existing templating languages."
 PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
