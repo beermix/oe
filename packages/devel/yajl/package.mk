@@ -9,6 +9,7 @@ PKG_SITE="http://lloyd.github.com/yajl/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A small event-driven (SAX-style) JSON parser."
+PKG_TOOLCHAIN="cmake-make"
 
 post_makeinstall_target() {
   mv $SYSROOT_PREFIX/usr/lib/libyajl_s.a $SYSROOT_PREFIX/usr/lib/libyajl.a
