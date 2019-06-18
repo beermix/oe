@@ -41,7 +41,6 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-doc-strings
                          --without-pymalloc
                          --without-ensurepip
-                         --disable-ipv6
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
@@ -82,7 +81,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --with-threads
                            --disable-ipv6
                            --with-computed-gotos
-                           --with-pymalloc
                            --with-lto=8
 "
 
@@ -91,10 +89,10 @@ pre_configure_target() {
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
-pre_configure_host() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
-}
+#pre_configure_host() {
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+#}
 
 post_unpack() {
   # This is needed to make sure the Python build process doesn't try to
