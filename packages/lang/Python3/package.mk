@@ -42,7 +42,6 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --without-pymalloc
                          --without-ensurepip
                          --disable-ipv6
-                         --with-computed-gotos
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
