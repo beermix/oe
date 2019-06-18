@@ -10,6 +10,6 @@ PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros xorgproto"
 PKG_LONGDESC="X authorization file management libary"
-PKG_BUILD_FLAGS="+pic"
+#PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-xthreads"
+PKG_CONFIGURE_OPTS_TARGET="--enable-xthreads"
