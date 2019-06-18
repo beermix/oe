@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# chrome-libXdamage chrome-libXfixes chrome-libXi chrome-libXrender chrome-libXtst chrome-libxcb
 
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
-PKG_REV="190"
+PKG_REV="191"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo chrome-libXcomposite \
-                    chrome-libXdamage chrome-libXfixes chrome-libXi chrome-libXrender \
-                    chrome-libXtst chrome-libxcb cups gdk-pixbuf gtk3 harfbuzz \
+cups gdk-pixbuf gtk3 harfbuzz \
                     libXcursor libxss nss pango scrnsaverproto unclutter"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Google Chrome Browser"
@@ -65,31 +65,31 @@ addon() {
   cp -PL $(get_build_dir cups)/cups/libcups.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libxcb
-  cp -PL $(get_build_dir chrome-libxcb)/.$TARGET_NAME/src/.libs/libxcb.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib  
+  #cp -PL $(get_build_dir chrome-libxcb)/.$TARGET_NAME/src/.libs/libxcb.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib  
 
   # libXcomposite
-  cp -PL $(get_build_dir chrome-libXcomposite)/.$TARGET_NAME/src/.libs/libXcomposite.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+  #cp -PL $(get_build_dir chrome-libXcomposite)/.$TARGET_NAME/src/.libs/libXcomposite.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libXcursor
   cp -PL $(get_build_dir libXcursor)/.$TARGET_NAME/src/.libs/libXcursor.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libXdamage
-  cp -PL $(get_build_dir chrome-libXdamage)/.$TARGET_NAME/src/.libs/libXdamage.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+  #cp -PL $(get_build_dir chrome-libXdamage)/.$TARGET_NAME/src/.libs/libXdamage.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libXfixes
-  cp -PL $(get_build_dir chrome-libXfixes)/.$TARGET_NAME/src/.libs/libXfixes.so.3 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir chrome-libXfixes)/.$TARGET_NAME/src/.libs/libXfixes.so.3 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libXi  
-  cp -PL $(get_build_dir chrome-libXi)/.$TARGET_NAME/src/.libs/libXi.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir chrome-libXi)/.$TARGET_NAME/src/.libs/libXi.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libXrender
-  cp -PL $(get_build_dir chrome-libXrender)/.$TARGET_NAME/src/.libs/libXrender.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir chrome-libXrender)/.$TARGET_NAME/src/.libs/libXrender.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libxss
   cp -PL $(get_build_dir libxss)/.$TARGET_NAME/src/.libs/libXss.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libXtst
-  cp -PL $(get_build_dir chrome-libXtst)/.$TARGET_NAME/src/.libs/libXtst.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir chrome-libXtst)/.$TARGET_NAME/src/.libs/libXtst.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pango
   cp -PL $(get_build_dir pango)/.$TARGET_NAME/pango/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
