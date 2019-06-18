@@ -52,6 +52,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libunwind-exceptions \
+                           --disable-vtable-verify \
                            --disable-cet \
                            --with-tune=haswell"
 
