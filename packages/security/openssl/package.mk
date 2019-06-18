@@ -21,8 +21,6 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            enable-camellia \
                            enable-mdc2 \
                            no-tests \
-                           no-fuzz-libfuzzer \
-                           no-fuzz-afl \
                            no-static-engine \
                            zlib-dynamic"
 
