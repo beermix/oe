@@ -12,27 +12,23 @@ pre_configure_target() {
   #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
   #export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 
+  export CC="$TARGET_CC"
+  export CFLAGS="$TARGET_CFLAGS"
+  export CPPFLAGS="$TARGET_CPPFLAGS"
+  export LDFLAGS="$TARGET_LDFLAGS"
   export NO_EXPAT="YesPlease"
-  export NO_ICONV="YesPlease"
-  export NO_PYTHON="YesPlease"
-  export NO_UNIX_SOCKETS="YesPlease"
-  export NO_GETTEXT="YesPlease"
   export NO_MKSTEMPS="YesPlease"
-  export NO_PERL="YesPlease"
+  export NO_GETTEXT="YesPlease"
+  export NO_UNIX_SOCKETS="YesPlease"
+  export NO_ICONV="YesPlease"
   export NO_NSEC="YesPlease"
+  export NO_PERL="YesPlease"
+  export NO_PYTHON="YesPlease"
   export NO_TCLTK="YesPlease"
   export NO_INSTALL_HARDLINKS="yes"
 }
 
-configure_target() {
-  ./configure --host=$TARGET_NAME \
-              --build=$HOST_NAME \
-              --prefix=/usr \
-              --libexecdir=/usr/lib \
-              ac_cv_snprintf_returns_bogus=no \
-              ac_cv_fread_reads_directories=no \
-              --with-gitconfig=/etc/gitconfig
-}
+#PKG_CONFIGURE_OPTS_TARGET="ac_cv_snprintf_returns_bogus=no ac_cv_fread_reads_directories=no"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/x86_64-linux-gnu
