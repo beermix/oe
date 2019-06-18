@@ -22,7 +22,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            enable-mdc2 \
                            no-tests \
                            no-static-engine \
-                           zlib-dynamic"
+                           no-zlib-dynamic"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
