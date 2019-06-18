@@ -139,7 +139,7 @@ EOF
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
- ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # install benchmark tests
 #  local b
