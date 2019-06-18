@@ -20,6 +20,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            enable-camellia \
                            enable-mdc2 \
                            no-rfc377no-sctp \
+                           no-ec2m \
                            no-ssl3-method \
                            no-static-engine \
                            zlib-dynamic \
