@@ -1,15 +1,20 @@
-PKG_NAME="openssh"
-PKG_VERSION="7.6p1"
-PKG_SHA256="a323caeeddfe145baaa0db16e98d784b1fbc7dd436a6bf1f479dfd5cd1d21723"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.openssh.com/"
-PKG_URL="http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib openssl"
-PKG_SECTION="network"
-PKG_SHORTDESC="openssh: An open re-implementation of the SSH package"
-PKG_TOOLCHAIN="autotools"
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
-PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/ssh \
+PKG_NAME="openssh"
+PKG_VERSION="8.0p1"
+PKG_SHA256="bd943879e69498e8031eb6b7f44d08cdc37d59a7ab689aa0b437320c3481fd68"
+PKG_LICENSE="OSS"
+PKG_SITE="https://www.openssh.com/"
+PKG_URL="https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain openssl zlib"
+PKG_LONGDESC="An open re-implementation of the SSH package."
+PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+lto"
+
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_rpc_types_h=no \
+                           --sysconfdir=/etc/ssh \
                            --libexecdir=/usr/lib/openssh \
                            --disable-strip \
                            --disable-lastlog \
@@ -44,10 +49,7 @@ post_makeinstall_target() {
 
   sed -e "s|^#PermitRootLogin.*|PermitRootLogin yes|g" \
       -e "s|^#StrictModes.*|StrictModes no|g" \
-      -e "s|^#X11Forwarding.*|X11Forwarding yes|g" \
       -i $INSTALL/etc/ssh/sshd_config
-
-  echo "PubkeyAcceptedKeyTypes +ssh-dss" >> $INSTALL/etc/ssh/sshd_config
 
   debug_strip $INSTALL/usr
 }
