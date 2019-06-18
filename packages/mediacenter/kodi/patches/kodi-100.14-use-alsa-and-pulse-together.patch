@@ -1,79 +1,206 @@
-diff -Naur a/xbmc/cores/AudioEngine/AESinkFactory.cpp b/xbmc/cores/AudioEngine/AESinkFactory.cpp
---- a/xbmc/cores/AudioEngine/AESinkFactory.cpp	2016-01-12 22:00:19.000000000 +0100
-+++ b/xbmc/cores/AudioEngine/AESinkFactory.cpp	2016-01-25 10:25:46.375653966 +0100
-@@ -28,6 +28,9 @@
- #elif defined(TARGET_RASPBERRY_PI)
-   #include "Sinks/AESinkPi.h"
-   #include "Sinks/AESinkALSA.h"
-+  #if defined(HAS_PULSEAUDIO)
-+    #include "Sinks/AESinkPULSE.h"
-+  #endif
- #elif defined(TARGET_DARWIN_IOS)
-   #include "Sinks/AESinkDARWINIOS.h"
- #elif defined(TARGET_DARWIN_OSX)
-@@ -67,6 +70,9 @@
- #elif defined(TARGET_RASPBERRY_PI)
-         driver == "PI"          ||
-         driver == "ALSA"        ||
-+  #if defined(HAS_PULSEAUDIO)
-+        driver == "PULSE"	||
-+  #endif
- #elif defined(TARGET_DARWIN_IOS)
-         driver == "DARWINIOS"  ||
- #elif defined(TARGET_DARWIN_OSX)
-@@ -108,6 +114,10 @@
- #elif defined(TARGET_RASPBERRY_PI)
-   if (driver == "PI")
-     sink = new CAESinkPi();
-+  #if defined(HAS_PULSEAUDIO)
-+    if (driver == "PULSE")
-+      sink = new CAESinkPULSE();
-+  #endif
-   #if defined(HAS_ALSA)
-   if (driver == "ALSA")
-     sink = new CAESinkALSA();
-@@ -209,6 +219,16 @@
-   if(!info.m_deviceInfoList.empty())
-     list.push_back(info);
-   #endif
-+  #if defined(HAS_PULSEAUDIO)
-+  info.m_deviceInfoList.clear();
-+  info.m_sinkName = "PULSE";
-+  CAESinkPULSE::EnumerateDevicesEx(info.m_deviceInfoList, force);
-+  if(!info.m_deviceInfoList.empty())
-+  {
-+    list.push_back(info);
-+    return;
-+  }
-+  #endif
- #elif defined(TARGET_DARWIN_IOS)
+From 2e7de29a69b37ad0a7d8632c5aafcdd02a4f550d Mon Sep 17 00:00:00 2001
+From: 5schatten <supervisedthinking@gmail.com>
+Date: Tue, 7 May 2019 01:30:10 +0200
+Subject: [PATCH] allow using alsa and pulse together
+
+---
+ xbmc/windowing/X11/WinSystemX11GLContext.cpp | 35 ++------------------
+ xbmc/windowing/amlogic/WinSystemAmlogic.cpp  |  2 ++
+ xbmc/windowing/gbm/WinSystemGbm.cpp          | 34 ++-----------------
+ xbmc/windowing/rpi/WinSystemRpi.cpp          | 17 +++-------
+ xbmc/windowing/wayland/WinSystemWayland.cpp  | 35 ++------------------
+ 5 files changed, 13 insertions(+), 110 deletions(-)
+
+diff --git a/xbmc/windowing/X11/WinSystemX11GLContext.cpp b/xbmc/windowing/X11/WinSystemX11GLContext.cpp
+index 5b0b155736b9..a3a3251a5d10 100644
+--- a/xbmc/windowing/X11/WinSystemX11GLContext.cpp
++++ b/xbmc/windowing/X11/WinSystemX11GLContext.cpp
+@@ -40,39 +40,8 @@ std::unique_ptr<CWinSystemBase> CWinSystemBase::CreateWinSystem()
  
-   info.m_deviceInfoList.clear();
-@@ -253,21 +273,20 @@
-       CLog::Log(LOGNOTICE, "User specified Sink %s could not be enumerated", envSink.c_str());
-   }
+ CWinSystemX11GLContext::CWinSystemX11GLContext()
+ {
+-  std::string envSink;
+-  if (getenv("KODI_AE_SINK"))
+-    envSink = getenv("KODI_AE_SINK");
+-  if (StringUtils::EqualsNoCase(envSink, "ALSA"))
+-  {
+-    OPTIONALS::ALSARegister();
+-  }
+-  else if (StringUtils::EqualsNoCase(envSink, "PULSE"))
+-  {
+-    OPTIONALS::PulseAudioRegister();
+-  }
+-  else if (StringUtils::EqualsNoCase(envSink, "OSS"))
+-  {
+-    OPTIONALS::OSSRegister();
+-  }
+-  else if (StringUtils::EqualsNoCase(envSink, "SNDIO"))
+-  {
+-    OPTIONALS::SndioRegister();
+-  }
+-  else
+-  {
+-    if (!OPTIONALS::PulseAudioRegister())
+-    {
+-      if (!OPTIONALS::ALSARegister())
+-      {
+-        if (!OPTIONALS::SndioRegister())
+-        {
+-          OPTIONALS::OSSRegister();
+-        }
+-      }
+-    }
+-  }
+-
++  OPTIONALS::ALSARegister();
++  OPTIONALS::PulseAudioRegister();
+   m_lirc.reset(OPTIONALS::LircRegister());
+ }
  
--  #if defined(HAS_PULSEAUDIO)
-+  #if defined(HAS_ALSA)
-   info.m_deviceInfoList.clear();
--  info.m_sinkName = "PULSE";
--  CAESinkPULSE::EnumerateDevicesEx(info.m_deviceInfoList, force);
-+  info.m_sinkName = "ALSA";
-+  CAESinkALSA::EnumerateDevicesEx(info.m_deviceInfoList, force);
-   if(!info.m_deviceInfoList.empty())
-   {
-     list.push_back(info);
--    return;
-   }
-   #endif
+diff --git a/xbmc/windowing/amlogic/WinSystemAmlogic.cpp b/xbmc/windowing/amlogic/WinSystemAmlogic.cpp
+index 0637f83fc0fd..b1b41b05039e 100644
+--- a/xbmc/windowing/amlogic/WinSystemAmlogic.cpp
++++ b/xbmc/windowing/amlogic/WinSystemAmlogic.cpp
+@@ -20,6 +20,7 @@
+ // AESink Factory
+ #include "cores/AudioEngine/AESinkFactory.h"
+ #include "cores/AudioEngine/Sinks/AESinkALSA.h"
++#include "cores/AudioEngine/Sinks/AESinkPULSE.h"
+ #include "windowing/GraphicContext.h"
+ #include "windowing/Resolution.h"
+ #include "platform/linux/powermanagement/LinuxPowerSyscall.h"
+@@ -67,6 +68,7 @@ CWinSystemAmlogic::CWinSystemAmlogic() :
+   // Register sink
+   AE::CAESinkFactory::ClearSinks();
+   CAESinkALSA::Register();
++  CAESinkPULSE::Register();
+   CLinuxPowerSyscall::Register();
+   m_lirc.reset(OPTIONALS::LircRegister());
+   m_libinput->Start();
+diff --git a/xbmc/windowing/gbm/WinSystemGbm.cpp b/xbmc/windowing/gbm/WinSystemGbm.cpp
+index 4a3291a55045..9ad1f2daf1af 100644
+--- a/xbmc/windowing/gbm/WinSystemGbm.cpp
++++ b/xbmc/windowing/gbm/WinSystemGbm.cpp
+@@ -33,38 +33,8 @@ CWinSystemGbm::CWinSystemGbm() :
+   m_GBM(new CGBMUtils),
+   m_libinput(new CLibInputHandler)
+ {
+-  std::string envSink;
+-  if (getenv("KODI_AE_SINK"))
+-    envSink = getenv("KODI_AE_SINK");
+-  if (StringUtils::EqualsNoCase(envSink, "ALSA"))
+-  {
+-    OPTIONALS::ALSARegister();
+-  }
+-  else if (StringUtils::EqualsNoCase(envSink, "PULSE"))
+-  {
+-    OPTIONALS::PulseAudioRegister();
+-  }
+-  else if (StringUtils::EqualsNoCase(envSink, "OSS"))
+-  {
+-    OPTIONALS::OSSRegister();
+-  }
+-  else if (StringUtils::EqualsNoCase(envSink, "SNDIO"))
+-  {
+-    OPTIONALS::SndioRegister();
+-  }
+-  else
+-  {
+-    if (!OPTIONALS::PulseAudioRegister())
+-    {
+-      if (!OPTIONALS::ALSARegister())
+-      {
+-        if (!OPTIONALS::SndioRegister())
+-        {
+-          OPTIONALS::OSSRegister();
+-        }
+-      }
+-    }
+-  }
++  OPTIONALS::ALSARegister();
++  OPTIONALS::PulseAudioRegister();
  
--  #if defined(HAS_ALSA)
-+  #if defined(HAS_PULSEAUDIO)
-   info.m_deviceInfoList.clear();
--  info.m_sinkName = "ALSA";
--  CAESinkALSA::EnumerateDevicesEx(info.m_deviceInfoList, force);
-+  info.m_sinkName = "PULSE";
-+  CAESinkPULSE::EnumerateDevicesEx(info.m_deviceInfoList, force);
-   if(!info.m_deviceInfoList.empty())
-   {
-     list.push_back(info);
+   CLinuxPowerSyscall::Register();
+   m_lirc.reset(OPTIONALS::LircRegister());
+diff --git a/xbmc/windowing/rpi/WinSystemRpi.cpp b/xbmc/windowing/rpi/WinSystemRpi.cpp
+index bdeb68c8c006..f5bc22c3cbdb 100644
+--- a/xbmc/windowing/rpi/WinSystemRpi.cpp
++++ b/xbmc/windowing/rpi/WinSystemRpi.cpp
+@@ -22,7 +22,9 @@
+ #include "guilib/DispResource.h"
+ #include "utils/log.h"
+ #include "cores/AudioEngine/AESinkFactory.h"
++#include "cores/AudioEngine/Sinks/AESinkALSA.h"
+ #include "cores/AudioEngine/Sinks/AESinkPi.h"
++#include "cores/AudioEngine/Sinks/AESinkPULSE.h"
+ #include "platform/linux/powermanagement/LinuxPowerSyscall.h"
+ 
+ #include <EGL/egl.h>
+@@ -45,19 +47,8 @@ CWinSystemRpi::CWinSystemRpi() :
+   AE::CAESinkFactory::ClearSinks();
+ 
+   CAESinkPi::Register();
+-  std::string envSink;
+-  if (getenv("KODI_AE_SINK"))
+-    envSink = getenv("KODI_AE_SINK");
+-
+-  if (StringUtils::EqualsNoCase(envSink, "PULSE"))
+-  {
+-    OPTIONALS::PulseAudioRegister();
+-  }
+-  else
+-  {
+-    OPTIONALS::ALSARegister();
+-  }
+-
++  CAESinkALSA::Register();
++  CAESinkPULSE::Register();
+   CLinuxPowerSyscall::Register();
+   m_lirc.reset(OPTIONALS::LircRegister());
+   m_libinput->Start();
+diff --git a/xbmc/windowing/wayland/WinSystemWayland.cpp b/xbmc/windowing/wayland/WinSystemWayland.cpp
+index 9d0031239c6e..2b76e773f329 100644
+--- a/xbmc/windowing/wayland/WinSystemWayland.cpp
++++ b/xbmc/windowing/wayland/WinSystemWayland.cpp
+@@ -137,38 +137,9 @@ struct MsgBufferScale
+ CWinSystemWayland::CWinSystemWayland()
+ : CWinSystemBase{}, m_protocol{"WinSystemWaylandInternal"}
+ {
+-  std::string envSink;
+-  if (getenv("KODI_AE_SINK"))
+-    envSink = getenv("KODI_AE_SINK");
+-  if (StringUtils::EqualsNoCase(envSink, "ALSA"))
+-  {
+-    OPTIONALS::ALSARegister();
+-  }
+-  else if (StringUtils::EqualsNoCase(envSink, "PULSE"))
+-  {
+-    OPTIONALS::PulseAudioRegister();
+-  }
+-  else if (StringUtils::EqualsNoCase(envSink, "OSS"))
+-  {
+-    OPTIONALS::OSSRegister();
+-  }
+-  else if (StringUtils::EqualsNoCase(envSink, "SNDIO"))
+-  {
+-    OPTIONALS::SndioRegister();
+-  }
+-  else
+-  {
+-    if (!OPTIONALS::PulseAudioRegister())
+-    {
+-      if (!OPTIONALS::ALSARegister())
+-      {
+-        if (!OPTIONALS::SndioRegister())
+-        {
+-          OPTIONALS::OSSRegister();
+-        }
+-      }
+-    }
+-  }
++  OPTIONALS::ALSARegister();
++  OPTIONALS::PulseAudioRegister();
++
+   m_winEvents.reset(new CWinEventsWayland());
+   CLinuxPowerSyscall::Register();
+   m_lirc.reset(OPTIONALS::LircRegister());

@@ -1,32 +1,28 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="c51b9a9"
-PKG_SHA256="872a6ffefb90b6201a1e01fe5a52e05877e2040737e052b2f249725b9a8a44ff"
-PKG_SITE="http://www.kodi.tv"
+PKG_VERSION="2.3.17"
+PKG_SHA256="39746955c301c67ad3613254979f792a0eb29c0c109e35c1b54ac928c3fb8f3c"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/peak3d/inputstream.adaptive"
 PKG_URL="https://github.com/peak3d/inputstream.adaptive/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
+PKG_SECTION=""
 PKG_SHORTDESC="inputstream.adaptive"
-PKG_TOOLCHAIN="cmake-make"
+PKG_LONGDESC="inputstream.adaptive"
 
 PKG_IS_ADDON="yes"
 
-post_makeinstall_target() {
-  mkdir -p wv && cd wv
-    cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DDECRYPTERPATH=special://home/cdm \
-        $PKG_BUILD/wvdecrypter
-    make
-
-  cp -P $PKG_BUILD/.$TARGET_NAME/wv/libssd_wv.so $INSTALL/usr/lib
-}
+if [ "$TARGET_ARCH" = "x86_64" ] || [ "$TARGET_ARCH" = "arm" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET nss"
+fi
 
 addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+  install_binary_addon $PKG_ADDON_ID
 
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
-
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib/
-  cp -P $PKG_BUILD/.$TARGET_NAME/wv/libssd_wv.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
+  cp -P $PKG_BUILD/.$TARGET_NAME/wvdecrypter/libssd_wv.so $ADDON_BUILD/$PKG_ADDON_ID
 }
