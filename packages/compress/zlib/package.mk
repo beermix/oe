@@ -15,10 +15,15 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
 #PKG_TOOLCHAIN="cmake-make"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+speed +lto"
+PKG_BUILD_FLAGS="+speed"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=ON"
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=ON"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+  export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+}
 
 post_unpack() {
   mkdir -p $PKG_BUILD/.$HOST_NAME

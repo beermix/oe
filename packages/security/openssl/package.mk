@@ -19,17 +19,10 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-rc5 \
                            enable-camellia \
                            enable-mdc2 \
-                           no-tests \
-                           no-ec2m \
-                           no-gmp \
-                           no-jpake \
-                           no-krb5 \
-                           no-libunbound \
-                           no-md2 \
                            no-rfc377no-sctp \
                            no-ssl3-method \
                            no-static-engine \
-                           no-zlib-dynamic \
+                           zlib-dynamic \
                            no-zlib"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
