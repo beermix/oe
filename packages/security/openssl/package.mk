@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) no-ssl3-method \ 
 
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2s"
@@ -16,13 +16,23 @@ PKG_TOOLCHAIN="configure"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ssl3-method \
                            no-rc5 \
                            enable-camellia \
                            enable-mdc2 \
                            no-tests \
+                           no-ec2m \
+                           no-gmp \
+                           no-jpake \
+                           no-krb5 \
+                           no-libunbound \
+                           no-md2 \
+                           no-rfc377no-sctp \
+                           no-ssl2 \
+                           no-ssl3 \
+                           no-ssl3-method \
                            no-static-engine \
-                           no-zlib-dynamic"
+                           no-zlib-dynamic \
+                           no-zlib"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
