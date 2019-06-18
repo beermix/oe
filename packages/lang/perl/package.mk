@@ -1,5 +1,5 @@
 PKG_NAME="perl"
-PKG_VERSION="5.29.10"
+PKG_VERSION="5.31.0"
 PKG_SITE="http://www.cpan.org/src/5.0/?C=M;O=D"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.gz"
 #PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.xz"
