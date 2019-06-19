@@ -6,6 +6,7 @@ PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain curl pcre zlib openssl"
 PKG_DEPENDS_HOST="zlib:host pcre:host"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+size"
 
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
@@ -23,4 +24,4 @@ pre_configure_target() {
   export NO_INSTALL_HARDLINKS="yes"
 }
 
-#PKG_CONFIGURE_OPTS_TARGET="--without-iconv"
+PKG_CONFIGURE_OPTS_TARGET="--without-iconv"
