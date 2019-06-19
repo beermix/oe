@@ -7,11 +7,11 @@ PKG_SHA256="cabd5c9492825ce5bd23f3c3aeed6a97f8142f606d893df216411f07d1abab96"
 PKG_LICENSE="BSD"
 PKG_SITE="https://www.openssl.org/source/"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_HOST="ccache:host zlib:host"
+PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_TOOLCHAIN="configure"
-#PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
