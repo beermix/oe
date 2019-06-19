@@ -52,6 +52,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
+                           --enable-gnu-unique-object \
+                           --enable-gnu-indirect-function \
+                           --enable-libcc1 \
                            --disable-cet \
                            --with-tune=haswell"
 
@@ -86,7 +89,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-  # export CCACHE_DISABLE=true
 }
 
 post_make_host() {
