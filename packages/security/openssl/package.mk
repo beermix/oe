@@ -17,11 +17,12 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            no-ssl \
-                           zlib-dynamic \
                            no-ssl2 \
                            no-ssl3 \
                            no-ec2m \
-                           no-static-engine"
+                           zlib-dynamic \
+                           no-static-engine \
+                           enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
@@ -35,7 +36,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 no-zlib-dynamic no-zlib $LDFLAGS
 }
 
 makeinstall_host() {
@@ -45,24 +46,11 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-
-  case $TARGET_ARCH in
-    x86_64)
-      OPENSSL_TARGET=linux-x86_64
-      PLATFORM_FLAGS=enable-ec_nistp_64_gcc_128
-      ;;
-    arm)
-      OPENSSL_TARGET=linux-armv4
-      ;;
-    aarch64)
-      OPENSSL_TARGET=linux-aarch64
-      ;;
-  esac
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $LDFLAGS
 }
 
 makeinstall_target() {
