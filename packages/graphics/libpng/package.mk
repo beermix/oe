@@ -11,13 +11,11 @@ PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_LONGDESC="An extensible file format for the lossless, portable, well-compressed storage of raster images."
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic +pic:host"
+PKG_BUILD_FLAGS="+pic:host"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-hardware-optimizations \
-                           --enable-intel-sse \
-                           --enable-static \
-                           --disable-shared"
+                           --enable-intel-sse"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
