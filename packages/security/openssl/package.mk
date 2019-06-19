@@ -20,6 +20,10 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-ssl2 \
                            no-ssl3 \
                            no-ec2m \
+                           no-rc5 \
+                           enable-camellia \
+                           enable-mdc2 \
+                           no-tests \
                            zlib-dynamic \
                            no-static-engine \
                            enable-ec_nistp_64_gcc_128"
@@ -36,7 +40,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 no-zlib-dynamic no-zlib $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 no-zlib-dynamic -Wa,--noexecstack $LDFLAGS
 }
 
 makeinstall_host() {
@@ -50,7 +54,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -Wa,--noexecstack $LDFLAGS
 }
 
 makeinstall_target() {
