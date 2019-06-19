@@ -23,7 +23,6 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-rc5 \
                            enable-camellia \
                            enable-mdc2 \
-                           no-tests \
                            zlib-dynamic \
                            no-static-engine \
                            enable-ec_nistp_64_gcc_128"
