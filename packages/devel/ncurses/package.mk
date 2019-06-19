@@ -9,9 +9,7 @@ PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_DEPENDS_HOST="zlib:host"
-PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
-PKG_BUILD_FLAGS="-lto"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --disable-termcap \
