@@ -20,6 +20,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            zlib-dynamic \
                            no-ssl2 \
                            no-ssl3 \
+                           no-ec2m \
                            no-static-engine"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
@@ -38,7 +39,7 @@ configure_host() {
 }
 
 makeinstall_host() {
-  make install_sw
+  make install_sw -j1
 }
 
 pre_configure_target() {
@@ -65,8 +66,8 @@ configure_target() {
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  make INSTALL_PREFIX=$INSTALL install_sw -j1
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw -j1
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }
