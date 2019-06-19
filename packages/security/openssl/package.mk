@@ -35,7 +35,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $LDFLAGS
 }
 
 makeinstall_host() {
@@ -62,7 +62,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $LDFLAGS
 }
 
 makeinstall_target() {
