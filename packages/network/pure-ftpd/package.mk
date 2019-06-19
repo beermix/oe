@@ -5,9 +5,7 @@ PKG_DEPENDS_TARGET="toolchain libcap"
 #PKG_DEPENDS_TARGET="toolchain libcap libevent libsodium"
 #PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-tls \
-			      --without-pam \
-			      --with-minimal"
+PKG_CONFIGURE_OPTS_TARGET="--with-minimal"
 
 #post_makeinstall_target() {
 #  rm -rf $INSTALL/storage
