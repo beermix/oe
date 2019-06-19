@@ -16,15 +16,11 @@ PKG_TOOLCHAIN="configure"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-rc5 \
-                           enable-camellia \
-                           enable-mdc2 \
-                           no-rfc377no-sctp \
-                           no-ec2m \
-                           no-ssl3-method \
-                           no-static-engine \
+                           no-ssl \
                            zlib-dynamic \
-                           no-zlib"
+                           no-ssl2 \
+                           no-ssl3 \
+                           no-static-engine"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
