@@ -30,11 +30,17 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=4.4.0 \
+                           --enable-kernel=5.2 \
+                           --enable-stack-protector=strong \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
                            --disable-nscd \
+                           --enable-obsolete-nsl \
+                           --enable-tunables \
+                           --enable-cet \
+                           --without-selinux \
+                           --enable-clocale=gnu \
                            --enable-lock-elision=yes \
                            --disable-timezone-tools"
 
