@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv) -I$PKG_BUILD/src/crypto
 
 PKG_NAME="wpa_supplicant"
-#PKG_VERSION="2.8"
-#PKG_SHA256="a689336a12a99151b9de5e25bfccadb88438f4f4438eb8db331cd94346fd3d96"
+PKG_VERSION="2.8"
+PKG_SHA256="a689336a12a99151b9de5e25bfccadb88438f4f4438eb8db331cd94346fd3d96"
 PKG_LICENSE="GPL"
 PKG_SITE="https://w1.fi/releases/?C=M;O=D"
 PKG_URL="https://w1.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_VERSION="c2c6c01bb8b6fafc2074b46a53c4eab2c145ac6f"
-PKG_URL="https://w1.fi/cgit/hostap/snapshot/hostap-$PKG_VERSION.tar.gz"
+#PKG_VERSION="c2c6c01bb8b6fafc2074b46a53c4eab2c145ac6f"
+#PKG_URL="https://w1.fi/cgit/hostap/snapshot/hostap-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain dbus libnl-tiny openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
@@ -19,10 +19,11 @@ PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/b
 
 configure_target() {
   export LIBS="$LIBS -lpthread -lm"
-  export CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$PKG_BUILD/src/crypto -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
+  export CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
-  #export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -flto"
-  #export LDFLAGS="$LDFLAGS -Wl,--gc-sections -flto=4 -fuse-linker-plugin"
+  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -flto"
+  export LDFLAGS="$LDFLAGS -Wl,--gc-sections -flto -fuse-linker-plugin"
+
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 }
 

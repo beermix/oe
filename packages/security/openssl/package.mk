@@ -16,10 +16,10 @@ PKG_BUILD_FLAGS="+speed"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ssl \
-                           no-ssl2 \
-                           no-ssl3 \
-                           no-ec2m \
+                           no-heartbeats \
+                           no-sha0 \
+                           no-ssl2-method \
+                           no-ssl3-method \
                            zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
