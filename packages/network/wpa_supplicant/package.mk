@@ -23,7 +23,7 @@ configure_target() {
   export CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
   export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -flto"
-  export LDFLAGS="$LDFLAGS -Wl,--gc-sections -flto -fuse-linker-plugin"
+  export LDFLAGS="$LDFLAGS -Wl,--gc-sections -flto=4 -fuse-linker-plugin"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 }
