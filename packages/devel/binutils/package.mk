@@ -61,7 +61,6 @@ pre_configure_host() {
   unset LDFLAGS
   export CCACHE_DISABLE=true
 }
-}
 
 make_host() {
   make MAKEINFO=true configure-host
