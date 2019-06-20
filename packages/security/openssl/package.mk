@@ -20,11 +20,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-ssl2 \
                            no-ssl3 \
                            no-ec2m \
-                           no-rc5 \
-                           enable-camellia \
-                           enable-mdc2 \
                            zlib-dynamic \
-                           no-static-engine \
                            enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
@@ -39,7 +35,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 no-zlib-dynamic -Wa,--noexecstack $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 no-zlib-dynamic no-zlib -Wa,--noexecstack $LDFLAGS
 }
 
 makeinstall_host() {
