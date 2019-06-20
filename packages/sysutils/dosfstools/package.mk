@@ -12,6 +12,7 @@ PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain dosfstools"
 PKG_LONGDESC="dosfstools contains utilities for making and checking MS-DOS FAT filesystems."
+PKG_BUILD_FLAGS="+pic +pic:host"
 
 PKG_MAKE_OPTS_TARGET="PREFIX=/usr"
 PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"
