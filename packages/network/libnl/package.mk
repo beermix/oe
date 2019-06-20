@@ -15,8 +15,7 @@ PKG_LONGDESC="A library for applications dealing with netlink socket."
 PKG_TOOLCHAIN="configure"
 
 pre_configure_target() {
-   cd $PKG_BUILD
-   ./autogen.sh
+  NOCONFIGURE=1 ./autogen.sh
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
