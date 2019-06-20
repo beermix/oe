@@ -3,13 +3,11 @@
 
 PKG_NAME="Python3"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
-#PKG_VERSION="3.7.3"
-#PKG_SHA256="da60b54064d4cfcd9c26576f6df2690e62085123826cff2e667e72a91952d318"
-PKG_VERSION="3.7.4rc1"
+PKG_VERSION="3.7.3"
+PKG_SHA256="da60b54064d4cfcd9c26576f6df2690e62085123826cff2e667e72a91952d318"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
-PKG_URL="https://fossies.org/linux/misc/Python-3.7.4rc1.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host util-linux:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl Python3:host readline ncurses"
 PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
