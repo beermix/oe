@@ -38,5 +38,5 @@ mkdir -p $INSTALL/usr/lib/systemd/system
 
 mkdir -p $INSTALL/usr/share/dbus-1/system-services
   cp wpa_supplicant/dbus/fi.w1.wpa_supplicant1.service $INSTALL/usr/share/dbus-1/system-services
-  cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
+  #cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
 }
