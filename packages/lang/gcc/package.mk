@@ -46,8 +46,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --enable-gnu-unique-object \
-                           --enable-gnu-indirect-function \
                            --disable-cet \
                            --with-tune=haswell"
 
