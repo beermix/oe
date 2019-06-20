@@ -42,7 +42,6 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-doc-strings
                          --without-pymalloc
                          --without-ensurepip
-                         --with-threads
                          --with-computed-gotos
 "
 
