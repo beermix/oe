@@ -3,7 +3,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) --disable-debug
 
 PKG_NAME="libnl"
-PKG_VERSION="65b3dd5"
+#PKG_VERSION="65b3dd5"
 PKG_VERSION="3.4.0"
 PKG_SHA256="b7287637ae71c6db6f89e1422c995f0407ff2fe50cecd61a312b6a9b0921f5bf"
 PKG_LICENSE="LGPL"
@@ -13,10 +13,15 @@ PKG_URL="https://github.com/thom311/libnl/releases/download/libnl${PKG_VERSION//
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A library for applications dealing with netlink socket."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic"
 
 #pre_configure_target() {
 #  NOCONFIGURE=1 ./autogen.sh
 #}
+
+pre_configure_target() {
+    export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
