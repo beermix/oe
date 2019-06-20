@@ -17,7 +17,6 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            no-heartbeats \
-                           no-sha0 \
                            no-ssl2-method \
                            no-ssl3-method \
                            zlib-dynamic \
