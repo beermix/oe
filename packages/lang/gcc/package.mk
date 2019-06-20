@@ -48,7 +48,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --enable-gnu-unique-object \
                            --enable-gnu-indirect-function \
-                           --enable-cet \
+                           --disable-cet \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \

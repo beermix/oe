@@ -38,9 +38,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-nscd \
                            --enable-obsolete-nsl \
                            --enable-tunables \
-                           --enable-cet \
+                           --disable-cet \
                            --without-selinux \
-                           --enable-clocale=gnu \
                            --enable-lock-elision=yes \
                            --disable-timezone-tools"
 
