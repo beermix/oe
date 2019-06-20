@@ -10,7 +10,7 @@ PKG_SITE="https://w1.fi/releases/?C=M;O=D"
 PKG_URL="https://w1.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_VERSION="c2c6c01bb8b6fafc2074b46a53c4eab2c145ac6f"
 PKG_URL="https://w1.fi/cgit/hostap/snapshot/hostap-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
+PKG_DEPENDS_TARGET="toolchain dbus libnl-tiny openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
 
@@ -19,20 +19,23 @@ PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/b
 
 configure_target() {
   export LIBS="$LIBS -lpthread -lm"
+  export CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$PKG_BUILD/src/crypto -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
+  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -flto"
+  export LDFLAGS="$LDFLAGS -Wl,--gc-sections -flto=4 -fuse-linker-plugin"
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 }
 
 post_makeinstall_target() {
   rm -r $INSTALL/usr/bin/wpa_cli
 
-  mkdir -p $INSTALL/etc/dbus-1/system.d
-    cp wpa_supplicant/dbus/dbus-wpa_supplicant.conf $INSTALL/etc/dbus-1/system.d
+mkdir -p $INSTALL/etc/dbus-1/system.d
+  cp wpa_supplicant/dbus/dbus-wpa_supplicant.conf $INSTALL/etc/dbus-1/system.d
 
-  mkdir -p $INSTALL/usr/lib/systemd/system
-    cp wpa_supplicant/systemd/wpa_supplicant.service $INSTALL/usr/lib/systemd/system
+mkdir -p $INSTALL/usr/lib/systemd/system
+  cp wpa_supplicant/systemd/wpa_supplicant.service $INSTALL/usr/lib/systemd/system
 
-  mkdir -p $INSTALL/usr/share/dbus-1/system-services
-    cp wpa_supplicant/dbus/fi.w1.wpa_supplicant1.service $INSTALL/usr/share/dbus-1/system-services
-    cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
+mkdir -p $INSTALL/usr/share/dbus-1/system-services
+  cp wpa_supplicant/dbus/fi.w1.wpa_supplicant1.service $INSTALL/usr/share/dbus-1/system-services
+  cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
 }
