@@ -19,7 +19,7 @@ PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  export LIBS="$LIBS -lnl-3 -lm -lpthread"
+  export LIBS="$LIBS -lpthread -lm"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 }
