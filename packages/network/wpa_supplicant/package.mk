@@ -8,9 +8,9 @@ PKG_SHA256="a689336a12a99151b9de5e25bfccadb88438f4f4438eb8db331cd94346fd3d96"
 PKG_LICENSE="GPL"
 PKG_SITE="https://w1.fi/releases/?C=M;O=D"
 PKG_URL="https://w1.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_VERSION="c2c6c01bb8b6fafc2074b46a53c4eab2c145ac6f"
-PKG_SHA256="8647512bab9c47b8404ee085464ebdb01c4b718244354a3e5aecf46be0a4a676"
-PKG_URL="https://w1.fi/cgit/hostap/snapshot/hostap-$PKG_VERSION.tar.gz"
+#PKG_VERSION="c2c6c01bb8b6fafc2074b46a53c4eab2c145ac6f"
+#PKG_SHA256="8647512bab9c47b8404ee085464ebdb01c4b718244354a3e5aecf46be0a4a676"
+#PKG_URL="https://w1.fi/cgit/hostap/snapshot/hostap-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain dbus libnl-tiny openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
@@ -22,7 +22,7 @@ PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
- # export LIBS="$LIBS -lpthread -lm"
+#  export LIBS="$LIBS -lpthread -lm"
 #  export CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
   LDFLAGS="$LDFLAGS -lpthread -lm"
@@ -45,5 +45,5 @@ mkdir -p $INSTALL/usr/lib/systemd/system
 
 mkdir -p $INSTALL/usr/share/dbus-1/system-services
   cp wpa_supplicant/dbus/fi.w1.wpa_supplicant1.service $INSTALL/usr/share/dbus-1/system-services
-  cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
+#  cp wpa_supplicant/dbus/fi.epitest.hostap.WPASupplicant.service $INSTALL/usr/share/dbus-1/system-services
 }
