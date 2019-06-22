@@ -17,8 +17,8 @@ PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="cmake-make"
 #PKG_BUILD_FLAGS="+speed"
 
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DZLIB_COMPAT=1 -DCMAKE_VERBOSE_MAKEFILE=1"
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DZLIB_COMPAT=1 -DCMAKE_VERBOSE_MAKEFILE=1"
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DZLIB_COMPAT=ON -DWITH_OPTIM=ON -DCMAKE_VERBOSE_MAKEFILE=1"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DZLIB_COMPAT=ON -DWITH_OPTIM=ON -DCMAKE_VERBOSE_MAKEFILE=1"
 
 #pre_configure_target() {
 #  export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
