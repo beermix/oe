@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libXt"
-PKG_VERSION="1.1.5"
-PKG_SHA256="46eeb6be780211fdd98c5109286618f6707712235fdd19df4ce1e6954f349f1a"
+PKG_VERSION="1.2.0"
+PKG_SHA256="b31df531dabed9f4611fc8980bc51d7782967e2aff44c4105251a1acb5a77831"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"

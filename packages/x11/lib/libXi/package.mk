@@ -10,7 +10,6 @@ PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros libX11 libXfixes libXext"
 PKG_LONGDESC="LibXi provides an X Window System client interface to the XINPUT extension to the X protocol."
-#PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
                            --disable-silent-rules \

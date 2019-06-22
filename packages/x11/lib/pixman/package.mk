@@ -11,6 +11,7 @@ PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSI
 PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_LONGDESC="Pixman is a generic library for manipulating pixel regions, contains low-level pixel manipulation routines."
+PKG_TOOLCHAIN="meson"
 
 PKG_MESON_OPTS_TARGET="-Dloongson-mmi=disabled \
 			  -Dvmx=disabled \
