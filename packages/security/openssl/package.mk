@@ -20,7 +20,6 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-ssl2-method \
                            no-ssl3-method \
                            zlib-dynamic \
-                           no-tests \
                            enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
