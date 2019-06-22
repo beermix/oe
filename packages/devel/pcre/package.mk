@@ -27,8 +27,7 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 PKG_CONFIGURE_OPTS_TARGET="--enable-utf \
 			      --enable-pcre16 \
 			      --enable-unicode-properties \
-			      --enable-jit \
-			      --disable-silent-rules"
+			      --enable-jit"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
 			-DCMAKE_BUILD_TYPE= \
