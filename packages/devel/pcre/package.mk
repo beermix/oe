@@ -12,7 +12,7 @@ PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="cmake-make"
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic:host"
 #PKG_BUILD_FLAGS="+speed"
 
@@ -20,7 +20,15 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 			    --enable-utf \
 			    --enable-unicode-properties \
 			    --enable-jit \
-			    --with-gnu-ld --disable-shared"
+			    --with-gnu-ld \
+			    --disable-shared \
+			    --enable-static"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf \
+			      --enable-pcre16 \
+			      --enable-unicode-properties \
+			      --enable-jit \
+			      --disable-silent-rules"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
 			-DCMAKE_BUILD_TYPE= \
@@ -29,11 +37,6 @@ PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
 			-DPCRE_SUPPORT_UTF=ON \
 			-DPCRE_SUPPORT_JIT=ON \
 			-DPCRE_BUILD_TESTS=OFF"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-utf \
-			      --enable-pcre16 \
-			      --enable-unicode-properties \
-			      --enable-jit"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON \
 			  -DCMAKE_BUILD_TYPE= \
