@@ -589,8 +589,7 @@ update_bootmenu() {
         progress "Updating /flash/syslinux.cfg [$crnt_default -> $SYSLINUX_DEFAULT]"
 
         mount -o remount,rw /flash
-        sed -e "s/^SAY Wait for .* mode/SAY Wait for ${SYSLINUX_DEFAULT} mode/" -i /flash/syslinux.cfg
-        sed -e "s/^DEFAULT .*/DEFAULT $SYSLINUX_DEFAULT/" -i /flash/syslinux.cfg
+        sed -i "s/^DEFAULT .*/DEFAULT $SYSLINUX_DEFAULT/" /flash/syslinux.cfg
         rm -f /flash/EFI/BOOT/syslinux.cfg
         mount -o remount,ro /flash
       fi
@@ -604,7 +603,7 @@ update_bootmenu() {
         progress "Updating /flash/EFI/BOOT/grub.cfg [$crnt_default -> \"$GRUB_DEFAULT\"]"
 
         mount -o remount,rw /flash
-        sed -e "s/^set default=.*/set default=\"$GRUB_DEFAULT\"/" -i /flash/EFI/BOOT/grub.cfg
+        sed -i "s/^set default=.*/set default=\"$GRUB_DEFAULT\"/" /flash/EFI/BOOT/grub.cfg
         rm -f /flash/grub.cfg
         mount -o remount,ro /flash
       fi
@@ -933,16 +932,6 @@ else
     echo 50 > $f
   done
 fi
-
-## Configure frequency scaling properties
-#for policy in /sys/devices/system/cpu/cpufreq/schedutil /sys/devices/system/cpu/cpufreq/policy*/schedutil ; #do
-#  if [ -d $policy ] ; then
-#   echo 1 > $policy/io_is_busy
-#   echo 50 > $policy/up_threshold
-#   echo 100000 > $policy/sampling_rate
-#   echo 50 > $policy/sampling_down_factor
-#fi
-#done
 
 # run platform_init script if exists
 if [ -f "./platform_init" ]; then
