@@ -1,5 +1,6 @@
 PKG_NAME="mc"
-PKG_VERSION="4.8.22"
+PKG_VERSION="4.8.23"
+PKG_SHA256="dd7f7ce74183307b0df25b5c3e60ad3293fd3d3d27d2f37dd7a10efce13dff1c"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libtool:host e2fsprogs util-linux pcre fuse libssh2"
 PKG_TOOLCHAIN="autotools"
