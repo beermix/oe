@@ -28,7 +28,7 @@ configure_target() {
 #  export CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
   LDFLAGS="$LDFLAGS -lpthread -lm"
-  CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
+#  CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
 #  CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
 #  LDFLAGS="$LDFLAGS -Wl,--gc-sections"
