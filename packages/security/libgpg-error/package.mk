@@ -12,7 +12,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A library that defines common error values for all GnuPG components."
 
 pre_configure_target() {
-  PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC --enable-static --disable-shared --disable-nls --disable-rpath --with-gnu-ld --with-pic"
+  PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC  --disable-nls --disable-rpath"
 
 # inspired by openembedded
   case ${TARGET_ARCH} in
