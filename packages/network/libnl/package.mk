@@ -15,14 +15,11 @@ PKG_LONGDESC="A library for applications dealing with netlink socket."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic"
 
-#pre_configure_target() {
-#  NOCONFIGURE=1 ./autogen.sh
-#}
-
 pre_configure_target() {
     export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
-                           --disable-cli"
+                           --disable-cli \
+                           --disable-debug"
