@@ -113,14 +113,6 @@ post_makeinstall_target() {
   safe_remove $INSTALL/usr/share/factory
   safe_remove $INSTALL/usr/share/zsh
 
-  # clean up hwdb
-  #safe_remove $INSTALL/usr/lib/udev/hwdb.d/20-OUI.hwdb
-  #safe_remove $INSTALL/usr/lib/udev/hwdb.d/20-acpi-vendor.hwdb
-  #safe_remove $INSTALL/usr/lib/udev/hwdb.d/20-bluetooth-vendor-product.hwdb
-  #safe_remove $INSTALL/usr/lib/udev/hwdb.d/20-net-ifname.hwdb
-  #safe_remove $INSTALL/usr/lib/udev/hwdb.d/20-sdio-classes.hwdb
-  #safe_remove $INSTALL/usr/lib/udev/hwdb.d/20-sdio-vendor-model.hwdb
-
   # remove Network adaper renaming rule, this is confusing
   safe_remove $INSTALL/usr/lib/udev/rules.d/80-net-setup-link.rules
 
@@ -143,10 +135,6 @@ post_makeinstall_target() {
   safe_remove $INSTALL/usr/lib/systemd/systemd-update-done
   safe_remove $INSTALL/usr/lib/systemd/system/systemd-update-done.service
   safe_remove $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-update-done.service
-
-  # remove systemd-udev-hwdb-update. we have own hwdb.service
-  #safe_remove $INSTALL/usr/lib/systemd/system/systemd-udev-hwdb-update.service
-  #safe_remove $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-udev-hwdb-update.service
 
   # remove systemd-user-sessions
   safe_remove $INSTALL/usr/lib/systemd/system/systemd-user-sessions.service
