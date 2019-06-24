@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libinput"
-PKG_VERSION="1.13.2"
-PKG_SHA256="1d9fa0698348dea46f75321d98788f8ac7181c069b70c4d10736910a12bb6a6d"
+PKG_VERSION="1.13.3"
+PKG_SHA256="f3ff113023a28631d83971c059c1f3057d51a90aa3746428776f3b3462131092"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.freedesktop.org/software/libinput/?C=M;O=D"
 PKG_URL="http://www.freedesktop.org/software/libinput/${PKG_NAME}-${PKG_VERSION}.tar.xz"

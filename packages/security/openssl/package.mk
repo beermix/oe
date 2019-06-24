@@ -18,8 +18,14 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            threads \
                            no-ssl2 \
                            no-ssl3 \
-                           no-weak-ssl-ciphers \
+                           enable-camellia \
+                           enable-capieng \
+                           enable-idea \
+                           enable-mdc2 \
+                           enable-rc5  \
+                           enable-rfc3779 \
                            zlib-dynamic \
+                           zlib \
                            enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
