@@ -28591,3 +28591,23 @@ index 9a76486fbc..707ab89f8e 100644
  
  if { ![istarget "x86_64-*-linux*"] && ![istarget "x86_64-*-nacl*"]} {
      return
+
+commit ee4a6d6f0957e8ed6d45b1d2e9696e8fa7e23cc4
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Jun 25 00:01:30 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1f2aff1fe9..c6d3dca010 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190624
++#define BFD_VERSION_DATE 20190625
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
