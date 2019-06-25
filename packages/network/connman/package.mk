@@ -5,7 +5,7 @@
 PKG_NAME="connman"
 PKG_VERSION="2589fda"
 PKG_SHA256="2e4fa2688acb2670bdf1e31a4b44a84e8c12aff2ca3462fdaf5c7f0a2d584b13"
-W#PKG_VERSION="1.37"
+#WPKG_VERSION="1.37"
 #PKG_SHA256="6ce29b3eb0bb16a7387bc609c39455fd13064bdcde5a4d185fab3a0c71946e16"
 PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/pub/scm/network/connman/connman.git/log/"
