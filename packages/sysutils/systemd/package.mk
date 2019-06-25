@@ -15,7 +15,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Drootprefix=/usr \
                        -Dsplit-usr=false \
                        -Dsplit-bin=true \
-                       -Ddefault-hierarchy=hybrid \
+                       -Ddefault-hierarchy=legacy \
                        -Dtty-gid=5 \
                        -Dtests=false \
                        -Dseccomp=false \
@@ -93,7 +93,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dversion-tag=${PKG_VERSION}"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
+  export CFLAGS="$CFLAGS -O2 -g -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=32 -Wformat -Wformat-security -Wno-error -mzero-caller-saved-regs=used"
   export LC_ALL=en_US.UTF-8
 }
 
