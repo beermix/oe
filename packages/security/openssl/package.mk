@@ -24,6 +24,8 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            enable-mdc2 \
                            enable-rc5  \
                            enable-rfc3779 \
+                           enable-tlsext \
+                           enable-unit-test \
                            zlib-dynamic \
                            zlib \
                            enable-ec_nistp_64_gcc_128"
