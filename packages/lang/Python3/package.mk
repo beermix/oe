@@ -84,6 +84,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --disable-ipv6
                            --with-computed-gotos
                            --with-lto=8
+                           --enable-optimizations
 "
 
 pre_configure_host() {
