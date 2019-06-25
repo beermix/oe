@@ -4,12 +4,12 @@
 
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
-PKG_REV="192"
+PKG_REV="193"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
-PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo chrome-libXcomposite \
-                    chrome-libXtst cups gdk-pixbuf gtk3 harfbuzz \
+PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo \
+                    libXtst cups gdk-pixbuf gtk3 harfbuzz \
                     libXcursor libxss nss pango scrnsaverproto unclutter"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Google Chrome Browser"
@@ -89,7 +89,7 @@ addon() {
   cp -PL $(get_build_dir libxss)/.$TARGET_NAME/src/.libs/libXss.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libXtst
-  #cp -PL $(get_build_dir chrome-libXtst)/.$TARGET_NAME/src/.libs/libXtst.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir libXtst)/.$TARGET_NAME/src/.libs/libXtst.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir libXtst)/.$TARGET_NAME/src/.libs/libXtst.so.6 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pango
