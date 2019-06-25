@@ -966,7 +966,7 @@
 			See Documentation/x86/intel_mpx.txt for more
 			information about the feature.
 
-	nopku		[X86] Disable Memory Protection Keys CPU feature found
+	nopku		[X86] Disable Memory 4 Keys CPU feature found
 			in some Intel CPUs.
 
 	module.async_probe [KNL]
