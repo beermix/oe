@@ -30,8 +30,8 @@ configure_target() {
   LDFLAGS="$LDFLAGS -lpthread -lm"
   CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
-  CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
-  LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+#  CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
+#  LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 }
