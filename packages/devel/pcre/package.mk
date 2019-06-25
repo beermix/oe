@@ -17,14 +17,14 @@ PKG_BUILD_FLAGS="+pic:host"
 #PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
-			    --enable-utf \
+			    --enable-utf8 \
 			    --enable-unicode-properties \
 			    --enable-jit \
 			    --with-gnu-ld \
 			    --disable-shared \
 			    --enable-static"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-utf \
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \
 			      --enable-unicode-properties \
 			      --enable-jit"
