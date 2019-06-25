@@ -13,7 +13,6 @@ PKG_SITE="http://wiki.acestream.org/wiki/index.php/Download"
 #PKG_URL="https://dl.dropboxusercontent.com/s/9cf62xv4dieb3qd/acestream-3.1.16_ubuntu_16.04_x86_64.tar.xz"
 PKG_URL="http://dl.acestream.org/linux/acestream_3.1.16_ubuntu_16.04_x86_64.tar.gz"
 PKG_DEPENDS_TARGET="toolchain M2Crypto apsw setuptools"
-#PKG_SOURCE_DIR="acestream-3.1.35_ubuntu_18.04_x86_64"
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
