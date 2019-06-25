@@ -10,9 +10,9 @@ PKG_URL="https://dbus.freedesktop.org/releases/dbus-glib/$PKG_NAME-$PKG_VERSION.
 PKG_DEPENDS_TARGET="toolchain dbus glib expat"
 PKG_LONGDESC="A message bus, used for sending messages between applications."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+pic +lto"
-LTO_SUPPORT="yes"
-GOLD_SUPPORT="yes"
+PKG_BUILD_FLAGS="+pic"
+#LTO_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_abstract_sockets=yes \
                            ac_cv_func_posix_getpwnam_r=yes \
