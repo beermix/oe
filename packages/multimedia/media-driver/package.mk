@@ -10,5 +10,14 @@ PKG_SITE="https://01.org/linuxmedia"
 PKG_URL="https://github.com/intel/media-driver/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libva libdrm gmmlib"
 PKG_LONGDESC="media-driver: The Intel(R) Media Driver for VAAPI is a new VA-API (Video Acceleration API) user mode driver supporting hardware accelerated decoding, encoding, and video post processing for GEN based graphics hardware."
+PKG_TOOLCHAIN="cmake-make"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DENABLE_NONFREE_KERNELS=OFF -DBUILD_KERNELS=OFF"
+pre_configure_target() {
+   export LIBS="$LIBS -lpciaccess"
+}
+
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DINSTALL_DRIVER_SYSCONF=0"
+
+pre_configure_target() {
+   export LIBS="$LIBS -lpciaccess"
+}
