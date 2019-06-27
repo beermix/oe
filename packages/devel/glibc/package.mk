@@ -11,7 +11,7 @@ PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.29/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap"
+PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap pigz:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
 PKG_BUILD_FLAGS="-gold -lto"
@@ -137,7 +137,7 @@ EOF
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # install benchmark tests
 #  local b
@@ -176,7 +176,7 @@ post_makeinstall_target() {
   if [ "$PROJECT" = "Generic" ]; then
     mkdir -p $INSTALL/usr/share/i18n/charmaps
     cp -PR $PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
-    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
+    pigz --best --force $INSTALL/usr/share/i18n/charmaps/UTF-8
   fi
 
   if [ ! "$GLIBC_LOCALES" = yes ]; then
