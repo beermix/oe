@@ -3,11 +3,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="bzip2"
-PKG_VERSION="1.0.6"
-PKG_SHA256="a2848f34fcd5d6cf47def00461fcb528a0484d8edef8208d6d2e2909dc61d9cd"
+PKG_VERSION="1.0.7"
+PKG_SHA256="e768a87c5b1a79511499beb41500bcc4caf203726fff46a6f5f9ad27fe08ab2b"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bzip.org"
-PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://sourceware.org/pub/bzip2/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A high-quality bzip2 data compressor."
 PKG_BUILD_FLAGS="+speed"
