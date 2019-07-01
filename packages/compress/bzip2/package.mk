@@ -13,15 +13,15 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A high-quality bzip2 data compressor."
 PKG_TOOLCHAIN="cmake-make"
 
-pre_configure_host() {
-  export CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections"
-  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -ffunction-sections"
-}
+#pre_configure_host() {
+#  export CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections"
+#  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -ffunction-sections"
+#}
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections"
-  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -ffunction-sections"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections"
+#  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -ffunction-sections"
+#}
 
 PKG_CMAKE_OPTS_HOST="-DENABLE_STATIC_LIB=1 -DCMAKE_VERBOSE_MAKEFILE=0"
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DENABLE_STATIC_LIB=1 -DCMAKE_VERBOSE_MAKEFILE=0"
