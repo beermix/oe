@@ -17,7 +17,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-client \
                            --disable-docs"
 
 pre_configure_target() {
-  export LIBS="-lncurses"
+  export LIBS="-lncursesw -ltinfo"
 }
 
 post_install() {

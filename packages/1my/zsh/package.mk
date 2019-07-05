@@ -6,7 +6,7 @@ PKG_URL="https://sourceforge.net/projects/zsh/files/zsh/$PKG_VERSION/zsh-$PKG_VE
 PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap"
 
 pre_configure_target() {
-  export LIBS="$LIBS -lncursesw -ltinfo"
+  export LIBS="-lncursesw -ltinfo"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
