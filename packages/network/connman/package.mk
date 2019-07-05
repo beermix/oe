@@ -34,7 +34,8 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --enable-loopback \
                            --enable-ethernet \
                            --disable-gadget \
-                           --enable-wifi \
+                           --disable-wifi \
+                           --enable-iwd \
                            --disable-bluetooth \
                            --disable-ofono \
                            --disable-dundee \
@@ -44,11 +45,24 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --disable-tools \
                            --disable-stats \
                            --enable-client \
-                           --enable-pie \
                            --enable-datafiles \
                            --with-dbusconfdir=/etc \
                            --with-systemdunitdir=/usr/lib/systemd/system \
                            --disable-silent-rules"
+
+case "$WIRELESS_DAEMON" in
+  wpa_supplicant)
+    PKG_DEPENDS_TARGET+=" wpa_supplicant"
+    PKG_CONFIGURE_OPTS_TARGET+=" WPASUPPLICANT=/usr/bin/wpa_supplicant \
+                                 --enable-wifi \
+                                 --disable-iwd"
+    ;;
+  iwd)
+    PKG_DEPENDS_TARGET+=" iwd"
+    PKG_CONFIGURE_OPTS_TARGET+=" --disable-wifi \
+                                 --enable-iwd"
+    ;;
+esac
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \
                       statedir=/run/connman"

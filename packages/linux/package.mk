@@ -33,7 +33,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   git)
-    PKG_VERSION="6fbc727"
+    PKG_VERSION="3f9c4dc"
     PKG_SITE="https://github.com/torvalds/linux"
     PKG_URL="https://github.com/torvalds/linux/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"

@@ -12,7 +12,7 @@ fi
 
 if [ "${1}" = "--all" ]; then
   if [ -n "${2}" ]; then
-    for build_dir in $(ls -1d ${BUILD_ROOT}/${BUILD_BASE}.*); do
+    for build_dir in $(ls -1d ${ROOT}/build.*); do
       load_build_config ${build_dir} && ${SCRIPTS}/build "${2}"
     done
   fi
@@ -53,11 +53,6 @@ if [ -f ${STAMP} ]; then
   rm -f ${STAMP}
 fi
 
-if [ -n "${PKG_DEPENDS_UNPACK}" ]; then
-  for p in ${PKG_DEPENDS_UNPACK}; do
-    ${SCRIPTS}/unpack "${p}" "${PARENT_PKG}"
-  done
-fi
 ${SCRIPTS}/unpack "${PKG_NAME}" "${PARENT_PKG}"
 
 # build dependencies, only when PKG_DEPENDS_? is filled
