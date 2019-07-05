@@ -11,8 +11,8 @@ PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav"
 PKG_LONGDESC="A free and open source cross-platform media player."
-PKG_BUILD_FLAGS="-lto -gold "
-#PKG_TOOLCHAIN="cmake-make"
+PKG_BUILD_FLAGS="-lto -gold"
+PKG_TOOLCHAIN="cmake-make"
 
 configure_package() {
   PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
@@ -228,7 +228,7 @@ fi
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -lncurses"
+  export LIBS="-lncursesw -ltinfo"
 }
 
 post_makeinstall_target() {
