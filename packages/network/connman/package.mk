@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="connman"
 PKG_VERSION="1.37"
 PKG_SHA256="6ce29b3eb0bb16a7387bc609c39455fd13064bdcde5a4d185fab3a0c71946e16"
 PKG_LICENSE="GPL"
-PKG_SITE="https://git.kernel.org/pub/scm/network/connman/connman.git/log/"
+PKG_SITE="http://www.connman.net"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables"
 PKG_LONGDESC="A modular network connection manager."
@@ -30,8 +30,6 @@ PKG_CONFIGURE_OPTS_TARGET="--srcdir=.. \
                            --enable-loopback \
                            --enable-ethernet \
                            --disable-gadget \
-                           --disable-wifi \
-                           --enable-iwd \
                            --disable-bluetooth \
                            --disable-ofono \
                            --disable-dundee \

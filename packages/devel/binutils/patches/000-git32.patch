@@ -29644,3 +29644,971 @@ index 43fe4e5bcc..be0e03e1a6 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 13acf03468d1e218c0a980ff6e6adaaac4bb5d1e
+Author: Szabolcs Nagy <szabolcs.nagy@arm.com>
+Date:   Thu Apr 25 13:46:01 2019 +0100
+
+    aarch64: add STO_AARCH64_VARIANT_PCS and DT_AARCH64_VARIANT_PCS
+    
+    Backport commit 2301ed1c9af1316b4bad3747d2b03f7d44940f87
+    
+    The bottom 2 bits of st_other are used for visibility, the top 6 bits are
+    de facto reserved for processor specific use.  This patch defines a
+    bits to mark function symbols that follow a variant procedure call standard
+    with different register usage convention.
+    
+    A dynamic tag is also defined that marks modules with R_<CLS>_JUMP_SLOT
+    relocations referencing symbols marked with STO_AARCH64_VARIANT_PCS.
+    This can be used by dynamic linkers that support lazy binding to decide
+    what registers need to be preserved during symbol resolution.
+    
+    binutils/ChangeLog:
+    
+            * readelf.c (get_aarch64_dynamic_type): Handle DT_AARCH64_VARIANT_PCS.
+            (get_aarch64_symbol_other): New, handles STO_AARCH64_VARIANT_PCS.
+            (get_symbol_other): Call get_aarch64_symbol_other.
+    
+    include/ChangeLog:
+    
+            * elf/aarch64.h (DT_AARCH64_VARIANT_PCS): Define.
+            (STO_AARCH64_VARIANT_PCS): Define.
+
+diff --git a/binutils/ChangeLog b/binutils/ChangeLog
+index 78fe77dd8e..0112181890 100644
+--- a/binutils/ChangeLog
++++ b/binutils/ChangeLog
+@@ -1,3 +1,12 @@
++2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	Backport from mainline.
++	2019-05-24  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	* readelf.c (get_aarch64_dynamic_type): Handle DT_AARCH64_VARIANT_PCS.
++	(get_aarch64_symbol_other): New, handles STO_AARCH64_VARIANT_PCS.
++	(get_symbol_other): Call get_aarch64_symbol_other.
++
+ 2019-05-21  Tamar Christina  <tamar.christina@arm.com>
+ 
+ 	Backport from mainline.
+diff --git a/binutils/readelf.c b/binutils/readelf.c
+index b13eb6a43b..28466e0cd7 100644
+--- a/binutils/readelf.c
++++ b/binutils/readelf.c
+@@ -1796,6 +1796,17 @@ dump_relocations (Filedata *          filedata,
+   return res;
+ }
+ 
++static const char *
++get_aarch64_dynamic_type (unsigned long type)
++{
++  switch (type)
++    {
++    case DT_AARCH64_VARIANT_PCS:  return "AARCH64_VARIANT_PCS";
++    default:
++      return NULL;
++    }
++}
++
+ static const char *
+ get_mips_dynamic_type (unsigned long type)
+ {
+@@ -11053,6 +11064,22 @@ get_solaris_symbol_visibility (unsigned int visibility)
+     }
+ }
+ 
++static const char *
++get_aarch64_symbol_other (unsigned int other)
++{
++  static char buf[32];
++
++  if (other & STO_AARCH64_VARIANT_PCS)
++    {
++      other &= ~STO_AARCH64_VARIANT_PCS;
++      if (other == 0)
++	return "VARIANT_PCS";
++      snprintf (buf, sizeof buf, "VARIANT_PCS | %x", other);
++      return buf;
++    }
++  return NULL;
++}
++
+ static const char *
+ get_mips_symbol_other (unsigned int other)
+ {
+@@ -11164,6 +11191,9 @@ get_symbol_other (Filedata * filedata, unsigned int other)
+ 
+   switch (filedata->file_header.e_machine)
+     {
++    case EM_AARCH64:
++      result = get_aarch64_symbol_other (other);
++      break;
+     case EM_MIPS:
+       result = get_mips_symbol_other (other);
+       break;
+diff --git a/include/ChangeLog b/include/ChangeLog
+index 8c4c6353ad..0e1d7d433d 100644
+--- a/include/ChangeLog
++++ b/include/ChangeLog
+@@ -1,3 +1,11 @@
++2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	Backport from mainline.
++	2019-05-24  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	* elf/aarch64.h (DT_AARCH64_VARIANT_PCS): Define.
++	(STO_AARCH64_VARIANT_PCS): Define.
++
+ 2019-04-16  Sudakshina Das  <sudi.das@arm.com>
+ 
+ 	Backport from mainline.
+diff --git a/include/elf/aarch64.h b/include/elf/aarch64.h
+index 3133ea6f66..841d8479cf 100644
+--- a/include/elf/aarch64.h
++++ b/include/elf/aarch64.h
+@@ -35,6 +35,12 @@
+ 						entry point.  */
+ #define SHF_COMDEF		0x80000000   /* Section may be multiply defined
+ 						in the input to a link step.  */
++/* Processor specific dynamic array tags.  */
++#define DT_AARCH64_VARIANT_PCS	(DT_LOPROC + 5)
++
++/* AArch64-specific values for st_other.  */
++#define STO_AARCH64_VARIANT_PCS	0x80  /* Symbol may follow different call
++					 convention from the base PCS.  */
+ 
+ /* Relocation types.  */
+ 
+
+commit 5da3661e58411e14f353f5a567097d2bef94128d
+Author: Szabolcs Nagy <szabolcs.nagy@arm.com>
+Date:   Thu Apr 25 15:06:53 2019 +0100
+
+    aarch64: handle .variant_pcs directive in gas
+    
+    Backport commit f166ae0188dcb89c5ae925034260a708a254ab2f
+    
+    In ELF objects the specified symbol is marked with STO_AARCH64_VARIANT_PCS.
+    
+    gas/ChangeLog:
+    
+            * config/tc-aarch64.c (s_variant_pcs): New function.
+            * doc/c-aarch64.texi: Document .variant_pcs.
+            * testsuite/gas/aarch64/symbol-variant_pcs-1.d: New test.
+            * testsuite/gas/aarch64/symbol-variant_pcs-1.s: New test.
+            * testsuite/gas/aarch64/symbol-variant_pcs-2.d: New test.
+            * testsuite/gas/aarch64/symbol-variant_pcs-2.s: New test.
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 24c6c2cdf1..c6a65ac942 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,15 @@
++2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	Backport from mainline
++	2019-05-24  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	* config/tc-aarch64.c (s_variant_pcs): New function.
++	* doc/c-aarch64.texi: Document .variant_pcs.
++	* testsuite/gas/aarch64/symbol-variant_pcs-1.d: New test.
++	* testsuite/gas/aarch64/symbol-variant_pcs-1.s: New test.
++	* testsuite/gas/aarch64/symbol-variant_pcs-2.d: New test.
++	* testsuite/gas/aarch64/symbol-variant_pcs-2.s: New test.
++
+ 2019-07-02  Richard Sandiford  <richard.sandiford@arm.com>
+ 
+ 	* testsuite/gas/aarch64/sve-movprfx_27.s,
+diff --git a/gas/config/tc-aarch64.c b/gas/config/tc-aarch64.c
+index 3f75f93008..12f4849be1 100644
+--- a/gas/config/tc-aarch64.c
++++ b/gas/config/tc-aarch64.c
+@@ -1938,6 +1938,28 @@ s_aarch64_elf_cons (int nbytes)
+   demand_empty_rest_of_line ();
+ }
+ 
++/* Mark symbol that it follows a variant PCS convention.  */
++
++static void
++s_variant_pcs (int ignored ATTRIBUTE_UNUSED)
++{
++  char *name;
++  char c;
++  symbolS *sym;
++  asymbol *bfdsym;
++  elf_symbol_type *elfsym;
++
++  c = get_symbol_name (&name);
++  if (!*name)
++    as_bad (_("Missing symbol name in directive"));
++  sym = symbol_find_or_make (name);
++  restore_line_pointer (c);
++  demand_empty_rest_of_line ();
++  bfdsym = symbol_get_bfdsym (sym);
++  elfsym = elf_symbol_from (bfd_asymbol_bfd (bfdsym), bfdsym);
++  gas_assert (elfsym);
++  elfsym->internal_elf_sym.st_other |= STO_AARCH64_VARIANT_PCS;
++}
+ #endif /* OBJ_ELF */
+ 
+ /* Output a 32-bit word, but mark as an instruction.  */
+@@ -2084,6 +2106,7 @@ const pseudo_typeS md_pseudo_table[] = {
+   {"long", s_aarch64_elf_cons, 4},
+   {"xword", s_aarch64_elf_cons, 8},
+   {"dword", s_aarch64_elf_cons, 8},
++  {"variant_pcs", s_variant_pcs, 0},
+ #endif
+   {0, 0, 0}
+ };
+diff --git a/gas/doc/c-aarch64.texi b/gas/doc/c-aarch64.texi
+index 7451f2f795..f754538a06 100644
+--- a/gas/doc/c-aarch64.texi
++++ b/gas/doc/c-aarch64.texi
+@@ -425,6 +425,12 @@ should only be done if it is really necessary.
+ 
+ @c VVVVVVVVVVVVVVVVVVVVVVVVVV
+ 
++@cindex @code{.variant_pcs} directive, AArch64
++@item .variant_pcs @var{symbol}
++This directive marks @var{symbol} referencing a function that may
++follow a variant procedure call standard with different register
++usage convention from the base procedure call standard.
++
+ @c WWWWWWWWWWWWWWWWWWWWWWWWWW
+ @c XXXXXXXXXXXXXXXXXXXXXXXXXX
+ 
+diff --git a/gas/testsuite/gas/aarch64/symbol-variant_pcs-1.d b/gas/testsuite/gas/aarch64/symbol-variant_pcs-1.d
+new file mode 100644
+index 0000000000..6257ce1687
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/symbol-variant_pcs-1.d
+@@ -0,0 +1,10 @@
++#objdump: -t
++
++.*:     file format .*
++
++SYMBOL TABLE:
++0+ l    d  \.text	0+ \.text
++0+ l    d  \.data	0+ \.data
++0+ l    d  \.bss	0+ \.bss
++0+ l       \.text	0+ func
++0+         \*UND\*	0+ 0x80 foobar
+diff --git a/gas/testsuite/gas/aarch64/symbol-variant_pcs-1.s b/gas/testsuite/gas/aarch64/symbol-variant_pcs-1.s
+new file mode 100644
+index 0000000000..aecb9bde57
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/symbol-variant_pcs-1.s
+@@ -0,0 +1,8 @@
++.text
++.variant_pcs foobar
++func:
++	bl	foobar
++	b	foobar
++
++.data
++.xword	foobar
+diff --git a/gas/testsuite/gas/aarch64/symbol-variant_pcs-2.d b/gas/testsuite/gas/aarch64/symbol-variant_pcs-2.d
+new file mode 100644
+index 0000000000..d9b60ac8e7
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/symbol-variant_pcs-2.d
+@@ -0,0 +1,9 @@
++#objdump: -t
++
++.*:     file format .*
++
++SYMBOL TABLE:
++0+ l    d  \.text	0+ \.text
++0+ l    d  \.data	0+ \.data
++0+ l    d  \.bss	0+ \.bss
++0+ l       \.text	0+ 0x80 foo
+diff --git a/gas/testsuite/gas/aarch64/symbol-variant_pcs-2.s b/gas/testsuite/gas/aarch64/symbol-variant_pcs-2.s
+new file mode 100644
+index 0000000000..820733b306
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/symbol-variant_pcs-2.s
+@@ -0,0 +1,4 @@
++.text
++.variant_pcs foo
++foo:
++	ret
+
+commit e3e9513ae5bc4dd08a803597c69ac37864261702
+Author: Szabolcs Nagy <szabolcs.nagy@arm.com>
+Date:   Thu Apr 25 15:07:10 2019 +0100
+
+    aarch64: override default elf .set handling in gas
+    
+    Backport commit 0b4eac57c44ec4c9e13f5201b40936c3b3e6c639
+    
+    Allow st_other values such as STO_AARCH64_VARIANT_PCS to be set for alias
+    symbols independently.  This is needed for ifunc symbols which are
+    aliased to the resolver using .set and don't expect resolver attributes
+    to override the ifunc symbol attributes.  This means .variant_pcs must be
+    added explicitly to aliases.
+    
+    gas/ChangeLog:
+    
+            * config/tc-aarch64.c (aarch64_elf_copy_symbol_attributes): Define.
+            * config/tc-aarch64.h (aarch64_elf_copy_symbol_attributes): Declare.
+            (OBJ_COPY_SYMBOL_ATTRIBUTES): Define.
+            * testsuite/gas/aarch64/symbol-variant_pcs-3.d: New test.
+            * testsuite/gas/aarch64/symbol-variant_pcs-3.s: New test.
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index c6a65ac942..f5c03a91c0 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,14 @@
++2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	Backport from mainline
++	2019-05-24  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	* config/tc-aarch64.c (aarch64_elf_copy_symbol_attributes): Define.
++	* config/tc-aarch64.h (aarch64_elf_copy_symbol_attributes): Declare.
++	(OBJ_COPY_SYMBOL_ATTRIBUTES): Define.
++	* testsuite/gas/aarch64/symbol-variant_pcs-3.d: New test.
++	* testsuite/gas/aarch64/symbol-variant_pcs-3.s: New test.
++
+ 2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
+ 
+ 	Backport from mainline
+diff --git a/gas/config/tc-aarch64.c b/gas/config/tc-aarch64.c
+index 12f4849be1..9cb7b7c722 100644
+--- a/gas/config/tc-aarch64.c
++++ b/gas/config/tc-aarch64.c
+@@ -9345,3 +9345,35 @@ aarch64_copy_symbol_attributes (symbolS * dest, symbolS * src)
+ {
+   AARCH64_GET_FLAG (dest) = AARCH64_GET_FLAG (src);
+ }
++
++#ifdef OBJ_ELF
++/* Same as elf_copy_symbol_attributes, but without copying st_other.
++   This is needed so AArch64 specific st_other values can be independently
++   specified for an IFUNC resolver (that is called by the dynamic linker)
++   and the symbol it resolves (aliased to the resolver).  In particular,
++   if a function symbol has special st_other value set via directives,
++   then attaching an IFUNC resolver to that symbol should not override
++   the st_other setting.  Requiring the directive on the IFUNC resolver
++   symbol would be unexpected and problematic in C code, where the two
++   symbols appear as two independent function declarations.  */
++
++void
++aarch64_elf_copy_symbol_attributes (symbolS *dest, symbolS *src)
++{
++  struct elf_obj_sy *srcelf = symbol_get_obj (src);
++  struct elf_obj_sy *destelf = symbol_get_obj (dest);
++  if (srcelf->size)
++    {
++      if (destelf->size == NULL)
++	destelf->size = XNEW (expressionS);
++      *destelf->size = *srcelf->size;
++    }
++  else
++    {
++      if (destelf->size != NULL)
++	free (destelf->size);
++      destelf->size = NULL;
++    }
++  S_SET_SIZE (dest, S_GET_SIZE (src));
++}
++#endif
+diff --git a/gas/config/tc-aarch64.h b/gas/config/tc-aarch64.h
+index 50b76d3019..93d3371324 100644
+--- a/gas/config/tc-aarch64.h
++++ b/gas/config/tc-aarch64.h
+@@ -130,6 +130,12 @@ void aarch64_copy_symbol_attributes (symbolS *, symbolS *);
+   (aarch64_copy_symbol_attributes (DEST, SRC))
+ #endif
+ 
++#ifdef OBJ_ELF
++void aarch64_elf_copy_symbol_attributes (symbolS *, symbolS *);
++#define OBJ_COPY_SYMBOL_ATTRIBUTES(DEST, SRC) \
++  aarch64_elf_copy_symbol_attributes (DEST, SRC)
++#endif
++
+ #define TC_START_LABEL(STR, NUL_CHAR, NEXT_CHAR)			\
+   (NEXT_CHAR == ':' || (NEXT_CHAR == '/' && aarch64_data_in_code ()))
+ #define tc_canonicalize_symbol_name(str) aarch64_canonicalize_symbol_name (str);
+diff --git a/gas/testsuite/gas/aarch64/symbol-variant_pcs-3.d b/gas/testsuite/gas/aarch64/symbol-variant_pcs-3.d
+new file mode 100644
+index 0000000000..204914efbd
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/symbol-variant_pcs-3.d
+@@ -0,0 +1,12 @@
++#objdump: -t
++
++.*:     file format .*
++
++SYMBOL TABLE:
++0+ l    d  \.text	0+ \.text
++0+ l    d  \.data	0+ \.data
++0+ l    d  \.bss	0+ \.bss
++0+ g       \.text	0+ 0x80 foo_vpcs
++0+ g       \.text	0+ foo_base
++0+ g       \.text	0+ 0x80 alias_vpcs
++0+ g       \.text	0+ alias_base
+diff --git a/gas/testsuite/gas/aarch64/symbol-variant_pcs-3.s b/gas/testsuite/gas/aarch64/symbol-variant_pcs-3.s
+new file mode 100644
+index 0000000000..9960831682
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/symbol-variant_pcs-3.s
+@@ -0,0 +1,20 @@
++.text
++.global foo_vpcs
++.global foo_base
++.global alias_vpcs
++.global alias_base
++
++.variant_pcs foo_vpcs
++.variant_pcs alias_vpcs
++
++foo_vpcs:
++foo_base:
++	bl foo_vpcs
++	bl foo_base
++	bl alias_vpcs
++	bl alias_base
++
++/* Check that the STO_AARCH64_VARIANT_PCS is not affected by .set.  */
++
++.set alias_base, foo_vpcs
++.set alias_vpcs, foo_base
+
+commit e85bbbe5323d43bfd918860dfd95cafe890db183
+Author: Szabolcs Nagy <szabolcs.nagy@arm.com>
+Date:   Thu Apr 25 15:07:14 2019 +0100
+
+    aarch64: handle STO_AARCH64_VARIANT_PCS in bfd
+    
+    Backport commit 823710d5856996d1f54f04ecb2f7647aeae99b5b
+    Backport commit 65f381e729bedb933f3e1376e7f53f0ff63ac9a8
+    
+    Propagate STO_AARCH64_VARIANT_PCS st_other attribute to the output and
+    add DT_AARCH64_VARIANT_PCS dynamic tag if necessary.
+    
+    Mismatching attributes are not diagnosed.
+    
+    bfd/ChangeLog:
+    
+            * elfnn-aarch64.c (elfNN_aarch64_merge_symbol_attribute): New function.
+            (struct elf_aarch64_link_hash_table): Add variant_pcs member.
+            (elfNN_aarch64_allocate_dynrelocs): Update variant_pcs.
+            (elfNN_aarch64_size_dynamic_sections): Add DT_AARCH64_VARIANT_PCS.
+            (elf_backend_merge_symbol_attribute): Define.
+    
+    ld/ChangeLog:
+    
+            * testsuite/ld-aarch64/aarch64-elf.exp: Add new tests.
+            * testsuite/ld-aarch64/variant_pcs-1.s: New asm for tests.
+            * testsuite/ld-aarch64/variant_pcs-2.s: New asm for tests.
+            * testsuite/ld-aarch64/variant_pcs-now.d: New test.
+            * testsuite/ld-aarch64/variant_pcs-r.d: New test.
+            * testsuite/ld-aarch64/variant_pcs-shared.d: New test.
+            * testsuite/ld-aarch64/variant_pcs.ld: New linker script for tests.
+    
+    ld/ChangeLog:
+    
+            * testsuite/ld-aarch64/variant_pcs-now.d: Use --hash-style=sysv.
+            * testsuite/ld-aarch64/variant_pcs-shared.d: Likewise.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index c8f87ba8d2..d92a6eee80 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,14 @@
++2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	Backport from mainline.
++	2019-05-24  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	* elfnn-aarch64.c (elfNN_aarch64_merge_symbol_attribute): New function.
++	(struct elf_aarch64_link_hash_table): Add variant_pcs member.
++	(elfNN_aarch64_allocate_dynrelocs): Update variant_pcs.
++	(elfNN_aarch64_size_dynamic_sections): Add DT_AARCH64_VARIANT_PCS.
++	(elf_backend_merge_symbol_attribute): Define.
++
+ 2019-07-02  Srinath Parvathaneni  <srinath.parvathaneni@arm.com>
+ 
+ 	* elf32-arm.c (elf32_arm_gc_mark_extra_sections): Mark debug
+diff --git a/bfd/elfnn-aarch64.c b/bfd/elfnn-aarch64.c
+index 9652cf3878..1dbd0184ce 100644
+--- a/bfd/elfnn-aarch64.c
++++ b/bfd/elfnn-aarch64.c
+@@ -2579,6 +2579,9 @@ struct elf_aarch64_link_hash_table
+   unsigned int top_index;
+   asection **input_list;
+ 
++  /* JUMP_SLOT relocs for variant PCS symbols may be present.  */
++  int variant_pcs;
++
+   /* The offset into splt of the PLT entry for the TLS descriptor
+      resolver.  Special values are 0, if not necessary (or not found
+      to be necessary yet), and -1 if needed but not determined
+@@ -2790,6 +2793,31 @@ elfNN_aarch64_copy_indirect_symbol (struct bfd_link_info *info,
+   _bfd_elf_link_hash_copy_indirect (info, dir, ind);
+ }
+ 
++/* Merge non-visibility st_other attributes.  */
++
++static void
++elfNN_aarch64_merge_symbol_attribute (struct elf_link_hash_entry *h,
++				      const Elf_Internal_Sym *isym,
++				      bfd_boolean definition ATTRIBUTE_UNUSED,
++				      bfd_boolean dynamic ATTRIBUTE_UNUSED)
++{
++  unsigned int isym_sto = isym->st_other & ~ELF_ST_VISIBILITY (-1);
++  unsigned int h_sto = h->other & ~ELF_ST_VISIBILITY (-1);
++
++  if (isym_sto == h_sto)
++    return;
++
++  if (isym_sto & ~STO_AARCH64_VARIANT_PCS)
++    /* Not fatal, this callback cannot fail.  */
++    _bfd_error_handler (_("unknown attribute for symbol `%s': 0x%02x"),
++			h->root.root.string, isym_sto);
++
++  /* Note: Ideally we would warn about any attribute mismatch, but
++     this api does not allow that without substantial changes.  */
++  if (isym_sto & STO_AARCH64_VARIANT_PCS)
++    h->other |= STO_AARCH64_VARIANT_PCS;
++}
++
+ /* Destroy an AArch64 elf linker hash table.  */
+ 
+ static void
+@@ -8369,6 +8397,12 @@ elfNN_aarch64_allocate_dynrelocs (struct elf_link_hash_entry *h, void *inf)
+ 	     updated.  */
+ 
+ 	  htab->root.srelplt->reloc_count++;
++
++	  /* Mark the DSO in case R_<CLS>_JUMP_SLOT relocs against
++	     variant PCS symbols are present.  */
++	  if (h->other & STO_AARCH64_VARIANT_PCS)
++	    htab->variant_pcs = 1;
++
+ 	}
+       else
+ 	{
+@@ -8958,6 +8992,10 @@ elfNN_aarch64_size_dynamic_sections (bfd *output_bfd ATTRIBUTE_UNUSED,
+ 	      || !add_dynamic_entry (DT_JMPREL, 0))
+ 	    return FALSE;
+ 
++	  if (htab->variant_pcs
++	      && !add_dynamic_entry (DT_AARCH64_VARIANT_PCS, 0))
++	    return FALSE;
++
+ 	  if (htab->tlsdesc_plt
+ 	      && !(info->flags & DF_BIND_NOW)
+ 	      && (!add_dynamic_entry (DT_TLSDESC_PLT, 0)
+@@ -9711,6 +9749,9 @@ const struct elf_size_info elfNN_aarch64_size_info =
+ #define elf_backend_copy_indirect_symbol	\
+   elfNN_aarch64_copy_indirect_symbol
+ 
++#define elf_backend_merge_symbol_attribute	\
++  elfNN_aarch64_merge_symbol_attribute
++
+ /* Create .dynbss, and .rela.bss sections in DYNOBJ, and set up shortcuts
+    to them in our hash.  */
+ #define elf_backend_create_dynamic_sections	\
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 95e6cf7fda..67dab7aaec 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,21 @@
++2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	Backport from mainline.
++	2019-05-24  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	* testsuite/ld-aarch64/aarch64-elf.exp: Add new tests.
++	* testsuite/ld-aarch64/variant_pcs-1.s: New asm for tests.
++	* testsuite/ld-aarch64/variant_pcs-2.s: New asm for tests.
++	* testsuite/ld-aarch64/variant_pcs-now.d: New test.
++	* testsuite/ld-aarch64/variant_pcs-r.d: New test.
++	* testsuite/ld-aarch64/variant_pcs-shared.d: New test.
++	* testsuite/ld-aarch64/variant_pcs.ld: New linker script for tests.
++
++	2019-05-28  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	* testsuite/ld-aarch64/variant_pcs-now.d: Use --hash-style=sysv.
++	* testsuite/ld-aarch64/variant_pcs-shared.d: Likewise.
++
+ 2019-07-02  Srinath Parvathaneni  <srinath.parvathaneni@arm.com>
+ 
+ 	* testsuite/ld-arm/arm-elf.exp: Add tests.
+diff --git a/ld/testsuite/ld-aarch64/aarch64-elf.exp b/ld/testsuite/ld-aarch64/aarch64-elf.exp
+index ad0f8d9081..cac44585c0 100644
+--- a/ld/testsuite/ld-aarch64/aarch64-elf.exp
++++ b/ld/testsuite/ld-aarch64/aarch64-elf.exp
+@@ -372,6 +372,10 @@ run_dump_test_lp64 "rela-abs-relative-opt"
+ 
+ run_dump_test_lp64 "pie-bind-locally"
+ 
++run_dump_test_lp64 "variant_pcs-r"
++run_dump_test_lp64 "variant_pcs-shared"
++run_dump_test_lp64 "variant_pcs-now"
++
+ set aarch64elflinktests {
+   {"ld-aarch64/so with global symbol" "-shared" "" "" {copy-reloc-so.s}
+     {} "copy-reloc-so.so"}
+diff --git a/ld/testsuite/ld-aarch64/variant_pcs-1.s b/ld/testsuite/ld-aarch64/variant_pcs-1.s
+new file mode 100644
+index 0000000000..8461e8ff5e
+--- /dev/null
++++ b/ld/testsuite/ld-aarch64/variant_pcs-1.s
+@@ -0,0 +1,59 @@
++.text
++
++.variant_pcs f_spec_global_default_def
++.variant_pcs f_spec_global_default_undef
++.variant_pcs f_spec_global_hidden_def
++.variant_pcs f_spec_local
++.variant_pcs f_spec_global_default_ifunc
++.variant_pcs f_spec_global_hidden_ifunc
++.variant_pcs f_spec_local_ifunc
++
++.global f_spec_global_default_def
++.global f_spec_global_default_undef
++.global f_spec_global_hidden_def
++.global f_spec_global_default_ifunc
++.global f_spec_global_hidden_ifunc
++.global f_base_global_default_def
++.global f_base_global_default_undef
++.global f_base_global_hidden_def
++.global f_base_global_default_ifunc
++.global f_base_global_hidden_ifunc
++
++.hidden f_spec_global_hidden_def
++.hidden f_spec_global_hidden_ifunc
++.hidden f_base_global_hidden_def
++.hidden f_base_global_hidden_ifunc
++
++.type f_spec_global_default_ifunc, %gnu_indirect_function
++.type f_spec_global_hidden_ifunc, %gnu_indirect_function
++.type f_spec_local_ifunc, %gnu_indirect_function
++.type f_base_global_default_ifunc, %gnu_indirect_function
++.type f_base_global_hidden_ifunc, %gnu_indirect_function
++.type f_base_local_ifunc, %gnu_indirect_function
++
++f_spec_global_default_def:
++f_spec_global_hidden_def:
++f_spec_local:
++f_base_global_default_def:
++f_base_global_hidden_def:
++f_base_local:
++f_spec_global_default_ifunc:
++f_spec_global_hidden_ifunc:
++f_spec_local_ifunc:
++f_base_global_default_ifunc:
++f_base_global_hidden_ifunc:
++f_base_local_ifunc:
++	bl f_spec_global_default_def
++	bl f_spec_global_default_undef
++	bl f_spec_global_hidden_def
++	bl f_spec_local
++	bl f_base_global_default_def
++	bl f_base_global_default_undef
++	bl f_base_global_hidden_def
++	bl f_base_local
++	bl f_spec_global_default_ifunc
++	bl f_spec_global_hidden_ifunc
++	bl f_spec_local_ifunc
++	bl f_base_global_default_ifunc
++	bl f_base_global_hidden_ifunc
++	bl f_base_local_ifunc
+diff --git a/ld/testsuite/ld-aarch64/variant_pcs-2.s b/ld/testsuite/ld-aarch64/variant_pcs-2.s
+new file mode 100644
+index 0000000000..e8f13ad941
+--- /dev/null
++++ b/ld/testsuite/ld-aarch64/variant_pcs-2.s
+@@ -0,0 +1,47 @@
++.text
++
++.variant_pcs f_spec_global_default_def
++.variant_pcs f_spec_global_default_undef
++.variant_pcs f_spec_global_hidden_def
++.variant_pcs f_spec_local2
++.variant_pcs f_spec_global_default_ifunc
++.variant_pcs f_spec_global_hidden_ifunc
++.variant_pcs f_spec_local2_ifunc
++
++.global f_spec_global_default_def
++.global f_spec_global_default_undef
++.global f_spec_global_hidden_def
++.global f_spec_global_default_ifunc
++.global f_spec_global_hidden_ifunc
++.global f_base_global_default_def
++.global f_base_global_default_undef
++.global f_base_global_hidden_def
++.global f_base_global_default_ifunc
++.global f_base_global_hidden_ifunc
++
++.hidden f_spec_global_hidden_def
++.hidden f_spec_global_hidden_ifunc
++.hidden f_base_global_hidden_def
++.hidden f_base_global_hidden_ifunc
++
++.type f_spec_local2_ifunc, %gnu_indirect_function
++.type f_base_local2_ifunc, %gnu_indirect_function
++
++f_spec_local2:
++f_base_local2:
++f_spec_local2_ifunc:
++f_base_local2_ifunc:
++	bl f_spec_global_default_def
++	bl f_spec_global_default_undef
++	bl f_spec_global_hidden_def
++	bl f_spec_local2
++	bl f_base_global_default_def
++	bl f_base_global_default_undef
++	bl f_base_global_hidden_def
++	bl f_base_local2
++	bl f_spec_global_default_ifunc
++	bl f_spec_global_hidden_ifunc
++	bl f_spec_local2_ifunc
++	bl f_base_global_default_ifunc
++	bl f_base_global_hidden_ifunc
++	bl f_base_local2_ifunc
+diff --git a/ld/testsuite/ld-aarch64/variant_pcs-now.d b/ld/testsuite/ld-aarch64/variant_pcs-now.d
+new file mode 100644
+index 0000000000..c3f48fe847
+--- /dev/null
++++ b/ld/testsuite/ld-aarch64/variant_pcs-now.d
+@@ -0,0 +1,67 @@
++#source: variant_pcs-1.s
++#source: variant_pcs-2.s
++#ld: -shared --hash-style=sysv -T variant_pcs.ld -z now
++#readelf: -rsW
++
++Relocation section '\.rela\.plt' at offset 0x11000 contains 12 entries:
++    Offset             Info             Type               Symbol's Value  Symbol's Name \+ Addend
++0000000000009020  0000000100000402 R_AARCH64_JUMP_SLOT    0000000000000000 f_base_global_default_undef \+ 0
++0000000000009028  0000000200000402 R_AARCH64_JUMP_SLOT    0000000000000000 f_spec_global_default_undef \+ 0
++0000000000009030  0000000400000402 R_AARCH64_JUMP_SLOT    0000000000008000 f_base_global_default_def \+ 0
++0000000000009038  0000000500000402 R_AARCH64_JUMP_SLOT    0000000000008000 f_spec_global_default_def \+ 0
++0000000000009040  0000000000000408 R_AARCH64_IRELATIVE                       8000
++0000000000009048  0000000300000402 R_AARCH64_JUMP_SLOT    f_spec_global_default_ifunc\(\) f_spec_global_default_ifunc \+ 0
++0000000000009050  0000000000000408 R_AARCH64_IRELATIVE                       8000
++0000000000009058  0000000600000402 R_AARCH64_JUMP_SLOT    f_base_global_default_ifunc\(\) f_base_global_default_ifunc \+ 0
++0000000000009060  0000000000000408 R_AARCH64_IRELATIVE                       8038
++0000000000009068  0000000000000408 R_AARCH64_IRELATIVE                       8000
++0000000000009070  0000000000000408 R_AARCH64_IRELATIVE                       8000
++0000000000009078  0000000000000408 R_AARCH64_IRELATIVE                       8038
++
++Symbol table '\.dynsym' contains 7 entries:
++   Num:    Value          Size Type    Bind   Vis      Ndx Name
++     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND 
++     1: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND f_base_global_default_undef
++     2: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]   UND f_spec_global_default_undef
++     3: 0000000000008000     0 IFUNC   GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_ifunc
++     4: 0000000000008000     0 NOTYPE  GLOBAL DEFAULT    1 f_base_global_default_def
++     5: 0000000000008000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_def
++     6: 0000000000008000     0 IFUNC   GLOBAL DEFAULT    1 f_base_global_default_ifunc
++
++Symbol table '\.symtab' contains 35 entries:
++   Num:    Value          Size Type    Bind   Vis      Ndx Name
++     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND 
++     1: 0000000000008000     0 SECTION LOCAL  DEFAULT    1 
++     2: 0000000000008070     0 SECTION LOCAL  DEFAULT    2 
++     3: 0000000000009000     0 SECTION LOCAL  DEFAULT    3 
++     4: 0000000000009080     0 SECTION LOCAL  DEFAULT    4 
++     5: 0000000000011000     0 SECTION LOCAL  DEFAULT    5 
++     6: 0000000000011120     0 SECTION LOCAL  DEFAULT    6 
++     7: 00000000000111c8     0 SECTION LOCAL  DEFAULT    7 
++     8: 0000000000011270     0 SECTION LOCAL  DEFAULT    8 
++     9: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS .*variant_pcs-1\.o
++    10: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local
++    11: 0000000000008000     0 IFUNC   LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local_ifunc
++    12: 0000000000008000     0 IFUNC   LOCAL  DEFAULT    1 f_base_local_ifunc
++    13: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT    1 f_base_local
++    14: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT    1 \$x
++    15: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS .*variant_pcs-2\.o
++    16: 0000000000008038     0 NOTYPE  LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local2
++    17: 0000000000008038     0 IFUNC   LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local2_ifunc
++    18: 0000000000008038     0 IFUNC   LOCAL  DEFAULT    1 f_base_local2_ifunc
++    19: 0000000000008038     0 NOTYPE  LOCAL  DEFAULT    1 f_base_local2
++    20: 0000000000008038     0 NOTYPE  LOCAL  DEFAULT    1 \$x
++    21: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS 
++    22: 0000000000009080     0 OBJECT  LOCAL  DEFAULT  ABS _DYNAMIC
++    23: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_global_hidden_def
++    24: 0000000000008000     0 IFUNC   LOCAL  DEFAULT    1 f_base_global_hidden_ifunc
++    25: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT    1 f_base_global_hidden_def
++    26: 0000000000009000     0 OBJECT  LOCAL  DEFAULT  ABS _GLOBAL_OFFSET_TABLE_
++    27: 0000000000008000     0 IFUNC   LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_global_hidden_ifunc
++    28: 0000000000008070     0 NOTYPE  LOCAL  DEFAULT    2 \$x
++    29: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND f_base_global_default_undef
++    30: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]   UND f_spec_global_default_undef
++    31: 0000000000008000     0 IFUNC   GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_ifunc
++    32: 0000000000008000     0 NOTYPE  GLOBAL DEFAULT    1 f_base_global_default_def
++    33: 0000000000008000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_def
++    34: 0000000000008000     0 IFUNC   GLOBAL DEFAULT    1 f_base_global_default_ifunc
+diff --git a/ld/testsuite/ld-aarch64/variant_pcs-r.d b/ld/testsuite/ld-aarch64/variant_pcs-r.d
+new file mode 100644
+index 0000000000..a534149d9e
+--- /dev/null
++++ b/ld/testsuite/ld-aarch64/variant_pcs-r.d
+@@ -0,0 +1,60 @@
++#source: variant_pcs-1.s
++#source: variant_pcs-2.s
++#ld: -r
++#readelf: -rsW
++
++Relocation section '\.rela\.text' at offset .* contains 24 entries:
++    Offset             Info             Type               Symbol's Value  Symbol's Name \+ Addend
++0000000000000000  000000180000011b R_AARCH64_CALL26       0000000000000000 f_spec_global_default_def \+ 0
++0000000000000004  000000110000011b R_AARCH64_CALL26       0000000000000000 f_spec_global_default_undef \+ 0
++0000000000000008  000000120000011b R_AARCH64_CALL26       0000000000000000 f_spec_global_hidden_def \+ 0
++0000000000000010  000000170000011b R_AARCH64_CALL26       0000000000000000 f_base_global_default_def \+ 0
++0000000000000014  000000100000011b R_AARCH64_CALL26       0000000000000000 f_base_global_default_undef \+ 0
++0000000000000018  000000150000011b R_AARCH64_CALL26       0000000000000000 f_base_global_hidden_def \+ 0
++0000000000000020  000000140000011b R_AARCH64_CALL26       f_spec_global_default_ifunc\(\) f_spec_global_default_ifunc \+ 0
++0000000000000024  000000160000011b R_AARCH64_CALL26       f_spec_global_hidden_ifunc\(\) f_spec_global_hidden_ifunc \+ 0
++0000000000000028  000000060000011b R_AARCH64_CALL26       f_spec_local_ifunc\(\) f_spec_local_ifunc \+ 0
++000000000000002c  000000190000011b R_AARCH64_CALL26       f_base_global_default_ifunc\(\) f_base_global_default_ifunc \+ 0
++0000000000000030  000000130000011b R_AARCH64_CALL26       f_base_global_hidden_ifunc\(\) f_base_global_hidden_ifunc \+ 0
++0000000000000034  000000070000011b R_AARCH64_CALL26       f_base_local_ifunc\(\) f_base_local_ifunc \+ 0
++0000000000000038  000000180000011b R_AARCH64_CALL26       0000000000000000 f_spec_global_default_def \+ 0
++000000000000003c  000000110000011b R_AARCH64_CALL26       0000000000000000 f_spec_global_default_undef \+ 0
++0000000000000040  000000120000011b R_AARCH64_CALL26       0000000000000000 f_spec_global_hidden_def \+ 0
++0000000000000048  000000170000011b R_AARCH64_CALL26       0000000000000000 f_base_global_default_def \+ 0
++000000000000004c  000000100000011b R_AARCH64_CALL26       0000000000000000 f_base_global_default_undef \+ 0
++0000000000000050  000000150000011b R_AARCH64_CALL26       0000000000000000 f_base_global_hidden_def \+ 0
++0000000000000058  000000140000011b R_AARCH64_CALL26       f_spec_global_default_ifunc\(\) f_spec_global_default_ifunc \+ 0
++000000000000005c  000000160000011b R_AARCH64_CALL26       f_spec_global_hidden_ifunc\(\) f_spec_global_hidden_ifunc \+ 0
++0000000000000060  0000000c0000011b R_AARCH64_CALL26       f_spec_local2_ifunc\(\) f_spec_local2_ifunc \+ 0
++0000000000000064  000000190000011b R_AARCH64_CALL26       f_base_global_default_ifunc\(\) f_base_global_default_ifunc \+ 0
++0000000000000068  000000130000011b R_AARCH64_CALL26       f_base_global_hidden_ifunc\(\) f_base_global_hidden_ifunc \+ 0
++000000000000006c  0000000d0000011b R_AARCH64_CALL26       f_base_local2_ifunc\(\) f_base_local2_ifunc \+ 0
++
++Symbol table '\.symtab' contains 26 entries:
++   Num:    Value          Size Type    Bind   Vis      Ndx Name
++     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND 
++     1: 0000000000000000     0 SECTION LOCAL  DEFAULT    1 
++     2: 0000000000000000     0 SECTION LOCAL  DEFAULT    3 
++     3: 0000000000000000     0 SECTION LOCAL  DEFAULT    4 
++     4: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS .*variant_pcs-1\.o
++     5: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local
++     6: 0000000000000000     0 IFUNC   LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local_ifunc
++     7: 0000000000000000     0 IFUNC   LOCAL  DEFAULT    1 f_base_local_ifunc
++     8: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT    1 f_base_local
++     9: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT    1 \$x
++    10: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS .*variant_pcs-2\.o
++    11: 0000000000000038     0 NOTYPE  LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local2
++    12: 0000000000000038     0 IFUNC   LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local2_ifunc
++    13: 0000000000000038     0 IFUNC   LOCAL  DEFAULT    1 f_base_local2_ifunc
++    14: 0000000000000038     0 NOTYPE  LOCAL  DEFAULT    1 f_base_local2
++    15: 0000000000000038     0 NOTYPE  LOCAL  DEFAULT    1 \$x
++    16: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND f_base_global_default_undef
++    17: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]   UND f_spec_global_default_undef
++    18: 0000000000000000     0 NOTYPE  GLOBAL HIDDEN  \[VARIANT_PCS\]     1 f_spec_global_hidden_def
++    19: 0000000000000000     0 IFUNC   GLOBAL HIDDEN     1 f_base_global_hidden_ifunc
++    20: 0000000000000000     0 IFUNC   GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_ifunc
++    21: 0000000000000000     0 NOTYPE  GLOBAL HIDDEN     1 f_base_global_hidden_def
++    22: 0000000000000000     0 IFUNC   GLOBAL HIDDEN  \[VARIANT_PCS\]     1 f_spec_global_hidden_ifunc
++    23: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT    1 f_base_global_default_def
++    24: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_def
++    25: 0000000000000000     0 IFUNC   GLOBAL DEFAULT    1 f_base_global_default_ifunc
+diff --git a/ld/testsuite/ld-aarch64/variant_pcs-shared.d b/ld/testsuite/ld-aarch64/variant_pcs-shared.d
+new file mode 100644
+index 0000000000..bdcc2c867f
+--- /dev/null
++++ b/ld/testsuite/ld-aarch64/variant_pcs-shared.d
+@@ -0,0 +1,67 @@
++#source: variant_pcs-1.s
++#source: variant_pcs-2.s
++#ld: -shared --hash-style=sysv -T variant_pcs.ld
++#readelf: -rsW
++
++Relocation section '\.rela\.plt' at offset 0x11000 contains 12 entries:
++    Offset             Info             Type               Symbol's Value  Symbol's Name \+ Addend
++0000000000009020  0000000100000402 R_AARCH64_JUMP_SLOT    0000000000000000 f_base_global_default_undef \+ 0
++0000000000009028  0000000200000402 R_AARCH64_JUMP_SLOT    0000000000000000 f_spec_global_default_undef \+ 0
++0000000000009030  0000000400000402 R_AARCH64_JUMP_SLOT    0000000000008000 f_base_global_default_def \+ 0
++0000000000009038  0000000500000402 R_AARCH64_JUMP_SLOT    0000000000008000 f_spec_global_default_def \+ 0
++0000000000009040  0000000000000408 R_AARCH64_IRELATIVE                       8000
++0000000000009048  0000000300000402 R_AARCH64_JUMP_SLOT    f_spec_global_default_ifunc\(\) f_spec_global_default_ifunc \+ 0
++0000000000009050  0000000000000408 R_AARCH64_IRELATIVE                       8000
++0000000000009058  0000000600000402 R_AARCH64_JUMP_SLOT    f_base_global_default_ifunc\(\) f_base_global_default_ifunc \+ 0
++0000000000009060  0000000000000408 R_AARCH64_IRELATIVE                       8038
++0000000000009068  0000000000000408 R_AARCH64_IRELATIVE                       8000
++0000000000009070  0000000000000408 R_AARCH64_IRELATIVE                       8000
++0000000000009078  0000000000000408 R_AARCH64_IRELATIVE                       8038
++
++Symbol table '\.dynsym' contains 7 entries:
++   Num:    Value          Size Type    Bind   Vis      Ndx Name
++     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND 
++     1: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND f_base_global_default_undef
++     2: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]   UND f_spec_global_default_undef
++     3: 0000000000008000     0 IFUNC   GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_ifunc
++     4: 0000000000008000     0 NOTYPE  GLOBAL DEFAULT    1 f_base_global_default_def
++     5: 0000000000008000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_def
++     6: 0000000000008000     0 IFUNC   GLOBAL DEFAULT    1 f_base_global_default_ifunc
++
++Symbol table '\.symtab' contains 35 entries:
++   Num:    Value          Size Type    Bind   Vis      Ndx Name
++     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND 
++     1: 0000000000008000     0 SECTION LOCAL  DEFAULT    1 
++     2: 0000000000008070     0 SECTION LOCAL  DEFAULT    2 
++     3: 0000000000009000     0 SECTION LOCAL  DEFAULT    3 
++     4: 0000000000009080     0 SECTION LOCAL  DEFAULT    4 
++     5: 0000000000011000     0 SECTION LOCAL  DEFAULT    5 
++     6: 0000000000011120     0 SECTION LOCAL  DEFAULT    6 
++     7: 00000000000111c8     0 SECTION LOCAL  DEFAULT    7 
++     8: 0000000000011270     0 SECTION LOCAL  DEFAULT    8 
++     9: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS .*variant_pcs-1\.o
++    10: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local
++    11: 0000000000008000     0 IFUNC   LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local_ifunc
++    12: 0000000000008000     0 IFUNC   LOCAL  DEFAULT    1 f_base_local_ifunc
++    13: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT    1 f_base_local
++    14: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT    1 \$x
++    15: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS .*variant_pcs-2\.o
++    16: 0000000000008038     0 NOTYPE  LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local2
++    17: 0000000000008038     0 IFUNC   LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_local2_ifunc
++    18: 0000000000008038     0 IFUNC   LOCAL  DEFAULT    1 f_base_local2_ifunc
++    19: 0000000000008038     0 NOTYPE  LOCAL  DEFAULT    1 f_base_local2
++    20: 0000000000008038     0 NOTYPE  LOCAL  DEFAULT    1 \$x
++    21: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS 
++    22: 0000000000009080     0 OBJECT  LOCAL  DEFAULT  ABS _DYNAMIC
++    23: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_global_hidden_def
++    24: 0000000000008000     0 IFUNC   LOCAL  DEFAULT    1 f_base_global_hidden_ifunc
++    25: 0000000000008000     0 NOTYPE  LOCAL  DEFAULT    1 f_base_global_hidden_def
++    26: 0000000000009000     0 OBJECT  LOCAL  DEFAULT  ABS _GLOBAL_OFFSET_TABLE_
++    27: 0000000000008000     0 IFUNC   LOCAL  DEFAULT \[VARIANT_PCS\]     1 f_spec_global_hidden_ifunc
++    28: 0000000000008070     0 NOTYPE  LOCAL  DEFAULT    2 \$x
++    29: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND f_base_global_default_undef
++    30: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]   UND f_spec_global_default_undef
++    31: 0000000000008000     0 IFUNC   GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_ifunc
++    32: 0000000000008000     0 NOTYPE  GLOBAL DEFAULT    1 f_base_global_default_def
++    33: 0000000000008000     0 NOTYPE  GLOBAL DEFAULT \[VARIANT_PCS\]     1 f_spec_global_default_def
++    34: 0000000000008000     0 IFUNC   GLOBAL DEFAULT    1 f_base_global_default_ifunc
+diff --git a/ld/testsuite/ld-aarch64/variant_pcs.ld b/ld/testsuite/ld-aarch64/variant_pcs.ld
+new file mode 100644
+index 0000000000..a66a9343a7
+--- /dev/null
++++ b/ld/testsuite/ld-aarch64/variant_pcs.ld
+@@ -0,0 +1,23 @@
++/* Script for .variant_pcs symbol tests.  */
++OUTPUT_ARCH(aarch64)
++ENTRY(_start)
++SECTIONS
++{
++  /* Read-only sections, merged into text segment: */
++  PROVIDE (__executable_start = 0x8000); . = 0x8000;
++  .text           :
++  {
++    *(.before)
++    *(.text)
++    *(.after)
++  } =0
++  . = 0x9000;
++  .got            : { *(.got) *(.got.plt)}
++  . = 0x10000;
++  .rela.dyn       : { *(.rela.ifunc) }
++  . = 0x11000;
++  .rela.plt       : { *(.rela.plt) *(.rela.iplt) }
++  . = 0x12340000;
++  .far : { *(.far) }
++  .ARM.attributes 0 : { *(.ARM.atttributes) }
++}
