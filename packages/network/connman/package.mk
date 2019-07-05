@@ -3,20 +3,16 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="connman"
-#PKG_VERSION="2589fda"
-#PKG_SHA256="2e4fa2688acb2670bdf1e31a4b44a84e8c12aff2ca3462fdaf5c7f0a2d584b13"
 PKG_VERSION="1.37"
 PKG_SHA256="6ce29b3eb0bb16a7387bc609c39455fd13064bdcde5a4d185fab3a0c71946e16"
 PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/pub/scm/network/connman/connman.git/log/"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://git.kernel.org/pub/scm/network/connman/connman.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables wpa_supplicant"
+PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables"
 PKG_LONGDESC="A modular network connection manager."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
-                           --srcdir=.. \
+PKG_CONFIGURE_OPTS_TARGET="--srcdir=.. \
                            --disable-debug \
                            --disable-hh2serial-gps \
                            --disable-openconnect \
