@@ -31,6 +31,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
