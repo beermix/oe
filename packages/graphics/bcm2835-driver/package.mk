@@ -19,7 +19,7 @@ else
   PKG_FLOAT="hardfp"
 fi
 
-make_target() {
+makeinstall_target() {
   # Install vendor header files
   mkdir -p ${SYSROOT_PREFIX}/usr/include
     cp -PRv ${PKG_FLOAT}/opt/vc/include/* ${SYSROOT_PREFIX}/usr/include
@@ -41,9 +41,7 @@ make_target() {
   mkdir -p ${SYSROOT_PREFIX}/opt/vc
     ln -sf ${SYSROOT_PREFIX}/usr/lib     ${SYSROOT_PREFIX}/opt/vc/lib
     ln -sf ${SYSROOT_PREFIX}/usr/include ${SYSROOT_PREFIX}/opt/vc/include
-}
 
-makeinstall_target() {
   # Install EGL, OpenGL ES and other vendor libs
   mkdir -p ${INSTALL}/usr/lib
     cp -PRv ${PKG_FLOAT}/opt/vc/lib/*.so ${INSTALL}/usr/lib
