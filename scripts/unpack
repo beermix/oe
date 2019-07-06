@@ -55,7 +55,7 @@ pkg_lock_status "ACTIVE" "${PKG_NAME}" "unpack"
 
 ${SCRIPTS}/get "${PKG_NAME}"
 
-if [ -d "${SOURCES}/${PKG_NAME}" -o -d "${PKG_DIR}/sources" ] || pkg_call_exists unpack; then
+if [ -d "${SOURCES}/${PKG_NAME}" -o -d "${PKG_DIR}/sources" ]; then
   build_msg "CLR_UNPACK" "UNPACK" "${PKG_NAME}" "indent"
 
   # unpack into a unique location as unpacking into a single ${BUILD} directory is not thread-safe
@@ -66,10 +66,10 @@ if [ -d "${SOURCES}/${PKG_NAME}" -o -d "${PKG_DIR}/sources" ] || pkg_call_exists
   pkg_call_exists pre_unpack && pkg_call pre_unpack
 
   if pkg_call_exists unpack; then
-    PKG_BUILD_ORIG="${PKG_BUILD}"
-    PKG_BUILD="${PKG_UNPACK_DIR}/${PKG_NAME}-${PKG_VERSION}"
-    pkg_call unpack
-    PKG_BUILD="${PKG_BUILD_ORIG}"
+    (
+      PKG_BUILD="${PKG_UNPACK_DIR}/${PKG_NAME}-${PKG_VERSION}"
+      pkg_call unpack
+    )
   else
     if [ -n "${PKG_URL}" ]; then
       ${SCRIPTS}/extract "${PKG_NAME}" "${PKG_UNPACK_DIR}"
@@ -122,13 +122,9 @@ if [ -d "${SOURCES}/${PKG_NAME}" -o -d "${PKG_DIR}/sources" ] || pkg_call_exists
     PATCH_DIRS_PRJ=""
     if [ -n "${PKG_PATCH_DIRS}" ]; then
       for patch_dir in ${PKG_PATCH_DIRS}; do
-        if [[ ${patch_dir} =~ ^/ && -d ${patch_dir} ]]; then
-          PATCH_DIRS_PKG+=" ${patch_dir}/*.patch"
-        else
-          [ -d ${PKG_DIR}/patches/${patch_dir} ] && PATCH_DIRS_PKG+=" ${PKG_DIR}/patches/${patch_dir}/*.patch"
-          [ -d ${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${patch_dir} ] && PATCH_DIRS_PRJ+=" ${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${patch_dir}/*.patch"
-          [ -d ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/${PKG_NAME}/${patch_dir} ] && PATCH_DIRS_PRJ+=" ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/${PKG_NAME}/${patch_dir}/*.patch"
-        fi
+        [ -d ${PKG_DIR}/patches/${patch_dir} ] && PATCH_DIRS_PKG+=" ${PKG_DIR}/patches/${patch_dir}/*.patch"
+        [ -d ${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${patch_dir} ] && PATCH_DIRS_PRJ+=" ${PROJECT_DIR}/${PROJECT}/patches/${PKG_NAME}/${patch_dir}/*.patch"
+        [ -d ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/${PKG_NAME}/${patch_dir} ] && PATCH_DIRS_PRJ+=" ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/${PKG_NAME}/${patch_dir}/*.patch"
       done
     fi
 
