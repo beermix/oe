@@ -16,18 +16,25 @@ PKG_BUILD_FLAGS="+speed"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ssl2 \
-                           no-ssl3 \
-                           enable-camellia \
-                           enable-capieng \
-                           enable-idea \
-                           enable-mdc2 \
-                           enable-rc5  \
-                           enable-rfc3779 \
-                           enable-tlsext \
-                           enable-unit-test \
                            zlib-dynamic \
                            zlib \
+                           enable-capieng \
+                           enable-camellia \
+                           enable-unit-test \
+                           enable-idea \
+                           enable-mdc2 \
+                           enable-tlsext \
+                           enable-rfc3779 \
+                           enable-ec2m \
+                           no-gmp \
+                           experimental-jpake \
+                           enable-krb5 \
+                           experimental-libunbound \
+                           enable-md2 \
+                           enable-rc5 \
+                           no-sctp \
+                           no-ssl3-method \
+                           experimental-store \
                            enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
