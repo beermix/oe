@@ -26,15 +26,10 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            enable-tlsext \
                            enable-rfc3779 \
                            enable-ec2m \
-                           no-gmp \
-                           experimental-jpake \
                            enable-krb5 \
-                           experimental-libunbound \
                            enable-md2 \
                            enable-rc5 \
-                           no-sctp \
                            no-ssl3-method \
-                           experimental-store \
                            enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
@@ -61,14 +56,20 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
- CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
-  CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
-  LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+  CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
+  #CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
+  #LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
   ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+}
+
+make_target() {
+  cd $PKG_BUILD/.$TARGET_NAME
+  make depend
+  make
 }
 
 makeinstall_target() {
