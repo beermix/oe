@@ -31,11 +31,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -46,7 +46,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-cet \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
