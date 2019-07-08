@@ -3,8 +3,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="Pillow"
-PKG_VERSION="6.0.0"
-PKG_SHA256="809c0a2ce9032cbcd7b5313f71af4bdc5c8c771cb86eb7559afd954cab82ebb5"
+PKG_VERSION="6.1.0"
+PKG_SHA256="0804f77cb1e9b6dbd37601cee11283bba39a8d44b9ddb053400c58e0c0d7d9de"
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/python-pillow/Pillow/releases"
 PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
