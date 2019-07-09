@@ -30714,3 +30714,57 @@ index 6991e8ddc1..2349402d8c 100644
  	{
  	  unsigned int apuinfo_size = bfd_get_32 (abfd, contents + 4);
  	  unsigned int i;
+
+commit 16ba30dcfaa33637fb06bf4e6ff8afe68cb6c810
+Author: Szabolcs Nagy <szabolcs.nagy@arm.com>
+Date:   Mon Jul 8 13:57:43 2019 +0100
+
+    aarch64: fix DT_AARCH64_VARIANT_PCS handling in readelf
+    
+    backport commit 13acf03468d1e218c0a980ff6e6adaaac4bb5d1e
+    failed to copy the changes in get_dynamic_type.
+    
+    this could cause build failure
+    
+    binutils/readelf.c:1800:1: warning: 'get_aarch64_dynamic_type' defined but not used [-Wunused-function]
+    
+    binutils/ChangeLog:
+    
+    2019-07-08  Szabolcs Nagy  <szabolcs.nagy@arm.com>
+    
+            * readelf.c (get_dynamic_type): Handle EM_AARCH64.
+
+diff --git a/binutils/readelf.c b/binutils/readelf.c
+index 28466e0cd7..6b4eb41aee 100644
+--- a/binutils/readelf.c
++++ b/binutils/readelf.c
+@@ -2180,6 +2180,9 @@ get_dynamic_type (Filedata * filedata, unsigned long type)
+ 
+ 	  switch (filedata->file_header.e_machine)
+ 	    {
++	    case EM_AARCH64:
++	      result = get_aarch64_dynamic_type (type);
++	      break;
+ 	    case EM_MIPS:
+ 	    case EM_MIPS_RS3_LE:
+ 	      result = get_mips_dynamic_type (type);
+
+commit c3f9d95f92e763226a1281530923210d03b82f55
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Jul 9 00:01:11 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 34768fb405..ad8e170406 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190708
++#define BFD_VERSION_DATE 20190709
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
