@@ -60,7 +60,7 @@
     OPENGLES="no"
 
   # Displayserver to use (x11 / no)
-    DISPLAYSERVER="no"
+    DISPLAYSERVER="yes"
 
   # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap)
     KODIPLAYER_DRIVER="default"
