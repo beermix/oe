@@ -13,7 +13,7 @@ PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
-PKG_BUILD_FLAGS="+lto"
+PKG_BUILD_FLAGS="+lto +speed"
 LTO_SUPPORT="yes"
 GOLD_SUPPORT="yes"
 
