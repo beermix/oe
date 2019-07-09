@@ -1,6 +1,5 @@
 PKG_NAME="nuttcp"
 PKG_VERSION="8.1.4"
-PKG_DEPENDS_TARGET="toolchain"
 PKG_TOOLCHAIN="manual"
 
 make_target() {
