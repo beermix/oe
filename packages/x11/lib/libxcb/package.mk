@@ -14,7 +14,9 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_TARGET="--disable-screensaver \
                            --disable-xprint \
                            --disable-selinux \
-                           --disable-xvmc"
+                           --disable-xvmc \
+                           --enable-xinput \
+                           --enable-xkb"
 
 pre_configure_target() {
   PYTHON_LIBDIR=$SYSROOT_PREFIX/usr/lib/$PKG_PYTHON_VERSION
