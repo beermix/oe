@@ -32,7 +32,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel zen lts pf arch git
-    LINUX="default"
+    LINUX="arch"
 
 
 ################################################################################
@@ -60,7 +60,7 @@
     OPENGLES="no"
 
   # Displayserver to use (x11 / no)
-    DISPLAYSERVER="x11"
+    DISPLAYSERVER="no"
 
   # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap)
     KODIPLAYER_DRIVER="default"
@@ -74,10 +74,10 @@
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS"
+  #  ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS"
 
   # build and install driver addons (yes / no)
-    DRIVER_ADDONS_SUPPORT="yes"
+    DRIVER_ADDONS_SUPPORT="no"
 
   # driver addons to install:
   # for a list of additional drivers see packages/linux-driver-addons

@@ -46,7 +46,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   arch)
-    PKG_VERSION="01ccc3a"
+    PKG_VERSION="0ecfebd2b52404ae0c54a878c872bb93363ada36"
     PKG_SITE="https://git.archlinux.org/linux.git/log"
     PKG_URL="https://git.archlinux.org/linux.git/snapshot/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
