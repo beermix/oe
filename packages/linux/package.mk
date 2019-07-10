@@ -152,7 +152,6 @@ pre_make_target() {
     rm -rf $BUILD/initramfs
     $SCRIPTS/install initramfs
   )
-  pkg_lock_status "ACTIVE" "linux:target" "build"
 
   if [ "$TARGET_ARCH" = "x86_64" ]; then
     # copy some extra firmware to linux tree
