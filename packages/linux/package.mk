@@ -33,7 +33,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   git)
-    PKG_VERSION="46713c3"
+    PKG_VERSION="22051d9"
     PKG_SITE="https://github.com/torvalds/linux"
     PKG_URL="https://github.com/torvalds/linux/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
@@ -157,7 +157,7 @@ pre_make_target() {
   if [ "$TARGET_ARCH" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
-      #cp -a $(get_build_dir kernel-firmware)/{e100,rtl_nic} $PKG_BUILD/external-firmware
+      cp -a $(get_build_dir kernel-firmware)/{e100,rtl_nic} $PKG_BUILD/external-firmware
 
     cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
 
