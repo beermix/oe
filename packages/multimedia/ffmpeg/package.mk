@@ -22,9 +22,9 @@ get_graphicdrivers
 
 if [ "$V4L2_SUPPORT" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libdrm"
-  PKG_FFMPEG_V4L2="--enable-v4l2_m2m --enable-libdrm"
+  PKG_FFMPEG_V4L2="--enable-libdrm"
 else
-  PKG_FFMPEG_V4L2="--disable-v4l2_m2m"
+  PKG_FFMPEG_V4L2=""
 fi
 
 if [ "$VAAPI_SUPPORT" = "yes" ]; then
@@ -44,9 +44,9 @@ fi
 if [ "$PROJECT" = "Rockchip" ]; then
   PKG_PATCH_DIRS+=" rkmpp"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET rkmpp"
-  PKG_FFMPEG_RKMPP="--enable-rkmpp --enable-libdrm --enable-version3"
+  PKG_FFMPEG_RKMPP="--enable-libdrm --enable-version3"
 else
-  PKG_FFMPEG_RKMPP="--disable-rkmpp"
+  PKG_FFMPEG_RKMPP=""
 fi
 
 if [ "$PROJECT" = "Allwinner" ]; then
