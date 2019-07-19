@@ -1,26 +1,35 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) no-ssl3-method no-ssl2 no-ssl3
 
 PKG_NAME="openssl"
-PKG_VERSION="1.1.1b"
-PKG_SHA256="5c557b023230413dfb0756f3137a13e6d726838ccd1430888ad15bfb2b43ea4b"
+PKG_VERSION="1.0.2s"
+PKG_SHA256="cabd5c9492825ce5bd23f3c3aeed6a97f8142f606d893df216411f07d1abab96"
 PKG_LICENSE="BSD"
-PKG_SITE="https://www.openssl.org/source"
+PKG_SITE="https://www.openssl.org/source/"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="+speed -parallel"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ssl3 \
-                           no-rc5 \
+                           zlib-dynamic \
+                           zlib \
+                           enable-capieng \
                            enable-camellia \
+                           enable-unit-test \
+                           enable-idea \
                            enable-mdc2 \
+                           enable-tlsext \
+                           enable-rfc3779 \
+                           enable-ec2m \
+                           enable-krb5 \
+                           enable-md2 \
+                           enable-rc5 \
                            no-ssl3-method \
                            enable-ec_nistp_64_gcc_128"
 
@@ -36,13 +45,11 @@ post_unpack() {
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
-
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3"`
 }
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CPPFLAGS $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 no-zlib-dynamic no-zlib $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -52,18 +59,25 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $OPENSSL_TARGET $CPPFLAGS $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
+#make_target() {
+#  cd $PKG_BUILD/.$TARGET_NAME
+#  make depend
+#  make
+#}
+
 makeinstall_target() {
-  make DESTDIR=$INSTALL install_sw
-  make DESTDIR=$SYSROOT_PREFIX install_sw
+  make INSTALL_PREFIX=$INSTALL install_sw
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  chmod 755 $INSTALL/usr/lib/*.so*
+  chmod 755 $INSTALL/usr/lib/engines/*.so
 }
 
 post_makeinstall_target() {
