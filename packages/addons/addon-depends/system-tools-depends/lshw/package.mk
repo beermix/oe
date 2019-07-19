@@ -14,6 +14,6 @@ make_target() {
   make CXX=$CXX -C src/
 }
 
-makeinstall_target() {
-  : # nop
-}
+#makeinstall_target() {
+#  : # nop
+#}
