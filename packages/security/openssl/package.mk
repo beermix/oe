@@ -17,7 +17,17 @@ PKG_BUILD_FLAGS="-parallel +speed"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ssl3-method \
+                           no-ec2m \
+                           no-md2 \
+                           no-rc5 \
+                           no-rfc3779 \
+                           no-sctp \
+                           no-ssl-trace \
+                           no-ssl3 \
+                           no-unit-test \
+                           no-weak-ssl-ciphers \
+                           no-zlib \
+                           no-zlib-dynamic \
                            no-static-engine"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
