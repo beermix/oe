@@ -26,6 +26,8 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-ssl3 \
                            no-unit-test \
                            no-weak-ssl-ciphers \
+                           no-zlib \
+                           zlib-dynamic \
                            no-static-engine"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
@@ -44,7 +46,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 no-zlib no-zlib-dynamic $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
