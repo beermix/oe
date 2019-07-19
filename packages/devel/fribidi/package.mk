@@ -18,21 +18,13 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --disable-debug \
                            --disable-deprecated \
                            --disable-silent-rules \
-                           --enable-charsets \
-                           --with-gnu-ld \
-                           --without-glib \
-                           --disable-docs"
+                           --with-gnu-ld"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-debug \
-			    --disable-deprecated \
-			    --enable-charsets \
-			    --with-gnu-ld \
-			    --without-glib \
-			    --disable-docs"
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"

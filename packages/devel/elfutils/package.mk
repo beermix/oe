@@ -8,7 +8,7 @@ PKG_SHA256="eb5747c371b0af0f71e86215a5ebb88728533c3a104a43d4231963f308cd1023"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/elfutils/ftp/?C=M;O=D"
 PKG_URL="https://sourceware.org/elfutils/ftp/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="make:host bison:host flex:host zlib:host"
+PKG_DEPENDS_HOST="make:host zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib elfutils:host"
 PKG_LONGDESC="A collection of utilities to handle ELF objects."
 PKG_TOOLCHAIN="autotools"
@@ -21,7 +21,7 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="utrace_cv_cc_biarch=false \
-                         --disable-nls \
-                         --with-zlib \
-                         --without-bzlib \
-                         --without-lzma"
+                           --disable-nls \
+                           --with-zlib \
+                           --without-bzlib \
+                           --without-lzma"

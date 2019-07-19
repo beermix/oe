@@ -49,7 +49,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
-                         --enable-targets=x86_64-linux \
                          --disable-nls"
 
 pre_configure_host() {

@@ -15,10 +15,8 @@ pre_configure_host() {
   export CC=$LOCAL_CC
 }
 
-PKG_CONFIGURE_OPTS_HOST="--without-guile"
-
 post_makeinstall_host() {
-  mkdir -p $TOOLCHAIN/bin
+  #mkdir -p $TOOLCHAIN/bin
   #cp /home/user/.bin/make $TOOLCHAIN/bin/gmake
   ln -sf make $TOOLCHAIN/bin/gmake
 
