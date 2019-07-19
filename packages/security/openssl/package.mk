@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) no-ssl3-method no-ssl2 no-ssl3
 
 PKG_NAME="openssl"
@@ -11,7 +12,7 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+speed"
+PKG_BUILD_FLAGS="+speed -parallel"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
@@ -37,11 +38,13 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --openssldir=/etc/ssl"
 
+post_unpack() {
+  find $PKG_BUILD/apps -type f | xargs -n 1 -t sed 's|./demoCA|/etc/ssl|' -i
+}
+
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
-  CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
-  LDFLAGS="$LDFLAGS -Wl,--gc-sections -s"
 }
 
 configure_host() {
@@ -57,8 +60,6 @@ pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
   CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
-  #CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
-  #LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 }
 
 configure_target() {
@@ -66,11 +67,11 @@ configure_target() {
   ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
-make_target() {
-  cd $PKG_BUILD/.$TARGET_NAME
-  make depend
-  make
-}
+#make_target() {
+#  cd $PKG_BUILD/.$TARGET_NAME
+#  make depend
+#  make
+#}
 
 makeinstall_target() {
   make INSTALL_PREFIX=$INSTALL install_sw

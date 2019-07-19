@@ -13,60 +13,72 @@ PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
-PKG_BUILD_FLAGS="-gold -lto"
+PKG_DEPENDS_TARGET="toolchain zlib bzip2 gnutls speex"
+PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
+PKG_BUILD_FLAGS="-gold"
 
 # Dependencies
 get_graphicdrivers
 
+if [ "$V4L2_SUPPORT" = "yes" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libdrm"
+  PKG_FFMPEG_V4L2="--enable-v4l2_m2m --enable-libdrm"
+else
+  PKG_FFMPEG_V4L2="--disable-v4l2_m2m"
+fi
+
 if [ "$VAAPI_SUPPORT" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva"
-  FFMPEG_VAAPI="--enable-vaapi"
+  PKG_FFMPEG_VAAPI="--enable-vaapi"
 else
-  FFMPEG_VAAPI="--disable-vaapi"
+  PKG_FFMPEG_VAAPI="--disable-vaapi"
 fi
 
 if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET"
-  FFMPEG_VDPAU="--enable-vdpau"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau"
+  PKG_FFMPEG_VDPAU="--enable-vdpau"
 else
-  FFMPEG_VDPAU="--disable-vdpau"
+  PKG_FFMPEG_VDPAU="--disable-vdpau"
 fi
 
 if [ "$PROJECT" = "Rockchip" ]; then
+  PKG_PATCH_DIRS+=" rkmpp"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET rkmpp"
-  FFMPEG_RKMPP="--enable-rkmpp --enable-libdrm --enable-version3"
+  PKG_FFMPEG_RKMPP="--enable-rkmpp --enable-libdrm --enable-version3"
 else
-  FFMPEG_RKMPP="--disable-rkmpp"
+  PKG_FFMPEG_RKMPP="--disable-rkmpp"
+fi
+
+if [ "$PROJECT" = "Allwinner" ]; then
+  PKG_PATCH_DIRS+=" v4l2-request-api"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libdrm systemd" # systemd is needed for libudev
+  PKG_FFMPEG_V4L2_REQUEST="--enable-v4l2-request --enable-libudev --enable-libdrm"
 fi
 
 if build_with_debug; then
-  FFMPEG_DEBUG="--enable-debug --disable-stripping"
+  PKG_FFMPEG_DEBUG="--enable-debug --disable-stripping"
 else
-  FFMPEG_DEBUG="--disable-debug --enable-stripping"
+  PKG_FFMPEG_DEBUG="--disable-debug --enable-stripping"
 fi
 
 if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
+  PKG_PATCH_DIRS+=" rpi-hevc"
 fi
-
-case "$TARGET_ARCH" in
-  arm)
-    FFMPEG_TABLES="--enable-hardcoded-tables"
-    ;;
-  *)
-    FFMPEG_TABLES="--disable-hardcoded-tables"
-    ;;
-esac
 
 if target_has_feature neon; then
-  FFMPEG_FPU="--enable-neon"
+  PKG_FFMPEG_FPU="--enable-neon"
 else
-  FFMPEG_FPU="--disable-neon"
+  PKG_FFMPEG_FPU="--disable-neon"
 fi
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
+if [ "$TARGET_ARCH" = "x86_64" ]; then
+  PKG_DEPENDS_TARGET+=" nasm:host"
+fi
+
+if target_has_feature "(neon|sse)"; then
+  PKG_DEPENDS_TARGET+=" dav1d"
+  PKG_FFMPEG_AV1="--enable-libdav1d"
 fi
 
 pre_configure_target() {
@@ -74,11 +86,8 @@ pre_configure_target() {
   rm -rf .$TARGET_NAME
 
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
-    CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux $CFLAGS"
-    FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
-    FFMPEG_RPI="--enable-rpi"
-  else
-    FFMPEG_RPI="--disable-rpi"
+    PKG_FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
+    PKG_FFMPEG_RPI="--enable-rpi"
   fi
 }
 
@@ -99,7 +108,6 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
-              --host-libs="-lm" \
               --extra-cflags="$CFLAGS -Wno-attributes -Wno-deprecated-declarations" \
               --extra-ldflags="$LDFLAGS" \
               --extra-libs="$PKG_FFMPEG_LIBS" \
@@ -129,7 +137,7 @@ configure_target() {
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
-              --disable-gnutls --enable-openssl \
+              --enable-gnutls --disable-openssl \
               --disable-gray \
               --enable-swscale-alpha \
               --disable-small \
@@ -138,11 +146,13 @@ configure_target() {
               --enable-mdct \
               --enable-rdft \
               --disable-crystalhd \
-              --enable-vaapi \
-              --disable-vdpau \
-              --disable-dxva2 \
+              $PKG_FFMPEG_V4L2 \
+              $PKG_FFMPEG_VAAPI \
+              $PKG_FFMPEG_VDPAU \
+              $PKG_FFMPEG_RPI \
+              $PKG_FFMPEG_RKMPP \
+              $PKG_FFMPEG_V4L2_REQUEST \
               --enable-runtime-cpudetect \
-              $FFMPEG_TABLES \
               --disable-memalign-hack \
               --disable-hardcoded-tables \
               --enable-encoders \
@@ -191,8 +201,7 @@ configure_target() {
               --enable-zlib \
               --enable-asm \
               --disable-altivec \
-              --disable-neon \
-              --enable-yasm \
+              $PKG_FFMPEG_FPU \
               --disable-symver \
               --enable-indev=x11grab_xcb
 }
