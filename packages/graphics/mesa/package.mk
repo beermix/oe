@@ -100,8 +100,8 @@ fi
 pre_configure_target() {
   if [ "$DISPLAYSERVER" = "x11" ]; then
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
-    export CFLAGS="$CFLAGS -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-    export CXXFLAGS="$CXXFLAGS -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+    #export CFLAGS="$CFLAGS -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+    #export CXXFLAGS="$CXXFLAGS -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
   fi
 
   # Temporary hack (until panfrost evolves) to use 64-bit pointers in structs passed to GPU
