@@ -4,12 +4,8 @@
 #e2fsck -fpDv -E bmap2extent /dev/sdc1
 #e2fsck -fpDv -E bmap2extent /dev/sdd1
 
-#e2fsck -fpDv /dev/sdb1
-#e2fsck -fpDv /dev/sdc1
-#e2fsck -fpDv /dev/sdd1
-
-mount -t ext4 -o errors=remount-ro,relatime,rw /dev/sdb1 /home/user
-mount -t ext4 -o errors=remount-ro,relatime,rw /dev/sdc1 /home/user/-f2fs
-mount -t ext4 -o errors=remount-ro,relatime,rw /dev/sdd1 /home/user/.aa
+mount /dev/sdb1 /home/user
+mount /dev/sdc1 /home/user/-f2fs
+mount /dev/sdd1 /home/user/.aa
 
 /bin/smbd
