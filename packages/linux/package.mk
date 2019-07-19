@@ -158,6 +158,7 @@ pre_make_target() {
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
       #cp -a $(get_build_dir kernel-firmware)/{e100,rtl_nic} $PKG_BUILD/external-firmware
+      cp -ar $(get_build_dir kernel-firmware)/iwlwifi-*.ucode $PKG_BUILD/external-firmware
 
     cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
 
