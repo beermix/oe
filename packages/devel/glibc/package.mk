@@ -31,6 +31,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=5.2 \
+                           --enable-stack-protector=strong \
+                           --enable-stackguard-randomization \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
