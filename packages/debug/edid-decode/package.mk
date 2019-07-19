@@ -13,8 +13,8 @@ LTO_SUPPORT="yes"
 GOLD_SUPPORT="yes"
 
 make_target() {
-  echo "$CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c"
-  $CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c
+  echo "$CC $CFLAGS -Wall $LDFLAGS -o edid-decode edid-decode.c -lm"
+  $CC $CFLAGS -Wall $LDFLAGS -o edid-decode edid-decode.c -lm
 }
 
 makeinstall_target() {

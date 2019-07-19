@@ -16,7 +16,7 @@ PKG_SHA256="b6124b68ed56172012f767a9ea36d3b8ed45adafe7953bd11add66ae6f9d8a39"
 PKG_LICENSE="MIT"
 PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump nghttp2"
+PKG_DEPENDS_TARGET="toolchain zlib gnutls rtmpdump libidn2 nghttp2"
 PKG_LONGDESC="Client and library for (HTTP, HTTPS, FTP, ...) transfers."
 PKG_TOOLCHAIN="configure"
 
@@ -63,24 +63,18 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-egd-socket \
                            --enable-thread \
                            --with-random=/dev/urandom \
-                           --without-gnutls \
-                           --with-ssl \
-                           --without-polarssl \
+                           --with-gnutls \
+                           --without-ssl \
+                           --without-mbedtls \
                            --without-nss \
                            --with-ca-bundle=/run/libreelec/cacert.pem \
                            --without-ca-path \
                            --without-libpsl \
                            --without-libmetalink \
                            --without-libssh2 \
-                           --with-librtmp=$SYSROOT_PREFIX/usr \
-                           --without-libidn \
-                           --without-libidn2 \
+                           --with-librtmp \
+                           --with-libidn2 \
                            --with-nghttp2"
-
-pre_configure_target() {
-# link against librt because of undefined reference to 'clock_gettime'
-  export LIBS="-lrt -lm -lrtmp"
-}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/zsh
