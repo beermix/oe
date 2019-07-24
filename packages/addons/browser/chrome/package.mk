@@ -2,7 +2,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 # chrome-libXdamage chrome-libXfixes chrome-libXi chrome-libXrender chrome-libXtst chrome-libxcb
 
-PKG_NAME="a"
+PKG_NAME="chrome"
 PKG_VERSION="1.0"
 PKG_REV="200"
 PKG_ARCH="x86_64"
