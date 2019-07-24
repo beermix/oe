@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="fluxbox"
-PKG_VERSION="e792fff"
-PKG_SHA256="9d9881e5add2b21a1d458908e6c3fa08612da42150ce7bfc6662e8b9c39128cb"
+PKG_VERSION="02cc0c6"
+PKG_SHA256="a5cb9e343a2cfa32de82f270a9fc6580ffb43c9bd9254f1f5f1c6625e0b69aab"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/fluxbox/fluxbox"
 PKG_URL="https://github.com/fluxbox/fluxbox/archive/${PKG_VERSION}.tar.gz"
