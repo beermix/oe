@@ -3,16 +3,19 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="openssl"
-PKG_VERSION="1.1.1c"
-PKG_SHA256="f6fb3079ad15076154eda9413fed42877d668e7069d9b87396d0804fdb3f4c90"
+#PKG_VERSION="1.1.1c"
+#PKG_SHA256="f6fb3079ad15076154eda9413fed42877d668e7069d9b87396d0804fdb3f4c90"
+PKG_VERSION="b4b42d4"
 PKG_LICENSE="BSD"
 PKG_SITE="https://www.openssl.org/source/"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_1_1-stable"
+PKG_URL="https://github.com/openssl/openssl/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="-parallel +speed"
+#PKG_BUILD_FLAGS="-parallel +speed"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
@@ -27,7 +30,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-unit-test \
                            no-weak-ssl-ciphers \
                            no-zlib \
-                           no-zlib-dynamic \
+                           zlib-dynamic \
                            no-static-engine"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
