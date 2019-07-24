@@ -13,7 +13,6 @@ LTO_SUPPORT="yes"
 GOLD_SUPPORT="yes"
 
 make_target() {
-
   rm -f Makefile
   LDFLAGS="$LDFLAGS -lX11" $MAKE unclutter
 }
