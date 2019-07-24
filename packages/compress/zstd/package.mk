@@ -12,5 +12,5 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A fast real-time compression algorithm."
 
 configure_package() {
-  PKG_CMAKE_SCRIPT="$PKG_BUILD/build/cmake/CMakeLists.txt"
+  PKG_CMAKE_SCRIPT="${PKG_BUILD}/build/cmake/CMakeLists.txt"
 }
