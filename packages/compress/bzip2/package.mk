@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="bzip2"
-PKG_VERSION="ef31e2d0"
-PKG_SHA256="44b3e911505716972813b6793bee9d232deb1e6c5dbc71a44f098f5a6850eb34"
+PKG_VERSION="3eff3392"
+PKG_SHA256="e48fab35e462aa4f4045bfe8d2d3949edb55700d10b1034cd03f6cb52e132b5f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://gitlab.com/federicomenaquintero/bzip2"
 PKG_URL="https://gitlab.com/federicomenaquintero/bzip2/-/archive/${PKG_VERSION}.tar.gz"
