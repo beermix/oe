@@ -16,7 +16,7 @@ pre_configure_host() {
 }
 
 make_host() {
-  python2 configure.py --bootstrap --verbose
+  python2 configure.py --bootstrap
 # CXX=/bin/clang++ | $TOOLCHAIN/bin/python2
 # python2 configure.py --bootstrap
 }
