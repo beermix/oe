@@ -31186,3 +31186,23 @@ index 2d2752fd59..32ab2e2ac4 100644
        && !(AARCH64_CPU_HAS_FEATURE (features, AARCH64_FEATURE_MEMTAG)))
      return FALSE;
  
+
+commit 92214ca9bb0e0cd285cec5f8521edfc752ab08ca
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Jul 25 00:01:30 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ba43ce824c..085299541e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190724
++#define BFD_VERSION_DATE 20190725
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
