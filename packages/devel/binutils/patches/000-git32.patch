@@ -31206,3 +31206,72 @@ index ba43ce824c..085299541e 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 76febfe1694580841290e47dc519b40a7900063d
+Author: Srinath Parvathaneni <srinath.parvathaneni@arm.com>
+Date:   Mon Jul 22 14:46:11 2019 +0100
+
+    [ARM]: Correct the regular expressions in cmse_main_sec_debug.d file.
+    
+    Fixes the linker testcase "Secure gateway veneers:cmse functions debug
+    information missing" which was failing due to output regular expression
+    mismatch on arm-none-linux-gnueabihf targets.
+    
+            * ld/testsuite/ld-arm/cmse_main_sec_debug.d: Modify regexps to
+            allow for output from a arm-none-linux-gnueabihf target.
+    
+    (cherry picked from commit 0c628bba5afd16e0ab3d78ca81ab3f2d5342c50c)
+    
+    Committed on behalf of Srinath Parvathaneni.
+
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 67dab7aaec..0704764dd2 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,11 @@
++2019-07-25  Srinath Parvathaneni  <srinath.parvathaneni@arm.com>
++
++	Backport from mainline
++	2019-07-22  Srinath Parvathaneni  <srinath.parvathaneni@arm.com>
++
++	* testsuite/ld-arm/cmse_main_sec_debug.d: Modify regexps to
++	allow for output from an arm-none-linux-gnueabihf target.
++
+ 2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
+ 
+ 	Backport from mainline.
+diff --git a/ld/testsuite/ld-arm/cmse_main_sec_debug.d b/ld/testsuite/ld-arm/cmse_main_sec_debug.d
+index 61280b769c..2f01af295c 100644
+--- a/ld/testsuite/ld-arm/cmse_main_sec_debug.d
++++ b/ld/testsuite/ld-arm/cmse_main_sec_debug.d
+@@ -9,21 +9,21 @@ Contents of the \.debug_info section:
+    Abbrev Offset: 0x0
+    Pointer Size:  4
+  <0><b>: Abbrev Number: 1 \(DW_TAG_compile_unit\)
+-    <c>   DW_AT_producer    : \(indirect string, offset: 0x6\): GNU C17 10.0.0 20190617
++    <c>   DW_AT_producer    : \(indirect string, offset: 0x[a-f0-9]+\): GNU C17 10.0.0 20190617
+     <10>   DW_AT_language    : 12	\(ANSI C99\)
+-    <11>   DW_AT_name        : \(indirect string, offset: 0x0\): sec.c
+-    <15>   DW_AT_comp_dir    : \(indirect string, offset: 0x2b\): Blinky
+-    <19>   DW_AT_ranges      : 0x0
+-    <1d>   DW_AT_low_pc      : 0x0
+-    <21>   DW_AT_stmt_list   : 0x0
++    <11>   DW_AT_name        : \(indirect string, offset: 0x[a-f0-9]+\): sec.c
++    <15>   DW_AT_comp_dir    : \(indirect string, offset: 0x[a-f0-9]+\): Blinky
++    <19>   DW_AT_ranges      : 0x[a-f0-9]+
++    <1d>   DW_AT_low_pc      : 0x[a-f0-9]+
++    <21>   DW_AT_stmt_list   : 0x[a-f0-9]+
+  <1><25>: Abbrev Number: 2 \(DW_TAG_subprogram\)
+     <26>   DW_AT_external    : 1
+-    <26>   DW_AT_name        : \(indirect string, offset: 0x1e\): SecureLED_On
++    <26>   DW_AT_name        : \(indirect string, offset: 0x[a-f0-9]+\): SecureLED_On
+     <2a>   DW_AT_decl_file   : 1
+     <2b>   DW_AT_decl_line   : 2
+     <2c>   DW_AT_decl_column : 1
+-    <2d>   DW_AT_low_pc      : 0x8000
+-    <31>   DW_AT_high_pc     : 0xc
++    <2d>   DW_AT_low_pc      : 0x[a-f0-9]+
++    <31>   DW_AT_high_pc     : 0x[a-f0-9]+
+     <35>   DW_AT_frame_base  : 1 byte block: 9c 	\(DW_OP_call_frame_cfa\)
+     <37>   DW_AT_GNU_all_call_sites: 1
+  <1><37>: Abbrev Number: 0
