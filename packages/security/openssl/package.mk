@@ -22,7 +22,6 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            threads \
                            no-ssl \
                            zlib-dynamic \
-                           no-rc4 \
                            no-ssl2 \
                            no-ssl3 \
                            no-static-engine"
