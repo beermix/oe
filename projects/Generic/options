@@ -32,7 +32,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel zen lts pf arch git
-    LINUX="git"
+    LINUX="default"
 
 
 ################################################################################
