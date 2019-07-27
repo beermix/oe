@@ -108,9 +108,9 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
-              --extra-cflags="$CFLAGS -Wno-attributes -Wno-deprecated-declarations" \
+              --host-libs="-lm" \
+              --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
-              --extra-libs="$PKG_FFMPEG_LIBS" \
               --disable-static \
               --enable-shared \
               --enable-gpl \
