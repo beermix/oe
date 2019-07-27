@@ -9,9 +9,7 @@ PKG_SITE="https://dbus.freedesktop.org/releases/dbus-python/?C=M;O=D"
 PKG_URL="https://dbus.freedesktop.org/releases/dbus-python/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python2 dbus dbus-glib"
 PKG_LONGDESC="D-BUS is a message bus, used for sending messages between applications."
-#PKG_BUILD_FLAGS="+lto"
-#LTO_SUPPORT="yes"
-#GOLD_SUPPORT="yes"
+PKG_BUILD_FLAGS="+lto"
 
 pre_configure_target() {
   export PYTHON_CONFIG="$SYSROOT_PREFIX/usr/bin/python2-config"
