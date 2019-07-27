@@ -56,7 +56,7 @@ case "$LINUX" in
     PKG_VERSION="5.2.3"
     PKG_SHA256=""
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="clr"
+    PKG_PATCH_DIRS="defaults"
     PKG_BUILD_PERF="no"
     ;;
 esac

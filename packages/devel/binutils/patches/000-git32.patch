@@ -31275,3 +31275,43 @@ index 61280b769c..2f01af295c 100644
      <35>   DW_AT_frame_base  : 1 byte block: 9c 	\(DW_OP_call_frame_cfa\)
      <37>   DW_AT_GNU_all_call_sites: 1
   <1><37>: Abbrev Number: 0
+
+commit f3494cad30e16eb2190454add3d06cf52e278773
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Jul 26 00:01:28 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 085299541e..7031ee2a30 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190725
++#define BFD_VERSION_DATE 20190726
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 38ee8db6ad2b9aef624d57f157470bb1e7abb127
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Jul 27 00:01:20 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7031ee2a30..05459c41bf 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190726
++#define BFD_VERSION_DATE 20190727
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
