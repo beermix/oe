@@ -3,9 +3,9 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
 
 PKG_NAME="gcc"
-#PKG_VERSION="9.1.0"
-#PKG_SHA256="79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0"
-PKG_VERSION="9-20190720"
+PKG_VERSION="9.1.0"
+PKG_SHA256="79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0"
+#PKG_VERSION="9-20190720"
 #PKG_VERSION="4a61205"
 PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-9-branch"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"

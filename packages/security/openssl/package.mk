@@ -21,10 +21,11 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            no-ssl \
-                           zlib-dynamic \
                            no-ssl2 \
                            no-ssl3 \
-                           no-static-engine"
+                           zlib-dynamic \
+                           no-static-engine \
+                           enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
@@ -68,11 +69,11 @@ pre_configure_target() {
 }
 
 configure_target() {
-  export CFLAGS="$CFLAGS -flto -ffunction-sections" 
-  export LDFLAGS="$LDFLAGS -flto" 
-  export CXXFLAGS="$CXXFLAGS -flto -ffunction-sections" 
+  export CFLAGS="$CFLAGS -ffunction-sections" 
+  export CXXFLAGS="$CXXFLAGS -ffunction-sections" 
+
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {
