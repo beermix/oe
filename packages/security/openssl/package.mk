@@ -69,8 +69,8 @@ pre_configure_target() {
 }
 
 configure_target() {
-  export CFLAGS="$CFLAGS -ffunction-sections" 
-  export CXXFLAGS="$CXXFLAGS -ffunction-sections" 
+#  export CFLAGS="$CFLAGS -ffunction-sections" 
+#  export CXXFLAGS="$CXXFLAGS -ffunction-sections" 
 
   cd $PKG_BUILD/.$TARGET_NAME
   ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET $CFLAGS $LDFLAGS
