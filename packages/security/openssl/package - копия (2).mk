@@ -20,18 +20,12 @@ PKG_BUILD_FLAGS="+speed"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ec2m \
-                           no-md2 \
-                           no-rc5 \
-                           no-rfc3779 \
-                           no-sctp \
-                           no-ssl-trace \
+                           no-ssl \
+                           no-ssl2 \
                            no-ssl3 \
-                           no-unit-test \
-                           no-weak-ssl-ciphers \
-                           no-zlib \
-                           no-zlib-dynamic \
-                           no-static-engine"
+                           zlib-dynamic \
+                           no-static-engine \
+                           enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
