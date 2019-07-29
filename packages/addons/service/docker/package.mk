@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2017 Lukas Rusak (lrusak@libreelec.tv)
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
+# find . -type f -exec sed -i 's/etc\/docker/storage\/.kodi\/userdata\/addon_data\/service.system.docker\/config/g' {} +
 
 PKG_NAME="docker"
-PKG_VERSION="18.09.7"
-PKG_SHA256="f05dc15f5c11635472534c3aaf759c39c1bba842dd1ac23059431c2fd1ae1795"
-PKG_REV="126"
+PKG_VERSION="19.03.1"
+PKG_SHA256="dad9123e203751ce9981bc34773721593655231c32412e310e748b18f10f00"
+PKG_REV="127"
 PKG_ARCH="any"
 PKG_LICENSE="ASL"
 PKG_SITE="http://www.docker.com/"
