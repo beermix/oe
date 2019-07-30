@@ -15,7 +15,7 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_TOOLCHAIN="configure"
-#PKG_BUILD_FLAGS="+speed"
+PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
@@ -24,7 +24,8 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            zlib-dynamic \
                            no-ssl2 \
                            no-ssl3 \
-                           no-static-engine"
+                           no-static-engine \
+                           enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
@@ -52,28 +53,15 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-
-  case $TARGET_ARCH in
-    x86_64)
-      OPENSSL_TARGET=linux-x86_64
-      PLATFORM_FLAGS=enable-ec_nistp_64_gcc_128
-      ;;
-    arm)
-      OPENSSL_TARGET=linux-armv4
-      ;;
-    aarch64)
-      OPENSSL_TARGET=linux-aarch64
-      ;;
-  esac
 }
 
 configure_target() {
-  export CFLAGS="$CFLAGS -flto=8 -ffunction-sections -fsemantic-interposition -O3 -falign-functions=32 -falign-loops=32"
-  export CXXFLAGS="$CXXFLAGS -flto=8 -ffunction-sections -fsemantic-interposition -O3 "
-  export CXXFLAGS="$CXXFLAGS -flto=8 -fsemantic-interposition -O3 -falign-functions=32  "
+#  export CFLAGS="$CFLAGS -flto=8 -ffunction-sections -fsemantic-interposition -O3 -falign-functions=32 -falign-loops=32"
+#  export CXXFLAGS="$CXXFLAGS -flto=8 -ffunction-sections -fsemantic-interposition -O3 "
+#  export CXXFLAGS="$CXXFLAGS -flto=8 -fsemantic-interposition -O3 -falign-functions=32  "
 
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {
