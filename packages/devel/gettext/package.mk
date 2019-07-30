@@ -20,7 +20,14 @@ configure_package() {
                            --disable-java \
                            --disable-curses \
                            --with-included-libxml \
+                           --with-included-libcroco \
+                           --with-included-libunistring \
+                           --with-included-glib \
                            --disable-native-java \
                            --disable-csharp \
-                           --without-emacs"
+                           --without-emacs \
+                           --enable-relocatable \
+                           --disable-openmp \
+                           --without-cvs \
+                           --without-git"
 }
