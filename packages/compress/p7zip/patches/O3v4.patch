@@ -1,0 +1,507 @@
+diff -Naur p7zip-16.02-orig/makefile.afl p7zip-16.02/makefile.afl
+--- p7zip-16.02-orig/makefile.afl	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.afl	2019-07-30 16:03:45.346172580 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (x86, PPC, alpha ...)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.aix_gcc p7zip-16.02/makefile.aix_gcc
+--- p7zip-16.02-orig/makefile.aix_gcc	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.aix_gcc	2019-07-30 16:03:45.346172580 +0300
+@@ -3,7 +3,7 @@
+ # tested with AIX 5.3 and g++ 4.1.0
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+         -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGE_FILES \
+diff -Naur p7zip-16.02-orig/makefile.beos p7zip-16.02/makefile.beos
+--- p7zip-16.02-orig/makefile.beos	2019-07-30 16:03:39.302957132 +0300
++++ p7zip-16.02/makefile.beos	2019-07-30 16:03:45.334174057 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+ 	-DENV_BEOS \
+diff -Naur p7zip-16.02-orig/makefile.cygwin p7zip-16.02/makefile.cygwin
+--- p7zip-16.02-orig/makefile.cygwin	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.cygwin	2019-07-30 16:03:45.330174551 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.cygwin64 p7zip-16.02/makefile.cygwin64
+--- p7zip-16.02-orig/makefile.cygwin64	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.cygwin64	2019-07-30 16:03:45.330174551 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s -m64
++OPTFLAGS=-O3 -s -m64
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.cygwin64_asm p7zip-16.02/makefile.cygwin64_asm
+--- p7zip-16.02-orig/makefile.cygwin64_asm	2019-07-30 16:03:39.302957132 +0300
++++ p7zip-16.02/makefile.cygwin64_asm	2019-07-30 16:03:45.330174551 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s -m64
++OPTFLAGS=-O3 -s -m64
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.cygwin_asm p7zip-16.02/makefile.cygwin_asm
+--- p7zip-16.02-orig/makefile.cygwin_asm	2019-07-30 16:03:39.302957132 +0300
++++ p7zip-16.02/makefile.cygwin_asm	2019-07-30 16:03:45.298178494 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.djgpp p7zip-16.02/makefile.djgpp
+--- p7zip-16.02-orig/makefile.djgpp	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.djgpp	2019-07-30 16:03:45.178193281 +0300
+@@ -3,7 +3,7 @@
+ # (available targets for DJGPP : all test clean)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.djgpp_watt p7zip-16.02/makefile.djgpp_watt
+--- p7zip-16.02-orig/makefile.djgpp_watt	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.djgpp_watt	2019-07-30 16:03:45.326175044 +0300
+@@ -19,7 +19,7 @@
+ $(error Please set WATT_ROOT env. var. first!)
+ endif
+ 
+-#OPTFLAGS=-O -s
++#OPTFLAGS=-O3 -s
+ OPTIMIZE=-Os -mtune=i686 -fomit-frame-pointer -s
+ OPTFLAGS=$(OPTIMIZE) -I$(WATT_ROOT)/inc -L$(WATT_ROOT)/lib
+ 
+diff -Naur p7zip-16.02-orig/makefile.freebsd5 p7zip-16.02/makefile.freebsd5
+--- p7zip-16.02-orig/makefile.freebsd5	2019-07-30 16:03:39.302957132 +0300
++++ p7zip-16.02/makefile.freebsd5	2019-07-30 16:03:45.330174551 +0300
+@@ -2,7 +2,7 @@
+ # makefile for FreeBSD 5 (x86, PPC, alpha ...)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.freebsd6+ p7zip-16.02/makefile.freebsd6+
+--- p7zip-16.02-orig/makefile.freebsd6+	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.freebsd6+	2019-07-30 16:03:45.350172086 +0300
+@@ -2,7 +2,7 @@
+ # makefile for FreeBSD 6, 7, 8, 9, 10, ... (x86, PPC, alpha ...)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.gprof p7zip-16.02/makefile.gprof
+--- p7zip-16.02-orig/makefile.gprof	2019-07-30 16:03:39.302957132 +0300
++++ p7zip-16.02/makefile.gprof	2019-07-30 16:03:45.346172580 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -g -pg
++OPTFLAGS=-O3 -g -pg
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ 	-DNDEBUG -D_REENTRANT -DENV_UNIX \
+diff -Naur p7zip-16.02-orig/makefile.haiku p7zip-16.02/makefile.haiku
+--- p7zip-16.02-orig/makefile.haiku	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.haiku	2019-07-30 16:03:45.334174057 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+ 	-DENV_BEOS -DENV_HAIKU \
+diff -Naur p7zip-16.02-orig/makefile.hpux-gcc p7zip-16.02/makefile.hpux-gcc
+--- p7zip-16.02-orig/makefile.hpux-gcc	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.hpux-gcc	2019-07-30 16:03:45.334174057 +0300
+@@ -2,7 +2,7 @@
+ # makefile for HP-UX 11
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_amd64 p7zip-16.02/makefile.linux_amd64
+--- p7zip-16.02-orig/makefile.linux_amd64	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.linux_amd64	2019-07-30 16:03:45.334174057 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ # use "-m32" to have a 32bits executable
+ ALLFLAGS=-m64 ${OPTFLAGS} -pipe \
+diff -Naur p7zip-16.02-orig/makefile.linux_amd64_asm p7zip-16.02/makefile.linux_amd64_asm
+--- p7zip-16.02-orig/makefile.linux_amd64_asm	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.linux_amd64_asm	2019-07-30 16:03:58.046644719 +0300
+@@ -1,7 +1,7 @@
+ 
+ 
+-# OPTFLAGS=-Ofast -flto -march=native -funroll-loops -s
+-OPTFLAGS=-O -s
++OPTFLAGS=-Ofast -flto -march=native -funroll-loops -s
++# OPTFLAGS=-O3 -s
+ 
+ # use "-m32" to have a 32bits executable
+ ALLFLAGS=-m64 ${OPTFLAGS} -pipe \
+diff -Naur p7zip-16.02-orig/makefile.linux_any_cpu p7zip-16.02/makefile.linux_any_cpu
+--- p7zip-16.02-orig/makefile.linux_any_cpu	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.linux_any_cpu	2019-07-30 16:03:45.346172580 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (x86, PPC, alpha ...)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_any_cpu_gcc_4.X p7zip-16.02/makefile.linux_any_cpu_gcc_4.X
+--- p7zip-16.02-orig/makefile.linux_any_cpu_gcc_4.X	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.linux_any_cpu_gcc_4.X	2019-07-30 16:03:45.346172580 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (x86, PPC, alpha ...)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_aarch64 p7zip-16.02/makefile.linux_cross_aarch64
+--- p7zip-16.02-orig/makefile.linux_cross_aarch64	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.linux_cross_aarch64	2019-07-30 16:03:45.346172580 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (CROSS ARM)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_arm p7zip-16.02/makefile.linux_cross_arm
+--- p7zip-16.02-orig/makefile.linux_cross_arm	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.linux_cross_arm	2019-07-30 16:03:45.334174057 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (CROSS ARM)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_djgpp p7zip-16.02/makefile.linux_cross_djgpp
+--- p7zip-16.02-orig/makefile.linux_cross_djgpp	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.linux_cross_djgpp	2019-07-30 16:03:45.330174551 +0300
+@@ -7,7 +7,7 @@
+ #
+ 
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+ 	-I${DJGPP_HOME}/include \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_m68k p7zip-16.02/makefile.linux_cross_m68k
+--- p7zip-16.02-orig/makefile.linux_cross_m68k	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.linux_cross_m68k	2019-07-30 16:03:45.178193281 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (CROSS M68K)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_mipsel p7zip-16.02/makefile.linux_cross_mipsel
+--- p7zip-16.02-orig/makefile.linux_cross_mipsel	2019-07-30 16:03:39.302957132 +0300
++++ p7zip-16.02/makefile.linux_cross_mipsel	2019-07-30 16:03:45.346172580 +0300
+@@ -4,7 +4,7 @@
+ #
+ 
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_ppc p7zip-16.02/makefile.linux_cross_ppc
+--- p7zip-16.02-orig/makefile.linux_cross_ppc	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.linux_cross_ppc	2019-07-30 16:03:45.334174057 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (CROSS ARM)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_ppc64 p7zip-16.02/makefile.linux_cross_ppc64
+--- p7zip-16.02-orig/makefile.linux_cross_ppc64	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.linux_cross_ppc64	2019-07-30 16:03:45.334174057 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (CROSS ARM)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_ppc64le p7zip-16.02/makefile.linux_cross_ppc64le
+--- p7zip-16.02-orig/makefile.linux_cross_ppc64le	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.linux_cross_ppc64le	2019-07-30 16:03:45.326175044 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (CROSS ARM)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_s390x p7zip-16.02/makefile.linux_cross_s390x
+--- p7zip-16.02-orig/makefile.linux_cross_s390x	2019-07-30 16:03:39.286959305 +0300
++++ p7zip-16.02/makefile.linux_cross_s390x	2019-07-30 16:03:45.346172580 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (CROSS s390x)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_cross_sparc64 p7zip-16.02/makefile.linux_cross_sparc64
+--- p7zip-16.02-orig/makefile.linux_cross_sparc64	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.linux_cross_sparc64	2019-07-30 16:03:45.334174057 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (CROSS SPARC64)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_other p7zip-16.02/makefile.linux_other
+--- p7zip-16.02-orig/makefile.linux_other	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.linux_other	2019-07-30 16:03:45.330174551 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (other)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_s390x p7zip-16.02/makefile.linux_s390x
+--- p7zip-16.02-orig/makefile.linux_s390x	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.linux_s390x	2019-07-30 16:03:45.334174057 +0300
+@@ -3,7 +3,7 @@
+ #
+ # tested under SUSE Enterprise Linux 10
+ 
+-OPTFLAGS=-O -m31 -s
++OPTFLAGS=-O3 -m31 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+ 	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_scan-build p7zip-16.02/makefile.linux_scan-build
+--- p7zip-16.02-orig/makefile.linux_scan-build	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.linux_scan-build	2019-07-30 16:03:45.326175044 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (x86, PPC, alpha ...)
+ #
+ 
+-#OPTFLAGS=-O -s
++#OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_x32 p7zip-16.02/makefile.linux_x32
+--- p7zip-16.02-orig/makefile.linux_x32	2019-07-30 16:03:39.302957132 +0300
++++ p7zip-16.02/makefile.linux_x32	2019-07-30 16:03:45.330174551 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ # use "-m32" to have a 32bits executable
+ ALLFLAGS=-mx32 ${OPTFLAGS} -pipe \
+diff -Naur p7zip-16.02-orig/makefile.linux_x86_asm_gcc_4.X p7zip-16.02/makefile.linux_x86_asm_gcc_4.X
+--- p7zip-16.02-orig/makefile.linux_x86_asm_gcc_4.X	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.linux_x86_asm_gcc_4.X	2019-07-30 16:03:45.330174551 +0300
+@@ -3,7 +3,7 @@
+ #
+ 
+ # OPTFLAGS=-mfpmath=sse -Ofast -flto -march=native -funroll-loops -s
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -pipe -m32 \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.linux_x86_asm_gcc_4.X_fltk p7zip-16.02/makefile.linux_x86_asm_gcc_4.X_fltk
+--- p7zip-16.02-orig/makefile.linux_x86_asm_gcc_4.X_fltk	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.linux_x86_asm_gcc_4.X_fltk	2019-07-30 16:03:45.178193281 +0300
+@@ -2,7 +2,7 @@
+ # makefile for Linux (x86, PPC, alpha ...)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} -m32 -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.machine p7zip-16.02/makefile.machine
+--- p7zip-16.02-orig/makefile.machine	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.machine	2019-07-30 16:03:45.334174057 +0300
+@@ -1,7 +1,7 @@
+ 
+ 
+ # OPTFLAGS=-Ofast -flto -march=native -funroll-loops -s
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ # use "-m32" to have a 32bits executable
+ ALLFLAGS=-m64 ${OPTFLAGS} -pipe \
+diff -Naur p7zip-16.02-orig/makefile.netbsd p7zip-16.02/makefile.netbsd
+--- p7zip-16.02-orig/makefile.netbsd	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.netbsd	2019-07-30 16:03:45.334174057 +0300
+@@ -3,7 +3,7 @@
+ # makefile for NetBSD (x86, PPC, alpha ...)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.netware_asm_gcc_3.X p7zip-16.02/makefile.netware_asm_gcc_3.X
+--- p7zip-16.02-orig/makefile.netware_asm_gcc_3.X	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.netware_asm_gcc_3.X	2019-07-30 16:03:45.330174551 +0300
+@@ -5,7 +5,7 @@
+ CROSSPREFIX=i586-netware-
+ BINSUFFIX=.nlm
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+ 	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.openbsd_no_port p7zip-16.02/makefile.openbsd_no_port
+--- p7zip-16.02-orig/makefile.openbsd_no_port	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.openbsd_no_port	2019-07-30 16:03:45.298178494 +0300
+@@ -2,7 +2,7 @@
+ # makefile for OpenBSD (x86, PPC, alpha ...)
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+         -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.qnx_shared.bin p7zip-16.02/makefile.qnx_shared.bin
+--- p7zip-16.02-orig/makefile.qnx_shared.bin	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.qnx_shared.bin	2019-07-30 16:03:45.330174551 +0300
+@@ -2,7 +2,7 @@
+ # makefile.machine for "7z , 7za , 7zr , 7zCon.sfx " :
+ # tested with p7zip-4.47_beta on qnx-6.3.0 sp3 x86 target
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+        -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.qnx_shared.so p7zip-16.02/makefile.qnx_shared.so
+--- p7zip-16.02-orig/makefile.qnx_shared.so	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.qnx_shared.so	2019-07-30 16:03:45.334174057 +0300
+@@ -2,7 +2,7 @@
+ # makefile.machine for "7z.so , Codecs/Rar.so" :
+ # tested with p7zip-4.47_beta on qnx-6.3.0 sp3 x86 target
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+        -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.qnx_static p7zip-16.02/makefile.qnx_static
+--- p7zip-16.02-orig/makefile.qnx_static	2019-07-30 16:03:39.302957132 +0300
++++ p7zip-16.02/makefile.qnx_static	2019-07-30 16:03:45.350172086 +0300
+@@ -2,7 +2,7 @@
+ # makefile.machine for "static 7za 7zr 7zCon.sfx" :
+ # tested with p7zip-4.47_beta on qnx-6.3.0 sp3 x86 target
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+        -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.solaris_sparc_gcc p7zip-16.02/makefile.solaris_sparc_gcc
+--- p7zip-16.02-orig/makefile.solaris_sparc_gcc	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.solaris_sparc_gcc	2019-07-30 16:03:45.334174057 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.solaris_x86 p7zip-16.02/makefile.solaris_x86
+--- p7zip-16.02-orig/makefile.solaris_x86	2019-07-30 16:03:39.278960393 +0300
++++ p7zip-16.02/makefile.solaris_x86	2019-07-30 16:03:45.330174551 +0300
+@@ -1,5 +1,5 @@
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+diff -Naur p7zip-16.02-orig/makefile.tru64 p7zip-16.02/makefile.tru64
+--- p7zip-16.02-orig/makefile.tru64	2019-07-30 16:03:39.282959848 +0300
++++ p7zip-16.02/makefile.tru64	2019-07-30 16:03:45.330174551 +0300
+@@ -3,7 +3,7 @@
+ # tested with OSF 5.1 and g++ 3.4.2
+ #
+ 
+-OPTFLAGS=-O -s
++OPTFLAGS=-O3 -s
+ 
+ ALLFLAGS=${OPTFLAGS} \
+        -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \

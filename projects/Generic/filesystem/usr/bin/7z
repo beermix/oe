@@ -1,2 +1,2 @@
 #! /bin/sh
-"/usr/libexec/p7zip/7za" "$@"
+"/usr/libexec/p7zip/7z" "$@"
