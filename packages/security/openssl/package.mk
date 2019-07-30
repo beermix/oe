@@ -72,8 +72,8 @@ configure_target() {
 #  export CXXFLAGS="$CXXFLAGS -flto=8 -ffunction-sections -fsemantic-interposition -O3 "
 #  export CXXFLAGS="$CXXFLAGS -flto=8 -fsemantic-interposition -O3 -falign-functions=32  "
 
-  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
-  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+#  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
+#  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 
   cd $PKG_BUILD/.$TARGET_NAME
   ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET $CFLAGS $LDFLAGS
