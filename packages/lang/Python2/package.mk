@@ -20,6 +20,10 @@ PKG_BUILD_FLAGS="-parallel +speed"
 #LTO_SUPPORT="yes"
 #GOLD_SUPPORT="yes"
 
+post_unpack() {
+  rm -rf $PKG_BUILD/Modules/zlib
+}
+
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
@@ -85,6 +89,7 @@ post_makeinstall_host() {
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
 
+  flags="%{optflags}"
   export CFLAGS="${flags/-fPIE -pie}"
   export CFLAGS="$CFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
   export CXXFLAGS="$CXXFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
