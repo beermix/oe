@@ -49,6 +49,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
+                           --disable-libunwind-exceptions \
+                           --disable-vtable-verify \
+                           --enable-gnu-indirect-function \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libitm \
