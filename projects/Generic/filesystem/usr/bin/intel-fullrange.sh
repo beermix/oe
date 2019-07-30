@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 FB_TYPE="$(grep '^0 ' /proc/fb | sed 's/[^[:space:]] //')"
 
 if [ "$FB_TYPE" == "inteldrmfb" ] || echo "$FB_TYPE" | grep -q "^i9[0-9]*drmfb$"; then

@@ -14,7 +14,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --libdir=/storage/.config \
                            --libexecdir=/storage/.config \
                            --without-libnettle \
-                           --without-openssl \
+                           --with-openssl \
                            --disable-ipv6 \
                            --without-gnutls \
                            --without-libssh2 \
@@ -25,5 +25,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-libcares \
                            --without-libgcrypt \
                            --with-sqlite3 \
-                           --with-libxml2 \
-                           ARIA2_STATIC=yes"
+                           --with-libxml2"

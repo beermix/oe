@@ -4,7 +4,6 @@ PKG_SITE="https://github.com/hishamhm/htop"
 PKG_URL="https://github.com/hishamhm/htop/archive/${PKG_VERSION}.tar.gz"
 #PKG_DEPENDS_TARGET="toolchain ncurses libpciaccess"
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+hardening"
 
 #pre_configure_target() {
 #  export LIBS="$LIBS -lm  -ludev -lltdl -lpthread -ldl -lhwloc"
@@ -19,5 +18,5 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_stat=yes \
                            --disable-unicode \
                            --enable-linux-affinity \
                            --enable-setuid \
-                           --enable-hwloc=no \
+                           --disable-hwloc \
                            --enable-cgroup"
