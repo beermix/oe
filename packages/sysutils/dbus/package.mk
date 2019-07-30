@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="dbus"
-PKG_VERSION="1.13.12"
-PKG_SHA256="7588649b56dd257c6a5f85a8c45aa2dfdf9e99f4de3983710f452081ca43eca6"
+PKG_VERSION="1.12.16"
+PKG_SHA256="54a22d2fa42f2eb2a871f32811c6005b531b9613b1b93a0d269b05e7549fec80"
 PKG_LICENSE="GPL"
 PKG_SITE="https://dbus.freedesktop.org/releases/dbus/?C=M;O=D"
-PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat systemd"
 PKG_LONGDESC="D-Bus is a message bus, used for sending messages between applications."
 PKG_TOOLCHAIN="configure"
@@ -22,6 +22,7 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --disable-ansi \
                            --disable-xml-docs \
                            --disable-doxygen-docs \
+                           --enable-abstract-sockets \
                            --disable-x11-autolaunch \
                            --disable-selinux \
                            --disable-libaudit \
