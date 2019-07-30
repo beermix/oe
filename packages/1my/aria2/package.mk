@@ -19,10 +19,11 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --without-gnutls \
                            --without-libssh2 \
                            --with-ca-bundle=/etc/ssl/cacert.pem \
-                           --without-libexpat \
+                           --with-libexpat \
                            --with-zlib \
                            --with-libuv \
                            --with-libcares \
                            --without-libgcrypt \
-                           --without-sqlite3 \
-                           --without-libxml2"
+                           --with-sqlite3 \
+                           --with-libxml2 \
+                           ARIA2_STATIC=yes"
