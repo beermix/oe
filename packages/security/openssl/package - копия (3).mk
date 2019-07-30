@@ -20,10 +20,17 @@ PKG_TOOLCHAIN="configure"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ssl \
-                           zlib-dynamic \
-                           no-ssl2 \
+                           no-ec2m \
+                           no-md2 \
+                           no-rc5 \
+                           no-rfc3779 \
+                           no-sctp \
+                           no-ssl-trace \
                            no-ssl3 \
+                           no-unit-test \
+                           no-weak-ssl-ciphers \
+                           no-zlib \
+                           no-zlib-dynamic \
                            no-static-engine"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
@@ -68,9 +75,8 @@ pre_configure_target() {
 }
 
 configure_target() {
-  export CFLAGS="$CFLAGS -flto=8 -ffunction-sections -fsemantic-interposition -O3 -falign-functions=32 -falign-loops=32"
-  export CXXFLAGS="$CXXFLAGS -flto=8 -ffunction-sections -fsemantic-interposition -O3 "
-  export CXXFLAGS="$CXXFLAGS -flto=8 -fsemantic-interposition -O3 -falign-functions=32  "
+  export CFLAGS="$CFLAGS -flto=8 -ffunction-sections -fsemantic-interposition -O3 -falign-functions=32 -falign-loops=32" 
+  export CXXFLAGS="$CXXFLAGS -flto=8 -ffunction-sections -fsemantic-interposition -O3" 
 
   cd $PKG_BUILD/.$TARGET_NAME
   ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
