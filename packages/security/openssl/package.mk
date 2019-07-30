@@ -53,6 +53,18 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
+
+  case $TARGET_ARCH in
+    x86_64)
+      OPENSSL_TARGET=linux-x86_64
+      ;;
+    arm)
+      OPENSSL_TARGET=linux-armv4
+      ;;
+    aarch64)
+      OPENSSL_TARGET=linux-aarch64
+      ;;
+  esac
 }
 
 configure_target() {
