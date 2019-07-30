@@ -24,7 +24,7 @@ PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  LIBS="$LIBS -lpthread -lm"
+  export LIBS="$LIBS -lpthread -lm"
 #  export CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
 #  LDFLAGS="$LDFLAGS -lpthread -lm"
