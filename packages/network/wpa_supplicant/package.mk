@@ -16,7 +16,7 @@ PKG_DEPENDS_TARGET="toolchain dbus libnl-tiny openssl"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
-PKG_BUILD_FLAGS="+lto-parallel"
+PKG_BUILD_FLAGS="+speed +lto-parallel"
 LTO_SUPPORT="yes"
 GOLD_SUPPORT="yes"
 
@@ -29,7 +29,6 @@ configure_target() {
 
   LDFLAGS="$LDFLAGS -lpthread -lm"
   CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
-  #CFLAGS="$CFLAGS -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
 #  CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
 #  LDFLAGS="$LDFLAGS -Wl,--gc-sections"
