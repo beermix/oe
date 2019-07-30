@@ -1,5 +1,0 @@
-PKG_NAME="npapi-sdk"
-PKG_VERSION="0.27.2"
-PKG_URL="http://192.168.1.138:8080/%2Fnpapi-sdk-0.27.2.tar.bz2"
-PKG_DEPENDS_TARGET="ccahe:host"
-PKG_SECTION="security"
