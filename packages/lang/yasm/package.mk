@@ -11,12 +11,9 @@ PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
 PKG_TOOLCHAIN="cmake-make"
 PKG_TOOLCHAIN="autotools"
 
-CCACHE_DISABLE=true
-
-PKG_CONFIGURE_OPTS_HOST="--disable-multilib \
-			    --disable-werror \
-			    --disable-nls \
-			    --disable-sim \
-			    --disable-gdb"
+PKG_CONFIGURE_OPTS_HOST="--disable-debug \
+		           --disable-warnerror \
+		           --disable-profiling \
+		           --disable-python-bindings"
                          
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DENABLE_NLS=OFF -DBUILD_SHARED_LIBS=OFF"
