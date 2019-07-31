@@ -22,9 +22,10 @@ configure_target() {
 #  export LIBS="$LIBS -lpthread -lm"
   LDFLAGS="$LDFLAGS -lpthread -lm"
 
-  cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 
   export CFLAGS="$CFLAGS -D_GNU_SOURCE -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
+
+  cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 }
 
 post_makeinstall_target() {
