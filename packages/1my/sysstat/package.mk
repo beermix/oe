@@ -8,4 +8,13 @@ PKG_DEPENDS_TARGET="toolchain util-linux ncurses lm_sensors"
 #  cd $PKG_BUILD
 #}
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-documentation --disable-nls --sharedstatedir=/storage/.config"
+PKG_CONFIGURE_OPTS_TARGET="--disable-documentation \
+			      --disable-nls \
+			      --enable-yesterday \
+			      --enable-install-isag \
+			      --enable-install-cron \
+			      --enable-copy-only \
+			      --disable-man-group"
+
+#PKG_CONFIGURE_OPTS_TARGET="--disable-documentation --disable-nls --sharedstatedir=/storage/.config"
+
