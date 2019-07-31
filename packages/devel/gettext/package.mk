@@ -26,7 +26,6 @@ configure_package() {
                            --disable-native-java \
                            --disable-csharp \
                            --without-emacs \
-                           --enable-relocatable \
                            --disable-openmp \
                            --without-cvs \
                            --without-git"

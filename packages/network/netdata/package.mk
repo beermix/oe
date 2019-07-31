@@ -3,7 +3,7 @@ PKG_VERSION="1.16.0"
 PKG_SHA256="d62ae89c7b9e93d40feca6edd26b77c6e27e17caa2f90a50a1a7a677f6cc8b4f"
 PKG_URL="https://github.com/firehol/netdata/releases/"
 PKG_URL="https://github.com/firehol/netdata/releases/download/v$PKG_VERSION/netdata-v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain util-linux ncurses sysstat libmnl zlib lm_sensors libcap libnetfilter_acct"
+PKG_DEPENDS_TARGET="toolchain util-linux ncurses libmnl zlib lm_sensors libcap libnetfilter_acct"
 PKG_USE_CMAKE="no"
 PKG_TOOLCHAIN="autotools"
                            
@@ -13,7 +13,6 @@ PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
 			      --disable-lto \
 			      --with-user=root \
 			      --with-libcap \
-			      --enable-plugin-nfacct \
 			      --with-webdir=/storage/.config/netdata/webdir \
 			      --sysconfdir=/storage/.config \
                            --datadir=/storage/.config/netdata \
