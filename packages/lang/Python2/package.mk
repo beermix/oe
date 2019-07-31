@@ -29,6 +29,7 @@ PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
+                         --disable-ipv6 \
                          --enable-unicode=ucs4 \
                          --with-computed-gotos"
 
@@ -88,9 +89,6 @@ post_makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
-
-# export CFLAGS="$CFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
-# export CXXFLAGS="$CXXFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
 
   export CFLAGS="$CFLAGS -ffunction-sections -flto"
   export CXXFLAGS="$CXXFLAGS -ffunction-sections"
