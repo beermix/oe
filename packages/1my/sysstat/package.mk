@@ -9,7 +9,6 @@ PKG_DEPENDS_TARGET="toolchain util-linux ncurses lm_sensors"
 #}
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-documentation \
-			      --disable-nls \
 			      --enable-yesterday \
 			      --enable-install-isag \
 			      --enable-install-cron \
