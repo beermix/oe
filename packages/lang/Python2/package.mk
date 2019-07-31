@@ -56,7 +56,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-system-ffi \
                            --with-system-expat \
                            --with-computed-gotos \
-                           --with-lto"
+                           --with-lto \
+                           --enable-optimizations"
 
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
@@ -89,8 +90,11 @@ post_makeinstall_host() {
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
 
-  export CFLAGS="$CFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
-  export CXXFLAGS="$CXXFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+# export CFLAGS="$CFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
+# export CXXFLAGS="$CXXFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+
+  export CFLAGS="$CFLAGS -ffunction-sections -flto"
+  export CXXFLAGS="$CXXFLAGS -ffunction-sections"
 }
 
 make_target() {
