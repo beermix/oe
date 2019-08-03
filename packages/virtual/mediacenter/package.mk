@@ -28,7 +28,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $DISTRO_PKG_SETTINGS"
   fi
 
-# other package
+# other packages
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet pvr.iptvsimple inputstream.rtmp pvr.iptvsimple.multi inputstream.adaptive"
 
   if [ "$JOYSTICK_SUPPORT" = "yes" ]; then
