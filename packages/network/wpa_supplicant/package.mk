@@ -17,6 +17,7 @@ PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="+lto-parallel"
+
 LTO_SUPPORT="yes"
 GOLD_SUPPORT="yes"
 
