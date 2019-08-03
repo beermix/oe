@@ -25,7 +25,7 @@ post_unpack() {
   sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
 
   # Arch Linux installs x86_64 libraries /lib
-  #sed -i '/m64=/s/lib64/lib/' $PKG_BUILD/gcc/config/i386/t-linux64
+  # sed -i '/m64=/s/lib64/lib/' $PKG_BUILD/gcc/config/i386/t-linux64
 
   # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
@@ -53,6 +53,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libitm \
+                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell"
@@ -62,7 +63,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
-                              --disable-libquadmath \
                               --disable-libatomic \
                               --disable-shared \
                               --disable-threads \
