@@ -16,8 +16,8 @@ PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
 PKG_BUILD_FLAGS="+lto"
 
-LTO_SUPPORT="yes"
-GOLD_SUPPORT="yes"
+#LTO_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 if listcontains "${GRAPHIC_DRIVERS}" "(lima|panfrost)"; then
   PKG_VERSION="659aa3dd6519f64379e91ca97fe184434fd7fdee" # master-19.2
