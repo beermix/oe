@@ -16,16 +16,16 @@ PKG_DEPENDS_TARGET="toolchain zlib dbus libnl-tiny openssl"
 #PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
-#PKG_BUILD_FLAGS="+lto-parallel"
-#LTO_SUPPORT="yes"
-#GOLD_SUPPORT="yes"
+PKG_BUILD_FLAGS="+lto-parallel"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  export LIBS="$LIBS -lpthread -lm"
-
+#  export LIBS="$LIBS -lpthread -lm"
+  LDFLAGS="$LDFLAGS -lpthread -lm"
 #  LDFLAGS="$LDFLAGS -lz -lpthread -lm"
   export CFLAGS="$CFLAGS -DLIBNL1_COMPAT -DCONFIG_LIBNL20 -D__int32_t=int32_t -D__int16_t=int16_t -D__uint8_t=uint8_t -D__uint32_t=uint32_t -D__uint16_t=uint16_t -D_GNU_SOURCE -DCONFIG_LIBNL20 -include stdint.h -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 #  export CFLAGS="$CFLAGS -DLIBNL1_COMPAT -DCONFIG_LIBNL20 -D_GNU_SOURCE -DCONFIG_LIBNL20 -include stdint.h -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
