@@ -12,6 +12,9 @@ PKG_LONGDESC="A NTFS driver with read and write support."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+lto"
 
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
+
 PKG_CONFIGURE_OPTS_TARGET="--exec-prefix=/usr/ \
                            --disable-dependency-tracking \
                            --disable-library \
