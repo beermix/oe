@@ -3,11 +3,11 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="keyutils"
-PKG_VERSION="1.6"
-PKG_SHA256="d3aef20cec0005c0fa6b4be40079885567473185b1a57b629b030e67942c7115"
+PKG_VERSION="1.6.1"
+PKG_SHA256="3c71dcfc6900d07b02f4e061d8fb218a4ae6519c1d283d6a57b8e27718e2f557"
 PKG_LICENSE="GPL"
-PKG_SITE="http://people.redhat.com/~dhowells/keyutils/?C=M;O=D"
-PKG_URL="http://people.redhat.com/~dhowells/keyutils/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_SITE="https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git"
+PKG_URL="https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Keyutils is a set of utilities for managing the key retention facility in the kernel."
 PKG_BUILD_FLAGS="+pic"
