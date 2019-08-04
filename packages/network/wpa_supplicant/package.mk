@@ -32,8 +32,8 @@ configure_target() {
   export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -flto"
   export LDFLAGS="$LDFLAGS -Wl,--gc-sections -flto=4 -fuse-linker-plugin"
 
-  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
-  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+#  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
+#  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 }
