@@ -12,7 +12,8 @@ PKG_DEPENDS_TARGET="toolchain gmp"
 PKG_LONGDESC="A low-level cryptographic library."
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-documentation \
-                           --disable-openssl"
+                           --disable-openssl \
+                           --enable-mini-gmp"
 
 if target_has_feature neon; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-arm-neon"
