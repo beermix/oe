@@ -1,0 +1,413 @@
+diff --git a/genl_ctrl.c b/genl_ctrl.c
+index 1301642..0045459 100644
+--- a/genl_ctrl.c
++++ b/genl_ctrl.c
+@@ -45,6 +45,7 @@ static struct nla_policy ctrl_policy[CTRL_ATTR_MAX+1] = {
+ 	[CTRL_ATTR_HDRSIZE]	= { .type = NLA_U32 },
+ 	[CTRL_ATTR_MAXATTR]	= { .type = NLA_U32 },
+ 	[CTRL_ATTR_OPS]		= { .type = NLA_NESTED },
++	[CTRL_ATTR_MCAST_GROUPS] = { .type = NLA_NESTED },
+ };
+ 
+ static struct nla_policy family_op_policy[CTRL_ATTR_OP_MAX+1] = {
+@@ -52,6 +53,11 @@ static struct nla_policy family_op_policy[CTRL_ATTR_OP_MAX+1] = {
+ 	[CTRL_ATTR_OP_FLAGS]	= { .type = NLA_U32 },
+ };
+ 
++static struct nla_policy family_grp_policy[CTRL_ATTR_MCAST_GRP_MAX+1] = {
++	[CTRL_ATTR_MCAST_GRP_NAME] = { .type = NLA_STRING },
++	[CTRL_ATTR_MCAST_GRP_ID]   = { .type = NLA_U32 },
++};
++
+ static int ctrl_msg_parser(struct nl_cache_ops *ops, struct genl_cmd *cmd,
+ 			   struct genl_info *info, void *arg)
+ {
+@@ -127,6 +133,40 @@ static int ctrl_msg_parser(struct nl_cache_ops *ops, struct genl_cmd *cmd,
+ 		}
+ 	}
+ 
++	if (info->attrs[CTRL_ATTR_MCAST_GROUPS]) {
++		struct nlattr *nla, *nla_grps;
++		int remaining;
++
++		nla_grps = info->attrs[CTRL_ATTR_MCAST_GROUPS];
++		nla_for_each_nested(nla, nla_grps, remaining) {
++			struct nlattr *tb[CTRL_ATTR_MCAST_GRP_MAX+1];
++			int id;
++			const char * name;
++
++			err = nla_parse_nested(tb, CTRL_ATTR_MCAST_GRP_MAX, nla,
++					       family_grp_policy);
++			if (err < 0)
++				goto errout;
++
++			if (tb[CTRL_ATTR_MCAST_GRP_ID] == NULL) {
++				err = -NLE_MISSING_ATTR;
++				goto errout;
++			}
++			id = nla_get_u32(tb[CTRL_ATTR_MCAST_GRP_ID]);
++
++			if (tb[CTRL_ATTR_MCAST_GRP_NAME] == NULL) {
++				err = -NLE_MISSING_ATTR;
++				goto errout;
++			}
++			name = nla_get_string(tb[CTRL_ATTR_MCAST_GRP_NAME]);
++
++			err = genl_family_add_grp(family, id, name);
++			if (err < 0)
++				goto errout;
++		}
++
++	}
++
+ 	err = pp->pp_cb((struct nl_object *) family, pp);
+ errout:
+ 	genl_family_put(family);
+@@ -242,6 +282,44 @@ errout:
+ 	return err;
+ }
+ 
++static int genl_ctrl_grp_by_name(const struct genl_family *family,
++				const char *grp_name)
++{
++	struct genl_family_grp *grp;
++
++	nl_list_for_each_entry(grp, &family->gf_mc_grps, list) {
++		if (!strcmp(grp->name, grp_name)) {
++			return grp->id;
++		}
++	}
++
++	return -NLE_OBJ_NOTFOUND;
++}
++
++int genl_ctrl_resolve_grp(struct nl_sock *sk, const char *family_name,
++	const char *grp_name)
++{
++	struct nl_cache *cache;
++	struct genl_family *family;
++	int err;
++
++	if ((err = genl_ctrl_alloc_cache(sk, &cache)) < 0)
++		return err;
++
++	family = genl_ctrl_search_by_name(cache, family_name);
++	if (family == NULL) {
++		err = -NLE_OBJ_NOTFOUND;
++		goto errout;
++	}
++
++	err = genl_ctrl_grp_by_name(family, grp_name);
++	genl_family_put(family);
++errout:
++	nl_cache_free(cache);
++
++	return err;
++}
++
+ /** @} */
+ 
+ static struct genl_cmd genl_cmds[] = {
+diff --git a/genl_family.c b/genl_family.c
+index 88aaad9..221acfa 100644
+--- a/genl_family.c
++++ b/genl_family.c
+@@ -31,12 +31,14 @@ static void family_constructor(struct nl_object *c)
+ 	struct genl_family *family = (struct genl_family *) c;
+ 
+ 	nl_init_list_head(&family->gf_ops);
++	nl_init_list_head(&family->gf_mc_grps);
+ }
+ 
+ static void family_free_data(struct nl_object *c)
+ {
+ 	struct genl_family *family = (struct genl_family *) c;
+ 	struct genl_family_op *ops, *tmp;
++	struct genl_family_grp *grp, *t_grp;
+ 
+ 	if (family == NULL)
+ 		return;
+@@ -45,6 +47,12 @@ static void family_free_data(struct nl_object *c)
+ 		nl_list_del(&ops->o_list);
+ 		free(ops);
+ 	}
++
++	nl_list_for_each_entry_safe(grp, t_grp, &family->gf_mc_grps, list) {
++		nl_list_del(&grp->list);
++		free(grp);
++	}
++
+ }
+ 
+ static int family_clone(struct nl_object *_dst, struct nl_object *_src)
+@@ -52,6 +60,7 @@ static int family_clone(struct nl_object *_dst, struct nl_object *_src)
+ 	struct genl_family *dst = nl_object_priv(_dst);
+ 	struct genl_family *src = nl_object_priv(_src);
+ 	struct genl_family_op *ops;
++	struct genl_family_grp *grp;
+ 	int err;
+ 
+ 	nl_list_for_each_entry(ops, &src->gf_ops, o_list) {
+@@ -59,6 +68,13 @@ static int family_clone(struct nl_object *_dst, struct nl_object *_src)
+ 		if (err < 0)
+ 			return err;
+ 	}
++
++	nl_list_for_each_entry(grp, &src->gf_mc_grps, list) {
++		err = genl_family_add_grp(dst, grp->id, grp->name);
++		if (err < 0)
++			return err;
++	}
++
+ 	
+ 	return 0;
+ }
+@@ -119,6 +135,23 @@ int genl_family_add_op(struct genl_family *family, int id, int flags)
+ 	return 0;
+ }
+ 
++int genl_family_add_grp(struct genl_family *family, uint32_t id,
++			const char *name)
++{
++	struct genl_family_grp *grp;
++
++	grp = calloc(1, sizeof(*grp));
++	if (grp == NULL)
++		return -NLE_NOMEM;
++
++	grp->id = id;
++	strncpy(grp->name, name, GENL_NAMSIZ - 1);
++
++	nl_list_add_tail(&grp->list, &family->gf_mc_grps);
++
++	return 0;
++}
++
+ /** @} */
+ 
+ /** @cond SKIP */
+diff --git a/genl_mngt.c b/genl_mngt.c
+index 6c65179..246521f 100644
+--- a/genl_mngt.c
++++ b/genl_mngt.c
+@@ -136,31 +136,6 @@ errout:
+ 
+ }
+ 
+-#ifdef disabled
+-char *genl_op2name(int family, int op, char *buf, size_t len)
+-{
+-	struct genl_ops *ops;
+-	int i;
+-
+-	nl_list_for_each_entry(ops, &genl_ops_list, o_list) {
+-		if (ops->o_family == family) {
+-			for (i = 0; i < ops->o_ncmds; i++) {
+-				struct genl_cmd *cmd;
+-				cmd = &ops->o_cmds[i];
+-
+-				if (cmd->c_id == op) {
+-					strncpy(buf, cmd->c_name, len - 1);
+-					return buf;
+-				}
+-			}
+-		}
+-	}
+-
+-	strncpy(buf, "unknown", len - 1);
+-	return NULL;
+-}
+-#endif
+-
+ /**
+  * @name Register/Unregister
+  * @{
+@@ -215,60 +190,4 @@ void genl_unregister(struct nl_cache_ops *ops)
+ 
+ /** @} */
+ 
+-/**
+- * @name Resolving ID/Name
+- * @{
+- */
+-#ifdef disabled
+-static int __genl_ops_resolve(struct nl_cache *ctrl, struct genl_ops *ops)
+-{
+-	struct genl_family *family;
+-
+-	family = genl_ctrl_search_by_name(ctrl, ops->o_name);
+-	if (family != NULL) {
+-		ops->o_id = genl_family_get_id(family);
+-		genl_family_put(family);
+-
+-		return 0;
+-	}
+-
+-	return -NLE_OBJ_NOTFOUND;
+-}
+-
+-int genl_ops_resolve(struct nl_sock *sk, struct genl_ops *ops)
+-{
+-	struct nl_cache *ctrl;
+-	int err;
+-
+-	if ((err = genl_ctrl_alloc_cache(sk, &ctrl)) < 0)
+-		goto errout;
+-
+-	err = __genl_ops_resolve(ctrl, ops);
+-
+-	nl_cache_free(ctrl);
+-errout:
+-	return err;
+-}
+-
+-int genl_mngt_resolve(struct nl_sock *sk)
+-{
+-	struct nl_cache *ctrl;
+-	struct genl_ops *ops;
+-	int err = 0;
+-
+-	if ((err = genl_ctrl_alloc_cache(sk, &ctrl)) < 0)
+-		goto errout;
+-
+-	nl_list_for_each_entry(ops, &genl_ops_list, o_list) {
+-		err = __genl_ops_resolve(ctrl, ops);
+-	}
+-
+-	nl_cache_free(ctrl);
+-errout:
+-	return err;
+-}
+-#endif
+-/** @} */
+-
+-
+ /** @} */
+diff --git a/include/netlink-local.h b/include/netlink-local.h
+index 330100e..53da8ca 100644
+--- a/include/netlink-local.h
++++ b/include/netlink-local.h
+@@ -11,7 +11,9 @@
+ 
+ #ifndef NETLINK_LOCAL_H_
+ #define NETLINK_LOCAL_H_
++#ifndef _GNU_SOURCE
+ #define _GNU_SOURCE
++#endif
+ 
+ #include <stdio.h>
+ #include <errno.h>
+diff --git a/include/netlink-types.h b/include/netlink-types.h
+index 0d00593..65f7f6c 100644
+--- a/include/netlink-types.h
++++ b/include/netlink-types.h
+@@ -69,6 +69,13 @@ struct nl_addr
+ #define GENL_OP_HAS_DOIT	2
+ #define GENL_OP_HAS_DUMPIT	4
+ 
++struct genl_family_grp {
++	struct genl_family	*family;	/* private */
++	struct nl_list_head	list;		/* private */
++	char			name[GENL_NAMSIZ];
++	u_int32_t		id;
++};
++
+ struct genl_family_op
+ {
+ 	uint32_t		o_id;
+diff --git a/include/netlink/genl/ctrl.h b/include/netlink/genl/ctrl.h
+index 1ae62f4..26a0a99 100644
+--- a/include/netlink/genl/ctrl.h
++++ b/include/netlink/genl/ctrl.h
+@@ -29,6 +29,9 @@ extern struct genl_family *	genl_ctrl_search_by_name(struct nl_cache *,
+ 							 const char *);
+ extern int			genl_ctrl_resolve(struct nl_sock *,
+ 						  const char *);
++extern int 			genl_ctrl_resolve_grp(struct nl_sock *sk,
++						      const char *family,
++						      const char *grp);
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/include/netlink/genl/family.h b/include/netlink/genl/family.h
+index bdce09d..8a1a38b 100644
+--- a/include/netlink/genl/family.h
++++ b/include/netlink/genl/family.h
+@@ -39,6 +39,7 @@ struct genl_family
+ 	uint32_t		gf_maxattr;
+ 
+ 	struct nl_list_head	gf_ops;
++	struct nl_list_head	gf_mc_grps;
+ };
+ 
+ 
+@@ -47,6 +48,9 @@ extern void			genl_family_put(struct genl_family *);
+ 
+ extern int			genl_family_add_op(struct genl_family *,
+ 						   int, int);
++extern int 			genl_family_add_grp(struct genl_family *,
++					uint32_t , const char *);
++
+ 
+ /**
+  * @name Attributes
+@@ -58,7 +62,7 @@ static inline unsigned int genl_family_get_id(struct genl_family *family)
+ 	if (family->ce_mask & FAMILY_ATTR_ID)
+ 		return family->gf_id;
+ 	else
+-		return 0; /* GENL_ID_GENERATE */
++		return 0;
+ }
+ 
+ static inline void genl_family_set_id(struct genl_family *family, unsigned int id)
+diff --git a/include/netlink/genl/genl.h b/include/netlink/genl/genl.h
+index a3d2b6d..3f3340c 100644
+--- a/include/netlink/genl/genl.h
++++ b/include/netlink/genl/genl.h
+@@ -40,13 +40,6 @@ extern int		genlmsg_attrlen(const struct genlmsghdr *, int);
+ 
+ extern char *		genl_op2name(int, int, char *, size_t);
+ 
+-#ifdef LIBNL1_COMPAT
+-/* compatibility stuff for netlink 1.0 */
+-#define nl_handle nl_sock
+-#define nl_handle_alloc_cb nl_socket_alloc_cb
+-#define nl_handle_destroy nl_socket_free
+-#endif
+-
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/include/netlink/handlers.h b/include/netlink/handlers.h
+index 7fb53b4..f5c933d 100644
+--- a/include/netlink/handlers.h
++++ b/include/netlink/handlers.h
+@@ -14,6 +14,7 @@
+ 
+ #include <stdio.h>
+ #include <stdint.h>
++#include <sys/socket.h>
+ #include <sys/types.h>
+ #include <netlink/netlink-compat.h>
+ #include <netlink/netlink-kernel.h>
+diff --git a/include/netlink/socket.h b/include/netlink/socket.h
+index 9f7f422..bcb934c 100644
+--- a/include/netlink/socket.h
++++ b/include/netlink/socket.h
+@@ -166,6 +166,16 @@ static inline void nl_socket_disable_msg_peek(struct nl_sock *sk)
+ 	sk->s_flags &= ~NL_MSG_PEEK;
+ }
+ 
++static inline uint32_t nl_socket_get_peer_groups(struct nl_sock *sk)
++{
++	return sk->s_peer.nl_groups;
++}
++
++static inline void nl_socket_set_peer_groups(struct nl_sock *sk, uint32_t groups)
++{
++	sk->s_peer.nl_groups = groups;
++}
++
+ /**
+  * @name Callback Handler
+  * @{
