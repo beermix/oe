@@ -24,10 +24,10 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 			    --disable-shared \
 			    --enable-static"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \
-			      --enable-pcre32 \
-			      --enable-ji"
+			      --enable-unicode-properties \
+			      --enable-jit"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
 			-DCMAKE_BUILD_TYPE= \
