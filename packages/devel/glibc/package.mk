@@ -201,9 +201,9 @@ post_makeinstall_target() {
   fi
 
 # add cross ldd script
-  mkdir -p $TOOLCHAIN/bin/
-    cp $PKG_DIR/scripts/cross-compile-ldd $TOOLCHAIN/bin/$TARGET_NAME-ldd
-    chmod +x $TOOLCHAIN/bin/$TARGET_NAME-ldd
+#  mkdir -p $TOOLCHAIN/bin/
+#    cp $PKG_DIR/scripts/cross-compile-ldd $TOOLCHAIN/bin/$TARGET_NAME-ldd
+#    chmod +x $TOOLCHAIN/bin/$TARGET_NAME-ldd
 }
 
 configure_init() {
