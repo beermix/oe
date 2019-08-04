@@ -26,7 +26,6 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-pcre16 \
-			      --enable-pcre32 \
 			      --enable-ji"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
