@@ -1,0 +1,26 @@
+diff --git a/Makefile b/Makefile
+index b663cc0..5ca278e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,16 +1,16 @@
+-prefix=/usr/local
++prefix=/usr
+ libdir=$(prefix)/lib
+ includedir=$(prefix)/include
+ 
+-CC=gcc
+-AR=ar
+-RANLIB=ranlib
++CC?=gcc
++AR?=ar
++RANLIB?=ranlib
+ INSTALL=./install.sh
+ WFLAGS=-Wall
+ CFLAGS?=-O2
+ INCLUDES=-Iinclude
+ 
+-SHAREDLIB=libnl-tiny.so
++SHAREDLIB=
+ STATICLIB=libnl-tiny.a
+ PCFILE=libnl-tiny.pc
+ ALL_LIBS=$(SHAREDLIB) $(STATICLIB)

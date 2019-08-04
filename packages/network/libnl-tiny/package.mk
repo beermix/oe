@@ -7,8 +7,8 @@ PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/$PKG_NAME-$PKG_VERSION.tar
 PKG_URL="https://github.com/sabotage-linux/libnl-tiny/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 
-make_target() {
-  LIBNLTINY_MAKE_OPTS="CC=$CC AR=$AR RANLIB=$RANLIB prefix=/usr SHAREDLIB="
-  PKG_MAKE_OPTS_TARGET="$LIBNLTINY_MAKE_OPTS"
-  PKG_MAKEINSTALL_OPTS_TARGET="$LIBNLTINY_MAKE_OPTS"
-}
+#make_target() {
+#  LIBNLTINY_MAKE_OPTS="CC=$CC AR=$AR RANLIB=$RANLIB prefix=/usr SHAREDLIB="
+#  PKG_MAKE_OPTS_TARGET="$LIBNLTINY_MAKE_OPTS"
+#  PKG_MAKEINSTALL_OPTS_TARGET="$LIBNLTINY_MAKE_OPTS"
+#}
