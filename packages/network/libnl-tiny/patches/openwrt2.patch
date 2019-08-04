@@ -1,0 +1,1265 @@
+diff --git a/cache.c b/cache.c
+index 0e14574..56a1280 100644
+--- a/cache.c
++++ b/cache.c
+@@ -46,121 +46,6 @@
+ #include <netlink/object.h>
+ #include <netlink/utils.h>
+ 
+-/**
+- * @name Access Functions
+- * @{
+- */
+-
+-#ifdef disabled
+-/**
+- * Return the number of items in the cache
+- * @arg cache		cache handle
+- */
+-int nl_cache_nitems(struct nl_cache *cache)
+-{
+-	return cache->c_nitems;
+-}
+-
+-/**
+- * Return the number of items matching a filter in the cache
+- * @arg cache		Cache object.
+- * @arg filter		Filter object.
+- */
+-int nl_cache_nitems_filter(struct nl_cache *cache, struct nl_object *filter)
+-{
+-	struct nl_object_ops *ops;
+-	struct nl_object *obj;
+-	int nitems = 0;
+-
+-	if (cache->c_ops == NULL)
+-		BUG();
+-
+-	ops = cache->c_ops->co_obj_ops;
+-	
+-	nl_list_for_each_entry(obj, &cache->c_items, ce_list) {
+-		if (filter && !nl_object_match_filter(obj, filter))
+-			continue;
+-
+-		nitems++;
+-	}
+-
+-	return nitems;
+-}
+-
+-/**
+- * Returns \b true if the cache is empty.
+- * @arg cache		Cache to check
+- * @return \a true if the cache is empty, otherwise \b false is returned.
+- */
+-int nl_cache_is_empty(struct nl_cache *cache)
+-{
+-	return nl_list_empty(&cache->c_items);
+-}
+-
+-/**
+- * Return the operations set of the cache
+- * @arg cache		cache handle
+- */
+-struct nl_cache_ops *nl_cache_get_ops(struct nl_cache *cache)
+-{
+-	return cache->c_ops;
+-}
+-
+-/**
+- * Return the first element in the cache
+- * @arg cache		cache handle
+- */
+-struct nl_object *nl_cache_get_first(struct nl_cache *cache)
+-{
+-	if (nl_list_empty(&cache->c_items))
+-		return NULL;
+-
+-	return nl_list_entry(cache->c_items.next,
+-			     struct nl_object, ce_list);
+-}
+-
+-/**
+- * Return the last element in the cache
+- * @arg cache		cache handle
+- */
+-struct nl_object *nl_cache_get_last(struct nl_cache *cache)
+-{
+-	if (nl_list_empty(&cache->c_items))
+-		return NULL;
+-
+-	return nl_list_entry(cache->c_items.prev,
+-			     struct nl_object, ce_list);
+-}
+-
+-/**
+- * Return the next element in the cache
+- * @arg obj		current object
+- */
+-struct nl_object *nl_cache_get_next(struct nl_object *obj)
+-{
+-	if (nl_list_at_tail(obj, &obj->ce_cache->c_items, ce_list))
+-		return NULL;
+-	else
+-		return nl_list_entry(obj->ce_list.next,
+-				     struct nl_object, ce_list);
+-}
+-
+-/**
+- * Return the previous element in the cache
+- * @arg obj		current object
+- */
+-struct nl_object *nl_cache_get_prev(struct nl_object *obj)
+-{
+-	if (nl_list_at_head(obj, &obj->ce_cache->c_items, ce_list))
+-		return NULL;
+-	else
+-		return nl_list_entry(obj->ce_list.prev,
+-				     struct nl_object, ce_list);
+-}
+-#endif
+-
+-/** @} */
+-
+ /**
+  * @name Cache Creation/Deletion
+  * @{
+@@ -206,61 +91,6 @@ int nl_cache_alloc_and_fill(struct nl_cache_ops *ops, struct nl_sock *sock,
+ 	return 0;
+ }
+ 
+-#ifdef disabled
+-/**
+- * Allocate an empty cache based on type name
+- * @arg kind		Name of cache type
+- * @return A newly allocated and initialized cache.
+- */
+-int nl_cache_alloc_name(const char *kind, struct nl_cache **result)
+-{
+-	struct nl_cache_ops *ops;
+-	struct nl_cache *cache;
+-
+-	ops = nl_cache_ops_lookup(kind);
+-	if (!ops)
+-		return -NLE_NOCACHE;
+-
+-	if (!(cache = nl_cache_alloc(ops)))
+-		return -NLE_NOMEM;
+-
+-	*result = cache;
+-	return 0;
+-}
+-
+-/**
+- * Allocate a new cache containing a subset of a cache
+- * @arg orig		Original cache to be based on
+- * @arg filter		Filter defining the subset to be filled into new cache
+- * @return A newly allocated cache or NULL.
+- */
+-struct nl_cache *nl_cache_subset(struct nl_cache *orig,
+-				 struct nl_object *filter)
+-{
+-	struct nl_cache *cache;
+-	struct nl_object_ops *ops;
+-	struct nl_object *obj;
+-
+-	if (!filter)
+-		BUG();
+-
+-	cache = nl_cache_alloc(orig->c_ops);
+-	if (!cache)
+-		return NULL;
+-
+-	ops = orig->c_ops->co_obj_ops;
+-
+-	nl_list_for_each_entry(obj, &orig->c_items, ce_list) {
+-		if (!nl_object_match_filter(obj, filter))
+-			continue;
+-
+-		nl_cache_add(cache, obj);
+-	}
+-
+-	return cache;
+-}
+-#endif
+-
+ /**
+  * Clear a cache.
+  * @arg cache		cache to clear
+@@ -344,35 +174,6 @@ int nl_cache_add(struct nl_cache *cache, struct nl_object *obj)
+ 	return __cache_add(cache, new);
+ }
+ 
+-#ifdef disabled
+-/**
+- * Move object from one cache to another
+- * @arg cache		Cache to move object to.
+- * @arg obj		Object subject to be moved
+- *
+- * Removes the given object from its associated cache if needed
+- * and adds it to the new cache.
+- *
+- * @return 0 on success or a negative error code.
+- */
+-int nl_cache_move(struct nl_cache *cache, struct nl_object *obj)
+-{
+-	if (cache->c_ops->co_obj_ops != obj->ce_ops)
+-		return -NLE_OBJ_MISMATCH;
+-
+-	NL_DBG(3, "Moving object %p to cache %p\n", obj, cache);
+-	
+-	/* Acquire reference, if already in a cache this will be
+-	 * reverted during removal */
+-	nl_object_get(obj);
+-
+-	if (!nl_list_empty(&obj->ce_list))
+-		nl_cache_remove(obj);
+-
+-	return __cache_add(cache, obj);
+-}
+-#endif
+-
+ /**
+  * Removes an object from a cache.
+  * @arg obj		Object to remove from its cache
+@@ -397,34 +198,6 @@ void nl_cache_remove(struct nl_object *obj)
+ 	       obj, cache, nl_cache_name(cache));
+ }
+ 
+-#ifdef disabled
+-/**
+- * Search for an object in a cache
+- * @arg cache		Cache to search in.
+- * @arg needle		Object to look for.
+- *
+- * Iterates over the cache and looks for an object with identical
+- * identifiers as the needle.
+- *
+- * @return Reference to object or NULL if not found.
+- * @note The returned object must be returned via nl_object_put().
+- */
+-struct nl_object *nl_cache_search(struct nl_cache *cache,
+-				  struct nl_object *needle)
+-{
+-	struct nl_object *obj;
+-
+-	nl_list_for_each_entry(obj, &cache->c_items, ce_list) {
+-		if (nl_object_identical(obj, needle)) {
+-			nl_object_get(obj);
+-			return obj;
+-		}
+-	}
+-
+-	return NULL;
+-}
+-#endif
+-
+ /** @} */
+ 
+ /**
+@@ -523,107 +296,6 @@ int nl_cache_pickup(struct nl_sock *sk, struct nl_cache *cache)
+ 	return __cache_pickup(sk, cache, &p);
+ }
+ 
+-#ifdef disabled
+-static int cache_include(struct nl_cache *cache, struct nl_object *obj,
+-			 struct nl_msgtype *type, change_func_t cb)
+-{
+-	struct nl_object *old;
+-
+-	switch (type->mt_act) {
+-	case NL_ACT_NEW:
+-	case NL_ACT_DEL:
+-		old = nl_cache_search(cache, obj);
+-		if (old) {
+-			nl_cache_remove(old);
+-			if (type->mt_act == NL_ACT_DEL) {
+-				if (cb)
+-					cb(cache, old, NL_ACT_DEL);
+-				nl_object_put(old);
+-			}
+-		}
+-
+-		if (type->mt_act == NL_ACT_NEW) {
+-			nl_cache_move(cache, obj);
+-			if (old == NULL && cb)
+-				cb(cache, obj, NL_ACT_NEW);
+-			else if (old) {
+-				if (nl_object_diff(old, obj) && cb)
+-					cb(cache, obj, NL_ACT_CHANGE);
+-
+-				nl_object_put(old);
+-			}
+-		}
+-		break;
+-	default:
+-		NL_DBG(2, "Unknown action associated to object %p\n", obj);
+-		return 0;
+-	}
+-
+-	return 0;
+-}
+-
+-int nl_cache_include(struct nl_cache *cache, struct nl_object *obj,
+-		     change_func_t change_cb)
+-{
+-	struct nl_cache_ops *ops = cache->c_ops;
+-	int i;
+-
+-	if (ops->co_obj_ops != obj->ce_ops)
+-		return -NLE_OBJ_MISMATCH;
+-
+-	for (i = 0; ops->co_msgtypes[i].mt_id >= 0; i++)
+-		if (ops->co_msgtypes[i].mt_id == obj->ce_msgtype)
+-			return cache_include(cache, obj, &ops->co_msgtypes[i],
+-					     change_cb);
+-
+-	return -NLE_MSGTYPE_NOSUPPORT;
+-}
+-
+-static int resync_cb(struct nl_object *c, struct nl_parser_param *p)
+-{
+-	struct nl_cache_assoc *ca = p->pp_arg;
+-
+-	return nl_cache_include(ca->ca_cache, c, ca->ca_change);
+-}
+-
+-int nl_cache_resync(struct nl_sock *sk, struct nl_cache *cache,
+-		    change_func_t change_cb)
+-{
+-	struct nl_object *obj, *next;
+-	struct nl_cache_assoc ca = {
+-		.ca_cache = cache,
+-		.ca_change = change_cb,
+-	};
+-	struct nl_parser_param p = {
+-		.pp_cb = resync_cb,
+-		.pp_arg = &ca,
+-	};
+-	int err;
+-
+-	NL_DBG(1, "Resyncing cache %p <%s>...\n", cache, nl_cache_name(cache));
+-
+-	/* Mark all objects so we can see if some of them are obsolete */
+-	nl_cache_mark_all(cache);
+-
+-	err = nl_cache_request_full_dump(sk, cache);
+-	if (err < 0)
+-		goto errout;
+-
+-	err = __cache_pickup(sk, cache, &p);
+-	if (err < 0)
+-		goto errout;
+-
+-	nl_list_for_each_entry_safe(obj, next, &cache->c_items, ce_list)
+-		if (nl_object_is_marked(obj))
+-			nl_cache_remove(obj);
+-
+-	NL_DBG(1, "Finished resyncing %p <%s>\n", cache, nl_cache_name(cache));
+-
+-	err = 0;
+-errout:
+-	return err;
+-}
+-#endif
+ 
+ /** @} */
+ 
+@@ -702,138 +374,3 @@ int nl_cache_refill(struct nl_sock *sk, struct nl_cache *cache)
+ }
+ 
+ /** @} */
+-#ifdef disabled
+-
+-/**
+- * @name Utillities
+- * @{
+- */
+-
+-/**
+- * Mark all objects in a cache
+- * @arg cache		Cache to mark all objects in
+- */
+-void nl_cache_mark_all(struct nl_cache *cache)
+-{
+-	struct nl_object *obj;
+-
+-	NL_DBG(2, "Marking all objects in cache %p <%s>...\n",
+-	          cache, nl_cache_name(cache));
+-
+-	nl_list_for_each_entry(obj, &cache->c_items, ce_list)
+-		nl_object_mark(obj);
+-}
+-
+-/** @} */
+-
+-/**
+- * @name Dumping
+- * @{
+- */
+-/**
+- * Dump all elements of a cache.
+- * @arg cache		cache to dump
+- * @arg params		dumping parameters
+- *
+- * Dumps all elements of the \a cache to the file descriptor \a fd.
+- */
+-void nl_cache_dump(struct nl_cache *cache, struct nl_dump_params *params)
+-{
+-	nl_cache_dump_filter(cache, params, NULL);
+-}
+-
+-/**
+- * Dump all elements of a cache (filtered).
+- * @arg cache		cache to dump
+- * @arg params		dumping parameters (optional)
+- * @arg filter		filter object
+- *
+- * Dumps all elements of the \a cache to the file descriptor \a fd
+- * given they match the given filter \a filter.
+- */
+-void nl_cache_dump_filter(struct nl_cache *cache,
+-			  struct nl_dump_params *params,
+-			  struct nl_object *filter)
+-{
+-	int type = params ? params->dp_type : NL_DUMP_DETAILS;
+-	struct nl_object_ops *ops;
+-	struct nl_object *obj;
+-
+-	NL_DBG(2, "Dumping cache %p <%s> filter %p\n",
+-	       cache, nl_cache_name(cache), filter);
+-
+-	if (type > NL_DUMP_MAX || type < 0)
+-		BUG();
+-
+-	if (cache->c_ops == NULL)
+-		BUG();
+-
+-	ops = cache->c_ops->co_obj_ops;
+-	if (!ops->oo_dump[type])
+-		return;
+-
+-	nl_list_for_each_entry(obj, &cache->c_items, ce_list) {
+-		if (filter && !nl_object_match_filter(obj, filter))
+-			continue;
+-
+-		NL_DBG(4, "Dumping object %p...\n", obj);
+-		dump_from_ops(obj, params);
+-	}
+-}
+-
+-/** @} */
+-
+-/**
+- * @name Iterators
+- * @{
+- */
+-
+-/**
+- * Call a callback on each element of the cache.
+- * @arg cache		cache to iterate on
+- * @arg cb		callback function
+- * @arg arg		argument passed to callback function
+- *
+- * Calls a callback function \a cb on each element of the \a cache.
+- * The argument \a arg is passed on the callback function.
+- */
+-void nl_cache_foreach(struct nl_cache *cache,
+-		      void (*cb)(struct nl_object *, void *), void *arg)
+-{
+-	nl_cache_foreach_filter(cache, NULL, cb, arg);
+-}
+-
+-/**
+- * Call a callback on each element of the cache (filtered).
+- * @arg cache		cache to iterate on
+- * @arg filter		filter object
+- * @arg cb		callback function
+- * @arg arg		argument passed to callback function
+- *
+- * Calls a callback function \a cb on each element of the \a cache
+- * that matches the \a filter. The argument \a arg is passed on
+- * to the callback function.
+- */
+-void nl_cache_foreach_filter(struct nl_cache *cache, struct nl_object *filter,
+-			     void (*cb)(struct nl_object *, void *), void *arg)
+-{
+-	struct nl_object *obj, *tmp;
+-	struct nl_object_ops *ops;
+-
+-	if (cache->c_ops == NULL)
+-		BUG();
+-
+-	ops = cache->c_ops->co_obj_ops;
+-
+-	nl_list_for_each_entry_safe(obj, tmp, &cache->c_items, ce_list) {
+-		if (filter && !nl_object_match_filter(obj, filter))
+-			continue;
+-
+-		cb(obj, arg);
+-	}
+-}
+-
+-/** @} */
+-#endif
+-
+-/** @} */
+diff --git a/cache_mngt.c b/cache_mngt.c
+index 5c32d2a..8adbe51 100644
+--- a/cache_mngt.c
++++ b/cache_mngt.c
+@@ -73,55 +73,6 @@ struct nl_cache_ops *nl_cache_ops_associate(int protocol, int msgtype)
+ 	return NULL;
+ }
+ 
+-#ifdef disabled
+-
+-/**
+- * Lookup message type cache association
+- * @arg ops			cache operations
+- * @arg msgtype			netlink message type
+- *
+- * Searches for a matching message type association ing the specified
+- * cache operations.
+- *
+- * @return A message type association or NULL.
+- */
+-struct nl_msgtype *nl_msgtype_lookup(struct nl_cache_ops *ops, int msgtype)
+-{
+-	int i;
+-
+-	for (i = 0; ops->co_msgtypes[i].mt_id >= 0; i++)
+-		if (ops->co_msgtypes[i].mt_id == msgtype)
+-			return &ops->co_msgtypes[i];
+-
+-	return NULL;
+-}
+-
+-static struct nl_cache_ops *cache_ops_lookup_for_obj(struct nl_object_ops *obj_ops)
+-{
+-	struct nl_cache_ops *ops;
+-
+-	for (ops = cache_ops; ops; ops = ops->co_next)
+-		if (ops->co_obj_ops == obj_ops)
+-			return ops;
+-
+-	return NULL;
+-
+-}
+-
+-/**
+- * Call a function for each registered cache operation
+- * @arg cb		Callback function to be called
+- * @arg arg		User specific argument.
+- */
+-void nl_cache_ops_foreach(void (*cb)(struct nl_cache_ops *, void *), void *arg)
+-{
+-	struct nl_cache_ops *ops;
+-
+-	for (ops = cache_ops; ops; ops = ops->co_next)
+-		cb(ops, arg);
+-}
+-#endif
+-
+ /**
+  * Register a set of cache operations
+  * @arg ops		cache operations
+@@ -177,77 +128,4 @@ int nl_cache_mngt_unregister(struct nl_cache_ops *ops)
+ 
+ /** @} */
+ 
+-/**
+- * @name Global Cache Provisioning/Requiring
+- * @{
+- */
+-#ifdef disabled
+-/**
+- * Provide a cache for global use
+- * @arg cache		cache to provide
+- *
+- * Offers the specified cache to be used by other modules.
+- * Only one cache per type may be shared at a time,
+- * a previsouly provided caches will be overwritten.
+- */
+-void nl_cache_mngt_provide(struct nl_cache *cache)
+-{
+-	struct nl_cache_ops *ops;
+-
+-	ops = cache_ops_lookup_for_obj(cache->c_ops->co_obj_ops);
+-	if (!ops)
+-		BUG();
+-	else
+-		ops->co_major_cache = cache;
+-}
+-
+-/**
+- * Unprovide a cache for global use
+- * @arg cache		cache to unprovide
+- *
+- * Cancels the offer to use a cache globally. The
+- * cache will no longer be returned via lookups but
+- * may still be in use.
+- */
+-void nl_cache_mngt_unprovide(struct nl_cache *cache)
+-{
+-	struct nl_cache_ops *ops;
+-
+-	ops = cache_ops_lookup_for_obj(cache->c_ops->co_obj_ops);
+-	if (!ops)
+-		BUG();
+-	else if (ops->co_major_cache == cache)
+-		ops->co_major_cache = NULL;
+-}
+-
+-/**
+- * Demand the use of a global cache
+- * @arg name		name of the required object type
+- *
+- * Trys to find a cache of the specified type for global
+- * use.
+- *
+- * @return A cache provided by another subsystem of the
+- *         specified type marked to be available.
+- */
+-struct nl_cache *nl_cache_mngt_require(const char *name)
+-{
+-	struct nl_cache_ops *ops;
+-
+-	ops = nl_cache_ops_lookup(name);
+-	if (!ops || !ops->co_major_cache) {
+-		fprintf(stderr, "Application BUG: Your application must "
+-			"call nl_cache_mngt_provide() and\nprovide a valid "
+-			"%s cache to be used for internal lookups.\nSee the "
+-			" API documentation for more details.\n", name);
+-
+-		return NULL;
+-	}
+-	
+-	return ops->co_major_cache;
+-}
+-
+-#endif
+-/** @} */
+-
+ /** @} */
+diff --git a/genl_ctrl.c b/genl_ctrl.c
+index 1301642..0045459 100644
+--- a/genl_ctrl.c
++++ b/genl_ctrl.c
+@@ -45,6 +45,7 @@ static struct nla_policy ctrl_policy[CTRL_ATTR_MAX+1] = {
+ 	[CTRL_ATTR_HDRSIZE]	= { .type = NLA_U32 },
+ 	[CTRL_ATTR_MAXATTR]	= { .type = NLA_U32 },
+ 	[CTRL_ATTR_OPS]		= { .type = NLA_NESTED },
++	[CTRL_ATTR_MCAST_GROUPS] = { .type = NLA_NESTED },
+ };
+ 
+ static struct nla_policy family_op_policy[CTRL_ATTR_OP_MAX+1] = {
+@@ -52,6 +53,11 @@ static struct nla_policy family_op_policy[CTRL_ATTR_OP_MAX+1] = {
+ 	[CTRL_ATTR_OP_FLAGS]	= { .type = NLA_U32 },
+ };
+ 
++static struct nla_policy family_grp_policy[CTRL_ATTR_MCAST_GRP_MAX+1] = {
++	[CTRL_ATTR_MCAST_GRP_NAME] = { .type = NLA_STRING },
++	[CTRL_ATTR_MCAST_GRP_ID]   = { .type = NLA_U32 },
++};
++
+ static int ctrl_msg_parser(struct nl_cache_ops *ops, struct genl_cmd *cmd,
+ 			   struct genl_info *info, void *arg)
+ {
+@@ -127,6 +133,40 @@ static int ctrl_msg_parser(struct nl_cache_ops *ops, struct genl_cmd *cmd,
+ 		}
+ 	}
+ 
++	if (info->attrs[CTRL_ATTR_MCAST_GROUPS]) {
++		struct nlattr *nla, *nla_grps;
++		int remaining;
++
++		nla_grps = info->attrs[CTRL_ATTR_MCAST_GROUPS];
++		nla_for_each_nested(nla, nla_grps, remaining) {
++			struct nlattr *tb[CTRL_ATTR_MCAST_GRP_MAX+1];
++			int id;
++			const char * name;
++
++			err = nla_parse_nested(tb, CTRL_ATTR_MCAST_GRP_MAX, nla,
++					       family_grp_policy);
++			if (err < 0)
++				goto errout;
++
++			if (tb[CTRL_ATTR_MCAST_GRP_ID] == NULL) {
++				err = -NLE_MISSING_ATTR;
++				goto errout;
++			}
++			id = nla_get_u32(tb[CTRL_ATTR_MCAST_GRP_ID]);
++
++			if (tb[CTRL_ATTR_MCAST_GRP_NAME] == NULL) {
++				err = -NLE_MISSING_ATTR;
++				goto errout;
++			}
++			name = nla_get_string(tb[CTRL_ATTR_MCAST_GRP_NAME]);
++
++			err = genl_family_add_grp(family, id, name);
++			if (err < 0)
++				goto errout;
++		}
++
++	}
++
+ 	err = pp->pp_cb((struct nl_object *) family, pp);
+ errout:
+ 	genl_family_put(family);
+@@ -242,6 +282,44 @@ errout:
+ 	return err;
+ }
+ 
++static int genl_ctrl_grp_by_name(const struct genl_family *family,
++				const char *grp_name)
++{
++	struct genl_family_grp *grp;
++
++	nl_list_for_each_entry(grp, &family->gf_mc_grps, list) {
++		if (!strcmp(grp->name, grp_name)) {
++			return grp->id;
++		}
++	}
++
++	return -NLE_OBJ_NOTFOUND;
++}
++
++int genl_ctrl_resolve_grp(struct nl_sock *sk, const char *family_name,
++	const char *grp_name)
++{
++	struct nl_cache *cache;
++	struct genl_family *family;
++	int err;
++
++	if ((err = genl_ctrl_alloc_cache(sk, &cache)) < 0)
++		return err;
++
++	family = genl_ctrl_search_by_name(cache, family_name);
++	if (family == NULL) {
++		err = -NLE_OBJ_NOTFOUND;
++		goto errout;
++	}
++
++	err = genl_ctrl_grp_by_name(family, grp_name);
++	genl_family_put(family);
++errout:
++	nl_cache_free(cache);
++
++	return err;
++}
++
+ /** @} */
+ 
+ static struct genl_cmd genl_cmds[] = {
+diff --git a/genl_family.c b/genl_family.c
+index 88aaad9..221acfa 100644
+--- a/genl_family.c
++++ b/genl_family.c
+@@ -31,12 +31,14 @@ static void family_constructor(struct nl_object *c)
+ 	struct genl_family *family = (struct genl_family *) c;
+ 
+ 	nl_init_list_head(&family->gf_ops);
++	nl_init_list_head(&family->gf_mc_grps);
+ }
+ 
+ static void family_free_data(struct nl_object *c)
+ {
+ 	struct genl_family *family = (struct genl_family *) c;
+ 	struct genl_family_op *ops, *tmp;
++	struct genl_family_grp *grp, *t_grp;
+ 
+ 	if (family == NULL)
+ 		return;
+@@ -45,6 +47,12 @@ static void family_free_data(struct nl_object *c)
+ 		nl_list_del(&ops->o_list);
+ 		free(ops);
+ 	}
++
++	nl_list_for_each_entry_safe(grp, t_grp, &family->gf_mc_grps, list) {
++		nl_list_del(&grp->list);
++		free(grp);
++	}
++
+ }
+ 
+ static int family_clone(struct nl_object *_dst, struct nl_object *_src)
+@@ -52,6 +60,7 @@ static int family_clone(struct nl_object *_dst, struct nl_object *_src)
+ 	struct genl_family *dst = nl_object_priv(_dst);
+ 	struct genl_family *src = nl_object_priv(_src);
+ 	struct genl_family_op *ops;
++	struct genl_family_grp *grp;
+ 	int err;
+ 
+ 	nl_list_for_each_entry(ops, &src->gf_ops, o_list) {
+@@ -59,6 +68,13 @@ static int family_clone(struct nl_object *_dst, struct nl_object *_src)
+ 		if (err < 0)
+ 			return err;
+ 	}
++
++	nl_list_for_each_entry(grp, &src->gf_mc_grps, list) {
++		err = genl_family_add_grp(dst, grp->id, grp->name);
++		if (err < 0)
++			return err;
++	}
++
+ 	
+ 	return 0;
+ }
+@@ -119,6 +135,23 @@ int genl_family_add_op(struct genl_family *family, int id, int flags)
+ 	return 0;
+ }
+ 
++int genl_family_add_grp(struct genl_family *family, uint32_t id,
++			const char *name)
++{
++	struct genl_family_grp *grp;
++
++	grp = calloc(1, sizeof(*grp));
++	if (grp == NULL)
++		return -NLE_NOMEM;
++
++	grp->id = id;
++	strncpy(grp->name, name, GENL_NAMSIZ - 1);
++
++	nl_list_add_tail(&grp->list, &family->gf_mc_grps);
++
++	return 0;
++}
++
+ /** @} */
+ 
+ /** @cond SKIP */
+diff --git a/genl_mngt.c b/genl_mngt.c
+index 6c65179..246521f 100644
+--- a/genl_mngt.c
++++ b/genl_mngt.c
+@@ -136,31 +136,6 @@ errout:
+ 
+ }
+ 
+-#ifdef disabled
+-char *genl_op2name(int family, int op, char *buf, size_t len)
+-{
+-	struct genl_ops *ops;
+-	int i;
+-
+-	nl_list_for_each_entry(ops, &genl_ops_list, o_list) {
+-		if (ops->o_family == family) {
+-			for (i = 0; i < ops->o_ncmds; i++) {
+-				struct genl_cmd *cmd;
+-				cmd = &ops->o_cmds[i];
+-
+-				if (cmd->c_id == op) {
+-					strncpy(buf, cmd->c_name, len - 1);
+-					return buf;
+-				}
+-			}
+-		}
+-	}
+-
+-	strncpy(buf, "unknown", len - 1);
+-	return NULL;
+-}
+-#endif
+-
+ /**
+  * @name Register/Unregister
+  * @{
+@@ -215,60 +190,4 @@ void genl_unregister(struct nl_cache_ops *ops)
+ 
+ /** @} */
+ 
+-/**
+- * @name Resolving ID/Name
+- * @{
+- */
+-#ifdef disabled
+-static int __genl_ops_resolve(struct nl_cache *ctrl, struct genl_ops *ops)
+-{
+-	struct genl_family *family;
+-
+-	family = genl_ctrl_search_by_name(ctrl, ops->o_name);
+-	if (family != NULL) {
+-		ops->o_id = genl_family_get_id(family);
+-		genl_family_put(family);
+-
+-		return 0;
+-	}
+-
+-	return -NLE_OBJ_NOTFOUND;
+-}
+-
+-int genl_ops_resolve(struct nl_sock *sk, struct genl_ops *ops)
+-{
+-	struct nl_cache *ctrl;
+-	int err;
+-
+-	if ((err = genl_ctrl_alloc_cache(sk, &ctrl)) < 0)
+-		goto errout;
+-
+-	err = __genl_ops_resolve(ctrl, ops);
+-
+-	nl_cache_free(ctrl);
+-errout:
+-	return err;
+-}
+-
+-int genl_mngt_resolve(struct nl_sock *sk)
+-{
+-	struct nl_cache *ctrl;
+-	struct genl_ops *ops;
+-	int err = 0;
+-
+-	if ((err = genl_ctrl_alloc_cache(sk, &ctrl)) < 0)
+-		goto errout;
+-
+-	nl_list_for_each_entry(ops, &genl_ops_list, o_list) {
+-		err = __genl_ops_resolve(ctrl, ops);
+-	}
+-
+-	nl_cache_free(ctrl);
+-errout:
+-	return err;
+-}
+-#endif
+-/** @} */
+-
+-
+ /** @} */
+diff --git a/include/netlink-local.h b/include/netlink-local.h
+index 330100e..53da8ca 100644
+--- a/include/netlink-local.h
++++ b/include/netlink-local.h
+@@ -11,7 +11,9 @@
+ 
+ #ifndef NETLINK_LOCAL_H_
+ #define NETLINK_LOCAL_H_
++#ifndef _GNU_SOURCE
+ #define _GNU_SOURCE
++#endif
+ 
+ #include <stdio.h>
+ #include <errno.h>
+diff --git a/include/netlink-types.h b/include/netlink-types.h
+index 0d00593..65f7f6c 100644
+--- a/include/netlink-types.h
++++ b/include/netlink-types.h
+@@ -69,6 +69,13 @@ struct nl_addr
+ #define GENL_OP_HAS_DOIT	2
+ #define GENL_OP_HAS_DUMPIT	4
+ 
++struct genl_family_grp {
++	struct genl_family	*family;	/* private */
++	struct nl_list_head	list;		/* private */
++	char			name[GENL_NAMSIZ];
++	u_int32_t		id;
++};
++
+ struct genl_family_op
+ {
+ 	uint32_t		o_id;
+diff --git a/include/netlink/genl/ctrl.h b/include/netlink/genl/ctrl.h
+index 1ae62f4..26a0a99 100644
+--- a/include/netlink/genl/ctrl.h
++++ b/include/netlink/genl/ctrl.h
+@@ -29,6 +29,9 @@ extern struct genl_family *	genl_ctrl_search_by_name(struct nl_cache *,
+ 							 const char *);
+ extern int			genl_ctrl_resolve(struct nl_sock *,
+ 						  const char *);
++extern int 			genl_ctrl_resolve_grp(struct nl_sock *sk,
++						      const char *family,
++						      const char *grp);
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/include/netlink/genl/family.h b/include/netlink/genl/family.h
+index bdce09d..8a1a38b 100644
+--- a/include/netlink/genl/family.h
++++ b/include/netlink/genl/family.h
+@@ -39,6 +39,7 @@ struct genl_family
+ 	uint32_t		gf_maxattr;
+ 
+ 	struct nl_list_head	gf_ops;
++	struct nl_list_head	gf_mc_grps;
+ };
+ 
+ 
+@@ -47,6 +48,9 @@ extern void			genl_family_put(struct genl_family *);
+ 
+ extern int			genl_family_add_op(struct genl_family *,
+ 						   int, int);
++extern int 			genl_family_add_grp(struct genl_family *,
++					uint32_t , const char *);
++
+ 
+ /**
+  * @name Attributes
+@@ -58,7 +62,7 @@ static inline unsigned int genl_family_get_id(struct genl_family *family)
+ 	if (family->ce_mask & FAMILY_ATTR_ID)
+ 		return family->gf_id;
+ 	else
+-		return 0; /* GENL_ID_GENERATE */
++		return 0;
+ }
+ 
+ static inline void genl_family_set_id(struct genl_family *family, unsigned int id)
+diff --git a/include/netlink/genl/genl.h b/include/netlink/genl/genl.h
+index a3d2b6d..3f3340c 100644
+--- a/include/netlink/genl/genl.h
++++ b/include/netlink/genl/genl.h
+@@ -40,13 +40,6 @@ extern int		genlmsg_attrlen(const struct genlmsghdr *, int);
+ 
+ extern char *		genl_op2name(int, int, char *, size_t);
+ 
+-#ifdef LIBNL1_COMPAT
+-/* compatibility stuff for netlink 1.0 */
+-#define nl_handle nl_sock
+-#define nl_handle_alloc_cb nl_socket_alloc_cb
+-#define nl_handle_destroy nl_socket_free
+-#endif
+-
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/include/netlink/handlers.h b/include/netlink/handlers.h
+index 7fb53b4..f5c933d 100644
+--- a/include/netlink/handlers.h
++++ b/include/netlink/handlers.h
+@@ -14,6 +14,7 @@
+ 
+ #include <stdio.h>
+ #include <stdint.h>
++#include <sys/socket.h>
+ #include <sys/types.h>
+ #include <netlink/netlink-compat.h>
+ #include <netlink/netlink-kernel.h>
+diff --git a/include/netlink/socket.h b/include/netlink/socket.h
+index 9f7f422..bcb934c 100644
+--- a/include/netlink/socket.h
++++ b/include/netlink/socket.h
+@@ -166,6 +166,16 @@ static inline void nl_socket_disable_msg_peek(struct nl_sock *sk)
+ 	sk->s_flags &= ~NL_MSG_PEEK;
+ }
+ 
++static inline uint32_t nl_socket_get_peer_groups(struct nl_sock *sk)
++{
++	return sk->s_peer.nl_groups;
++}
++
++static inline void nl_socket_set_peer_groups(struct nl_sock *sk, uint32_t groups)
++{
++	sk->s_peer.nl_groups = groups;
++}
++
+ /**
+  * @name Callback Handler
+  * @{
+diff --git a/msg.c b/msg.c
+index e84c281..b502047 100644
+--- a/msg.c
++++ b/msg.c
+@@ -166,12 +166,7 @@
+ #include <netlink/msg.h>
+ #include <linux/socket.h>
+ 
+-static size_t default_msg_size;
+-
+-static void __init init_msg_size(void)
+-{
+-	default_msg_size = getpagesize();
+-}
++static size_t default_msg_size = 4096;
+ 
+ /**
+  * @name Attribute Access
+diff --git a/nl.c b/nl.c
+index 99e9aeb..2fb866e 100644
+--- a/nl.c
++++ b/nl.c
+@@ -366,7 +366,7 @@ errout:
+  * Receives a netlink message, allocates a buffer in \c *buf and
+  * stores the message content. The peer's netlink address is stored
+  * in \c *nla. The caller is responsible for freeing the buffer allocated
+- * in \c *buf if a positive value is returned.  Interruped system calls
++ * in \c *buf if a positive value is returned.  Interrupted system calls
+  * are handled by repeating the read. The input buffer size is determined
+  * by peeking before the actual read is done.
+  *
+@@ -397,7 +397,7 @@ int nl_recv(struct nl_sock *sk, struct sockaddr_nl *nla,
+ 		flags |= MSG_PEEK;
+ 
+ 	if (page_size == 0)
+-		page_size = getpagesize();
++		page_size = getpagesize() * 4;
+ 
+ 	iov.iov_len = page_size;
+ 	iov.iov_base = *buf = malloc(iov.iov_len);
+diff --git a/object.c b/object.c
+index f915551..384bacd 100644
+--- a/object.c
++++ b/object.c
+@@ -62,27 +62,6 @@ struct nl_object *nl_object_alloc(struct nl_object_ops *ops)
+ 	return new;
+ }
+ 
+-#ifdef disabled
+-/**
+- * Allocate a new object of kind specified by the name
+- * @arg kind		name of object type
+- * @return The new object or nULL
+- */
+-int nl_object_alloc_name(const char *kind, struct nl_object **result)
+-{
+-	struct nl_cache_ops *ops;
+-
+-	ops = nl_cache_ops_lookup(kind);
+-	if (!ops)
+-		return -NLE_OPNOTSUPP;
+-
+-	if (!(*result = nl_object_alloc(ops->co_obj_ops)))
+-		return -NLE_NOMEM;
+-
+-	return 0;
+-}
+-#endif
+-
+ struct nl_derived_object {
+ 	NLHDR_COMMON
+ 	char data;
+@@ -163,117 +142,6 @@ void nl_object_free(struct nl_object *obj)
+  * @{
+  */
+ 
+-#ifdef disabled
+-/**
+- * Dump this object according to the specified parameters
+- * @arg obj		object to dump
+- * @arg params		dumping parameters
+- */
+-void nl_object_dump(struct nl_object *obj, struct nl_dump_params *params)
+-{
+-	dump_from_ops(obj, params);
+-}
+-
+-/**
+- * Check if the identifiers of two objects are identical 
+- * @arg a		an object
+- * @arg b		another object of same type
+- *
+- * @return true if both objects have equal identifiers, otherwise false.
+- */
+-int nl_object_identical(struct nl_object *a, struct nl_object *b)
+-{
+-	struct nl_object_ops *ops = obj_ops(a);
+-	int req_attrs;
+-
+-	/* Both objects must be of same type */
+-	if (ops != obj_ops(b))
+-		return 0;
+-
+-	req_attrs = ops->oo_id_attrs;
+-
+-	/* Both objects must provide all required attributes to uniquely
+-	 * identify an object */
+-	if ((a->ce_mask & req_attrs) != req_attrs ||
+-	    (b->ce_mask & req_attrs) != req_attrs)
+-		return 0;
+-
+-	/* Can't judge unless we can compare */
+-	if (ops->oo_compare == NULL)
+-		return 0;
+-
+-	return !(ops->oo_compare(a, b, req_attrs, 0));
+-}
+-
+-/**
+- * Compute bitmask representing difference in attribute values
+- * @arg a		an object
+- * @arg b		another object of same type
+- *
+- * The bitmask returned is specific to an object type, each bit set represents
+- * an attribute which mismatches in either of the two objects. Unavailability
+- * of an attribute in one object and presence in the other is regarded a
+- * mismatch as well.
+- *
+- * @return Bitmask describing differences or 0 if they are completely identical.
+- */
+-uint32_t nl_object_diff(struct nl_object *a, struct nl_object *b)
+-{
+-	struct nl_object_ops *ops = obj_ops(a);
+-
+-	if (ops != obj_ops(b) || ops->oo_compare == NULL)
+-		return UINT_MAX;
+-
+-	return ops->oo_compare(a, b, ~0, 0);
+-}
+-
+-/**
+- * Match a filter against an object
+- * @arg obj		object to check
+- * @arg filter		object of same type acting as filter
+- *
+- * @return 1 if the object matches the filter or 0
+- *           if no filter procedure is available or if the
+- *           filter does not match.
+- */
+-int nl_object_match_filter(struct nl_object *obj, struct nl_object *filter)
+-{
+-	struct nl_object_ops *ops = obj_ops(obj);
+-
+-	if (ops != obj_ops(filter) || ops->oo_compare == NULL)
+-		return 0;
+-	
+-	return !(ops->oo_compare(obj, filter, filter->ce_mask,
+-				 LOOSE_COMPARISON));
+-}
+-
+-/**
+- * Convert bitmask of attributes to a character string
+- * @arg obj		object of same type as attribute bitmask
+- * @arg attrs		bitmask of attribute types
+- * @arg buf		destination buffer
+- * @arg len		length of destination buffer
+- *
+- * Converts the bitmask of attribute types into a list of attribute
+- * names separated by comas.
+- *
+- * @return destination buffer.
+- */
+-char *nl_object_attrs2str(struct nl_object *obj, uint32_t attrs,
+-			  char *buf, size_t len)
+-{
+-	struct nl_object_ops *ops = obj_ops(obj);
+-
+-	if (ops->oo_attrs2str != NULL)
+-		return ops->oo_attrs2str(attrs, buf, len);
+-	else {
+-		memset(buf, 0, len);
+-		return buf;
+-	}
+-}
+-
+-#endif
+-
+ /** @} */
+ 
+ /** @} */
+diff --git a/unl.c b/unl.c
+index b38dab8..33c020e 100644
+--- a/unl.c
++++ b/unl.c
+@@ -109,13 +109,10 @@ out:
+ 
+ int unl_genl_request(struct unl *unl, struct nl_msg *msg, unl_cb handler, void *arg)
+ {
+-	struct nlmsghdr *nlh;
+ 	struct nl_cb *cb;
+ 	int err;
+ 
+ 	cb = nl_cb_alloc(NL_CB_CUSTOM);
+-	nlh = nlmsg_hdr(msg);
+-
+ 	err = nl_send_auto_complete(unl->sock, msg);
+ 	if (err < 0)
+ 		goto out;
