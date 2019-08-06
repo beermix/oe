@@ -26,7 +26,7 @@ case "$LINUX" in
   ;;
   zen)
     PKG_VERSION="5.2.6-lqx1"
-    PKG_SHA256=""
+    PKG_SHA256="cd26524e48e355d960098bc15f65c783f875501912f82b99d774344bf70124d6"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/v$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="zen"
