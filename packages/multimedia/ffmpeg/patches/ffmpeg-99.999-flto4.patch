@@ -1,0 +1,33 @@
+diff --git a/configure b/configure
+index 0c5ed07a07..ac8b6472e5 100755
+--- a/configure
++++ b/configure
+@@ -4124,7 +4124,7 @@ icl_flags(){
+             # on Windows, does enable remarks so disable them here.
+             -Wall)                echo $flag -Qdiag-disable:remark ;;
+             -std=c99)             echo -Qstd=c99 ;;
+-            -flto)                echo -ipo ;;
++            -flto=7)                echo -ipo ;;
+         esac
+     done
+ }
+@@ -4132,7 +4132,7 @@ icl_flags(){
+ icc_flags(){
+     for flag; do
+         case $flag in
+-            -flto)                echo -ipo ;;
++            -flto=4)                echo -ipo ;;
+             *)                    echo $flag ;;
+         esac
+     done
+@@ -6431,8 +6431,8 @@ check_optflags -fno-signed-zeros
+ 
+ if enabled lto; then
+     test "$cc_type" != "$ld_type" && die "LTO requires same compiler and linker"
+-    check_cflags  -flto
+-    check_ldflags -flto $cpuflags
++    check_cflags  -flto=7
++    check_ldflags -flto=7 $cpuflags
+     disable inline_asm_direct_symbol_refs
+ fi
+ 
