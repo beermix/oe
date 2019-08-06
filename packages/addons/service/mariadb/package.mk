@@ -26,7 +26,6 @@ configure_package() {
     -DSTACK_DIRECTION=-1 \
     -DHAVE_IB_GCC_ATOMIC_BUILTINS=1 \
     -DCMAKE_CROSSCOMPILING=OFF \
-    -DWITH_ZLIB=bundled \
     import_executables"
 
   PKG_CMAKE_OPTS_TARGET=" \
@@ -43,11 +42,8 @@ configure_package() {
     -DWITH_SSL=system \
     -DWITH_SSL=${SYSROOT_PREFIX}/usr \
     -DWITH_JEMALLOC=OFF \
-    -DWITH_PCRE=bundled \
-    -DWITH_ZLIB=bundled \
     -DWITH_EDITLINE=bundled \
     -DWITH_LIBEVENT=bundled \
-    -DCONNECT_WITH_LIBXML2=bundled \
     -DSKIP_TESTS=ON \
     -DWITH_DEBUG=OFF \
     -DWITH_UNIT_TESTS=OFF \
