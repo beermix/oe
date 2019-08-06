@@ -90,8 +90,11 @@ pre_configure_target() {
 
   export CFLAGS="$CFLAGS -ffunction-sections"
   export CXXFLAGS="$CXXFLAGS -ffunction-sections"
+}
 
- # export CFLAGS="$CFLAGS -flto"
+pre_configure_host() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 make_target() {
