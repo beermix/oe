@@ -81,7 +81,7 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 #  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
