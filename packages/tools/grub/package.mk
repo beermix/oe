@@ -3,13 +3,12 @@
 
 PKG_NAME="grub"
 PKG_VERSION="2.04"
-PKG_SHA256="e5292496995ad42dabe843a0192cf2a2c502e7ffcc7479398232b10a472df77d"
+PKG_SHA256="a4a065f83d23e089a8086e7d0a3f86d914f884a9732a38c9a16ae2edb427fde1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnu.org/software/grub/index.html"
 PKG_URL="http://git.savannah.gnu.org/cgit/grub.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_URL="https://ftp.gnu.org/gnu/grub/grub-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain flex freetype:host"
+PKG_DEPENDS_TARGET="toolchain flex freetype:host gnulib:host"
 PKG_LONGDESC="GRUB is a Multiboot boot loader."
 PKG_TOOLCHAIN="configure"
 
@@ -25,7 +24,8 @@ pre_configure_target() {
   unset CPP
 
   cd $PKG_BUILD
-    ./autogen.sh
+    # keep grub synced with gnulib
+    ./bootstrap --gnulib-srcdir=$(get_build_dir gnulib) --copy --no-git --no-bootstrap-sync --skip-po
 }
 
 make_target() {
