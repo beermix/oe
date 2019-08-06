@@ -16,8 +16,8 @@ PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+lto +speed"
 
-#LTO_SUPPORT="yes"
-#GOLD_SUPPORT="yes"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 post_unpack() {
   mkdir -p $PKG_BUILD/.$HOST_NAME

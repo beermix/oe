@@ -7,7 +7,7 @@ PKG_VERSION="1.1.1c"
 PKG_SHA256="f6fb3079ad15076154eda9413fed42877d668e7069d9b87396d0804fdb3f4c90"
 #PKG_VERSION="b4b42d4"
 PKG_LICENSE="BSD"
-PKG_SITE="https://www.openssl.org/source/"
+PKG_SITE="https://github.com/openssl/openssl/releases"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_1_1-stable"
 #PKG_URL="https://github.com/openssl/openssl/archive/$PKG_VERSION.tar.gz"
@@ -20,14 +20,9 @@ PKG_BUILD_FLAGS="+speed"
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
-                           no-ec2m \
-                           no-md2 \
-                           no-rc5 \
-                           no-rfc3779 \
                            no-sctp \
                            no-ssl-trace \
                            no-ssl3 \
-                           no-unit-test \
                            no-weak-ssl-ciphers \
                            no-zlib \
                            no-zlib-dynamic \
