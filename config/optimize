@@ -1,6 +1,6 @@
 # Linker hash-style is set to gnu via gcc default
-# LD_OPTIM="-Wl,--as-needed"
-  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
+#LD_OPTIM="-Wl,--as-needed"
+LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
