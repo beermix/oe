@@ -1,5 +1,5 @@
 PKG_NAME="re2"
-PKG_VERSION="2019-06-01"
+PKG_VERSION="2019-08-01"
 PKG_SITE="https://github.com/google/re2/releases"
 PKG_URL="https://github.com/google/re2/archive/$PKG_VERSION.tar.gz"
 PKG_TOOLCHAIN="manual"
