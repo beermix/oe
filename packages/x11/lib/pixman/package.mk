@@ -21,4 +21,5 @@ PKG_MESON_OPTS_TARGET="-Dloongson-mmi=disabled \
 			  -Dmips-dspr2=disabled \
 			  -Dgtk=disabled \
 			  -Dmmx=enabled \
-			  -Dsse2=enabled"
+			  -Dsse2=enabled \
+			  -Dsse3=enabled"
