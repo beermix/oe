@@ -93,13 +93,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-}
-
-pre_configure_bootstrap() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
 }
 
 post_make_host() {
