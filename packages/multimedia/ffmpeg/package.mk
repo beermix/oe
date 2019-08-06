@@ -203,6 +203,7 @@ configure_target() {
               --disable-altivec \
               $PKG_FFMPEG_FPU \
               --disable-symver \
+              --enable-lto \
               --enable-indev=x11grab_xcb
 }
 
