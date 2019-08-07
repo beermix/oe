@@ -3,10 +3,10 @@
 
 PKG_NAME="glu"
 PKG_VERSION="9.0.1"
-PKG_SHA256="f98dff2045e0c557da88553bf4cf9958f49cd5bd40d33d2f8b5e13c8f904d126"
+PKG_SHA256="fb5a4c2dd6ba6d1c21ab7c05129b0769544e1d68e1e3b0ffecb18e73c93055bc"
 PKG_LICENSE="OSS"
 PKG_SITE="http://cgit.freedesktop.org/mesa/glu/"
-PKG_URL="http://cgit.freedesktop.org/mesa/glu/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://mesa.freedesktop.org/archive/glu/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain mesa"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
 PKG_TOOLCHAIN="autotools"
