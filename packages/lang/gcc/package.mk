@@ -48,6 +48,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-system-zlib \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
