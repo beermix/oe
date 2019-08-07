@@ -45,14 +45,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --with-linker-hash-style=gnu \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-gnu-indirect-function \
                            --disable-libunwind-exceptions \
                            --disable-vtable-verify \
-                           --without-ppl \
-                           --without-cloog \
-                           --disable-libada \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell"
