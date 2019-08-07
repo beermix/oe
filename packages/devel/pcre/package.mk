@@ -9,19 +9,17 @@ PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/svn2github/pcre/"
 PKG_URL="https://ftp.pcre.org/pub/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="gcc:host"
-PKG_DEPENDS_TARGET="toolchain zlib bzip2 readline"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic:host"
 PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
+			    --enable-static \
 			    --enable-utf8 \
 			    --enable-unicode-properties \
-			    --enable-jit \
-			    --with-gnu-ld \
-			    --disable-shared \
-			    --enable-static"
+			    --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-pcre16 \
