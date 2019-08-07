@@ -53,6 +53,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-vtable-verify \
                            --without-ppl \
                            --without-cloog \
+                           --with-system-zlib \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libmpx \
