@@ -15,13 +15,12 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_TOOLCHAIN="configure"
-#PKG_BUILD_FLAGS="+speed"
+PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            no-sctp \
-                           no-ssl-trace \
                            no-ssl3 \
                            no-weak-ssl-ciphers \
                            no-zlib \
