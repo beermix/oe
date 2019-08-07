@@ -21,12 +21,11 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 			    --enable-unicode-properties \
 			    --with-gnu-ld"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \
-			      --enable-utf8 \
-			      --with-match-limit-recursion=16000 \
-			      --enable-jit \
-			      --enable-cpp"
+			      --enable-unicode-properties \
+			      --enable-cpp \
+			      --enable-jit"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
