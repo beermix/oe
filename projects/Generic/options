@@ -40,7 +40,7 @@
 ################################################################################
 
   # Project CFLAGS
-    PROJECT_CFLAGS='--param "l1-cache-size=32" --param "l1-cache-line-size=64" --param "l2-cache-size=3072"'
+    PROJECT_CFLAGS="--param=l1-cache-size=32 --param=l1-cache-line-size=64 --param=l2-cache-size=3072"
 
   # SquashFS compression method (gzip / lzo / xz / zstd)
     SQUASHFS_COMPRESSION="zstd"
