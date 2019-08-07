@@ -13,7 +13,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic:host"
-PKG_BUILD_FLAGS="+speed"
+#PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 			    --enable-static \
