@@ -9,7 +9,6 @@ PKG_SITE="http://taglib.github.com/"
 PKG_URL="http://taglib.github.io/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain cmake:host zlib"
 PKG_LONGDESC="TagLib is a library for reading and editing the meta-data of several popular audio formats."
-PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON \
                        -DWITH_MP4=ON \
