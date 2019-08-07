@@ -19,12 +19,13 @@ PKG_TOOLCHAIN="cmake-make"
 
 #LTO_SUPPORT="yes"
 #GOLD_SUPPORT="yes"
+# -DWITH_OPTIM=ON 
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
   export CXXFLAGS="$CXXFLAGS -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
 }
 
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DZLIB_COMPAT=ON -DWITH_OPTIM=ON -DCMAKE_VERBOSE_MAKEFILE=0"
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DZLIB_COMPAT=ON -DCMAKE_VERBOSE_MAKEFILE=0"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DZLIB_COMPAT=ON -DWITH_OPTIM=ON -DCMAKE_VERBOSE_MAKEFILE=0"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DZLIB_COMPAT=ON -DCMAKE_VERBOSE_MAKEFILE=0"
