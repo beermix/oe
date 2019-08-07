@@ -5,7 +5,7 @@ PKG_SITE="https://www.x.org/releases/individual/app/?C=M;O=D"
 PKG_SITE="https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/log/"
 PKG_URL="https://www.x.org/releases/individual/app/igt-gpu-tools-$PKG_VERSION.tar.xz"
 #PKG_URL="https://cgit.freedesktop.org/xorg/app/intel-gpu-tools/snapshot/$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain systemd procps-ng glib mesa libdrm libpciaccess cairo swig:host libunwind libXv elfutils peg:host"
+PKG_DEPENDS_TARGET="toolchain systemd procps-ng glib mesa libdrm libpciaccess cairo swig:host libunwind libXv elfutils"
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
