@@ -14,8 +14,8 @@ PKG_LONGDESC="A high-quality bzip2 data compressor."
 PKG_BUILD_FLAGS="+pic:host +pic +speed"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections"
-  export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -ffunction-sections"
+  export CFLAGS="$CFLAGS -Wall -fno-semantic-interposition -ffunction-sections"
+  export CXXFLAGS="$CXXFLAGS -Wall -fno-semantic-interposition -ffunction-sections"
 }
 
 pre_build_host() {
