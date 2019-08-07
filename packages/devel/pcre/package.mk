@@ -11,7 +11,6 @@ PKG_URL="https://ftp.pcre.org/pub/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain zlib bzip2 readline"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
-PKG_TOOLCHAIN="cmake-make"
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic:host"
 PKG_BUILD_FLAGS="+speed"
@@ -26,23 +25,10 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-pcre16 \
-			      --enable-ji"
-
-PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
-			-DPCRE_BUILD_PCRECPP=ON \
-			-DPCRE_SUPPORT_UNICODE_PROPERTIES=ON \
-			-DPCRE_SUPPORT_UTF=ON \
-			-DPCRE_SUPPORT_JIT=ON \
-			-DPCRE_BUILD_TESTS=OFF"
-
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON \
-			  -DPCRE_BUILD_PCRE16=ON \
-			  -DPCRE_BUILD_PCRECPP=ON \
-			  -DPCRE_SUPPORT_UNICODE_PROPERTIES=ON \
-			  -DPCRE_SUPPORT_UTF=ON \
-			  -DPCRE_SUPPORT_JIT=ON \
-			  -DPCRE_BUILD_TESTS=OFF \
-			  -DCMAKE_BUILD_TYPE=Release"
+			      --enable-utf8 \
+			      --with-match-limit-recursion=16000 \
+			      --enable-jit \
+			      --enable-cpp"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
