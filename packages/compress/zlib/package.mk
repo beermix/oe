@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="zlib"
-PKG_VERSION="67972ff"
-PKG_SHA256="f309a26558d1e362bc0861bad413f919545a37591cf927813c1ed7cfa813eabe"
+PKG_VERSION="74a3e05"
+PKG_SHA256="72e4f99869b6b34455c1f1bebd348e43865c948566dedf5fd2bfaed245a2a0b3"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/zlib-ng/zlib-ng"
 PKG_URL="https://github.com/zlib-ng/zlib-ng/archive/$PKG_VERSION.tar.gz"
