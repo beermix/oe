@@ -52,8 +52,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gcc-major-version-only \
                            --enable-default-pie \
                            --with-ppl=yes \
-                           --without-cloog \
-                           --disable-libada \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libgomp \
