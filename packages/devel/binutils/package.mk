@@ -20,7 +20,7 @@ post_unpack() {
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
-                         --without-ppl \
+                         --with-ppl=yes \
                          --without-cloog \
                          --disable-werror \
                          --disable-multilib \

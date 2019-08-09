@@ -3,16 +3,16 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
 
 PKG_NAME="gcc"
-#PKG_VERSION="9.1.0"
-#PKG_SHA256="79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0"
+PKG_VERSION="9.1.0"
+PKG_SHA256="79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0"
 PKG_LICENSE="GPL"
-PKG_VERSION="9-20190803"
+#PKG_VERSION="9-20190803"
 PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-9-branch"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -48,8 +48,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --with-system-zlib \
-                           --without-ppl \
+                           --disable-libunwind-exceptions \
+                           --with-gcc-major-version-only \
+                           --enable-default-pie \
+                           --with-ppl=yes \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
