@@ -24,7 +24,7 @@ configure_package() {
                            --with-included-libunistring \
                            --with-included-glib \
                            --disable-native-java \
-                           --disable-csharp \
+                           --without-included-gettext \
                            --without-emacs \
                            --disable-openmp \
                            --without-cvs \
