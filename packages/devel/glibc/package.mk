@@ -30,7 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=4.4.0 \
+                           --enable-kernel=5.2 \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
@@ -199,9 +199,9 @@ post_makeinstall_target() {
   fi
 
 # add cross ldd script
-#  mkdir -p $TOOLCHAIN/bin/
-#    cp $PKG_DIR/scripts/cross-compile-ldd $TOOLCHAIN/bin/$TARGET_NAME-ldd
-#    chmod +x $TOOLCHAIN/bin/$TARGET_NAME-ldd
+  mkdir -p $TOOLCHAIN/bin/
+    cp $PKG_DIR/scripts/cross-compile-ldd $TOOLCHAIN/bin/$TARGET_NAME-ldd
+    chmod +x $TOOLCHAIN/bin/$TARGET_NAME-ldd
 }
 
 configure_init() {
