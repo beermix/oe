@@ -25,6 +25,7 @@ configure_package() {
     -DCMAKE_INSTALL_MESSAGE=NEVER \
     -DSTACK_DIRECTION=-1 \
     -DHAVE_IB_GCC_ATOMIC_BUILTINS=1 \
+    -DWITH_ZLIB=bundled \
     -DCMAKE_CROSSCOMPILING=OFF \
     import_executables"
 
@@ -44,6 +45,11 @@ configure_package() {
     -DWITH_JEMALLOC=OFF \
     -DWITH_PCRE=bundled \
     -DWITH_ZLIB=bundled \
+    -DDEFAULT_CHARSET=utf8mb4 \
+    -DDEFAULT_COLLATION=utf8mb4_unicode_ci \
+    -DPLUGIN_EXAMPLE=NO \
+    -DPLUGIN_FEDERATED=NO \
+    -DPLUGIN_FEEDBACK=NO \
     -DWITH_EDITLINE=bundled \
     -DWITH_LIBEVENT=bundled \
     -DCONNECT_WITH_LIBXML2=bundled \
