@@ -3,8 +3,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv) -I$PKG_BUILD/src/crypto
 
 PKG_NAME="wpa_supplicant"
-PKG_VERSION="2.8"
-PKG_SHA256="a689336a12a99151b9de5e25bfccadb88438f4f4438eb8db331cd94346fd3d96"
+PKG_VERSION="2.9"
+PKG_SHA256="fcbdee7b4a64bea8177973299c8c824419c413ec2e3a95db63dd6a5dc3541f17"
 PKG_LICENSE="GPL"
 PKG_SITE="https://w1.fi/releases/?C=M;O=D"
 PKG_URL="https://w1.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
