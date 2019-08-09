@@ -49,7 +49,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libunwind-exceptions \
-                           --with-gcc-major-version-only \
                            --enable-default-pie \
                            --with-ppl=yes \
                            --disable-libmudflap \
