@@ -13,10 +13,10 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A high-quality bzip2 data compressor."
 PKG_BUILD_FLAGS="+pic:host +pic +speed"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -Wall -fno-semantic-interposition -ffunction-sections"
-  export CXXFLAGS="$CXXFLAGS -Wall -fno-semantic-interposition -ffunction-sections"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -Wall -fno-semantic-interposition -ffunction-sections"
+#  export CXXFLAGS="$CXXFLAGS -Wall -fno-semantic-interposition -ffunction-sections"
+#}
 
 pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
