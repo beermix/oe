@@ -43,8 +43,6 @@ configure_package() {
     -DWITH_SSL=system \
     -DWITH_SSL=${SYSROOT_PREFIX}/usr \
     -DWITH_PCRE=bundled \
-    -DWITH_ZLIB=bundled \
-    -DCONNECT_WITH_LIBXML2=system \
     -DDEFAULT_CHARSET=utf8mb4 \
     -DDEFAULT_COLLATION=utf8mb4_unicode_ci \
     -DENABLED_LOCAL_INFILE=ON \
