@@ -29,3 +29,7 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 			  -DWITH_OPTIM=ON \
 			  -DWITH_NATIVE_INSTRUCTIONS=OFF \
 			  -DCMAKE_VERBOSE_MAKEFILE=ON"
+			  
+makeinstall_host() {
+  : # nop
+}
