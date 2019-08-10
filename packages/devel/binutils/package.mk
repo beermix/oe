@@ -31,6 +31,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-targets=x86_64-linux \
+                         --enable-secureplt
                          --enable-lto \
                          --disable-nls"
 
@@ -67,6 +68,15 @@ make_host() {
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
   #cp -v ../include/demangle.h $SYSROOT_PREFIX/usr/include
+
+  cp -v ../include/ansidecl.h $SYSROOT_PREFIX/usr/include
+  cp -v ../include/plugin-api.h $SYSROOT_PREFIX/usr/include
+  cp -v ../include/*.h $SYSROOT_PREFIX/usr/include
+
+#  cp -v ../include/ansidecl.h %{buildroot}%{_includedir}/
+#  cp -v ../include/libiberty.h %{buildroot}%{_prefix}/include
+#  cp -v ../include/plugin-api.h %{buildroot}%{_includedir}/
+#  cp -v ../include/*.h %{buildroot}%{_includedir}/libiberty/
 
   make MAKEINFO=true install
 }
