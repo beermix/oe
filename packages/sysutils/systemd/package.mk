@@ -16,7 +16,6 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dsplit-usr=false \
                        -Dsplit-bin=true \
                        -Ddefault-hierarchy=hybrid \
-                       -Ddefault-locale=C \
                        -Dtty-gid=5 \
                        -Dtests=false \
                        -Dseccomp=false \
