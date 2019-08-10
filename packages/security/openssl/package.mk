@@ -22,6 +22,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            threads \
                            no-sctp \
                            no-ssl3 \
+                           no-weak-ssl-ciphers \
                            no-zlib \
                            no-zlib-dynamic \
                            no-static-engine \
