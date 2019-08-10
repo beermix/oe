@@ -53,10 +53,4 @@ makeinstall_target() {
 
   mkdir -p $INSTALL/usr/lib
     cp -P libbz2.so* $INSTALL/usr/lib
-    
-  mkdir -p $INSTALL/usr/bin
-    cp -P bzdiff $INSTALL/usr/bin
-    cp -P bzgrep $INSTALL/usr/bin
-    cp -P bzip2 $INSTALL/usr/bin
-    cp -P bzmore $INSTALL/usr/bin
 }
