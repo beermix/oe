@@ -11,7 +11,7 @@ PKG_DEPENDS_HOST="cmake:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="cmake-make"
-PKG_BUILD_FLAGS="+speed"
+#PKG_BUILD_FLAGS="+speed"
 
 #PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DAMD64=OFF"
 #PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DAMD64=ON"
