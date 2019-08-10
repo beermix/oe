@@ -20,7 +20,7 @@ pre_build_host() {
 
 make_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so CC="$HOST_CC $CFLAGS $LDFLAGS"
+  make -f Makefile-libbz2_so  CC="$HOST_CC $CFLAGS $LDFLAGS"
 }
 
 makeinstall_host() {

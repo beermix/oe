@@ -16,9 +16,9 @@ PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +speed"
 
-post_unpack() {
-  rm -rf $PKG_BUILD/Modules/zlib
-}
+#post_unpack() {
+#  rm -rf $PKG_BUILD/Modules/zlib
+#}
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
@@ -86,8 +86,11 @@ post_makeinstall_host() {
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
 
-  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
-  export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+#  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
+#  export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+
+  export CFLAGS="$CFLAGS -ffunction-sections -flto"
+  export CXXFLAGS="$CXXFLAGS -ffunction-sections"
 }
 
 pre_configure_host() {
