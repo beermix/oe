@@ -3,34 +3,22 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
 
 PKG_NAME="gcc"
-#PKG_VERSION="9.1.0"
-#PKG_SHA256="79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0"
+PKG_VERSION="9.1.0"
+PKG_SHA256="79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0"
 PKG_LICENSE="GPL"
-PKG_VERSION="b04aad7"
+#PKG_VERSION="9-20190803"
 PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-9-branch"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
-
-#post_unpack() {
-  # Do not run fixincludes
-#  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
-
-  # Arch Linux installs x86_64 libraries /lib
-#  sed -i '/m64=/s/lib64/lib/' $PKG_BUILD/gcc/config/i386/t-linux64
-
-  # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
-#}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -52,6 +40,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
+                           --disable-libitm \
+                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell"
@@ -62,8 +52,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-libatomic \
-                              --disable-libitm \
-                              --disable-libquadmath \
                               --disable-libgomp \
                               --disable-shared \
                               --disable-threads \

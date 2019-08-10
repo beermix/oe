@@ -20,7 +20,7 @@ pre_build_host() {
 
 make_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so  CC="$HOST_CC $CFLAGS $LDFLAGS"
+  make -f Makefile-libbz2_so CC="$HOST_CC $CFLAGS $LDFLAGS"
 }
 
 makeinstall_host() {
@@ -51,6 +51,7 @@ makeinstall_target() {
     cp bzlib.h $SYSROOT_PREFIX/usr/include
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib
+    cp libbz2.a $SYSROOT_PREFIX/usr/lib
 
   mkdir -p $INSTALL/usr/lib
     cp -P libbz2.so* $INSTALL/usr/lib
