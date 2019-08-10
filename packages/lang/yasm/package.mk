@@ -14,7 +14,13 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
 		           --disable-warnerror \
 		           --disable-profiling \
+		           --disable-gcov \
 		           --disable-nls \
-		           --disable-python-bindings"
-                         
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DENABLE_NLS=OFF -DBUILD_SHARED_LIBS=OFF"
+		           --disable-rpath \
+		           --disable-python-bindings \
+		           --without-dmalloc \
+                         --with-gnu-ld \
+                         --without-libiconv-prefix \
+                         --without-libintl-prefix"
+		           
+ PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DENABLE_NLS=OFF -DBUILD_SHARED_LIBS=OFF"
