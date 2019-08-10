@@ -28,7 +28,3 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 			  -DZLIB_COMPAT=ON \
 			  -DWITH_OPTIM=ON \
 			  -DCMAKE_VERBOSE_MAKEFILE=ON"
-			  
-makeinstall_host() {
-  : # nop
-}
