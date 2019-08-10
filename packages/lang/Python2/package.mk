@@ -25,9 +25,7 @@ PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --disable-ipv6 \
-                         --enable-unicode=ucs4 \
-                         --with-computed-gotos"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -91,11 +89,6 @@ pre_configure_target() {
 
   export CFLAGS="$CFLAGS -ffunction-sections -flto"
   export CXXFLAGS="$CXXFLAGS -ffunction-sections"
-}
-
-pre_configure_host() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 make_target() {
