@@ -254,12 +254,12 @@ setup_toolchain() {
   fi
 
   # parallel
-  if flag_enabled "parallel" "yes"; then
-    NINJA_OPTS="$NINJA_OPTS -j$CONCURRENCY_MAKE_LEVEL"
-    export MAKEFLAGS="-j$CONCURRENCY_MAKE_LEVEL"
-  else
+  if ! flag_enabled "parallel" "yes"; then
     NINJA_OPTS="$NINJA_OPTS -j1"
     export MAKEFLAGS="-j1"
+  else
+    NINJA_OPTS="$NINJA_OPTS -j$CONCURRENCY_MAKE_LEVEL"
+    export MAKEFLAGS="-j$CONCURRENCY_MAKE_LEVEL"
   fi
 
   # verbose flag
@@ -385,7 +385,6 @@ ar = '$AR'
 strip = '$STRIP'
 pkgconfig = '$PKG_CONFIG'
 llvm-config = '$SYSROOT_PREFIX/usr/bin/llvm-config-host'
-libgcrypt-config = '$SYSROOT_PREFIX/usr/bin/libgcrypt-config'
 
 [host_machine]
 system = 'linux'
@@ -1303,15 +1302,13 @@ pkg_lock_status() {
   [ "${MTWITHLOCKS}" != "yes" ] && return 0
 
   local status="$1" pkg="$2" task="$3" msg="$4"
-  local this_job="${MTJOBID}" line idwidth
-
-  [ "${THREADCOUNT}" = "0" ] && idwidth=${#MTMAXJOBS} || idwidth=2
+  local this_job="${MTJOBID}" line
 
   (
     flock --exclusive 94
 
-    printf -v line "%s: <%06d> [%0*d/%0*d] %-7s %-7s %-35s" \
-    "$(date +%Y-%m-%d\ %H:%M:%S.%N)" $$ ${idwidth} ${this_job} ${#MTMAXJOBS} ${PARALLEL_SEQ:-0} "${status}" "${task}" "${pkg}"
+    printf -v line "%s: <%06d> [%02d/%0*d] %-7s %-7s %-35s" \
+    "$(date +%Y-%m-%d\ %H:%M:%S.%N)" $$ ${this_job} ${#MTMAXJOBS} ${PARALLEL_SEQ:-0} "${status}" "${task}" "${pkg}"
     [ -n "${msg}" ] && line+=" (${msg})"
 
     echo "${line}" >>"${THREAD_CONTROL}/history"
@@ -1337,11 +1334,9 @@ update_dashboard() {
 
   local status="$1" pkg="$2" task="$3" msg="$4"
   local line sedline preamble num elapsed projdevarch
-  local boldred boldgreen boldyellow endcolor idwidth
+  local boldred boldgreen boldyellow endcolor
 
   sedline=$((MTJOBID + 2))
-
-  [ "${THREADCOUNT}" = "0" ] && idwidth=${#MTMAXJOBS} || idwidth=2
 
   num=$(< "${THREAD_CONTROL}/status.max")
   if [ ${num} -lt ${sedline} ]; then
@@ -1374,7 +1369,7 @@ update_dashboard() {
     esac
   fi
 
-  printf -v line "[%0*d\/%0*d] %b%-7s%b %-7s %-35s" ${idwidth} ${MTJOBID} ${#MTMAXJOBS} ${PARALLEL_SEQ:-0} "${color}" "${status//\//\\/}" "${endcolor}" "${task}" "${pkg}"
+  printf -v line "[%02d\/%0*d] %b%-7s%b %-7s %-35s" ${MTJOBID} ${#MTMAXJOBS} ${PARALLEL_SEQ:-0} "${color}" "${status//\//\\/}" "${endcolor}" "${task}" "${pkg}"
   [ -n "${msg}" ] && line+=" ${msg//\//\\/}"
 
   sed -e "1s/.*/${preamble}/;${sedline}s/.*/${line}/" -i "${THREAD_CONTROL}/status"

@@ -147,16 +147,15 @@ start_multithread_build() {
   echo 0 >"${THREAD_CONTROL}/status.max"
   touch "${THREAD_CONTROL}/status"
 
-  # Increase file descriptors if building one thread/package
-  [ "${THREADCOUNT}" = "0" ] && ulimit -n ${ULIMITN:-10240}
+  [ "${THREADCOUNT}" = "0" ] && THREADCOUNT=1
 
   # Bootstrap GNU parallel
   MTWITHLOCKS=no $SCRIPTS/build parallel:host 2>&1 || die "Unable to bootstrap parallel package"
 
-  # determine number of available slots for the given THREADCOUNT - optimise logging for single threaded builds
+  # if number of detected slots is 1 then don't bother using inter-process locks as this is a sequential build
   [ $(seq 1 32 | ${TOOLCHAIN}/bin/parallel --plain --no-notice --max-procs ${THREADCOUNT} echo {%} | sort -n | tail -1) -eq 1 ] && singlethread=yes || singlethread=no
 
-  # create a single log file by default for a single threaded build (or the builder is a masochist)
+  # create a single log file by default if not using locks (single build process), or the builder is a masochist
   if [ "${singlethread}" = "yes" -a "${ONELOG,,}" != "no" ] || [ "${ONELOG,,}" = "yes" ]; then
     buildopts+=" --ungroup"
   else
