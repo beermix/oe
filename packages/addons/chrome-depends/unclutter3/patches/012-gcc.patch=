@@ -1,0 +1,24 @@
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index 02071fb..bc82dca
+--- a/Makefile
++++ b/Makefile
+@@ -9,15 +9,12 @@ PREFIX = /usr
+ BINDIR = $(PREFIX)/bin
+ MANDIR = $(PREFIX)/share/man/man1
+ 
+-CC = gcc
++CC = x86_64-libreelec-linux-gnu-gcc
+ LD = $(CC)
+ 
+ CPPFLAGS += -D'__VERSION="$(shell git describe --all --long --always)"' "-I$(IDIR)"
+ 
+-CFLAGS += -std=gnu99
+-CFLAGS += -Wall -Wundef -Wshadow -Wformat-security
+-
+-LDFLAGS += $(shell pkg-config --libs x11 xi xfixes)
++LDFLAGS += $(shell x86_64-pc-linux-gnu-pkg-config --libs x11 xi xfixes)
+ # libev has no pkg-config support
+ LDFLAGS += -lev
+ 
