@@ -8,7 +8,7 @@ PKG_REV="201"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
-PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo chrome-libXcomposite \
+PKG_DEPENDS_TARGET="toolchain libpthread-stubs at-spi2-atk atk cairo chrome-libXcomposite \
                     chrome-libXdamage chrome-libXfixes chrome-libXi chrome-libXrender \
                     chrome-libXtst chrome-libxcb cups gdk-pixbuf gtk3 harfbuzz \
                     libXcursor libxss nss pango scrnsaverproto unclutter"
