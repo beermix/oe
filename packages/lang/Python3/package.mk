@@ -8,7 +8,7 @@ PKG_SHA256="fb799134b868199930b75f26678f18932214042639cd52b16da7fd134cd9b13f"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="zlib:host bzip2:host expat:host libffi:host util-linux:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host util-linux:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl Python3:host readline ncurses"
 PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 
@@ -37,9 +37,10 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --enable-lib2to3
                          --disable-idle3
                          --without-cxx-main
-                         --with-expat=system
+                         --with-expat=builtin
                          --with-libmpdec=none
                          --with-doc-strings
+                         --disable-ipv6
                          --without-pymalloc
                          --without-ensurepip
 "
@@ -83,11 +84,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --disable-ipv6
                            --with-computed-gotos
 "
-
-#pre_configure_host() {
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
-#}
 
 post_unpack() {
   # This is needed to make sure the Python build process doesn't try to

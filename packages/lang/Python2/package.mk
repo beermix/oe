@@ -9,18 +9,18 @@ PKG_SHA256="f222ef602647eecb6853681156d32de4450a2c39f4de93bd5b20235f2e660ed7"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host expat:host libffi:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host ncurses readline"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
 
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +speed"
 
-post_unpack() {
-  rm -r $PKG_BUILD/Modules/zlib
-  rm -r $PKG_BUILD/Modules/expat
-  rm -r $PKG_BUILD/Modules/_ctypes/{darwin,libffi}*
-}
+#post_unpack() {
+#  rm -r $PKG_BUILD/Modules/zlib
+#  rm -r $PKG_BUILD/Modules/expat
+#  rm -r $PKG_BUILD/Modules/_ctypes/{darwin,libffi}*
+#}
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
@@ -28,9 +28,7 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
                          --disable-ipv6 \
-                         --enable-unicode=ucs4 \
-                         --with-system-expat \
-                         --with-system-ffi"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -92,11 +90,6 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
   export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
 }
-
-#pre_configure_host() {
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
-#}
 
 make_target() {
   make  CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
