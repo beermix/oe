@@ -3,14 +3,14 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glib"
-#PKG_VERSION="2.61.2"
-#PKG_SHA256="99c6bcfb8600562d519222a429e2dc0af469b2006b8080a9a1f438456071c0b5"
-PKG_VERSION="6d7143e"
+PKG_VERSION="2.61.2"
+PKG_SHA256="99c6bcfb8600562d519222a429e2dc0af469b2006b8080a9a1f438456071c0b5"
+#PKG_VERSION="6d7143e"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://github.com/GNOME/glib"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="libffi:host Python3:host meson:host"
 PKG_DEPENDS_TARGET="toolchain pcre zlib libffi Python3:host util-linux"
 PKG_LONGDESC="A library which includes support routines for C such as lists, trees, hashes, memory allocation."
