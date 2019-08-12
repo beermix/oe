@@ -1,20 +1,22 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)  +lto-parallel
+# https://github.com/python/cpython/tree/2.7
 
 PKG_NAME="Python2"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
-PKG_VERSION="2.7.16"
-PKG_SHA256="f222ef602647eecb6853681156d32de4450a2c39f4de93bd5b20235f2e660ed7"
+PKG_VERSION="35f9bcc"
+PKG_SHA256=""
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/python/cpython/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host ncurses readline"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
 
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-parallel +speed"
+PKG_BUILD_FLAGS="-parallel +lto-parallel +speed"
 
 #post_unpack() {
 #  rm -r $PKG_BUILD/Modules/zlib
@@ -53,8 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat \
-                           --with-computed-gotos \
-                           --with-lto"
+                           --with-computed-gotos"
 
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
@@ -87,8 +88,8 @@ post_makeinstall_host() {
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
 
-  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
-  export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+#  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
+#  export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
 }
 
 make_target() {
