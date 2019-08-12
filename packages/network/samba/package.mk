@@ -9,8 +9,10 @@ PKG_SITE="https://www.samba.org"
 PKG_URL="https://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib connman"
 PKG_LONGDESC="A free SMB / CIFS fileserver and client."
-PKG_BUILD_FLAGS="+pic +hardening"
-PKG_BUILD_FLAGS="+pic"
+PKG_BUILD_FLAGS="+pic +lto"
+
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 configure_package() {
  if [ "$AVAHI_DAEMON" = yes ]; then
