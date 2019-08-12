@@ -12,7 +12,7 @@ PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav"
 PKG_LONGDESC="A free and open source cross-platform media player."
 PKG_BUILD_FLAGS="-lto -gold"
-PKG_TOOLCHAIN="cmake-make"
+#PKG_TOOLCHAIN="cmake-make"
 
 configure_package() {
   PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
@@ -204,6 +204,19 @@ fi
                          -DENABLE_EVENTCLIENTS=ON \
                          -DENABLE_LDGOLD=ON \
                          -DCMAKE_VERBOSE_MAKEFILE=0 \
+                         -DENABLE_AVX=OFF \
+                         -DENABLE_AVX2=OFF \
+                         -DENABLE_SSE=ON \
+                         -DENABLE_SSE2=ON \
+                         -DENABLE_SSE3=ON \
+                         -DENABLE_SSE4_1=ON \
+                         -DENABLE_SSE4_2=ON \
+                         -DENABLE_SSSE3=ON \
+                         -DHAVE_SSE=TRUE \
+                         -DHAVE_SSE2=TRUE \
+                         -DHAVE_SSE3=TRUE \
+                         -DHAVE_SSE4_1=TRUE \
+                         -DHAVE_SSSE3=TRUE \
                          $KODI_ARCH \
                          $KODI_OPENGL \
                          $KODI_OPENGLES \
