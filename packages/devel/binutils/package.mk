@@ -68,13 +68,11 @@ makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
   #cp -v ../include/demangle.h $SYSROOT_PREFIX/usr/include
 
-#  cp -v ../include/ansidecl.h $SYSROOT_PREFIX/usr/include
-#  cp -v ../include/plugin-api.h $SYSROOT_PREFIX/usr/include
+  cp -v ../include/ansidecl.h $SYSROOT_PREFIX/usr/include
+  cp -v ../include/plugin-api.h $SYSROOT_PREFIX/usr/include
 
-#  mkdir -p $SYSROOT_PREFIX/usr/include/libiberty
-#  cp -v ../include/*.h $SYSROOT_PREFIX/usr/include/libiberty/
-
-
+  mkdir -p $SYSROOT_PREFIX/usr/include/libiberty
+  cp -v ../include/*.h $SYSROOT_PREFIX/usr/include/libiberty/
 
 #  cp -v ../include/ansidecl.h %{buildroot}%{_includedir}/
 #  cp -v ../include/libiberty.h %{buildroot}%{_prefix}/include
