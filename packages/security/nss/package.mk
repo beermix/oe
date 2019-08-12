@@ -27,7 +27,6 @@ make_host() {
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
      SKIP_SHLIBSIGN=1 \
      NSS_TESTS="dummy" \
-     NSS_ENABLE_WERROR=0 \
      CC=$CC LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
      V=1
 }
@@ -58,7 +57,6 @@ make_target() {
      NSS_USE_SYSTEM_SQLITE=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      SKIP_SHLIBSIGN=1 \
-     NSS_ENABLE_WERROR=0 \
      OS_TEST=$TARGET_ARCH \
      NSS_TESTS="dummy" \
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \
