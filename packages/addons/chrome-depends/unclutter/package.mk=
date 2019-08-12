@@ -2,11 +2,11 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="unclutter"
-PKG_VERSION="b450d78"
-PKG_SHA256="4eaf1e23d671073f27ddc9afd5dd906d2706d398bdb065054772a3974103eea8"
+PKG_VERSION="1.09"
+PKG_SHA256="3a53575fe2a75a34bc9a2b0ad92ee0f8a7dbedc05d8783f191c500060a40a9bd"
 PKG_LICENSE="Public Domain"
-PKG_SITE="https://github.com/Airblader/unclutter-xfixes"
-PKG_URL="https://github.com/Airblader/unclutter-xfixes/archive/$PKG_VERSION.tar.gz"
+PKG_SITE="https://sourceforge.net/projects/unclutter/"
+PKG_URL="https://sourceforge.net/projects/unclutter/unclutter/source_$PKG_VERSION/unclutter-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_LONGDESC="Unclutter runs in the background of an X11 session and hides the X11 Cursor."
 LTO_SUPPORT="yes"
