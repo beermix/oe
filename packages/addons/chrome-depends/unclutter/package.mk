@@ -7,7 +7,7 @@ PKG_SHA256=""
 PKG_LICENSE="Public Domain"
 PKG_SITE="https://github.com/Airblader/unclutter-xfixes"
 PKG_URL="https://github.com/Airblader/unclutter-xfixes/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11"
+PKG_DEPENDS_TARGET="toolchain libev libX11"
 PKG_LONGDESC="Unclutter runs in the background of an X11 session and hides the X11 Cursor."
 
 makeinstall_target() {
