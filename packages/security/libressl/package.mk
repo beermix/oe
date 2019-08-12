@@ -1,6 +1,6 @@
 PKG_NAME="libressl"
-PKG_VERSION="2.9.2"
-PKG_SHA256="c4c78167fae325b47aebd8beb54b6041d6f6a56b3743f4bd5d79b15642f9d5d4"
+PKG_VERSION="3.0.0"
+PKG_SHA256=""
 PKG_SITE="http://mirror.ox.ac.uk/pub/OpenBSD/LibreSSL/?C=M;O=D"
 PKG_URL="http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
