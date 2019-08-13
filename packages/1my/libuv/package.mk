@@ -3,7 +3,6 @@ PKG_VERSION="v1.31.0"
 PKG_SITE="https://dist.libuv.org/dist/"
 PKG_URL="http://dist.libuv.org/dist/$PKG_VERSION/libuv-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="devel"
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic:host +pic"
 
