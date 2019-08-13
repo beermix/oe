@@ -36,7 +36,7 @@ addon() {
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
   # atk
-  cp -PL $(get_build_dir atk)/.$TARGET_NAME/atk/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # cairo
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -49,22 +49,18 @@ addon() {
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # gtk3 gdk3
-  cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgailutil-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgailutil-3.so.0.0.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgdk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgdk-3.so.0.2406.4 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk3)/.$TARGET_NAME/gtk/.libs/libgtk-3.so.0.2406.4 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgailutil-3.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
-  cp -PL $(get_build_dir harfbuzz)/.$TARGET_NAME/src/.libs/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir harfbuzz)/.$TARGET_NAME/src/.libs/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libatk-bridge
-  cp -PL $(get_build_dir at-spi2-atk)/.$TARGET_NAME/atk-adaptor/libatk-bridge-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+  cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libatspi
-  cp -PL $(get_build_dir at-spi2-core)/.$TARGET_NAME/atspi/libatspi.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+  cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libcups
   cp -PL $(get_build_dir cups)/cups/libcups.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -76,7 +72,7 @@ addon() {
   cp -PL $(get_build_dir chrome-libXcomposite)/.$TARGET_NAME/src/.libs/libXcomposite.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libXcursor
-  cp -PL $(get_build_dir libXcursor)/.$TARGET_NAME/src/.libs/libXcursor.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
+  cp -PL $(get_build_dir libXcursor)/.install_pkg/usr/lib/libXcursor.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 
 
   # libXdamage
   cp -PL $(get_build_dir chrome-libXdamage)/.$TARGET_NAME/src/.libs/libXdamage.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib 

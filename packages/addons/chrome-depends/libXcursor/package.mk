@@ -12,6 +12,6 @@ PKG_DEPENDS_TARGET="toolchain libX11 libXfixes libXrender"
 PKG_LONGDESC="X11 Cursor management library.s"
 PKG_BUILD_FLAGS="+pic"
 
-makeinstall_target() {
-  :
-}
+#makeinstall_target() {
+#  :
+#}
