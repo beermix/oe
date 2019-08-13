@@ -34,7 +34,7 @@ pre_configure_target() {
                              --disable-static \
                              --disable-gtk-doc \
                              --enable-largefile \
-                             --enable-atomic \
+                             --disable-atomic \
                              --disable-gcov \
                              --disable-valgrind \
                              --disable-xcb \
