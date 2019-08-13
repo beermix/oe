@@ -9,7 +9,7 @@ PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
 PKG_URL="https://github.com/ninja-build/ninja/archive/v$PKG_VERSION.tar.gz"
 #PKG_URL="https://github.com/ninja-build/ninja/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="Python2:host"
+PKG_DEPENDS_HOST="Python2:host re2c:host"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
