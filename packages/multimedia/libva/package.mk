@@ -10,20 +10,11 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/libva/releases"
 PKG_URL="https://github.com/intel/libva/archive/$PKG_VERSION.tar.gz"
 PKG_LONGDESC="Libva is an implementation for VA-API (VIdeo Acceleration API)."
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="meson"
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm"
-  DISPLAYSERVER_LIBVA="--enable-x11 --disable-glx --disable-wayland"
-elif [ "$DISPLAYSERVER" = "weston" ]; then
-  DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx --enable-wayland"
-  PKG_DEPENDS_TARGET="toolchain libdrm wayland"
-else
-  PKG_DEPENDS_TARGET="toolchain libdrm"
-  DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx --disable-wayland"
-fi
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
-                           --disable-docs \
-                           --enable-drm \
-                           $DISPLAYSERVER_LIBVA"
+PKG_MESON_OPTS_TARGET="-Ddisable_drm=false \
+                       -Dwith_x11=yes \
+                       -Dwith_glx=no \
+                       -Dwith_wayland=no \
+                       -Denable_va_messaging=true \
+                       -Denable_docs=false"
