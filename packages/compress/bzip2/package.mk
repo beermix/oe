@@ -11,7 +11,7 @@ PKG_URL="https://sourceware.org/pub/bzip2/bzip2-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A high-quality bzip2 data compressor."
-PKG_BUILD_FLAGS="+pic:host +pic +speed"
+PKG_BUILD_FLAGS="+pic +pic:host +speed"
 
 pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
