@@ -11,6 +11,7 @@ PKG_DEPENDS_HOST="cmake:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Expat is an XML parser library written in C."
 PKG_TOOLCHAIN="cmake-make"
+PKG_BUILD_FLAGS="+speed"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_doc=OFF \
 			  -DBUILD_tools=OFF \
