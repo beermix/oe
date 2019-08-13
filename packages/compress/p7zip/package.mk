@@ -8,8 +8,9 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://p7zip.sourceforge.net/"
 PKG_URL="http://downloads.sourceforge.net/project/p7zip/p7zip/${PKG_VERSION}/p7zip_${PKG_VERSION}_src_all.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_HOST="zlib:host"
 PKG_TOOLCHAIN="cmake-make"
-PKG_TOOLCHAIN="manual"
+#PKG_TOOLCHAIN="manual"
 
 post_unpack() {
   cp $PKG_BUILD/makefile.linux_amd64_asm $PKG_BUILD/makefile.machine
@@ -32,8 +33,12 @@ pre_configure_host() {
   export LDFLAGS="$LDFLAGS -s"
 }
 
-#configure_package() {
-#  PKG_CMAKE_SCRIPT="$PKG_BUILD/CPP/7zip/CMAKE/CMakeLists.txt"
-#  PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=0"
-#  PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=0"
-#}
+pre_configure_target() {
+  export LDFLAGS="$LDFLAGS -s"
+}
+
+configure_package() {
+  PKG_CMAKE_SCRIPT="$PKG_BUILD/CPP/7zip/CMAKE/CMakeLists.txt"
+  PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=0"
+  PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=0"
+}
