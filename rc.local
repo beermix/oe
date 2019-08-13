@@ -4,6 +4,14 @@
 #e2fsck -fpDv -E bmap2extent /dev/sdc1
 #e2fsck -fpDv -E bmap2extent /dev/sdd1
 
+#e2fsck -fpDv /dev/sdb1
+#e2fsck -fpDv /dev/sdc1
+#e2fsck -fpDv /dev/sdd1
+
+#fsck.ext4 -yfv /dev/sdb1
+#fsck.ext4 -yfv /dev/sdc1
+#fsck.ext4 -yfv /dev/sdd1
+
 mount /dev/sdb1 /home/user
 mount /dev/sdc1 /home/user/-f2fs
 mount /dev/sdd1 /home/user/.aa
