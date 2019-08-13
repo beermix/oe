@@ -16,7 +16,7 @@ PKG_DEPENDS_TARGET="toolchain zlib dbus libnl-tiny openssl"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
-PKG_BUILD_FLAGS="+lto-parallel"
+PKG_BUILD_FLAGS="+lto-parallel +speed"
 
 PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
