@@ -12,6 +12,10 @@ PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo gdk-pixbuf glib libX11 libXi
 PKG_LONGDESC="A library for creating graphical user interfaces for the X Window System."
 PKG_TOOLCHAIN="meson"
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -DG_ENABLE_DEBUG -DG_DISABLE_CAST_CHECKS"
+}
+
 PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
 			  -Dwayland_backend=false \
 			  -Dbroadway_backend=false \
@@ -19,8 +23,8 @@ PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
 			  -Dquartz_backend=false \
 			  -Dmir_backend=false \
 			  -Dintrospection=false \
-			  -Dprint_backends=false \
-			  -Dcolord=false \
+			  -Dprint_backends=file \
+			  -Dcolord=no \
 			  -Dgtk_doc=false \
 			  -Dman=false \
 			  -Ddemos=false \
