@@ -49,6 +49,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-gnu-indirect-function \
                            --disable-vtable-verify \
+                           --enable-install-libiberty
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
