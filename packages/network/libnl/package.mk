@@ -12,9 +12,9 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A library for applications dealing with netlink socket."
 PKG_BUILD_FLAGS="+pic"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
+#}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
