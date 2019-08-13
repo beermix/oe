@@ -13,7 +13,8 @@ PKG_LONGDESC="A library for creating graphical user interfaces for the X Window 
 PKG_TOOLCHAIN="meson"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -DG_ENABLE_DEBUG -DG_DISABLE_CAST_CHECKS"
+#  export CFLAGS="$CFLAGS -DG_ENABLE_DEBUG -DG_DISABLE_CAST_CHECKS"
+   export CFLAGS="$CFLAGS -DG_DISABLE_CAST_CHECKS"
 }
 
 PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
