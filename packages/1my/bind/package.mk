@@ -17,8 +17,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --with-gost=no \
 			      --without-gssapi \
 			      --with-ecdsa=yes \
-			      --with-libtool \
-			      --with-readline \
 			      --without-python \
 			      --sysconfdir=/storage/.config"
 
