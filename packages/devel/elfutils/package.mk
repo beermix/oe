@@ -12,7 +12,7 @@ PKG_DEPENDS_HOST="make:host zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib elfutils:host"
 PKG_LONGDESC="A collection of utilities to handle ELF objects."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+pic -hardening"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-nls \
