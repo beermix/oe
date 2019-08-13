@@ -24,12 +24,6 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
 }
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
-
-pre_configure_host() {
-  export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
-}
-
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/bin
     cp -f $PKG_DIR/scripts/fribidi-config $SYSROOT_PREFIX/usr/bin
