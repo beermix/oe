@@ -19,8 +19,14 @@ PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
 			  -Dquartz_backend=false \
 			  -Dmir_backend=false \
 			  -Dintrospection=false \
+			  -Dprint_backends=false \
+			  -Dcolord=false \
 			  -Dgtk_doc=false \
-			  -Dman=false"
+			  -Dman=false \
+			  -Ddemos=false \
+			  -Dexamples=false \
+			  -Dtests=false \
+			  -Dinstalled_tests=false"
 
 #pre_configure_target() {
 #  LIBS="$LIBS -lXcursor"
