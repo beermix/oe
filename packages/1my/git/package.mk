@@ -12,6 +12,10 @@ pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
 
+  export CC="$(TARGET_CC)"
+  export CFLAGS="$(TARGET_CFLAGS)"
+  export CPPFLAGS="$(TARGET_CPPFLAGS)"
+  export LDFLAGS="$(TARGET_LDFLAGS)"
   export NO_EXPAT="YesPlease"
   export NO_MKSTEMPS="YesPlease"
   export NO_GETTEXT="YesPlease"
