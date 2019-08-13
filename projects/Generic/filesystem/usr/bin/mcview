@@ -1,4 +1,4 @@
 #!/bin/sh
 HISTFILE="/run/mc_histfile"
 export HISTFILE
-exec mc-bin "$@"
+exec mc-bin -v "$@"

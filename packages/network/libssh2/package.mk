@@ -1,7 +1,7 @@
 PKG_NAME="libssh2"
-PKG_VERSION="b0bf660"
+PKG_VERSION="3319335"
+PKG_SITE="https://github.com/libssh2/libssh2"
 PKG_URL="https://github.com/libssh2/libssh2/archive/$PKG_VERSION.tar.gz"
-#PKG_SITE="https://www.libssh2.org/download/?C=M;O=D"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_TOOLCHAIN="cmake-make"
 #PKG_BUILD_FLAGS="+pic"
@@ -13,7 +13,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --disable-debug \
 			      --with-gnu-ld"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE= \
-			  -DBUILD_EXAMPLES=0 \
+PKG_CMAKE_OPTS_TARGET="-DBUILD_EXAMPLES=0 \
 			  -DBUILD_SHARED_LIBS=0 \
 			  -DENABLE_ZLIB_COMPRESSION=1"
