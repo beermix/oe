@@ -13,7 +13,7 @@ PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
-PKG_BUILD_FLAGS="+lto +speed"
+PKG_BUILD_FLAGS="+speed"
 
 if listcontains "${GRAPHIC_DRIVERS}" "(lima|panfrost)"; then
   PKG_VERSION="659aa3dd6519f64379e91ca97fe184434fd7fdee" # master-19.2
@@ -97,8 +97,8 @@ fi
 pre_configure_target() {
   if [ "$DISPLAYSERVER" = "x11" ]; then
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
-    #export CFLAGS="$CFLAGS -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-    #export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+    export CFLAGS="$CFLAGS -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+    export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
   fi
 
   # Temporary hack (until panfrost evolves) to use 64-bit pointers in structs passed to GPU
