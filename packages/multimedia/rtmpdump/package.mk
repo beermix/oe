@@ -2,10 +2,10 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="rtmpdump"
-PKG_VERSION="fa8646d"
-PKG_SHA256="dba4d4d2e1c7de6884b01d98194b83cab6784669089fa3c919152087a3a38fd2"
+PKG_VERSION="c5f04a58fc2aeea6296ca7c44ee4734c18401aa3"
+PKG_SHA256="fd8c21263d93fbde8bee8aa6c5f6a657789674bb0f9e74f050651504d5f43b46"
 PKG_LICENSE="GPL"
-PKG_SITE="http://rtmpdump.mplayerhq.hu/"
+PKG_SITE="https://repo.or.cz/rtmpdump.git/shortlog"
 PKG_URL="http://repo.or.cz/rtmpdump.git/snapshot/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_LONGDESC="rtmpdump is a toolkit for RTMP streams."
