@@ -8,12 +8,13 @@ PKG_SHA256="e87aae032bf07c26f85ac0ed3250998c37621d95f8bd748b31f15b33c45ee995"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/westes/flex/releases"
 PKG_URL="https://github.com/westes/flex/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_HOST="ccache:host m4:host autotools:host gettext:host"
+PKG_DEPENDS_HOST="ccache:host m4:host gettext:host autotools:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A tool for generating programs that perform pattern-matching on text."
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_path_M4=$BUILD/toolchain/bin/m4 \
+			    ac_cv_func_reallocarray=no \
 			    --enable-static \
 			    --disable-shared \
 			    --disable-rpath \
@@ -22,6 +23,7 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_path_M4=$BUILD/toolchain/bin/m4 \
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
+                           ac_cv_func_reallocarray=no \
                            --disable-doc \
                            --disable-program"
 
