@@ -25,4 +25,5 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-libcares \
                            --without-libgcrypt \
                            --with-sqlite3 \
-                           --with-libxml2"
+                           --with-libxml2 \
+                           ARIA2_STATIC=yes"
