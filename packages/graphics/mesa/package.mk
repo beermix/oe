@@ -13,7 +13,7 @@ PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
-PKG_BUILD_FLAGS="+speed"
+PKG_BUILD_FLAGS="+lto +speed"
 
 if listcontains "${GRAPHIC_DRIVERS}" "(lima|panfrost)"; then
   PKG_VERSION="659aa3dd6519f64379e91ca97fe184434fd7fdee" # master-19.2
