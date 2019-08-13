@@ -13,7 +13,7 @@ PKG_URL="https://w1.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
 #PKG_VERSION="cb28bd5"
 #PKG_URL="https://w1.fi/cgit/hostap/snapshot/hostap-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib dbus libnl-tiny openssl"
-#PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
+PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_LONGDESC="A free software implementation of an IEEE 802.11i supplicant."
 PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="+lto-parallel"
@@ -24,7 +24,7 @@ PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/b
 configure_target() {
   LDFLAGS="$LDFLAGS -lpthread -lm"
 
-  export CFLAGS="$CFLAGS -DCONFIG_LIBNL20 -D_GNU_SOURCE -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
+#  export CFLAGS="$CFLAGS -DCONFIG_LIBNL20 -D_GNU_SOURCE -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
 #  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -flto"
 #  export LDFLAGS="$LDFLAGS -Wl,--gc-sections -flto -fuse-linker-plugin"
