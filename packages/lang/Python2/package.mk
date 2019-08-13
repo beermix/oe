@@ -49,7 +49,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat"
-
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
@@ -81,8 +80,8 @@ post_makeinstall_host() {
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
 
-#  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
-#  export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+  export CFLAGS="$CFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+  export CXXFLAGS="$CXXFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
 }
 
 make_target() {

@@ -82,7 +82,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --without-ensurepip
                            --with-threads
                            --disable-ipv6
-                           --with-computed-gotos
 "
 
 post_unpack() {
