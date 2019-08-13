@@ -11,9 +11,10 @@ PKG_SITE="https://www.openssl.org/source/"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_0_2-stable"
 PKG_URL="https://github.com/openssl/openssl/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_HOST="ccache:host nasm:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
+PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
@@ -55,7 +56,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CPPFLAGS $CFLAGS $LDFLAGS"
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
