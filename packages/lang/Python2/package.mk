@@ -49,6 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat \
+                           --without-ensurepip \
                            --with-computed-gotos \
                            --with-lto"
 post_patch() {
