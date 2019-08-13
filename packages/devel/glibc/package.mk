@@ -30,7 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=5.2 \
+                           --enable-kernel=4.4.0 \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
@@ -57,7 +57,6 @@ pre_build_target() {
 
 pre_configure_target() {
 # Filter out some problematic *FLAGS
-#  export CCACHE_DISABLE=true
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
@@ -128,28 +127,9 @@ EOF
   fi
 }
 
-# build benchmark tests
-#post_make_target() {
-#  make bench-build
-#}
-
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
 #  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
-
-# install benchmark tests
-#  local b
-#  mkdir -p "$INSTALL/usr/lib/benchtests"
-#  for b in benchtests/bench-* ; do
-#    if [ -x "$b" ]; then
-#      echo "installing benchmark $b"
-#      cp "$b" "$INSTALL/usr/lib/benchtests"
-#    fi
-#  done
-
-# install benchmark scripts
-#  mkdir -p "$INSTALL/usr/lib/benchtests"
-#  cp -PR $PKG_BUILD/benchtests/scripts "$INSTALL/usr/lib/benchtests/"
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
@@ -162,9 +142,7 @@ post_makeinstall_target() {
 
   safe_remove $INSTALL/usr/lib/audit
   safe_remove $INSTALL/usr/lib/glibc
-#  safe_remove $INSTALL/usr/lib/libc_pic
   safe_remove $INSTALL/usr/lib/*.o
-#  safe_remove $INSTALL/usr/lib/*.map
   safe_remove $INSTALL/var
 
 # remove locales and charmaps
