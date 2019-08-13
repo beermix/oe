@@ -1,0 +1,74 @@
+From 5e9a18108be2126c61b09ef740632c95d11e7e2e Mon Sep 17 00:00:00 2001
+From: Athenas Jimenez Gonzalez <athenas.jimenez.gonzalez@intel.com>
+Date: Tue, 31 Jul 2018 10:33:30 -0500
+Subject: [PATCH] Add spacing config for Clear Sans
+
+---
+ conf.d/20-unhint-clear-sans.conf | 13 +++++++++++++
+ conf.d/Makefile.am               |  2 ++
+ conf.d/Makefile.in               |  2 ++
+ 3 files changed, 17 insertions(+)
+ create mode 100644 conf.d/20-unhint-clear-sans.conf
+
+diff --git a/conf.d/20-unhint-clear-sans.conf b/conf.d/20-unhint-clear-sans.conf
+new file mode 100644
+index 0000000..466ef3e
+--- /dev/null
++++ b/conf.d/20-unhint-clear-sans.conf
+@@ -0,0 +1,13 @@
++<?xml version="1.0"?>
++<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
++<fontconfig>
++        <match target="font">
++                <test name="family" compare="eq" ignore-blanks="true">
++                        <string>Clear Sans</string>
++                </test>
++                <edit name="spacing">
++                        <const>proportional</const>
++                </edit>
++        </match>
++
++</fontconfig>
+diff --git a/conf.d/Makefile.am b/conf.d/Makefile.am
+index ff03fb2..941d211 100644
+--- a/conf.d/Makefile.am
++++ b/conf.d/Makefile.am
+@@ -29,6 +29,7 @@ CONF_LINKS = \
+ 	10-hinting-$(PREFERRED_HINTING).conf	\
+ 	10-scale-bitmap-fonts.conf \
+ 	20-unhint-small-vera.conf \
++	20-unhint-clear-sans.conf \
+ 	30-metric-aliases.conf \
+ 	40-nonlatin.conf \
+ 	45-generic.conf \
+@@ -68,6 +69,7 @@ template_DATA =				\
+ 	11-lcdfilter-legacy.conf	\
+ 	11-lcdfilter-light.conf		\
+ 	20-unhint-small-vera.conf	\
++	20-unhint-clear-sans.conf   \
+ 	25-unhint-nonlatin.conf		\
+ 	30-metric-aliases.conf		\
+ 	40-nonlatin.conf		\
+diff --git a/conf.d/Makefile.in b/conf.d/Makefile.in
+index ff988eb..410b179 100644
+--- a/conf.d/Makefile.in
++++ b/conf.d/Makefile.in
+@@ -371,6 +371,7 @@ CONF_LINKS = \
+ 	10-hinting-$(PREFERRED_HINTING).conf	\
+ 	10-scale-bitmap-fonts.conf \
+ 	20-unhint-small-vera.conf \
++	20-unhint-clear-sans.conf \
+ 	30-metric-aliases.conf \
+ 	40-nonlatin.conf \
+ 	45-generic.conf \
+@@ -408,6 +409,7 @@ template_DATA = \
+ 	11-lcdfilter-legacy.conf	\
+ 	11-lcdfilter-light.conf		\
+ 	20-unhint-small-vera.conf	\
++	20-unhint-clear-sans.conf   \
+ 	25-unhint-nonlatin.conf		\
+ 	30-metric-aliases.conf		\
+ 	40-nonlatin.conf		\
+-- 
+2.18.0
+
