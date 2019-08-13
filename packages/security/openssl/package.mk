@@ -1,20 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) no-ssl3-method no-ssl2 no-ssl3
 
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2s"
 PKG_SHA256="cabd5c9492825ce5bd23f3c3aeed6a97f8142f606d893df216411f07d1abab96"
-#PKG_VERSION="d333eba"
 PKG_LICENSE="BSD"
 PKG_SITE="https://www.openssl.org/source/"
-PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_0_2-stable"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
-#PKG_URL="https://github.com/openssl/openssl/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host nasm:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
-PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
@@ -42,12 +37,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-                           --openssldir=/etc/ssl"
-
-post_unpack() {
-  find $PKG_BUILD/apps -type f | xargs -n 1 -t sed 's|./demoCA|/etc/ssl|' -i
-}
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr --openssldir=/etc/ssl"
 
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
@@ -56,7 +46,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -Wa,--noexecstack $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -66,11 +56,23 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
+
+  case $TARGET_ARCH in
+    x86_64)
+      OPENSSL_TARGET=linux-x86_64
+      ;;
+    arm)
+      OPENSSL_TARGET=linux-armv4
+      ;;
+    aarch64)
+      OPENSSL_TARGET=linux-aarch64
+      ;;
+  esac
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET -Wa,--noexecstack $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {

@@ -203,7 +203,6 @@ fi
                          -DENABLE_LIRCCLIENT=ON \
                          -DENABLE_EVENTCLIENTS=ON \
                          -DENABLE_LDGOLD=ON \
-                         -DCMAKE_VERBOSE_MAKEFILE=0 \
                          -DENABLE_AVX=OFF \
                          -DENABLE_AVX2=OFF \
                          -DENABLE_SSE=ON \
