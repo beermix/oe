@@ -9,6 +9,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/libva/releases"
 PKG_URL="https://github.com/intel/libva/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm"
 PKG_LONGDESC="Libva is an implementation for VA-API (VIdeo Acceleration API)."
 PKG_TOOLCHAIN="meson"
 
