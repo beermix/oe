@@ -65,7 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-thread \
                            --with-random=/dev/urandom \
                            --without-gnutls \
-                           --wit-ssl \
+                           --with-ssl \
                            --without-mbedtls \
                            --without-nss \
                            --with-ca-bundle=/run/libreelec/cacert.pem \
