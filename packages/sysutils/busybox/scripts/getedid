@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 #
 # exit 1 = unsupported GPU
@@ -186,7 +186,7 @@ intel_amd() {
   if [ "$kernel" -lt "415000" ]; then
     sed -i "/ APPEND/s/$/ initrd=\/edid.cpio drm_kms_helper.edid_firmware=$hdmi:edid\/edid.bin video=$hdmi:D/" "$file"
   else
-    sed -i "/ APPEND/s/$/ initrd=\/edid.cpio drm.edid_firmware=edid\/edid.bin/" "$file"
+    sed -i "/ APPEND/s/$/ initrd=\/edid.cpio drm.edid_firmware=edid\/edid.bin video=$hdmi:D/" "$file"
   fi
 
   # reboot

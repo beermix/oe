@@ -31697,3 +31697,496 @@ index e9a65d9140..cc6902e30d 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit ff97da8abeb502df3aea6eb8019c78885b5d2294
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Aug 14 00:01:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index cc6902e30d..56515f8042 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190813
++#define BFD_VERSION_DATE 20190814
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 7fe7d5d979b848e6842c436254439814e13b6de4
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Aug 15 00:01:34 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 56515f8042..9dcec6ec32 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190814
++#define BFD_VERSION_DATE 20190815
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 3fa38ff7e597168def7b7fda312e18ad7036362f
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Aug 16 00:01:18 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 9dcec6ec32..c1af68d4f5 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190815
++#define BFD_VERSION_DATE 20190816
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 87cae3526585294fdd7c3799b6c6b9c0e6318444
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Aug 17 00:01:27 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c1af68d4f5..e77acad0bb 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190816
++#define BFD_VERSION_DATE 20190817
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 86bee50d3c32db6e626149525af6ab241705a1b4
+Author: Alan Modra <amodra@gmail.com>
+Date:   Fri Aug 16 13:20:28 2019 +0930
+
+    PowerPC gcc bootstrap fail with bss-plt
+    
+    git commit 3e04d7655b introduced a bug by sizing output sections
+    earlier in ppc_before_allocation.  That meant PLT (and GOT) sizes were
+    not included when calculating total executable section sizes.
+    
+            * emultempl/ppc32elf.em (ppc_before_allocation): Force running
+            prelim_size_sections before deciding whether branch trampolines
+            might be needed.
+    
+    (cherry picked from commit 7df6aecc97b96843da080d54414052b1c954ddca)
+
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 0704764dd2..a05684b00d 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,9 @@
++2019-08-16  Alan Modra  <amodra@gmail.com>
++
++	* emultempl/ppc32elf.em (ppc_before_allocation): Force running
++	prelim_size_sections before deciding whether branch trampolines
++	might be needed.
++
+ 2019-07-25  Srinath Parvathaneni  <srinath.parvathaneni@arm.com>
+ 
+ 	Backport from mainline
+diff --git a/ld/emultempl/ppc32elf.em b/ld/emultempl/ppc32elf.em
+index 77143e753e..2e79175a1c 100644
+--- a/ld/emultempl/ppc32elf.em
++++ b/ld/emultempl/ppc32elf.em
+@@ -171,7 +171,12 @@ ppc_before_allocation (void)
+       bfd_vma high = 0;
+       asection *o;
+ 
+-      /* Run lang_size_sections (if not already done).  */
++      /* Run lang_size_sections even if already done, so as to pick
++	 up gld${EMULATION_NAME}_before_allocation sizing.  This
++	 matters when we have an executable bss plt which will
++	 typically be laid out near the end of the image, ie. worst
++	 case for branches at the start of .text.  */
++      expld.phase = lang_first_phase_enum;
+       prelim_size_sections ();
+ 
+       for (o = link_info.output_bfd->sections; o != NULL; o = o->next)
+
+commit e8d25d40456520c8890937915df77dbd2d748d76
+Author: Alan Modra <amodra@gmail.com>
+Date:   Fri Aug 16 15:17:23 2019 +0930
+
+    PR24909, Uninitialized use on stack in readelf
+    
+            PR 24909
+            PR 23499
+            * readelf.c (get_symbol_version_string): Set sym_info earlier.
+    
+    (cherry picked from commit 0b8b76098ff3d3dcd0c621f2e45cc0b4e7211d6a)
+
+diff --git a/binutils/ChangeLog b/binutils/ChangeLog
+index 0112181890..7fb60cc1ce 100644
+--- a/binutils/ChangeLog
++++ b/binutils/ChangeLog
+@@ -1,3 +1,9 @@
++2019-08-16  Alan Modra  <amodra@gmail.com>
++
++	PR 24909
++	PR 23499
++	* readelf.c (get_symbol_version_string): Set sym_info earlier.
++
+ 2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
+ 
+ 	Backport from mainline.
+diff --git a/binutils/readelf.c b/binutils/readelf.c
+index 6b4eb41aee..ef294e18dd 100644
+--- a/binutils/readelf.c
++++ b/binutils/readelf.c
+@@ -11401,6 +11401,7 @@ get_symbol_version_string (Filedata *                   filedata,
+   if ((vers_data & VERSYM_HIDDEN) == 0 && vers_data == 0)
+     return NULL;
+ 
++  *sym_info = (vers_data & VERSYM_HIDDEN) != 0 ? symbol_hidden : symbol_public;
+   max_vd_ndx = 0;
+ 
+   /* Usually we'd only see verdef for defined symbols, and verneed for
+@@ -11466,12 +11467,8 @@ get_symbol_version_string (Filedata *                   filedata,
+ 	      ivda.vda_name = BYTE_GET (evda.vda_name);
+ 
+ 	      if (psym->st_name != ivda.vda_name)
+-		{
+-		  *sym_info = ((vers_data & VERSYM_HIDDEN) != 0
+-			       ? symbol_hidden : symbol_public);
+-		  return (ivda.vda_name < strtab_size
+-			  ? strtab + ivda.vda_name : _("<corrupt>"));
+-		}
++		return (ivda.vda_name < strtab_size
++			? strtab + ivda.vda_name : _("<corrupt>"));
+ 	    }
+ 	}
+     }
+
+commit 4bc59a5ab53c4cf43993e48d9a7eb5055d7b4e51
+Author: Alan Modra <amodra@gmail.com>
+Date:   Sat Aug 17 18:01:05 2019 +0930
+
+    PR24911, Heap overflow issue in qsort_r, dwarf.c
+    
+    The actual args to this function are "pointers to pointers to
+    debug_info".
+    
+            PR 24911
+            * dwarf.c (comp_addr_base): Dereference args.
+    
+    (cherry picked from commit d367307b93e5589245d1f2c8bbcfe709404540a8)
+
+diff --git a/binutils/ChangeLog b/binutils/ChangeLog
+index 7fb60cc1ce..a80a1fd470 100644
+--- a/binutils/ChangeLog
++++ b/binutils/ChangeLog
+@@ -1,3 +1,8 @@
++2019-08-17  Alan Modra  <amodra@gmail.com>
++
++	PR 24911
++	* dwarf.c (comp_addr_base): Dereference args.
++
+ 2019-08-16  Alan Modra  <amodra@gmail.com>
+ 
+ 	PR 24909
+diff --git a/binutils/dwarf.c b/binutils/dwarf.c
+index 36fa68004c..d465b42366 100644
+--- a/binutils/dwarf.c
++++ b/binutils/dwarf.c
+@@ -6470,8 +6470,8 @@ display_debug_aranges (struct dwarf_section *section,
+ static int
+ comp_addr_base (const void * v0, const void * v1)
+ {
+-  debug_info * info0 = (debug_info *) v0;
+-  debug_info * info1 = (debug_info *) v1;
++  debug_info *info0 = *(debug_info **) v0;
++  debug_info *info1 = *(debug_info **) v1;
+   return info0->addr_base - info1->addr_base;
+ }
+ 
+
+commit 5400e8089360f511194e48850e19198a0ed6bda2
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Aug 18 00:02:45 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index e77acad0bb..97a2a97c98 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190817
++#define BFD_VERSION_DATE 20190818
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 49c6db46bc9f794596f074e2d7fcddee5f6ff46b
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Aug 19 00:02:29 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 97a2a97c98..11a3c8c620 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190818
++#define BFD_VERSION_DATE 20190819
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 8f71a6fb671132ce36474156abc3d30e7d2c3820
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Aug 20 00:01:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 11a3c8c620..9161bd7ba0 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190819
++#define BFD_VERSION_DATE 20190820
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 34a5de604f7548b3dbc65de5210ff091dd2b952e
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Aug 21 00:01:15 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 9161bd7ba0..68fbda7b98 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190820
++#define BFD_VERSION_DATE 20190821
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 5921485ab440c4667b9d60bd765888769832eda6
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Aug 22 00:01:38 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 68fbda7b98..f91b5926c7 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190821
++#define BFD_VERSION_DATE 20190822
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 33ad488e390667562447c891f375eb5208022e28
+Author: Kyrylo Tkachov <kyrylo.tkachov@arm.com>
+Date:   Thu Aug 22 10:23:58 2019 +0100
+
+    [AArch64][gas] Update MTE system register encodings
+    
+            Backport from mainline
+            2019-08-22  Kyrylo Tkachov <kyrylo.tkachov@arm.com>
+    
+            * aarch64-opc.c (aarch64_sys_regs): Update encoding of tfsre0_el1,
+            tfsr_el1, tfsr_el2, tfsr_el3, tfsr_el12.
+            (aarch64_sys_reg_supported_p): Update checks for the above.
+    
+            Backport from mainline
+            2019-08-22  Kyrylo Tkachov <kyrylo.tkachov@arm.com>
+    
+            * testsuite/gas/aarch64/sysreg-4.d: Update expected disassembly for
+            tfsre0_el1, tfsr_el1, tfsr_el2, tfsr_el3, tfsr_el12 system registers.
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 46b58d2a30..b794290213 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,11 @@
++2019-08-22  Kyrylo Tkachov <kyrylo.tkachov@arm.com>
++
++	Backport from mainline
++	2019-08-22  Kyrylo Tkachov <kyrylo.tkachov@arm.com>
++
++	* testsuite/gas/aarch64/sysreg-4.d: Update expected disassembly for
++	tfsre0_el1, tfsr_el1, tfsr_el2, tfsr_el3, tfsr_el12 system registers.
++
+ 2019-08-02  Alan Modra  <amodra@gmail.com>
+ 
+ 	Backport from master
+diff --git a/gas/testsuite/gas/aarch64/sysreg-4.d b/gas/testsuite/gas/aarch64/sysreg-4.d
+index bc3d0bdb7f..c25536d6ca 100644
+--- a/gas/testsuite/gas/aarch64/sysreg-4.d
++++ b/gas/testsuite/gas/aarch64/sysreg-4.d
+@@ -21,21 +21,21 @@ Disassembly of section \.text:
+ .*:	d5380388 	mrs	x8, id_pfr2_el1
+ .*:	d53b42e1 	mrs	x1, tco
+ .*:	d53b42e2 	mrs	x2, tco
+-.*:	d5386621 	mrs	x1, tfsre0_el1
+-.*:	d5386501 	mrs	x1, tfsr_el1
+-.*:	d53c6502 	mrs	x2, tfsr_el2
+-.*:	d53e6603 	mrs	x3, tfsr_el3
+-.*:	d53d660c 	mrs	x12, tfsr_el12
++.*:	d5385621 	mrs	x1, tfsre0_el1
++.*:	d5385601 	mrs	x1, tfsr_el1
++.*:	d53c5602 	mrs	x2, tfsr_el2
++.*:	d53e5603 	mrs	x3, tfsr_el3
++.*:	d53d560c 	mrs	x12, tfsr_el12
+ .*:	d53810a1 	mrs	x1, rgsr_el1
+ .*:	d53810c3 	mrs	x3, gcr_el1
+ .*:	d5390084 	mrs	x4, gmid_el1
+ .*:	d51b42e1 	msr	tco, x1
+ .*:	d51b42e2 	msr	tco, x2
+-.*:	d5186621 	msr	tfsre0_el1, x1
+-.*:	d5186501 	msr	tfsr_el1, x1
+-.*:	d51c6502 	msr	tfsr_el2, x2
+-.*:	d51e6603 	msr	tfsr_el3, x3
+-.*:	d51d660c 	msr	tfsr_el12, x12
++.*:	d5185621 	msr	tfsre0_el1, x1
++.*:	d5185601 	msr	tfsr_el1, x1
++.*:	d51c5602 	msr	tfsr_el2, x2
++.*:	d51e5603 	msr	tfsr_el3, x3
++.*:	d51d560c 	msr	tfsr_el12, x12
+ .*:	d51810a1 	msr	rgsr_el1, x1
+ .*:	d51810c3 	msr	gcr_el1, x3
+ .*:	d503489f 	msr	tco, #0x8
+diff --git a/opcodes/ChangeLog b/opcodes/ChangeLog
+index 86d4cc3bd2..0b7a51a0b6 100644
+--- a/opcodes/ChangeLog
++++ b/opcodes/ChangeLog
+@@ -1,3 +1,12 @@
++2019-08-22  Kyrylo Tkachov <kyrylo.tkachov@arm.com>
++
++	Backport from mainline
++	2019-08-22  Kyrylo Tkachov <kyrylo.tkachov@arm.com>
++
++	* aarch64-opc.c (aarch64_sys_regs): Update encoding of tfsre0_el1,
++	tfsr_el1, tfsr_el2, tfsr_el3, tfsr_el12.
++	(aarch64_sys_reg_supported_p): Update checks for the above.
++
+ 2019-07-24  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
+ 
+ 	Backport from mainline
+diff --git a/opcodes/aarch64-opc.c b/opcodes/aarch64-opc.c
+index 32ab2e2ac4..2b4c14e9a1 100644
+--- a/opcodes/aarch64-opc.c
++++ b/opcodes/aarch64-opc.c
+@@ -3925,11 +3925,11 @@ const aarch64_sys_reg aarch64_sys_regs [] =
+   { "rndr",		CPENC(3,3,C2,C4,0), F_ARCHEXT | F_REG_READ }, /* RO */
+   { "rndrrs",		CPENC(3,3,C2,C4,1), F_ARCHEXT | F_REG_READ }, /* RO */
+   { "tco",		CPENC(3,3,C4,C2,7), F_ARCHEXT },
+-  { "tfsre0_el1",	CPENC(3,0,C6,C6,1), F_ARCHEXT },
+-  { "tfsr_el1",		CPENC(3,0,C6,C5,0), F_ARCHEXT },
+-  { "tfsr_el2",		CPENC(3,4,C6,C5,0), F_ARCHEXT },
+-  { "tfsr_el3",		CPENC(3,6,C6,C6,0), F_ARCHEXT },
+-  { "tfsr_el12",	CPENC(3,5,C6,C6,0), F_ARCHEXT },
++  { "tfsre0_el1",	CPENC(3,0,C5,C6,1), F_ARCHEXT },
++  { "tfsr_el1",		CPENC(3,0,C5,C6,0), F_ARCHEXT },
++  { "tfsr_el2",		CPENC(3,4,C5,C6,0), F_ARCHEXT },
++  { "tfsr_el3",		CPENC(3,6,C5,C6,0), F_ARCHEXT },
++  { "tfsr_el12",	CPENC(3,5,C5,C6,0), F_ARCHEXT },
+   { "rgsr_el1",		CPENC(3,0,C1,C0,5), F_ARCHEXT },
+   { "gcr_el1",		CPENC(3,0,C1,C0,6), F_ARCHEXT },
+   { "gmid_el1",		CPENC(3,1,C0,C0,4), F_ARCHEXT | F_REG_READ }, /* RO */
+@@ -4398,11 +4398,11 @@ aarch64_sys_reg_supported_p (const aarch64_feature_set features,
+ 
+   /* System Registers in ARMv8.5-A with AARCH64_FEATURE_MEMTAG.  */
+   if ((reg->value == CPENC (3, 3, C4, C2, 7)
+-       || reg->value == CPENC (3, 0, C6, C6, 1)
+-       || reg->value == CPENC (3, 0, C6, C5, 0)
+-       || reg->value == CPENC (3, 4, C6, C5, 0)
+-       || reg->value == CPENC (3, 6, C6, C6, 0)
+-       || reg->value == CPENC (3, 5, C6, C6, 0)
++       || reg->value == CPENC (3, 0, C5, C6, 1)
++       || reg->value == CPENC (3, 0, C5, C6, 0)
++       || reg->value == CPENC (3, 4, C5, C6, 0)
++       || reg->value == CPENC (3, 6, C5, C6, 0)
++       || reg->value == CPENC (3, 5, C5, C6, 0)
+        || reg->value == CPENC (3, 0, C1, C0, 5)
+        || reg->value == CPENC (3, 0, C1, C0, 6)
+        || reg->value == CPENC (3, 1, C0, C0, 4))
+
+commit 9d4ff9a0dd7ae111f616fdccb1ccbbbb6d0a55e8
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Aug 23 00:02:16 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index f91b5926c7..51b4d0148e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190822
++#define BFD_VERSION_DATE 20190823
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 8dae3576a1bfe384c3111c49c4d681a8f9178f05
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Aug 24 00:02:10 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 51b4d0148e..834099a13b 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20190823
++#define BFD_VERSION_DATE 20190824
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
