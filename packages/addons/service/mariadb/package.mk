@@ -3,7 +3,7 @@
 
 PKG_NAME="mariadb"
 PKG_VERSION="10.4.7"
-PKG_REV="106"
+PKG_REV="107"
 PKG_SHA256="c8e6a6d0bb4f22c416ed675d24682a3ecfa383c5283efee70c8edf131374d817"
 PKG_LICENSE="GPL2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
