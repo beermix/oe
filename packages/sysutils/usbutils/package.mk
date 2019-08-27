@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="usbutils"
-PKG_VERSION="010"
-PKG_SHA256="61c7364bb4986fb05e5067e4ac5585b1299b664c57f761caecd2e9e724794a19"
+PKG_VERSION="012"
+PKG_SHA256="88634625f91840bc1993d2731cc081ee8d3b13d56069a95bdd6ac6ef0e063e46"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.linux-usb.org/"
 PKG_URL="http://kernel.org/pub/linux/utils/usb/usbutils/$PKG_NAME-$PKG_VERSION.tar.xz"
