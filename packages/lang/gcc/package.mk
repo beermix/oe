@@ -24,7 +24,7 @@ PKG_LONGDESC="This package contains the GNU Compiler Collection."
 #  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
 
   # Arch Linux installs x86_64 libraries /lib
-  # sed -i '/m64=/s/lib64/lib/' $PKG_BUILD/gcc/config/i386/t-linux64
+# sed -i '/m64=/s/lib64/lib/' $PKG_BUILD/gcc/config/i386/t-linux64
 
   # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
@@ -45,11 +45,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-gnu-indirect-function \
                            --disable-vtable-verify \
-                           --enable-install-libiberty
+                           --enable-install-libiberty \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
