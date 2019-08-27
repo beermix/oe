@@ -1,6 +1,6 @@
 PKG_NAME="nano"
-PKG_VERSION="4.3"
-PKG_SHA256="00d3ad1a287a85b4bf83e5f06cedd0a9f880413682bebd52b4b1e2af8cfc0d81"
+PKG_VERSION="4.4"
+PKG_SHA256="2af222e0354848ffaa3af31b5cd0a77917e9cb7742cd073d762f3c32f0f582c7"
 PKG_URL="https://ftp.gnu.org/gnu/nano/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline file"
