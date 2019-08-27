@@ -1,12 +1,10 @@
 PKG_NAME="bash"
-PKG_VERSION="3ba6974"
+PKG_VERSION="9f597fd"
+PKG_SHA256="acd35b78d07c1824b017574ed8c9fabec6d42010f531e82b0edfff69f4f25d76"
 #PKG_SITE="https://github.com/bminor/bash/"
 #PKG_URL="http://ftp.gnu.org/gnu/bash/bash-$PKG_VERSION.tar.gz"
 PKG_URL="https://github.com/bminor/bash/archive/${PKG_VERSION}.tar.gz"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
-#PKG_BUILD_FLAGS="+hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-readline \
 			      --with-installed-readline \
