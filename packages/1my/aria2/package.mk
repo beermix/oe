@@ -26,4 +26,4 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --without-libgcrypt \
                            --with-sqlite3 \
                            --with-libxml2 \
-                           ARIA2_STATIC=yes"
+                           ARIA2_STATIC=no"
