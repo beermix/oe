@@ -1,15 +1,15 @@
 PKG_NAME="aria2"
-PKG_VERSION="1.34.0"
-PKG_SHA256="3a44a802631606e138a9e172a3e9f5bcbaac43ce2895c1d8e2b46f30487e77a3"
-#PKG_VERSION="7f6578a"
+#PKG_VERSION="1.34.0"
+#PKG_SHA256="3a44a802631606e138a9e172a3e9f5bcbaac43ce2895c1d8e2b46f30487e77a3"
+PKG_VERSION="7f6578a"
 PKG_SITE="https://github.com/aria2/aria2/releases"
 PKG_URL="https://github.com/aria2/aria2/releases/download/release-$PKG_VERSION/aria2-$PKG_VERSION.tar.xz"
-#PKG_URL="https://github.com/aria2/aria2/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/aria2/aria2/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat pcre curl libev libxml2 libuv c-ares"
 PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --sysconfdir=/storage/.config \
+PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
                            --libdir=/storage/.config \
                            --libexecdir=/storage/.config \
