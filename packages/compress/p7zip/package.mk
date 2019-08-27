@@ -17,7 +17,7 @@ post_unpack() {
 }
 
 make_host() {
-  make CXX=$CXX CC=$CC 7za
+  make CXX=$CXX CC=$CC 7z 7za
 }
 
 make_target() {
