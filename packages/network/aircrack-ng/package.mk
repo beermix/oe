@@ -5,4 +5,4 @@ PKG_URL="https://github.com/aircrack-ng/aircrack-ng/archive/${PKG_VERSION}.tar.g
 PKG_DEPENDS_TARGET="toolchain openssl libdnet libnl libpcap openssl pcre usbutils iw"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking"
+#PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking"
