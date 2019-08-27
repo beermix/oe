@@ -5,7 +5,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-pvr/pvr.iptvsimple"
 PKG_URL="https://github.com/kodi-pvr/pvr.iptvsimple/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform zlib"
-PKG_TOOLCHAIN="cmake-make"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.pvrclient"
