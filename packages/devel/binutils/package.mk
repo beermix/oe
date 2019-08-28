@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --enable-targets=x86_64-linux 
 
 PKG_NAME="binutils"
 PKG_VERSION="2.32"
@@ -30,7 +30,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --enable-targets=x86_64-linux \
                          --enable-lto \
                          --disable-nls"
 
@@ -49,7 +48,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
-                         --enable-targets=x86_64-linux \
                          --disable-nls"
 
 pre_configure_host() {
