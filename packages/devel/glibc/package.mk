@@ -30,13 +30,12 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=5.0 \
+                           --enable-kernel=4.4.0 \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --enable-cet=no \
                            --disable-timezone-tools"
 
 # busybox:init needs it
