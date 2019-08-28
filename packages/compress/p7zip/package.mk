@@ -8,7 +8,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://p7zip.sourceforge.net/"
 PKG_URL="http://downloads.sourceforge.net/project/p7zip/p7zip/${PKG_VERSION}/p7zip_${PKG_VERSION}_src_all.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib"
-PKG_DEPENDS_HOST="zlib:host"
+#PKG_DEPENDS_HOST="zlib:host"
 #PKG_TOOLCHAIN="cmake-make"
 PKG_TOOLCHAIN="manual"
 
