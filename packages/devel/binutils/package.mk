@@ -7,15 +7,10 @@ PKG_VERSION="2.32"
 PKG_SHA256="0ab6c55dd86a92ed561972ba15b9b70a8b9f75557f896446c82e8b36e473ee04"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_32-branch"
-PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_LONGDESC="A GNU collection of binary utilities."
-
-#post_unpack() {
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
-#}
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -58,33 +53,19 @@ pre_configure_host() {
 }
 
 make_host() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true
+  make configure-host
+  make
 }
 
 makeinstall_host() {
-#  cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-#  cp -v ../include/demangle.h $SYSROOT_PREFIX/usr/include
-
-#  cp -v ../include/ansidecl.h $SYSROOT_PREFIX/usr/include
-#  cp -v ../include/plugin-api.h $SYSROOT_PREFIX/usr/include
-
-#  mkdir -p $SYSROOT_PREFIX/usr/include/libiberty
-#  cp -v ../include/*.h $SYSROOT_PREFIX/usr/include/libiberty/
-
-#  cp -v ../include/ansidecl.h %{buildroot}%{_includedir}/
-#  cp -v ../include/libiberty.h %{buildroot}%{_prefix}/include
-#  cp -v ../include/plugin-api.h %{buildroot}%{_includedir}/
-#  cp -v ../include/*.h %{buildroot}%{_includedir}/libiberty/
-
-  make MAKEINFO=true install
+  make install
 }
 
 make_target() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true -C libiberty
-  make MAKEINFO=true -C bfd
-  make MAKEINFO=true -C opcodes
+  make configure-host
+  make -C libiberty
+  make -C bfd
+  make -C opcodes
 }
 
 makeinstall_target() {
