@@ -59,6 +59,9 @@ make_host() {
 }
 
 makeinstall_host() {
+  cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
+  cp -v ../include/demangle.h $SYSROOT_PREFIX/usr/include
+
   make install
 }
 
