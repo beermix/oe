@@ -90,17 +90,7 @@ else
   PKG_MESON_OPTS_TARGET+=" -Dgles1=false -Dgles2=false"
 fi
 
-# Temporary workaround:
-# Listed libraries are static, while mesa expects shared ones. This breaks the
-# dependency tracking. The following has some ideas on how to address that.
-# https://github.com/LibreELEC/LibreELEC.tv/pull/2163
 pre_configure_target() {
-  if [ "$DISPLAYSERVER" = "x11" ]; then
-    export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
-    export CFLAGS="$CFLAGS -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-    export CXXFLAGS="$CXXFLAGS -falign-functions=32 -fno-lto -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-  fi
-
   # Temporary hack (until panfrost evolves) to use 64-bit pointers in structs passed to GPU
   # even if userspace is 32-bit. This is required for Mali-T8xx to work with mesa built for
   # arm userspace. The hack does not affect building for aarch64.
