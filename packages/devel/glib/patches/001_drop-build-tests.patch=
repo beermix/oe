@@ -1,8 +1,7 @@
-diff --git a/gio/meson.build b/gio/meson.build
-index c0e0e81f8..88525efb1 100644
---- a/gio/meson.build
-+++ b/gio/meson.build
-@@ -1008,11 +1008,7 @@ if enable_systemtap
+diff -Naur glib-2.61.1.org/gio/meson.build glib-2.61.1/gio/meson.build
+--- glib-2.61.1.org/gio/meson.build	2019-05-24 19:00:33.000000000 +0200
++++ glib-2.61.1/gio/meson.build	2019-08-26 09:21:14.893507207 +0200
+@@ -994,8 +994,3 @@
  endif
  
  subdir('fam')
@@ -11,16 +10,12 @@ index c0e0e81f8..88525efb1 100644
 -if build_tests
 -    subdir('tests')
 -endif
-+
- 
- # The following is an example for building internal marshallers that are used
- # by GIO. We cannot guarantee glib-genmarshal availability while building GLib
-diff --git a/glib/meson.build b/glib/meson.build
-index 91a48f194..50990f1d1 100644
---- a/glib/meson.build
-+++ b/glib/meson.build
-@@ -458,8 +458,3 @@ if enable_systemtap
-   )
+\ Kein Zeilenumbruch am Dateiende.
+diff -Naur glib-2.61.1.org/glib/meson.build glib-2.61.1/glib/meson.build
+--- glib-2.61.1.org/glib/meson.build	2019-05-24 19:00:33.000000000 +0200
++++ glib-2.61.1/glib/meson.build	2019-08-26 09:21:22.941561248 +0200
+@@ -459,8 +459,3 @@
+     install : true)
  endif
  
 -# Don’t build the tests unless we can run them (either natively or in an exe wrapper)
@@ -28,12 +23,12 @@ index 91a48f194..50990f1d1 100644
 -if build_tests
 -  subdir('tests')
 -endif
-diff --git a/gobject/meson.build b/gobject/meson.build
-index c7805c556..5f2a9e893 100644
---- a/gobject/meson.build
-+++ b/gobject/meson.build
-@@ -165,8 +165,3 @@ if enable_systemtap
-   )
+\ Kein Zeilenumbruch am Dateiende.
+diff -Naur glib-2.61.1.org/gobject/meson.build glib-2.61.1/gobject/meson.build
+--- glib-2.61.1.org/gobject/meson.build	2019-05-24 19:00:33.000000000 +0200
++++ glib-2.61.1/gobject/meson.build	2019-08-26 09:21:28.981601802 +0200
+@@ -166,8 +166,3 @@
+     install : true)
  endif
  
 -# Don’t build the tests unless we can run them (either natively or in an exe wrapper)
@@ -41,11 +36,11 @@ index c7805c556..5f2a9e893 100644
 -if build_tests
 -  subdir('tests')
 -endif
-diff --git a/meson.build b/meson.build
-index d9e0a56ad..0b9b4dc75 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2056,11 +2056,6 @@ subdir('gthread')
+\ Kein Zeilenumbruch am Dateiende.
+diff -Naur glib-2.61.1.org/meson.build glib-2.61.1/meson.build
+--- glib-2.61.1.org/meson.build	2019-05-24 19:00:33.000000000 +0200
++++ glib-2.61.1/meson.build	2019-08-26 09:21:08.029461110 +0200
+@@ -2045,11 +2045,6 @@
  subdir('gmodule')
  subdir('gio')
  subdir('fuzzing')
