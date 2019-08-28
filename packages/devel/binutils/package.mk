@@ -54,24 +54,24 @@ pre_configure_host() {
 }
 
 make_host() {
-  make MAKEINFO=true configure-host
+  make configure-host
   make MAKEINFO=true
 }
 
 makeinstall_host() {
-  make MAKEINFO=true install
+  make install
 }
 
 make_target() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true -C libiberty
-  make MAKEINFO=true -C bfd
-  make MAKEINFO=true -C opcodes
+  make configure-host
+  make -C libiberty
+  make -C bfd
+  make -C opcodes
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
-  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C bfd install
-  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C opcodes install
+  make DESTDIR="$SYSROOT_PREFIX" -C bfd install
+  make DESTDIR="$SYSROOT_PREFIX" -C opcodes install
 }
