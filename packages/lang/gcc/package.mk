@@ -3,10 +3,10 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
 
 PKG_NAME="gcc"
-PKG_VERSION="9.2.0"
-PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
+#PKG_VERSION="9.2.0"
+#PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
 PKG_LICENSE="GPL"
-#PKG_VERSION="9-20190824"
+PKG_VERSION="9-20190824"
 #PKG_VERSION="10-20190825"
 PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-9-branch"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -39,6 +39,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gnu-indirect-function \
                            --disable-vtable-verify \
                            --enable-install-libiberty \
+                           --with-system-zlib \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
