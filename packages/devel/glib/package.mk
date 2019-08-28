@@ -12,7 +12,7 @@ PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/GNOME/glib/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="libffi:host Python3:host meson:host"
-PKG_DEPENDS_TARGET="toolchain pcre zlib libffi Python3:host util-linux libelf"
+PKG_DEPENDS_TARGET="toolchain pcre zlib libffi Python3:host util-linux"
 PKG_LONGDESC="A library which includes support routines for C such as lists, trees, hashes, memory allocation."
 PKG_TOOLCHAIN="meson"
 
