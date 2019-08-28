@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --enable-targets=x86_64-linux 
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) 
 
 PKG_NAME="binutils"
 PKG_VERSION="2.32"
@@ -25,6 +25,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
+                         --enable-targets=x86_64-linux \
                          --enable-lto \
                          --disable-nls"
 
@@ -53,24 +54,24 @@ pre_configure_host() {
 }
 
 make_host() {
-  make configure-host
-  make
+  make MAKEINFO=true configure-host
+  make MAKEINFO=true
 }
 
 makeinstall_host() {
-  make install
+  make MAKEINFO=true install
 }
 
 make_target() {
-  make configure-host
-  make -C libiberty
-  make -C bfd
-  make -C opcodes
+  make MAKEINFO=true configure-host
+  make MAKEINFO=true -C libiberty
+  make MAKEINFO=true -C bfd
+  make MAKEINFO=true -C opcodes
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
-  make DESTDIR="$SYSROOT_PREFIX" -C bfd install
-  make DESTDIR="$SYSROOT_PREFIX" -C opcodes install
+  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C bfd install
+  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C opcodes install
 }
