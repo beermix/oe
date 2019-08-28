@@ -39,7 +39,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gnu-indirect-function \
                            --disable-vtable-verify \
                            --enable-install-libiberty \
-                           --with-system-zlib \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
