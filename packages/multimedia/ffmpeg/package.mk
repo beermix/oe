@@ -123,7 +123,7 @@ configure_target() {
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
-              --disable-gnutls --enable-openssl \
+              --enable-gnutls --disable-openssl \
               --disable-gray \
               --enable-swscale-alpha \
               --disable-small \
@@ -147,10 +147,7 @@ configure_target() {
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
               --disable-muxers \
-              --enable-muxer=spdif \
-              --enable-muxer=adts \
               --enable-muxer=asf \
-              --enable-muxer=ipod \
               --enable-muxer=mpegts \
               --enable-demuxers \
               --enable-parsers \
