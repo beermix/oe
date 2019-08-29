@@ -200,7 +200,7 @@ fi
                          -DENABLE_DBUS=ON \
                          -DENABLE_XSLT=ON \
                          -DENABLE_CCACHE=ON \
-                         -DENABLE_LIRCCLIENT=OFF \
+                         -DENABLE_LIRCCLIENT=ON \
                          -DENABLE_EVENTCLIENTS=ON \
                          -DENABLE_LDGOLD=ON \
                          -DENABLE_AVX=OFF \
@@ -240,7 +240,7 @@ fi
 }
 
 pre_configure_target() {
-  export LIBS="-lncurses"
+  export LIBS="-lncursesw -ltinfo"
 }
 
 post_makeinstall_target() {
