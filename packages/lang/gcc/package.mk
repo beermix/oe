@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host                            --enable-gnu-indirect-function --enable-gnu-unique-object \--disable-vtable-verify \
 
 PKG_NAME="gcc"
 PKG_VERSION="9.2.0"
@@ -33,9 +33,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --enable-gnu-indirect-function \
-                           --enable-gnu-unique-object \
-                           --disable-vtable-verify \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -43,7 +40,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libatomic \
                            --disable-libitm \
                            --disable-libquadmath \
-                           --disable-libsanitizer \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
@@ -52,6 +48,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
