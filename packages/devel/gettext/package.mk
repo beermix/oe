@@ -22,5 +22,5 @@ configure_package() {
                            --with-included-libxml \
                            --disable-native-java \
                            --disable-csharp \
-                           --without-included-gettext"
+                           --without-emacs"
 }

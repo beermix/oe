@@ -1,32 +1,33 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) no-ssl3-method no-ssl2 no-ssl3
 
 PKG_NAME="openssl"
-PKG_VERSION="1.1.1c"
-PKG_SHA256="f6fb3079ad15076154eda9413fed42877d668e7069d9b87396d0804fdb3f4c90"
-#PKG_VERSION="b4b42d4"
+PKG_VERSION="1.0.2s"
+PKG_SHA256="cabd5c9492825ce5bd23f3c3aeed6a97f8142f606d893df216411f07d1abab96"
 PKG_LICENSE="BSD"
-PKG_SITE="https://github.com/openssl/openssl/releases"
+PKG_SITE="https://www.openssl.org/source/"
 PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_1_1-stable"
-#PKG_URL="https://github.com/openssl/openssl/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
-PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+speed"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            no-ec2m \
+                           no-gmp \
+                           no-jpake \
+                           no-krb5 \
+                           no-libunbound \
                            no-md2 \
                            no-rc5 \
                            no-rfc3779 \
                            no-sctp \
                            no-ssl-trace \
+                           no-ssl2 \
                            no-ssl3 \
+                           no-store \
                            no-unit-test \
                            no-weak-ssl-ciphers \
                            no-zlib \
@@ -36,12 +37,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-                           --openssldir=/etc/ssl"
-
-post_unpack() {
-  find $PKG_BUILD/apps -type f | xargs -n 1 -t sed 's|./demoCA|/etc/ssl|' -i
-}
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr --openssldir=/etc/ssl"
 
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
@@ -50,7 +46,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 no-zlib no-zlib-dynamic $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -Wa,--noexecstack $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -64,7 +60,6 @@ pre_configure_target() {
   case $TARGET_ARCH in
     x86_64)
       OPENSSL_TARGET=linux-x86_64
-      PLATFORM_FLAGS=enable-ec_nistp_64_gcc_128
       ;;
     arm)
       OPENSSL_TARGET=linux-armv4
@@ -77,12 +72,14 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET "$CFLAGS $LDFLAGS"
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET -Wa,--noexecstack $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {
-  make DESTDIR=$INSTALL install_sw
-  make DESTDIR=$SYSROOT_PREFIX install_sw
+  make INSTALL_PREFIX=$INSTALL install_sw
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  chmod 755 $INSTALL/usr/lib/*.so*
+  chmod 755 $INSTALL/usr/lib/engines/*.so
 }
 
 post_makeinstall_target() {
