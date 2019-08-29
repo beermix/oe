@@ -184,6 +184,7 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
+              --enable-inline-asm \
               --disable-symver \
               --enable-indev=x11grab_xcb
 }
