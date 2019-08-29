@@ -10,8 +10,8 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-readline --without-mpfr"
-PKG_CONFIGURE_OPTS_HOST="--without-readline --without-mpfr"
+PKG_CONFIGURE_OPTS_TARGET="--without-libsigsegv --without-readline --without-mpfr"
+PKG_CONFIGURE_OPTS_HOST="--without-libsigsegv --without-readline --without-mpfr"
 
 post_makeinstall_target() {
   ln -sf gawk $INSTALL/usr/bin/awk
