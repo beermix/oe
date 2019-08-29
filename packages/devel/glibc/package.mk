@@ -5,7 +5,7 @@
 PKG_NAME="glibc"
 PKG_VERSION="2.30"
 PKG_SHA256="e2c4114e569afbe7edbc29131a43be833850ab9a459d81beb2588016d2bbb8af"
-#PKG_VERSION="35ffd20dbd76d3cb6b478c7a69bb40d8c827ed81"
+#PKG_VERSION="0b3c9e57a41d9f7c26fb6aa45b99f671bef9c7e0"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.30/master"
@@ -30,7 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=5.0 \
+                           --enable-kernel=5.1 \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
@@ -142,7 +142,9 @@ post_makeinstall_target() {
 
   safe_remove $INSTALL/usr/lib/audit
   safe_remove $INSTALL/usr/lib/glibc
+  safe_remove $INSTALL/usr/lib/libc_pic
   safe_remove $INSTALL/usr/lib/*.o
+  safe_remove $INSTALL/usr/lib/*.map
   safe_remove $INSTALL/var
 
 # remove locales and charmaps

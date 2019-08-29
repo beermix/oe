@@ -13,7 +13,7 @@ PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib bzip2 speex nasm:host"
+PKG_DEPENDS_TARGET="toolchain zlib bzip2 speex nasm:host gnutls"
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_BUILD_FLAGS="-gold"
 
@@ -123,7 +123,7 @@ configure_target() {
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
-              --disable-gnutls --enable-openssl \
+              --enable-gnutls --disable-openssl \
               --disable-gray \
               --enable-swscale-alpha \
               --disable-small \
@@ -147,10 +147,7 @@ configure_target() {
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
               --disable-muxers \
-              --enable-muxer=spdif \
-              --enable-muxer=adts \
               --enable-muxer=asf \
-              --enable-muxer=ipod \
               --enable-muxer=mpegts \
               --enable-demuxers \
               --enable-parsers \
@@ -187,6 +184,7 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
+              --enable-inline-asm \
               --disable-symver \
               --enable-indev=x11grab_xcb
 }

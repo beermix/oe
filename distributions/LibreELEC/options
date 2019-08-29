@@ -1,8 +1,8 @@
 # LTO (Link Time Optimization) support
-  LTO_SUPPORT="no"
+  LTO_SUPPORT="yes"
 
 # GOLD (Google Linker) support
-  GOLD_SUPPORT="no"
+  GOLD_SUPPORT="yes"
 
 # HARDENING (security relevant linker and compiler flags) support
   HARDENING_SUPPORT="no"
@@ -123,10 +123,10 @@
   UDEVIL="yes"
 
 # build and install exFAT fuse support (yes / no)
-  EXFAT="no"
+  EXFAT="yes"
 
 # build and install NTFS-3G fuse support (yes / no)
-  NTFS3G="no"
+  NTFS3G="yes"
 
 # build and install hfs filesystem utilities (yes / no)
   HFSTOOLS="no"

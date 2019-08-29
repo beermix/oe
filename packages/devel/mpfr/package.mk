@@ -17,6 +17,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
                          --prefix=$TOOLCHAIN \
                          --with-gmp-lib=$TOOLCHAIN/lib \
-                         --with-gmp-include=$TOOLCHAIN/include"
+                         --with-gmp-include=$TOOLCHAIN/include \
+                         --enable-thread-safe"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-thread-safe"

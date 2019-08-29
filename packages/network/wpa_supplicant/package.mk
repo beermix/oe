@@ -14,11 +14,13 @@ PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="+lto-parallel"
 
 PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
-PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
+PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin eapol_test"
 
 configure_target() {
- # LDFLAGS="$LDFLAGS -lpthread -lm"
-  export LIBS="$LIBS -lpthread -lm"
+# LDFLAGS="$LDFLAGS -lpthread -lm"
+ export LIBS="$LIBS -lpthread -lm"
+
+#  export CFLAGS="$CFLAGS -D_GNU_SOURCE -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 }

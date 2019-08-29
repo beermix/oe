@@ -4,7 +4,7 @@
 
 PKG_NAME="systemd"
 PKG_VERSION="243-rc2"
-PKG_SHA256="ac0231e2ef59b5cf72e8f312ed399275aeb671adba69cb295333c646e6c950d5"
+PKG_SHA256=""
 PKG_LICENSE="LGPL2.1+"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
@@ -69,7 +69,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dquotacheck=false \
                        -Dsysusers=false \
                        -Dtmpfiles=true \
-                       -Dhwdb=false \
+                       -Dhwdb=true \
                        -Drfkill=false \
                        -Dldconfig=false \
                        -Defi=false \
@@ -256,5 +256,6 @@ post_install() {
   enable_service userconfig.service
   enable_service usercache.service
   enable_service kernel-overlays.service
+  enable_service hwdb.service
   enable_service debug-shell.service
 }
