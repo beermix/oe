@@ -82,7 +82,7 @@
   AVAHI_DAEMON="no"
 
 # build with UPnP support (yes / no)
-  KODI_UPNP_SUPPORT="yes"
+  KODI_UPNP_SUPPORT="no"
 
 # build with MySQL support (mysql / mariadb / none)
   KODI_MYSQL_SUPPORT="none"
@@ -109,10 +109,10 @@
   SAMBA_SUPPORT="no"
 
 # build and install Samba Server (yes / no)
-  SAMBA_SERVER="no"
+  SAMBA_SERVER="yes"
 
 # build and install SFTP Server (yes / no)
-  SFTP_SERVER="no"
+  SFTP_SERVER="yes"
 
 # build and install OpenVPN support (yes / no)
   OPENVPN_SUPPORT="no"
