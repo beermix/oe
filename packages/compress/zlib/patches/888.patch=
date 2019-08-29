@@ -1,0 +1,12 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2122d6d..82b2948 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -114,7 +114,6 @@ endif()
+ 
+ if (ZLIB_COMPAT)
+     add_definitions(-DZLIB_COMPAT)
+-    set(WITH_GZFILEOP ON)
+     set(LIBNAME1 libz)
+     set(LIBNAME2 zlib)
+     set(SUFFIX "")
