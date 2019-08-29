@@ -9,6 +9,7 @@ PKG_SITE="http://www.nongnu.org/libunwind/"
 PKG_URL="http://download.savannah.nongnu.org/releases/libunwind/libunwind-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_LONGDESC="library to determine the call-chain of a program"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			   --disable-shared"

@@ -11,8 +11,20 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
 			      --disable-shared \
 			      --enable-static \
-			      --disable-git-hash \
+			      --enable-overlay \
 			      --disable-debug \
 			      --disable-amdgpu \
 			      --disable-nouveau \
 			      --enable-intel"
+
+PKG_MESON_OPTS_TARGET="-Dbuild_overlay=enabled \
+                       -Doverlay_backends=x,xv \
+                       -Dbuild_man=disabled \
+                       -Dwith_valgrind=disabled \
+                       -Dbuild_audio=disabled \
+                       -Dbuild_chamelium=disabled \
+                       -Dbuild_docs=disabled \
+                       -Dbuild_tests=disabled \
+                       -Dwith_libdrm=intel \
+                       -Dwith_libunwind=disabled \
+                       -Dbuild_runner=disabled"
