@@ -34,6 +34,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-gnu-indirect-function \
                            --disable-vtable-verify \
+                           --enable-default-pie \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -41,7 +42,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libatomic \
                            --disable-libitm \
                            --disable-libquadmath \
-                           --disable-libsanitizer \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
@@ -50,6 +50,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \

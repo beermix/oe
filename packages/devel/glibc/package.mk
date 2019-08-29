@@ -3,14 +3,14 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) --enable-stack-protector=strong \--enable-stackguard-randomization \
 
 PKG_NAME="glibc"
-#PKG_VERSION="2.30"
-#PKG_SHA256="e2c4114e569afbe7edbc29131a43be833850ab9a459d81beb2588016d2bbb8af"
-PKG_VERSION="0b3c9e57a41d9f7c26fb6aa45b99f671bef9c7e0"
+PKG_VERSION="2.30"
+PKG_SHA256="e2c4114e569afbe7edbc29131a43be833850ab9a459d81beb2588016d2bbb8af"
+#PKG_VERSION="0b3c9e57a41d9f7c26fb6aa45b99f671bef9c7e0"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.30/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap pigz:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
@@ -30,12 +30,13 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=4.4.0 \
+                           --enable-kernel=5.0 \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --enable-static-pie \
                            --disable-timezone-tools"
 
 # busybox:init needs it
@@ -142,7 +143,9 @@ post_makeinstall_target() {
 
   safe_remove $INSTALL/usr/lib/audit
   safe_remove $INSTALL/usr/lib/glibc
+  safe_remove $INSTALL/usr/lib/libc_pic
   safe_remove $INSTALL/usr/lib/*.o
+  safe_remove $INSTALL/usr/lib/*.map
   safe_remove $INSTALL/var
 
 # remove locales and charmaps
