@@ -1,27 +1,44 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#
+#  OpenELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  OpenELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 
 PKG_NAME="samba"
 PKG_VERSION="3.6.25"
+PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.samba.org"
 PKG_URL="https://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib connman"
-PKG_LONGDESC="A free SMB / CIFS fileserver and client."
-PKG_BUILD_FLAGS="+pic +lto-parallel"
+PKG_SECTION="network"
+PKG_SHORTDESC="samba: The free SMB / CIFS fileserver and client"
+PKG_LONGDESC="Samba is a SMB server that runs on Unix and other operating systems. It allows these operating systems (currently Unix, Netware, OS/2 and AmigaDOS) to act as a file and print server for SMB and CIFS clients. There are many Lan-Manager compatible clients such as LanManager for DOS, Windows for Workgroups, Windows NT, Windows 95, Linux smbfs, OS/2, Pathworks and more."
 
-configure_package() {
- if [ "$AVAHI_DAEMON" = yes ]; then
-   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET avahi"
-   SMB_AVAHI="--enable-avahi"
- else
-   SMB_AVAHI="--disable-avahi"
- fi
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
- PKG_CONFIGURE_SCRIPT="${PKG_BUILD}/source3/configure"
+if [ "$AVAHI_DAEMON" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET avahi"
+  SMB_AVAHI="--enable-avahi"
+else
+  SMB_AVAHI="--disable-avahi"
+fi
 
- PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
+PKG_CONFIGURE_SCRIPT="source3/configure"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            libreplace_cv_HAVE_C99_VSNPRINTF=yes \
                            libreplace_cv_HAVE_GETADDRINFO=no \
                            libreplace_cv_HAVE_IFACE_IFCONF=no \
@@ -94,17 +111,14 @@ configure_package() {
                            --without-winbind \
                            --with-included-popt \
                            --with-included-iniparser"
-}
 
 pre_configure_target() {
   ( cd ../source3
     sh autogen.sh
   )
-  export CFLAGS="$CFLAGS -D__location__=\\\"\\\" -ffunction-sections -fdata-sections"
-  export LDFLAGS="$LDFLAGS -fwhole-program -Wl,--gc-sections"
-  
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+
+  CFLAGS="$CFLAGS -fPIC -DPIC"
+  LDFLAGS="$LDFLAGS -fwhole-program"
 }
 
 make_target() {
