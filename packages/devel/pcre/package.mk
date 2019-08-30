@@ -11,8 +11,8 @@ PKG_URL="https://ftp.pcre.org/pub/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
-PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic:host +pic +lto-parallel"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 			    --enable-static \

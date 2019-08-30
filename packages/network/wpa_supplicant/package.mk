@@ -20,7 +20,10 @@ configure_target() {
  LDFLAGS="$LDFLAGS -lpthread -lm"
 # export LIBS="$LIBS -lpthread -lm"
 
-export CFLAGS="$CFLAGS -DCONFIG_LIBNL20 -D_GNU_SOURCE -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
+  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
+  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+
+#  export CFLAGS="$CFLAGS -DCONFIG_LIBNL20 -D_GNU_SOURCE -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 }
