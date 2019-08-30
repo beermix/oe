@@ -3,11 +3,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="systemd"
-PKG_VERSION="013a875"
-PKG_SHA256=""
+PKG_VERSION="242"
+PKG_SHA256="ec22be9a5dd94c9640e6348ed8391d1499af8ca2c2f01109198a414cff6c6cba"
 PKG_LICENSE="LGPL2.1+"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy libidn2"
 PKG_LONGDESC="A system and session manager for Linux, compatible with SysV and LSB init scripts."
 
@@ -15,7 +15,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Drootprefix=/usr \
                        -Dsplit-usr=false \
                        -Dsplit-bin=true \
-                       -Ddefault-hierarchy=hybrid \
+                       -Ddefault-hierarchy=legacy \
                        -Dtty-gid=5 \
                        -Dtests=false \
                        -Dseccomp=false \
@@ -93,7 +93,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dversion-tag=${PKG_VERSION}"
 
 pre_configure_target() {
-  export TARGET_CFLAGS="$TARGET_CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
+  export TARGET_CFLAGS="$TARGET_CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used"
   export LC_ALL=en_US.UTF-8
 }
 
