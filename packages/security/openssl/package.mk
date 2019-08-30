@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) no-ssl3-method no-ssl2 no-ssl3
 
 PKG_NAME="openssl"
@@ -10,20 +11,24 @@ PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
-PKG_BUILD_FLAGS="+speed"
+PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+speed -parallel"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
                            threads \
                            zlib-dynamic \
-                           no-ssl \
-                           no-ssl2 \
-                           no-ssl3 \
+                           no-ssl3-method \
                            enable-ec_nistp_64_gcc_128"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
                          --openssldir=$TOOLCHAIN/etc/ssl"
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr --openssldir=/etc/ssl"
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+                           --openssldir=/etc/ssl"
+
+post_unpack() {
+  find $PKG_BUILD/apps -type f | xargs -n 1 -t sed 's|./demoCA|/etc/ssl|' -i
+}
 
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
@@ -32,7 +37,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -Wa,--noexecstack $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
 }
 
 makeinstall_host() {
@@ -58,7 +63,12 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET -Wa,--noexecstack $CFLAGS $LDFLAGS
+  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+}
+
+make_target() {
+  make depend
+  make
 }
 
 makeinstall_target() {

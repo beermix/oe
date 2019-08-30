@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host                            --enable-gnu-indirect-function --enable-gnu-unique-object \--disable-vtable-verify \
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
 
 PKG_NAME="gcc"
 PKG_VERSION="9.2.0"
@@ -33,6 +33,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --enable-gnu-indirect-function \
+                           --enable-gnu-unique-object \
+                           --disable-vtable-verify \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
