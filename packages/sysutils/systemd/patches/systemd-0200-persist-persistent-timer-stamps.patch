@@ -1,8 +1,17 @@
+From c1bcb16c35724404d30fab53017b757c886e9ab7 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Mon, 8 Jan 2018 13:46:51 +0000
+Subject: [PATCH] timers: use a persistent filesystem for persistent timers
+
+---
+ src/core/timer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 diff --git a/src/core/timer.c b/src/core/timer.c
-index 7d816856b1..53ea3ad3e6 100644
+index 03935ee..bfd5c02 100644
 --- a/src/core/timer.c
 +++ b/src/core/timer.c
-@@ -142,11 +142,11 @@ static int timer_setup_persistent(Timer *t) {
+@@ -154,11 +154,11 @@ static int timer_setup_persistent(Timer *t) {
  
          if (MANAGER_IS_SYSTEM(UNIT(t)->manager)) {
  
@@ -16,3 +25,6 @@ index 7d816856b1..53ea3ad3e6 100644
          } else {
                  const char *e;
  
+-- 
+2.14.1
+
