@@ -6,7 +6,7 @@
 #                           --disable-vtable-verify \
 #                           --disable-libsanitizer \
 #                           --enable-target-optspace \
-#                           --with-gcc-major-version-only \
+#                           
 
 PKG_NAME="gcc"
 #PKG_VERSION="9.2.0"
@@ -38,6 +38,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-gcc-major-version-only \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -52,6 +53,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
