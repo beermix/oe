@@ -721,7 +721,7 @@ Options:
       --check-ver:       Check newer for version-based packages, ignore rev-based/github packages
       --check-rev:       Check newer for rev-based/github packages, ignore version-based packages
       --no-progress:     Do not show progress indicator
-  -T, --threads:         Number of worker threads, default is 32
+  -T, --threads:         Number of download worker threads, default is 16
   -U, --gituser:         Git username (or source from ~/.git.conf) - avoids API limits
   -P, --gitpass:         Git password (or source from ~/.git.conf) - avoids API limits
       --dry-run:         Don't actually download anything (will still git clone/pull if configured)
@@ -819,7 +819,6 @@ generate_work_worker() {
   local package_name var comma PKG_URL PKG_SOURCE_NAME PKG_VERSION PKG_IS_ADDON
 
   [ -f "${workfile_i}" ] || return 0
-
   (
     # Override exit function so that packages calling exit don't terminate this sub-shell
     exit() {
