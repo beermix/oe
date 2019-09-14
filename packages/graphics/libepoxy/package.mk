@@ -13,12 +13,11 @@ PKG_SHA256="002958c5528321edd53440235d3c44e71b5b1e09b9177e8daf677450b6c4433d"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/anholt/libepoxy/releases"
 PKG_URL="https://github.com/anholt/libepoxy/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain util-macros libX11 mesa"
 PKG_LONGDESC="Epoxy is a library for handling OpenGL function pointer management for you."
 PKG_TOOLCHAIN="meson"
 
 PKG_MESON_OPTS_TARGET="-Ddocs=false \
 			  -Dx11=true \
 			  -Dglx=yes \
-			  -Degl=yes \
-			  -Dtests=false"
+			  -Degl=yes"
