@@ -2,7 +2,7 @@ PKG_NAME="coreutils"
 PKG_VERSION="8.31"
 PKG_URL="http://ftpmirror.gnu.org/coreutils/coreutils-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="acl libcap pcre readline openssl"
-#PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_restrict=no \
 			      ac_cv_func_chown_works=yes \
@@ -41,6 +41,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_restrict=no \
 			      utils_cv_localtime_cache=no \
 			      PERL=missing \
 			      MAKEINFO=true \
-			      --without-selinux"
-      
+			      --without-selinux \
+			      --disable-xattr \
+			      --disable-acl \
+			      --enable-no-install-program=stdbuf"
+
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
