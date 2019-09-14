@@ -5,7 +5,7 @@
 PKG_NAME="connman"
 PKG_VERSION="1.37"
 PKG_SHA256="6ce29b3eb0bb16a7387bc609c39455fd13064bdcde5a4d185fab3a0c71946e16"
-#PKG_VERSION="a9cf591"
+#PKG_VERSION="038eb34"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.connman.net"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
