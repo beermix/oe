@@ -11,7 +11,7 @@ PKG_URL="http://ftpmirror.gnu.org/mpfr/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gmp"
 PKG_DEPENDS_HOST="ccache:host gmp:host"
 PKG_LONGDESC="A C library for multiple-precision floating-point computations with exact rounding."
-#PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_BUILD_FLAGS="+pic:host +pic"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
