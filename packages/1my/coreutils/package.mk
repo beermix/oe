@@ -1,5 +1,6 @@
 PKG_NAME="coreutils"
 PKG_VERSION="8.31"
+PKG_SHA256="ff7a9c918edce6b4f4b2725e3f9b37b0c4d193531cac49a48b56c4d0d3a9e9fd"
 PKG_URL="http://ftpmirror.gnu.org/coreutils/coreutils-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="acl libcap pcre readline openssl"
 PKG_TOOLCHAIN="autotools"
