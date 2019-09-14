@@ -29,6 +29,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
+                         --enable-relro \
+                         --enable-threads \
+                         --with-pic \
+                         --with-system-zlib \
                          --disable-gdb \
                          --disable-sim \
                          --enable-targets=x86_64-linux"
@@ -49,11 +53,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-ld \
                          --disable-lto \
                          --disable-nls \
-                         --enable-relro \
-                         --enable-targets=x86_64-pep \
-                         --enable-threads \
-                         --with-pic \
-                         --with-system-zlib \
                          --disable-gdb \
                          --disable-sim \
                          --enable-targets=x86_64-linux"
