@@ -29,6 +29,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
+                         --disable-gdb \
+                         --disable-sim \
                          --enable-targets=x86_64-linux"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
@@ -47,6 +49,8 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-ld \
                          --disable-lto \
                          --disable-nls \
+                         --disable-gdb \
+                         --disable-sim \
                          --enable-targets=x86_64-linux"
 
 pre_configure_host() {
@@ -57,28 +61,28 @@ pre_configure_host() {
 }
 
 make_host() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true
+  make configure-host
+  make
 }
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make MAKEINFO=true install
+  make install
 }
 
 make_target() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true -C libiberty
-  make MAKEINFO=true -C bfd
-  make MAKEINFO=true -C opcodes
-  make MAKEINFO=true -C binutils strings
+  make configure-host
+  make -C libiberty
+  make -C bfd
+  make -C opcodes
+  make -C binutils strings
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
-  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C bfd install
-  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C opcodes install
+  make DESTDIR="$SYSROOT_PREFIX" -C bfd install
+  make DESTDIR="$SYSROOT_PREFIX" -C opcodes install
 
   mkdir -p ${INSTALL}/usr/bin
     cp binutils/strings ${INSTALL}/usr/bin
