@@ -2,15 +2,15 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mali-bifrost"
-PKG_VERSION="79755036ecadecff0963cb55537d361708618122" # BX301A01B-SW-99002-r16p0-01rel0_meson-g12b
-PKG_SHA256="f3d7ea0cc3a0fc215274c19ca3068f0ca0094206663497147906cde8f3671232"
+PKG_VERSION="61bf5319dfd266b72a96c9c2d518dbbde8514d66" # BX301A01B-SW-99002-r16p0-01rel0
+PKG_SHA256="b21d840586f24638d76d5a9684b812a4cb9415006f320a34db6f8b389cfb0a1c"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://developer.arm.com/products/software/mali-drivers/bifrost-kernel"
 PKG_URL="https://github.com/LibreELEC/mali-bifrost/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-PKG_LONGDESC="mali-midgard: the Linux kernel driver for ARM Mali Midgard GPUs"
+PKG_LONGDESC="mali-bifrost: the Linux kernel driver for ARM Mali Bifrost GPUs"
 PKG_TOOLCHAIN="manual"
 PKG_IS_KERNEL_PKG="yes"
 
