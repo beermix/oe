@@ -33,6 +33,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-threads \
                          --with-pic \
                          --with-system-zlib \
+                         --with-mmap \
                          --disable-gdb \
                          --disable-sim \
                          --enable-targets=x86_64-linux"

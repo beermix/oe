@@ -14,7 +14,7 @@ PKG_TOOLCHAIN="configure"
 
 configure_host() {
   ../configure --prefix=${TOOLCHAIN} \
-               --no-qt-gui --system-libs --no-system-expat \
+               --no-qt-gui --no-system-libs --no-system-expat \
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
