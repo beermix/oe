@@ -5,6 +5,8 @@
 #                           --enable-gnu-unique-object \
 #                           --disable-vtable-verify \
 #                           --disable-libsanitizer \
+#                           --enable-target-optspace \
+#                           --with-gcc-major-version-only \
 
 PKG_NAME="gcc"
 #PKG_VERSION="9.2.0"
@@ -36,9 +38,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --enable-target-optspace \
-                           --with-gcc-major-version-only \
-                           --with-system-zlib \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
