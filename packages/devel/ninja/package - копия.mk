@@ -9,10 +9,16 @@ PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
 PKG_URL="https://github.com/ninja-build/ninja/archive/v$PKG_VERSION.tar.gz"
 PKG_URL="https://github.com/ninja-build/ninja/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="cmake:host Python2:host Python3:host re2c:host"
-PKG_TOOLCHAIN="cmake-make"
+PKG_DEPENDS_HOST="Python3:host re2c:host"
+PKG_TOOLCHAIN="manual"
+
+make_host() {
+  python3 configure.py --bootstrap
+# CXX=/bin/clang++ | $TOOLCHAIN/bin/python2
+# python2 configure.py --bootstrap
+}
 
 makeinstall_host() {
-  cp $PKG_BUILD/.$HOST_NAME/ninja $TOOLCHAIN/bin
+  cp ninja $TOOLCHAIN/bin
   strip $TOOLCHAIN/bin/ninja
 }
