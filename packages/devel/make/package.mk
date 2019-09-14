@@ -18,7 +18,6 @@ pre_configure_host() {
 
 post_makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
-  #cp /home/user/.bin/make $TOOLCHAIN/bin/gmake
 
   ln -sf make $TOOLCHAIN/bin/gmake
 
