@@ -1,6 +1,6 @@
 PKG_NAME="bash"
 PKG_VERSION="d894cfd"
-PKG_SHA256=""
+PKG_SHA256="65d34a7d87d7141a8877fa335c76a5f1dcfa56565363198c76791563d024d791"
 #PKG_SITE="https://github.com/bminor/bash/"
 #PKG_URL="http://ftp.gnu.org/gnu/bash/bash-$PKG_VERSION.tar.gz"
 PKG_URL="https://github.com/bminor/bash/archive/${PKG_VERSION}.tar.gz"
