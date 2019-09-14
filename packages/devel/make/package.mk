@@ -24,7 +24,7 @@ post_makeinstall_host() {
 
   ln -sf /usr/bin/make $TOOLCHAIN/bin/make
 
- #cp -r $PKG_DIR/src/bin/help2man $TOOLCHAIN/bin/
+  cp -r $PKG_DIR/src/bin/* $TOOLCHAIN/bin
 
  #mkdir -p $TOOLCHAIN/share/aclocal
 
