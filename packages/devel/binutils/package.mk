@@ -10,7 +10,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_33-branch"
 PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
+PKG_DEPENDS_HOST="ccache:host bison:host flex:host zlib:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_LONGDESC="A GNU collection of binary utilities."
 
@@ -49,6 +49,11 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-ld \
                          --disable-lto \
                          --disable-nls \
+                         --enable-relro \
+                         --enable-targets=x86_64-pep \
+                         --enable-threads \
+                         --with-pic \
+                         --with-system-zlib \
                          --disable-gdb \
                          --disable-sim \
                          --enable-targets=x86_64-linux"
