@@ -1,0 +1,46 @@
+From 5efc10d24e1fb7f59817f007c18219dfc46bf457 Mon Sep 17 00:00:00 2001
+From: Eugene Yudin <e.yudin@ndmsystems.com>
+Date: Fri, 22 Feb 2019 19:47:53 +0300
+Subject: Fix NULL pointer dereference in open_memstream()
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+--000000000000cb1b1305827e5ae0
+Content-Type: text/plain; charset="UTF-8"
+
+Hi,
+
+Current version of uClibc-ng has issue in open_memstream() function.
+If the cookie variable is NULL (due malloc() fail) then null pointer is
+dereferenced after if block.
+
+The attached patch fixes this issue.
+--
+Best regards,
+Eugene
+
+<div dir="ltr"><div dir="ltr"><div dir="ltr"><div dir="ltr">Hi,<div><br></div><div>Current version of uClibc-ng has issue in open_memstream() function.</div><div>If the cookie variable is NULL (due malloc() fail) then null pointer is dereferenced after if block.</div><div><br></div><div>The attached patch fixes this issue.<br clear="all"><div>-- <br></div><div dir="ltr" class="gmail_signature"><div dir="ltr"><div><div><span><div>Best regards,<br></div>Eugene</span></div></div></div></div></div></div></div></div></div>
+---
+ libc/stdio/open_memstream.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/libc/stdio/open_memstream.c b/libc/stdio/open_memstream.c
+index 17ef191..71a8413 100644
+--- a/libc/stdio/open_memstream.c
++++ b/libc/stdio/open_memstream.c
+@@ -156,9 +156,10 @@ FILE *open_memstream(char **bufloc, size_t *sizeloc)
+ 			__STDIO_STREAM_VALIDATE(fp);
+ 			return fp;
+ 		}
++
++		free(cookie->buf);
+ 	}
+ 
+-	free(cookie->buf);
+  EXIT_cookie:
+ 	free(cookie);
+ 
+-- 
+cgit v0.11.2-3-g2eb4
+

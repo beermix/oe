@@ -1,0 +1,74 @@
+From df82d659c340312c5d7e32a5660168624d5fa265 Mon Sep 17 00:00:00 2001
+From: Yann Sionneau <ysionneau@kalray.eu>
+Date: Tue, 9 Apr 2019 13:04:21 +0200
+Subject: Fix _dl_deallocate_tls in !SHARED case
+
+This patch seems needed in builds where
+- SHARED is not defined (no shared lib support)
+- and USE_TLS is set
+
+Without this patch, static_dtv is free'ed.
+See the following backtrace:
+0  __do_check_chunk (p=0x52638 <fork_handler_pool+2296>) at libc/stdlib/malloc-standard/malloc.c:80
+1  0x0000000000017fa0 in __do_check_inuse_chunk (p=0x52638 <fork_handler_pool+2296>) at libc/stdlib/malloc-standard/malloc.c:143
+2  0x0000000000017354 in free (mem=0x52648 <static_dtv>) at libc/stdlib/malloc-standard/free.c:293
+3  0x000000000002d5b0 in _dl_deallocate_tls (tcb=0x58690, dealloc_tcb=false) at libpthread/nptl/sysdeps/generic/dl-tls.c:588
+4  0x0000000000021c0c in __deallocate_stack (pd=0x58000) at libpthread/nptl/allocatestack.c:717
+5  0x0000000000024408 in __free_tcb (pd=0x58000) at libpthread/nptl/pthread_create.c:217
+6  0x00000000000200ac in pthread_join (threadid=360448, thread_return=0x0 <k1c_start>) at libpthread/nptl/pthread_join.c:109
+7  0x0000000000010354 in tf (a=0x58000) at tst-basic3.c:42
+8  0x00000000000247c8 in start_thread (arg=0x4000200960) at libpthread/nptl/pthread_create.c:285
+9  0x0000000000026560 in ?? ()
+
+This backtrace is obtained while debugging tst-basic3 from the uclibc-ng nptl testsuite.
+It aborts because of the assert in malloc:
+https://elixir.bootlin.com/uclibc-ng/v1.0.31/source/libc/stdlib/malloc-standard/malloc.c#L80
+
+Signed-off-by: Yann Sionneau <ysionneau@kalray.eu>
+---
+ libpthread/nptl/sysdeps/generic/dl-tls.c   | 5 +++++
+ libpthread/nptl/sysdeps/generic/libc-tls.c | 5 ++++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/libpthread/nptl/sysdeps/generic/dl-tls.c b/libpthread/nptl/sysdeps/generic/dl-tls.c
+index 989e587..7d25e47 100644
+--- a/libpthread/nptl/sysdeps/generic/dl-tls.c
++++ b/libpthread/nptl/sysdeps/generic/dl-tls.c
+@@ -48,6 +48,9 @@
+ /* Value used for dtv entries for which the allocation is delayed.  */
+ # define TLS_DTV_UNALLOCATED	((void *) -1l)
+ 
++#ifndef SHARED
++extern dtv_t static_dtv;
++#endif
+ 
+ /* Out-of-memory handler.  */
+ # ifdef SHARED
+@@ -584,6 +587,8 @@ _dl_deallocate_tls (void *tcb, bool dealloc_tcb)
+   /* The array starts with dtv[-1].  */
+ #ifdef SHARED
+   if (dtv != GL(dl_initial_dtv))
++#else
++  if ((dtv - 1) != &static_dtv)
+ #endif
+     free (dtv - 1);
+ 
+diff --git a/libpthread/nptl/sysdeps/generic/libc-tls.c b/libpthread/nptl/sysdeps/generic/libc-tls.c
+index a6df4cd..d746c9a 100644
+--- a/libpthread/nptl/sysdeps/generic/libc-tls.c
++++ b/libpthread/nptl/sysdeps/generic/libc-tls.c
+@@ -42,7 +42,10 @@ extern size_t _dl_phnum;
+ extern int __tdata_start;
+ #endif
+ 
+-static dtv_t static_dtv[2 + TLS_SLOTINFO_SURPLUS];
++#ifdef SHARED
++static
++#endif
++dtv_t static_dtv[2 + TLS_SLOTINFO_SURPLUS];
+ 
+ 
+ static struct
+-- 
+cgit v0.11.2-3-g2eb4
+

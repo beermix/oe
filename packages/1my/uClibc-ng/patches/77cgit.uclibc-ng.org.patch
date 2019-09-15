@@ -1,0 +1,48 @@
+From 365d19dfec4437b7a8227f594953a54c76863278 Mon Sep 17 00:00:00 2001
+From: Waldemar Brodkorb <wbrodkorb@conet.de>
+Date: Fri, 14 Dec 2018 10:53:22 +0100
+Subject: fix issues in ethers.c
+
+Old version manages strings the regular way (i.e. counting on zero-ended
+sequences). In fact strings captured from the /etc/ethers file are
+'\n'-ended. So, for example, using strchr function could lead to buffer
+overflow.
+
+Reported-by: "Andrey V. Zhmurin" <zhmurin_a@mcst.ru
+---
+ libc/inet/ethers.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/libc/inet/ethers.c b/libc/inet/ethers.c
+index 857e5d1..caa4a64 100644
+--- a/libc/inet/ethers.c
++++ b/libc/inet/ethers.c
+@@ -32,11 +32,11 @@ static const char *__ether_line(const char *line, struct ether_addr *addr)
+ 	if (!res)
+ 		return NULL;
+ 
+-	while (*line && (*line != ' ') && (*line != '\t'))
++	while (*line && (*line != '\n') && (*line != ' ') && (*line != '\t'))
+ 		line++;
+-	while (*line && ((*line == ' ')	|| (*line == '\t')))
++	while (*line && (*line != '\n') && ((*line == ' ') || (*line == '\t')))
+ 		line++;
+-	return (*line) ? line : NULL;
++	return (*line && (*line != '\n')) ? line : NULL;
+ }
+ 
+ /*
+@@ -45,9 +45,7 @@ static const char *__ether_line(const char *line, struct ether_addr *addr)
+  */
+ static const char *__ether_line_w(char *line, struct ether_addr *addr)
+ {
+-	char *end = strchr(line, '#');
+-	if (!end)
+-		end = strchr(line, '\n');
++	char *end = strpbrk(line, "#\n");
+ 	if (end)
+ 		*end = '\0';
+ 	return __ether_line(line, addr);
+-- 
+cgit v0.11.2-3-g2eb4
+

@@ -1,0 +1,153 @@
+From 4f506bb95ad4bc55e6174cef98803802a35b050e Mon Sep 17 00:00:00 2001
+From: Denys Vlasenko <dvlasenk@redhat.com>
+Date: Fri, 21 Jun 2019 12:09:36 +0200
+Subject: fix opendir, fpathconf and ttyname_r to use fstat64(), not fstat()
+
+There is no opendir64(), thus even programs built for 64-bit off_t
+use opendir(). Before this change, internally opendir() uses fstat(),
+with the following breakage if some of struct stat fields are too narrow:
+
+$ strace ls -l
+execve("/busybox/ls", ["ls", "-l"], 0x7ffcdc43ede8 /* 16 vars */) = 0
+ioctl(0, TCGETS, {B38400 opost isig icanon echo ...}) = 0
+ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0
+getuid32()                              = 0
+time([1551486393 /* 2019-03-02T00:26:33+0000 */]) = 1551486393 (2019-03-02T00:26:33+0000)
+ioctl(0, TIOCGWINSZ, {ws_row=38, ws_col=120, ws_xpixel=0, ws_ypixel=0}) = 0
+ioctl(1, TCGETS, {B38400 opost isig icanon echo ...}) = 0
+brk(NULL)                               = 0x9768000
+brk(0x9769000)                          = 0x9769000
+lstat64(".", 0xffa6e374)                = 0
+open(".", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+fstat(3, 0xffa6e378)                    = -1 EOVERFLOW (Value too large for defined data type)
+
+See https://bugs.busybox.net/show_bug.cgi?id=11651
+
+Signed-off-by: Denys Vlasenko <dvlasenk@redhat.com>
+---
+ libc/misc/dirent/opendir.c | 13 ++++++++-----
+ libc/termios/ttyname.c     | 11 +++++++----
+ libc/unistd/fpathconf.c    |  6 ++++--
+ 3 files changed, 19 insertions(+), 11 deletions(-)
+
+diff --git a/libc/misc/dirent/opendir.c b/libc/misc/dirent/opendir.c
+index 8af00f8..0ef8364 100644
+--- a/libc/misc/dirent/opendir.c
++++ b/libc/misc/dirent/opendir.c
+@@ -16,6 +16,9 @@
+ #include <dirent.h>
+ #include "dirstream.h"
+ 
++#define STAT stat64
++#define FSTAT fstat64
++
+ static DIR *fd_to_DIR(int fd, __blksize_t size)
+ {
+ 	DIR *ptr;
+@@ -43,9 +46,9 @@ static DIR *fd_to_DIR(int fd, __blksize_t size)
+ DIR *fdopendir(int fd)
+ {
+ 	int flags;
+-	struct stat st;
++	struct STAT st;
+ 
+-	if (fstat(fd, &st))
++	if (FSTAT(fd, &st))
+ 		return NULL;
+ 	if (!S_ISDIR(st.st_mode)) {
+ 		__set_errno(ENOTDIR);
+@@ -69,12 +72,12 @@ DIR *fdopendir(int fd)
+ DIR *opendir(const char *name)
+ {
+ 	int fd;
+-	struct stat statbuf;
++	struct STAT statbuf;
+ 	DIR *ptr;
+ 
+ #ifndef O_DIRECTORY
+ 	/* O_DIRECTORY is linux specific and has been around since like 2.1.x */
+-	if (stat(name, &statbuf))
++	if (STAT(name, &statbuf))
+ 		return NULL;
+ 	if (!S_ISDIR(statbuf.st_mode)) {
+ 		__set_errno(ENOTDIR);
+@@ -90,7 +93,7 @@ DIR *opendir(const char *name)
+ 	 * defined and since Linux has supported it for like ever, i'm not going
+ 	 * to worry about it right now (if ever). */
+ 
+-	if (fstat(fd, &statbuf) < 0) {
++	if (FSTAT(fd, &statbuf) < 0) {
+ 		/* this close() never fails
+ 		 *int saved_errno;
+ 		 *saved_errno = errno; */
+diff --git a/libc/termios/ttyname.c b/libc/termios/ttyname.c
+index 5fcf23b..9cd281b 100644
+--- a/libc/termios/ttyname.c
++++ b/libc/termios/ttyname.c
+@@ -31,6 +31,9 @@
+ #include <dirent.h>
+ #include <sys/stat.h>
+ 
++#define STAT stat64
++#define FSTAT fstat64
++#define LSTAT lstat64
+ 
+ #define TTYNAME_BUFLEN		32
+ 
+@@ -45,8 +48,8 @@ static const char dirlist[] =
+ int ttyname_r(int fd, char *ubuf, size_t ubuflen)
+ {
+ 	struct dirent *d;
+-	struct stat st;
+-	struct stat dst;
++	struct STAT st;
++	struct STAT dst;
+ 	const char *p;
+ 	char *s;
+ 	DIR *fp;
+@@ -54,7 +57,7 @@ int ttyname_r(int fd, char *ubuf, size_t ubuflen)
+ 	size_t len;
+ 	char buf[TTYNAME_BUFLEN];
+ 
+-	if (fstat(fd, &st) < 0) {
++	if (FSTAT(fd, &st) < 0) {
+ 		return errno;
+ 	}
+ 
+@@ -86,7 +89,7 @@ int ttyname_r(int fd, char *ubuf, size_t ubuflen)
+ 
+ 			strcpy(s, d->d_name);
+ 
+-			if ((lstat(buf, &dst) == 0)
++			if ((LSTAT(buf, &dst) == 0)
+ #if 0
+ 				/* Stupid filesystems like cramfs fail to guarantee that
+ 				 * st_ino and st_dev uniquely identify a file, contrary to
+diff --git a/libc/unistd/fpathconf.c b/libc/unistd/fpathconf.c
+index 556343b..82c34c4 100644
+--- a/libc/unistd/fpathconf.c
++++ b/libc/unistd/fpathconf.c
+@@ -24,6 +24,8 @@
+ #include <sys/stat.h>
+ #include <sys/statfs.h>
+ 
++#define STAT stat64
++#define FSTAT fstat64
+ 
+ #ifndef __USE_FILE_OFFSET64
+ extern int fstatfs (int __fildes, struct statfs *__buf)
+@@ -205,9 +207,9 @@ long int fpathconf(int fd, int name)
+ #if defined _POSIX_ASYNC_IO
+ 	    {
+ 		/* AIO is only allowed on regular files and block devices.  */
+-		struct stat st;
++		struct STAT st;
+ 
+-		if (fstat (fd, &st) < 0 || (! S_ISREG (st.st_mode) && ! S_ISBLK (st.st_mode)))
++		if (FSTAT (fd, &st) < 0 || (! S_ISREG (st.st_mode) && ! S_ISBLK (st.st_mode)))
+ 		    return -1;
+ 		else
+ 		    return 1;
+-- 
+cgit v0.11.2-3-g2eb4
+

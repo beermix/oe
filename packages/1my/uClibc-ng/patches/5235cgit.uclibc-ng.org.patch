@@ -1,0 +1,27 @@
+From ed495bf14d60373c13357e0783ffd3b96e076360 Mon Sep 17 00:00:00 2001
+From: Christoph Hellwig <hch@lst.de>
+Date: Mon, 24 Jun 2019 06:37:37 -0700
+Subject: riscv: add the MAP_UNINITIALIZED definition
+
+This avoids a nommu build failure.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+---
+ libc/sysdeps/linux/riscv64/bits/mman.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/libc/sysdeps/linux/riscv64/bits/mman.h b/libc/sysdeps/linux/riscv64/bits/mman.h
+index 316f87d..fa6f8e6 100644
+--- a/libc/sysdeps/linux/riscv64/bits/mman.h
++++ b/libc/sysdeps/linux/riscv64/bits/mman.h
+@@ -31,6 +31,7 @@
+ # define MAP_HUGETLB	0x40000		/* Create huge page mapping.  */
+ # define MAP_SYNC	0x80000		/* Perform synchronous page
+ 					   faults for the mapping.  */
++# define MAP_UNINITIALIZED 0x4000000    /* For anonymous mmap, memory could -   					   be uninitialized.  */
+ #endif
+ 
+ /* Include generic Linux declarations.  */
+-- 
+cgit v0.11.2-3-g2eb4
+

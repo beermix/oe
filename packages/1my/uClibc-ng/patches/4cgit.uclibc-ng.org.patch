@@ -1,0 +1,75 @@
+From 028d28e6a9654c9addfc4fe1af9b6dd9bd464680 Mon Sep 17 00:00:00 2001
+From: Yann Sionneau <ysionneau@kalray.eu>
+Date: Tue, 25 Jun 2019 15:45:48 +0200
+Subject: Fix header installation for recent 64-only arch
+
+Summary:
+Recent arch do not support Legacy.
+Thus they don't define ARCH_HAS_DEPRECATED_SYSCALLS
+
+But this led to per-arch headers not being installed and common-generic ones taking precedence.
+
+So it was impossible to declare arch-specific statfs.h for instance, to force 64-bit mode only.
+
+This was leading to the following situation to happen:
+1/ an application compiles (say without -D_FILE_OFFSET_BITS set)
+   it therefore uses struct statfs from libc/sysdeps/linux/common-generic/bits/statfs.h
+   where f_type and f_bsize fields are U32: https://elixir.bootlin.com/uclibc-ng/latest/source/libc/sysdeps/linux/common-generic/bits/statfs.h#L18
+2/ application calls "statfs"
+3/ uClibc issues "statfs64" syscall (because __NR_statfs64 is defined and __NR_statfs is undefined):
+https://elixir.bootlin.com/uclibc-ng/latest/source/libc/sysdeps/linux/common/statfs.c#L14
+4/ if Linux kernel port is not defining CONFIG_COMPAT, it calls do_statfs_native
+https://elixir.bootlin.com/linux/latest/source/fs/statfs.c#L195
+5/ it does copy_to_user of the size of struct statfs defined in the kernel source tree:
+https://elixir.bootlin.com/linux/latest/source/fs/statfs.c#L161
+6/ Generic struct statfs in the kernel is defined like this:
+https://elixir.bootlin.com/linux/latest/source/include/uapi/asm-generic/statfs.h#L23
+f_type and f_bsize fields are long (64 bits) for 64-bit archs.
+7/ memory corruption occurs because of this mismatch
+
+Solution:
+Allow to not define __ARCH_HAS_DEPRECATED_SYSCALLS__ *and* declare its own arch-specific statfs.h header, matching the kernel one.
+(for instance with f_type and f_bsize defined as long)
+
+Does this change break other archs?
+This change allows headers in libc/sysdeps/linux/<ARCH>/bits/ to override ones in libc/sysdeps/linux/common-generic/bits/
+The only arch which does not define __ARCH_HAS_DEPRECATED_SYSCALLS__ *and* has a header in libc/sysdeps/linux/<ARCH>/bits/ which can conflict with one in libc/sysdeps/linux/common-generic/bits/
+is c6x.
+The file that can override is ../libc/sysdeps/linux/c6x/bits/kernel_stat.h
+  This, btw, means that, today, this file is there and is not used (during compilation, GNU Make overrides the rule):
+    Makefile.in:152: warning: overriding recipe for target `include/bits/kernel_stat.h'
+    Makefile.in:148: warning: ignoring old recipe for target `include/bits/kernel_stat.h'
+I was not able to compile uClibc with the only binary toolchain I found for c6x arch (gcc-4.5.1 from code sourcery: https://sourcery.mentor.com/GNUToolchain/release1882)
+However, I can tell that c6x's kernel_stat.h only defines two structs: kernel_stat and kernel_stat64: https://elixir.bootlin.com/uclibc-ng/latest/source/libc/sysdeps/linux/c6x/bits/kernel_stat.h
+And I can also tell that those structs are only used when using xstat conversion functions (__xstat32_conv / xstat_conv) which are only used and present in the __ARCH_HAS_DEPRECATED_SYSCALLS__ == y case.
+However, c6x does not define __ARCH_HAS_DEPRECATED_SYSCALLS__
+So I think I can say that this change does not affect c6x nor other archs.
+---
+ Makefile.in | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 1754040..16ee9ee 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -144,14 +144,14 @@ $(top_builddir)include/dl-osinfo.h $(top_builddir)include/not-cancel.h:
+ $(ALL_HEADERS_BITS_COMMON):
+ 	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/common/bits/$(@F) $@
+ 
+-$(ALL_HEADERS_BITS_ARCH):
+-	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/$(TARGET_ARCH)/bits/$(@F) $@
+-
+ ifneq ($(ARCH_HAS_DEPRECATED_SYSCALLS),y)
+ $(ALL_HEADERS_BITS_COMMON_NO_LEGACY):
+ 	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/common-generic/bits/$(@F) $@
+ endif
+ 
++$(ALL_HEADERS_BITS_ARCH):
++	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/$(TARGET_ARCH)/bits/$(@F) $@
++
+ ifneq ($(TARGET_SUBARCH),)
+ $(ALL_HEADERS_BITS_SUBARCH):
+ 	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/$(TARGET_ARCH)/bits/$(TARGET_SUBARCH)/$(@F) $@
+-- 
+cgit v0.11.2-3-g2eb4
+

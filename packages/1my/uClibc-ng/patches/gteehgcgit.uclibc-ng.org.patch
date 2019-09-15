@@ -1,0 +1,40 @@
+From 785dee78552f9ad06819bf7eb1adc05b43110842 Mon Sep 17 00:00:00 2001
+From: Petar Jovanovic <petar.jovanovic@rt-rk.com>
+Date: Mon, 6 May 2019 13:29:02 +0000
+Subject: mips: fix memmove() call when __ARCH_HAS_BWD_MEMCPY__ is not defined
+
+When arch (such as MIPS) does not define __ARCH_HAS_BWD_MEMCPY__, memmove()
+calls memcpy() which is wrong for overlapping regions.
+
+Signed-off-by: Petar Jovanovic <petar.jovanovic@rt-rk.com>
+---
+ libc/string/generic/memmove.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/libc/string/generic/memmove.c b/libc/string/generic/memmove.c
+index bf78c47..1ac0180 100644
+--- a/libc/string/generic/memmove.c
++++ b/libc/string/generic/memmove.c
+@@ -23,7 +23,7 @@
+ #include "memcopy.h"
+ #include "pagecopy.h"
+ 
+-#ifdef __ARCH_HAS_BWD_MEMCPY__
++#ifndef __ARCH_HAS_BWD_MEMCPY__
+ /* generic-opt memmove assumes memcpy does forward copying! */
+ #include "_memcpy_fwd.c"
+ #endif
+@@ -224,8 +224,8 @@ void *memmove (void *dest, const void *src, size_t len)
+      Reduces the working set.  */
+   if (dstp - srcp >= len)	/* *Unsigned* compare!  */
+     {
+-#ifndef __ARCH_HAS_BWD_MEMCPY__
+-      /* Backward memcpy implementation cannot be used */
++#ifdef __ARCH_HAS_BWD_MEMCPY__
++      /* Backward memcpy implementation can be used */
+       memcpy(dest, src, len);
+ #else
+       /* Copy from the beginning to the end.  */
+-- 
+cgit v0.11.2-3-g2eb4
+

@@ -1,0 +1,32 @@
+From 721f0983ea98376644a22df578740b6489a4e49a Mon Sep 17 00:00:00 2001
+From: Christoph Hellwig <hch@lst.de>
+Date: Mon, 24 Jun 2019 06:38:09 -0700
+Subject: riscv: clear a3/a4 in crt1
+
+We don't support shared libraries and thus _init/_fini.  But loading
+nommu binaries blows they aren't cleared, so do that.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+---
+ libc/sysdeps/linux/riscv64/crt1.S | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/libc/sysdeps/linux/riscv64/crt1.S b/libc/sysdeps/linux/riscv64/crt1.S
+index 872e0b1..1e8403d 100644
+--- a/libc/sysdeps/linux/riscv64/crt1.S
++++ b/libc/sysdeps/linux/riscv64/crt1.S
+@@ -52,6 +52,11 @@ _start:
+ 	la   a0, main
+ 	REG_L a1, 0(sp)      /* argc.  */
+ 	addi  a2, sp, SZREG  /* argv.  */
++	/*
++	 * No support fo app_init/app_fini as we don't support shared libraries.
++	 */
++	mv    a3, zero
++	mv    a4, zero
+ 	andi  sp, sp, ALMASK /* Align stack. */
+ 	mv    a6, sp  /* stack_end.  */
+ 
+-- 
+cgit v0.11.2-3-g2eb4
+

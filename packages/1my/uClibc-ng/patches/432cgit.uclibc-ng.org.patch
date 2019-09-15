@@ -1,0 +1,49 @@
+From 018ef9e16af6da971ca66ddcd54230edd6d6d65e Mon Sep 17 00:00:00 2001
+From: Yann Sionneau <ysionneau@kalray.eu>
+Date: Thu, 11 Apr 2019 12:21:57 +0200
+Subject: Fix TLS allocation and loading in !SHARED case
+
+For ARCH where shared lib are not supported:
+- SHARED is not set (!SHARED is true)
+- __ARCH_HAS_NO_LDSO__ is set
+
+so code inside #if !defined __ARCH_HAS_NO_LDSO__ && !defined SHARED
+is compiled-out.
+
+But without a call do _dl_aux_init(), _dl_phdr stays NULL and
+__libc_setup_tls won't be able to allocate memory for the in-executable TLS
+and also won't be able to load the initimage from ELF TLS segment.
+
+This results in segfault when doing things like "errno = 0" like
+in tst-cancel15.c for instance in uClibc-ng testsuite.
+
+Signed-off-by: Yann Sionneau <ysionneau@kalray.eu>
+---
+ libc/misc/internals/__uClibc_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libc/misc/internals/__uClibc_main.c b/libc/misc/internals/__uClibc_main.c
+index 849bca8..affa0ce 100644
+--- a/libc/misc/internals/__uClibc_main.c
++++ b/libc/misc/internals/__uClibc_main.c
+@@ -370,7 +370,7 @@ void __uClibc_main(int (*main)(int, char **, char **), int argc,
+ 		    char **argv, void (*app_init)(void), void (*app_fini)(void),
+ 		    void (*rtld_fini)(void), void *stack_end attribute_unused)
+ {
+-#if !defined __ARCH_HAS_NO_LDSO__ && !defined SHARED
++#ifndef SHARED
+     unsigned long *aux_dat;
+     ElfW(auxv_t) auxvt[AT_EGID + 1];
+ #endif
+@@ -396,7 +396,7 @@ void __uClibc_main(int (*main)(int, char **, char **), int argc,
+ 	__environ = &argv[argc];
+     }
+ 
+-#if !defined __ARCH_HAS_NO_LDSO__ && !defined SHARED
++#ifndef SHARED
+     /* Pull stuff from the ELF header when possible */
+     memset(auxvt, 0x00, sizeof(auxvt));
+     aux_dat = (unsigned long*)__environ;
+-- 
+cgit v0.11.2-3-g2eb4
+
