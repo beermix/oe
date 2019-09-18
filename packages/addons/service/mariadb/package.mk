@@ -2,9 +2,9 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) xz lz4 zstd libevent
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.4.7"
+PKG_VERSION="10.4.8"
 PKG_REV="107"
-PKG_SHA256="c8e6a6d0bb4f22c416ed675d24682a3ecfa383c5283efee70c8edf131374d817"
+PKG_SHA256="10cc2c3bdb76733c9c6fd1e3c6c860d8b4282c85926da7d472d2a0e00fffca9b"
 PKG_LICENSE="GPL2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
 PKG_URL="https://downloads.mariadb.org/interstitial/${PKG_NAME}-${PKG_VERSION}/source/${PKG_NAME}-${PKG_VERSION}.tar.gz"
