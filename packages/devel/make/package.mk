@@ -10,7 +10,7 @@ PKG_SITE="https://www.gnu.org/software/make/"
 PKG_URL="http://ftpmirror.gnu.org/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
 PKG_LONGDESC="Utility to maintain groups of programs."
-PKG_TOOLCHAIN="manual"
+#PKG_TOOLCHAIN="manual"
 
 pre_configure_host() {
   export CC=$LOCAL_CC
@@ -21,7 +21,7 @@ post_makeinstall_host() {
 
   ln -sf make $TOOLCHAIN/bin/gmake
 
-  ln -sf /usr/bin/make $TOOLCHAIN/bin/make
+  #ln -sf /usr/bin/make $TOOLCHAIN/bin/make
 
   cp -r $PKG_DIR/src/bin/* $TOOLCHAIN/bin
 
