@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later-or-later-or-later
 # Copyright (C) 2019-present Peter Vicman (peter.vicman@gmail.com)
 
 PKG_NAME="jdk-x86_64-zulu"

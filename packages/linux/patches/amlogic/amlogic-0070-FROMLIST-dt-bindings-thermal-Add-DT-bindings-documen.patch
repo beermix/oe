@@ -21,7 +21,7 @@ index 000000000000..d25e59113398
 --- /dev/null
 +++ b/Documentation/devicetree/bindings/thermal/amlogic,thermal.yaml
 @@ -0,0 +1,54 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++# SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
 +%YAML 1.2
 +---
 +$id: http://devicetree.org/schemas/thermal/amlogic,thermal.yaml#

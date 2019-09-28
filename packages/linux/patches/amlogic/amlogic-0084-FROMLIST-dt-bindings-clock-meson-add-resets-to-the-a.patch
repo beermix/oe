@@ -33,7 +33,7 @@ index 000000000000..14b78dabed0e
 --- /dev/null
 +++ b/include/dt-bindings/reset/amlogic,meson-g12a-audio-reset.h
 @@ -0,0 +1,38 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
 + * Copyright (c) 2019 BayLibre, SAS.
 + * Author: Jerome Brunet <jbrunet@baylibre.com>

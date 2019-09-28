@@ -58,7 +58,7 @@ index 000000000000..73128ed24361
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-a311d-khadas-vim3.dts
 @@ -0,0 +1,15 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++// SPDX-License-Identifier: (GPL-2.0-or-later+ OR MIT)
 +/*
 + * Copyright (c) 2019 BayLibre, SAS
 + * Author: Neil Armstrong <narmstrong@baylibre.com>
@@ -79,7 +79,7 @@ index 000000000000..382148ef882a
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-khadas-vim3.dtsi
 @@ -0,0 +1,542 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++// SPDX-License-Identifier: (GPL-2.0-or-later+ OR MIT)
 +/*
 + * Copyright (c) 2019 BayLibre, SAS
 + * Author: Neil Armstrong <narmstrong@baylibre.com>
@@ -627,7 +627,7 @@ index 000000000000..6bcf972b8bfa
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-s922x-khadas-vim3.dts
 @@ -0,0 +1,15 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++// SPDX-License-Identifier: (GPL-2.0-or-later+ OR MIT)
 +/*
 + * Copyright (c) 2019 BayLibre, SAS
 + * Author: Neil Armstrong <narmstrong@baylibre.com>

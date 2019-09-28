@@ -126,7 +126,7 @@ index 000000000000..cdea10825f71
 --- /dev/null
 +++ b/drivers/fpga/dfl-fme-error.c
 @@ -0,0 +1,385 @@
-+// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Driver for FPGA Management Engine Error Management
 + *

@@ -33,7 +33,7 @@ index 000000000000..e5013981fdc4
 --- /dev/null
 +++ b/drivers/media/rc/keymaps/rc-tanix-tx3mini.c
 @@ -0,0 +1,79 @@
-+// SPDX-License-Identifier: GPL-2.0+
++// SPDX-License-Identifier: GPL-2.0-or-later+
 +// Copyright (c) 2018 Christian Hewitt
 +
 +#include <media/rc-map.h>

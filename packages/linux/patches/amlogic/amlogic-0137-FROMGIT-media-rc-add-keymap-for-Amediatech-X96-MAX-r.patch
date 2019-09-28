@@ -33,7 +33,7 @@ index 000000000000..d947e4652c92
 --- /dev/null
 +++ b/drivers/media/rc/keymaps/rc-x96max.c
 @@ -0,0 +1,85 @@
-+// SPDX-License-Identifier: GPL-2.0+
++// SPDX-License-Identifier: GPL-2.0-or-later+
 +//
 +// Copyright (C) 2019 Christian Hewitt <christianshewitt@gmail.com>
 +

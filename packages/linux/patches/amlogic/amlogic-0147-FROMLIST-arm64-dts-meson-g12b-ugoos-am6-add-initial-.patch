@@ -29,7 +29,7 @@ index 000000000000..585c42f949c1
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-ugoos-am6.dts
 @@ -0,0 +1,557 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++// SPDX-License-Identifier: (GPL-2.0-or-later+ OR MIT)
 +/*
 + * Copyright (c) 2019 BayLibre, SAS
 + * Author: Neil Armstrong <narmstrong@baylibre.com>

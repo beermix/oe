@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later-or-later-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libdvbcsa"

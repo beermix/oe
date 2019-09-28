@@ -26,7 +26,7 @@ index 72a37572501f..500be0b0d473 100644
 --- a/drivers/clk/meson/Kconfig
 +++ b/drivers/clk/meson/Kconfig
 @@ -1,7 +1,4 @@
- # SPDX-License-Identifier: GPL-2.0-only
+ # SPDX-License-Identifier: GPL-2.0-or-later-only
 -config COMMON_CLK_MESON_INPUT
 -	tristate
 -
@@ -51,7 +51,7 @@ index 086226e9dba6..000000000000
 --- a/drivers/clk/meson/clk-input.c
 +++ /dev/null
 @@ -1,49 +0,0 @@
--// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+-// SPDX-License-Identifier: (GPL-2.0-or-later OR MIT)
 -/*
 - * Copyright (c) 2018 BayLibre, SAS.
 - * Author: Jerome Brunet <jbrunet@baylibre.com>
@@ -106,7 +106,7 @@ index 4a541b9685a6..000000000000
 --- a/drivers/clk/meson/clk-input.h
 +++ /dev/null
 @@ -1,19 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
+-/* SPDX-License-Identifier: GPL-2.0-or-later */
 -/*
 - * Copyright (c) 2019 BayLibre, SAS.
 - * Author: Jerome Brunet <jbrunet@baylibre.com>

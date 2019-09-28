@@ -8,7 +8,7 @@
 # When Kodi is updated, then this should be updated to the corresponding branch
 KODI_SKIN_CONFLUENCE_VERSION = 96bed03570a90d4fdfb96ab71de9a51ceedd03fb
 KODI_SKIN_CONFLUENCE_SITE = $(call github,xbmc,skin.confluence,$(KODI_SKIN_CONFLUENCE_VERSION))
-KODI_SKIN_CONFLUENCE_LICENSE = GPL-2.0
+KODI_SKIN_CONFLUENCE_LICENSE = GPL-2.0-or-later
 KODI_SKIN_CONFLUENCE_LICENSE_FILES = LICENSE.txt
 KODI_SKIN_CONFLUENCE_DEPENDENCIES = kodi
 

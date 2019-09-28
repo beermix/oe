@@ -66,7 +66,7 @@ index 000000000000..36976927fe82
 --- /dev/null
 +++ b/drivers/clk/meson/clk-cpu-dyndiv.c
 @@ -0,0 +1,73 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++// SPDX-License-Identifier: (GPL-2.0-or-later OR MIT)
 +/*
 + * Copyright (c) 2019 BayLibre, SAS.
 + * Author: Neil Armstrong <narmstrong@baylibre.com>
@@ -145,7 +145,7 @@ index 000000000000..f4908404792e
 --- /dev/null
 +++ b/drivers/clk/meson/clk-cpu-dyndiv.h
 @@ -0,0 +1,20 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
 + * Copyright (c) 2019 BayLibre, SAS.
 + * Author: Neil Armstrong <narmstrong@baylibre.com>

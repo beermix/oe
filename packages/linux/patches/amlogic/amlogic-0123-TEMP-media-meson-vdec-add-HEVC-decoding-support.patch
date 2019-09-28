@@ -46,7 +46,7 @@ index 000000000000..03f00f969f02
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/codec_hevc.c
 @@ -0,0 +1,1357 @@
-+// SPDX-License-Identifier: GPL-2.0+
++// SPDX-License-Identifier: GPL-2.0-or-later+
 +/*
 + * Copyright (C) 2018 Maxime Jourdan <mjourdan@baylibre.com>
 + * Copyright (C) 2015 Amlogic, Inc. All rights reserved.
@@ -1409,7 +1409,7 @@ index 000000000000..f2f9b2464df1
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/codec_hevc.h
 @@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
++/* SPDX-License-Identifier: GPL-2.0-or-later+ */
 +/*
 + * Copyright (C) 2018 Maxime Jourdan <maxi.jourdan@wanadoo.fr>
 + */
@@ -1428,7 +1428,7 @@ index 000000000000..2b296beb5d88
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/codec_hevc_common.c
 @@ -0,0 +1,188 @@
-+// SPDX-License-Identifier: GPL-2.0+
++// SPDX-License-Identifier: GPL-2.0-or-later+
 +/*
 + * Copyright (C) 2018 Maxime Jourdan <mjourdan@baylibre.com>
 + */
@@ -1623,7 +1623,7 @@ index 000000000000..7c8891529ac8
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/codec_hevc_common.h
 @@ -0,0 +1,49 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
++/* SPDX-License-Identifier: GPL-2.0-or-later+ */
 +/*
 + * Copyright (C) 2018 BayLibre, SAS
 + * Author: Maxime Jourdan <mjourdan@baylibre.com>
@@ -1678,7 +1678,7 @@ index 000000000000..ba49f906be5a
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/hevc_regs.h
 @@ -0,0 +1,205 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
++/* SPDX-License-Identifier: GPL-2.0-or-later+ */
 +/*
 + * Copyright (C) 2015 Amlogic, Inc. All rights reserved.
 + */
@@ -1914,7 +1914,7 @@ index 000000000000..b1406a5638da
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/vdec_hevc.c
 @@ -0,0 +1,191 @@
-+// SPDX-License-Identifier: GPL-2.0+
++// SPDX-License-Identifier: GPL-2.0-or-later+
 +/*
 + * Copyright (C) 2018 Maxime Jourdan <maxi.jourdan@wanadoo.fr>
 + *

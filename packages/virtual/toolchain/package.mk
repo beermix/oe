@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: GPL-2.0
-# SPDX-License-Identifier: GPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv) | gawk:host tar:host patch:host gzip:host bc:host
 
 PKG_NAME="toolchain"

@@ -106,7 +106,7 @@ index 000000000000..0d7768af88fc
 --- /dev/null
 +++ b/drivers/fpga/dfl-fme-perf.c
 @@ -0,0 +1,871 @@
-+// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Driver for FPGA Management Engine (FME) Global Performance Reporting
 + *

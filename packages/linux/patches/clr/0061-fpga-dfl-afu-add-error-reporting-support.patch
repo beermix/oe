@@ -86,7 +86,7 @@ index 000000000000..f20dbdf5805d
 --- /dev/null
 +++ b/drivers/fpga/dfl-afu-error.c
 @@ -0,0 +1,225 @@
-+// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Driver for FPGA Accelerated Function Unit (AFU) Error Reporting
 + *

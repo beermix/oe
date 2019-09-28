@@ -110,7 +110,7 @@ index 000000000000..84944dfbae28
 --- /dev/null
 +++ b/drivers/staging/exfat/Makefile
 @@ -0,0 +1,10 @@
-+# SPDX-License-Identifier: GPL-2.0
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
 +obj-$(CONFIG_EXFAT_FS) += exfat.o
 +
@@ -144,7 +144,7 @@ index 000000000000..6c12f2d79f4d
 --- /dev/null
 +++ b/drivers/staging/exfat/exfat.h
 @@ -0,0 +1,971 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
 + *  Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
 + */
@@ -1121,7 +1121,7 @@ index 000000000000..f086c75e7076
 --- /dev/null
 +++ b/drivers/staging/exfat/exfat_blkdev.c
 @@ -0,0 +1,136 @@
-+// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + *  Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
 + */
@@ -1263,7 +1263,7 @@ index 000000000000..1565ce65d39f
 --- /dev/null
 +++ b/drivers/staging/exfat/exfat_cache.c
 @@ -0,0 +1,724 @@
-+// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + *  Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
 + */
@@ -1993,7 +1993,7 @@ index 000000000000..b3e9cf725cf5
 --- /dev/null
 +++ b/drivers/staging/exfat/exfat_core.c
 @@ -0,0 +1,3701 @@
-+// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + *  Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
 + */
@@ -5700,7 +5700,7 @@ index 000000000000..03cb8290b5d2
 --- /dev/null
 +++ b/drivers/staging/exfat/exfat_nls.c
 @@ -0,0 +1,404 @@
-+// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + *  Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
 + */
@@ -6110,7 +6110,7 @@ index 000000000000..5f6caee819a6
 --- /dev/null
 +++ b/drivers/staging/exfat/exfat_super.c
 @@ -0,0 +1,4049 @@
-+// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + *  Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
 + */
@@ -10165,7 +10165,7 @@ index 000000000000..366082fb3dab
 --- /dev/null
 +++ b/drivers/staging/exfat/exfat_upcase.c
 @@ -0,0 +1,740 @@
-+// SPDX-License-Identifier: GPL-2.0
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + *  Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
 + */
