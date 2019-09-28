@@ -1,15 +1,15 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.4.8"
-PKG_REV="107"
-PKG_SHA256="10cc2c3bdb76733c9c6fd1e3c6c860d8b4282c85926da7d472d2a0e00fffca9b"
+PKG_VERSION="10.3.18"
+PKG_REV="103"
+PKG_SHA256="69456ca85bf9d96c6d28b4ade2a9f6787d79a602e27ef941f9ba4e0b55dddedc"
 PKG_LICENSE="GPL2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
 PKG_URL="https://downloads.mariadb.org/interstitial/${PKG_NAME}-${PKG_VERSION}/source/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain ncurses:host"
-PKG_DEPENDS_TARGET="toolchain binutils bzip2 xz lz4 zstd libevent libaio libxml2 lzo ncurses openssl systemd zlib mariadb:host"
+PKG_DEPENDS_TARGET="toolchain binutils bzip2 libaio libxml2 lzo ncurses openssl systemd zlib mariadb:host"
 PKG_SHORTDESC="MariaDB is a community-developed fork of the MySQL."
 PKG_LONGDESC="MariaDB (${PKG_VERSION}) is a fast SQL database server and a drop-in replacement for MySQL."
 PKG_TOOLCHAIN="cmake"
@@ -43,6 +43,10 @@ configure_package() {
     -DWITH_SSL=${SYSROOT_PREFIX}/usr \
     -DWITH_JEMALLOC=OFF \
     -DWITH_PCRE=bundled \
+    -DWITH_ZLIB=bundled \
+    -DWITH_EDITLINE=bundled \
+    -DWITH_LIBEVENT=bundled \
+    -DCONNECT_WITH_LIBXML2=bundled \
     -DSKIP_TESTS=ON \
     -DWITH_DEBUG=OFF \
     -DWITH_UNIT_TESTS=OFF \
