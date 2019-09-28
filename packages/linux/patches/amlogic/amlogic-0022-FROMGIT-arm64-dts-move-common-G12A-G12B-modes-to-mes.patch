@@ -31,7 +31,7 @@ index 000000000000..06e186ca41e3
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
 @@ -0,0 +1,2409 @@
-+// SPDX-License-Identifier: (GPL-2.0-or-later+ OR MIT)
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2018 Amlogic, Inc. All rights reserved.
 + */

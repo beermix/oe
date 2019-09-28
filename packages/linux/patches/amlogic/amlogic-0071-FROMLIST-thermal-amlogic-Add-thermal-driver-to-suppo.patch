@@ -68,7 +68,7 @@ index 000000000000..672d11abd8c7
 --- /dev/null
 +++ b/drivers/thermal/amlogic_thermal.c
 @@ -0,0 +1,336 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later+
++// SPDX-License-Identifier: GPL-2.0+
 +/*
 + * Amlogic Thermal Sensor Driver
 + *

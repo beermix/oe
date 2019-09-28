@@ -1,9 +1,9 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="media_tree_cc"
-PKG_VERSION="2019-03-08"
-PKG_SHA256="e3394cb051c9bd450e84f6597072fe65ab7d1a45113cfbe5027dd9137129834f"
+PKG_VERSION="2019-07-10"
+PKG_SHA256="c1d4467a7771d4a3e3f80cdce7065b4a1a9b61a306f35586e4c198812661e883"
 PKG_LICENSE="GPL"
 PKG_SITE="https://bitbucket.org/CrazyCat/media_build/downloads/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.bz2"

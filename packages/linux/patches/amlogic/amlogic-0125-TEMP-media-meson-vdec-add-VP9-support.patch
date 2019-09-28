@@ -33,7 +33,7 @@ index 000000000000..731119b9ee17
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/codec_vp9.c
 @@ -0,0 +1,1083 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later+
++// SPDX-License-Identifier: GPL-2.0+
 +/*
 + * Copyright (C) 2018 Maxime Jourdan <mjourdan@baylibre.com>
 + * Copyright (C) 2015 Amlogic, Inc. All rights reserved.
@@ -1122,7 +1122,7 @@ index 000000000000..62db65a2b939
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/codec_vp9.h
 @@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later+ */
++/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
 + * Copyright (C) 2018 Maxime Jourdan <maxi.jourdan@wanadoo.fr>
 + */

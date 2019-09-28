@@ -37,7 +37,7 @@ index 000000000000..bb183ed90d69
 --- /dev/null
 +++ b/drivers/media/rc/keymaps/rc-khadas.c
 @@ -0,0 +1,56 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later+
++// SPDX-License-Identifier: GPL-2.0+
 +//
 +// Copyright (C) 2019 Christian Hewitt <christianshewitt@gmail.com>
 +

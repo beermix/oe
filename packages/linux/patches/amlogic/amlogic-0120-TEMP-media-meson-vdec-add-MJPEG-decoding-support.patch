@@ -33,7 +33,7 @@ index 000000000000..abea9e3f944c
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/codec_mjpeg.c
 @@ -0,0 +1,140 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later+
++// SPDX-License-Identifier: GPL-2.0+
 +/*
 + * Copyright (C) 2018 Maxime Jourdan <maxi.jourdan@wanadoo.fr>
 + */
@@ -179,7 +179,7 @@ index 000000000000..364fa7ee6d9e
 --- /dev/null
 +++ b/drivers/staging/media/meson/vdec/codec_mjpeg.h
 @@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later+ */
++/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
 + * Copyright (C) 2018 Maxime Jourdan <maxi.jourdan@wanadoo.fr>
 + */

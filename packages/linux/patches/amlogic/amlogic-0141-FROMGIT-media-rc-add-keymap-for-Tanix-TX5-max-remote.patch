@@ -30,7 +30,7 @@ index 000000000000..43f467f66171
 --- /dev/null
 +++ b/drivers/media/rc/keymaps/rc-tanix-tx5max.c
 @@ -0,0 +1,71 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later+
++// SPDX-License-Identifier: GPL-2.0+
 +// Copyright (c) 2018 Christian Hewitt
 +
 +#include <media/rc-map.h>

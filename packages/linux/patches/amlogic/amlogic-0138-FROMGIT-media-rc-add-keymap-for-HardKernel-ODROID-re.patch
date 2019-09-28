@@ -33,7 +33,7 @@ index 000000000000..e95aab608c5a
 --- /dev/null
 +++ b/drivers/media/rc/keymaps/rc-odroid.c
 @@ -0,0 +1,51 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later+
++// SPDX-License-Identifier: GPL-2.0+
 +//
 +// Copyright (C) 2019 Christian Hewitt <christianshewitt@gmail.com>
 +

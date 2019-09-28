@@ -35,7 +35,7 @@ index d90ce8a32887..919c3c027c62 100644
 --- a/sound/soc/Makefile
 +++ b/sound/soc/Makefile
 @@ -1,5 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+ # SPDX-License-Identifier: GPL-2.0
 -snd-soc-core-objs := soc-core.o soc-dapm.o soc-jack.o soc-utils.o
 +snd-soc-core-objs := soc-core.o soc-dapm.o soc-jack.o soc-utils.o soc-dai.o
  snd-soc-core-objs += soc-pcm.o soc-io.o soc-devres.o soc-ops.o
@@ -315,7 +315,7 @@ index 000000000000..a1009ead40de
 --- /dev/null
 +++ b/sound/soc/soc-dai.c
 @@ -0,0 +1,254 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
++// SPDX-License-Identifier: GPL-2.0
 +//
 +// soc-dai.c
 +//

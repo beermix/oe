@@ -32,7 +32,7 @@ index 000000000000..d61f43052a34
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-a311d.dtsi
 @@ -0,0 +1,149 @@
-+// SPDX-License-Identifier: (GPL-2.0-or-later+ OR MIT)
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 BayLibre, SAS
 + * Author: Neil Armstrong <narmstrong@baylibre.com>
@@ -200,7 +200,7 @@ index 000000000000..046cc332d07f
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi
 @@ -0,0 +1,124 @@
-+// SPDX-License-Identifier: (GPL-2.0-or-later+ OR MIT)
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 BayLibre, SAS
 + * Author: Neil Armstrong <narmstrong@baylibre.com>
