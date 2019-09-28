@@ -36,7 +36,6 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=${DRI_DRIVERS// /,} \
                        -Dopengl=true \
                        -Dgbm=true \
                        -Degl=true \
-                       -Dasm=true \
                        -Dvalgrind=false \
                        -Dlibunwind=false \
                        -Dlmsensors=false \
