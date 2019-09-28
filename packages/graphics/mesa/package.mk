@@ -4,7 +4,7 @@
 
 PKG_NAME="mesa"
 PKG_VERSION="19.2.0"
-PKG_SHA256=""
+PKG_SHA256="759b49948e61e4312ae12c7bb905b0ec6d385535dc44fe346c334e5a4807e0cd"
 PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/mesa/mesa/log/?h=19.1"
 PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-$PKG_VERSION.tar.gz"

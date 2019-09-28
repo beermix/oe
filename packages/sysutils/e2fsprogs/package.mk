@@ -4,7 +4,7 @@
 
 PKG_NAME="e2fsprogs"
 PKG_VERSION="1.45.4"
-PKG_SHA256=""
+PKG_SHA256="65faf6b590ca1da97440d6446bd11de9e0914b42553740ba5d9d2a796fa0dc02"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceforge.net/projects/e2fsprogs/files"
 PKG_URL="https://www.kernel.org/pub/linux/kernel/people/tytso/$PKG_NAME/v$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
