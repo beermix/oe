@@ -93,7 +93,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dversion-tag=${PKG_VERSION}"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
+  export TARGET_CFLAGS="$TARGET_CFLAGS -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
   export LC_ALL=en_US.UTF-8
 }
 
@@ -156,8 +156,19 @@ post_makeinstall_target() {
   safe_remove $INSTALL/usr/bin/systemd-nspawn
   safe_remove $INSTALL/usr/lib/systemd/system/systemd-nspawn@.service
 
-  # remove genetators/catalog
-  safe_remove $INSTALL/usr/lib/systemd/system-generators
+  # remove unneeded generators
+  for gen in $INSTALL/usr/lib/systemd/system-generators/*; do
+    case "$gen" in
+      */systemd-debug-generator)
+        # keep it
+        ;;
+      *)
+        safe_remove "$gen"
+        ;;
+    esac
+  done
+
+  # remove catalog
   safe_remove $INSTALL/usr/lib/systemd/catalog
 
   # remove partition
