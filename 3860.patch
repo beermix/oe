@@ -1,0 +1,43 @@
+From d3c938dad3df4288401b5d5c367308fe4ec08d1f Mon Sep 17 00:00:00 2001
+From: 5schatten <supervisedthinking@gmail.com>
+Date: Thu, 19 Sep 2019 22:38:23 +0200
+Subject: [PATCH] pulseaudio: update to 13.0 / dropped upstreamed & renamed
+ patch
+
+---
+ packages/audio/pulseaudio/package.mk                         | 5 +++--
+ ...100.01-never-append-dirty-to-server-module-version.patch} | 0
+ ....02-check_uid.patch => pulseaudio-100.02-check_uid.patch} | 0
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+ rename packages/audio/pulseaudio/patches/{pulseaudio-0900.01-never-append-dirty-to-server-module-version.patch => pulseaudio-100.01-never-append-dirty-to-server-module-version.patch} (100%)
+ rename packages/audio/pulseaudio/patches/{pulseaudio-0900.02-check_uid.patch => pulseaudio-100.02-check_uid.patch} (100%)
+
+diff --git a/packages/audio/pulseaudio/package.mk b/packages/audio/pulseaudio/package.mk
+index d28ae529dc3..865bdabc818 100644
+--- a/packages/audio/pulseaudio/package.mk
++++ b/packages/audio/pulseaudio/package.mk
+@@ -3,13 +3,14 @@
+ # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+ 
+ PKG_NAME="pulseaudio"
+-PKG_VERSION="12.2"
+-PKG_SHA256="809668ffc296043779c984f53461c2b3987a45b7a25eb2f0a1d11d9f23ba4055"
++PKG_VERSION="13.0"
++PKG_SHA256="961b23ca1acfd28f2bc87414c27bb40e12436efcf2158d29721b1e89f3f28057"
+ PKG_LICENSE="GPL"
+ PKG_SITE="http://pulseaudio.org/"
+ PKG_URL="http://www.freedesktop.org/software/pulseaudio/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+ PKG_DEPENDS_TARGET="toolchain alsa-lib dbus libcap libsndfile libtool openssl soxr systemd glib:host"
+ PKG_LONGDESC="PulseAudio is a sound system for POSIX OSes, meaning that it is a proxy for your sound applications."
++PKG_TOOLCHAIN="configure"
+ 
+ if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then
+   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET sbc"
+diff --git a/packages/audio/pulseaudio/patches/pulseaudio-0900.01-never-append-dirty-to-server-module-version.patch b/packages/audio/pulseaudio/patches/pulseaudio-100.01-never-append-dirty-to-server-module-version.patch
+similarity index 100%
+rename from packages/audio/pulseaudio/patches/pulseaudio-0900.01-never-append-dirty-to-server-module-version.patch
+rename to packages/audio/pulseaudio/patches/pulseaudio-100.01-never-append-dirty-to-server-module-version.patch
+diff --git a/packages/audio/pulseaudio/patches/pulseaudio-0900.02-check_uid.patch b/packages/audio/pulseaudio/patches/pulseaudio-100.02-check_uid.patch
+similarity index 100%
+rename from packages/audio/pulseaudio/patches/pulseaudio-0900.02-check_uid.patch
+rename to packages/audio/pulseaudio/patches/pulseaudio-100.02-check_uid.patch
