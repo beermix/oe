@@ -14,25 +14,6 @@ image:
 noobs:
 	./scripts/image noobs
 
-amlpkg:
-	./scripts/image amlpkg
-
-# legacy sequential build targets
-system-st:
-	./scripts/image_st
-
-release-st:
-	./scripts/image_st release
-
-image-st:
-	./scripts/image_st mkimage
-
-noobs-st:
-	./scripts/image_st noobs
-
-amlpkg-st:
-	./scripts/image_st amlpkg
-
 clean:
 	rm -rf build.*
 
