@@ -5,9 +5,10 @@
 PKG_NAME="xorg-server"
 PKG_VERSION="0d8cc7bb180468fee72330f40d87f6e9db7b42c0"
 PKG_LICENSE="OSS"
-PKG_SITE="http://www.X.org"
+PKG_SITE="https://cgit.freedesktop.org/xorg/xserver/log/" # https://github.com/mirror/xserver
 PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_URL="https://cgit.freedesktop.org/xorg/xserver/snapshot/$PKG_VERSION.tar.xz"
+#PKG_URL="https://github.com/mirror/xserver/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper"
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_LONGDESC="Xorg is a full featured X server running on Intel x86 hardware."
