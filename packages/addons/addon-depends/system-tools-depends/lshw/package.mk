@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="lshw"
@@ -14,6 +14,6 @@ make_target() {
   make CXX=$CXX -C src/
 }
 
-#makeinstall_target() {
-#  : # nop
-#}
+makeinstall_target() {
+  : # nop
+}

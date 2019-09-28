@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
@@ -13,6 +13,9 @@ PKG_LONGDESC="A native Go implementation for connecting containers."
 PKG_TOOLCHAIN="manual"
 
 pre_make_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-mno-pclmul --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fdiagnostics-color=always||g"`
+
   case $TARGET_ARCH in
     x86_64)
       export GOARCH=amd64

@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="containerd"
-PKG_VERSION="1.2.7"
-PKG_SHA256="7179c709a0d187708a1eeddcbdecd7206b2c642dc4413bcdb049cd6b38d06801"
+PKG_VERSION="1.2.8"
+PKG_SHA256="6165ae2ad669d9ec6d317492d30a1511365bd31ad29efae757f19c1828bf75b3"
 PKG_LICENSE="APL"
 PKG_SITE="https://github.com/containerd/containerd/releases"
 PKG_URL="https://github.com/containerd/containerd/archive/v$PKG_VERSION.tar.gz"
@@ -19,7 +19,6 @@ pre_make_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-mno-pclmul --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fdiagnostics-color=always||g"`
 
-pre_make_target() {
   case ${TARGET_ARCH} in
     x86_64)
       export GOARCH=amd64

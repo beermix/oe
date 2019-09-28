@@ -9,7 +9,7 @@ PKG_SHA256="46b52f92cb258e038e3f29624e75a52e4d2f91502f56edeac0f0b2661b3b9c3d"
 PKG_REV="128"
 PKG_ARCH="any"
 PKG_LICENSE="ASL"
-PKG_SITE="http://www.docker.com/"
+PKG_SITE="https://github.com/docker/docker-ce/releases"
 PKG_URL="https://github.com/docker/docker-ce/archive/v${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini systemd"
 PKG_SECTION="service/system"
@@ -24,10 +24,12 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Docker"
 PKG_ADDON_TYPE="xbmc.service"
 
-configure_target() {
+pre_make_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-mno-pclmul --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fdiagnostics-color=always||g"`
+}
 
+configure_target() {
   export DOCKER_BUILDTAGS="daemon \
                            autogen \
                            exclude_graphdriver_devicemapper \
