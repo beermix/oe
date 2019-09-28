@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2009-2017 Lukas Rusak (lrusak@libreelec.tv)
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 # find . -type f -exec sed -i 's/etc\/docker/storage\/.kodi\/userdata\/addon_data\/service.system.docker\/config/g' {} +
