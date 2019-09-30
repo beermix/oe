@@ -1,0 +1,863 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 90dd960e8..650d9b5bb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -9,6 +9,7 @@ Vineet Gupta <Vineet.Gupta1@synopsys.com>
+ 
+ CSKY:
+ Guo Ren <ren_guo@c-sky.com>
++Mao Han <han_mao@c-sky.com>
+ 
+ MIPS:
+ Matthew Fortune <Matthew.Fortune@imgtec.com>
+diff --git a/Makefile.in b/Makefile.in
+index 1754040f7..16ee9ee00 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -144,14 +144,14 @@ $(top_builddir)include/dl-osinfo.h $(top_builddir)include/not-cancel.h:
+ $(ALL_HEADERS_BITS_COMMON):
+ 	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/common/bits/$(@F) $@
+ 
+-$(ALL_HEADERS_BITS_ARCH):
+-	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/$(TARGET_ARCH)/bits/$(@F) $@
+-
+ ifneq ($(ARCH_HAS_DEPRECATED_SYSCALLS),y)
+ $(ALL_HEADERS_BITS_COMMON_NO_LEGACY):
+ 	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/common-generic/bits/$(@F) $@
+ endif
+ 
++$(ALL_HEADERS_BITS_ARCH):
++	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/$(TARGET_ARCH)/bits/$(@F) $@
++
+ ifneq ($(TARGET_SUBARCH),)
+ $(ALL_HEADERS_BITS_SUBARCH):
+ 	$(do_ln) $(call rel_srcdir)libc/sysdeps/linux/$(TARGET_ARCH)/bits/$(TARGET_SUBARCH)/$(@F) $@
+diff --git a/docs/defines.txt b/docs/defines.txt
+index b23fac9c0..6af44bdd8 100644
+--- a/docs/defines.txt
++++ b/docs/defines.txt
+@@ -10,11 +10,28 @@ __USE_GNU, __USE_BSD, __USE_XOPEN[2K], __USE_SVID, __USE_POSIX...
+     If defined, user program which included us requests compat additions
+     from relevant standard or Unix flavor. See features.h for full list.
+ 
+-__USE_FILE_OFFSET64
++_LARGEFILE_SOURCE
++   If defined, headers will provide functions fseeko and ftello.
++_LARGEFILE64_SOURCE
++    If defined, headers will in addition to data types, constants and
++    functions named xxx (e.g. off_t, struct stat, F_SETLK, ftruncate())
++    supply data types, constants and functions named xxx64 (e.g. off64_t,
++    struct stat64, F_SETLK64, ftruncate64()) known as an interface for
++    64-bit file offsets.
+ __USE_LARGEFILE[64]
+-_LARGEFILE[64]_SOURCE
++    Defined to 1 and used internally when built with _LARGEFILE[64]_SOURCE.
++    Undefined otherwise.
++
+ _FILE_OFFSET_BITS
+-    ???
++    Select default filesystem interface. When defined as 64 the data types,
++    constants and functions mentioned in _LARGEFILE64_SOURCE as xxx are
++    aliased to the corresponding xxx64 data types, constants and functions.
++    _FILE_OFFSET_BITS=64 enables both __USE_LARGEFILE and __USE_LARGEFILE64.
++    This flag does not affect the way libc itself is built, it only affects
++    what declarations are provided to library user.
++__USE_FILE_OFFSET64
++    Defined to 1 and used internally when built with _FILE_OFFSET_BITS=64.
++    Undefined otherwise.
+ 
+ __THROW
+     Function annotation "I do not throw anything".
+diff --git a/include/elf.h b/include/elf.h
+index a9957fc31..9aae04cef 100644
+--- a/include/elf.h
++++ b/include/elf.h
+@@ -271,9 +271,10 @@ typedef struct
+ #define EM_AARCH64	183		/* ARM AARCH64 */
+ #define EM_MICROBLAZE	189		/* Xilinx Microblaze */
+ #define EM_ARCV2	195		/* ARCv2 Cores */
++#define EM_CSKY		252		/* C-SKY Cores */
+ 
+ /* NEXT FREE NUMBER: Increment this after adding your official arch number */
+-#define EM_NUM		196
++#define EM_NUM		253
+ 
+ /* If it is necessary to assign new unofficial EM_* values, please pick large
+    random numbers (0x8523, 0xa7f2, etc.) to minimize the chances of collision
+diff --git a/include/sys/uio.h b/include/sys/uio.h
+index aa766f9b1..330426fec 100644
+--- a/include/sys/uio.h
++++ b/include/sys/uio.h
+@@ -59,7 +59,7 @@ extern ssize_t writev (int __fd, const struct iovec *__iovec, int __count);
+    This function is a cancellation point and therefore not marked with
+    __THROW.  */
+ extern ssize_t preadv (int __fd, const struct iovec *__iovec, int __count,
+-		       off_t __offset) __wur;
++		       __off64_t __offset) __wur;
+ 
+ /* Write data pointed by the buffers described by IOVEC, which is a
+    vector of COUNT 'struct iovec's, to file descriptor FD at the given
+@@ -71,7 +71,7 @@ extern ssize_t preadv (int __fd, const struct iovec *__iovec, int __count,
+    This function is a cancellation point and therefore not marked with
+    __THROW.  */
+ extern ssize_t pwritev (int __fd, const struct iovec *__iovec, int __count,
+-			off_t __offset) __wur;
++			__off64_t __offset) __wur;
+ #endif	/* Use misc.  */
+ 
+ __END_DECLS
+diff --git a/ldso/ldso/csky/dl-sysdep.h b/ldso/ldso/csky/dl-sysdep.h
+index 04aae68f6..223045053 100644
+--- a/ldso/ldso/csky/dl-sysdep.h
++++ b/ldso/ldso/csky/dl-sysdep.h
+@@ -18,7 +18,7 @@ do {                                                        \
+ 
+ /* Here we define the magic numbers that this dynamic loader should accept */
+ #define MAGIC1 EM_MCORE
+-#undef  MAGIC2
++#define MAGIC2 EM_CSKY
+ 
+ /* Used for error messages */
+ #define ELF_TARGET "csky"
+diff --git a/ldso/ldso/dl-elf.c b/ldso/ldso/dl-elf.c
+index 9cb46dea4..2bcfcda64 100644
+--- a/ldso/ldso/dl-elf.c
++++ b/ldso/ldso/dl-elf.c
+@@ -863,7 +863,7 @@ struct elf_resolve *_dl_load_elf_shared_library(unsigned int rflags,
+ 		{
+ # ifdef __SUPPORT_LD_DEBUG_EARLY__
+ 			char *tmp = (char *) tpnt->l_tls_initimage;
+-			tpnt->l_tls_initimage = (char *) DL_RELOC_ADDR(tpnt->loadaddr, tlsppnt->p_vaddr;
++			tpnt->l_tls_initimage = (char *) DL_RELOC_ADDR(tpnt->loadaddr, tlsppnt->p_vaddr);
+ 			_dl_debug_early("Relocated TLS initial image from %x to %x (size = %x)\n", tmp, tpnt->l_tls_initimage, tpnt->l_tls_initimage_size);
+ 			tmp = 0;
+ # else
+diff --git a/libc/inet/ethers.c b/libc/inet/ethers.c
+index 857e5d165..caa4a644c 100644
+--- a/libc/inet/ethers.c
++++ b/libc/inet/ethers.c
+@@ -32,11 +32,11 @@ static const char *__ether_line(const char *line, struct ether_addr *addr)
+ 	if (!res)
+ 		return NULL;
+ 
+-	while (*line && (*line != ' ') && (*line != '\t'))
++	while (*line && (*line != '\n') && (*line != ' ') && (*line != '\t'))
+ 		line++;
+-	while (*line && ((*line == ' ')	|| (*line == '\t')))
++	while (*line && (*line != '\n') && ((*line == ' ') || (*line == '\t')))
+ 		line++;
+-	return (*line) ? line : NULL;
++	return (*line && (*line != '\n')) ? line : NULL;
+ }
+ 
+ /*
+@@ -45,9 +45,7 @@ static const char *__ether_line(const char *line, struct ether_addr *addr)
+  */
+ static const char *__ether_line_w(char *line, struct ether_addr *addr)
+ {
+-	char *end = strchr(line, '#');
+-	if (!end)
+-		end = strchr(line, '\n');
++	char *end = strpbrk(line, "#\n");
+ 	if (end)
+ 		*end = '\0';
+ 	return __ether_line(line, addr);
+diff --git a/libc/misc/dirent/opendir.c b/libc/misc/dirent/opendir.c
+index 8af00f88c..0ef8364f6 100644
+--- a/libc/misc/dirent/opendir.c
++++ b/libc/misc/dirent/opendir.c
+@@ -16,6 +16,9 @@
+ #include <dirent.h>
+ #include "dirstream.h"
+ 
++#define STAT stat64
++#define FSTAT fstat64
++
+ static DIR *fd_to_DIR(int fd, __blksize_t size)
+ {
+ 	DIR *ptr;
+@@ -43,9 +46,9 @@ static DIR *fd_to_DIR(int fd, __blksize_t size)
+ DIR *fdopendir(int fd)
+ {
+ 	int flags;
+-	struct stat st;
++	struct STAT st;
+ 
+-	if (fstat(fd, &st))
++	if (FSTAT(fd, &st))
+ 		return NULL;
+ 	if (!S_ISDIR(st.st_mode)) {
+ 		__set_errno(ENOTDIR);
+@@ -69,12 +72,12 @@ DIR *fdopendir(int fd)
+ DIR *opendir(const char *name)
+ {
+ 	int fd;
+-	struct stat statbuf;
++	struct STAT statbuf;
+ 	DIR *ptr;
+ 
+ #ifndef O_DIRECTORY
+ 	/* O_DIRECTORY is linux specific and has been around since like 2.1.x */
+-	if (stat(name, &statbuf))
++	if (STAT(name, &statbuf))
+ 		return NULL;
+ 	if (!S_ISDIR(statbuf.st_mode)) {
+ 		__set_errno(ENOTDIR);
+@@ -90,7 +93,7 @@ DIR *opendir(const char *name)
+ 	 * defined and since Linux has supported it for like ever, i'm not going
+ 	 * to worry about it right now (if ever). */
+ 
+-	if (fstat(fd, &statbuf) < 0) {
++	if (FSTAT(fd, &statbuf) < 0) {
+ 		/* this close() never fails
+ 		 *int saved_errno;
+ 		 *saved_errno = errno; */
+diff --git a/libc/misc/internals/__uClibc_main.c b/libc/misc/internals/__uClibc_main.c
+index 849bca8d4..affa0ce0a 100644
+--- a/libc/misc/internals/__uClibc_main.c
++++ b/libc/misc/internals/__uClibc_main.c
+@@ -370,7 +370,7 @@ void __uClibc_main(int (*main)(int, char **, char **), int argc,
+ 		    char **argv, void (*app_init)(void), void (*app_fini)(void),
+ 		    void (*rtld_fini)(void), void *stack_end attribute_unused)
+ {
+-#if !defined __ARCH_HAS_NO_LDSO__ && !defined SHARED
++#ifndef SHARED
+     unsigned long *aux_dat;
+     ElfW(auxv_t) auxvt[AT_EGID + 1];
+ #endif
+@@ -396,7 +396,7 @@ void __uClibc_main(int (*main)(int, char **, char **), int argc,
+ 	__environ = &argv[argc];
+     }
+ 
+-#if !defined __ARCH_HAS_NO_LDSO__ && !defined SHARED
++#ifndef SHARED
+     /* Pull stuff from the ELF header when possible */
+     memset(auxvt, 0x00, sizeof(auxvt));
+     aux_dat = (unsigned long*)__environ;
+diff --git a/libc/stdio/open_memstream.c b/libc/stdio/open_memstream.c
+index 17ef191cb..71a84138d 100644
+--- a/libc/stdio/open_memstream.c
++++ b/libc/stdio/open_memstream.c
+@@ -156,9 +156,10 @@ FILE *open_memstream(char **bufloc, size_t *sizeloc)
+ 			__STDIO_STREAM_VALIDATE(fp);
+ 			return fp;
+ 		}
++
++		free(cookie->buf);
+ 	}
+ 
+-	free(cookie->buf);
+  EXIT_cookie:
+ 	free(cookie);
+ 
+diff --git a/libc/string/generic/memmove.c b/libc/string/generic/memmove.c
+index bf78c4778..5389cc029 100644
+--- a/libc/string/generic/memmove.c
++++ b/libc/string/generic/memmove.c
+@@ -23,8 +23,9 @@
+ #include "memcopy.h"
+ #include "pagecopy.h"
+ 
+-#ifdef __ARCH_HAS_BWD_MEMCPY__
++#if defined(__ARCH_HAS_BWD_MEMCPY__) || defined(__mips__)
+ /* generic-opt memmove assumes memcpy does forward copying! */
++/* also needed for MIPS as its memcpy does not support overlapping regions */
+ #include "_memcpy_fwd.c"
+ #endif
+ 
+@@ -224,8 +225,11 @@ void *memmove (void *dest, const void *src, size_t len)
+      Reduces the working set.  */
+   if (dstp - srcp >= len)	/* *Unsigned* compare!  */
+     {
+-#ifndef __ARCH_HAS_BWD_MEMCPY__
+-      /* Backward memcpy implementation cannot be used */
++      /*  Calling memcpy() from memmove() should be skipped in two cases:
++       *  a) if arch's memcpy uses a backward copying (SH4)
++       *  b) if arch's memcpy is not fully safe for overlapping regions (MIPS)
++       */
++#if !defined(__ARCH_HAS_BWD_MEMCPY_) && !defined(__mips__)
+       memcpy(dest, src, len);
+ #else
+       /* Copy from the beginning to the end.  */
+diff --git a/libc/string/xtensa/strcmp.S b/libc/string/xtensa/strcmp.S
+index a16da5da2..a106bee67 100644
+--- a/libc/string/xtensa/strcmp.S
++++ b/libc/string/xtensa/strcmp.S
+@@ -37,11 +37,6 @@
+ 	.text
+ 	.align 4
+ 	.literal_position
+-	.literal .Lmask0, MASK0
+-	.literal .Lmask1, MASK1
+-	.literal .Lmask2, MASK2
+-	.literal .Lmask3, MASK3
+-	.literal .Lmask4, MASK4
+ ENTRY (strcmp)
+ 	/* a2 = s1, a3 = s2 */
+ 
+@@ -130,10 +125,9 @@ ENTRY (strcmp)
+ 	.align	4
+ #if XCHAL_HAVE_LOOPS
+ .Laligned:
+-	.begin	no-transform
+ 	movi	a11, 0
+-	l32r	a4, .Lmask0	/* mask for byte 0 */
+-	l32r	a7, .Lmask4
++	movi	a4, MASK0	/* mask for byte 0 */
++	movi	a7, MASK4
+ 	loop	a11, .Laligned_done /* Loop forever. */
+ 
+ 	/* First unrolled loop body.  */
+@@ -184,10 +178,10 @@ ENTRY (strcmp)
+ 	   If not, loop over the rest of string using normal algorithm.  */
+ 
+ 	bnone	a8, a4, .Leq	/* if byte 0 is zero */
+-	l32r	a5, .Lmask1	/* mask for byte 1 */
+-	l32r	a6, .Lmask2	/* mask for byte 2 */
++	movi	a5, MASK1	/* mask for byte 1 */
++	movi	a6, MASK2	/* mask for byte 2 */
+ 	bnone	a8, a5, .Leq	/* if byte 1 is zero */
+-	l32r	a7, .Lmask3	/* mask for byte 3 */
++	movi	a7, MASK3	/* mask for byte 3 */
+ 	bnone	a8, a6, .Leq	/* if byte 2 is zero */
+ 	bnone	a8, a7, .Leq	/* if byte 3 is zero */
+ 	addi.n	a2, a2, 4	/* advance s1 pointer */
+@@ -196,7 +190,6 @@ ENTRY (strcmp)
+ 
+ 	/* align (1 mod 4) */
+ 	loop	a11, .Leq	/* loop forever */
+-	.end	no-transform
+ 
+ 	l32i	a8, a2, 0	/* get word from s1 */
+ 	l32i	a9, a3, 0	/* get word from s2 */
+diff --git a/libc/sysdeps/linux/common-generic/bits/statfs.h b/libc/sysdeps/linux/common-generic/bits/statfs.h
+index a2767b49a..23519a57e 100644
+--- a/libc/sysdeps/linux/common-generic/bits/statfs.h
++++ b/libc/sysdeps/linux/common-generic/bits/statfs.h
+@@ -11,65 +11,61 @@
+ #include <endian.h>
+ #include <bits/align64bit.h>
+ #include <bits/types.h>
++#include <bits/wordsize.h>
+ 
++/* 64-bit libc uses the kernel's 'struct statfs', accessed via the
++   statfs() syscall; 32-bit libc uses the kernel's 'struct statfs64'
++   and accesses it via the statfs64() syscall.  All the various
++   APIs offered by libc use the kernel shape for their struct statfs
++   structure; the only difference is that 32-bit programs not
++   using __USE_FILE_OFFSET64 only see the low 32 bits of some
++   of the fields (the __fsblkcnt_t and __fsfilcnt_t fields).  */
++
++#if defined __USE_FILE_OFFSET64
++# define __field64(type, type64, name) type64 name
++#elif __WORDSIZE == 64
++# define __field64(type, type64, name) type name
++#elif __BYTE_ORDER == __LITTLE_ENDIAN
++# define __field64(type, type64, name) \
++  type name __attribute__((__aligned__ (__alignof__ (type64)))); int __##name##_pad
++#else
++# define __field64(type, type64, name) \
++  int __##name##_pad __attribute__((__aligned__ (__alignof__ (type64)))); type name
++#endif
+ 
+ struct statfs
+   {
+-    __U32_TYPE f_type;
+-    __U32_TYPE f_bsize;
+-#ifndef __USE_FILE_OFFSET64
+-# if __BYTE_ORDER == __LITTLE_ENDIAN
+-    __U32_TYPE f_blocks;
+-    __U32_TYPE __pad1;
+-    __U32_TYPE f_bfree;
+-    __U32_TYPE __pad2;
+-    __U32_TYPE f_bavail;
+-    __U32_TYPE __pad3;
+-    __U32_TYPE f_files;
+-    __U32_TYPE __pad4;
+-    __U32_TYPE f_ffree;
+-    __U32_TYPE __pad5;
+-# else
+-    __U32_TYPE __pad1;
+-    __U32_TYPE f_blocks;
+-    __U32_TYPE __pad2;
+-    __U32_TYPE f_bfree;
+-    __U32_TYPE __pad3;
+-    __U32_TYPE f_bavail;
+-    __U32_TYPE __pad4;
+-    __U32_TYPE f_files;
+-    __U32_TYPE __pad5;
+-    __U32_TYPE f_ffree;
+-# endif /* __LITTLE_ENDIAN */
+-#else
+-    __U64_TYPE f_blocks;
+-    __U64_TYPE f_bfree;
+-    __U64_TYPE f_bavail;
+-    __U64_TYPE f_files;
+-    __U64_TYPE f_ffree;
+-#endif /* __USE_FILE_OFFSET64 */
++    __SWORD_TYPE f_type;
++    __SWORD_TYPE f_bsize;
++    __field64(__fsblkcnt_t, __fsblkcnt64_t, f_blocks);
++    __field64(__fsblkcnt_t, __fsblkcnt64_t, f_bfree);
++    __field64(__fsblkcnt_t, __fsblkcnt64_t, f_bavail);
++    __field64(__fsfilcnt_t, __fsfilcnt64_t, f_files);
++    __field64(__fsfilcnt_t, __fsfilcnt64_t, f_ffree);
+     __fsid_t f_fsid;
+-    __U32_TYPE f_namelen;
+-    __U32_TYPE f_frsize;
+-    __U32_TYPE f_flags;
+-    __U32_TYPE f_spare[4];
+-  } __ARCH_64BIT_ALIGNMENT__;
++    __SWORD_TYPE f_namelen;
++    __SWORD_TYPE f_frsize;
++    __SWORD_TYPE f_flags;
++    __SWORD_TYPE f_spare[4];
++  };
++
++#undef __field64
+ 
+ #ifdef __USE_LARGEFILE64
+ struct statfs64
+   {
+-    __U32_TYPE f_type;
+-    __U32_TYPE f_bsize;
++    __SWORD_TYPE f_type;
++    __SWORD_TYPE f_bsize;
+     __U64_TYPE f_blocks;
+     __U64_TYPE f_bfree;
+     __U64_TYPE f_bavail;
+     __U64_TYPE f_files;
+     __U64_TYPE f_ffree;
+     __fsid_t f_fsid;
+-    __U32_TYPE f_namelen;
+-    __U32_TYPE f_frsize;
+-    __U32_TYPE f_flags;
+-    __U32_TYPE f_spare[4];
++    __SWORD_TYPE f_namelen;
++    __SWORD_TYPE f_frsize;
++    __SWORD_TYPE f_flags;
++    __SWORD_TYPE f_spare[4];
+   };
+ #endif
+ 
+diff --git a/libc/sysdeps/linux/common/__syscall_fcntl64.c b/libc/sysdeps/linux/common/__syscall_fcntl64.c
+index 0c13d152f..696b1ff41 100644
+--- a/libc/sysdeps/linux/common/__syscall_fcntl64.c
++++ b/libc/sysdeps/linux/common/__syscall_fcntl64.c
+@@ -30,7 +30,7 @@ int fcntl64(int fd, int cmd, ...)
+ 	arg = va_arg(list, long);
+ 	va_end(list);
+ 
+-	if (SINGLE_THREAD_P || (cmd != F_SETLKW64))
++	if (SINGLE_THREAD_P || (cmd != F_SETLKW && cmd != F_SETLKW64))
+ 		return __NC(fcntl64)(fd, cmd, arg);
+ # ifdef __NEW_THREADS
+ 	oldtype = LIBC_CANCEL_ASYNC();
+diff --git a/libc/sysdeps/linux/common/fstatfs.c b/libc/sysdeps/linux/common/fstatfs.c
+index fcb0820eb..0b2709ce3 100644
+--- a/libc/sysdeps/linux/common/fstatfs.c
++++ b/libc/sysdeps/linux/common/fstatfs.c
+@@ -30,15 +30,6 @@ _syscall2(int, __libc_fstatfs, int, fd, struct statfs *, buf)
+ int __libc_fstatfs (int __fildes, struct statfs *__buf)
+ {
+ 	int err = INLINE_SYSCALL(fstatfs64, 3, __fildes, sizeof(*__buf), __buf);
+-
+-	if (err == 0) {
+-		/* Did we overflow? */
+-		if (__buf->__pad1 || __buf->__pad2 || __buf->__pad3 ||
+-		    __buf->__pad4 || __buf->__pad5) {
+-			__set_errno(EOVERFLOW);
+-			return -1;
+-		}
+-	}
+ 	return err;
+ };
+ /* Redefined fstatfs because we need it for backwards compatibility */
+diff --git a/libc/sysdeps/linux/common/ftruncate.c b/libc/sysdeps/linux/common/ftruncate.c
+index b9a69714f..637050777 100644
+--- a/libc/sysdeps/linux/common/ftruncate.c
++++ b/libc/sysdeps/linux/common/ftruncate.c
+@@ -15,7 +15,11 @@
+ int ftruncate(int fd, __off_t length)
+ {
+ # if __WORDSIZE == 32
++#  if defined(__UCLIBC_SYSCALL_ALIGN_64BIT__)
++	return INLINE_SYSCALL(ftruncate64, 4, fd, 0, OFF_HI_LO(length));
++#  else
+ 	return INLINE_SYSCALL(ftruncate64, 3, fd, OFF_HI_LO(length));
++#  endif
+ # else
+ 	return ftruncate64(fd, length);
+ # endif
+diff --git a/libc/sysdeps/linux/common/openat.c b/libc/sysdeps/linux/common/openat.c
+index f71567cdc..62451df4c 100644
+--- a/libc/sysdeps/linux/common/openat.c
++++ b/libc/sysdeps/linux/common/openat.c
+@@ -9,6 +9,7 @@
+ #include <sys/syscall.h>
+ #include <fcntl.h>
+ #include <stdarg.h>
++#include <cancel.h>
+ 
+ #ifdef __NR_openat
+ # define __NR___syscall_openat __NR_openat
+@@ -16,13 +17,25 @@ static __inline__ _syscall4(int, __syscall_openat, int, fd, const char *, file,
+ 
+ int __openat(int fd, const char *file, int o_flag, ...)
+ {
++#ifdef __NEW_THREADS
++        int oldtype, result;
++#endif
+ 	va_list ap;
+ 	mode_t mode;
+ 
+ 	va_start(ap, o_flag);
+ 	mode = va_arg(ap, int);
+ 	va_end(ap);
+-	return __syscall_openat(fd, file, o_flag, mode);
++
++	if (SINGLE_THREAD_P)
++		return __syscall_openat(fd, file, o_flag, mode);
++
++#ifdef __NEW_THREADS
++        oldtype = LIBC_CANCEL_ASYNC ();
++        result = __syscall_openat(fd, file, o_flag, mode);
++        LIBC_CANCEL_RESET (oldtype);
++        return result;
++#endif
+ }
+ 
+ strong_alias_untyped(__openat,openat)
+diff --git a/libc/sysdeps/linux/common/preadv.c b/libc/sysdeps/linux/common/preadv.c
+index fd9dde4b9..6a07d5df8 100644
+--- a/libc/sysdeps/linux/common/preadv.c
++++ b/libc/sysdeps/linux/common/preadv.c
+@@ -21,7 +21,7 @@
+ 
+ #ifdef __NR_preadv
+ ssize_t
+-preadv (int fd, const struct iovec *vector, int count, off_t offset)
++preadv (int fd, const struct iovec *vector, int count, __off64_t offset)
+ {
+   unsigned long pos_l, pos_h;
+ 
+diff --git a/libc/sysdeps/linux/common/pwritev.c b/libc/sysdeps/linux/common/pwritev.c
+index bef5bcf69..f07c40e6d 100644
+--- a/libc/sysdeps/linux/common/pwritev.c
++++ b/libc/sysdeps/linux/common/pwritev.c
+@@ -21,7 +21,7 @@
+ 
+ #ifdef __NR_pwritev
+ ssize_t
+-pwritev (int fd, const struct iovec *vector, int count, off_t offset)
++pwritev (int fd, const struct iovec *vector, int count, __off64_t offset)
+ {
+   unsigned long pos_l, pos_h;
+ 
+diff --git a/libc/sysdeps/linux/common/statfs.c b/libc/sysdeps/linux/common/statfs.c
+index ab9ec0e56..2990ff3e2 100644
+--- a/libc/sysdeps/linux/common/statfs.c
++++ b/libc/sysdeps/linux/common/statfs.c
+@@ -18,16 +18,6 @@ extern __typeof(statfs) __libc_statfs attribute_hidden;
+ int __libc_statfs(const char *path, struct statfs *buf)
+ {
+ 	int err = INLINE_SYSCALL(statfs64, 3, path, sizeof(*buf), buf);
+-
+-	if (err == 0) {
+-		/* Did we overflow? */
+-		if (buf->__pad1 || buf->__pad2 || buf->__pad3 ||
+-		    buf->__pad4 || buf->__pad5) {
+-			__set_errno(EOVERFLOW);
+-			return -1;
+-		}
+-	}
+-
+ 	return err;
+ }
+ # if defined __UCLIBC_LINUX_SPECIFIC__ || defined __UCLIBC_HAS_THREADS_NATIVE__
+diff --git a/libc/sysdeps/linux/mips/bits/syscalls.h b/libc/sysdeps/linux/mips/bits/syscalls.h
+index 787bb7d55..b8f80597e 100644
+--- a/libc/sysdeps/linux/mips/bits/syscalls.h
++++ b/libc/sysdeps/linux/mips/bits/syscalls.h
+@@ -29,6 +29,16 @@
+        }								\
+      result_var; })
+ 
++#define INLINE_SYSCALL_NOERR_NCS(name, nr, args...)			\
++({									\
++	INTERNAL_SYSCALL_DECL(err);					\
++	long res = INTERNAL_SYSCALL_NCS(name, err, nr, args);		\
++	if (unlikely(INTERNAL_SYSCALL_ERROR_P(res, err))) {		\
++	    res = -res;							\
++	}								\
++        res;								\
++})
++
+ #define INTERNAL_SYSCALL_DECL(err) long err attribute_unused
+ 
+ #define INTERNAL_SYSCALL_ERROR_P(val, err)   ((long) (err))
+diff --git a/libc/sysdeps/linux/riscv64/bits/mman.h b/libc/sysdeps/linux/riscv64/bits/mman.h
+index 316f87d99..fa6f8e6a0 100644
+--- a/libc/sysdeps/linux/riscv64/bits/mman.h
++++ b/libc/sysdeps/linux/riscv64/bits/mman.h
+@@ -31,6 +31,7 @@
+ # define MAP_HUGETLB	0x40000		/* Create huge page mapping.  */
+ # define MAP_SYNC	0x80000		/* Perform synchronous page
+ 					   faults for the mapping.  */
++# define MAP_UNINITIALIZED 0x4000000    /* For anonymous mmap, memory could -   					   be uninitialized.  */
+ #endif
+ 
+ /* Include generic Linux declarations.  */
+diff --git a/libc/sysdeps/linux/riscv64/crt1.S b/libc/sysdeps/linux/riscv64/crt1.S
+index 872e0b12e..1e8403d26 100644
+--- a/libc/sysdeps/linux/riscv64/crt1.S
++++ b/libc/sysdeps/linux/riscv64/crt1.S
+@@ -52,6 +52,11 @@ _start:
+ 	la   a0, main
+ 	REG_L a1, 0(sp)      /* argc.  */
+ 	addi  a2, sp, SZREG  /* argv.  */
++	/*
++	 * No support fo app_init/app_fini as we don't support shared libraries.
++	 */
++	mv    a3, zero
++	mv    a4, zero
+ 	andi  sp, sp, ALMASK /* Align stack. */
+ 	mv    a6, sp  /* stack_end.  */
+ 
+diff --git a/libc/sysdeps/linux/sparc/bits/syscalls.h b/libc/sysdeps/linux/sparc/bits/syscalls.h
+index 75af7a157..28edc0568 100644
+--- a/libc/sysdeps/linux/sparc/bits/syscalls.h
++++ b/libc/sysdeps/linux/sparc/bits/syscalls.h
+@@ -33,7 +33,7 @@
+             register long __g1 __asm__("g1") = sys_num;     \
+             LOAD_ARGS_##nr(args)                            \
+             __asm__ __volatile__( __SYSCALL_STRING          \
+-                : "=r" (__res), "=&r" (__o0)                \
++                : "=r" (__res), "=r" (__o0)                \
+                 : "1" (__o0) ASM_ARGS_##nr, "r" (__g1)     \
+                 : __SYSCALL_CLOBBERS );                                   \
+         }                                                   \
+diff --git a/libc/sysdeps/linux/xtensa/bits/poll.h b/libc/sysdeps/linux/xtensa/bits/poll.h
+new file mode 100644
+index 000000000..4588cc326
+--- /dev/null
++++ b/libc/sysdeps/linux/xtensa/bits/poll.h
+@@ -0,0 +1,49 @@
++/* Copyright (C) 1997, 2001, 2006 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#ifndef _SYS_POLL_H
++# error "Never use <bits/poll.h> directly; include <sys/poll.h> instead."
++#endif
++
++/* Event types that can be polled for.  These bits may be set in `events'
++   to indicate the interesting event types; they will appear in `revents'
++   to indicate the status of the file descriptor.  */
++#define POLLIN		0x001		/* There is data to read.  */
++#define POLLPRI		0x002		/* There is urgent data to read.  */
++#define POLLOUT		0x004		/* Writing now will not block.  */
++
++#ifdef __USE_XOPEN
++/* These values are defined in XPG4.2.  */
++# define POLLRDNORM	0x040		/* Normal data may be read.  */
++# define POLLRDBAND	0x080		/* Priority data may be read.  */
++# define POLLWRNORM	POLLOUT		/* Writing now will not block.  */
++# define POLLWRBAND	0x100		/* Priority data may be written.  */
++#endif
++
++#ifdef __USE_GNU
++/* These are extensions for Linux.  */
++# define POLLMSG	0x400
++# define POLLREMOVE	0x800
++# define POLLRDHUP	0x2000
++#endif
++
++/* Event types always implicitly polled for.  These bits need not be set in
++   `events', but they will appear in `revents' to indicate the status of
++   the file descriptor.  */
++#define POLLERR		0x008		/* Error condition.  */
++#define POLLHUP		0x010		/* Hung up.  */
++#define POLLNVAL	0x020		/* Invalid polling request.  */
+diff --git a/libc/termios/ttyname.c b/libc/termios/ttyname.c
+index 5fcf23b64..9cd281be8 100644
+--- a/libc/termios/ttyname.c
++++ b/libc/termios/ttyname.c
+@@ -31,6 +31,9 @@
+ #include <dirent.h>
+ #include <sys/stat.h>
+ 
++#define STAT stat64
++#define FSTAT fstat64
++#define LSTAT lstat64
+ 
+ #define TTYNAME_BUFLEN		32
+ 
+@@ -45,8 +48,8 @@ static const char dirlist[] =
+ int ttyname_r(int fd, char *ubuf, size_t ubuflen)
+ {
+ 	struct dirent *d;
+-	struct stat st;
+-	struct stat dst;
++	struct STAT st;
++	struct STAT dst;
+ 	const char *p;
+ 	char *s;
+ 	DIR *fp;
+@@ -54,7 +57,7 @@ int ttyname_r(int fd, char *ubuf, size_t ubuflen)
+ 	size_t len;
+ 	char buf[TTYNAME_BUFLEN];
+ 
+-	if (fstat(fd, &st) < 0) {
++	if (FSTAT(fd, &st) < 0) {
+ 		return errno;
+ 	}
+ 
+@@ -86,7 +89,7 @@ int ttyname_r(int fd, char *ubuf, size_t ubuflen)
+ 
+ 			strcpy(s, d->d_name);
+ 
+-			if ((lstat(buf, &dst) == 0)
++			if ((LSTAT(buf, &dst) == 0)
+ #if 0
+ 				/* Stupid filesystems like cramfs fail to guarantee that
+ 				 * st_ino and st_dev uniquely identify a file, contrary to
+diff --git a/libc/unistd/fpathconf.c b/libc/unistd/fpathconf.c
+index 556343be2..82c34c4da 100644
+--- a/libc/unistd/fpathconf.c
++++ b/libc/unistd/fpathconf.c
+@@ -24,6 +24,8 @@
+ #include <sys/stat.h>
+ #include <sys/statfs.h>
+ 
++#define STAT stat64
++#define FSTAT fstat64
+ 
+ #ifndef __USE_FILE_OFFSET64
+ extern int fstatfs (int __fildes, struct statfs *__buf)
+@@ -205,9 +207,9 @@ long int fpathconf(int fd, int name)
+ #if defined _POSIX_ASYNC_IO
+ 	    {
+ 		/* AIO is only allowed on regular files and block devices.  */
+-		struct stat st;
++		struct STAT st;
+ 
+-		if (fstat (fd, &st) < 0 || (! S_ISREG (st.st_mode) && ! S_ISBLK (st.st_mode)))
++		if (FSTAT (fd, &st) < 0 || (! S_ISREG (st.st_mode) && ! S_ISBLK (st.st_mode)))
+ 		    return -1;
+ 		else
+ 		    return 1;
+diff --git a/libpthread/nptl/Makefile.in b/libpthread/nptl/Makefile.in
+index bd220ba8f..52381b8c6 100644
+--- a/libpthread/nptl/Makefile.in
++++ b/libpthread/nptl/Makefile.in
+@@ -146,15 +146,18 @@ CFLAGS-clock_nanosleep.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-close.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-connect.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-creat.c = -fexceptions -fasynchronous-unwind-tables
++CFLAGS-creat64.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-fdatasync.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-fsync.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-lockf.c = -fexceptions
++CFLAGS-lockf64.c = -fexceptions
+ CFLAGS-msgrcv.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-msgsnd.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-msync.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-nanosleep.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-open64.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-open.c = -fexceptions -fasynchronous-unwind-tables
++CFLAGS-openat.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-pause.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-poll.c = -fexceptions -fasynchronous-unwind-tables
+ CFLAGS-ppoll.c = -fexceptions -fasynchronous-unwind-tables
+diff --git a/libpthread/nptl/init.c b/libpthread/nptl/init.c
+index 74d30c739..4959d5ed8 100644
+--- a/libpthread/nptl/init.c
++++ b/libpthread/nptl/init.c
+@@ -292,7 +292,12 @@ __pthread_initialize_minimal_internal (void)
+ 
+   /* Make sure it meets the minimum size that allocate_stack
+      (allocatestack.c) will demand, which depends on the page size.  */
++  #ifdef SHARED
++  extern size_t GLRO(dl_pagesize);
++  const uintptr_t pagesz = GLRO(dl_pagesize);
++  #else
+   const uintptr_t pagesz = sysconf (_SC_PAGESIZE);
++  #endif
+   const size_t minstack = pagesz + __static_tls_size + MINIMAL_REST_STACK;
+   if (limit.rlim_cur < minstack)
+     limit.rlim_cur = minstack;
+diff --git a/libpthread/nptl/sysdeps/generic/dl-tls.c b/libpthread/nptl/sysdeps/generic/dl-tls.c
+index 989e587a2..7d25e4706 100644
+--- a/libpthread/nptl/sysdeps/generic/dl-tls.c
++++ b/libpthread/nptl/sysdeps/generic/dl-tls.c
+@@ -48,6 +48,9 @@
+ /* Value used for dtv entries for which the allocation is delayed.  */
+ # define TLS_DTV_UNALLOCATED	((void *) -1l)
+ 
++#ifndef SHARED
++extern dtv_t static_dtv;
++#endif
+ 
+ /* Out-of-memory handler.  */
+ # ifdef SHARED
+@@ -584,6 +587,8 @@ _dl_deallocate_tls (void *tcb, bool dealloc_tcb)
+   /* The array starts with dtv[-1].  */
+ #ifdef SHARED
+   if (dtv != GL(dl_initial_dtv))
++#else
++  if ((dtv - 1) != &static_dtv)
+ #endif
+     free (dtv - 1);
+ 
+diff --git a/libpthread/nptl/sysdeps/generic/libc-tls.c b/libpthread/nptl/sysdeps/generic/libc-tls.c
+index a6df4cdc4..d746c9a38 100644
+--- a/libpthread/nptl/sysdeps/generic/libc-tls.c
++++ b/libpthread/nptl/sysdeps/generic/libc-tls.c
+@@ -42,7 +42,10 @@ extern size_t _dl_phnum;
+ extern int __tdata_start;
+ #endif
+ 
+-static dtv_t static_dtv[2 + TLS_SLOTINFO_SURPLUS];
++#ifdef SHARED
++static
++#endif
++dtv_t static_dtv[2 + TLS_SLOTINFO_SURPLUS];
+ 
+ 
+ static struct
+diff --git a/libuargp/argp-parse.c b/libuargp/argp-parse.c
+index ecd5e7eb6..030bc4f9f 100644
+--- a/libuargp/argp-parse.c
++++ b/libuargp/argp-parse.c
+@@ -112,7 +112,7 @@ argp_default_parser (int key, char *arg, struct argp_state *state)
+       break;
+ 
+     case OPT_PROGNAME:         /* Set the program name.  */
+-#if defined _LIBC || HAVE_DECL_PROGRAM_INVOCATION_NAME
++#if defined _LIBC && defined(__UCLIBC_HAS_PROGRAM_INVOCATION_NAME__)
+       program_invocation_name = arg;
+ #endif
+       /* [Note that some systems only have PROGRAM_INVOCATION_SHORT_NAME (aka
+@@ -126,7 +126,7 @@ argp_default_parser (int key, char *arg, struct argp_state *state)
+       else
+        state->name = arg;
+ 
+-#if defined _LIBC || HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
++#if defined _LIBC && defined(__UCLIBC_HAS_PROGRAM_INVOCATION_NAME__)
+       program_invocation_short_name = state->name;
+ #endif
+ 
