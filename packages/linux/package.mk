@@ -32,6 +32,13 @@ case "$LINUX" in
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
+  xanmod)
+    PKG_VERSION="5.3.2-xanmod2"
+    PKG_SHA256=""
+    PKG_URL="https://github.com/xanmod/linux/archive/$PKG_VERSION.tar.gz"
+    PKG_PATCH_DIRS="default"
+    PKG_BUILD_PERF="no"
+    ;;
   git)
     PKG_VERSION="9cf6b75"
     PKG_SITE="https://github.com/torvalds/linux"
