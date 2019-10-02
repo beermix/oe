@@ -13,3 +13,9 @@ PKG_LONGDESC="A general-purpose parser generator."
 
 PKG_CONFIGURE_OPTS_HOST="--disable-rpath --with-gnu-ld"
 
+post_configure_host() {
+# The configure system causes Bison to be built without support for
+# internationalization of error messages if a bison program is not already in
+# $PATH. The following addition will correct this:
+  echo '#define YYENABLE_NLS 1' >> lib/config.h
+}
