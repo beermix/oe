@@ -1,9 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-
-# fakeroot-1.20.2 depends on libcap:host, which depends on attr:host
-# there are reported buildproblems with attr:host, which should be replicated
-# use fakeroot-1.18.4 instead until attr:host builds
+# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="fakeroot"
 PKG_VERSION="1.23"
