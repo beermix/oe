@@ -3,8 +3,8 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="fribidi"
-PKG_VERSION="1.0.5"
-PKG_SHA256="6a64f2a687f5c4f203a46fa659f43dd43d1f8b845df8d723107e8a7e6158e4ce"
+PKG_VERSION="1.0.7"
+PKG_SHA256="5ab5f21e9f2fc57b4b40f8ea8f14dba78a5cc46d9cf94bc5e00a58e6886a935d"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://github.com/fribidi/fribidi/releases/"
 PKG_URL="https://github.com/fribidi/fribidi/releases/download/v$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
