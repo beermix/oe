@@ -2,10 +2,10 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) isl:host
 #--enable-gnu-indirect-function --disable-libunwind-exceptions
-#                           --enable-gnu-unique-object \
+#                           --enable-gnu-unique-object --disable-vtable-verify\
 #                           --disable-vtable-verify \
 #                           --disable-libsanitizer \
-#                           --enable-target-optspace \
+#                           --enable-target-optspace \ --without-included-gettext --with-default-libstdcxx-abi=gcc4-compatible
 #                           
 
 PKG_NAME="gcc"
@@ -37,10 +37,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-gcc-major-version-only \
                            --enable-gnu-indirect-function \
                            --disable-libunwind-exceptions \
+                           --enable-gnu-unique-object \
+                           --disable-vtable-verify \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -50,7 +51,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath \
                            --with-system-zlib \
                            --with-target-system-zlib=auto \
-                           --without-included-gettext \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp"
