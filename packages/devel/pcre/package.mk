@@ -12,7 +12,8 @@ PKG_DEPENDS_HOST="gcc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic:host +pic +lto-parallel"
+#PKG_BUILD_FLAGS="+pic:host +pic +lto-parallel"
+PKG_BUILD_FLAGS="+pic:host +pic"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 			    --enable-static \
