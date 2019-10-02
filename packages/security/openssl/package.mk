@@ -26,9 +26,9 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --openssldir=/etc/ssl"
 
-#post_unpack() {
-#  find $PKG_BUILD/apps -type f | xargs -n 1 -t sed 's|./demoCA|/etc/ssl|' -i
-#}
+post_unpack() {
+  find $PKG_BUILD/apps -type f | xargs -n 1 -t sed 's|./demoCA|/etc/ssl|' -i
+}
 
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
