@@ -12,7 +12,6 @@ PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_LONGDESC="Nano is an enhanced clone of the Pico text editor."
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
-                           --disable-nls \
                            --disable-libmagic \
                            --disable-wrapping"
 
