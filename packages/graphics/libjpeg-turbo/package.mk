@@ -35,4 +35,4 @@ fi
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
-}16:16 02.10.2019
+}
