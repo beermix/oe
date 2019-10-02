@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2017 Escalade
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
@@ -12,10 +12,10 @@ PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo gdk-pixbuf glib libX11 libXi
 PKG_LONGDESC="A library for creating graphical user interfaces for the X Window System."
 PKG_TOOLCHAIN="meson"
 
-pre_configure_target() {
+#pre_configure_target() {
 #  export CFLAGS="$CFLAGS -DG_ENABLE_DEBUG -DG_DISABLE_CAST_CHECKS"
-   export CFLAGS="$CFLAGS -DG_DISABLE_CAST_CHECKS"
-}
+#   export CFLAGS="$CFLAGS -DG_DISABLE_CAST_CHECKS"
+#}
 
 PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
 			  -Dwayland_backend=false \
@@ -32,14 +32,3 @@ PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
 			  -Dexamples=false \
 			  -Dtests=false \
 			  -Dinstalled_tests=false"
-
-#pre_configure_target() {
-#  LIBS="$LIBS -lXcursor"
-#  export PKG_CONFIG_PATH="$(get_build_dir pango)/.$TARGET_NAME/meson-private:$(get_build_dir gdk-pixbuf)/.$TARGET_NAME/meson-private:$(get_build_dir shared-mime-info)/.$TARGET_NAME"
-#  export CFLAGS="$CFLAGS -I$(get_build_dir pango) -I$(get_build_dir pango)/.$TARGET_NAME -L$(get_build_dir pango)/.$TARGET_NAME/pango"
-#  export GLIB_COMPILE_RESOURCES=glib-compile-resources GLIB_MKENUMS=glib-mkenums GLIB_GENMARSHAL=glib-genmarshal
-#}
-
-#makeinstall_target() {
-#  :
-#}

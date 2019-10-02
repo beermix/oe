@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
+# SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
@@ -17,10 +17,3 @@ PKG_MESON_OPTS_TARGET="-Dgtk_doc=false \
                        -Dintrospection=false \
                        -Duse_fontconfig=true"
 
-#pre_configure_target() {
-#  export PKG_CONFIG_PATH="$(get_build_dir cairo)/.$TARGET_NAME/src":"$(get_build_dir libXft)/.$TARGET_NAME/src"
-#}
-
-#makeinstall_target() {
-#  :
-#}
