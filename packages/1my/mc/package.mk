@@ -41,4 +41,3 @@ post_makeinstall_target() {
   rm -f $INSTALL/usr/bin/{mcedit,mcview}
   cp $PKG_DIR/wrapper/* $INSTALL/usr/bin
 }
-
