@@ -11,6 +11,17 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_LONGDESC="giflib: giflib service library"
+PKG_BUILD_FLAGS="+pic:host"
+
+pre_configure_host() {
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
+}
+
+pre_configure_target() {
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
+}
 
 make_target() {
   PKG_MAKE_OPTS_TARGET="PREFIX=/usr shared-lib"
@@ -18,10 +29,11 @@ make_target() {
 }
 
 make_host() {
-  PKG_MAKE_OPTS_HOST="PREFIX=${TOOLCHAIN} static-lib"
-  PKG_MAKEINSTALL_OPTS_HOST="PREFIX=${TOOLCHAIN} install-static-lib"
-}
+  cd $PKG_BUILD/.$HOST_NAME
+  make PREFIX=${TOOLCHAIN} static-lib
+} 
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
+makeinstall_host() {
+  cd $PKG_BUILD/.$HOST_NAME
+  make PREFIX=${TOOLCHAIN} install-static-lib
 }
