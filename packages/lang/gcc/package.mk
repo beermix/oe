@@ -50,6 +50,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libatomic \
                            --disable-libitm \
                            --disable-libquadmath \
+                           --without-included-gettext \
                            --with-system-zlib \
                            --with-target-system-zlib=auto \
                            --disable-libgomp \
