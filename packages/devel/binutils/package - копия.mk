@@ -58,32 +58,31 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  export CCACHE_DISABLE=true
 }
 
 make_host() {
-  make configure-host
-  make
+  make MAKEINFO=true configure-host
+  make MAKEINFO=true
 }
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
+  make MAKEINFO=true install
 }
 
 make_target() {
-  make configure-host
-  make -C libiberty
-  make -C bfd
-  make -C opcodes
-  make -C binutils strings
+  make MAKEINFO=true configure-host
+  make MAKEINFO=true -C libiberty
+  make MAKEINFO=true -C bfd
+  make MAKEINFO=true -C opcodes
+  make MAKEINFO=true -C binutils strings
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
-  make DESTDIR="$SYSROOT_PREFIX" -C bfd install
-  make DESTDIR="$SYSROOT_PREFIX" -C opcodes install
+  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C bfd install
+  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C opcodes install
 
   mkdir -p ${INSTALL}/usr/bin
     cp binutils/strings ${INSTALL}/usr/bin
