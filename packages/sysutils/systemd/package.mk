@@ -268,5 +268,4 @@ post_install() {
   enable_service usercache.service
   enable_service kernel-overlays.service
   enable_service hwdb.service
-  enable_service debug-shell.service
 }
