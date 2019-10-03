@@ -16,11 +16,11 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A tool for generating programs that perform pattern-matching on text."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld  --disable-doc"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
-                           --disable-doc --disable-program"
+                           --disable-program"
 
 post_makeinstall_host() {
   cat > $TOOLCHAIN/bin/lex << "EOF"
