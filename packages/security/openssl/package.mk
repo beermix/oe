@@ -66,11 +66,6 @@ configure_target() {
   ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $OPENSSL_TARGET "-Wa,--noexecstack $CFLAGS $LDFLAGS"
 }
 
-make_target() {
-  make depend
-  make
-}
-
 makeinstall_target() {
   make INSTALL_PREFIX=$INSTALL install_sw
   make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
