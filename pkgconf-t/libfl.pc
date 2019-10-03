@@ -1,0 +1,8 @@
+prefix=/home/user/-f2fs/oe/build.LibreELEC-Generic.x86_64-9.80-devel/toolchain
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+
+Name: libfl
+Description: Flex (the fast lexical analyzer) support library
+Version: 2.6.4
+Libs: -L${libdir} -lfl

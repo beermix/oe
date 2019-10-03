@@ -1,0 +1,11 @@
+prefix=/home/user/-f2fs/oe/build.LibreELEC-Generic.x86_64-9.80-devel/toolchain
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libkmod
+Description: Library to deal with kernel modules
+Version: 26
+Libs: -L${libdir} -lkmod
+Libs.private:  
+Cflags: -I${includedir}

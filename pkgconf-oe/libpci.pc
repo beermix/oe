@@ -1,0 +1,11 @@
+prefix=/usr
+includedir=${prefix}/include
+libdir=${prefix}/lib
+idsdir=${prefix}/share
+
+Name: libpci
+Description: libpci
+Version: 3.6.2
+Libs: -L${libdir} -lpci
+Libs.private:  -ludev
+Cflags: -I${includedir}
