@@ -21,7 +21,8 @@ PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc
 PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 
-GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
+GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
+                           --target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
