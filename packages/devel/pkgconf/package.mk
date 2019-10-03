@@ -5,7 +5,7 @@ PKG_URL="https://github.com/pkgconf/pkgconf/archive/pkgconf-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host autotools:host"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static --with-gnu-ld"
+#PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static --with-gnu-ld"
 
 post_makeinstall_host() {
   ln -sf pkgconf $TOOLCHAIN/bin/pkg-config
