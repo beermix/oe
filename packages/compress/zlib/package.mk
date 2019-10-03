@@ -13,5 +13,4 @@ PKG_LONGDESC="A general purpose (ZIP) data compression library."
 PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
-
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
