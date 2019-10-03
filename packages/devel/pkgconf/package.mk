@@ -7,7 +7,7 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="--with-system-libdir="$_libdir" \
 			    --with-system-includedir="$_includedir" \
-			    --disable-static"
+			    --disable-shared"
 
 post_makeinstall_host() {
   ln -s pkgconf $TOOLCHAIN/bin/pkg-config
