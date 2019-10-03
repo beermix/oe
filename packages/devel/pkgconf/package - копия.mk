@@ -1,11 +1,16 @@
 PKG_NAME="pkgconf"
 PKG_VERSION="1.6.3"
-PKG_SHA256="743bac2b1fae7985cc6ff91deece9af2b64d6fe7dae7cebd6c42f8a04fcc4c2d"
+PKG_SHA256=""
 PKG_URL="https://github.com/pkgconf/pkgconf/archive/pkgconf-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host autotools:host"
+PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--with-system-libdir="$_libdir" \
+_pcdirs=/usr/lib/pkgconfig:/usr/share/pkgconfig
+_libdir=${TOOLCHAIN}/lib
+_includedir=${TOOLCHAIN}/include
+
+PKG_CONFIGURE_OPTS_HOST="--with-pkg-config-dir="$_pcdirs" \
+			    --with-system-libdir="$_libdir" \
 			    --with-system-includedir="$_includedir" \
 			    --disable-static"
 
@@ -14,6 +19,5 @@ post_makeinstall_host() {
 }
 
 pre_configure_host() {
-  export _libdir=${TOOLCHAIN}/lib
-  export  _includedir=${TOOLCHAIN}/include
+  export CFLAGS="$CFLAGS -Wall"
 }
