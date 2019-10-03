@@ -1,13 +1,11 @@
 PKG_NAME="pkgconf"
-PKG_VERSION="1.6.3"
-PKG_SHA256="743bac2b1fae7985cc6ff91deece9af2b64d6fe7dae7cebd6c42f8a04fcc4c2d"
-PKG_URL="https://github.com/pkgconf/pkgconf/archive/pkgconf-$PKG_VERSION.tar.gz"
+PKG_VERSION="1.6.1"
+PKG_SHA256="22b9ee38438901f9d60f180e5182821180854fa738fd071f593ea26a81da208c"
+PKG_URL="https://distfiles.dereferenced.org/pkgconf/pkgconf-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host autotools:host"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--with-system-libdir=${TOOLCHAIN}/lib \
-			    --with-system-includedir=${TOOLCHAIN}/include \
-			    --disable-static"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pic"
 
 post_makeinstall_host() {
   ln -sf pkgconf $TOOLCHAIN/bin/pkg-config

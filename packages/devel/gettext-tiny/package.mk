@@ -3,15 +3,17 @@
 
 PKG_NAME="gettext-tiny"
 PKG_VERSION="a76f8ad"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/sabotage-linux/gettext-tiny"
 PKG_URL="https://github.com/sabotage-linux/gettext-tiny/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 
 make_host() {
-  make LIBINTL=FLAVOR
+#  make LIBINTL=FLAVOR
+  make CFLAGS="$HOST_CFLAGS -fPIC" LIBINTL=NONE
 }
 
 makeinstall_host() {
-  make LIBINTL=FLAVOR DESTDIR=$TOOLCHAIN prefix=/ all install
+#  make LIBINTL=NONE DESTDIR=$TOOLCHAIN prefix=/ all install
+#  make DESTDIR=$TOOLCHAIN LIBINTL=NONE install
+  make LIBINTL=NONE DESTDIR=$TOOLCHAIN prefix=/ install
 }
