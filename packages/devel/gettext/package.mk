@@ -10,6 +10,7 @@ PKG_SITE="http://www.gnu.org/s/gettext/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="A program internationalization library and tools."
+PKG_TOOLCHAIN="autotools"
 
 configure_package() {
   PKG_CONFIGURE_SCRIPT="${PKG_BUILD}/gettext-tools/configure"
