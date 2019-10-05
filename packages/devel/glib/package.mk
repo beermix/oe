@@ -4,7 +4,7 @@
 
 PKG_NAME="glib"
 PKG_VERSION="2.63.0"
-PKG_SHA256=""
+PKG_SHA256="d974d7f514358ee6f69451826a215578141701075924108da311ec2c8dc01056"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://github.com/GNOME/glib"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
