@@ -37,7 +37,7 @@ case "$LINUX" in
     PKG_SHA256=""
     PKG_URL="https://github.com/xanmod/linux/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="no"
+    PKG_BUILD_PERF="clr"
     ;;
   git)
     PKG_VERSION="9cf6b75"
