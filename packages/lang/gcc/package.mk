@@ -39,6 +39,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-diagnostics-color=always \
+                           --with-gcc-major-version-only \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
