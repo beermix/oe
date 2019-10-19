@@ -1,0 +1,9 @@
+[Unit]
+Description=Set CPU frequency governor and its tunables
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/set-cpufreq
+
+[Install]
+WantedBy=basic.target
