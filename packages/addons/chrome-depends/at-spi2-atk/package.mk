@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="at-spi2-atk"
-PKG_VERSION="2.34.0"
+PKG_VERSION="2.34.1"
 PKG_SHA256=""
 PKG_LICENSE="OSS"
 PKG_SITE="https://ftp.acc.umu.se/pub/gnome/sources/at-spi2-atk/?C=M;O=D"
