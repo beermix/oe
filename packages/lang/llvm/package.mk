@@ -3,15 +3,21 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="llvm"
-PKG_VERSION="8.0.1"
-PKG_SHA256="44787a6d02f7140f145e2250d56c9f849334e11f9ae379827510ed72f12b75e7"
+PKG_VERSION="b860b5e"
+PKG_SHA256="cbfc66ff2850afcc72e232446c73ebd781a32d5bced4b9aecc5b52453bb5543a"
 PKG_ARCH="x86_64"
-PKG_LICENSE="Apache-2.0"
+PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
-PKG_URL="https://github.com/llvm/llvm-project/releases/download/llvmorg-${PKG_VERSION}/llvm-${PKG_VERSION}.src.tar.xz"
+PKG_URL="https://github.com/RPCS3/llvm/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain llvm:host zlib"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure."
+
+if [ "$LVM_SUPPORT" = "yes" ]; then
+  LLVM_TARGETS="AMDGPU;X86"
+else
+  LLVM_TARGETS="X86"
+fi
 
 PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_BUILD_TOOLS=OFF \
@@ -25,7 +31,7 @@ PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_INCLUDE_DOCS=OFF \
                        -DLLVM_ENABLE_DOXYGEN=OFF \
                        -DLLVM_ENABLE_SPHINX=OFF \
-                       -DLLVM_TARGETS_TO_BUILD="X86" \
+                       -DLLVM_TARGETS_TO_BUILD=$LLVM_TARGETS \
                        -DLLVM_ENABLE_TERMINFO=OFF \
                        -DLLVM_ENABLE_ASSERTIONS=OFF \
                        -DLLVM_ENABLE_WERROR=OFF \
@@ -49,7 +55,14 @@ pre_configure_target() {
 }
 
 make_host() {
-  ninja $NINJA_OPTS llvm-config llvm-tblgen
+  ninja $NINJA_OPTS llvm-config llvm-tblgen FileCheck
+}
+
+makeinstall_target() {
+  DESTDIR=$SYSROOT_PREFIX ninja install $PKG_MAKEINSTALL_OPTS_TARGET
+  if [ "$LVM_SUPPORT" = "yes" ]; then
+    DESTDIR=$INSTALL ninja install $PKG_MAKEINSTALL_OPTS_TARGET
+  fi
 }
 
 makeinstall_host() {
