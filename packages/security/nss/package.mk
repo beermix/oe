@@ -3,11 +3,11 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="nss"
-PKG_VERSION="3.46"
-PKG_SHA256="3d4197196e870ab2dccc6ee497e0ec83f45ea070fee929dd931491c024d69f31"
+PKG_VERSION="3.47"
+PKG_SHA256="5fb148ed1a035bfc8cb1561cd44af4d5ac7afbbb4f75da5a1bcf61f9cfe0fb5e"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="https://ftp.mozilla.org/pub/security/nss/releases/"
-PKG_URL="http://ftp.mozilla.org/pub/security/nss/releases/NSS_3_46_RTM/src/nss-3.46-with-nspr-4.22.tar.gz"
+PKG_URL="http://ftp.mozilla.org/pub/security/nss/releases/NSS_3_47_RTM/src/nss-3.47-with-nspr-4.23.tar.gz"
 PKG_DEPENDS_HOST="nspr:host zlib:host"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib sqlite"
 PKG_LONGDESC="The Network Security Services (NSS) package is a set of libraries designed to support cross-platform development of security-enabled client and server applications"
