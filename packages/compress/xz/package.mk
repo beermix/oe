@@ -21,9 +21,10 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --enable-lzma-links \
                          --disable-scripts \
                          --disable-nls \
-                         --disable-doc"
+                         --disable-doc \
+                         --enable-assembler"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-doc --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-doc --disable-shared --enable-assembler"
 
 post_makeinstall_target() {
   rm -rf $INSTALL
