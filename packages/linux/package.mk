@@ -22,13 +22,11 @@ case "$LINUX" in
     PKG_URL="https://github.com/pfactum/pf-kernel/archive/v$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
-    PKG_BUILD_PERF="no"
-  ;;
+    ;;
   zen) # https://github.com/zen-kernel/zen-kernel/releases
     PKG_VERSION="5.3.1-zen1"
     PKG_SHA256=""
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/v$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
     ;;
@@ -36,8 +34,8 @@ case "$LINUX" in
     PKG_VERSION="5.3.6-xanmod5"
     PKG_SHA256=""
     PKG_URL="https://github.com/xanmod/linux/archive/$PKG_VERSION.tar.gz"
-    PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="clr"
+    PKG_PATCH_DIRS="clr"
+    PKG_BUILD_PERF="no"
     ;;
   git)
     PKG_VERSION="9cf6b75"

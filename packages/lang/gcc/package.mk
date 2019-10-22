@@ -13,7 +13,7 @@ PKG_NAME="gcc"
 #PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
 PKG_LICENSE="GPL"
 #PKG_VERSION="9-20191012"
-PKG_VERSION="10-20191013"
+PKG_VERSION="10-20191020"
 PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
@@ -37,7 +37,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-diagnostics-color=always \
                            --with-gcc-major-version-only \
                            --without-ppl \
