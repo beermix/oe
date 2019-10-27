@@ -29,9 +29,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-targets=x86_64-linux \
                          --enable-lto \
-                         --disable-nls \
-                         --disable-gdb \
-                         --disable-sim"
+                         --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -49,9 +47,7 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --enable-targets=x86_64-linux \
                          --disable-ld \
                          --disable-lto \
-                         --disable-nls \
-                         --disable-gdb \
-                         --disable-sim"
+                         --disable-nls"
 
 pre_configure_host() {
   unset CPPFLAGS
