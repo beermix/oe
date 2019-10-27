@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="parted"
-PKG_VERSION="3.3"
-PKG_SHA256="57e2b4bd87018625c515421d4524f6e3b55175b472302056391c5f7eccb83d44"
+PKG_VERSION="3.2"
+PKG_SHA256="858b589c22297cacdf437f3baff6f04b333087521ab274f7ab677cb8c6bb78e4"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/parted/"
 PKG_URL="http://ftpmirror.gnu.org/parted/$PKG_NAME-$PKG_VERSION.tar.xz"
