@@ -4,7 +4,7 @@
 
 PKG_NAME="gtk3"
 PKG_VERSION="3.24.12"
-PKG_SHA256=""
+PKG_SHA256="1384eba5614fed160044ae0d32369e3df7b4f517b03f4b1f24d383e528f4be83"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://ftp.acc.umu.se/pub/gnome/sources/gtk+/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gtk+/${PKG_VERSION:0:4}/gtk+-$PKG_VERSION.tar.xz"
