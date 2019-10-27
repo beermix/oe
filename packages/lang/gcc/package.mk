@@ -5,17 +5,17 @@
 #                           --enable-gnu-unique-object --disable-vtable-verify\
 #                           --disable-vtable-verify \
 #                           --disable-libsanitizer \
-#                           --enable-target-optspace \ --without-included-gettext --with-default-libstdcxx-abi=gcc4-compatible
+#                           --enable-target-optspace \ --without-included-gettext --with-default-libstdcxx-abi=gcc4-compatible --with-gcc-major-version-only \
 #                           
 
 PKG_NAME="gcc"
-#PKG_VERSION="9.2.0"
-#PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
+PKG_VERSION="9.2.0"
+PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
 PKG_LICENSE="GPL"
-PKG_VERSION="ff7ec1d"
+#PKG_VERSION="9-20191026"
 #PKG_VERSION="10-20191020"
 PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -37,8 +37,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-diagnostics-color=always \
-                           --with-gcc-major-version-only \
                            --disable-vtable-verify \
                            --without-ppl \
                            --without-cloog \
