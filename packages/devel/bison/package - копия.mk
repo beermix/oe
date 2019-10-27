@@ -19,3 +19,12 @@ post_configure_host() {
 # $PATH. The following addition will correct this:
   echo '#define YYENABLE_NLS 1' >> lib/config.h
 }
+
+post_makeinstall_host() {
+  cat > $TOOLCHAIN/bin/yacc << "EOF"
+#!/bin/sh
+exec bison -y "$@"
+EOF
+
+  chmod -v 755 $TOOLCHAIN/bin/yacc
+}
