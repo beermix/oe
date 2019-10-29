@@ -38,6 +38,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libunwind-exceptions \
                            --without-ppl \
                            --without-cloog \
@@ -66,7 +67,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
-                         --with-headers=$SYSROOT_PREFIX/usr/include \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
