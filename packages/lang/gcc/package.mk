@@ -44,8 +44,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp"
 
@@ -53,6 +51,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
+                              --disable-libitm \
+                              --disable-libquadmath \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
@@ -79,14 +79,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CCACHE_DISABLE=true
+  #export CCACHE_DISABLE=true
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
-pre_configure_bootstrap() {
-  export CCACHE_DISABLE=true
-}
+#pre_configure_bootstrap() {
+#  export CCACHE_DISABLE=true
+#}
 
 post_make_host() {
   # fix wrong link

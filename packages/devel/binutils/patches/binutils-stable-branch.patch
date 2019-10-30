@@ -1,3 +1,29 @@
+commit 04165950d1397154a784cd55da758d5c7a8d3457
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Oct 13 00:02:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c83a871701..39d843f67d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191012
++#define BFD_VERSION_DATE 20191013
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit cadd49ac6f48530eb35a6846d4e6636f14ffac1c
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Sun Oct 13 13:26:19 2019 +0100
+
+    Reset development flag back to true
+
 diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index aa5a81ffed..ee28eab3ad 100644
 --- a/bfd/ChangeLog
@@ -23,6 +49,61 @@ index eb0e7b6da1..54d494c105 100644
  
  # Indicate whether this is a release branch.
  experimental=false
+
+commit 9676be3aa9a712697fe61a72efff923487f0c06f
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Oct 14 00:01:35 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 39d843f67d..eb3e522553 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191013
++#define BFD_VERSION_DATE 20191014
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 2948a47219b2000e389faaa3df6fa5eaf330b7ff
+Author: Tamar Christina <tamar.christina@arm.com>
+Date:   Tue Sep 24 14:46:17 2019 +0100
+
+    Arm: Fix out of range conditional branch (PR/24991)
+    
+    The fix for PR12848 introduced an off by one error in the mask, this corrected
+    the negative overflows but not the positive overflows.  As a result the
+    conditional branch instructions accepted a too wide positive immediate which
+    resulted in it corrupting the instruction during encoding.
+    
+    The relocation I believe has been incorrectly named, to be consistent with the
+    other relocations it should have been named BRANCH21 which is why the masks for
+    it are confusing.
+    
+    I've replaced the masks with a function out_of_range_p which should make it
+    harder to make such mistakes.
+    
+    The mask for BL/BLX on Armv6t+ is also wrong, the extended range is 25-bits
+    and so the mask should be checking for 24-bits for positive overflow.
+    
+    gas/ChangeLog:
+    
+            PR gas/24991
+            * config/tc-arm.c (out_of_range_p): New.
+            (md_apply_fix): Use it in BFD_RELOC_THUMB_PCREL_BRANCH9,
+            BFD_RELOC_THUMB_PCREL_BRANCH12, BFD_RELOC_THUMB_PCREL_BRANCH20,
+            BFD_RELOC_THUMB_PCREL_BRANCH23, BFD_RELOC_THUMB_PCREL_BRANCH25
+            * testsuite/gas/arm/pr24991.d: New test.
+            * testsuite/gas/arm/pr24991.l: New test.
+            * testsuite/gas/arm/pr24991.s: New test.
+    
+    (cherry picked from commit e8f8842d90abe5eafa8c32f08fbc3a747a45747c)
+
 diff --git a/gas/ChangeLog b/gas/ChangeLog
 index 75324bfaac..0955809b5b 100644
 --- a/gas/ChangeLog
@@ -153,3 +234,617 @@ index 0000000000..27f8daff1c
 +        .thumb
 +        beq     .+ 0x124f80
 +
+
+commit a010731c12cecc5bd8d8ab826e19724b0ee9a540
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Oct 15 00:01:18 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index eb3e522553..b8f756d9c0 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191014
++#define BFD_VERSION_DATE 20191015
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 320d36e82e37ec69a9944e39c20bfd8366fb842a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Oct 16 00:01:12 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b8f756d9c0..1d22de687e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191015
++#define BFD_VERSION_DATE 20191016
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 7afa33f5c32875cf822b3c62dcd332f8838c7ef7
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Oct 17 00:01:30 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1d22de687e..a8bec80b1c 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191016
++#define BFD_VERSION_DATE 20191017
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 2474d0a2d2b691ea25d0fa05ec8260072a5656e3
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Oct 18 00:01:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index a8bec80b1c..b9f4fa4170 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191017
++#define BFD_VERSION_DATE 20191018
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 1a908e1658963cf94f51a22031385958589ca335
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Oct 19 00:01:29 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b9f4fa4170..5a3797888c 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191018
++#define BFD_VERSION_DATE 20191019
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 99ba661ea6f86c1979f01029af51bd6f8eb8cdf4
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Oct 20 00:03:18 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5a3797888c..14b15f3991 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191019
++#define BFD_VERSION_DATE 20191020
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 921703f7e05838e76ddb3ec65f396ee8484b5398
+Author: John David Anglin <danglin@gcc.gnu.org>
+Date:   Sun Oct 20 12:20:01 2019 -0400
+
+            [bfd] Revise import stubs on hppa.
+    
+            This commit updates the import stubs to leave the pointer to the
+            function descriptor in register %r22.  This provides a backup
+            mechanism for _dl_runtime_resolve to fixup descriptors during
+            lazy binding.
+    
+            bfd/ChangeLog
+            2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
+    
+                    * elf32-hppa.c: Revise import stub sequences.
+                    (LONG_BRANCH_STUB_SIZE): Define.
+                    (LONG_BRANCH_SHARED_STUB_SIZE): Define.
+                    (IMPORT_STUB_SIZE): Define.
+                    (IMPORT_SHARED_STUB_SIZE): Define.
+                    (EXPORT_STUB_SIZE): Define.
+                    (plt_stub): Revise to not use register %r22.
+                    (LDO_R1_R22): Define.
+                    (LDW_R22_R21): Define.
+                    (LDW_R22_R19): Define.
+                    (hppa_build_one_stub): Update stub generation and use new defines.
+                    (hppa_size_one_stub): Likewise.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index ee28eab3ad..2aa9958526 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,18 @@
++2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
++
++	* elf32-hppa.c: Revise import stub sequences.
++	(LONG_BRANCH_STUB_SIZE): Define.
++	(LONG_BRANCH_SHARED_STUB_SIZE): Define.
++	(IMPORT_STUB_SIZE): Define.
++	(IMPORT_SHARED_STUB_SIZE): Define.
++	(EXPORT_STUB_SIZE): Define.
++	(plt_stub): Revise to not use register %r22.
++	(LDO_R1_R22): Define.
++	(LDW_R22_R21): Define.
++	(LDW_R22_R19): Define.
++	(hppa_build_one_stub): Update stub generation and use new defines.
++	(hppa_size_one_stub): Likewise.
++
+ 2019-10-13  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* development.sh (development): Reset to true.
+diff --git a/bfd/elf32-hppa.c b/bfd/elf32-hppa.c
+index a61adbc3c8..49f0ca6cc0 100644
+--- a/bfd/elf32-hppa.c
++++ b/bfd/elf32-hppa.c
+@@ -71,34 +71,38 @@
+ 
+    Import stub to call shared library routine from normal object file
+    (single sub-space version)
+-   :		addil LR'lt_ptr+ltoff,%dp	; get procedure entry point
+-   :		ldw RR'lt_ptr+ltoff(%r1),%r21
++   :		addil LR'lt_ptr+ltoff,%dp	; get PLT address
++   :		ldo RR'lt_ptr+ltoff(%r1),%r22   ; 
++   :		ldw 0(%r22),%r21		; get procedure entry point
+    :		bv %r0(%r21)
+-   :		ldw RR'lt_ptr+ltoff+4(%r1),%r19	; get new dlt value.
++   :		ldw 4(%r22),%r19		; get new dlt value.
+ 
+    Import stub to call shared library routine from shared library
+    (single sub-space version)
+-   :		addil LR'ltoff,%r19		; get procedure entry point
+-   :		ldw RR'ltoff(%r1),%r21
++   :		addil LR'ltoff,%r19		; get PLT address
++   :		ldo RR'ltoff(%r1),%r22
++   :		ldw 0(%r22),%r21		; get procedure entry point
+    :		bv %r0(%r21)
+-   :		ldw RR'ltoff+4(%r1),%r19	; get new dlt value.
++   :		ldw 4(%r22),%r19		; get new dlt value.
+ 
+    Import stub to call shared library routine from normal object file
+    (multiple sub-space support)
+-   :		addil LR'lt_ptr+ltoff,%dp	; get procedure entry point
+-   :		ldw RR'lt_ptr+ltoff(%r1),%r21
+-   :		ldw RR'lt_ptr+ltoff+4(%r1),%r19	; get new dlt value.
+-   :		ldsid (%r21),%r1
++   :		addil LR'lt_ptr+ltoff,%dp	; get PLT address
++   :		ldo RR'lt_ptr+ltoff(%r1),%r22   ; 
++   :		ldw 0(%r22),%r21		; get procedure entry point
++   :		ldsid (%r21),%r1		; get target sid
++   :		ldw 4(%r22),%r19		; get new dlt value.
+    :		mtsp %r1,%sr0
+    :		be 0(%sr0,%r21)			; branch to target
+    :		stw %rp,-24(%sp)		; save rp
+ 
+    Import stub to call shared library routine from shared library
+    (multiple sub-space support)
+-   :		addil LR'ltoff,%r19		; get procedure entry point
+-   :		ldw RR'ltoff(%r1),%r21
+-   :		ldw RR'ltoff+4(%r1),%r19	; get new dlt value.
+-   :		ldsid (%r21),%r1
++   :		addil LR'ltoff,%r19		; get PLT address
++   :		ldo RR'ltoff(%r1),%r22
++   :		ldw 0(%r22),%r21		; get procedure entry point
++   :		ldsid (%r21),%r1		; get target sid
++   :		ldw 4(%r22),%r19		; get new dlt value.
+    :		mtsp %r1,%sr0
+    :		be 0(%sr0,%r21)			; branch to target
+    :		stw %rp,-24(%sp)		; save rp
+@@ -136,12 +140,17 @@
+ 
+ #define PLT_ENTRY_SIZE 8
+ #define GOT_ENTRY_SIZE 4
++#define LONG_BRANCH_STUB_SIZE 8
++#define LONG_BRANCH_SHARED_STUB_SIZE 12
++#define IMPORT_STUB_SIZE 20
++#define IMPORT_SHARED_STUB_SIZE 32
++#define EXPORT_STUB_SIZE 24
+ #define ELF_DYNAMIC_INTERPRETER "/lib/ld.so.1"
+ 
+ static const bfd_byte plt_stub[] =
+ {
+-  0x0e, 0x80, 0x10, 0x96,  /* 1: ldw	0(%r20),%r22		*/
+-  0xea, 0xc0, 0xc0, 0x00,  /*    bv	%r0(%r22)		*/
++  0x0e, 0x80, 0x10, 0x95,  /* 1: ldw	0(%r20),%r21		*/
++  0xea, 0xa0, 0xc0, 0x00,  /*    bv	%r0(%r21)		*/
+   0x0e, 0x88, 0x10, 0x95,  /*    ldw	4(%r20),%r21		*/
+ #define PLT_STUB_ENTRY (3*4)
+   0xea, 0x9f, 0x1f, 0xdd,  /*    b,l	1b,%r20			*/
+@@ -662,6 +671,10 @@ hppa_type_of_stub (asection *input_sec,
+ #define ADDIL_R19	0x2a600000	/* addil LR'XXX,%r19,%r1	*/
+ #define LDW_R1_DP	0x483b0000	/* ldw   RR'XXX(%sr0,%r1),%dp	*/
+ 
++#define LDO_R1_R22	0x34360000	/* ldo   RR'XXX(%r1),%r22	*/
++#define LDW_R22_R21	0x0ec01095	/* ldw   0(%r22),%r21		*/
++#define LDW_R22_R19	0x0ec81093	/* ldw   4(%r22),%r19		*/
++
+ #define LDSID_R21_R1	0x02a010a1	/* ldsid (%sr0,%r21),%r1	*/
+ #define MTSP_R1		0x00011820	/* mtsp  %r1,%sr0		*/
+ #define BE_SR0_R21	0xe2a00000	/* be    0(%sr0,%r21)		*/
+@@ -734,7 +747,7 @@ hppa_build_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+       insn = hppa_rebuild_insn ((int) BE_SR4_R1, val, 17);
+       bfd_put_32 (stub_bfd, insn, loc + 4);
+ 
+-      size = 8;
++      size = LONG_BRANCH_STUB_SIZE;
+       break;
+ 
+     case hppa_stub_long_branch_shared:
+@@ -756,7 +769,7 @@ hppa_build_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+       val = hppa_field_adjust (sym_value, (bfd_signed_vma) -8, e_rrsel) >> 2;
+       insn = hppa_rebuild_insn ((int) BE_SR4_R1, val, 17);
+       bfd_put_32 (stub_bfd, insn, loc + 8);
+-      size = 12;
++      size = LONG_BRANCH_SHARED_STUB_SIZE;
+       break;
+ 
+     case hppa_stub_import:
+@@ -776,40 +789,35 @@ hppa_build_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+       if (hsh->stub_type == hppa_stub_import_shared)
+ 	insn = ADDIL_R19;
+ #endif
++
++      /* Load function descriptor address into register %r22.  It is
++	 sometimes needed for lazy binding.  */
+       val = hppa_field_adjust (sym_value, 0, e_lrsel),
+       insn = hppa_rebuild_insn ((int) insn, val, 21);
+       bfd_put_32 (stub_bfd, insn, loc);
+ 
+-      /* It is critical to use lrsel/rrsel here because we are using
+-	 two different offsets (+0 and +4) from sym_value.  If we use
+-	 lsel/rsel then with unfortunate sym_values we will round
+-	 sym_value+4 up to the next 2k block leading to a mis-match
+-	 between the lsel and rsel value.  */
+       val = hppa_field_adjust (sym_value, 0, e_rrsel);
+-      insn = hppa_rebuild_insn ((int) LDW_R1_R21, val, 14);
++      insn = hppa_rebuild_insn ((int) LDO_R1_R22, val, 14);
+       bfd_put_32 (stub_bfd, insn, loc + 4);
+ 
++      bfd_put_32 (stub_bfd, (bfd_vma) LDW_R22_R21, loc + 8);
++
+       if (htab->multi_subspace)
+ 	{
+-	  val = hppa_field_adjust (sym_value, (bfd_signed_vma) 4, e_rrsel);
+-	  insn = hppa_rebuild_insn ((int) LDW_R1_DLT, val, 14);
+-	  bfd_put_32 (stub_bfd, insn, loc + 8);
+-
+ 	  bfd_put_32 (stub_bfd, (bfd_vma) LDSID_R21_R1, loc + 12);
+-	  bfd_put_32 (stub_bfd, (bfd_vma) MTSP_R1,      loc + 16);
+-	  bfd_put_32 (stub_bfd, (bfd_vma) BE_SR0_R21,   loc + 20);
+-	  bfd_put_32 (stub_bfd, (bfd_vma) STW_RP,       loc + 24);
++	  bfd_put_32 (stub_bfd, (bfd_vma) LDW_R22_R19,  loc + 16);
++	  bfd_put_32 (stub_bfd, (bfd_vma) MTSP_R1,      loc + 20);
++	  bfd_put_32 (stub_bfd, (bfd_vma) BE_SR0_R21,   loc + 24);
++	  bfd_put_32 (stub_bfd, (bfd_vma) STW_RP,       loc + 28);
+ 
+-	  size = 28;
++	  size = IMPORT_SHARED_STUB_SIZE;
+ 	}
+       else
+ 	{
+-	  bfd_put_32 (stub_bfd, (bfd_vma) BV_R0_R21, loc + 8);
+-	  val = hppa_field_adjust (sym_value, (bfd_signed_vma) 4, e_rrsel);
+-	  insn = hppa_rebuild_insn ((int) LDW_R1_DLT, val, 14);
+-	  bfd_put_32 (stub_bfd, insn, loc + 12);
++	  bfd_put_32 (stub_bfd, (bfd_vma) BV_R0_R21, loc + 12);
++	  bfd_put_32 (stub_bfd, (bfd_vma) LDW_R22_R19, loc + 16);
+ 
+-	  size = 16;
++	  size = IMPORT_STUB_SIZE;
+ 	}
+ 
+       break;
+@@ -858,7 +866,7 @@ hppa_build_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+       hsh->hh->eh.root.u.def.section = stub_sec;
+       hsh->hh->eh.root.u.def.value = stub_sec->size;
+ 
+-      size = 24;
++      size = EXPORT_STUB_SIZE;
+       break;
+ 
+     default:
+@@ -906,17 +914,17 @@ hppa_size_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+   htab = in_arg;
+ 
+   if (hsh->stub_type == hppa_stub_long_branch)
+-    size = 8;
++    size = LONG_BRANCH_STUB_SIZE;
+   else if (hsh->stub_type == hppa_stub_long_branch_shared)
+-    size = 12;
++    size = LONG_BRANCH_SHARED_STUB_SIZE;
+   else if (hsh->stub_type == hppa_stub_export)
+-    size = 24;
++    size = EXPORT_STUB_SIZE;
+   else /* hppa_stub_import or hppa_stub_import_shared.  */
+     {
+       if (htab->multi_subspace)
+-	size = 28;
++	size = IMPORT_SHARED_STUB_SIZE;
+       else
+-	size = 16;
++	size = IMPORT_STUB_SIZE;
+     }
+ 
+   hsh->stub_sec->size += size;
+
+commit 7c65b97032bb8f8572723d4ce10d4f07c00c1734
+Author: John David Anglin <danglin@gcc.gnu.org>
+Date:   Sun Oct 20 12:28:35 2019 -0400
+
+            [bfd]   Provide 8-byte minimum alignment for .plt section
+    
+            This change increases the default alignment for the .plt section
+            from 4 bytes to 8 bytes.  When function descriptors are 8-byte
+            aligned, they can be updated atomically on 32-bit hppa.  This
+            helps with ordering issues on SMP machines.  It also ensures
+            that descriptors reside on the same cache line.  This reduces
+            the probability of a double TLB miss in a call.
+    
+            2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
+    
+                    * elf32-hppa.c (elf32_hppa_size_dynamic_sections): Provide 8-byte
+                    minimum alignment for .plt section.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 2aa9958526..86ce07a1c1 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,5 +1,8 @@
+ 2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
+ 
++	* elf32-hppa.c (elf32_hppa_size_dynamic_sections): Provide 8-byte
++	minimum alignment for .plt section.
++
+ 	* elf32-hppa.c: Revise import stub sequences.
+ 	(LONG_BRANCH_STUB_SIZE): Define.
+ 	(LONG_BRANCH_SHARED_STUB_SIZE): Define.
+diff --git a/bfd/elf32-hppa.c b/bfd/elf32-hppa.c
+index 49f0ca6cc0..cd99584f27 100644
+--- a/bfd/elf32-hppa.c
++++ b/bfd/elf32-hppa.c
+@@ -2280,10 +2280,11 @@ elf32_hppa_size_dynamic_sections (bfd *output_bfd ATTRIBUTE_UNUSED,
+ 		 against the .got section.  */
+ 	      int gotalign = bfd_section_alignment (dynobj, htab->etab.sgot);
+ 	      int pltalign = bfd_section_alignment (dynobj, sec);
++	      int align = gotalign > 3 ? gotalign : 3;
+ 	      bfd_size_type mask;
+ 
+-	      if (gotalign > pltalign)
+-		(void) bfd_set_section_alignment (dynobj, sec, gotalign);
++	      if (align > pltalign)
++		(void) bfd_set_section_alignment (dynobj, sec, align);
+ 	      mask = ((bfd_size_type) 1 << gotalign) - 1;
+ 	      sec->size = (sec->size + sizeof (plt_stub) + mask) & ~mask;
+ 	    }
+
+commit 438708c4da64b4b6610c6146bb29b8a9cc2be51e
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Oct 21 00:02:13 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 14b15f3991..ac25709a6e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191020
++#define BFD_VERSION_DATE 20191021
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c3285908b23fdb2173bbd5dd512a6e844aad3e70
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Oct 22 00:01:10 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ac25709a6e..12d9ea358c 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191021
++#define BFD_VERSION_DATE 20191022
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit ad04d012f9fc66c3c90fc888292e2e631bec49f5
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Oct 23 00:01:41 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 12d9ea358c..6788e040d7 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191022
++#define BFD_VERSION_DATE 20191023
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit d90ac7088ed6020ac80fd95025e973ab0638eaec
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Oct 24 00:01:11 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 6788e040d7..63ab10a3b5 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191023
++#define BFD_VERSION_DATE 20191024
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 52f9b3adc0771944d2c988a91ba3a69820f3844a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Oct 25 00:02:27 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 63ab10a3b5..7fec35fdbd 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191024
++#define BFD_VERSION_DATE 20191025
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit ea476f4b9558fe6e7858fd20a31214d758d016cc
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Oct 26 00:02:08 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7fec35fdbd..6144234a07 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191025
++#define BFD_VERSION_DATE 20191026
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 3c3645770cccf882768a9862908311fcbd387fe5
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Oct 27 00:03:10 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 6144234a07..1f63d55db5 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191026
++#define BFD_VERSION_DATE 20191027
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit cc77c335cc6844117caf7d3e7c0c4a5b3c306426
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Oct 28 00:02:02 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1f63d55db5..dd603a6e61 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191027
++#define BFD_VERSION_DATE 20191028
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 14eda134284f60e51c015952cfaab81165c218af
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Oct 29 00:02:24 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index dd603a6e61..eea699f09f 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191028
++#define BFD_VERSION_DATE 20191029
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit b0a291746e8563812318afc26e4e340535edc94f
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Oct 30 00:02:20 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index eea699f09f..ae10413b62 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191029
++#define BFD_VERSION_DATE 20191030
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
