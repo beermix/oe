@@ -66,6 +66,13 @@ makeinstall_host() {
   make MAKEINFO=true install
 }
 
+#post_makeinstall_host() {
+  # No shared linking to these files outside binutils
+#  rm -f "$pkgdir"/usr/lib/lib{bfd,opcodes}.so
+#  echo 'INPUT( /usr/lib/libbfd.a -liberty -lz -ldl )' > "$pkgdir/usr/lib/libbfd.so"
+#  echo 'INPUT( /usr/lib/libopcodes.a -lbfd )' > "$pkgdir/usr/lib/libopcodes.so"
+#}
+
 make_target() {
   make configure-host
   make -C libiberty
