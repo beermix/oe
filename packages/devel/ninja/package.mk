@@ -4,7 +4,7 @@
 PKG_NAME="ninja"
 #PKG_VERSION="1.9.0"
 #PKG_SHA256="5d7ec75828f8d3fd1a0c2f31b5b0cea780cdfe1031359228c428c1a48bfcd5b9"
-PKG_VERSION="21bd971"
+PKG_VERSION="40d45a7"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
 PKG_URL="https://github.com/ninja-build/ninja/archive/$PKG_VERSION.tar.gz"
