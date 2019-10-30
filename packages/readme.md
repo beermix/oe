@@ -57,7 +57,7 @@ To control the build behaviour of your package, use variables in the top-down or
 #### Make Options
 | Variable    | Default | Required |Description |
 |-------------|---------|----------|------------|
-| PKG_MAKE_OPTS<br>PKG_MAKE_OPTS_BOOTSTRP<br>PKG_MAKE_OPTS_HOST<br>PKG_MAKE_OPTS_INIT<br> PKG_MAKE_OPTS_TARGET | - | no | Options directly passed to make in the build step
+| PKG_MAKE_OPTS<br>PKG_MAKE_OPTS_BOOTSTRAP<br>PKG_MAKE_OPTS_HOST<br>PKG_MAKE_OPTS_INIT<br> PKG_MAKE_OPTS_TARGET | - | no | Options directly passed to make in the build step
 | PKG_MAKEINSTALL_OPTS_HOST<br>PKG_MAKEINSTALL_OPTS_TARGET | - | no | Options directly passed to make in the install step
 
 #### Addons

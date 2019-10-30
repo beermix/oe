@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)                          --enable-targets=x86_64-linux \
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv) 
 
 PKG_NAME="binutils"
@@ -57,7 +57,7 @@ pre_configure_host() {
 }
 
 make_host() {
-  make MAKEINFO=true configure-host
+  make configure-host
   make MAKEINFO=true
 }
 
@@ -67,18 +67,18 @@ makeinstall_host() {
 }
 
 make_target() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true -C libiberty
-  make MAKEINFO=true -C bfd
-  make MAKEINFO=true -C opcodes
-  make MAKEINFO=true -C binutils strings
+  make configure-host
+  make -C libiberty
+  make -C bfd
+  make -C opcodes
+  make -C binutils strings
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
-  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C bfd install
-  make MAKEINFO=true DESTDIR="$SYSROOT_PREFIX" -C opcodes install
+  make DESTDIR="$SYSROOT_PREFIX" -C bfd MAKEINFO=true install
+  make DESTDIR="$SYSROOT_PREFIX" -C opcodes MAKEINFO=true install
 
   mkdir -p ${INSTALL}/usr/bin
     cp binutils/strings ${INSTALL}/usr/bin
