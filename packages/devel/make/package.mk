@@ -17,11 +17,11 @@ pre_configure_host() {
 }
 
 post_makeinstall_host() {
-  mkdir -p $TOOLCHAIN/bin
+#  mkdir -p $TOOLCHAIN/bin
 
   ln -sf make $TOOLCHAIN/bin/gmake
 
-  #ln -sf /usr/bin/make $TOOLCHAIN/bin/make
+#  ln -sf /usr/bin/make $TOOLCHAIN/bin/make
 
 #  cp -r $PKG_DIR/src/bin/* $TOOLCHAIN/bin
 

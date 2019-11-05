@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="ncurses"
@@ -7,9 +7,10 @@ PKG_VERSION="6.0"
 PKG_SHA256="f551c24b30ce8bfb6e96d9f59b42fbea30fa3a6123384172f9e7284bcf647260"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib"
-PKG_DEPENDS_HOST="zlib:host"
-PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
+PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_TARGET="toolchain zlib ncurses:host"
+PKG_LONGDESC="A library is a free software emulation of curses in System V Release 4.0, and more."
+# causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --disable-termcap \
