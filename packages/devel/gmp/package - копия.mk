@@ -13,7 +13,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating point numbers."
 PKG_BUILD_FLAGS="+pic:host +pic"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-fat --enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-cxx --enable-static --disable-shared"
 
