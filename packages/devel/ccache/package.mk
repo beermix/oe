@@ -11,7 +11,7 @@ PKG_URL="https://github.com/ccache/ccache/releases/download/v$PKG_VERSION/ccache
 PKG_DEPENDS_HOST="make:host"
 PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by caching."
 
-PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-man"
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-man --disable-option-checking"
 
 pre_configure_host() {
   export CC=$LOCAL_CC
