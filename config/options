@@ -107,7 +107,7 @@ check_config
 init_package_cache
 
 if [ -z "${DEFAULT_PYTHON_VERSION+set}" ]; then
-  export DEFAULT_PYTHON_VERSION="$(get_pkg_variable Python3 PKG_PYTHON_VERSION)"
+  export DEFAULT_PYTHON_VERSION="$(get_pkg_variable Python2 PKG_PYTHON_VERSION)"
 fi
 
 # set package metadata
