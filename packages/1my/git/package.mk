@@ -1,6 +1,6 @@
 PKG_NAME="git"
-PKG_VERSION="2.23.0"
-PKG_SHA256="234fa05b6839e92dc300b2dd78c92ec9c0c8d439f65e1d430a7034f60af16067"
+PKG_VERSION="2.24.0"
+PKG_SHA256="9f71d61973626d8b28c4cdf8e2484b4bf13870ed643fed982d68b2cfd754371b"
 PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain curl pcre zlib openssl"
 PKG_DEPENDS_HOST="zlib:host pcre:host"
