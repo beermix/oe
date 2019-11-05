@@ -4,10 +4,10 @@
 
 PKG_NAME="ccache"
 PKG_VERSION="3.7.5"
-PKG_SHA256="058cc18a25d57c0fd9aa494efdee3cc567b1b60ba1c80a18c5a0128c23832c09"
+PKG_SHA256="e51c611a3da865754cb0ff1ddd95bd7a6acac603576c0bd39583f8cc30af28d2"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/ccache/ccache/releases"
-PKG_URL="https://github.com/ccache/ccache/releases/download/v$PKG_VERSION/ccache-$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/ccache/ccache/releases/download/v$PKG_VERSION/ccache-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="make:host"
 PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by caching."
 PKG_TOOLCHAIN="manual"
