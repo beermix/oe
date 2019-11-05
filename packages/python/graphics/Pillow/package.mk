@@ -18,15 +18,15 @@ pre_make_target() {
 }
 
 make_target() {
-  python setup.py build --cross-compile
+  python2 setup.py build --cross-compile
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python2 setup.py install --root=$INSTALL --prefix=/usr
 }
 
 post_makeinstall_target() {
-  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
+  python_remove_source
 
   rm -rf $INSTALL/usr/bin
 }
