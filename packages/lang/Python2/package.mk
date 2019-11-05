@@ -14,10 +14,9 @@ PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERS
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host ncurses readline"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
+
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +speed"
-
-PKG_PYTHON_VERSION="python2.7"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
@@ -83,7 +82,7 @@ post_makeinstall_host() {
 }
 
 pre_configure_target() {
-  export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python2
+  export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
 
   export CFLAGS="$CFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
   export CXXFLAGS="$CXXFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
@@ -125,7 +124,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/python*-config
 
   cd $INSTALL/usr/lib/$PKG_PYTHON_VERSION
-  $TOOLCHAIN/bin/python2 -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
+  $TOOLCHAIN/bin/python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
   find $INSTALL/usr/lib/$PKG_PYTHON_VERSION -name "*.py" -exec rm -f {} \; &>/dev/null
 
   # strip
