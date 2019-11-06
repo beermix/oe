@@ -45,6 +45,8 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-plugins \
                          --disable-gold \
                          --enable-targets=x86_64-linux \
+                         --enable-secureplt \
+                         --enable-relro \
                          --disable-ld \
                          --disable-lto \
                          --disable-nls"
