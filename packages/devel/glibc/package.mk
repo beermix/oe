@@ -57,7 +57,7 @@ pre_build_target() {
 
 pre_configure_target() {
 # Filter out some problematic *FLAGS
-  export CCACHE_DISABLE=true
+#  export CCACHE_DISABLE=true
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
@@ -143,9 +143,7 @@ post_makeinstall_target() {
 
   safe_remove $INSTALL/usr/lib/audit
   safe_remove $INSTALL/usr/lib/glibc
-  safe_remove $INSTALL/usr/lib/libc_pic
   safe_remove $INSTALL/usr/lib/*.o
-  safe_remove $INSTALL/usr/lib/*.map
   safe_remove $INSTALL/var
 
 # remove locales and charmaps
@@ -180,8 +178,9 @@ post_makeinstall_target() {
   fi
 
 # install ArchLinux files
-  cp $PKG_DIR/files/sdt.h $SYSROOT_PREFIX/usr/include/sys/
-  cp $PKG_DIR/files/sdt-config.h $SYSROOT_PREFIX/usr/include/sys/
+  mkdir -p $SYSROOT_PREFIX/usr/include/sys
+  install -m644 $PKG_DIR/files/sdt.h $SYSROOT_PREFIX/usr/include/sys/sdt.h
+  install -m644 $PKG_DIR/files/sdt-config.h $SYSROOT_PREFIX/usr/include/sys/sdt-config.h
 
 # add cross ldd script
 #  mkdir -p $TOOLCHAIN/bin/
