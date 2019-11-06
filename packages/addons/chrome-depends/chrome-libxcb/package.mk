@@ -7,6 +7,7 @@ PKG_NAME="chrome-libxcb"
 PKG_LONGDESC="libxcb for chrome"
 PKG_URL=""
 PKG_DEPENDS_UNPACK+=" libxcb libpthread-stubs"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET \
                            --disable-static \
