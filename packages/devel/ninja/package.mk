@@ -12,7 +12,6 @@ PKG_DEPENDS_HOST="cmake:host Python2:host Python3:host re2c:host"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  cd $PKG_BUILD
   python3 configure.py --bootstrap
 }
 
