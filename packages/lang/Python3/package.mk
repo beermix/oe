@@ -96,8 +96,7 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-  #ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
-
+  rm -f $TOOLCHAIN/bin/python*-config
   rm -f $TOOLCHAIN/bin/smtpd.py*
   rm -f $TOOLCHAIN/bin/pyvenv
   rm -f $TOOLCHAIN/bin/pydoc*
@@ -114,8 +113,6 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-  #ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
-
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
   PKG_INSTALL_PATH_LIB=$INSTALL/usr/lib/$PKG_PYTHON_VERSION
