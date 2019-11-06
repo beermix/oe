@@ -22,7 +22,7 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --without-python --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX"
 
 post_makeinstall_target() {
   sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/xml2-config

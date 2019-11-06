@@ -11,4 +11,4 @@ PKG_DEPENDS_TARGET="toolchain glib libxml2 itstool:host"
 PKG_LONGDESC="The shared-mime-info package contains the core database of common types."
 PKG_BUILD_FLAGS="-parallel"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_fdatasync=no --disable-nls --disable-update-mimedb"
+PKG_CONFIGURE_OPTS_TARGET="--disable-update-mimedb"
