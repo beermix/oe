@@ -968,3 +968,23 @@ index 3954f6eea1..1d49c07326 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 12d7177b4384131a2a3db77411d2bc8227a9a0a3
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Nov 6 00:01:31 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1d49c07326..e455f80af4 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191105
++#define BFD_VERSION_DATE 20191106
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
