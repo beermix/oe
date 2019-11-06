@@ -10,17 +10,22 @@ avieira (1):
 bergner (1):
       Backport from mainline 	2019-10-08  Tulio Magno Quites Machado Filho  <tuliom@linux.ibm.com>
 
-burnus (2):
+burnus (5):
       Fortran] PR91586 Fix ICE on invalid code with CLASS
       Fortran] PR91863 - fix call to bind(C) with array descriptor
+      Backport Fortran BIND(C) fixes
+      Fortran] PR 92208 don't use function-result dummy variable as actual argument
+      PR 92208 + PR 92277 – GCC 9 follow-up fix
 
-danglin (6):
+danglin (8):
       * config/pa/pa.c (pa_trampoline_init): Remove spurious extended 	character.
       * config/pa/lib2funcs.S (__gcc_plt_call): Load branch target to %r21. 	Load PIC register after branch target.  Fix white space. 	* config/pa/milli64.S ($$dyncall): Separate LINUX and non LINUX 	implementations.  Load PIC register after branch target.  Don't 	clobber function pointer when it points to function descriptor. 	Use nullification instead of branch in LINUX implementation.
       * config/pa/pa.c (pa_output_call): Load descriptor address to register 	%r22.  Load function address before global pointer. 	(pa_attr_length_indirect_call): Adjust length of inline versions of 	$$dyncall. 	(pa_output_indirect_call): Remove fast inline version of $$dyncall 	before normal cases.  Update inline $$dyncall sequences to preserve 	function descriptor address in register %r22. 	(TRAMPOLINE_CODE_SIZE): Adjust. 	(pa_asm_trampoline_template): Revise 32-bit trampoline.  Don't assume 	register %r22 contains trampoline address. 	(pa_trampoline_init): Adjust offsets. 	(pa_trampoline_adjust_address): Likewise. 	* config/pa/pa.h (TRAMPOLINE_SIZE): Adjust 32-bit size.
       * config/pa/fptr.c (_dl_read_access_allowed): Change argument to 	unsigned int.  Adjust callers. 	(__canonicalize_funcptr_for_compare): Change plabel type to volatile 	unsigned int *.  Load relocation offset before function pointer. 	Add barrier to ensure ordering.
       * config/pa/pa.c (pa_output_indirect_call): Fix typos in last change.
       * config/abi/post/hppa-linux-gnu/baseline_symbols.txt: Update.
+      Backport from mainline 	2019-10-03  John David Anglin  <danglin@gcc.gnu.org>
+      Backport from mainline 	2019-10-03  John David Anglin  <danglin@gcc.gnu.org>
 
 draganm (3):
       Backprot fix for uninitialised use in mips_split_move
@@ -45,7 +50,12 @@ edlinger (3):
 emsr (1):
       2019-09-09  Edward Smith-Rowland  <3dw4rd@verizon.net>
 
-gccadmin (81):
+gccadmin (86):
+      Daily bump.
+      Daily bump.
+      Daily bump.
+      Daily bump.
+      Daily bump.
       Daily bump.
       Daily bump.
       Daily bump.
@@ -141,7 +151,7 @@ hubicka (3):
       free summary vectors. 	Backport from mainline 	2019-10-24  Jan Hubicka  <hubicka@ucw.cz> 	* symbols-summary.h (fast_function_summary<T *, V>::release, 	fast_call_summary<T *, V>::release): Free m_vector.
       Avoid gimple body modifications while streaming. 	Backport from mainline 	2019-10-11  Jan Hubicka  <hubicka@ucw.cz> 	* gimple-streamer-out.c (output_gimple_stmt): Add explicit function 	parameter. 	* lto-streamer-out.c: Include tree-dfa.h. 	(output_cfg): Do not use cfun. 	(lto_prepare_function_for_streaming): New. 	(output_function): Do not push cfun; do not initialize loop optimizer. 	* lto-streamer.h (lto_prepare_function_for_streaming): Declare. 	* passes.c (ipa_write_summaries): Use it. 	(ipa_write_optimization_summaries): Do not modify bodies. 	* tree-dfa.c (renumber_gimple_stmt_uids): Add function parameter. 	* tree.dfa.h (renumber_gimple_stmt_uids): Update prototype. 	* tree-ssa-dse.c (pass_dse::execute): Update use of 	renumber_gimple_stmt_uids. 	* tree-ssa-math-opts.c (pass_optimize_widening_mul::execute): Likewise.
 
-iains (21):
+iains (22):
       Darwin, libsanitizer - remove reference to __cxa_rethrow_primary_exception.
       [Darwin, PPC] Fix fail of cpp/assert4.c
       [Darwin, fixincludes] Backport fix for PR83531
@@ -163,6 +173,7 @@ iains (21):
       [Darwin] Fix Objective-C NeXT ABI version check diagnostics.
       [Darwin, machopic] Back out part of PR71767 fix.
       [testsuite] Make the Wnonnull test independent of system headers.
+      [objective-c/c++, testsuite] Fix stubify tests for -fnext-runtime.
 
 ian (3):
       go/internal/gccgoimporter: support embedded field in pointer loop
@@ -259,9 +270,13 @@ kito (2):
       RISC-V: Fix bad insn splits with paradoxical subregs.
       RISC-V: Fix more splitters accidentally calling gen_reg_rtx.
 
-krebbel (2):
+krebbel (6):
       Fix PR88751
       S/390: Add support for z15 as CPU name.
+      IBM Z: Use tree_fits_uhwi_p in vector_alignment hook
+      IBM Z: Fix testsuite useable_hw check
+      IBM Z: gen-vect-11/32: Set min-vect-loop-bound param back to default
+      IBM Z: gen-vect-26/28: Vectorizing without peeling is ok for Z
 
 ktkachov (3):
       [arm] Fix use of CRC32 intrinsics with Armv8-a and hard-float
@@ -358,10 +373,12 @@ rguenth (7):
 ro (1):
       Update Solaris baselines for GCC 9.3
 
-segher (3):
+segher (5):
       Backport from trunk 	2019-08-22  Segher Boessenkool  <segher@kernel.crashing.org>
       Backport from trunk 	2019-08-22  Segher Boessenkool  <segher@kernel.crashing.org>
       Backport from trunk 	2019-08-23  Segher Boessenkool  <segher@kernel.crashing.org>
+      backport for PR91289
+      backport "rs6000: Implement [u]avg<mode>3_ceil"
 
 sje (1):
       2019-08-15  Steve Ellcey  <sellcey@marvell.com>
@@ -629,10 +646,55 @@ index deeb3d66ef0..45acc9e6670 100644
 -9.2.0
 +9.2.1
 diff --git a/gcc/ChangeLog b/gcc/ChangeLog
-index 7f6557d8018..37a7432c3e8 100644
+index 7f6557d8018..4a24d37df06 100644
 --- a/gcc/ChangeLog
 +++ b/gcc/ChangeLog
-@@ -1,3 +1,1132 @@
+@@ -1,3 +1,1177 @@
++2019-11-05  Segher Boessenkool  <segher@kernel.crashing.org>
++
++	Backport from trunk
++	2019-10-24  Segher Boessenkool  <segher@kernel.crashing.org>
++
++	* config/rs6000/altivec.md (altivec_vavgu<VI_char>): Rename to...
++	(uavg<mode>3_ceil): ... This.
++	(altivec_vavgs<VI_char>): Rename to...
++	(avg<mode>3_ceil): ... This.
++	* config/rs6000/rs6000-builtin.def (VAVGUB, VAVGSB, VAVGUH, VAVGSH,
++	VAVGUW, VAVGSW): Adjust.
++
++2019-11-05  Segher Boessenkool  <segher@kernel.crashing.org>
++
++	Backport from trunk
++	2019-10-26  Segher Boessenkool  <segher@kernel.crashing.org>
++
++	PR target/91289
++	* config/rs6000/rs6000.c (rs6000_emit_allocate_stack): Don't add an
++	immediate to r0; use r11 instead.  Save and restore r11 to r0 around
++	this.
++
++2019-11-05  Andreas Krebbel  <krebbel@linux.ibm.com>
++
++	Backport from mainline
++	2019-11-05  Andreas Krebbel  <krebbel@linux.ibm.com>
++
++	* config/s390/s390.c (s390_vector_alignment): Check if the value
++	fits into uhwi before using it.
++
++2019-11-01  John David Anglin  <danglin@gcc.gnu.org>
++
++	Backport from mainline
++	2019-10-03  John David Anglin  <danglin@gcc.gnu.org>
++
++	* config/pa/pa.c (pa_output_call): Remove 64-bit sibcall sequence.
++	(pa_attr_length_call): Adjust length for 64-bit plabel sequence.
++
++2019-11-01  John David Anglin  <danglin@gcc.gnu.org>
++
++	Backport from mainline
++	2019-10-03  John David Anglin  <danglin@gcc.gnu.org>
++
++	* config/pa/pa.h (MAX_PCREL17F_OFFSET): Adjust.
++
 +2019-10-30  Iain Sandoe  <iain@sandoe.co.uk>
 +
 +	Backport from mainline
@@ -1765,7 +1827,7 @@ index 7f6557d8018..37a7432c3e8 100644
  2019-08-12  Release Manager
  
  	* GCC 9.2.0 released.
-@@ -513,7 +1642,7 @@
+@@ -513,7 +1687,7 @@
  
  2019-07-11  Uroš Bizjak  <ubizjak@gmail.com>
  
@@ -5282,10 +5344,65 @@ index 2ae1f7e0440..a9b0c86be07 100644
    "cfc1\t%0,$31")
  
 diff --git a/gcc/config/pa/pa.c b/gcc/config/pa/pa.c
-index 707ae5822c3..5784fc076f5 100644
+index 707ae5822c3..6d75f26e02f 100644
 --- a/gcc/config/pa/pa.c
 +++ b/gcc/config/pa/pa.c
-@@ -8052,20 +8052,22 @@ pa_output_call (rtx_insn *insn, rtx call_dest, int sibcall)
+@@ -7856,7 +7856,7 @@ pa_attr_length_call (rtx_insn *insn, int sibcall)
+ 
+   /* 64-bit plabel sequence.  */
+   else if (TARGET_64BIT && !local_call)
+-    length += sibcall ? 28 : 24;
++    length += 24;
+ 
+   /* non-pic long absolute branch sequence.  */
+   else if ((TARGET_LONG_ABS_CALL || local_call) && !flag_pic)
+@@ -7928,38 +7928,24 @@ pa_output_call (rtx_insn *insn, rtx call_dest, int sibcall)
+ 	  xoperands[0] = pa_get_deferred_plabel (call_dest);
+ 	  xoperands[1] = gen_label_rtx ();
+ 
+-	  /* If this isn't a sibcall, we put the load of %r27 into the
+-	     delay slot.  We can't do this in a sibcall as we don't
+-	     have a second call-clobbered scratch register available.
+-	     We don't need to do anything when generating fast indirect
+-	     calls.  */
+-	  if (seq_length != 0 && !sibcall)
++	  /* Put the load of %r27 into the delay slot.  We don't need to
++	     do anything when generating fast indirect calls.  */
++	  if (seq_length != 0)
+ 	    {
+ 	      final_scan_insn (NEXT_INSN (insn), asm_out_file,
+ 			       optimize, 0, NULL);
+ 
+ 	      /* Now delete the delay insn.  */
+ 	      SET_INSN_DELETED (NEXT_INSN (insn));
+-	      seq_length = 0;
+ 	    }
+ 
+ 	  output_asm_insn ("addil LT'%0,%%r27", xoperands);
+ 	  output_asm_insn ("ldd RT'%0(%%r1),%%r1", xoperands);
+ 	  output_asm_insn ("ldd 0(%%r1),%%r1", xoperands);
+-
+-	  if (sibcall)
+-	    {
+-	      output_asm_insn ("ldd 24(%%r1),%%r27", xoperands);
+-	      output_asm_insn ("ldd 16(%%r1),%%r1", xoperands);
+-	      output_asm_insn ("bve (%%r1)", xoperands);
+-	    }
+-	  else
+-	    {
+-	      output_asm_insn ("ldd 16(%%r1),%%r2", xoperands);
+-	      output_asm_insn ("bve,l (%%r2),%%r2", xoperands);
+-	      output_asm_insn ("ldd 24(%%r1),%%r27", xoperands);
+-	      seq_length = 1;
+-	    }
++	  output_asm_insn ("ldd 16(%%r1),%%r2", xoperands);
++	  output_asm_insn ("bve,l (%%r2),%%r2", xoperands);
++	  output_asm_insn ("ldd 24(%%r1),%%r27", xoperands);
++	  seq_length = 1;
+ 	}
+       else
+ 	{
+@@ -8052,20 +8038,22 @@ pa_output_call (rtx_insn *insn, rtx call_dest, int sibcall)
  		    {
  		      output_asm_insn ("addil LT'%0,%%r19", xoperands);
  		      output_asm_insn ("ldw RT'%0(%%r1),%%r1", xoperands);
@@ -5314,7 +5431,7 @@ index 707ae5822c3..5784fc076f5 100644
  
  		  if (!sibcall && !TARGET_PA_20)
  		    {
-@@ -8158,10 +8160,6 @@ pa_attr_length_indirect_call (rtx_insn *insn)
+@@ -8158,10 +8146,6 @@ pa_attr_length_indirect_call (rtx_insn *insn)
    if (TARGET_PORTABLE_RUNTIME)
      return 16;
  
@@ -5325,7 +5442,7 @@ index 707ae5822c3..5784fc076f5 100644
    if (!TARGET_LONG_CALLS
        && ((TARGET_PA_20 && !TARGET_SOM && distance < 7600000)
  	  || distance < MAX_PCREL17F_OFFSET))
-@@ -8171,12 +8169,15 @@ pa_attr_length_indirect_call (rtx_insn *insn)
+@@ -8171,12 +8155,15 @@ pa_attr_length_indirect_call (rtx_insn *insn)
    if (!flag_pic)
      return 12;
  
@@ -5346,7 +5463,7 @@ index 707ae5822c3..5784fc076f5 100644
  
    /* Long PIC pc-relative call.  */
    return 20;
-@@ -8214,22 +8215,6 @@ pa_output_indirect_call (rtx_insn *insn, rtx call_dest)
+@@ -8214,22 +8201,6 @@ pa_output_indirect_call (rtx_insn *insn, rtx call_dest)
        return "blr %%r0,%%r2\n\tbv,n %%r0(%%r31)";
      }
  
@@ -5369,7 +5486,7 @@ index 707ae5822c3..5784fc076f5 100644
    /* Now the normal case -- we can reach $$dyncall directly or
       we're sure that we can get there via a long-branch stub. 
  
-@@ -8258,35 +8243,40 @@ pa_output_indirect_call (rtx_insn *insn, rtx call_dest)
+@@ -8258,35 +8229,40 @@ pa_output_indirect_call (rtx_insn *insn, rtx call_dest)
        return "ble R'$$dyncall(%%sr4,%%r2)\n\tcopy %%r31,%%r2";
      }
  
@@ -5429,7 +5546,7 @@ index 707ae5822c3..5784fc076f5 100644
    /* We need a long PIC call to $$dyncall.  */
    xoperands[0] = gen_rtx_SYMBOL_REF (Pmode, "$$dyncall");
    xoperands[1] = gen_rtx_REG (Pmode, 2);
-@@ -10048,7 +10038,7 @@ pa_modes_tieable_p (machine_mode mode1, machine_mode mode2)
+@@ -10048,7 +10024,7 @@ pa_modes_tieable_p (machine_mode mode1, machine_mode mode2)
  
  /* Length in units of the trampoline instruction code.  */
  
@@ -5438,7 +5555,7 @@ index 707ae5822c3..5784fc076f5 100644
  
  
  /* Output assembler code for a block containing the constant parts
-@@ -10069,27 +10059,46 @@ pa_asm_trampoline_template (FILE *f)
+@@ -10069,27 +10045,46 @@ pa_asm_trampoline_template (FILE *f)
  {
    if (!TARGET_64BIT)
      {
@@ -5497,7 +5614,7 @@ index 707ae5822c3..5784fc076f5 100644
  	}
        fputs ("\t.word	0\n", f);
        fputs ("\t.word	0\n", f);
-@@ -10103,11 +10112,11 @@ pa_asm_trampoline_template (FILE *f)
+@@ -10103,11 +10098,11 @@ pa_asm_trampoline_template (FILE *f)
        fputs ("\t.dword 0\n", f);
        fputs ("\t.dword 0\n", f);
        fputs ("\tmfia	%r31\n", f);
@@ -5513,7 +5630,7 @@ index 707ae5822c3..5784fc076f5 100644
        fputs ("\t.dword 0  ; fptr\n", f);
        fputs ("\t.dword 0  ; static link\n", f);
      }
-@@ -10117,10 +10126,10 @@ pa_asm_trampoline_template (FILE *f)
+@@ -10117,10 +10112,10 @@ pa_asm_trampoline_template (FILE *f)
     FNADDR is an RTX for the address of the function's pure code.
     CXT is an RTX for the static chain value for the function.
  
@@ -5528,7 +5645,7 @@ index 707ae5822c3..5784fc076f5 100644
     words create a plabel for the indirect call to the trampoline.
  
     A similar sequence is used for the 64-bit port but the plabel is
-@@ -10146,15 +10155,15 @@ pa_trampoline_init (rtx m_tramp, tree fndecl, rtx chain_value)
+@@ -10146,15 +10141,15 @@ pa_trampoline_init (rtx m_tramp, tree fndecl, rtx chain_value)
  
    if (!TARGET_64BIT)
      {
@@ -5548,7 +5665,7 @@ index 707ae5822c3..5784fc076f5 100644
        emit_move_insn (tmp, gen_rtx_REG (Pmode, 19));
  
        /* fdc and fic only use registers for the address to flush,
-@@ -10206,20 +10215,20 @@ pa_trampoline_init (rtx m_tramp, tree fndecl, rtx chain_value)
+@@ -10206,20 +10201,20 @@ pa_trampoline_init (rtx m_tramp, tree fndecl, rtx chain_value)
      }
  
  #ifdef HAVE_ENABLE_EXECUTE_STACK
@@ -5573,7 +5690,7 @@ index 707ae5822c3..5784fc076f5 100644
  }
  
 diff --git a/gcc/config/pa/pa.h b/gcc/config/pa/pa.h
-index 561efa51882..385feb27033 100644
+index 561efa51882..24739e56f97 100644
 --- a/gcc/config/pa/pa.h
 +++ b/gcc/config/pa/pa.h
 @@ -689,7 +689,7 @@ extern int may_call_alloca;
@@ -5584,6 +5701,26 @@ index 561efa51882..385feb27033 100644
 +#define TRAMPOLINE_SIZE (TARGET_64BIT ? 72 : 64)
  
  /* Alignment required by the trampoline.  */
+ 
+@@ -1293,13 +1293,12 @@ do {									     \
+ #endif
+ 
+ /* The maximum offset in bytes for a PA 1.X pc-relative call to the
+-   head of the preceding stub table.  The selected offsets have been
+-   chosen so that approximately one call stub is allocated for every
+-   86.7 instructions.  A long branch stub is two instructions when
+-   not generating PIC code.  For HP-UX and ELF targets, PIC stubs are
+-   seven and four instructions, respectively.  */  
+-#define MAX_PCREL17F_OFFSET \
+-  (flag_pic ? (TARGET_HPUX ? 198164 : 221312) : 240000)
++   head of the preceding stub table.  A long branch stub is two or three
++   instructions for non-PIC and PIC, respectively.  Import stubs are
++   seven and five instructions for HP-UX and ELF targets, respectively.
++   The default stub group size for ELF targets is 217856 bytes.
++   FIXME: We need an option to set the maximum offset.  */  
++#define MAX_PCREL17F_OFFSET (TARGET_HPUX ? 198164 : 217856)
+ 
+ #define NEED_INDICATE_EXEC_STACK 0
  
 diff --git a/gcc/config/riscv/riscv-protos.h b/gcc/config/riscv/riscv-protos.h
 index 8b510f87df8..5b0bbdd7cb4 100644
@@ -5851,7 +5988,7 @@ index a8bac170e72..e40535c9e40 100644
    operands[2] = GEN_INT (ctz_hwi (INTVAL (operands[2])));
  })
 diff --git a/gcc/config/rs6000/altivec.md b/gcc/config/rs6000/altivec.md
-index 4a1150e0994..8d535acd428 100644
+index 4a1150e0994..654d756647c 100644
 --- a/gcc/config/rs6000/altivec.md
 +++ b/gcc/config/rs6000/altivec.md
 @@ -80,9 +80,6 @@
@@ -5874,6 +6011,24 @@ index 4a1150e0994..8d535acd428 100644
     UNSPEC_VRLMI
     UNSPEC_VRLNM
  ])
+@@ -566,7 +560,7 @@
+   [(set_attr "type" "vecsimple")])
+ 
+ ;;
+-(define_insn "altivec_vavgu<VI_char>"
++(define_insn "uavg<mode>3_ceil"
+   [(set (match_operand:VI 0 "register_operand" "=v")
+         (unspec:VI [(match_operand:VI 1 "register_operand" "v")
+                     (match_operand:VI 2 "register_operand" "v")]
+@@ -575,7 +569,7 @@
+   "vavgu<VI_char> %0,%1,%2"
+   [(set_attr "type" "vecsimple")])
+ 
+-(define_insn "altivec_vavgs<VI_char>"
++(define_insn "avg<mode>3_ceil"
+   [(set (match_operand:VI 0 "register_operand" "=v")
+         (unspec:VI [(match_operand:VI 1 "register_operand" "v")
+                     (match_operand:VI 2 "register_operand" "v")]
 @@ -4101,223 +4095,6 @@
    "bcd<bcd_add_sub>. %0,%1,%2,%3"
    [(set_attr "type" "vecsimple")])
@@ -6232,9 +6387,28 @@ index 471058dd417..a1a46a9e7ea 100644
  ;; Mach-O PIC trickery.
  (define_expand "macho_high"
 diff --git a/gcc/config/rs6000/rs6000-builtin.def b/gcc/config/rs6000/rs6000-builtin.def
-index 0a2bdb79e15..4d4f3b3e746 100644
+index 0a2bdb79e15..0feee7cafca 100644
 --- a/gcc/config/rs6000/rs6000-builtin.def
 +++ b/gcc/config/rs6000/rs6000-builtin.def
+@@ -1002,12 +1002,12 @@ BU_ALTIVEC_2 (VADDUWS,	      "vadduws",	CONST,	altivec_vadduws)
+ BU_ALTIVEC_2 (VADDSWS,	      "vaddsws",	CONST,	altivec_vaddsws)
+ BU_ALTIVEC_2 (VAND,	      "vand",		CONST,	andv4si3)
+ BU_ALTIVEC_2 (VANDC,	      "vandc",		CONST,	andcv4si3)
+-BU_ALTIVEC_2 (VAVGUB,	      "vavgub",		CONST,	altivec_vavgub)
+-BU_ALTIVEC_2 (VAVGSB,	      "vavgsb",		CONST,	altivec_vavgsb)
+-BU_ALTIVEC_2 (VAVGUH,	      "vavguh",		CONST,	altivec_vavguh)
+-BU_ALTIVEC_2 (VAVGSH,	      "vavgsh",		CONST,	altivec_vavgsh)
+-BU_ALTIVEC_2 (VAVGUW,	      "vavguw",		CONST,	altivec_vavguw)
+-BU_ALTIVEC_2 (VAVGSW,	      "vavgsw",		CONST,	altivec_vavgsw)
++BU_ALTIVEC_2 (VAVGUB,	      "vavgub",		CONST,	uavgv16qi3_ceil)
++BU_ALTIVEC_2 (VAVGSB,	      "vavgsb",		CONST,	avgv16qi3_ceil)
++BU_ALTIVEC_2 (VAVGUH,	      "vavguh",		CONST,	uavgv8hi3_ceil)
++BU_ALTIVEC_2 (VAVGSH,	      "vavgsh",		CONST,	avgv8hi3_ceil)
++BU_ALTIVEC_2 (VAVGUW,	      "vavguw",		CONST,	uavgv4si3_ceil)
++BU_ALTIVEC_2 (VAVGSW,	      "vavgsw",		CONST,	avgv4si3_ceil)
+ BU_ALTIVEC_2 (VCFUX,	      "vcfux",		CONST,	altivec_vcfux)
+ BU_ALTIVEC_2 (VCFSX,	      "vcfsx",		CONST,	altivec_vcfsx)
+ BU_ALTIVEC_2 (VCMPBFP,	      "vcmpbfp",	CONST,	altivec_vcmpbfp)
 @@ -1177,26 +1177,26 @@ BU_ALTIVEC_X (MTVSCR,		"mtvscr",	    MISC)
  BU_ALTIVEC_X (MFVSCR,		"mfvscr",	    MISC)
  BU_ALTIVEC_X (DSSALL,		"dssall",	    MISC)
@@ -6360,7 +6534,7 @@ index c3b98315503..d30e5dec980 100644
        }
  
 diff --git a/gcc/config/rs6000/rs6000.c b/gcc/config/rs6000/rs6000.c
-index cb8d737976b..2a8932d80aa 100644
+index cb8d737976b..a670096145b 100644
 --- a/gcc/config/rs6000/rs6000.c
 +++ b/gcc/config/rs6000/rs6000.c
 @@ -7671,6 +7671,104 @@ address_offset (rtx op)
@@ -6492,7 +6666,26 @@ index cb8d737976b..2a8932d80aa 100644
  	      && MACHOPIC_INDIRECT
  	      && machopic_classify_symbol (x) == MACHOPIC_UNDEFINED_FUNCTION)
  	    name = machopic_indirection_name (x, /*stub_p=*/true);
-@@ -37762,25 +37866,31 @@ rs6000_can_inline_p (tree caller, tree callee)
+@@ -25729,10 +25833,14 @@ rs6000_emit_allocate_stack (HOST_WIDE_INT size, rtx copy_reg, int copy_off)
+ 						    stack_limit_rtx,
+ 						    GEN_INT (size)));
+ 
+-	  emit_insn (gen_elf_high (tmp_reg, toload));
+-	  emit_insn (gen_elf_low (tmp_reg, tmp_reg, toload));
+-	  emit_insn (gen_cond_trap (LTU, stack_reg, tmp_reg,
+-				    const0_rtx));
++	  /* We cannot use r0 with elf_low.  Lamely solve this problem by
++	     moving registers around.  */
++	  rtx r11_reg = gen_rtx_REG (Pmode, 11);
++	  emit_move_insn (tmp_reg, r11_reg);
++	  emit_insn (gen_elf_high (r11_reg, toload));
++	  emit_insn (gen_elf_low (r11_reg, r11_reg, toload));
++	  emit_insn (gen_cond_trap (LTU, stack_reg, r11_reg, const0_rtx));
++	  emit_move_insn (r11_reg, tmp_reg);
+ 	}
+       else
+ 	warning (0, "stack limit expression is not supported");
+@@ -37762,25 +37870,31 @@ rs6000_can_inline_p (tree caller, tree callee)
    tree caller_tree = DECL_FUNCTION_SPECIFIC_TARGET (caller);
    tree callee_tree = DECL_FUNCTION_SPECIFIC_TARGET (callee);
  
@@ -6536,7 +6729,7 @@ index cb8d737976b..2a8932d80aa 100644
  	ret = true;
      }
  
-@@ -38273,7 +38383,8 @@ rs6000_call_darwin_1 (rtx value, rtx func_desc, rtx tlsarg,
+@@ -38273,7 +38387,8 @@ rs6000_call_darwin_1 (rtx value, rtx func_desc, rtx tlsarg,
    if ((cookie_val & CALL_LONG) != 0
        && GET_CODE (func_desc) == SYMBOL_REF)
      {
@@ -7122,7 +7315,7 @@ index ab41cb883f3..502edea719b 100644
    PROCESSOR_max
  };
 diff --git a/gcc/config/s390/s390.c b/gcc/config/s390/s390.c
-index fc4571d0d0c..21aaae1fdbd 100644
+index fc4571d0d0c..081b67d8dab 100644
 --- a/gcc/config/s390/s390.c
 +++ b/gcc/config/s390/s390.c
 @@ -337,7 +337,7 @@ const struct s390_processor processor_table[] =
@@ -7272,6 +7465,27 @@ index fc4571d0d0c..21aaae1fdbd 100644
  }
  
  /* Returns TRUE if INSN is a long-running instruction.  */
+@@ -15968,13 +15974,19 @@ s390_support_vector_misalignment (machine_mode mode ATTRIBUTE_UNUSED,
+ static HOST_WIDE_INT
+ s390_vector_alignment (const_tree type)
+ {
++  tree size = TYPE_SIZE (type);
++
+   if (!TARGET_VX_ABI)
+     return default_vector_alignment (type);
+ 
+   if (TYPE_USER_ALIGN (type))
+     return TYPE_ALIGN (type);
+ 
+-  return MIN (64, tree_to_shwi (TYPE_SIZE (type)));
++  if (tree_fits_uhwi_p (size)
++      && tree_to_uhwi (size) < BIGGEST_ALIGNMENT)
++    return tree_to_uhwi (size);
++
++  return BIGGEST_ALIGNMENT;
+ }
+ 
+ /* Implement TARGET_CONSTANT_ALIGNMENT.  Alignment on even addresses for
 diff --git a/gcc/config/s390/s390.h b/gcc/config/s390/s390.h
 index 969f58a2ba0..f7023d985f1 100644
 --- a/gcc/config/s390/s390.h
@@ -9072,10 +9286,38 @@ index f0e43b5fda2..9feaea9fde5 100644
    low = fold_convert_loc (loc, etype, low);
    exp = fold_convert_loc (loc, etype, exp);
 diff --git a/gcc/fortran/ChangeLog b/gcc/fortran/ChangeLog
-index e3073787ea9..759390f5832 100644
+index e3073787ea9..a9369691722 100644
 --- a/gcc/fortran/ChangeLog
 +++ b/gcc/fortran/ChangeLog
-@@ -1,3 +1,350 @@
+@@ -1,3 +1,378 @@
++2019-11-05  Tobias Burnus  <tobias@codesourcery.com>
++
++	PR fortran/92208
++	Backport from mainline
++	2019-10-31  Tobias Burnus  <tobias@codesourcery.com>
++
++	PR fortran/92277
++	* trans-expr.c (gfc_conv_gfc_desc_to_cfi_desc): Fix DECL_ARTIFICIAL
++	checking.
++
++2019-11-04  Tobias Burnus  <tobias@codesourcery.com>
++
++	Backport from mainline
++	2019-10-30  Tobias Burnus  <tobias@codesourcery.com>
++
++	PR fortran/92208
++	* trans-array.c (gfc_conv_array_parameter): Only copy
++	string-length backend_decl if expression is not a function.
++
++2019-11-04  Tobias Burnus  <tobias@codesourcery.com>
++
++	Backport from mainline
++	2019-10-31  Tobias Burnus  <tobias@codesourcery.com>
++
++	PR fortran/92284.
++	* trans-expr.c (gfc_conv_gfc_desc_to_cfi_desc): Free CFI descriptor
++	at the end; partial revised revert of Rev. 277502.
++
 +2019-10-28  Paul Thomas  <pault@gcc.gnu.org>
 +
 +	Backport from trunk
@@ -11070,7 +11312,7 @@ index 6c1f4bd4fce..58b4652b010 100644
  		tmp = f (c->expr, kind);
  	    }
 diff --git a/gcc/fortran/trans-array.c b/gcc/fortran/trans-array.c
-index 583425c516d..9e1f159a696 100644
+index 583425c516d..3945d116180 100644
 --- a/gcc/fortran/trans-array.c
 +++ b/gcc/fortran/trans-array.c
 @@ -6110,17 +6110,20 @@ gfc_conv_array_initializer (tree type, gfc_expr * expr)
@@ -11098,6 +11340,15 @@ index 583425c516d..9e1f159a696 100644
  		}
  	      break;
  
+@@ -8024,7 +8027,7 @@ gfc_conv_array_parameter (gfc_se * se, gfc_expr * expr, bool g77,
+ 	  /* The components shall be deallocated before their containing entity.  */
+ 	  gfc_prepend_expr_to_block (&se->post, tmp);
+ 	}
+-      if (expr->ts.type == BT_CHARACTER)
++      if (expr->ts.type == BT_CHARACTER && expr->expr_type != EXPR_FUNCTION)
+ 	se->string_length = expr->ts.u.cl->backend_decl;
+       if (size)
+ 	array_parameter_size (se->expr, expr, size);
 diff --git a/gcc/fortran/trans-decl.c b/gcc/fortran/trans-decl.c
 index 9538dee5733..d1a6172063e 100644
 --- a/gcc/fortran/trans-decl.c
@@ -11228,7 +11479,7 @@ index 9538dee5733..d1a6172063e 100644
  
    return build1_v (RETURN_EXPR, result);
 diff --git a/gcc/fortran/trans-expr.c b/gcc/fortran/trans-expr.c
-index afe08fc2668..71f29883173 100644
+index afe08fc2668..52a8cdd6902 100644
 --- a/gcc/fortran/trans-expr.c
 +++ b/gcc/fortran/trans-expr.c
 @@ -4989,21 +4989,30 @@ gfc_conv_gfc_desc_to_cfi_desc (gfc_se *parmse, gfc_expr *e, gfc_symbol *fsym)
@@ -11265,7 +11516,37 @@ index afe08fc2668..71f29883173 100644
    if (e->rank != 0)
      {
        parmse->force_no_tmp = 1;
-@@ -5070,11 +5079,12 @@ gfc_conv_gfc_desc_to_cfi_desc (gfc_se *parmse, gfc_expr *e, gfc_symbol *fsym)
+@@ -5018,6 +5027,10 @@ gfc_conv_gfc_desc_to_cfi_desc (gfc_se *parmse, gfc_expr *e, gfc_symbol *fsym)
+ 	parmse->expr = build_fold_indirect_ref_loc (input_location,
+ 						    parmse->expr);
+ 
++      bool is_artificial = (INDIRECT_REF_P (parmse->expr)
++			    ? DECL_ARTIFICIAL (TREE_OPERAND (parmse->expr, 0))
++			    : DECL_ARTIFICIAL (parmse->expr));
++
+       /* Unallocated allocatable arrays and unassociated pointer arrays
+ 	 need their dtype setting if they are argument associated with
+ 	 assumed rank dummies.  */
+@@ -5036,7 +5049,7 @@ gfc_conv_gfc_desc_to_cfi_desc (gfc_se *parmse, gfc_expr *e, gfc_symbol *fsym)
+       type = e->ts.type != BT_ASSUMED ? gfc_typenode_for_spec (&e->ts) :
+ 					NULL_TREE;
+ 
+-      if (type && DECL_ARTIFICIAL (parmse->expr)
++      if (type && is_artificial
+ 	  && type != gfc_get_element_type (TREE_TYPE (parmse->expr)))
+ 	{
+ 	  /* Obtain the offset to the data.  */
+@@ -5048,8 +5061,7 @@ gfc_conv_gfc_desc_to_cfi_desc (gfc_se *parmse, gfc_expr *e, gfc_symbol *fsym)
+ 			  gfc_conv_descriptor_dtype (parmse->expr),
+ 			  gfc_get_dtype_rank_type (e->rank, type));
+ 	}
+-      else if (type == NULL_TREE
+-	       || (!is_subref_array (e) && !DECL_ARTIFICIAL (parmse->expr)))
++      else if (type == NULL_TREE || (!is_subref_array (e) && !is_artificial))
+ 	{
+ 	  /* Make sure that the span is set for expressions where it
+ 	     might not have been done already.  */
+@@ -5070,41 +5082,40 @@ gfc_conv_gfc_desc_to_cfi_desc (gfc_se *parmse, gfc_expr *e, gfc_symbol *fsym)
  						    parmse->expr, attr);
      }
  
@@ -11282,7 +11563,21 @@ index afe08fc2668..71f29883173 100644
    gfc_add_expr_to_block (&parmse->pre, tmp);
  
    /* Now pass the gfc_descriptor by reference.  */
-@@ -5092,26 +5102,39 @@ gfc_conv_gfc_desc_to_cfi_desc (gfc_se *parmse, gfc_expr *e, gfc_symbol *fsym)
+   parmse->expr = gfc_build_addr_expr (NULL_TREE, parmse->expr);
+ 
+-  /* Variables to point to the gfc and CFI descriptors.  */
++  /* Variables to point to the gfc and CFI descriptors; cfi = NULL implies
++     that the CFI descriptor is allocated by the gfor_fndecl_gfc_to_cfi call.  */
+   gfc_desc_ptr = parmse->expr;
+   cfi_desc_ptr = gfc_create_var (pvoid_type_node, "cfi");
+-  gfc_add_modify (&parmse->pre, cfi_desc_ptr,
+-		  build_int_cst (pvoid_type_node, 0));
++  gfc_add_modify (&parmse->pre, cfi_desc_ptr, null_pointer_node);
+ 
+-  /* Allocate the CFI descriptor and fill the fields.  */
++  /* Allocate the CFI descriptor itself and fill the fields.  */
+   tmp = gfc_build_addr_expr (NULL_TREE, cfi_desc_ptr);
+   tmp = build_call_expr_loc (input_location,
  			     gfor_fndecl_gfc_to_cfi, 2, tmp, gfc_desc_ptr);
    gfc_add_expr_to_block (&parmse->pre, tmp);
  
@@ -11295,20 +11590,20 @@ index afe08fc2668..71f29883173 100644
    /* The CFI descriptor is passed to the bind_C procedure.  */
    parmse->expr = cfi_desc_ptr;
  
--  /* Free the CFI descriptor.  */
+   /* Free the CFI descriptor.  */
 -  gfc_init_block (&block);
 -  cond = fold_build2_loc (input_location, NE_EXPR,
 -			  logical_type_node, cfi_desc_ptr,
 -			  build_int_cst (TREE_TYPE (cfi_desc_ptr), 0));
--  tmp = gfc_call_free (cfi_desc_ptr);
+   tmp = gfc_call_free (cfi_desc_ptr);
 -  gfc_add_expr_to_block (&block, tmp);
 -  tmp = build3_v (COND_EXPR, cond,
 -		  gfc_finish_block (&block),
 -		  build_empty_stmt (input_location));
--  gfc_prepend_expr_to_block (&parmse->post, tmp);
--
+   gfc_prepend_expr_to_block (&parmse->post, tmp);
+ 
    /* Transfer values back to gfc descriptor.  */
-   tmp = gfc_build_addr_expr (NULL_TREE, parmse->expr);
+@@ -5112,6 +5123,25 @@ gfc_conv_gfc_desc_to_cfi_desc (gfc_se *parmse, gfc_expr *e, gfc_symbol *fsym)
    tmp = build_call_expr_loc (input_location,
  			     gfor_fndecl_cfi_to_gfc, 2, gfc_desc_ptr, tmp);
    gfc_prepend_expr_to_block (&parmse->post, tmp);
@@ -11334,7 +11629,7 @@ index afe08fc2668..71f29883173 100644
  }
  
  
-@@ -6001,8 +6024,14 @@ gfc_conv_procedure_call (gfc_se * se, gfc_symbol * sym,
+@@ -6001,8 +6031,14 @@ gfc_conv_procedure_call (gfc_se * se, gfc_symbol * sym,
  		      gfc_add_expr_to_block (&se->pre, tmp);
  		  }
  
@@ -11351,7 +11646,7 @@ index afe08fc2668..71f29883173 100644
  		  if (GFC_DESCRIPTOR_TYPE_P (TREE_TYPE (tmp)))
  		    tmp = gfc_conv_descriptor_data_get (tmp);
  		  tmp = gfc_deallocate_with_status (tmp, NULL_TREE, NULL_TREE,
-@@ -10603,7 +10632,8 @@ gfc_trans_assignment_1 (gfc_expr * expr1, gfc_expr * expr2, bool init_flag,
+@@ -10603,7 +10639,8 @@ gfc_trans_assignment_1 (gfc_expr * expr1, gfc_expr * expr2, bool init_flag,
        if (expr1->ts.deferred
  	  && gfc_expr_attr (expr1).allocatable
  	  && gfc_check_dependency (expr1, expr2, true))
@@ -15026,10 +15321,80 @@ index 29f6cdc4667..33b4be79c0f 100644
    /* We have real symbol that should be in symbol table.  However try to trim
       down the refernces to libraries bit more because linker will otherwise
 diff --git a/gcc/testsuite/ChangeLog b/gcc/testsuite/ChangeLog
-index bc11ae4ae0b..b21af8bcab5 100644
+index bc11ae4ae0b..7a0bedbfb30 100644
 --- a/gcc/testsuite/ChangeLog
 +++ b/gcc/testsuite/ChangeLog
-@@ -1,3 +1,708 @@
+@@ -1,3 +1,778 @@
++2019-11-05  Andreas Krebbel  <krebbel@linux.ibm.com>
++
++	Backport from mainline
++	2019-11-05  Andreas Krebbel  <krebbel@linux.ibm.com>
++
++	* gcc.dg/tree-ssa/gen-vect-26.c: Disable loop peeling check for
++	IBM Z.
++	* gcc.dg/tree-ssa/gen-vect-28.c: Likewise.
++
++2019-11-05  Andreas Krebbel  <krebbel@linux.ibm.com>
++
++	Backport from mainline
++	2019-11-05  Andreas Krebbel  <krebbel@linux.ibm.com>
++
++	* gcc.dg/tree-ssa/gen-vect-11.c: Add --param min-vect-loop-bound=0
++	for IBM Z.
++	* gcc.dg/tree-ssa/gen-vect-32.c: Likewise.
++
++2019-11-05  Andreas Krebbel  <krebbel@linux.ibm.com>
++
++	Backport from mainline
++	2019-11-05  Andreas Krebbel  <krebbel@linux.ibm.com>
++
++	* gcc.target/s390/s390.exp
++	(check_effective_target_s390_useable_hw): Add inline asm for z14
++	and z15. Replace instruction for z13 with lochiz. Add register
++	clobbers. Check also for __zarch__ when doing the __VX__ test.
++
++2019-11-04  Iain Sandoe  <iain@sandoe.co.uk>
++
++	Backport from mainline.
++	2019-06-20  Iain Sandoe  <iain@sandoe.co.uk>
++
++	* obj-c++.dg/stubify-1.mm: Adjust options and scan-asm checks.
++	* obj-c++.dg/stubify-2.mm: Likewise.
++	* objc.dg/stubify-1.m: Likewise.
++	* objc.dg/stubify-2.m: Likewise.
++
++2019-11-04  Tobias Burnus  <tobias@codesourcery.com>
++
++	Backport from mainline
++	2019-10-30  Tobias Burnus  <tobias@codesourcery.com>
++
++	PR fortran/92208
++	* gfortran.dg/pr92208.f90: New.
++
++2019-11-04  Tobias Burnus  <tobias@codesourcery.com>
++
++	Backport from mainline
++	2019-10-31  Jakub Jelinek  <jakub@redhat.com>
++
++	PR fortran/92284
++	* gfortran.dg/bind_c_array_params_3_aux.c: Include
++	../../../libgfortran/ISO_Fortran_binding.h rather than
++	ISO_Fortran_binding.h.
++
++	2019-10-31  Tobias Burnus  <tobias@codesourcery.com>
++
++	PR fortran/92284
++	* gfortran.dg/bind-c-intent-out.f90: Update expected dump;
++	extend comment.
++	* gfortran.dg/bind_c_array_params_3.f90: New.
++	* gfortran.dg/bind_c_array_params_3_aux.c: New.
++
++	2019-10-31  Tobias Burnus  <tobias@codesourcery.com>
++
++	PR fortran/92277
++	* fortran.dg/pr92277.f90: New.
++
++
 +2019-10-30  Iain Sandoe  <iain@sandoe.co.uk>
 +
 +	Backport from mainline.
@@ -15738,7 +16103,7 @@ index bc11ae4ae0b..b21af8bcab5 100644
  2019-08-12  Release Manager
  
  	* GCC 9.2.0 released.
-@@ -427,7 +1132,7 @@
+@@ -427,7 +1202,7 @@
  	Backport from mainline.
  	2019-05-15  Iain Sandoe  <iain@sandoe.co.uk>
  
@@ -15747,7 +16112,7 @@ index bc11ae4ae0b..b21af8bcab5 100644
  	(check_effective_target_powerpc_p8vector_ok): No support for Darwin.
  	(check_effective_target_powerpc_p9vector_ok): Likewise.
  	(check_effective_target_powerpc_float128_sw_ok): Likewise.
-@@ -720,7 +1425,7 @@
+@@ -720,7 +1495,7 @@
  
  	Backport from mainline
  	PR fortran/91077
@@ -15756,7 +16121,7 @@ index bc11ae4ae0b..b21af8bcab5 100644
  
  2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
  
-@@ -969,7 +1674,7 @@
+@@ -969,7 +1744,7 @@
         * gcc.target/i386/pr82699-6.c: Likewise
         * gcc.target/i386/returninst1.c: Likewise
         * gcc.target/i386/returninst2.c: Likewise
@@ -15765,7 +16130,7 @@ index bc11ae4ae0b..b21af8bcab5 100644
  
  2019-05-30  Iain Sandoe  <iain@sandoe.co.uk>
  
-@@ -1131,7 +1836,7 @@
+@@ -1131,7 +1906,7 @@
  
  	Backport from trunk
  	PR fortran/90498
@@ -15774,7 +16139,7 @@ index bc11ae4ae0b..b21af8bcab5 100644
  
  2019-05-17  Jakub Jelinek  <jakub@redhat.com>
  
-@@ -3801,21 +4506,21 @@
+@@ -3801,21 +4576,21 @@
  2019-02-23  Paul Thomas  <pault@gcc.gnu.org>
  
  	PR fortran/88117
@@ -15803,7 +16168,7 @@ index bc11ae4ae0b..b21af8bcab5 100644
  
  2019-02-22  David Malcolm  <dmalcolm@redhat.com>
  
-@@ -4444,7 +5149,7 @@
+@@ -4444,7 +5219,7 @@
  2019-02-09  Paul Thomas  <pault@gcc.gnu.org>
  
  	PR fortran/89200
@@ -15812,7 +16177,7 @@ index bc11ae4ae0b..b21af8bcab5 100644
  
  2019-02-09  Jakub Jelinek  <jakub@redhat.com>
  
-@@ -4704,17 +5409,17 @@
+@@ -4704,17 +5479,17 @@
  2019-02-02  Paul Thomas  <pault@gcc.gnu.org>
  
  	PR fortran/88393
@@ -18614,6 +18979,63 @@ index 00000000000..ebc67a01e33
 +}
 +
 +/* { dg-final { scan-tree-dump "loop depth 1" "optimized" } } */
+diff --git a/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-11.c b/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-11.c
+index 650e73a5ee8..dd1c0ac3eba 100644
+--- a/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-11.c
++++ b/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-11.c
+@@ -1,6 +1,10 @@
+ /* { dg-do run { target vect_cmdline_needed } } */
+ /* { dg-options "-O2 -ftree-vectorize -fwrapv -fdump-tree-vect-details -fvect-cost-model=dynamic" } */
+-/* { dg-options "-O2 -ftree-vectorize -fwrapv -fdump-tree-vect-details -fvect-cost-model=dynamic -mno-sse" { target { i?86-*-* x86_64-*-* } } } */
++/* { dg-additional-options "-mno-sse" { target { i?86-*-* x86_64-*-* } } } */
++/* The IBM Z backend sets the min-vect-loop-bound param to 2 to avoid
++   awkward epilogue code generation in some cases.  This line needs to
++   be removed after finding an alternate way to fix this.  */
++/* { dg-additional-options "--param min-vect-loop-bound=0" { target { s390*-*-* } } } */
+ 
+ #include <stdlib.h>
+ 
+diff --git a/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-26.c b/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-26.c
+index 8e5f1410612..b0933831ca6 100644
+--- a/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-26.c
++++ b/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-26.c
+@@ -30,5 +30,6 @@ int main ()
+ 
+ 
+ /* { dg-final { scan-tree-dump-times "vectorized 1 loops" 1 "vect" { target { ! avr-*-* } } } } */
+-/* { dg-final { scan-tree-dump-times "Vectorizing an unaligned access" 0 "vect" { target { ! avr-*-* } } } } */
+-/* { dg-final { scan-tree-dump-times "Alignment of access forced using peeling" 1 "vect" { target { ! avr-*-* } } } } */
++/* IBM Z does not require special alignment for vectorization.  */
++/* { dg-final { scan-tree-dump-times "Vectorizing an unaligned access" 0 "vect" { target { ! { avr-*-* s390*-*-* } } } } } */
++/* { dg-final { scan-tree-dump-times "Alignment of access forced using peeling" 1 "vect" { target { ! { avr-*-* s390*-*-* } } } } } */
+diff --git a/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-28.c b/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-28.c
+index ce97e0970b5..e35b41d03b1 100644
+--- a/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-28.c
++++ b/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-28.c
+@@ -38,5 +38,6 @@ int main (void)
+ 
+ 
+ /* { dg-final { scan-tree-dump-times "vectorized 1 loops" 1 "vect" { target { ! avr-*-* } } } } */
+-/* { dg-final { scan-tree-dump-times "Vectorizing an unaligned access" 0 "vect" { target { ! avr-*-* } } } } */
+-/* { dg-final { scan-tree-dump-times "Alignment of access forced using peeling" 1 "vect" { target { ! avr-*-* } } } } */
++/* IBM Z does not require special alignment for vectorization.  */
++/* { dg-final { scan-tree-dump-times "Vectorizing an unaligned access" 0 "vect" { target { ! { avr-*-* s390*-*-* } } } } } */
++/* { dg-final { scan-tree-dump-times "Alignment of access forced using peeling" 1 "vect" { target { ! { avr-*-* s390*-*-* } } } } } */
+diff --git a/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-32.c b/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-32.c
+index 8fce4385d0b..2ec698968a9 100644
+--- a/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-32.c
++++ b/gcc/testsuite/gcc.dg/tree-ssa/gen-vect-32.c
+@@ -1,6 +1,10 @@
+ /* { dg-do run { target vect_cmdline_needed } } */
+ /* { dg-options "-O2 -ftree-vectorize -fdump-tree-vect-details -fno-vect-cost-model" } */
+ /* { dg-additional-options "-mno-sse" { target { i?86-*-* x86_64-*-* } } } */
++/* The IBM Z backend sets the min-vect-loop-bound param to 2 to avoid
++   awkward epilogue code generation in some cases.  This line needs to
++   be removed after finding an alternate way to fix this.  */
++/* { dg-additional-options "--param min-vect-loop-bound=0" { target { s390*-*-* } } } */
+ 
+ #include <stdlib.h>
+ 
 diff --git a/gcc/testsuite/gcc.dg/tree-ssa/pr91091-2.c b/gcc/testsuite/gcc.dg/tree-ssa/pr91091-2.c
 new file mode 100644
 index 00000000000..b578de79cf1
@@ -19641,6 +20063,51 @@ index 00000000000..5b2ae89a471
 +  return u.s.b;
 +}
 +/* { dg-final { scan-assembler "srliw" } } */
+diff --git a/gcc/testsuite/gcc.target/s390/s390.exp b/gcc/testsuite/gcc.target/s390/s390.exp
+index 86f7e4398eb..ee94a806766 100644
+--- a/gcc/testsuite/gcc.target/s390/s390.exp
++++ b/gcc/testsuite/gcc.target/s390/s390.exp
+@@ -86,18 +86,22 @@ proc check_effective_target_s390_useable_hw { } {
+ 	int main (void)
+ 	{
+ 	    asm (".machinemode zarch" : : );
+-	#if __ARCH__ >= 11
+-	    asm ("lcbb %%r2,0(%%r15),0" : : );
++	#if __ARCH__ >= 13
++	    asm ("ncrk %%r2,%%r2,%%r2" : : : "r2");
++	#elif __ARCH__ >= 12
++	    asm ("agh %%r2,0(%%r15)" : : : "r2");
++	#elif __ARCH__ >= 11
++	    asm ("lochiz %%r2,42" : : : "r2");
+ 	#elif __ARCH__ >= 10
+-	    asm ("risbgn %%r2,%%r2,0,0,0" : : );
++	    asm ("risbgn %%r2,%%r2,0,0,0" : : : "r2");
+ 	#elif __ARCH__ >= 9
+-	    asm ("sgrk %%r2,%%r2,%%r2" : : );
++	    asm ("sgrk %%r2,%%r2,%%r2" : : : "r2");
+ 	#elif __ARCH__ >= 8
+-	    asm ("rosbg %%r2,%%r2,0,0,0" : : );
++	    asm ("rosbg %%r2,%%r2,0,0,0" : : : "r2");
+ 	#elif __ARCH__ >= 7
+-	    asm ("nilf %%r2,0" : : );
++	    asm ("nilf %%r2,0" : : : "r2");
+ 	#elif __ARCH__ >= 6
+-	    asm ("lay %%r2,0(%%r15)" : : );
++	    asm ("lay %%r2,0(%%r15)" : : : "r2");
+ 	#elif __ARCH__ >= 5
+ 	    asm ("tam" : : );
+ 	#endif
+@@ -107,8 +111,8 @@ proc check_effective_target_s390_useable_hw { } {
+ 	    asm ("etnd %0" : "=d" (nd));
+ 	  }
+ 	#endif
+-	#ifdef __VX__
+-	    asm ("vzero %%v0" : : );
++	#if defined (__VX__) && defined (__zarch__)
++	    asm ("vzero %%v0" : : : "v0");
+ 	#endif
+ 	  return 0;
+ 	}
 diff --git a/gcc/testsuite/gcc.target/sparc/20161111-1.c b/gcc/testsuite/gcc.target/sparc/20161111-1.c
 index eda8b0a9f12..8195fec8990 100644
 --- a/gcc/testsuite/gcc.target/sparc/20161111-1.c
@@ -19867,10 +20334,10 @@ index 00000000000..1b205950556
 +end
 diff --git a/gcc/testsuite/gfortran.dg/bind-c-intent-out.f90 b/gcc/testsuite/gfortran.dg/bind-c-intent-out.f90
 new file mode 100644
-index 00000000000..493e546d45d
+index 00000000000..39822c0753a
 --- /dev/null
 +++ b/gcc/testsuite/gfortran.dg/bind-c-intent-out.f90
-@@ -0,0 +1,41 @@
+@@ -0,0 +1,42 @@
 +! { dg-do compile }
 +! { dg-options "-fdump-tree-original" }
 +!
@@ -19908,10 +20375,88 @@ index 00000000000..493e546d45d
 +! the intent(out) implies freeing in the callee (!), hence the "free"
 +! It is the only 'free' as 'a' is part of the main program and, hence, implicitly has the SAVE attribute.
 +! The  'cfi = 0' appears before the call due to the deallocate and when preparing the C descriptor
++! As cfi (i.e. the descriptor itself) is allocated in libgomp, it has to be freed after the call.
 +
-+! { dg-final { scan-tree-dump-times "__builtin_free" 1 "original" } }
-+! { dg-final { scan-tree-dump-times "__builtin_free \\(cfi\\.\[0-9\]+\\);" 1 "original" } }
++! { dg-final { scan-tree-dump-times "__builtin_free" 2 "original" } }
++! { dg-final { scan-tree-dump-times "__builtin_free \\(cfi\\.\[0-9\]+\\);" 2 "original" } }
 +! { dg-final { scan-tree-dump-times "cfi\\.\[0-9\]+ = 0B;" 2 "original" } }
+diff --git a/gcc/testsuite/gfortran.dg/bind_c_array_params_3.f90 b/gcc/testsuite/gfortran.dg/bind_c_array_params_3.f90
+new file mode 100644
+index 00000000000..d5bad7d03f2
+--- /dev/null
++++ b/gcc/testsuite/gfortran.dg/bind_c_array_params_3.f90
+@@ -0,0 +1,39 @@
++! { dg-do run }
++! { dg-additional-sources bind_c_array_params_3_aux.c }
++!
++! PR fortran/92284
++!
++! Contributed by José Rui Faustino de Sousa
++!
++program arr_p
++  use, intrinsic :: iso_c_binding, only: c_int
++  implicit none (type, external)
++
++  integer(kind=c_int), pointer :: arr(:)
++  integer :: i
++
++  nullify(arr)
++  call arr_set(arr)
++
++  if (.not.associated(arr)) stop 1
++  if (lbound(arr,dim=1) /= 1) stop 2
++  if (ubound(arr,dim=1) /= 9) stop 3
++  if (any (arr /= [(i, i=0,8)])) stop 4
++  deallocate(arr)
++
++contains
++
++  subroutine arr_set(this) !bind(c)
++    integer(kind=c_int), pointer, intent(out) :: this(:)
++
++    interface
++      subroutine arr_set_c(this) bind(c)
++        use, intrinsic :: iso_c_binding, only: c_int
++        implicit none
++        integer(kind=c_int), pointer, intent(out) :: this(:)
++      end subroutine arr_set_c
++    end interface
++
++    call arr_set_c(this)
++  end subroutine arr_set
++end program arr_p
+diff --git a/gcc/testsuite/gfortran.dg/bind_c_array_params_3_aux.c b/gcc/testsuite/gfortran.dg/bind_c_array_params_3_aux.c
+new file mode 100644
+index 00000000000..07d1a033c5a
+--- /dev/null
++++ b/gcc/testsuite/gfortran.dg/bind_c_array_params_3_aux.c
+@@ -0,0 +1,26 @@
++/* Used by bind_c_array_params_3.f90.  */
++/* PR fortran/92284.  */
++
++#include <assert.h>
++#include <errno.h>
++#include <stdio.h>
++
++#include "../../../libgfortran/ISO_Fortran_binding.h"
++
++void arr_set_c(CFI_cdesc_t*);
++
++void arr_set_c(CFI_cdesc_t *arr){
++  int i, stat, *auxp = NULL;
++  CFI_index_t   lb[] = {1};
++  CFI_index_t   ub[] = {9};
++  
++  assert(arr);
++  assert(arr->rank==1);
++  assert(!arr->base_addr);
++  stat = CFI_allocate(arr, lb, ub, sizeof(int));
++  assert(stat==CFI_SUCCESS);
++  auxp = (int*)arr->base_addr;
++  assert(auxp);
++  for(i=0; i<ub[0]-lb[0]+1; i++) auxp[i]=i;
++  return;
++}
 diff --git a/gcc/testsuite/gfortran.dg/char_result_19.f90 b/gcc/testsuite/gfortran.dg/char_result_19.f90
 new file mode 100644
 index 00000000000..e66ebdcda53
@@ -21222,6 +21767,89 @@ index 00000000000..cd237d38660
 +   flush (iostat=i%kind) ! { dg-error "Expecting a variable at" }
 +   rewind (iostat=i%kind) ! { dg-error "Expecting a variable at" }
 +end
+diff --git a/gcc/testsuite/gfortran.dg/pr92208.f90 b/gcc/testsuite/gfortran.dg/pr92208.f90
+new file mode 100644
+index 00000000000..9de7f4b24b5
+--- /dev/null
++++ b/gcc/testsuite/gfortran.dg/pr92208.f90
+@@ -0,0 +1,39 @@
++! { dg-do run }
++!
++! PR fortran/92208
++!
++! Contributed by Nils Reiche
++!
++program stringtest
++  implicit none
++  integer, parameter :: noVars = 2
++
++!  print*, "varNames: ", createVarnames("var",noVars)
++  call function1(noVars,createVarnames("var",noVars),"path")
++
++contains
++
++function createVarnames(string,noVars) result(stringArray)
++  implicit none
++  character(len=*),                        intent(in)  :: string
++  integer,                                 intent(in)  :: noVars
++  character(len=len_trim(string)+6), dimension(noVars) :: stringArray
++  integer :: i
++  do i=1,noVars
++    write(stringArray(i),'(a,i0)') string, i
++  enddo
++end function createVarnames
++
++subroutine function1(noVars,varNames,path)
++  implicit none
++  integer, intent(in)  :: noVars
++  character(len=*), intent(in)  :: path
++  character(len=*), dimension(noVars) :: varNames
++
++  if (path /= 'path') stop 1
++  if (any(varNames /= ['var1', 'var2'])) stop 2
++  !print*, "function1-path    : ", trim(path)
++  !print*, "function1-varNames: ", varNames
++end subroutine function1
++
++end program stringtest
+diff --git a/gcc/testsuite/gfortran.dg/pr92277.f90 b/gcc/testsuite/gfortran.dg/pr92277.f90
+new file mode 100644
+index 00000000000..5121063f5f3
+--- /dev/null
++++ b/gcc/testsuite/gfortran.dg/pr92277.f90
+@@ -0,0 +1,32 @@
++! { dg-do compile }
++!
++! PR fortran/92277
++!
++! Contributed by José Rui Faustino de Sousa
++!
++module arr_m
++  implicit none
++contains
++  subroutine arr_set(this, that)
++    integer, intent(out) :: this(..)
++    integer, optional, intent(out) :: that(..)
++
++    interface
++      subroutine arr_set_c(this) bind(c)
++        use, intrinsic :: iso_c_binding, only: c_int
++        implicit none
++        integer(kind=c_int), intent(out) :: this(..)
++      end subroutine arr_set_c
++      subroutine arr_set_c_opt(this) bind(c)
++        use, intrinsic :: iso_c_binding, only: c_int
++        implicit none
++        integer(kind=c_int), optional, intent(out) :: this(..)
++      end subroutine arr_set_c_opt
++    end interface
++
++    call arr_set_c(this)
++    call arr_set_c(that)
++    call arr_set_c_opt(this)
++    call arr_set_c_opt(that)
++  end subroutine arr_set
++end module arr_m
 diff --git a/gcc/testsuite/gfortran.dg/typebound_call_22.f03 b/gcc/testsuite/gfortran.dg/typebound_call_22.f03
 index b9f0b712573..30f86937fe2 100644
 --- a/gcc/testsuite/gfortran.dg/typebound_call_22.f03
@@ -21320,7 +21948,7 @@ index 00000000000..fa93f1d7ff2
 +   end
 +end
 diff --git a/gcc/testsuite/obj-c++.dg/stubify-1.mm b/gcc/testsuite/obj-c++.dg/stubify-1.mm
-index c2355437afc..46ce3fb8158 100644
+index c2355437afc..e8f21882de9 100644
 --- a/gcc/testsuite/obj-c++.dg/stubify-1.mm
 +++ b/gcc/testsuite/obj-c++.dg/stubify-1.mm
 @@ -4,7 +4,7 @@
@@ -21328,12 +21956,26 @@ index c2355437afc..46ce3fb8158 100644
  /* { dg-skip-if "" { *-*-* } { "-fgnu-runtime" } { "" } } */
  /* { dg-require-effective-target ilp32 } */
 -/* { dg-options "-Os -mdynamic-no-pic -fno-exceptions -mmacosx-version-min=10.4" } */
-+/* { dg-options "-Os -mdynamic-no-pic -fno-exceptions -mmacosx-version-min=10.4 -msymbol-stubs" } */
++/* { dg-options "-mdynamic-no-pic -fno-exceptions -mmacosx-version-min=10.4 -msymbol-stubs" } */
  
  typedef struct objc_object { } *id ;
  int x = 41 ;
+@@ -32,8 +32,8 @@ extern "C" {
+ }
+ @end
+ 
+-/* { dg-final { scan-assembler-not "\(bl|call\)\[ \t\]+_objc_msgSend\n" } } */
+-/* { dg-final { scan-assembler     "\(bl|call\)\[ \t\]+L_objc_msgSend\\\$stub\n" } } */
+-/* { dg-final { scan-assembler-not "\(bl|call\)\[ \t\]+_bogonic\n" } } */
+-/* { dg-final { scan-assembler     "\(bl|call\)\[ \t\]+L_bogonic\\\$stub\n" } } */
+-/* { dg-final { scan-assembler-not "\\\$non_lazy_ptr" } } */
++/* { dg-final { scan-assembler-not {(bl|call)[ \t]+_objc_msgSend\n} } } */
++/* { dg-final { scan-assembler     {(bl|call)[ \t]+L_objc_msgSend\$stub\n} } } */
++/* { dg-final { scan-assembler-not {(bl|call)[ \t]+_bogonic\n} } } */
++/* { dg-final { scan-assembler     {(bl|call)[ \t]+L_bogonic\$stub\n} } } */
++/* { dg-final { scan-assembler-not {\$non_lazy_ptr} } } */
 diff --git a/gcc/testsuite/obj-c++.dg/stubify-2.mm b/gcc/testsuite/obj-c++.dg/stubify-2.mm
-index a9f66cac5d2..dd88974e259 100644
+index a9f66cac5d2..1863f986ce0 100644
 --- a/gcc/testsuite/obj-c++.dg/stubify-2.mm
 +++ b/gcc/testsuite/obj-c++.dg/stubify-2.mm
 @@ -4,7 +4,7 @@
@@ -21341,12 +21983,23 @@ index a9f66cac5d2..dd88974e259 100644
  /* { dg-skip-if "" { *-*-* } { "-fgnu-runtime" } { "" } } */
  /* { dg-require-effective-target ilp32 } */
 -/* { dg-options "-mdynamic-no-pic -fdump-rtl-jump -mmacosx-version-min=10.4" } */
-+/* { dg-options "-mdynamic-no-pic -fdump-rtl-jump -mmacosx-version-min=10.4 -msymbol-stubs" } */
++/* { dg-options "-mdynamic-no-pic -mmacosx-version-min=10.4 -msymbol-stubs" } */
  
  typedef struct objc_object { } *id ;
  int x = 41 ;
+@@ -30,4 +30,9 @@ extern int bogonic (int, int, int) ;
+ 
+ /* Any symbol_ref of an un-stubified objc_msgSend is an error; look
+    for "objc_msgSend" in quotes, without the $stub suffix. */
+-/* { dg-final {  scan-rtl-dump-not "symbol_ref.*\"objc_msgSend\"" "jump" } } */
++
++/* { dg-final { scan-assembler-not {(bl|call)[ \t]+_objc_msgSend\n} } } */
++/* { dg-final { scan-assembler     {(bl|call)[ \t]+L_objc_msgSend\$stub\n} } } */
++/* { dg-final { scan-assembler-not {(bl|call)[ \t]+_Z7bogoniciii\n} } } */
++/* { dg-final { scan-assembler     {(bl|call)[ \t]+L__Z7bogoniciii\$stub\n} } } */
++/* { dg-final { scan-assembler-not {\$non_lazy_ptr} } } */
 diff --git a/gcc/testsuite/objc.dg/stubify-1.m b/gcc/testsuite/objc.dg/stubify-1.m
-index 91bf73a14f7..97d5b598380 100644
+index 91bf73a14f7..641595ccfe4 100644
 --- a/gcc/testsuite/objc.dg/stubify-1.m
 +++ b/gcc/testsuite/objc.dg/stubify-1.m
 @@ -4,7 +4,7 @@
@@ -21358,19 +22011,48 @@ index 91bf73a14f7..97d5b598380 100644
  
  typedef struct objc_object { } *id ;
  int x = 41 ;
+@@ -28,8 +28,8 @@ extern int bogonic (int, int, int) ;
+ }
+ @end
+ 
+-/* { dg-final { scan-assembler-not "\(bl|call\)\[ \t\]+_objc_msgSend\n" } } */
+-/* { dg-final { scan-assembler     "\(bl|call\)\[ \t\]+L_objc_msgSend\\\$stub\n" } } */
+-/* { dg-final { scan-assembler-not "\(bl|call\)\[ \t\]+_bogonic\n" } } */
+-/* { dg-final { scan-assembler     "\(bl|call\)\[ \t\]+L_bogonic\\\$stub\n" } } */
+-/* { dg-final { scan-assembler-not "\\\$non_lazy_ptr" } } */
++/* { dg-final { scan-assembler-not {(bl|call)[ \t]+_objc_msgSend\n} } } */
++/* { dg-final { scan-assembler     {(bl|call)[ \t]+L_objc_msgSend\$stub\n} } } */
++/* { dg-final { scan-assembler-not {(bl|call)[ \t]+_bogonic\n} } } */
++/* { dg-final { scan-assembler     {(bl|call)[ \t]+L_bogonic\$stub\n} } } */
++/* { dg-final { scan-assembler-not {\$non_lazy_ptr} } } */
 diff --git a/gcc/testsuite/objc.dg/stubify-2.m b/gcc/testsuite/objc.dg/stubify-2.m
-index eaf4b964e4b..a07992a5a9e 100644
+index eaf4b964e4b..2930e46fc13 100644
 --- a/gcc/testsuite/objc.dg/stubify-2.m
 +++ b/gcc/testsuite/objc.dg/stubify-2.m
-@@ -4,7 +4,7 @@
- /* { dg-do compile { target powerpc*-*-darwin* } } */
+@@ -1,10 +1,10 @@
+ /* All calls must be properly stubified, m32 only.  */
+ /* Testcase extracted from TextEdit:Document.m.  */
+ 
+-/* { dg-do compile { target powerpc*-*-darwin* } } */
++/* { dg-do compile { target *-*-darwin* } } */
  /* { dg-skip-if "" { *-*-* } { "-fgnu-runtime" } { "" } } */
  /* { dg-require-effective-target ilp32 } */
 -/* { dg-options "-mdynamic-no-pic -fdump-rtl-jump -mmacosx-version-min=10.4" } */
-+/* { dg-options "-mdynamic-no-pic -fdump-rtl-jump -mmacosx-version-min=10.4 -msymbol-stubs" } */
++/* { dg-options "-mdynamic-no-pic -mmacosx-version-min=10.4 -msymbol-stubs" } */
  
  typedef struct objc_object { } *id ;
  int x = 41 ;
+@@ -30,4 +30,9 @@ extern int bogonic (int, int, int) ;
+ 
+ /* Any symbol_ref of an un-stubified objc_msgSend is an error; look
+    for "objc_msgSend" in quotes, without the $stub suffix.  */
+-/* { dg-final { scan-rtl-dump-not "symbol_ref.*\"objc_msgSend\"" "jump" } } */
++
++/* { dg-final { scan-assembler-not {(bl|call)[ \t]+_objc_msgSend\n} } } */
++/* { dg-final { scan-assembler     {(bl|call)[ \t]+L_objc_msgSend\$stub\n} } } */
++/* { dg-final { scan-assembler-not {(bl|call)[ \t]+_bogonic\n} } } */
++/* { dg-final { scan-assembler     {(bl|call)[ \t]+L_bogonic\$stub\n} } } */
++/* { dg-final { scan-assembler-not {\$non_lazy_ptr} } } */
 diff --git a/gcc/tree-cfg.c b/gcc/tree-cfg.c
 index 32be59acfb0..d27cc65f883 100644
 --- a/gcc/tree-cfg.c
@@ -22725,6 +23407,54 @@ index 7476439647c..5d81bcba74a 100644
        njumps = 0;
        master_init = true;
      }
+diff --git a/libgfortran/runtime/ISO_Fortran_binding.c b/libgfortran/runtime/ISO_Fortran_binding.c
+index 695ef57ac32..c71d8e89453 100644
+--- a/libgfortran/runtime/ISO_Fortran_binding.c
++++ b/libgfortran/runtime/ISO_Fortran_binding.c
+@@ -119,24 +119,25 @@ gfc_desc_to_cfi_desc (CFI_cdesc_t **d_ptr, const gfc_array_void *s)
+     d->type = (CFI_type_t)(d->type
+ 		+ ((CFI_type_t)d->elem_len << CFI_type_kind_shift));
+ 
+-  /* Full pointer or allocatable arrays retain their lower_bounds.  */
+-  for (n = 0; n < GFC_DESCRIPTOR_RANK (s); n++)
+-    {
+-      if (d->attribute != CFI_attribute_other)
+-	d->dim[n].lower_bound = (CFI_index_t)GFC_DESCRIPTOR_LBOUND(s, n);
+-      else
+-	d->dim[n].lower_bound = 0;
+-
+-      /* Assumed size arrays have gfc ubound == 0 and CFI extent = -1.  */
+-      if ((n == GFC_DESCRIPTOR_RANK (s) - 1)
+-	  && GFC_DESCRIPTOR_LBOUND(s, n) == 1
+-	  && GFC_DESCRIPTOR_UBOUND(s, n) == 0)
+-	d->dim[n].extent = -1;
+-      else
+-	d->dim[n].extent = (CFI_index_t)GFC_DESCRIPTOR_UBOUND(s, n)
+-			    - (CFI_index_t)GFC_DESCRIPTOR_LBOUND(s, n) + 1;
+-      d->dim[n].sm = (CFI_index_t)(GFC_DESCRIPTOR_STRIDE(s, n) * s->span);
+-    }
++  if (d->base_addr)
++    /* Full pointer or allocatable arrays retain their lower_bounds.  */
++    for (n = 0; n < GFC_DESCRIPTOR_RANK (s); n++)
++      {
++	if (d->attribute != CFI_attribute_other)
++	  d->dim[n].lower_bound = (CFI_index_t)GFC_DESCRIPTOR_LBOUND(s, n);
++	else
++	  d->dim[n].lower_bound = 0;
++
++	/* Assumed size arrays have gfc ubound == 0 and CFI extent = -1.  */
++	if (n == GFC_DESCRIPTOR_RANK (s) - 1
++	    && GFC_DESCRIPTOR_LBOUND(s, n) == 1
++	    && GFC_DESCRIPTOR_UBOUND(s, n) == 0)
++	  d->dim[n].extent = -1;
++	else
++	  d->dim[n].extent = (CFI_index_t)GFC_DESCRIPTOR_UBOUND(s, n)
++			     - (CFI_index_t)GFC_DESCRIPTOR_LBOUND(s, n) + 1;
++	d->dim[n].sm = (CFI_index_t)(GFC_DESCRIPTOR_STRIDE(s, n) * s->span);
++      }
+ 
+   if (*d_ptr == NULL)
+     *d_ptr = d;
 diff --git a/libgo/go/go/internal/gccgoimporter/importer_test.go b/libgo/go/go/internal/gccgoimporter/importer_test.go
 index 58fa8c8cf5c..eb070c137ff 100644
 --- a/libgo/go/go/internal/gccgoimporter/importer_test.go
