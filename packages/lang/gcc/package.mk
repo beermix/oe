@@ -48,7 +48,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-diagnostics-color=always \
                            --disable-vtable-verify \
                            --disable-libunwind-exceptions \
-                           --with-system-zlib \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
