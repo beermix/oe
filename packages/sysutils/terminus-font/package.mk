@@ -17,7 +17,7 @@ pre_configure_init() {
 }
 
 configure_init() {
-  ./configure INT=${TOOLCHAIN}/bin/Python2
+  ./configure INT=${TOOLCHAIN}/bin/python2
 }
 
 make_init() {
