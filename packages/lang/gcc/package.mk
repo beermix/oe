@@ -27,9 +27,11 @@ PKG_LONGDESC="This package contains the GNU Compiler Collection."
 post_unpack() {
   ISL_DIR=$(get_build_dir isl)
   ln -s $ISL_DIR $PKG_BUILD/isl
-
+}
+ 
+post_patch() {
   #sed -i '/maybe-check-target-libphobos \\/d' $PKG_BUILD/Makefile
-  echo ${PKG_VERSION} > $PKG_BUILD/gcc/BASE-VER
+  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 }
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
