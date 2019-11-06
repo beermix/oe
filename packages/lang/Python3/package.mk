@@ -114,7 +114,7 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-  ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
+  #ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
 
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
