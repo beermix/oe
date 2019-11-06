@@ -4,7 +4,7 @@
 PKG_NAME="mariadb"
 PKG_VERSION="10.3.19"
 PKG_REV="105"
-PKG_SHA256="5c924fc516aa1794afec49362c7e07ba95de0c94f324056a23f7ae88658e0f84"
+PKG_SHA256=""
 PKG_LICENSE="GPL2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
 PKG_URL="https://downloads.mariadb.org/interstitial/${PKG_NAME}-${PKG_VERSION}/source/${PKG_NAME}-${PKG_VERSION}.tar.gz"
