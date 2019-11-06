@@ -28,7 +28,7 @@ post_unpack() {
   ISL_DIR=$(get_build_dir isl)
   ln -s $ISL_DIR $PKG_BUILD/isl
 
-  sed -i '/maybe-check-target-libphobos \\/d' $PKG_BUILD/Makefile
+  #sed -i '/maybe-check-target-libphobos \\/d' $PKG_BUILD/Makefile
   echo ${PKG_VERSION} > $PKG_BUILD/gcc/BASE-VER
 }
 
