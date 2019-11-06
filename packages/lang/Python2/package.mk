@@ -18,6 +18,8 @@ PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +speed"
 
+PKG_PYTHON_VERSION="python2.7"
+
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
@@ -109,6 +111,8 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
+  ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
+
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
   for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest; do
