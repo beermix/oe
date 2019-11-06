@@ -1,1 +1,0 @@
-/home/user/-f2fs/oe/build.LibreELEC-Generic.x86_64-9.80-devel/vdr-2.4.1
