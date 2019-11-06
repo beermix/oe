@@ -96,7 +96,7 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-  ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
+  #ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
 
   rm -f $TOOLCHAIN/bin/smtpd.py*
   rm -f $TOOLCHAIN/bin/pyvenv
