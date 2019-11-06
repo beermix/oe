@@ -58,7 +58,7 @@ pre_configure_host() {
 
 make_host() {
   make configure-host
-  make MAKEINFO=true
+  make
 }
 
 makeinstall_host() {
