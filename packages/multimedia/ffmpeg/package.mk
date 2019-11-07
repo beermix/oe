@@ -78,12 +78,12 @@ pre_configure_target() {
 
 configure_target() {
   ./configure --prefix="/usr" \
-              --cpu="$TARGET_CPU" \
-              --arch="$TARGET_ARCH" \
+              --cpu="${TARGET_CPU}" \
+              --arch="${TARGET_ARCH}" \
               --enable-cross-compile \
-              --cross-prefix="$TARGET_PREFIX" \
-              --sysroot="$SYSROOT_PREFIX" \
-              --sysinclude="$SYSROOT_PREFIX/usr/include" \
+              --cross-prefix="${TARGET_PREFIX}" \
+              --sysroot="${SYSROOT_PREFIX}" \
+              --sysinclude="${SYSROOT_PREFIX}/usr/include" \
               --target-os="linux" \
               --nm="$NM" \
               --ar="$AR" \
@@ -190,5 +190,5 @@ configure_target() {
 }
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/usr/share/ffmpeg/examples
+  rm -rf ${INSTALL}/usr/share/ffmpeg/examples
 }

@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="rtmpdump"
-PKG_VERSION="c5f04a5"
-PKG_SHA256="fd8c21263d93fbde8bee8aa6c5f6a657789674bb0f9e74f050651504d5f43b46"
+PKG_VERSION="fa8646d"
+PKG_SHA256="dba4d4d2e1c7de6884b01d98194b83cab6784669089fa3c919152087a3a38fd2"
 PKG_LICENSE="GPL"
 PKG_SITE="https://repo.or.cz/rtmpdump.git/shortlog"
 PKG_URL="http://repo.or.cz/rtmpdump.git/snapshot/$PKG_VERSION.tar.gz"

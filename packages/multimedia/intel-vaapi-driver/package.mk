@@ -22,5 +22,4 @@ post_unpack() {
 
 PKG_MESON_OPTS_TARGET="-Dwith_x11=yes \
                        -Dwith_wayland=no \
-                       -Denable_hybrid_codec=true \
-                       -Denable_tests=false"
+                       -Denable_hybrid_codec=true"

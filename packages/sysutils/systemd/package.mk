@@ -3,11 +3,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="systemd"
-PKG_VERSION="243"
-PKG_SHA256="0611843c2407f8b125b1b7cb93533bdebd4ccf91c99dffa64ec61556a258c7d1"
+PKG_VERSION="ef677436aa203c24816021dd698b57f219f0ff64"
+PKG_SHA256="0ec88f76c5e39f3ad0e7edd89859145ecd1eae315c5a2de78a990f042518dd8b"
 PKG_LICENSE="LGPL2.1+"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy libidn2"
 PKG_LONGDESC="A system and session manager for Linux, compatible with SysV and LSB init scripts."
 
