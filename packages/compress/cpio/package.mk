@@ -2,8 +2,8 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="cpio"
-PKG_VERSION="2.12"
-PKG_SHA256="08a35e92deb3c85d269a0059a27d4140a9667a6369459299d08c17f713a92e73"
+PKG_VERSION="2.13"
+PKG_SHA256="e87470d9c984317f658567c03bfefb6b0c829ff17dbf6b0de48d71a4c8f3db88"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/cpio/"
 PKG_URL="http://ftpmirror.gnu.org/cpio/$PKG_NAME-$PKG_VERSION.tar.gz"
