@@ -2,7 +2,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.3.19"
+PKG_VERSION="10.4.9"
 PKG_REV="105"
 PKG_SHA256=""
 PKG_LICENSE="GPL2"
@@ -29,42 +29,38 @@ configure_package() {
     import_executables"
 
   PKG_CMAKE_OPTS_TARGET=" \
-    -DCMAKE_INSTALL_MESSAGE=NEVER \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_CONFIG=mysql_release \
-    -DFEATURE_SET=classic \
-    -DSTACK_DIRECTION=1 \
     -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=ON \
     -DCMAKE_CROSSCOMPILING=ON \
     -DIMPORT_EXECUTABLES=${PKG_BUILD}/.${HOST_NAME}/import_executables.cmake \
     -DWITHOUT_AWS_KEY_MANAGEMENT=ON \
-    -DWITH_EXTRA_CHARSETS=complex \
-    -DWITH_SSL=system \
-    -DWITH_SSL=${SYSROOT_PREFIX}/usr \
-    -DWITH_JEMALLOC=OFF \
-    -DWITH_PCRE=bundled \
-    -DWITH_ZLIB=bundled \
     -DWITH_EDITLINE=bundled \
     -DWITH_LIBEVENT=bundled \
     -DCONNECT_WITH_LIBXML2=bundled \
-    -DSKIP_TESTS=ON \
-    -DWITH_DEBUG=OFF \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DDEFAULT_CHARSET=utf8mb4 \
+    -DDEFAULT_COLLATION=utf8mb4_unicode_ci \
+    -DENABLED_LOCAL_INFILE=ON \
+    -DPLUGIN_EXAMPLE=NO \ 
+    -DPLUGIN_FEDERATED=NO \
+    -DPLUGIN_FEEDBACK=NO \
+    -DWITH_EMBEDDED_SERVER=ON \
+    -DWITH_EXTRA_CHARSETS=complex \
+    -DWITH_JEMALLOC=ON \
+    -DWITH_LIBWRAP=OFF \
+    -DWITH_PCRE=bundled \
+    -DWITH_READLINE=ON \
+    -DWITH_SSL=system \
+    -DWITH_SYSTEMD=yes \
     -DWITH_UNIT_TESTS=OFF \
-    -DENABLE_DTRACE=OFF \
-    -DSECURITY_HARDENED=OFF \
-    -DWITH_EMBEDDED_SERVER=OFF \
-    -DWITHOUT_SERVER=OFF \
-    -DPLUGIN_AUTH_SOCKET=STATIC \
-    -DDISABLE_SHARED=NO \
-    -DENABLED_PROFILING=OFF \
-    -DENABLE_STATIC_LIBS=OFF \
-    -DMYSQL_UNIX_ADDR=/var/run/mysqld/mysqld.sock \
-    -DWITH_SAFEMALLOC=OFF \
-    -DWITHOUT_AUTH_EXAMPLES=ON"
+    -DWITH_ZLIB=system \
+    -DSTACK_DIRECTION=-1 \
+    -Dhave_CXX__D_FORTIFY_SOURCE_2=0 \
+    -DMYSQLD_STATIC_PLUGIN_LIBS=1 \
+    -DMYSQL_UNIX_ADDR=/var/run/mysqld/mysqld.sock"
 }
 
 make_host() {
-  ninja ${NINJA_OPTS} import_executables
+  ninja ${NINJA_OPTS}
 }
 
 makeinstall_host() {
@@ -73,7 +69,7 @@ makeinstall_host() {
 
 makeinstall_target() {
   # use only for addon
-  DESTDIR=${PKG_BUILD}/.install_addon ninja ${NINJA_OPTS} install
+ninja ${NINJA_OPTS} install -j8
   rm -rf "${PKG_BUILD}/.install_addon/usr/mysql-test"
 }
 

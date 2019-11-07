@@ -51,7 +51,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
-                           --disable-vtable-verify \
                            --disable-libunwind-exceptions \
                            --without-ppl \
                            --without-cloog \
