@@ -95,13 +95,13 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
 #  export CCACHE_DISABLE=true
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export gcc_cv_libc_provides_ssp=yes
   unset CPP
 }
 
-pre_configure_bootstrap() {
+#pre_configure_bootstrap() {
 #  export CCACHE_DISABLE=true
-  export gcc_cv_libc_provides_ssp=yes
-}
+#}
 
 post_make_host() {
   # fix wrong link
