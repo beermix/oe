@@ -2,7 +2,6 @@ PKG_NAME="iana-etc"
 PKG_VERSION="2019"
 PKG_LICENSE="none"
 PKG_SITE="http://www.iana.org"
-#PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="iana-etc: The Iana-Etc package provides data for network services and protocols."
 PKG_TOOLCHAIN="manual"
 
@@ -11,8 +10,8 @@ unpack() {
 }
 
 make_target() {
-  wget https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
-  wget https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
+  wget --tries=5 --timeout=20 --no-check-certificate https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
+  wget --tries=5 --timeout=20 --no-check-certificate https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
 }
 
 makeinstall_target() {
