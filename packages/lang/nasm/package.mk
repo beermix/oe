@@ -11,3 +11,7 @@ PKG_SITE="https://www.nasm.us/pub/nasm/releasebuilds/?C=M;O=D"
 PKG_URL="http://www.nasm.us/pub/nasm/releasebuilds/${PKG_VERSION}/nasm-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="The Netwide Assembler, NASM, is an 80x86 and x86-64 assembler designed for portability and modularity."
+
+PKG_CONFIGURE_OPTS_HOST="--disable-lto \
+			    --disable-werror \
+			    --disable-gdb"
