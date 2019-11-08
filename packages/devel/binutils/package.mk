@@ -14,6 +14,10 @@ PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_LONGDESC="A GNU collection of binary utilities."
 
+post_patch() {
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+}
+
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \

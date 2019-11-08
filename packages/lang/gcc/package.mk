@@ -31,8 +31,10 @@ post_unpack() {
 }
  
 post_patch() {
-  #sed -i '/maybe-check-target-libphobos \\/d' $PKG_BUILD/Makefile
   echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
+
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
 }
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
@@ -88,7 +90,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         gcc_cv_libc_provides_ssp=yes \
                          $GCC_OPTS"
 
 pre_configure_host() {
@@ -97,9 +98,10 @@ pre_configure_host() {
   unset CPP
 }
 
-#pre_configure_bootstrap() {
+pre_configure_bootstrap() {
 #  export CCACHE_DISABLE=true
-#}
+  export gcc_cv_libc_provides_ssp=yes
+}
 
 post_make_host() {
   # fix wrong link
