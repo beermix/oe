@@ -9,7 +9,7 @@ PKG_SITE="https://github.com/libretro/libretro-uae"
 PKG_URL="https://github.com/libretro/libretro-uae/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_LONGDESC="libretro wrapper for UAE emulator."
-PKG_BUILD_FLAGS="-lto"
+PKG_BUILD_FLAGS="-lto -hardening"
 
 PKG_LIBNAME="puae_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"

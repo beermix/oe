@@ -11,6 +11,7 @@ PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION
 PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl"
 PKG_LONGDESC="IP packet filter administration."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(kernel_path)"
 

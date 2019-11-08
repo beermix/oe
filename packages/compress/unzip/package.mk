@@ -10,6 +10,7 @@ PKG_URL="http://ftp.uk.i-scream.org/sites/www.ibiblio.org/gentoo/distfiles/$PKG_
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="UnZip is an extraction utility for archives compressed in .zip format."
 PKG_TOOLCHAIN="manual"
+PKG_BUILD_FLAGS="-hardening"
 
 make_target() {
     make CC=$CC RANLIB=$RANLIB AR=$AR STRIP=$STRIP \

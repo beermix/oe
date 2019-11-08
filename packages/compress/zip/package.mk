@@ -10,6 +10,7 @@ PKG_URL="$SOURCEFORGE_SRC/infozip/Zip%203.x%20%28latest%29/3.0/${PKG_NAME}${PKG_
 PKG_DEPENDS_TARGET="toolchain bzip2"
 PKG_LONGDESC="A compression and file packaging utility."
 PKG_TOOLCHAIN="manual"
+PKG_BUILD_FLAGS="-hardening"
 
 make_target() {
   make CC=$CC CPP=$CPP RANLIB=$RANLIB AR=$AR STRIP=$STRIP LOCAL_ZIP="$CFLAGS" \
