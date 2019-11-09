@@ -62,7 +62,8 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 CFLAGS_OPTIM_HARDENING="-fno-plt"
 CXXFLAGS_OPTIM_HARDENING="-fno-plt"
 #CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
-LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now -Wl,--hash-style=gnu -Wl,--no-copy-dt-needed-entries"
+LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
+# -Wl,--hash-style=gnu -Wl,--no-copy-dt-needed-entries
 
 
 # add distro specific library dirs
