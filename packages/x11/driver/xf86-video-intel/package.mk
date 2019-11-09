@@ -12,6 +12,7 @@ PKG_URL="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/$PKG
 PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-macros systemd xorg-server"
 PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-hardening"
 # xf86-video-intel is broken enough. dont link with LTO
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
