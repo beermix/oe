@@ -24,6 +24,7 @@ PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc
 PKG_DEPENDS_INIT="toolchain"
 PKG_DEPENDS_UNPACK+=" isl"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
+PKG_BUILD_FLAGS="-gold -lto -hardening"
 
 post_unpack() {
   ISL_DIR=$(get_build_dir isl)
