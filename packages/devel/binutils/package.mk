@@ -5,7 +5,6 @@
 PKG_NAME="binutils"
 PKG_VERSION="2.33.1"
 PKG_SHA256="ab66fc2d1c3ec0359b8e08843c9f33b63e8707efdff5e4cc5c200eae24722cbf"
-#PKG_VERSION="e648cc9"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_33-branch"
 PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
@@ -64,8 +63,8 @@ pre_configure_host() {
 }
 
 make_host() {
-  make configure-host
-  make
+  make MAKEINFO=true configure-host
+  make MAKEINFO=true
 }
 
 makeinstall_host() {
