@@ -65,7 +65,6 @@ CXXFLAGS_OPTIM_HARDENING="-fno-plt"
 LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
 # -Wl,--hash-style=gnu -Wl,--no-copy-dt-needed-entries
 
-
 # add distro specific library dirs
 if [ -z "$HOST_LIBDIR" ]; then
   HOST_LIBDIR="$TOOLCHAIN/lib"

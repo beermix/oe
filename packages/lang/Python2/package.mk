@@ -131,6 +131,8 @@ post_makeinstall_target() {
   $TOOLCHAIN/bin/python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
   find $INSTALL/usr/lib/$PKG_PYTHON_VERSION -name "*.py" -exec rm -f {} \; &>/dev/null
 
+  python_compile $PKG_INSTALL_PATH_LIB
+
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
   debug_strip $INSTALL/usr
