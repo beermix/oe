@@ -3,8 +3,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="cmake"
-PKG_VERSION="3.16.0-rc3"
-PKG_SHA256="95f3326fe7e810463be1cab93674a69b1f5ff410397cbbcbab7223ddd675c482"
+PKG_VERSION="3.15.5"
+PKG_SHA256="fbdd7cef15c0ced06bb13024bfda0ecc0dedbcaaaa6b8a5d368c75255243beb4"
 PKG_LICENSE="BSD"
 PKG_SITE="https://cmake.org/download"
 PKG_URL="http://www.cmake.org/files/v${PKG_VERSION%.*}/cmake-${PKG_VERSION}.tar.gz"
@@ -18,7 +18,7 @@ configure_host() {
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
-               -DCMAKE_EXE_LINKER_FLAGS="${HOST_LDFLAGS} -s" \
+               -DCMAKE_EXE_LINKER_FLAGS="${HOST_LDFLAGS}" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0
 }
