@@ -95,7 +95,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
 #  export CCACHE_DISABLE=true
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
-  export gcc_cv_libc_provides_ssp=yes
   unset CPP
 }
 
