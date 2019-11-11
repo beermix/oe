@@ -183,9 +183,9 @@ post_makeinstall_target() {
   install -m644 $PKG_DIR/files/sdt-config.h $SYSROOT_PREFIX/usr/include/sys/sdt-config.h
 
 # add cross ldd script
-  mkdir -p $TOOLCHAIN/bin/
-    cp $PKG_DIR/scripts/cross-compile-ldd $TOOLCHAIN/bin/$TARGET_NAME-ldd
-    chmod +x $TOOLCHAIN/bin/$TARGET_NAME-ldd
+#  mkdir -p $TOOLCHAIN/bin/
+#    cp $PKG_DIR/scripts/cross-compile-ldd $TOOLCHAIN/bin/$TARGET_NAME-ldd
+#    chmod +x $TOOLCHAIN/bin/$TARGET_NAME-ldd
 }
 
 configure_init() {
