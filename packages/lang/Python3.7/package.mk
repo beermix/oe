@@ -3,8 +3,8 @@
 
 PKG_NAME="Python3"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
-PKG_VERSION="3.8.0"
-PKG_SHA256="b356244e13fb5491da890b35b13b2118c3122977c2cd825e3eb6e7d462030d84"
+PKG_VERSION="3.7.5"
+PKG_SHA256="e85a76ea9f3d6c485ec1780fca4e500725a4a7bbc63c78ebc44170de9b619d94"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
@@ -13,10 +13,9 @@ PKG_DEPENDS_TARGET="toolchain Python3:host sqlite expat zlib bzip2 xz openssl li
 PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
 
-PKG_PYTHON_VERSION="python3.8"
+PKG_PYTHON_VERSION="python3.7"
 
-PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+speed"
+PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          ac_cv_prog_SVNVERSION=/bin/false
@@ -83,17 +82,19 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --with-system-ffi
                            --without-pymalloc
                            --without-ensurepip
-                           --with-threads
                            --disable-ipv6
                            --with-computed-gotos
 "
 
-post_unpack() {
-  # This is needed to make sure the Python build process doesn't try to
-  # regenerate those files with the pgen program. Otherwise, it builds
-  # pgen for the target, and tries to run it on the host.
-    touch $PKG_BUILD/Include/graminit.h
-    touch $PKG_BUILD/Python/graminit.c
+pre_configure_host() {
+  export PYTHON_MODULES_INCLUDE="$HOST_INCDIR"
+  export PYTHON_MODULES_LIB="$HOST_LIBDIR"
+  export DISABLED_EXTENSIONS="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES"
+}
+
+post_make_host() {
+  # python distutils per default adds -L$LIBDIR when linking binary extensions
+  sed -e "s|^ 'LIBDIR':.*| 'LIBDIR': '/usr/lib',|g" -i $(find $PKG_BUILD/.$HOST_NAME -not -path '*/__pycache__/*' -name '_sysconfigdata__*.py')
 }
 
 post_makeinstall_host() {
@@ -107,6 +108,12 @@ post_makeinstall_host() {
   cp $PKG_BUILD/Tools/scripts/reindent.py $TOOLCHAIN/lib/$PKG_PYTHON_VERSION
 }
 
+pre_configure_target() {
+  export PYTHON_MODULES_INCLUDE="$TARGET_INCDIR"
+  export PYTHON_MODULES_LIB="$TARGET_LIBDIR"
+  export DISABLED_EXTENSIONS="$PKG_PY_DISABLED_MODULES"
+}
+
 post_makeinstall_target() {
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
@@ -116,12 +123,13 @@ post_makeinstall_target() {
     rm -rf $PKG_INSTALL_PATH_LIB/$dir
   done
 
+  rm -rf $PKG_INSTALL_PATH_LIB/distutils/command/*.exe
+
   rm -rf $INSTALL/usr/bin/pyvenv
   rm -rf $INSTALL/usr/bin/python*-config
   rm -rf $INSTALL/usr/bin/smtpd.py $INSTALL/usr/bin/smtpd.py.*
 
-  $TOOLCHAIN/bin/python3 -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py -d ${PKG_INSTALL_PATH_LIB#${INSTALL}} -b -f $PKG_INSTALL_PATH_LIB
-  find $PKG_INSTALL_PATH_LIB -name "*.py" -exec rm -f {} \; &>/dev/null
+  python_compile $PKG_INSTALL_PATH_LIB
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
