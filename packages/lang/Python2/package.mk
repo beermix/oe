@@ -112,8 +112,6 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
-
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
   for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest; do
@@ -130,8 +128,6 @@ post_makeinstall_target() {
   cd $INSTALL/usr/lib/$PKG_PYTHON_VERSION
   $TOOLCHAIN/bin/python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
   find $INSTALL/usr/lib/$PKG_PYTHON_VERSION -name "*.py" -exec rm -f {} \; &>/dev/null
-
-  python_compile $PKG_INSTALL_PATH_LIB
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
