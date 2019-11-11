@@ -56,7 +56,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
                            --disable-libunwind-exceptions \
-                           --with-gcc-major-version-only \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
