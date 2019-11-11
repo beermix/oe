@@ -11,9 +11,5 @@ PKG_URL="https://mesa.freedesktop.org/archive/glu/${PKG_NAME}-${PKG_VERSION}.tar
 PKG_DEPENDS_TARGET="toolchain mesa"
 PKG_NEED_UNPACK="$(get_pkg_directory mesa)"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
-PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
-                           --disable-debug \
-                           --disable-osmesa \
-                           --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules --disable-osmesa"
