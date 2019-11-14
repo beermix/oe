@@ -2,6 +2,7 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
+PKG_NAME="curl"
 PKG_VERSION="7.67.0"
 PKG_SHA256="f5d2e7320379338c3952dcc7566a140abb49edb575f9f99272455785c40e536c"
 PKG_LICENSE="MIT"
