@@ -16,14 +16,14 @@ PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:hos
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_DEPENDS_INIT="toolchain"
-#PKG_DEPENDS_UNPACK+=" isl"
+PKG_DEPENDS_UNPACK+=" isl"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-gold -lto -hardening"
 
-#post_unpack() {
-#  ISL_DIR=$(get_build_dir isl)
-#  ln -s $ISL_DIR $PKG_BUILD/isl
-#}
+post_unpack() {
+  ISL_DIR=$(get_build_dir isl)
+  ln -s $ISL_DIR $PKG_BUILD/isl
+}
  
 post_patch() {
   echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
