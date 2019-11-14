@@ -32,7 +32,7 @@ post_unpack() {
 }
  
 post_patch() {
-  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
+#  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
@@ -93,6 +93,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --enable-linker-build-id \
                          $GCC_OPTS"
 
 pre_configure_host() {
