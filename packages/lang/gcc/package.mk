@@ -16,20 +16,20 @@ PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:hos
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_DEPENDS_INIT="toolchain"
-PKG_DEPENDS_UNPACK+=" isl"
+#PKG_DEPENDS_UNPACK+=" isl"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-gold -lto -hardening"
 
-post_unpack() {
-  ISL_DIR=$(get_build_dir isl)
-  ln -s $ISL_DIR $PKG_BUILD/isl
-}
+#post_unpack() {
+#  ISL_DIR=$(get_build_dir isl)
+#  ln -s $ISL_DIR $PKG_BUILD/isl
+#}
  
 post_patch() {
   echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
 }
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
@@ -37,7 +37,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -87,17 +86,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-linker-build-id \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CCACHE_DISABLE=true
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-}
-
-pre_configure_bootstrap() {
-  export CCACHE_DISABLE=true
 }
 
 post_make_host() {
