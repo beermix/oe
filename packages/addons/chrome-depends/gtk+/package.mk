@@ -1,9 +1,12 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2017 Escalade
+# Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+
 PKG_NAME="gtk+"
 PKG_VERSION="2.24.32"
 PKG_SHA256="b6c8a93ddda5eabe3bfee1eb39636c9a03d2a56c7b62828b359bf197943c582e"
 #PKG_VERSION="aca9558"
 PKG_URL="https://github.com/GNOME/gtk/archive/${PKG_VERSION}.tar.gz"
-PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/GNOME/gtk/tree/gtk-2-24"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/GNOME/gtk/archive/${PKG_VERSION}.tar.gz"
