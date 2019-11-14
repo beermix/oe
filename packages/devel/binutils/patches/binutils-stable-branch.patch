@@ -30,19 +30,6 @@ index aa5a81ffed..86ce07a1c1 100644
  	Release 2.33.1
 diff --git a/bfd/development.sh b/bfd/development.sh
 index eb0e7b6da1..54d494c105 100644
---- a/bfd/development.sh
-+++ b/bfd/development.sh
-@@ -16,7 +16,7 @@
- # along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
- # Controls whether to enable development-mode features by default.
--development=false
-+development=true
- 
- # Indicate whether this is a release branch.
- experimental=false
-diff --git a/bfd/elf32-hppa.c b/bfd/elf32-hppa.c
-index a61adbc3c8..cd99584f27 100644
 --- a/bfd/elf32-hppa.c
 +++ b/bfd/elf32-hppa.c
 @@ -71,34 +71,38 @@
