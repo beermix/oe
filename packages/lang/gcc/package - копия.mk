@@ -37,7 +37,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -51,10 +50,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-diagnostics-color=always \
                            --disable-libunwind-exceptions \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
+                           --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp"
 
@@ -62,6 +61,9 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
+                              --enable-cloog-backend=isl \
+                              --disable-libitm \
+                              --disable-libquadmath \
                               --disable-shared \
                               --disable-threads \
                               --disable-libgomp \
