@@ -7,11 +7,11 @@ PKG_SHA256="8e4e86f04ed789648b66f757329743a0d6dfb5294c3b91b756a474f1ce05a794"
 PKG_URL="http://ftpmirror.gnu.org/gawk/gawk-$PKG_VERSION.tar.xz"
 #PKG_URL="http://git.savannah.gnu.org/cgit/gawk.git/snapshot/gawk-$PKG_VERSION.tar.gz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain readline"
+PKG_DEPENDS_TARGET="toolchain readline mpfr"
 PKG_DEPENDS_HOST="ccache:host mpfr:host"
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-mpfr --disable-rpath"
+PKG_CONFIGURE_OPTS_TARGET="--without-libsigsegv"
 PKG_CONFIGURE_OPTS_HOST="--without-libsigsegv"
 
 post_makeinstall_target() {

@@ -15,8 +15,12 @@ PKG_BUILD_FLAGS="+pic:host +pic"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-cxx --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
 pre_configure_host() {
+  export CPPFLAGS="$CPPFLAGS -fexceptions"
+}
+
+pre_configure_target() {
   export CPPFLAGS="$CPPFLAGS -fexceptions"
 }
