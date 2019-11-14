@@ -22,8 +22,12 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
+                           --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
+                           --with-elf \
+                           --with-tls \
+                           --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=5.3 \

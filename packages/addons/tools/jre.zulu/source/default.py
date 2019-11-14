@@ -1,2 +1,2 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)

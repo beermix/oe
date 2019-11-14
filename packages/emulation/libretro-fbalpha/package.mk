@@ -10,7 +10,6 @@ PKG_URL="https://github.com/libretro/fbalpha/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_LONGDESC="game.libretro.fba: fba for Kodi"
 PKG_TOOLCHAIN="make"
-PKG_BUILD_FLAGS="-hardening"
 
 PKG_LIBNAME="fbalpha_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"

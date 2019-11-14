@@ -2,15 +2,6 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
-# Notes:
-# - build curl with OpenSSL support instead GnuTLS support to
-#   work around a long standing bug on Pi where https streams often hang on
-#   start. This hang is normally fatal and requires a reboot.
-#   see also http://trac.xbmc.org/ticket/14674 .
-#   Easiest way to reproduce is to install gdrive addon and play a video from
-#   there: http://forum.xbmc.org/showthread.php?tid=177557
-
-PKG_NAME="curl"
 PKG_VERSION="7.67.0"
 PKG_SHA256="f5d2e7320379338c3952dcc7566a140abb49edb575f9f99272455785c40e536c"
 PKG_LICENSE="MIT"

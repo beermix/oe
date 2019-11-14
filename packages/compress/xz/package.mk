@@ -9,9 +9,9 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://tukaani.org/xz/"
 PKG_URL="http://tukaani.org/xz/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="gcc:host"
 PKG_LONGDESC="A free general-purpose data compression software with high compression ratio."
-PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_BUILD_FLAGS="+pic +pic:host"
 
 # never build shared or k0p happens when building
 # on fedora due to host selinux/liblzma
@@ -21,10 +21,9 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --enable-lzma-links \
                          --disable-scripts \
                          --disable-nls \
-                         --disable-doc \
-                         --enable-assembler"
+                         --disable-doc"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-doc --disable-shared --enable-assembler"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --disable-doc"
 
 post_makeinstall_target() {
   rm -rf $INSTALL

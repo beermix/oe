@@ -1,9 +1,9 @@
-# SPDX-License-Identifier: GPL-2.0-or-later-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="ffmpeg-tools"
 PKG_VERSION="1.0"
-PKG_REV="108"
+PKG_REV="109"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://libreelec.tv"

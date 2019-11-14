@@ -8,6 +8,7 @@ PKG_SHA256="f1063084dc4302a427dabcca499c8312b3a32a29b7d2506653ecc8f950a9a237"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/libexpat/libexpat/releases"
 PKG_URL="https://github.com/libexpat/libexpat/releases/download/R_${PKG_VERSION//./_}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
+PKG_DEPENDS_HOST="toolchain:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Expat is an XML parser library written in C."
 

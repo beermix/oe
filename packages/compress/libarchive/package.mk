@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libarchive"
@@ -7,8 +7,7 @@ PKG_SHA256="c160d3c45010a51a924208f13f6b7b956dabdf8c5c60195df188a599028caa7c"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libarchive/libarchive/releases"
 PKG_URL="https://www.libarchive.org/downloads/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_URL="https://github.com/libarchive/libarchive/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="toolchain"
+PKG_DEPENDS_HOST="toolchain:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="A multi-format archive and compression library."
 

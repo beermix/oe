@@ -2,14 +2,14 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.4.9"
-PKG_REV="105"
+PKG_VERSION="10.3.20"
+PKG_REV="103"
 PKG_SHA256=""
 PKG_LICENSE="GPL2"
-PKG_SITE="https://github.com/MariaDB/server/releases"
+PKG_SITE="https://mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/${PKG_NAME}-${PKG_VERSION}/source/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain:host ncurses:host"
-PKG_DEPENDS_TARGET="toolchain binutils bzip2 libaio libxml2 lzo ncurses openssl systemd zlib xz jemalloc mariadb:host"
+PKG_DEPENDS_TARGET="toolchain binutils bzip2 libaio libxml2 lzo ncurses openssl systemd zlib mariadb:host"
 PKG_SHORTDESC="MariaDB is a community-developed fork of the MySQL."
 PKG_LONGDESC="MariaDB (${PKG_VERSION}) is a fast SQL database server and a drop-in replacement for MySQL."
 PKG_TOOLCHAIN="cmake"
@@ -29,38 +29,42 @@ configure_package() {
     import_executables"
 
   PKG_CMAKE_OPTS_TARGET=" \
+    -DCMAKE_INSTALL_MESSAGE=NEVER \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_CONFIG=mysql_release \
+    -DFEATURE_SET=classic \
+    -DSTACK_DIRECTION=1 \
     -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=ON \
     -DCMAKE_CROSSCOMPILING=ON \
     -DIMPORT_EXECUTABLES=${PKG_BUILD}/.${HOST_NAME}/import_executables.cmake \
     -DWITHOUT_AWS_KEY_MANAGEMENT=ON \
+    -DWITH_EXTRA_CHARSETS=complex \
+    -DWITH_SSL=system \
+    -DWITH_SSL=${SYSROOT_PREFIX}/usr \
+    -DWITH_JEMALLOC=OFF \
+    -DWITH_PCRE=bundled \
+    -DWITH_ZLIB=bundled \
     -DWITH_EDITLINE=bundled \
     -DWITH_LIBEVENT=bundled \
     -DCONNECT_WITH_LIBXML2=bundled \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DDEFAULT_CHARSET=utf8mb4 \
-    -DDEFAULT_COLLATION=utf8mb4_unicode_ci \
-    -DENABLED_LOCAL_INFILE=ON \
-    -DPLUGIN_EXAMPLE=NO \ 
-    -DPLUGIN_FEDERATED=NO \
-    -DPLUGIN_FEEDBACK=NO \
-    -DWITH_EMBEDDED_SERVER=ON \
-    -DWITH_EXTRA_CHARSETS=complex \
-    -DWITH_JEMALLOC=ON \
-    -DWITH_LIBWRAP=OFF \
-    -DWITH_PCRE=bundled \
-    -DWITH_READLINE=ON \
-    -DWITH_SSL=system \
-    -DWITH_SYSTEMD=yes \
+    -DSKIP_TESTS=ON \
+    -DWITH_DEBUG=OFF \
     -DWITH_UNIT_TESTS=OFF \
-    -DWITH_ZLIB=system \
-    -DSTACK_DIRECTION=-1 \
-    -Dhave_CXX__D_FORTIFY_SOURCE_2=0 \
-    -DMYSQLD_STATIC_PLUGIN_LIBS=1 \
-    -DMYSQL_UNIX_ADDR=/var/run/mysqld/mysqld.sock"
+    -DENABLE_DTRACE=OFF \
+    -DSECURITY_HARDENED=OFF \
+    -DWITH_EMBEDDED_SERVER=OFF \
+    -DWITHOUT_SERVER=OFF \
+    -DPLUGIN_AUTH_SOCKET=STATIC \
+    -DDISABLE_SHARED=NO \
+    -DENABLED_PROFILING=OFF \
+    -DENABLE_STATIC_LIBS=OFF \
+    -DMYSQL_UNIX_ADDR=/var/run/mysqld/mysqld.sock \
+    -DWITH_SAFEMALLOC=OFF \
+    -DWITHOUT_AUTH_EXAMPLES=ON"
 }
 
 make_host() {
-  ninja ${NINJA_OPTS}
+  ninja ${NINJA_OPTS} import_executables
 }
 
 makeinstall_host() {
@@ -69,7 +73,7 @@ makeinstall_host() {
 
 makeinstall_target() {
   # use only for addon
-ninja ${NINJA_OPTS} install -j8
+  DESTDIR=${PKG_BUILD}/.install_addon ninja ${NINJA_OPTS} install
   rm -rf "${PKG_BUILD}/.install_addon/usr/mysql-test"
 }
 
