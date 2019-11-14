@@ -4,8 +4,8 @@
 # find . -type f -exec sed -i 's/etc\/docker/storage\/.kodi\/userdata\/addon_data\/service.system.docker\/config/g' {} +
 
 PKG_NAME="docker"
-PKG_VERSION="19.03.2"
-PKG_SHA256="46b52f92cb258e038e3f29624e75a52e4d2f91502f56edeac0f0b2661b3b9c3d"
+PKG_VERSION="19.03.5"
+PKG_SHA256="d7948256e32bb4c104285d78e652ba9ead898c2e4dcee05f05ede2eaba719919"
 PKG_REV="128"
 PKG_ARCH="any"
 PKG_LICENSE="ASL"
