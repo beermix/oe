@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv) no-ssl3-method no-ssl2 no-ssl3
+# Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2t"

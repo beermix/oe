@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="dbus-python"
 PKG_VERSION="1.2.12"
@@ -18,6 +19,5 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
-  find $INSTALL/usr/lib -name "*.pyc" -exec rm -rf "{}" ";"
+  python_remove_source
 }
