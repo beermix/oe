@@ -1,9 +1,10 @@
 PKG_NAME="c-ares"
-PKG_VERSION="1.14.0"
-PKG_SHA256="45d3c1fd29263ceec2afc8ff9cd06d5f8f889636eb4e80ce3cc7f0eaf7aadc6e"
+PKG_VERSION="1.15.0"
+PKG_SHA256="6cdb97871f2930530c97deb7cf5c8fa4be5a0b02c7cea6e7c7667672a39d6852"
+PKG_SITE="https://github.com/c-ares/c-ares/releases"
 PKG_URL="https://c-ares.haxx.se/download/c-ares-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
-PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-pic"
 
