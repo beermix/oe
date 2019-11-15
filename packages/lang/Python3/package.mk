@@ -12,8 +12,10 @@ PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host util-linux:host xz:host"
 PKG_DEPENDS_TARGET="toolchain Python3:host sqlite expat zlib bzip2 xz openssl libffi readline ncurses"
 PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+speed"
 
 PKG_PYTHON_VERSION="python3.8"
+
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
