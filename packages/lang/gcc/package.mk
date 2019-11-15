@@ -50,7 +50,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
                            --disable-libunwind-exceptions \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-default-libstdcxx-abi=new \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libitm \

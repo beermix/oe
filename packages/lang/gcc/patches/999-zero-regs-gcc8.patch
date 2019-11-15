@@ -25,6 +25,10 @@ Tried with x86-64 kernel 4.15.3.  Kernel doesn't boot.
  gcc/config/i386/i386.h                       |  13 +
  gcc/config/i386/i386.md                      |  56 ++++-
  gcc/config/i386/i386.opt                     |  17 ++
+ gcc/testsuite/gcc.target/i386/ret-thunk-22.c |   2 +-
+ gcc/testsuite/gcc.target/i386/ret-thunk-23.c |   2 +-
+ gcc/testsuite/gcc.target/i386/ret-thunk-24.c |   2 +-
+ gcc/testsuite/gcc.target/i386/ret-thunk-25.c |   2 +-
  10 files changed, 308 insertions(+), 40 deletions(-)
 
 diff --git a/gcc/config/i386/i386-opts.h b/gcc/config/i386/i386-opts.h
