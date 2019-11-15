@@ -8,7 +8,7 @@ PKG_SHA256="f551c24b30ce8bfb6e96d9f59b42fbea30fa3a6123384172f9e7284bcf647260"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain zlib ncurses:host"
+PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_LONGDESC="A library is a free software emulation of curses in System V Release 4.0, and more."
 # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
 
