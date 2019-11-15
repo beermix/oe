@@ -10,12 +10,12 @@ make_target() {
   make build_lib_static
 }
 
-#makeinstall_target() {
-#  cp lib/libjemalloc.a $SYSROOT_PREFIX/usr/lib
-#  cp lib/libjemalloc_pic.a $SYSROOT_PREFIX/usr/lib
-#}
+makeinstall_target() {
+  cp lib/libjemalloc.a $SYSROOT_PREFIX/usr/lib
+  cp lib/libjemalloc_pic.a $SYSROOT_PREFIX/usr/lib
+}
 
-#post_makeinstall_target() {
-#  rm -rf $SYSROOT_PREFIX/usr/lib/libjemalloc.so*
-#  rm -rf $SYSROOT_PREFIX/usr/lib/libjemalloc.so
-#}
+post_makeinstall_target() {
+  rm -rf $SYSROOT_PREFIX/usr/lib/libjemalloc.so*
+  rm -rf $SYSROOT_PREFIX/usr/lib/libjemalloc.so
+}
