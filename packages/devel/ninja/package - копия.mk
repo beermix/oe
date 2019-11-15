@@ -12,12 +12,9 @@ PKG_URL="https://github.com/ninja-build/ninja/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python3:host re2c:host"
 PKG_TOOLCHAIN="manual"
 
-make_host() {
-  python3 configure.py --bootstrap
-# CXX=/bin/clang++ | $TOOLCHAIN/bin/python2
-}
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
 
 makeinstall_host() {
-  cp ninja $TOOLCHAIN/bin
+  cp $PKG_BUILD/.$HOST_NAME/ninja $TOOLCHAIN/bin
   strip $TOOLCHAIN/bin/ninja
 }

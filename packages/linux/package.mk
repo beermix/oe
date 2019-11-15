@@ -24,10 +24,10 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   zen) # https://github.com/zen-kernel/zen-kernel/releases
-    PKG_VERSION="5.3.11-lqx1"
+    PKG_VERSION="5.3.11-lqx2"
     PKG_SHA256=""
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/v$PKG_VERSION.tar.gz"
-    PKG_PATCH_DIRS="default"
+    PKG_PATCH_DIRS="clr"
     PKG_BUILD_PERF="no"
     ;;
   xanmod) # https://github.com/xanmod/linux/releases
