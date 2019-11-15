@@ -148,7 +148,7 @@ post_makeinstall_target() {
   safe_remove $INSTALL/var
 
 # remove locales and charmaps
-  safe_remove $INSTALL/usr/share/i18n/charmaps
+#  safe_remove $INSTALL/usr/share/i18n/charmaps
 
 # add UTF-8 charmap for Generic (charmap is needed for installer)
   if [ "$PROJECT" = "Generic" ]; then
