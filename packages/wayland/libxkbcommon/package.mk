@@ -10,7 +10,6 @@ PKG_SITE="https://github.com/xkbcommon/libxkbcommon/releases"
 PKG_URL="http://xkbcommon.org/download/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain xkeyboard-config"
 PKG_LONGDESC="xkbcommon is a library to handle keyboard descriptions."
-#PKG_BUILD_FLAGS="-gold -lto -hardening"
 
 PKG_MESON_OPTS_TARGET="-Denable-docs=false"
 

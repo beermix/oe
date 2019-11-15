@@ -10,10 +10,12 @@ PKG_SITE="http://xcb.freedesktop.org"
 PKG_URL="http://xcb.freedesktop.org/dist/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros Python3:host xcb-proto libpthread-stubs libXau"
 PKG_LONGDESC="X C-language Bindings library."
-#PKG_BUILD_FLAGS="+pic"
+PKG_BUILD_FLAGS="+pic"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-screensaver \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+                           --disable-shared \
+                           --disable-screensaver \
                            --disable-xprint \
                            --disable-selinux \
                            --disable-xvmc"

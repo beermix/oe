@@ -5,6 +5,7 @@
 PKG_NAME="gdk-pixbuf"
 PKG_VERSION="2.40.0"
 PKG_SHA256="1582595099537ca8ff3b99c6804350b4c058bb8ad67411bbaae024ee7cead4e6"
+#PKG_VERSION="2.38.0"
 PKG_LICENSE="OSS"
 PKG_SITE="https://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/${PKG_VERSION:0:4}/gdk-pixbuf-$PKG_VERSION.tar.xz"
@@ -15,7 +16,3 @@ PKG_MESON_OPTS_TARGET="-Ddocs=false \
                        -Dgir=false \
                        -Dman=false \
                        -Djasper=true"
-
-#pre_configure_target() {
-#  export PKG_CONFIG_PATH="$(get_build_dir shared-mime-info)/.$TARGET_NAME"
-#}
