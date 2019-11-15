@@ -31,7 +31,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=5.3 \
-                           --enable-static-pie \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
@@ -83,7 +82,6 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
@@ -148,7 +146,7 @@ post_makeinstall_target() {
   safe_remove $INSTALL/var
 
 # remove locales and charmaps
-#  safe_remove $INSTALL/usr/share/i18n/charmaps
+  safe_remove $INSTALL/usr/share/i18n/charmaps
 
 # add UTF-8 charmap for Generic (charmap is needed for installer)
   if [ "$PROJECT" = "Generic" ]; then

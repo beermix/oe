@@ -133,35 +133,6 @@ EOF
 
   chmod +x ${TARGET_PREFIX}g++
 
-  # POSIX conformance launcher scripts for c89 and c99
-#  cat > $TOOLCHAIN/bin/c89 <<"EOF"
-#!/bin/sh
-#fl="-std=c89"
-#for opt; do
-#  case "\$opt" in
-#    -ansi|-std=c89|-std=iso9899:1990) fl="";;
-#    -std=*) echo "`basename \$0` called with non ANSI/ISO C option \$opt" >&2
-#        exit 1;;
-#  esac
-#done
-#exec $TOOLCHAIN/bin/${TARGET_NAME}-gcc $fl ${1+"$@"}
-#EOF
-#
-#  cat > $TOOLCHAIN/bin/c99 <<"EOF"
-#!/bin/sh
-#fl="-std=c99"
-#for opt; do
-#  case "\$opt" in
-#    -std=c99|-std=iso9899:1999) fl="";;
-#    -std=*) echo "`basename \$0` called with non ISO C99 option \$opt" >&2
-#        exit 1;;
-#  esac
-#done
-#exec $TOOLCHAIN/bin/${TARGET_NAME}-gcc $fl ${1+"$@"}
-#EOF
-#
-#  chmod +x $TOOLCHAIN/bin/c{8,9}9
-
   # To avoid cache trashing
   touch -c -t $DATE $CROSS_CXX
 
