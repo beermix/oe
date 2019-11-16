@@ -25,8 +25,5 @@ configure_package() {
                            --with-included-glib \
                            --disable-native-java \
                            --disable-csharp \
-                           --without-emacs \
-                           --disable-openmp \
-                           --without-cvs \
-                           --without-git"
+                           --without-emacs"
 }
