@@ -8,12 +8,12 @@ PKG_SHA256="d0f940a72f648943c1f2211e0e3117387c31d765137d92bd8284a3fb9752a998"
 PKG_LICENSE="GPL"
 PKG_SITE="https://busybox.net/downloads/?C=M;O=D"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="gcc:host"
+PKG_DEPENDS_HOST="toolchain:host"
 PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip usbutils parted procps-ng gptfdisk less bash libtirpc"
 PKG_DEPENDS_INIT="toolchain libtirpc"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable."
 # busybox fails to build with GOLD support enabled with binutils-2.25
-PKG_BUILD_FLAGS="-gold"
+PKG_BUILD_FLAGS="-parallel -gold"
 
 # nano text editor
 if [ "$NANO_EDITOR" = "yes" ]; then
