@@ -3,35 +3,25 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gettext"
-PKG_VERSION="0.20.1"
-PKG_SHA256="66415634c6e8c3fa8b71362879ec7575e27da43da562c798a8a2f223e6e47f5c"
+PKG_VERSION="0.19.8.1"
+PKG_SHA256="ff942af0e438ced4a8b0ea4b0b6e0d6d657157c5e2364de57baa279c1c125c43"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/s/gettext/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host m4:host"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="A program internationalization library and tools."
 
-post_unpack() {
-  sed -i -e '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/examples$$//' $PKG_BUILD/gettext-tools/Makefile.in
-  sed -i -e '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/tests$$//' $PKG_BUILD/gettext-runtime/Makefile.in
-}
+configure_package() {
+  PKG_CONFIGURE_SCRIPT="${PKG_BUILD}/gettext-tools/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
-			    --disable-java \
-			    --disable-curses \
-			    --with-included-libxml \
-			    --disable-native-java \
-			    --without-included-gettext \
-			    --without-emacs \
-			    --disable-openmp \
-			    --without-cvs \
-			    --without-git \
-			    --enable-silent-rules \
-			    --disable-shared \
-			    --enable-static"
-
-post_configure() {
-  sed -e 's/ -shared / -Wl,-O1,--as-needed\0/g' -i $PKG_BUILD/gettext-tools/libtool
-  sed -e 's/ -shared / -Wl,-O1,--as-needed\0/g' -i $PKG_BUILD/gettext-runtime/libtool
-  sed -e 's/ -shared / -Wl,-O1,--as-needed\0/g' -i $PKG_BUILD/gettext-runtime/libasprintf/libtool
+  PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
+                           --disable-rpath \
+                           --with-gnu-ld \
+                           --disable-java \
+                           --disable-curses \
+                           --with-included-libxml \
+                           --disable-native-java \
+                           --without-included-gettext \
+                           --disable-csharp \
+                           --without-emacs"
 }
