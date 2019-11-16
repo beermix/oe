@@ -26,6 +26,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
 			    --disable-openmp \
 			    --without-cvs \
 			    --without-git \
+			    --enable-silent-rules \
 			    --disable-shared \
 			    --enable-static"
 
