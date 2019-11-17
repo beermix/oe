@@ -19,7 +19,10 @@ configure_package() {
                            --with-gnu-ld \
                            --disable-java \
                            --disable-curses \
+                           --with-included-libcroco \
+                           --with-included-libunistring \
                            --with-included-libxml \
+                           --with-included-glib \
                            --disable-native-java \
                            --without-included-gettext \
                            --disable-csharp \
