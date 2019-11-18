@@ -9,7 +9,7 @@ PKG_LICENSE="GPL2"
 PKG_SITE="https://mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/${PKG_NAME}-${PKG_VERSION}/source/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain:host ncurses:host"
-PKG_DEPENDS_TARGET="toolchain binutils bzip2 libaio xz zstd jemalloc libevent libxml2 lzo ncurses openssl systemd zlib mariadb:host"
+PKG_DEPENDS_TARGET="toolchain binutils bzip2 libaio xz zstd jemalloc libxml2 lzo ncurses openssl systemd zlib mariadb:host"
 PKG_SHORTDESC="MariaDB is a community-developed fork of the MySQL."
 PKG_LONGDESC="MariaDB (${PKG_VERSION}) is a fast SQL database server and a drop-in replacement for MySQL."
 PKG_TOOLCHAIN="cmake"
@@ -41,7 +41,7 @@ configure_package() {
     -DWITH_EXTRA_CHARSETS=complex \
     -DWITH_SSL=system \
     -DWITH_SSL=${SYSROOT_PREFIX}/usr \
-    -DWITH_JEMALLOC=OFF \
+    -DWITH_JEMALLOC=ON \
     -DWITH_PCRE=bundled \
     -DWITH_ZLIB=bundled \
     -DWITH_EDITLINE=bundled \
