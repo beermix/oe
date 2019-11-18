@@ -21,6 +21,7 @@ post_configure_host() {
 }
 
 post_makeinstall_host() {
+  rm $TOOLCHAIN/bin/yacc
   cat > $TOOLCHAIN/bin/yacc << "EOF"
 #!/bin/sh
 exec bison -y "$@"
