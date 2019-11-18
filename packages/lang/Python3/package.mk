@@ -3,8 +3,8 @@
 
 PKG_NAME="Python3"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
-PKG_VERSION="3.8.0"
-PKG_SHA256="b356244e13fb5491da890b35b13b2118c3122977c2cd825e3eb6e7d462030d84"
+PKG_VERSION="3.7.5"
+PKG_SHA256="e85a76ea9f3d6c485ec1780fca4e500725a4a7bbc63c78ebc44170de9b619d94"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
@@ -12,9 +12,8 @@ PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host util-linux:host xz:host"
 PKG_DEPENDS_TARGET="toolchain Python3:host sqlite expat zlib bzip2 xz openssl libffi readline ncurses"
 PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+speed"
 
-PKG_PYTHON_VERSION="python3.8"
+PKG_PYTHON_VERSION="python3.7"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
@@ -44,7 +43,7 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-system-ffi
                          --without-pymalloc
                          --without-ensurepip
-                         --disable-ipv6
+                         --with-computed-gotos
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
@@ -84,7 +83,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --without-pymalloc
                            --without-ensurepip
                            --disable-ipv6
-                           --with-lto=8
                            --with-computed-gotos
 "
 
@@ -92,9 +90,6 @@ pre_configure_host() {
   export PYTHON_MODULES_INCLUDE="$HOST_INCDIR"
   export PYTHON_MODULES_LIB="$HOST_LIBDIR"
   export DISABLED_EXTENSIONS="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES"
-
-  export CFLAGS="$CFLAGS -O3 -mfma"
-  export CXXFLAGS="$CXXFLAGS -O3 -mfma"
 }
 
 post_make_host() {
@@ -103,7 +98,7 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-  ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
+#  ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
 
   rm -f $TOOLCHAIN/bin/smtpd.py*
   rm -f $TOOLCHAIN/bin/pyvenv
@@ -121,7 +116,7 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-  ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
+#  ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
 
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
