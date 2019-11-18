@@ -30,8 +30,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-deterministic-archives \
-                         --enable-targets=x86_64-linux \
-                         --enable-64-bit-bfd \
+                         --enable-targets=x86_64-pep \
+                         --enable-relro \
+                         --enable-threads \
+                         --disable-gdb \
+                         --with-pic \
                          --enable-lto \
                          --disable-nls"
 
@@ -48,7 +51,7 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-libssp \
                          --disable-plugins \
                          --disable-gold \
-                         --enable-targets=x86_64-linux \
+                         --enable-targets=x86_64-pep \
                          --disable-ld \
                          --disable-lto \
                          --disable-nls"
