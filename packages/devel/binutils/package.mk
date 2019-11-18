@@ -32,9 +32,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-deterministic-archives \
                          --enable-targets=x86_64-pep \
                          --enable-relro \
-                         --enable-threads \
                          --disable-gdb \
-                         --with-pic \
                          --enable-lto \
                          --disable-nls"
 
