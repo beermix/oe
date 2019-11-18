@@ -86,8 +86,8 @@ case "${DISTRO}" in
       perl_pkg=(JSON XML-Parser perl-Thread-Queue)
       ;;
     arch)
-      deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python3 rpcgen)
-      deps_pkg+=(g++ xorg-mkfontscale xorg-mkfontdir xorg-bdftopcf libxslt "java-runtime-common jdk8-openjdk" python3 rpcsvc-proto)
+      deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python3 rpcgen itstool)
+      deps_pkg+=(g++ xorg-mkfontscale xorg-mkfontdir xorg-bdftopcf libxslt "java-runtime-common jdk8-openjdk" python3 rpcsvc-proto itstool)
       perl_pkg=(perl-json perl-xml-parser perl)
       ;;
     opensuse)

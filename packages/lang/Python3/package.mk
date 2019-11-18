@@ -91,6 +91,9 @@ pre_configure_host() {
   export PYTHON_MODULES_INCLUDE="$HOST_INCDIR"
   export PYTHON_MODULES_LIB="$HOST_LIBDIR"
   export DISABLED_EXTENSIONS="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES"
+  
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|g"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|g"`
 }
 
 post_make_host() {
