@@ -83,7 +83,7 @@ post_makeinstall_host() {
 }
 
 pre_configure_target() {
-  export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
+  export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python2
 
   export CFLAGS="$CFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
   export CXXFLAGS="$CXXFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec"

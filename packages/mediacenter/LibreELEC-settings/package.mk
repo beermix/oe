@@ -3,12 +3,12 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="LibreELEC-settings"
-PKG_VERSION="f59dcc824fd8fe5b79c0a709a0c70676cc9ab3b1"
-PKG_SHA256="0dcfa78f80386c0bcbf550ef0cb0e28a99e6aca1208ccb0664a5fccaff20d01e"
+PKG_VERSION="881a2d114412f4e6d80c39c0b17ae172a26316eb"
+PKG_SHA256="3ae041ea93fa5ae3129fae0cc4b3e9e3fd4270c2f46709d65b87fe2c0dad5dc0"
 PKG_LICENSE="GPL"
 PKG_SITE="https://libreelec.tv"
 PKG_URL="https://github.com/LibreELEC/service.libreelec.settings/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python2 connman pygobject dbus-python"
+PKG_DEPENDS_TARGET="toolchain Python3 connman pygobject dbus-python"
 PKG_LONGDESC="LibreELEC-settings: is a settings dialog for LibreELEC"
 
 PKG_MAKE_OPTS_TARGET="DISTRONAME=$DISTRONAME ROOT_PASSWORD=$ROOT_PASSWORD"
@@ -25,11 +25,11 @@ post_makeinstall_target() {
 
   ADDON_INSTALL_DIR=$INSTALL/usr/share/kodi/addons/service.libreelec.settings
 
-  $TOOLCHAIN/bin/python -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py $ADDON_INSTALL_DIR/resources/lib/ -f
-  rm -rf $(find $ADDON_INSTALL_DIR/resources/lib/ -name "*.py")
+  python_compile $ADDON_INSTALL_DIR/resources/lib/
 
-  $TOOLCHAIN/bin/python -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py $ADDON_INSTALL_DIR/oe.py -f
-  rm -rf $ADDON_INSTALL_DIR/oe.py
+  python_compile $ADDON_INSTALL_DIR/defaults.py
+
+  python_compile $ADDON_INSTALL_DIR/oe.py
 }
 
 post_install() {

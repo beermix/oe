@@ -16,7 +16,6 @@ PKG_BUILD_FLAGS="+speed"
 
 PKG_PYTHON_VERSION="python3.8"
 
-
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
@@ -104,7 +103,7 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-#  ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
+  ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
 
   rm -f $TOOLCHAIN/bin/smtpd.py*
   rm -f $TOOLCHAIN/bin/pyvenv
@@ -122,7 +121,7 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-#  ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
+  ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
 
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
