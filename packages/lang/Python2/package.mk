@@ -60,6 +60,13 @@ post_patch() {
   # pgen for the target, and tries to run it on the host.
     touch $PKG_BUILD/Include/graminit.h
     touch $PKG_BUILD/Python/graminit.c
+
+    touch touch $PKG_BUILD/Include/Python-ast.h
+    touch $PKG_BUILD/Python/Python-ast.c
+    touch $PKG_BUILD/Python/opcode_targets.h
+    
+    find $PKG_BUILD -name '*.py' | \
+    xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|"
 }
 
 make_host() {
@@ -80,6 +87,8 @@ makeinstall_host() {
 
 post_makeinstall_host() {
   rm -fr $PKG_BUILD/.$HOST_NAME/build/temp.*
+  rm $TOOLCHAIN/bin/python
+  ln -s python3 $TOOLCHAIN/bin/python
 }
 
 pre_configure_target() {
@@ -124,8 +133,13 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/smtpd.py
   rm -rf $INSTALL/usr/bin/python*-config
 
+  rm -rf $INSTALL/usr/bin/python
+  rm $SYSROOT_PREFIX/usr/lib/pkgconfig/python.pc
+  ln -s python3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/python.pc
+  
+
   cd $INSTALL/usr/lib/$PKG_PYTHON_VERSION
-  $TOOLCHAIN/bin/python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
+  $TOOLCHAIN/bin/python2 -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
   find $INSTALL/usr/lib/$PKG_PYTHON_VERSION -name "*.py" -exec rm -f {} \; &>/dev/null
 
   # strip
