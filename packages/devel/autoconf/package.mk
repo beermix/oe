@@ -17,4 +17,6 @@ PKG_CONFIGURE_OPTS_HOST="EMACS=no \
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
+
+  install -D -m 0644 $PKG_DIR/src/fake-gtk-doc-check.m4 $TOOLCHAIN/share/aclocal/fake-gtk-doc-check.m4
 }
