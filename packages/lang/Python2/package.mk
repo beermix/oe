@@ -134,8 +134,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/python*-config
 
   rm -rf $INSTALL/usr/bin/python
-  rm $SYSROOT_PREFIX/usr/lib/pkgconfig/python.pc
-  ln -s python3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/python.pc
+#  rm $SYSROOT_PREFIX/usr/lib/pkgconfig/python.pc
+#  ln -s python3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/python.pc
 
 
   cd $INSTALL/usr/lib/$PKG_PYTHON_VERSION
