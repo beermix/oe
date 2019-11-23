@@ -28,6 +28,7 @@ PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            no-weak-ssl-ciphers \
                            no-zlib \
                            no-zlib-dynamic \
+                           no-ssl3-method \
                            no-static-engine"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN \
