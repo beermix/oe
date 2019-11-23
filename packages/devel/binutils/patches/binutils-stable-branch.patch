@@ -1,26 +1,34 @@
+commit 04165950d1397154a784cd55da758d5c7a8d3457
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Oct 13 00:02:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c83a871701..39d843f67d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191012
++#define BFD_VERSION_DATE 20191013
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit cadd49ac6f48530eb35a6846d4e6636f14ffac1c
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Sun Oct 13 13:26:19 2019 +0100
+
+    Reset development flag back to true
+
 diff --git a/bfd/ChangeLog b/bfd/ChangeLog
-index aa5a81ffed..86ce07a1c1 100644
+index aa5a81ffed..ee28eab3ad 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,25 @@
-+2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
-+
-+	* elf32-hppa.c (elf32_hppa_size_dynamic_sections): Provide 8-byte
-+	minimum alignment for .plt section.
-+
-+	* elf32-hppa.c: Revise import stub sequences.
-+	(LONG_BRANCH_STUB_SIZE): Define.
-+	(LONG_BRANCH_SHARED_STUB_SIZE): Define.
-+	(IMPORT_STUB_SIZE): Define.
-+	(IMPORT_SHARED_STUB_SIZE): Define.
-+	(EXPORT_STUB_SIZE): Define.
-+	(plt_stub): Revise to not use register %r22.
-+	(LDO_R1_R22): Define.
-+	(LDW_R22_R21): Define.
-+	(LDW_R22_R19): Define.
-+	(hppa_build_one_stub): Update stub generation and use new defines.
-+	(hppa_size_one_stub): Likewise.
-+
+@@ -1,3 +1,7 @@
 +2019-10-13  Nick Clifton  <nickc@redhat.com>
 +
 +	* development.sh (development): Reset to true.
@@ -41,8 +49,364 @@ index eb0e7b6da1..54d494c105 100644
  
  # Indicate whether this is a release branch.
  experimental=false
+
+commit 9676be3aa9a712697fe61a72efff923487f0c06f
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Oct 14 00:01:35 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 39d843f67d..eb3e522553 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191013
++#define BFD_VERSION_DATE 20191014
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 2948a47219b2000e389faaa3df6fa5eaf330b7ff
+Author: Tamar Christina <tamar.christina@arm.com>
+Date:   Tue Sep 24 14:46:17 2019 +0100
+
+    Arm: Fix out of range conditional branch (PR/24991)
+    
+    The fix for PR12848 introduced an off by one error in the mask, this corrected
+    the negative overflows but not the positive overflows.  As a result the
+    conditional branch instructions accepted a too wide positive immediate which
+    resulted in it corrupting the instruction during encoding.
+    
+    The relocation I believe has been incorrectly named, to be consistent with the
+    other relocations it should have been named BRANCH21 which is why the masks for
+    it are confusing.
+    
+    I've replaced the masks with a function out_of_range_p which should make it
+    harder to make such mistakes.
+    
+    The mask for BL/BLX on Armv6t+ is also wrong, the extended range is 25-bits
+    and so the mask should be checking for 24-bits for positive overflow.
+    
+    gas/ChangeLog:
+    
+            PR gas/24991
+            * config/tc-arm.c (out_of_range_p): New.
+            (md_apply_fix): Use it in BFD_RELOC_THUMB_PCREL_BRANCH9,
+            BFD_RELOC_THUMB_PCREL_BRANCH12, BFD_RELOC_THUMB_PCREL_BRANCH20,
+            BFD_RELOC_THUMB_PCREL_BRANCH23, BFD_RELOC_THUMB_PCREL_BRANCH25
+            * testsuite/gas/arm/pr24991.d: New test.
+            * testsuite/gas/arm/pr24991.l: New test.
+            * testsuite/gas/arm/pr24991.s: New test.
+    
+    (cherry picked from commit e8f8842d90abe5eafa8c32f08fbc3a747a45747c)
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 75324bfaac..0955809b5b 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,17 @@
++2019-10-14  Tamar Christina  <tamar.christina@arm.com>
++
++	Backported from mainline.
++	2019-09-24  Tamar Christina  <tamar.christina@arm.com>
++
++	PR gas/24991
++	* config/tc-arm.c (out_of_range_p): New.
++	(md_apply_fix): Use it in BFD_RELOC_THUMB_PCREL_BRANCH9,
++	BFD_RELOC_THUMB_PCREL_BRANCH12, BFD_RELOC_THUMB_PCREL_BRANCH20,
++	BFD_RELOC_THUMB_PCREL_BRANCH23, BFD_RELOC_THUMB_PCREL_BRANCH25
++	* testsuite/gas/arm/pr24991.d: New test.
++	* testsuite/gas/arm/pr24991.l: New test.
++	* testsuite/gas/arm/pr24991.s: New test.
++
+ 2019-10-12  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Release 2.33.1
+diff --git a/gas/config/tc-arm.c b/gas/config/tc-arm.c
+index 9273bb5783..caabdbba90 100644
+--- a/gas/config/tc-arm.c
++++ b/gas/config/tc-arm.c
+@@ -106,6 +106,15 @@ enum arm_float_abi
+    should define CPU_DEFAULT here.  */
+ #endif
+ 
++/* Perform range checks on positive and negative overflows by checking if the
++   VALUE given fits within the range of an BITS sized immediate.  */
++static bfd_boolean out_of_range_p (offsetT value, offsetT bits)
++ {
++  gas_assert (bits < (offsetT)(sizeof (value) * 8));
++  return (value & ~((1 << bits)-1))
++	  && ((value & ~((1 << bits)-1)) != ~((1 << bits)-1));
++}
++
+ #ifndef FPU_DEFAULT
+ # ifdef TE_LINUX
+ #  define FPU_DEFAULT FPU_ARCH_FPA
+@@ -28047,7 +28056,7 @@ md_apply_fix (fixS *	fixP,
+       break;
+ 
+     case BFD_RELOC_THUMB_PCREL_BRANCH9: /* Conditional branch.	*/
+-      if ((value & ~0xff) && ((value & ~0xff) != ~0xff))
++      if (out_of_range_p (value, 8))
+ 	as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+ 
+       if (fixP->fx_done || !seg->use_rela_p)
+@@ -28059,7 +28068,7 @@ md_apply_fix (fixS *	fixP,
+       break;
+ 
+     case BFD_RELOC_THUMB_PCREL_BRANCH12: /* Unconditional branch.  */
+-      if ((value & ~0x7ff) && ((value & ~0x7ff) != ~0x7ff))
++      if (out_of_range_p (value, 11))
+ 	as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+ 
+       if (fixP->fx_done || !seg->use_rela_p)
+@@ -28070,6 +28079,7 @@ md_apply_fix (fixS *	fixP,
+ 	}
+       break;
+ 
++    /* This relocation is misnamed, it should be BRANCH21.  */
+     case BFD_RELOC_THUMB_PCREL_BRANCH20:
+       if (fixP->fx_addsy
+ 	  && (S_GET_SEGMENT (fixP->fx_addsy) == seg)
+@@ -28080,7 +28090,7 @@ md_apply_fix (fixS *	fixP,
+ 	  /* Force a relocation for a branch 20 bits wide.  */
+ 	  fixP->fx_done = 0;
+ 	}
+-      if ((value & ~0x1fffff) && ((value & ~0x0fffff) != ~0x0fffff))
++      if (out_of_range_p (value, 20))
+ 	as_bad_where (fixP->fx_file, fixP->fx_line,
+ 		      _("conditional branch out of range"));
+ 
+@@ -28159,12 +28169,11 @@ md_apply_fix (fixS *	fixP,
+ 	 fixP->fx_r_type = BFD_RELOC_THUMB_PCREL_BRANCH23;
+ #endif
+ 
+-      if ((value & ~0x3fffff) && ((value & ~0x3fffff) != ~0x3fffff))
++      if (out_of_range_p (value, 22))
+ 	{
+ 	  if (!(ARM_CPU_HAS_FEATURE (cpu_variant, arm_ext_v6t2)))
+ 	    as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+-	  else if ((value & ~0x1ffffff)
+-		   && ((value & ~0x1ffffff) != ~0x1ffffff))
++	  else if (out_of_range_p (value, 24))
+ 	    as_bad_where (fixP->fx_file, fixP->fx_line,
+ 			  _("Thumb2 branch out of range"));
+ 	}
+@@ -28175,7 +28184,7 @@ md_apply_fix (fixS *	fixP,
+       break;
+ 
+     case BFD_RELOC_THUMB_PCREL_BRANCH25:
+-      if ((value & ~0x0ffffff) && ((value & ~0x0ffffff) != ~0x0ffffff))
++      if (out_of_range_p (value, 24))
+ 	as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+ 
+       if (fixP->fx_done || !seg->use_rela_p)
+diff --git a/gas/testsuite/gas/arm/pr24991.d b/gas/testsuite/gas/arm/pr24991.d
+new file mode 100644
+index 0000000000..2acca2d656
+--- /dev/null
++++ b/gas/testsuite/gas/arm/pr24991.d
+@@ -0,0 +1,4 @@
++#as: -march=armv7-a
++#source: pr24991.s
++#error_output: pr24991.l
++
+diff --git a/gas/testsuite/gas/arm/pr24991.l b/gas/testsuite/gas/arm/pr24991.l
+new file mode 100644
+index 0000000000..4fc58751c8
+--- /dev/null
++++ b/gas/testsuite/gas/arm/pr24991.l
+@@ -0,0 +1,2 @@
++[^:]*: Assembler messages:
++[^:]*:4: Error: conditional branch out of range
+diff --git a/gas/testsuite/gas/arm/pr24991.s b/gas/testsuite/gas/arm/pr24991.s
+new file mode 100644
+index 0000000000..27f8daff1c
+--- /dev/null
++++ b/gas/testsuite/gas/arm/pr24991.s
+@@ -0,0 +1,5 @@
++        .arch armv7-a
++        .syntax unified
++        .thumb
++        beq     .+ 0x124f80
++
+
+commit a010731c12cecc5bd8d8ab826e19724b0ee9a540
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Oct 15 00:01:18 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index eb3e522553..b8f756d9c0 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191014
++#define BFD_VERSION_DATE 20191015
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 320d36e82e37ec69a9944e39c20bfd8366fb842a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Oct 16 00:01:12 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b8f756d9c0..1d22de687e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191015
++#define BFD_VERSION_DATE 20191016
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 7afa33f5c32875cf822b3c62dcd332f8838c7ef7
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Oct 17 00:01:30 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1d22de687e..a8bec80b1c 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191016
++#define BFD_VERSION_DATE 20191017
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 2474d0a2d2b691ea25d0fa05ec8260072a5656e3
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Oct 18 00:01:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index a8bec80b1c..b9f4fa4170 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191017
++#define BFD_VERSION_DATE 20191018
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 1a908e1658963cf94f51a22031385958589ca335
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Oct 19 00:01:29 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b9f4fa4170..5a3797888c 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191018
++#define BFD_VERSION_DATE 20191019
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 99ba661ea6f86c1979f01029af51bd6f8eb8cdf4
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Oct 20 00:03:18 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5a3797888c..14b15f3991 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191019
++#define BFD_VERSION_DATE 20191020
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 921703f7e05838e76ddb3ec65f396ee8484b5398
+Author: John David Anglin <danglin@gcc.gnu.org>
+Date:   Sun Oct 20 12:20:01 2019 -0400
+
+            [bfd] Revise import stubs on hppa.
+    
+            This commit updates the import stubs to leave the pointer to the
+            function descriptor in register %r22.  This provides a backup
+            mechanism for _dl_runtime_resolve to fixup descriptors during
+            lazy binding.
+    
+            bfd/ChangeLog
+            2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
+    
+                    * elf32-hppa.c: Revise import stub sequences.
+                    (LONG_BRANCH_STUB_SIZE): Define.
+                    (LONG_BRANCH_SHARED_STUB_SIZE): Define.
+                    (IMPORT_STUB_SIZE): Define.
+                    (IMPORT_SHARED_STUB_SIZE): Define.
+                    (EXPORT_STUB_SIZE): Define.
+                    (plt_stub): Revise to not use register %r22.
+                    (LDO_R1_R22): Define.
+                    (LDW_R22_R21): Define.
+                    (LDW_R22_R19): Define.
+                    (hppa_build_one_stub): Update stub generation and use new defines.
+                    (hppa_size_one_stub): Likewise.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index ee28eab3ad..2aa9958526 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,18 @@
++2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
++
++	* elf32-hppa.c: Revise import stub sequences.
++	(LONG_BRANCH_STUB_SIZE): Define.
++	(LONG_BRANCH_SHARED_STUB_SIZE): Define.
++	(IMPORT_STUB_SIZE): Define.
++	(IMPORT_SHARED_STUB_SIZE): Define.
++	(EXPORT_STUB_SIZE): Define.
++	(plt_stub): Revise to not use register %r22.
++	(LDO_R1_R22): Define.
++	(LDW_R22_R21): Define.
++	(LDW_R22_R19): Define.
++	(hppa_build_one_stub): Update stub generation and use new defines.
++	(hppa_size_one_stub): Likewise.
++
+ 2019-10-13  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* development.sh (development): Reset to true.
 diff --git a/bfd/elf32-hppa.c b/bfd/elf32-hppa.c
-index a61adbc3c8..cd99584f27 100644
+index a61adbc3c8..49f0ca6cc0 100644
 --- a/bfd/elf32-hppa.c
 +++ b/bfd/elf32-hppa.c
 @@ -71,34 +71,38 @@
@@ -234,7 +598,43 @@ index a61adbc3c8..cd99584f27 100644
      }
  
    hsh->stub_sec->size += size;
-@@ -2272,10 +2280,11 @@ elf32_hppa_size_dynamic_sections (bfd *output_bfd ATTRIBUTE_UNUSED,
+
+commit 7c65b97032bb8f8572723d4ce10d4f07c00c1734
+Author: John David Anglin <danglin@gcc.gnu.org>
+Date:   Sun Oct 20 12:28:35 2019 -0400
+
+            [bfd]   Provide 8-byte minimum alignment for .plt section
+    
+            This change increases the default alignment for the .plt section
+            from 4 bytes to 8 bytes.  When function descriptors are 8-byte
+            aligned, they can be updated atomically on 32-bit hppa.  This
+            helps with ordering issues on SMP machines.  It also ensures
+            that descriptors reside on the same cache line.  This reduces
+            the probability of a double TLB miss in a call.
+    
+            2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
+    
+                    * elf32-hppa.c (elf32_hppa_size_dynamic_sections): Provide 8-byte
+                    minimum alignment for .plt section.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 2aa9958526..86ce07a1c1 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,5 +1,8 @@
+ 2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
+ 
++	* elf32-hppa.c (elf32_hppa_size_dynamic_sections): Provide 8-byte
++	minimum alignment for .plt section.
++
+ 	* elf32-hppa.c: Revise import stub sequences.
+ 	(LONG_BRANCH_STUB_SIZE): Define.
+ 	(LONG_BRANCH_SHARED_STUB_SIZE): Define.
+diff --git a/bfd/elf32-hppa.c b/bfd/elf32-hppa.c
+index 49f0ca6cc0..cd99584f27 100644
+--- a/bfd/elf32-hppa.c
++++ b/bfd/elf32-hppa.c
+@@ -2280,10 +2280,11 @@ elf32_hppa_size_dynamic_sections (bfd *output_bfd ATTRIBUTE_UNUSED,
  		 against the .got section.  */
  	      int gotalign = bfd_section_alignment (dynobj, htab->etab.sgot);
  	      int pltalign = bfd_section_alignment (dynobj, sec);
@@ -248,133 +648,683 @@ index a61adbc3c8..cd99584f27 100644
  	      mask = ((bfd_size_type) 1 << gotalign) - 1;
  	      sec->size = (sec->size + sizeof (plt_stub) + mask) & ~mask;
  	    }
-diff --git a/gas/ChangeLog b/gas/ChangeLog
-index 75324bfaac..0955809b5b 100644
---- a/gas/ChangeLog
-+++ b/gas/ChangeLog
-@@ -1,3 +1,17 @@
-+2019-10-14  Tamar Christina  <tamar.christina@arm.com>
-+
-+	Backported from mainline.
-+	2019-09-24  Tamar Christina  <tamar.christina@arm.com>
-+
-+	PR gas/24991
-+	* config/tc-arm.c (out_of_range_p): New.
-+	(md_apply_fix): Use it in BFD_RELOC_THUMB_PCREL_BRANCH9,
-+	BFD_RELOC_THUMB_PCREL_BRANCH12, BFD_RELOC_THUMB_PCREL_BRANCH20,
-+	BFD_RELOC_THUMB_PCREL_BRANCH23, BFD_RELOC_THUMB_PCREL_BRANCH25
-+	* testsuite/gas/arm/pr24991.d: New test.
-+	* testsuite/gas/arm/pr24991.l: New test.
-+	* testsuite/gas/arm/pr24991.s: New test.
-+
- 2019-10-12  Nick Clifton  <nickc@redhat.com>
+
+commit 438708c4da64b4b6610c6146bb29b8a9cc2be51e
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Oct 21 00:02:13 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 14b15f3991..ac25709a6e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
- 	Release 2.33.1
-diff --git a/gas/config/tc-arm.c b/gas/config/tc-arm.c
-index 9273bb5783..caabdbba90 100644
---- a/gas/config/tc-arm.c
-+++ b/gas/config/tc-arm.c
-@@ -106,6 +106,15 @@ enum arm_float_abi
-    should define CPU_DEFAULT here.  */
- #endif
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191020
++#define BFD_VERSION_DATE 20191021
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c3285908b23fdb2173bbd5dd512a6e844aad3e70
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Oct 22 00:01:10 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ac25709a6e..12d9ea358c 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
-+/* Perform range checks on positive and negative overflows by checking if the
-+   VALUE given fits within the range of an BITS sized immediate.  */
-+static bfd_boolean out_of_range_p (offsetT value, offsetT bits)
-+ {
-+  gas_assert (bits < (offsetT)(sizeof (value) * 8));
-+  return (value & ~((1 << bits)-1))
-+	  && ((value & ~((1 << bits)-1)) != ~((1 << bits)-1));
-+}
-+
- #ifndef FPU_DEFAULT
- # ifdef TE_LINUX
- #  define FPU_DEFAULT FPU_ARCH_FPA
-@@ -28047,7 +28056,7 @@ md_apply_fix (fixS *	fixP,
-       break;
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191021
++#define BFD_VERSION_DATE 20191022
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit ad04d012f9fc66c3c90fc888292e2e631bec49f5
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Oct 23 00:01:41 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 12d9ea358c..6788e040d7 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
-     case BFD_RELOC_THUMB_PCREL_BRANCH9: /* Conditional branch.	*/
--      if ((value & ~0xff) && ((value & ~0xff) != ~0xff))
-+      if (out_of_range_p (value, 8))
- 	as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191022
++#define BFD_VERSION_DATE 20191023
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit d90ac7088ed6020ac80fd95025e973ab0638eaec
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Oct 24 00:01:11 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 6788e040d7..63ab10a3b5 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
-       if (fixP->fx_done || !seg->use_rela_p)
-@@ -28059,7 +28068,7 @@ md_apply_fix (fixS *	fixP,
-       break;
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191023
++#define BFD_VERSION_DATE 20191024
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 52f9b3adc0771944d2c988a91ba3a69820f3844a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Oct 25 00:02:27 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 63ab10a3b5..7fec35fdbd 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
-     case BFD_RELOC_THUMB_PCREL_BRANCH12: /* Unconditional branch.  */
--      if ((value & ~0x7ff) && ((value & ~0x7ff) != ~0x7ff))
-+      if (out_of_range_p (value, 11))
- 	as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191024
++#define BFD_VERSION_DATE 20191025
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit ea476f4b9558fe6e7858fd20a31214d758d016cc
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Oct 26 00:02:08 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7fec35fdbd..6144234a07 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
-       if (fixP->fx_done || !seg->use_rela_p)
-@@ -28070,6 +28079,7 @@ md_apply_fix (fixS *	fixP,
- 	}
-       break;
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191025
++#define BFD_VERSION_DATE 20191026
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 3c3645770cccf882768a9862908311fcbd387fe5
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Oct 27 00:03:10 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 6144234a07..1f63d55db5 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
-+    /* This relocation is misnamed, it should be BRANCH21.  */
-     case BFD_RELOC_THUMB_PCREL_BRANCH20:
-       if (fixP->fx_addsy
- 	  && (S_GET_SEGMENT (fixP->fx_addsy) == seg)
-@@ -28080,7 +28090,7 @@ md_apply_fix (fixS *	fixP,
- 	  /* Force a relocation for a branch 20 bits wide.  */
- 	  fixP->fx_done = 0;
- 	}
--      if ((value & ~0x1fffff) && ((value & ~0x0fffff) != ~0x0fffff))
-+      if (out_of_range_p (value, 20))
- 	as_bad_where (fixP->fx_file, fixP->fx_line,
- 		      _("conditional branch out of range"));
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191026
++#define BFD_VERSION_DATE 20191027
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit cc77c335cc6844117caf7d3e7c0c4a5b3c306426
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Oct 28 00:02:02 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1f63d55db5..dd603a6e61 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
-@@ -28159,12 +28169,11 @@ md_apply_fix (fixS *	fixP,
- 	 fixP->fx_r_type = BFD_RELOC_THUMB_PCREL_BRANCH23;
- #endif
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191027
++#define BFD_VERSION_DATE 20191028
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 14eda134284f60e51c015952cfaab81165c218af
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Oct 29 00:02:24 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index dd603a6e61..eea699f09f 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
--      if ((value & ~0x3fffff) && ((value & ~0x3fffff) != ~0x3fffff))
-+      if (out_of_range_p (value, 22))
- 	{
- 	  if (!(ARM_CPU_HAS_FEATURE (cpu_variant, arm_ext_v6t2)))
- 	    as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
--	  else if ((value & ~0x1ffffff)
--		   && ((value & ~0x1ffffff) != ~0x1ffffff))
-+	  else if (out_of_range_p (value, 24))
- 	    as_bad_where (fixP->fx_file, fixP->fx_line,
- 			  _("Thumb2 branch out of range"));
- 	}
-@@ -28175,7 +28184,7 @@ md_apply_fix (fixS *	fixP,
-       break;
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191028
++#define BFD_VERSION_DATE 20191029
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit b0a291746e8563812318afc26e4e340535edc94f
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Oct 30 00:02:20 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index eea699f09f..ae10413b62 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
-     case BFD_RELOC_THUMB_PCREL_BRANCH25:
--      if ((value & ~0x0ffffff) && ((value & ~0x0ffffff) != ~0x0ffffff))
-+      if (out_of_range_p (value, 24))
- 	as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191029
++#define BFD_VERSION_DATE 20191030
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit fa7d7260f34bc96f73d41db5ba234be6f744f6ed
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Oct 31 00:01:35 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ae10413b62..7e14ab2d7d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
  
-       if (fixP->fx_done || !seg->use_rela_p)
-diff --git a/gas/testsuite/gas/arm/pr24991.d b/gas/testsuite/gas/arm/pr24991.d
-new file mode 100644
-index 0000000000..2acca2d656
---- /dev/null
-+++ b/gas/testsuite/gas/arm/pr24991.d
-@@ -0,0 +1,4 @@
-+#as: -march=armv7-a
-+#source: pr24991.s
-+#error_output: pr24991.l
-+
-diff --git a/gas/testsuite/gas/arm/pr24991.l b/gas/testsuite/gas/arm/pr24991.l
-new file mode 100644
-index 0000000000..4fc58751c8
---- /dev/null
-+++ b/gas/testsuite/gas/arm/pr24991.l
-@@ -0,0 +1,2 @@
-+[^:]*: Assembler messages:
-+[^:]*:4: Error: conditional branch out of range
-diff --git a/gas/testsuite/gas/arm/pr24991.s b/gas/testsuite/gas/arm/pr24991.s
-new file mode 100644
-index 0000000000..27f8daff1c
---- /dev/null
-+++ b/gas/testsuite/gas/arm/pr24991.s
-@@ -0,0 +1,5 @@
-+        .arch armv7-a
-+        .syntax unified
-+        .thumb
-+        beq     .+ 0x124f80
-+
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191030
++#define BFD_VERSION_DATE 20191031
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 3655dc115dcd5202605273e17cd61649993203d4
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Nov 1 00:01:21 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7e14ab2d7d..c04e44da89 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191031
++#define BFD_VERSION_DATE 20191101
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 58bba3d11fc8ae20aeb2f9978cd5cd780ed5c63c
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Nov 2 00:01:13 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c04e44da89..66be430504 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191101
++#define BFD_VERSION_DATE 20191102
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 33cc02ce1f61dfd1bb1857b319faeeae5eaf4f65
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Nov 3 00:02:01 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 66be430504..e79dc59a7e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191102
++#define BFD_VERSION_DATE 20191103
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 23c9071a49995643150c9b0750a689a59635fdd8
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Nov 4 00:01:17 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index e79dc59a7e..3954f6eea1 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191103
++#define BFD_VERSION_DATE 20191104
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 1be55c65b22c73d41d1ea8091488b9d2aae17a18
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Nov 5 00:01:13 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 3954f6eea1..1d49c07326 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191104
++#define BFD_VERSION_DATE 20191105
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 12d7177b4384131a2a3db77411d2bc8227a9a0a3
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Nov 6 00:01:31 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1d49c07326..e455f80af4 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191105
++#define BFD_VERSION_DATE 20191106
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c1af18e7c79b4b41dafcc17e4c441b3c7c865fb1
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Nov 7 00:02:16 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index e455f80af4..8d1457d608 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191106
++#define BFD_VERSION_DATE 20191107
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 549d12c1b75e89438b3f282604219b6172d02e87
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Nov 8 00:01:13 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 8d1457d608..923ab8a747 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191107
++#define BFD_VERSION_DATE 20191108
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit f4b8be6271cb5857e4c5074b990b44ec76d5c601
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Nov 9 00:01:34 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 923ab8a747..622b416e7a 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191108
++#define BFD_VERSION_DATE 20191109
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e1103a12e125a9329a5723059d0c2aaa35df334a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Nov 10 00:02:15 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 622b416e7a..6df99ef46f 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191109
++#define BFD_VERSION_DATE 20191110
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 56d4ff88eefdd88baac977022825d340f78a5f4c
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Nov 11 00:01:32 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 6df99ef46f..113cc4f2cb 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191110
++#define BFD_VERSION_DATE 20191111
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit a85ca3a5ea3033f657970666a831b3abd6df267d
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Nov 12 00:02:21 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 113cc4f2cb..cb28fc479e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191111
++#define BFD_VERSION_DATE 20191112
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 09ff928567aaed5cb224f541397282e7c764b3ea
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Nov 13 00:01:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index cb28fc479e..fe0486a4fe 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191112
++#define BFD_VERSION_DATE 20191113
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 2bfb9e2a3ede21247bde33a4a5969f7511a23d68
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Nov 14 00:01:11 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index fe0486a4fe..1604253882 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191113
++#define BFD_VERSION_DATE 20191114
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 1bb12b2deaa5b5aa1da94b80af1b2d396b3d7652
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Nov 15 00:01:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1604253882..2f6470a8eb 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191114
++#define BFD_VERSION_DATE 20191115
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit a08a1d42c1db35f7899cd1a56428249e3ca6f448
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Nov 16 00:01:10 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 2f6470a8eb..380eeb166d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191115
++#define BFD_VERSION_DATE 20191116
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit acc7eecf5a6e555b96b7667bf843c38121afb2b2
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Nov 17 00:02:02 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 380eeb166d..35947e812e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191116
++#define BFD_VERSION_DATE 20191117
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit d31fdb679d07e855d1ba3198eda78c527ffb5b4c
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Nov 18 00:01:17 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 35947e812e..5ba9408c54 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191117
++#define BFD_VERSION_DATE 20191118
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 75233fd1a2e3e53d81f5c040ecdee330462f25e3
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Nov 19 00:01:26 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5ba9408c54..812ce3b57b 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191118
++#define BFD_VERSION_DATE 20191119
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit f0a6ba3e087ddbc189f3c1ee5083647a736a8779
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Nov 20 00:01:46 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 812ce3b57b..4d40a4f7ca 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191119
++#define BFD_VERSION_DATE 20191120
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 7a9013e51ad3a8dbfeb42f462b415179b058e261
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Nov 21 00:01:32 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4d40a4f7ca..330a5e6a83 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191120
++#define BFD_VERSION_DATE 20191121
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit cebac20b09b83a6783168c00571f3576656b4957
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Nov 22 00:01:17 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 330a5e6a83..5105867095 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191121
++#define BFD_VERSION_DATE 20191122
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 0522c409b0903ae8924789999d6bbc8d5578b893
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Nov 23 00:01:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5105867095..efdfc416cb 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191122
++#define BFD_VERSION_DATE 20191123
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@

@@ -3,10 +3,10 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gcc"
-PKG_VERSION="9.2.0"
-PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
+#PKG_VERSION="9.2.0"
+#PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
 PKG_LICENSE="GPL"
-#PKG_VERSION="9-20191026"
+PKG_VERSION="9-20191116"
 #PKG_VERSION="10-20191110"
 PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -16,17 +16,17 @@ PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:hos
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_DEPENDS_INIT="toolchain"
-PKG_DEPENDS_UNPACK+=" isl"
+#PKG_DEPENDS_UNPACK+=" isl"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-gold -lto -hardening"
 
-post_unpack() {
-  ISL_DIR=$(get_build_dir isl)
-  ln -s $ISL_DIR $PKG_BUILD/isl
-}
+#post_unpack() {
+#  ISL_DIR=$(get_build_dir isl)
+#  ln -s $ISL_DIR $PKG_BUILD/isl
+#}
  
 post_patch() {
-  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
+#  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
@@ -37,7 +37,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl \
+                           --with-isl=no \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
