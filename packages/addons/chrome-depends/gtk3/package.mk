@@ -29,8 +29,7 @@ PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
                        -Ddemos=false \
                        -Dexamples=false \
                        -Dtests=false \
-                       -Dinstalled_tests=false \
-                       -Dbuiltin_immodules=yes"
+                       -Dinstalled_tests=false"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --disable-debug \
