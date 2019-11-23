@@ -91,4 +91,4 @@ fi
   cat_file "${KODI_ROOT}/.smb/smb.conf"
   cat_file "${KODI_ROOT}/.smb/user.conf"
   cat_file "/run/samba/smb.conf"
-) | /usr/bin/pastebinit 2>/dev/null
+) | ${OUTPUT} 2>/dev/null

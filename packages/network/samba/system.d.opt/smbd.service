@@ -1,14 +1,15 @@
 [Unit]
 Description=Samba SMB Daemon
-After=network.target
-ConditionPathExists=/storage/.cache/services/samba.conf
+Wants=network-online.target nmbd.service
+After=network-online.target nmbd.service
+ConditionPathExists=!/storage/.cache/services/samba.disabled
+ConditionPathExists=/run/samba/smb.conf
 
 [Service]
 Type=forking
-PIDFile=/var/run/smbd-smb.conf.pid
+PIDFile=/run/samba/smbd.pid
 LimitNOFILE=16384
-ExecStart=/usr/bin/smbd --configfile=/run/samba/smb.conf
-ExecStartPre=/usr/lib/samba/samba-config
+ExecStart=/usr/sbin/smbd
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=1s
 Restart=always

@@ -6,7 +6,7 @@ PKG_VERSION=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.libreelec.tv"
 PKG_URL=""
-#PKG_DEPENDS_TARGET="qemu:host"
+PKG_DEPENDS_TARGET="qemu:host"
 PKG_SECTION="virtual"
 PKG_LONGDESC="virtual is a Meta package to install Virtual project extra dependencies"
 

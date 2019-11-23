@@ -3,175 +3,196 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="samba"
-PKG_VERSION="3.6.25"
-PKG_LICENSE="GPL"
+PKG_VERSION="4.11.2"
+PKG_SHA256="d27bf1b7cf5f25fb5587896fccb73747a705f7cf7ee352b5cbab82841db09f1f"
+PKG_LICENSE="GPLv3+"
 PKG_SITE="https://www.samba.org"
-PKG_URL="https://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib connman"
+PKG_URL="https://download.samba.org/pub/samba/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain attr heimdal:host e2fsprogs Python3 zlib readline popt libaio connman gnutls"
+PKG_NEED_UNPACK="$(get_pkg_directory heimdal) $(get_pkg_directory e2fsprogs)"
 PKG_LONGDESC="A free SMB / CIFS fileserver and client."
-PKG_BUILD_FLAGS="+pic +lto-parallel"
+PKG_BUILD_FLAGS="-gold"
 
 configure_package() {
- if [ "$AVAHI_DAEMON" = yes ]; then
-   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET avahi"
-   SMB_AVAHI="--enable-avahi"
- else
-   SMB_AVAHI="--disable-avahi"
- fi
+  #PKG_WAF_VERBOSE="-v"
 
- PKG_CONFIGURE_SCRIPT="${PKG_BUILD}/source3/configure"
+  if [ "$AVAHI_DAEMON" = yes ]; then
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET avahi"
+    SMB_AVAHI="--enable-avahi"
+  else
+    SMB_AVAHI="--disable-avahi"
+  fi
 
- PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
-                           libreplace_cv_HAVE_C99_VSNPRINTF=yes \
-                           libreplace_cv_HAVE_GETADDRINFO=no \
-                           libreplace_cv_HAVE_IFACE_IFCONF=no \
-                           LINUX_LFS_SUPPORT=yes \
-                           samba_cv_CC_NEGATIVE_ENUM_VALUES=yes \
-                           samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
-                           samba_cv_HAVE_IFACE_IFCONF=yes \
-                           samba_cv_HAVE_KERNEL_OPLOCKS_LINUX=yes \
-                           samba_cv_HAVE_SECURE_MKSTEMP=yes \
-                           samba_cv_HAVE_WRFILE_KEYTAB=no \
-                           samba_cv_USE_SETREUID=yes \
-                           samba_cv_USE_SETRESUID=yes \
-                           samba_cv_have_setreuid=yes \
-                           samba_cv_have_setresuid=yes \
-                           --with-configdir=/etc/samba \
-                           --with-privatedir=/var/run \
-                           --with-codepagedir=/etc/samba \
-                           --with-lockdir=/var/lock \
-                           --with-logfilebase=/var/log \
-                           --with-nmbdsocketdir=/var/nmbd \
-                           --with-piddir=/var/run \
-                           --disable-shared-libs \
-                           --disable-debug \
-                           --with-libiconv="$SYSROOT_PREFIX/usr" \
-                           --disable-krb5developer \
-                           --disable-picky-developer \
-                           --enable-largefile \
-                           --disable-socket-wrapper \
-                           --disable-nss-wrapper \
-                           --disable-swat \
-                           --disable-cups \
-                           --disable-iprint \
-                           --disable-pie \
-                           --disable-relro \
-                           --disable-fam \
-                           --disable-dnssd \
-                           $SMB_AVAHI \
-                           --disable-pthreadpool \
-                           --disable-dmalloc \
-                           --with-fhs \
-                           --without-libtalloc \
-                           --disable-external-libtalloc \
-                           --without-libtdb \
-                           --disable-external-libtdb \
-                           --without-libnetapi \
-                           --with-libsmbclient \
-                           --without-libsmbsharemodes \
-                           --without-libaddns \
-                           --without-afs \
-                           --without-fake-kaserver \
-                           --without-vfs-afsacl \
-                           --without-ldap \
-                           --without-ads \
-                           --without-dnsupdate \
-                           --without-automount \
-                           --without-krb5 \
-                           --without-pam \
-                           --without-pam_smbpass \
-                           --without-nisplus-home \
-                           --with-syslog \
-                           --without-quotas \
-                           --without-sys-quotas \
-                           --without-utmp \
-                           --without-cluster-support \
-                           --without-acl-support \
-                           --without-aio-support \
-                           --with-sendfile-support \
-                           --without-libtevent \
-                           --without-wbclient \
-                           --without-winbind \
-                           --with-included-popt \
-                           --with-included-iniparser"
-}
+  if [ "$TARGET_ARCH" = x86_64 ]; then
+    SMB_AESNI="--accel-aes=intelaesni"
+  else
+    SMB_AESNI="--accel-aes=none"
+  fi
 
-pre_configure_target() {
-  ( cd ../source3
-    sh autogen.sh
-  )
-  export CFLAGS="$CFLAGS -D__location__=\\\"\\\" -ffunction-sections -fdata-sections"
-  export LDFLAGS="$LDFLAGS -fwhole-program -Wl,--gc-sections"
-  
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
-}
+  PKG_CONFIGURE_OPTS="--prefix=/usr \
+                      --sysconfdir=/etc \
+                      --localstatedir=/var \
+                      --with-lockdir=/var/lock-samba \
+                      --with-logfilebase=/var/log \
+                      --with-piddir=/run/samba \
+                      --with-privatedir=/run/samba \
+                      --with-modulesdir=/usr/lib \
+                      --with-privatelibdir=/usr/lib \
+                      --with-sockets-dir=/run/samba \
+                      --with-configdir=/run/samba \
+                      --with-libiconv=$SYSROOT_PREFIX/usr \
+                      --cross-compile \
+                      --cross-answers=$PKG_BUILD/cache.txt \
+                      --hostcc=gcc \
+                      --enable-fhs \
+                      --without-dmapi \
+                      --disable-glusterfs \
+                      --disable-rpath \
+                      --disable-rpath-install \
+                      --disable-rpath-private-install \
+                      $SMB_AVAHI \
+                      $SMB_AESNI \
+                      --disable-cups \
+                      --disable-iprint \
+                      --with-relro \
+                      --with-sendfile-support \
+                      --without-acl-support \
+                      --without-ads \
+                      --without-ad-dc \
+                      --without-automount \
+                      --without-cluster-support \
+                      --without-dnsupdate \
+                      --without-fam \
+                      --without-gettext \
+                      --without-gpgme \
+                      --without-iconv \
+                      --without-ldap \
+                      --without-libarchive \
+                      --without-pam \
+                      --without-pie \
+                      --without-regedit \
+                      --without-systemd \
+                      --without-utmp \
+                      --without-winbind \
+                      --enable-auto-reconfigure \
+                      --bundled-libraries='ALL,!asn1_compile,!compile_et,!zlib' \
+                      --without-quotas \
+                      --with-syslog  \
+                      --without-json \
+                      --without-ldb-lmdb \
+                      --nopyc --nopyo"
 
-make_target() {
-  make bin/libtalloc.a
-  make bin/libwbclient.a
-  make bin/libtdb.a
-  make bin/libtevent.a
-  make bin/libsmbclient.a
+  PKG_SAMBA_TARGET="smbclient,client/smbclient,smbtree,nmblookup,testparm"
 
   if [ "$SAMBA_SERVER" = "yes" ]; then
-    make bin/samba_multicall
+    PKG_SAMBA_TARGET+=",smbd/smbd,nmbd,smbpasswd"
   fi
 }
 
-post_make_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp -P bin/*.a $SYSROOT_PREFIX/usr/lib
+pre_configure_target() {
+# samba uses its own build directory
+  cd $PKG_BUILD
+    rm -rf .$TARGET_NAME
 
-  mkdir -p $SYSROOT_PREFIX/usr/include
-    cp ../source3/include/libsmbclient.h $SYSROOT_PREFIX/usr/include
+# work around link issues
+  export LDFLAGS="$LDFLAGS -lreadline -lncurses"
 
-  mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
-    # talloc/tdb/tevent/wbclient static
-    sed -e "s,^Libs: -lsmbclient$,Libs: -lsmbclient -ltalloc -ltdb -ltevent -lwbclient,g" -i pkgconfig/smbclient.pc
-    cp pkgconfig/smbclient.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
+# support 64-bit offsets and seeks on 32-bit platforms
+  if [ "$TARGET_ARCH" = "arm" ]; then
+    export CFLAGS+=" -D_FILE_OFFSET_BITS=64 -D_OFF_T_DEFINED_ -Doff_t=off64_t -Dlseek=lseek64"
+  fi
+}
+
+configure_target() {
+  cp $PKG_DIR/config/samba4-cache.txt $PKG_BUILD/cache.txt
+    echo "Checking uname machine type: \"$TARGET_ARCH\"" >> $PKG_BUILD/cache.txt
+
+  export COMPILE_ET=$TOOLCHAIN/bin/heimdal_compile_et
+  export ASN1_COMPILE=$TOOLCHAIN/bin/heimdal_asn1_compile
+
+  PYTHON_CONFIG="$SYSROOT_PREFIX/usr/bin/python3-config" \
+  python_LDFLAGS="" python_LIBDIR="" \
+  PYTHON=${TOOLCHAIN}/bin/python3 ./configure $PKG_CONFIGURE_OPTS
+}
+
+make_target() {
+  ./buildtools/bin/waf build ${PKG_WAF_VERBOSE} --targets=$PKG_SAMBA_TARGET -j$CONCURRENCY_MAKE_LEVEL
 }
 
 makeinstall_target() {
+  ./buildtools/bin/waf install ${PKG_WAF_VERBOSE} --destdir=$SYSROOT_PREFIX --targets=smbclient -j$CONCURRENCY_MAKE_LEVEL
+  ./buildtools/bin/waf install ${PKG_WAF_VERBOSE} --destdir=$INSTALL --targets=$PKG_SAMBA_TARGET -j$CONCURRENCY_MAKE_LEVEL
+}
+
+copy_directory_of_links() {
+  local _tmp link
+  for link in "${1}/"*.so*; do
+    if [ -L ${link} ]; then
+      _tmp="$(readlink -m "${link}")"
+      cp -P ${_tmp} ${2}
+      cp -P ${_tmp}.* ${2} 2>/dev/null || true
+    else
+      cp -P ${link} ${2}
+    fi
+  done
+}
+
+perform_manual_install() {
+  mkdir -p ${SYSROOT_PREFIX}/usr/lib
+    copy_directory_of_links ${PKG_BUILD}/bin/shared ${SYSROOT_PREFIX}/usr/lib
+
+  mkdir -p ${INSTALL}/usr/lib
+    copy_directory_of_links ${PKG_BUILD}/bin/shared ${INSTALL}/usr/lib
+    copy_directory_of_links ${PKG_BUILD}/bin/shared/private ${INSTALL}/usr/lib
+
+  if [ "$SAMBA_SERVER" = "yes" ]; then
+    mkdir -p ${INSTALL}/usr/sbin
+      cp -L ${PKG_BUILD}/bin/smbd ${INSTALL}/usr/sbin
+      cp -L ${PKG_BUILD}/bin/nmbd ${INSTALL}/usr/sbin
+  fi
+}
+
+post_makeinstall_target() {
+  perform_manual_install
+
+  rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/lib/python*
+  rm -rf $INSTALL/usr/share/perl*
+  rm -rf $INSTALL/usr/lib64
+
+  mkdir -p $INSTALL/usr/lib/samba
+    cp $PKG_DIR/scripts/samba-config $INSTALL/usr/lib/samba
+    cp $PKG_DIR/scripts/smbd-config $INSTALL/usr/lib/samba
+    cp $PKG_DIR/scripts/samba-autoshare $INSTALL/usr/lib/samba
+
+  if find_file_path config/smb.conf; then
+    mkdir -p $INSTALL/etc/samba
+      cp ${FOUND_PATH} $INSTALL/etc/samba
+    mkdir -p $INSTALL/usr/config
+      cp $INSTALL/etc/samba/smb.conf $INSTALL/usr/config/samba.conf.sample
+  fi
+
+  mkdir -p $INSTALL/usr/bin
+    cp -PR bin/default/source3/client/smbclient $INSTALL/usr/bin
+    cp -PR bin/default/source3/utils/smbtree $INSTALL/usr/bin
+    cp -PR bin/default/source3/utils/nmblookup $INSTALL/usr/bin
+    cp -PR bin/default/source3/utils/testparm $INSTALL/usr/bin
+
   if [ "$SAMBA_SERVER" = "yes" ]; then
     mkdir -p $INSTALL/usr/bin
-      cp bin/samba_multicall $INSTALL/usr/bin
-      ln -sf samba_multicall $INSTALL/usr/bin/smbd
-      ln -sf samba_multicall $INSTALL/usr/bin/nmbd
-      ln -sf samba_multicall $INSTALL/usr/bin/smbpasswd
-
-    mkdir -p $INSTALL/etc/samba
-      cp ../codepages/lowcase.dat $INSTALL/etc/samba
-      cp ../codepages/upcase.dat $INSTALL/etc/samba
-      cp ../codepages/valid.dat $INSTALL/etc/samba
+      cp -PR bin/default/source3/utils/smbpasswd $INSTALL/usr/bin
 
     mkdir -p $INSTALL/usr/lib/systemd/system
       cp $PKG_DIR/system.d.opt/* $INSTALL/usr/lib/systemd/system
 
     mkdir -p $INSTALL/usr/share/services
       cp -P $PKG_DIR/default.d/*.conf $INSTALL/usr/share/services
-
-    mkdir -p $INSTALL/usr/lib/samba
-      cp $PKG_DIR/scripts/samba-config $INSTALL/usr/lib/samba
-      cp $PKG_DIR/scripts/samba-autoshare $INSTALL/usr/lib/samba
-
-    if [ -f $PROJECT_DIR/$PROJECT/config/smb.conf ]; then
-      mkdir -p $INSTALL/etc/samba
-        cp $PROJECT_DIR/$PROJECT/config/smb.conf $INSTALL/etc/samba
-    elif [ -f $DISTRO_DIR/$DISTRO/config/smb.conf ]; then
-      mkdir -p $INSTALL/etc/samba
-        cp $DISTRO_DIR/$DISTRO/config/smb.conf $INSTALL/etc/samba
-    else
-      mkdir -p $INSTALL/etc/samba
-        cp $PKG_DIR/config/smb.conf $INSTALL/etc/samba
-      mkdir -p $INSTALL/usr/config
-        cp $PKG_DIR/config/smb.conf $INSTALL/usr/config/samba.conf.sample
-    fi
-
   fi
 }
 
 post_install() {
+  enable_service samba-config.service
+
   if [ "$SAMBA_SERVER" = "yes" ]; then
     enable_service nmbd.service
     enable_service smbd.service
