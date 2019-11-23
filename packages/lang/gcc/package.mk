@@ -28,8 +28,8 @@ PKG_BUILD_FLAGS="-gold -lto -hardening"
 post_patch() {
   echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
 }
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
