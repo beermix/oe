@@ -10,7 +10,7 @@
         #               athlon-fx amdfam10 barcelona
         # (Intel CPUs)  atom core2 nocona
         #
-        TARGET_CPU="westmere"
+        TARGET_CPU="x86-64"
         TARGET_FEATURES="64bit"
         ;;
     esac
@@ -77,7 +77,7 @@
   #  ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS"
 
   # build and install driver addons (yes / no)
-    DRIVER_ADDONS_SUPPORT="no"
+    DRIVER_ADDONS_SUPPORT="yes"
 
   # driver addons to install:
   # for a list of additional drivers see packages/linux-driver-addons
