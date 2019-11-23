@@ -27,9 +27,9 @@ post_configure_target() {
   sed -i 's|../LICENSE|LICENSE|' Makefile
 }
 
-pre_configure_target() {
-  export LIBS="-latomic"
-}
+#pre_configure_target() {
+#  export LIBS="-latomic"
+#}
 
 configure_package() {
   PKG_CONFIGURE_OPTS_TARGET="--disable-samples \
