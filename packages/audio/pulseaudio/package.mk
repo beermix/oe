@@ -6,7 +6,7 @@ PKG_NAME="pulseaudio"
 PKG_VERSION="13.0"
 PKG_SHA256="961b23ca1acfd28f2bc87414c27bb40e12436efcf2158d29721b1e89f3f28057"
 PKG_LICENSE="GPL"
-PKG_SITE="http://pulseaudio.org/"
+PKG_SITE="https://www.freedesktop.org/software/pulseaudio/releases/?C=M;O=D"
 PKG_URL="http://www.freedesktop.org/software/pulseaudio/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain alsa-lib dbus libcap libsndfile libtool openssl soxr speexdsp systemd glib:host"
 PKG_LONGDESC="PulseAudio is a sound system for POSIX OSes, meaning that it is a proxy for your sound applications."
@@ -68,6 +68,7 @@ PKG_MESON_OPTS_TARGET="-Dgcov=false \
 pre_configure_target() {
   sed -e 's|; remixing-use-all-sink-channels = yes|; remixing-use-all-sink-channels = no|' \
       -i $PKG_BUILD/src/daemon/daemon.conf.in
+#  export CFLAGS="$CFLAGS -fopenmp"	
 }
 
 post_makeinstall_target() {
