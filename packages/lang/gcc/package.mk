@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gcc"
-#PKG_VERSION="9.2.0"
-#PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
+PKG_VERSION="9.2.0"
+PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
 PKG_LICENSE="GPL"
 #PKG_VERSION="9-20191116"
 PKG_VERSION="10-20191117"
@@ -50,8 +50,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --with-gcc-major-version-only \
-                           --disable-libsanitizer \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -66,6 +64,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
