@@ -4,7 +4,8 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="3.0.3"
+PKG_VERSION="3.0.8"
+PKG_SHA256="e0149ef4a20a19b9ecd87309c2d27787ee3f47dfd47c6639644bc1f6fd95bdf6"
 #PKG_REV="20171107-0242"
 #PKG_SITE="https://nightlies.videolan.org/build/source/"
 #PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
