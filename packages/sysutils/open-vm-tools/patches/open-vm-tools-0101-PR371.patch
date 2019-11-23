@@ -1,16 +1,16 @@
 From 81480daf43f5a42b268cc1c43d8c9e2164e5cd88 Mon Sep 17 00:00:00 2001
 From: MilhouseVH <milhouseVH.github@nmacleod.com>
 Date: Tue, 24 Sep 2019 13:20:51 +0100
-Subject: [PATCH] stop systemd-243 / complaints
+Subject: [PATCH] stop systemd-243 udev complaints
 
 ---
- //99-vmware-scsi-/.rules | 4 ++--
+ udev/99-vmware-scsi-udev.rules | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a///99-vmware-scsi-/.rules b///99-vmware-scsi-/.rules
+diff --git a/udev/99-vmware-scsi-udev.rules b/udev/99-vmware-scsi-udev.rules
 index 053b59706..051040ef7 100644
---- a///99-vmware-scsi-/.rules
-+++ b///99-vmware-scsi-/.rules
+--- a/udev/99-vmware-scsi-udev.rules
++++ b/udev/99-vmware-scsi-udev.rules
 @@ -2,6 +2,6 @@
  #
  # This file is part of open-vm-tools
