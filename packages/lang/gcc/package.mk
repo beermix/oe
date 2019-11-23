@@ -16,14 +16,14 @@ PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:hos
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_DEPENDS_INIT="toolchain"
-#PKG_DEPENDS_UNPACK+=" isl"
+PKG_DEPENDS_UNPACK+=" isl"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-gold -lto -hardening"
 
-#post_unpack() {
-#  ISL_DIR=$(get_build_dir isl)
-#  ln -s $ISL_DIR $PKG_BUILD/isl
-#}
+post_unpack() {
+  ISL_DIR=$(get_build_dir isl)
+  ln -s $ISL_DIR $PKG_BUILD/isl
+}
  
 post_patch() {
   echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
@@ -37,7 +37,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl=no \
+                           --with-isl \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -48,13 +48,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=new \
                            --with-diagnostics-color=always \
+                           --disable-vtable-verify \
                            --disable-libunwind-exceptions \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libitm \
                            --disable-libquadmath \
+                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp"
 
@@ -99,7 +100,7 @@ post_make_host() {
 
   if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
     ${TARGET_PREFIX}strip $TARGET_NAME/libgcc/libgcc_s.so*
-    ${TARGET_PREFIX}strip $TARGET_NAME/libgomp/.libs/libgomp.so*
+#    ${TARGET_PREFIX}strip $TARGET_NAME/libgomp/.libs/libgomp.so*
     ${TARGET_PREFIX}strip $TARGET_NAME/libatomic/.libs/libatomic.so*
     ${TARGET_PREFIX}strip $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so*
   fi
@@ -153,7 +154,7 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/usr/lib
-    cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/usr/lib
+#    cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
