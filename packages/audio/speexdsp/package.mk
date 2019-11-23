@@ -9,3 +9,5 @@ PKG_SITE="https://speex.org"
 PKG_URL="http://downloads.us.xiph.org/releases/speex/speexdsp-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Speex audio processing library"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-sse"
