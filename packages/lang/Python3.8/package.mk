@@ -128,7 +128,7 @@ post_makeinstall_target() {
 
   PKG_INSTALL_PATH_LIB=$INSTALL/usr/lib/$PKG_PYTHON_VERSION
 
-  for dir in config compiler sysconfigdata lib-dynload/sysconfigdata lib2to3; do
+  for dir in config compiler sysconfigdata lib-dynload/sysconfigdata lib2to3 test; do
     rm -rf $PKG_INSTALL_PATH_LIB/$dir
   done
 
