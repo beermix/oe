@@ -5,7 +5,7 @@
   GOLD_SUPPORT="yes"
 
 # HARDENING (security relevant linker and compiler flags) support
-  HARDENING_SUPPORT="yes"
+  HARDENING_SUPPORT="no"
 
 # Name of the Distro to build (full name, without special characters)
   DISTRONAME="LibreELEC"
@@ -137,13 +137,13 @@
 # Xorg Graphic drivers to use (all / i915,i965,r200,r300,r600,nvidia)
 # Space separated list is supported,
 # e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia"
-  GRAPHIC_DRIVERS="i965"
+  GRAPHIC_DRIVERS="i915 i965 vmware virtio"
 
 # build and install remote support (yes / no)
-  REMOTE_SUPPORT="no"
+  REMOTE_SUPPORT="yes"
 
 # build and install Joystick support (yes / no)
-  JOYSTICK_SUPPORT="no"
+  JOYSTICK_SUPPORT="yes"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="no"
@@ -173,7 +173,7 @@
   ADDITIONAL_PACKAGES=""
 
 # build with installer (yes / no)
-  INSTALLER_SUPPORT="no"
+  INSTALLER_SUPPORT="yes"
 
 # Testpackages for development (yes / no)
   TESTING="no"
@@ -218,11 +218,8 @@
 # Settings package name - blank if not required
   DISTRO_PKG_SETTINGS="LibreELEC-settings"
 
-# IR remote protocols supported in default config
-  IR_REMOTE_PROTOCOLS=""
-
 # IR remote keymaps supported in default config
-  IR_REMOTE_KEYMAPS=""
+  IR_REMOTE_KEYMAPS="rc6_mce xbox_360 xbox_one"
 
 # debug tty path
   DEBUG_TTY="/dev/tty3"

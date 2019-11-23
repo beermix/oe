@@ -10,7 +10,7 @@ PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_33-branch"
 PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
 PKG_URL="http://ftp.gnu.org/gnu/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
-PKG_DEPENDS_TARGET="toolchain binutils:host"
+PKG_DEPENDS_TARGET="toolchain zlib binutils:host"
 PKG_LONGDESC="A GNU collection of binary utilities."
 
 post_patch() {
@@ -21,6 +21,8 @@ post_patch() {
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
+                         --without-ppl \
+                         --without-cloog \
                          --disable-werror \
                          --disable-multilib \
                          --disable-libada \
@@ -39,6 +41,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
+                         --with-system-zlib \
                          --without-ppl \
                          --without-cloog \
                          --enable-static \
@@ -49,7 +52,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-libssp \
                          --disable-plugins \
                          --disable-gold \
-                         --enable-targets=x86_64-pep \
                          --disable-ld \
                          --disable-lto \
                          --disable-nls"
