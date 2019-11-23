@@ -68,16 +68,16 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware dvb-firmware iwlwifi-firmware"
+    FIRMWARE="misc-firmware wlan-firmware iwlwifi-firmware"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta intel_nuc_led"
+#    ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta intel_nuc_led"
 
   # build and install driver addons (yes / no)
-    DRIVER_ADDONS_SUPPORT="yes"
+    DRIVER_ADDONS_SUPPORT="no"
 
   # driver addons to install:
   # for a list of additional drivers see packages/linux-driver-addons
