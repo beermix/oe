@@ -4,15 +4,16 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="open-vm-tools"
-PKG_VERSION="stable-11.0.1"
-PKG_SHA256="99f1e3c5245bb002c1e66cbb7a1078e1c3567db5f92cc2e00ab08557e9df4758"
+PKG_VERSION="11.0.1-14773994"
+PKG_SHA256=""
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vmware/open-vm-tools"
-PKG_URL="https://github.com/vmware/open-vm-tools/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-11.0.1/open-vm-tools-11.0.1-14773994.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fuse glib:host glib libdnet libtirpc"
 PKG_LONGDESC="open-vm-tools: open source implementation of VMware Tools"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-gold -lto -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --disable-tests \
@@ -28,16 +29,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
                            --with-sysroot=$SYSROOT_PREFIX"
 
-post_unpack() {
-  mv $PKG_BUILD/$PKG_NAME/* $PKG_BUILD/
 
-  sed -e 's|.*common-agent/etc/config/Makefile.*||' -i $PKG_BUILD/configure.ac
-
-  mkdir -p $PKG_BUILD/common-agent/etc/config
-
-  # Hack to allow package to be bumped without linking against old libraries
-  rm -f ${SYSROOT_PREFIX}/usr/lib/libvmtools*
-}
 
 pre_configure_target() {
   export LIBS="-ldnet -ltirpc"
