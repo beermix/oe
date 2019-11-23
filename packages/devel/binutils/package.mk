@@ -31,10 +31,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --enable-deterministic-archives \
                          --enable-targets=x86_64-linux \
-                         --enable-relro \
-                         --disable-gdb \
                          --enable-lto \
                          --disable-nls"
 
@@ -72,13 +69,6 @@ makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
   make MAKEINFO=true install
 }
-
-#post_makeinstall_host() {
-  # No shared linking to these files outside binutils
-#  rm -f "$pkgdir"/usr/lib/lib{bfd,opcodes}.so
-#  echo 'INPUT( /usr/lib/libbfd.a -liberty -lz -ldl )' > "$pkgdir/usr/lib/libbfd.so"
-#  echo 'INPUT( /usr/lib/libopcodes.a -lbfd )' > "$pkgdir/usr/lib/libopcodes.so"
-#}
 
 make_target() {
   make configure-host
