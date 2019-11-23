@@ -13,7 +13,6 @@ PKG_BUILD_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="driver.dvb"
 PKG_LONGDESC="DVB driver for Digital Devices cards"
-PKG_BUILD_FLAGS="-hardening"
 
 PKG_IS_ADDON="embedded"
 PKG_ADDON_IS_STANDALONE="yes"

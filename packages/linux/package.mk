@@ -80,7 +80,7 @@ if [ "$PKG_BUILD_PERF" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= $PKG_KERNEL_CFG
 fi
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-ucode:host elfutils:host pciutils"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-ucode:host kernel-firmware elfutils:host pciutils"
 fi
 
 if [[ "$KERNEL_TARGET" = uImage* ]]; then
@@ -161,6 +161,7 @@ pre_make_target() {
   if [ "$TARGET_ARCH" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
+      cp -a $(get_build_dir kernel-firmware)/{i915,e100,rtl_nic} $PKG_BUILD/external-firmware
 
     cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
 
