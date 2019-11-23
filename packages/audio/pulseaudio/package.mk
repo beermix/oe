@@ -66,9 +66,9 @@ PKG_MESON_OPTS_TARGET="-Dgcov=false \
                        -Dwebrtc-aec=disabled"
 
 pre_configure_target() {
+  export CFLAGS="$CFLAGS -fopenmp"
   sed -e 's|; remixing-use-all-sink-channels = yes|; remixing-use-all-sink-channels = no|' \
       -i $PKG_BUILD/src/daemon/daemon.conf.in
-#  export CFLAGS="$CFLAGS -fopenmp"	
 }
 
 post_makeinstall_target() {
