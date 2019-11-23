@@ -488,10 +488,6 @@ if [ "${TARGET}" = "target" -o "${TARGET}" = "init" ]; then
     if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
       ${STRIP} $(find ${INSTALL} \
         -type f -name "*.so*" \
-        ! -name "ld-*.so" \
-        ! -name "libc-*.so" \
-        ! -name "libpthread-*.so" \
-        ! -name "libthread_db-*so" \
         2>/dev/null) 2>/dev/null || :
         if [ "${TARGET}" = "init" ]; then
           ${STRIP} $(find ${INSTALL} -type f -name "*.so*" 2>/dev/null) 2>/dev/null || :
