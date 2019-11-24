@@ -16,7 +16,7 @@ PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
 
 makeinstall_host() {
   cp $PKG_BUILD/.$HOST_NAME/ninja $TOOLCHAIN/bin
-  strip -s $TOOLCHAIN/bin/ninja
+#  strip -s $TOOLCHAIN/bin/ninja
 }
 
 #make_host() {
