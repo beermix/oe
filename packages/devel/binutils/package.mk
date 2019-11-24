@@ -33,8 +33,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-targets=x86_64-linux \
-                         --disable-gdb \
-                         --disable-sim \
                          --enable-lto \
                          --disable-nls"
 
@@ -54,8 +52,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
-                         --disable-gdb \
-                         --disable-sim \
                          --disable-nls"
 
 pre_configure_host() {
