@@ -49,6 +49,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-diagnostics-color=auto \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-libunwind-exceptions \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
