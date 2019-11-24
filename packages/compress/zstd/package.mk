@@ -18,7 +18,7 @@ configure_package() {
 }
 
 PKG_MESON_OPTS_HOST="-Ddebug_level=0 \
-		       -Dstatic_runtime=false \
+		       -Dstatic_runtime=true \
 		       -Dbin_programs=false \
 		       -Ddefault_library=static"
 
