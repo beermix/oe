@@ -44,7 +44,7 @@
   KODI_EXTRA_FONTS="yes"
 
 # build and install PulseAudio support (yes / no)
-  PULSEAUDIO_SUPPORT="no"
+  PULSEAUDIO_SUPPORT="yes"
 
 # build and install espeak support (yes / no)
   ESPEAK_SUPPORT="no"
@@ -54,15 +54,15 @@
 
 # build and install with BD+ support
 # (BD+ decryption support in KODI) (yes / no)
-  BLURAY_BDPLUS_SUPPORT="no"
+  BLURAY_BDPLUS_SUPPORT="yes"
 
 # build and install with AACS support
 # (BD decryption support in KODI) (yes / no)
-  BLURAY_AACS_SUPPORT="no"
+  BLURAY_AACS_SUPPORT="yes"
 
 # build and install with DVDCSS support
 # (DVD decryption support in KODI) (yes / no)
-  KODI_DVDCSS_SUPPORT="no"
+  KODI_DVDCSS_SUPPORT="yes"
 
 # additional drivers to install:
 # for a list of additional drivers see packages/linux-drivers
@@ -77,7 +77,7 @@
   KODI_WEBSERVER_SUPPORT="yes"
 
 # build and install Avahi (Zeroconf) daemon (yes / no)
-  AVAHI_DAEMON="no"
+  AVAHI_DAEMON="yes"
 
 # build with UPnP support (yes / no)
   KODI_UPNP_SUPPORT="yes"
