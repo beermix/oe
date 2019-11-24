@@ -1,6 +1,6 @@
 PKG_NAME="pcre2"
-PKG_VERSION="10.33"
-PKG_SHA256="bc7045250ce94d8022c121c1884970ae532f2cdc3295c03975cca8628e9febc6"
+PKG_VERSION="10.34"
+PKG_SHA256="8ef1ab826221aa56ccad558cb1910ead0d89c2bd0a16c88744d6260ccc864fb0"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib bzip2 readline"
