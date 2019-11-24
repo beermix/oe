@@ -7,7 +7,7 @@ PKG_SHA256="3500826dc3b9a8fdb762bebe551106081a6bdecd4181a3d1bd0206e48bba8974"
 PKG_LICENSE="BSD"
 PKG_SITE="https://pypi.org/project/pycryptodome"
 PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python3 distutilscross:host"
+PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
 PKG_LONGDESC="PyCryptodome is a self-contained Python package of low-level cryptographic primitives."
 PKG_TOOLCHAIN="manual"
 
@@ -20,11 +20,11 @@ pre_configure_target() {
 }
 
 make_target() {
-  python3 setup.py build --cross-compile
+  python setup.py build --cross-compile
 }
 
 makeinstall_target() {
-  python3 setup.py install --root=$INSTALL --prefix=/usr
+  python setup.py install --root=$INSTALL --prefix=/usr
 
   # Remove SelfTest bloat
   find $INSTALL -type d -name SelfTest -exec rm -fr "{}" \; 2>/dev/null || true
@@ -35,5 +35,5 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  python_remove_source
+  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
 }
