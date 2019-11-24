@@ -47,7 +47,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-diagnostics-color=auto-if-env \
+                           --with-diagnostics-color=auto \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
