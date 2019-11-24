@@ -50,7 +50,7 @@
   ESPEAK_SUPPORT="no"
 
 # build and install with BluRay support (yes / no)
-  KODI_BLURAY_SUPPORT="no"
+  KODI_BLURAY_SUPPORT="yes"
 
 # build and install with BD+ support
 # (BD+ decryption support in KODI) (yes / no)
