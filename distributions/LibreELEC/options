@@ -50,19 +50,19 @@
   ESPEAK_SUPPORT="no"
 
 # build and install with BluRay support (yes / no)
-  KODI_BLURAY_SUPPORT="yes"
+  KODI_BLURAY_SUPPORT="no"
 
 # build and install with BD+ support
 # (BD+ decryption support in KODI) (yes / no)
-  BLURAY_BDPLUS_SUPPORT="yes"
+  BLURAY_BDPLUS_SUPPORT="no"
 
 # build and install with AACS support
 # (BD decryption support in KODI) (yes / no)
-  BLURAY_AACS_SUPPORT="yes"
+  BLURAY_AACS_SUPPORT="no"
 
 # build and install with DVDCSS support
 # (DVD decryption support in KODI) (yes / no)
-  KODI_DVDCSS_SUPPORT="yes"
+  KODI_DVDCSS_SUPPORT="no"
 
 # additional drivers to install:
 # for a list of additional drivers see packages/linux-drivers
@@ -77,7 +77,7 @@
   KODI_WEBSERVER_SUPPORT="yes"
 
 # build and install Avahi (Zeroconf) daemon (yes / no)
-  AVAHI_DAEMON="yes"
+  AVAHI_DAEMON="no"
 
 # build with UPnP support (yes / no)
   KODI_UPNP_SUPPORT="yes"
@@ -121,10 +121,10 @@
   UDEVIL="yes"
 
 # build and install exFAT fuse support (yes / no)
-  EXFAT="yes"
+  EXFAT="no"
 
 # build and install NTFS-3G fuse support (yes / no)
-  NTFS3G="yes"
+  NTFS3G="no"
 
 # build and install hfs filesystem utilities (yes / no)
   HFSTOOLS="no"
@@ -215,6 +215,9 @@
 
 # Settings package name - blank if not required
   DISTRO_PKG_SETTINGS="LibreELEC-settings"
+
+# IR remote protocols supported in default config
+  IR_REMOTE_PROTOCOLS="RC6 NEC"
 
 # IR remote keymaps supported in default config
   IR_REMOTE_KEYMAPS="rc6_mce"

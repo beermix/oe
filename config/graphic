@@ -27,7 +27,7 @@ get_graphicdrivers() {
   fi
 
   if listcontains "${GRAPHIC_DRIVERS}" "etnaviv"; then
-    GALLIUM_DRIVERS+=" etnaviv kmsro"
+    GALLIUM_DRIVERS+=" etnaviv imx"
     V4L2_SUPPORT="yes"
     VAAPI_SUPPORT="no"
     VDPAU_SUPPORT="no"
@@ -56,10 +56,6 @@ get_graphicdrivers() {
 
   if listcontains "${GRAPHIC_DRIVERS}" "lima"; then
     GALLIUM_DRIVERS+=" kmsro lima"
-    V4L2_SUPPORT="yes"
-  fi
-
-  if listcontains "${GRAPHIC_DRIVERS}" "mali"; then
     V4L2_SUPPORT="yes"
   fi
 

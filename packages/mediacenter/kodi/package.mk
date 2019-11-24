@@ -5,32 +5,42 @@
 PKG_NAME="kodi"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc/tree/Leia"
-PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host Python3 zlib systemd lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav libhdhomerun libfmt lirc libfstrcmp flatbuffers:host flatbuffers"
+PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host Python2 zlib systemd lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav libhdhomerun libfmt lirc libfstrcmp flatbuffers:host flatbuffers"
 PKG_LONGDESC="A free and open source cross-platform media player."
-PKG_BUILD_FLAGS="+speed"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_PATCH_DIRS="$KODI_VENDOR"
 
 case $KODI_VENDOR in
   raspberrypi)
-    PKG_VERSION="60bef867ee45a6eba15abc7cd021220cc30d6910" # kodi19-pre-Python3
-    PKG_SHA256="1804b2e494472810a71e604fc9e05b2a47fe7d0d775e42f91ac180ec417dde9a"
+    PKG_VERSION="newclock5_18.5-Leia"
+    PKG_SHA256="c6b608db0b2b9d7fe4163797acfe0fe73fe063fe62c7d88326edbbcc1d0ae400"
+    PKG_URL="https://github.com/popcornmix/xbmc/archive/$PKG_VERSION.tar.gz"
+    PKG_SOURCE_NAME="kodi-$KODI_VENDOR-$PKG_VERSION.tar.gz"
+    ;;
+  raspberrypi4)
+    PKG_VERSION="leia_pi4_18.5-Leia"
+    PKG_SHA256="f5d48be9882af93ec3bfe94dbbddfd0224076077aff31dddb5e00245f4353b42"
     PKG_URL="https://github.com/popcornmix/xbmc/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="kodi-$KODI_VENDOR-$PKG_VERSION.tar.gz"
     ;;
   rockchip)
-    PKG_VERSION="rockchip_18.4-Leia"
-    PKG_SHA256="16a64493ba1c91f22064444970147b505e6d38d368012f4ea88c68c1416a2ef2"
+    PKG_VERSION="rockchip_18.5-Leia"
+    PKG_SHA256="b821ae99345e25e9482a3306084aae1b79df59576500518458cb5e8c1ae13171"
     PKG_URL="https://github.com/kwiboo/xbmc/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="kodi-$KODI_VENDOR-$PKG_VERSION.tar.gz"
     ;;
   *)
-    PKG_VERSION="29f64ce850040abc9972fcf015a02a3804bdf8c6"
-    PKG_SHA256="1ee23b6d1b72f4224f9b0011195c65357cdab88579144e852967f6d3dd298c6c"
+    PKG_VERSION="18.5-Leia"
+    PKG_SHA256="108979df8b41ab4168f5cdc0233f46e38767eda5921f4ccae16584e98d0d6b29"
     PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_NAME="kodi-$PKG_VERSION.tar.gz"
     ;;
 esac
+
+if [ "$PROJECT" = "RPi" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
+fi
 
 configure_package() {
   # Single threaded LTO is very slow so rely on Kodi for parallel LTO support
@@ -48,14 +58,12 @@ configure_package() {
 
   if [ "$DISPLAYSERVER" = "x11" ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXext libdrm libXrandr"
-    KODI_XORG="-DCORE_PLATFORM_NAME=x11 -DX11_RENDER_SYSTEM=gl"
+    KODI_XORG="-DCORE_PLATFORM_NAME=x11"
   elif [ "$DISPLAYSERVER" = "weston" ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland waylandpp"
     CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
     CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
-    KODI_XORG="-DCORE_PLATFORM_NAME=wayland \
-               -DWAYLAND_RENDER_SYSTEM=gles \
-               -DWAYLANDPP_PROTOCOLS_DIR=${SYSROOT_PREFIX}/usr/share/waylandpp/protocols"
+    KODI_XORG="-DCORE_PLATFORM_NAME=wayland -DWAYLAND_RENDER_SYSTEM=gles"
   fi
 
   if [ ! "$OPENGL" = "no" ]; then
@@ -254,7 +262,7 @@ configure_package() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -lncurses"
+  export LIBS="-lncursesw -ltinfo"
 }
 
 post_makeinstall_target() {

@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="pvr.vbox"
-PKG_VERSION="5.4.0-Matrix"
-PKG_SHA256="1a6ff5c493bfd48ef9800efd8190b54c52af4086c49233322020b78a06be5d51"
+PKG_VERSION="4.7.0-Leia"
+PKG_SHA256="98aadcf3d0109a7dc5f85b4e5473d595039b59c46b0686a2fbda88ff7631ee0c"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

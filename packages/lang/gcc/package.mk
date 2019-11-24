@@ -50,6 +50,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-diagnostics-color=always \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libunwind-exceptions \
+                           --disable-vtable-verify \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \

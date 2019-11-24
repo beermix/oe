@@ -18,7 +18,6 @@ PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +speed"
 
-PKG_PYTHON_VERSION="python2.7"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
@@ -65,8 +64,8 @@ post_patch() {
     touch $PKG_BUILD/Python/Python-ast.c
     touch $PKG_BUILD/Python/opcode_targets.h
     
-    find $PKG_BUILD -name '*.py' | \
-    xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|"
+#    find $PKG_BUILD -name '*.py' | \
+#    xargs sed -i "s|#[ ]*![ ]*/usr/bin/env python$|#!/usr/bin/env python2|"
 }
 
 make_host() {
@@ -87,15 +86,10 @@ makeinstall_host() {
 
 post_makeinstall_host() {
   rm -fr $PKG_BUILD/.$HOST_NAME/build/temp.*
-  rm $TOOLCHAIN/bin/python
-  ln -s python3 $TOOLCHAIN/bin/python
 }
 
 pre_configure_target() {
-  export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python2
-
-  export CFLAGS="$CFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
-  export CXXFLAGS="$CXXFLAGS -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+  export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
 }
 
 make_target() {
@@ -133,13 +127,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/smtpd.py
   rm -rf $INSTALL/usr/bin/python*-config
 
-  rm -rf $INSTALL/usr/bin/python
-#  rm $SYSROOT_PREFIX/usr/lib/pkgconfig/python.pc
-#  ln -s python3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/python.pc
-
-
   cd $INSTALL/usr/lib/$PKG_PYTHON_VERSION
-  $TOOLCHAIN/bin/python2 -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
+  $TOOLCHAIN/bin/python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
   find $INSTALL/usr/lib/$PKG_PYTHON_VERSION -name "*.py" -exec rm -f {} \; &>/dev/null
 
   # strip
