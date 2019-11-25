@@ -3,8 +3,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="containerd"
-PKG_VERSION="1.3.0"
-PKG_SHA256="a5115a680cc02ca6ce5680b7c3f2852006b2f556b35f88872eb20311a47cb4d1"
+PKG_VERSION="1.3.1"
+PKG_SHA256="73e64a5373b79f15ea4c663046fb27e2631988d65f166c8236846da6a2c32c3e"
 PKG_LICENSE="APL"
 PKG_SITE="https://github.com/containerd/containerd/releases"
 PKG_URL="https://github.com/containerd/containerd/archive/v$PKG_VERSION.tar.gz"
@@ -16,8 +16,6 @@ PKG_TOOLCHAIN="manual"
 PKG_GIT_COMMIT="a4bc1d432a2c33aa2eed37f338dceabb93641310"
 
 pre_make_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-mno-pclmul --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fdiagnostics-color=always||g"`
 
   case ${TARGET_ARCH} in
     x86_64)
@@ -41,7 +39,7 @@ pre_make_target() {
   esac
 
   export GOOS=linux
-  export CGO_ENABLED=1
+  export CGO_ENABLED=0
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=${CFLAGS}
   export CONTAINERD_VERSION=${PKG_VERSION}

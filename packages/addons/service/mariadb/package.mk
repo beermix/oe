@@ -41,7 +41,7 @@ configure_package() {
     -DWITH_EXTRA_CHARSETS=complex \
     -DWITH_SSL=system \
     -DWITH_SSL=${SYSROOT_PREFIX}/usr \
-    -DWITH_JEMALLOC=OFF \
+    -DWITH_JEMALLOC=ON \
     -DWITH_PCRE=bundled \
     -DWITH_ZLIB=bundled \
     -DWITH_EDITLINE=bundled \
