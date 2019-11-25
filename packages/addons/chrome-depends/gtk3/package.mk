@@ -13,7 +13,7 @@ PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gtk+/${PKG_VERSION:0:4}/gtk+-$P
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo gdk-pixbuf glib libX11 libXi libXrandr libepoxy pango"
 PKG_LONGDESC="A library for creating graphical user interfaces for the X Window System."
 PKG_TOOLCHAIN="meson"
-#PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="configure"
 
 PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
                        -Dwayland_backend=false \
