@@ -23,7 +23,7 @@ PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$TOOLCHAIN/bin/nsinstall"
 
 configure_host() {
   cd $(get_build_dir nss)/nspr
-  ./configure --with-pthreads --enable-64bit --enable-optimize --disable-debug --prefix=$TOOLCHAIN
+  ./configure --with-pthreads --enable-64bit --disable-debug --prefix=$TOOLCHAIN
 }
 
 pre_make_host() {
@@ -33,7 +33,7 @@ pre_make_host() {
 
 configure_target() {
   cd $(get_build_dir nss)/nspr
-  ./configure --with-pthreads --enable-optimize --disable-debug $TARGET_USE_64 $TARGET_CONFIGURE_OPTS
+  ./configure --with-pthreads --disable-debug $TARGET_USE_64 $TARGET_CONFIGURE_OPTS
 }
 
 pre_make_target() {
