@@ -10,9 +10,9 @@ PKG_SITE="https://github.com/ccache/ccache/releases"
 PKG_URL="https://github.com/ccache/ccache/releases/download/v$PKG_VERSION/ccache-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="make:host"
 PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by caching."
-PKG_TOOLCHAIN="manual"
+#PKG_TOOLCHAIN="manual"
 
-PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-man --disable-option-checking"
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-man"
 
 pre_configure_host() {
   export CC=$LOCAL_CC
@@ -20,8 +20,8 @@ pre_configure_host() {
 }
 
 post_makeinstall_host() {
- mkdir -p $TOOLCHAIN/bin
- ln -s  /home/user/.bin/ccache $TOOLCHAIN/bin/ccache
+# mkdir -p $TOOLCHAIN/bin
+# ln -s  /home/user/.bin/ccache $TOOLCHAIN/bin/ccache
 # setup ccache
   if [ -z "$CCACHE_DISABLE" ]; then
     $TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
