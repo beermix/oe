@@ -1,3 +1,0 @@
-#!/bin/sh
-exec /storage/.kodi/addons/service.rutorrent/bin/php \
-  -c /storage/.kodi/addons/service.rutorrent/config/php.ini

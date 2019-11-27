@@ -1,9 +1,0 @@
-#!/bin/sh
-
-. /etc/profile
-oe_setup_addon service.medusa
-
-nice -n "$me_nice" \
-python $ADDON_DIR/medusa/start.py \
-       --datadir="$ADDON_HOME" \
-       --port="$me_port"

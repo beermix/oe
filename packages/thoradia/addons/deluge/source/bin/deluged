@@ -1,5 +1,0 @@
-#!/bin/python
-import deluge.main
-
-if __name__ == '__main__':
-    deluge.main.start_daemon()
