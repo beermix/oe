@@ -4,12 +4,12 @@
 PKG_NAME="mariadb"
 PKG_VERSION="10.4.10"
 PKG_REV="103"
-PKG_SHA256=""
+PKG_SHA256="cd50fddf86c2a47405737e342f78ebd40d5716f0fb32b976245de713bed01421"
 PKG_LICENSE="GPL2"
-PKG_SITE="https://github.com/MariaDB/server/releases"
-PKG_URL="https://fossies.org/linux/misc/mariadb-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="toolchain ncurses:host"
-PKG_DEPENDS_TARGET="toolchain binutils bzip2 libaio xz zstd jemalloc libpam libxml2 lzo ncurses openssl systemd zlib mariadb:host"
+PKG_SITE="https://mariadb.org"
+PKG_URL="https://downloads.mariadb.org/interstitial/${PKG_NAME}-${PKG_VERSION}/source/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_HOST="toolchain:host ncurses:host"
+PKG_DEPENDS_TARGET="toolchain binutils bzip2 libaio libxml2 lzo ncurses openssl systemd zlib mariadb:host"
 PKG_SHORTDESC="MariaDB is a community-developed fork of the MySQL."
 PKG_LONGDESC="MariaDB (${PKG_VERSION}) is a fast SQL database server and a drop-in replacement for MySQL."
 PKG_TOOLCHAIN="cmake"
@@ -41,7 +41,7 @@ configure_package() {
     -DWITH_EXTRA_CHARSETS=complex \
     -DWITH_SSL=system \
     -DWITH_SSL=${SYSROOT_PREFIX}/usr \
-    -DWITH_JEMALLOC=ON \
+    -DWITH_JEMALLOC=OFF \
     -DWITH_PCRE=bundled \
     -DWITH_ZLIB=bundled \
     -DWITH_EDITLINE=bundled \
@@ -64,7 +64,7 @@ configure_package() {
 }
 
 make_host() {
-  ionice -c3 nice -n19 ninja ${NINJA_OPTS} import_executables
+  ninja ${NINJA_OPTS} import_executables
 }
 
 makeinstall_host() {
