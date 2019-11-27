@@ -45,9 +45,9 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   rc)
-    PKG_VERSION="5.2-rc5"
+    PKG_VERSION="5.4"
     PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
-    PKG_PATCH_DIRS="default"
+    PKG_PATCH_DIRS="clr"
     PKG_BUILD_PERF="no"
     ;;
   arch)
@@ -58,7 +58,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   *)
-    PKG_VERSION="5.2.11"
+    PKG_VERSION="5.4"
     PKG_SHA256=""
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="clr"

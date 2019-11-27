@@ -32,7 +32,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel zen xanmod lts pf arch git
-    LINUX="zen"
+    LINUX="default"
 
 
 ################################################################################
