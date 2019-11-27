@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="e628d22673dfa494230e6f79ceff7d178137c71a"
-PKG_SHA256="b2a8d6dca0b4da44032d3715ecc04ef89a227eb878c21d2012f3d4a797f294ce"
+PKG_VERSION="0867eea666c654961d6dabe49b9afc3802545f32"
+PKG_SHA256="7c35c854ebff92eb6f57fbfd88b24b195eaf1a21758e0e960d3a8c3790293279"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log"
