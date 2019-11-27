@@ -3,8 +3,8 @@
 GRUB_DEFAULT=0
 GRUB_TIMEOUT=1
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX_DEFAULT=""
-GRUB_CMDLINE_LINUX="mitigations=off quiet module.sig_unenforce console=tty0 console=ttyS0,115200n8 cryptomgr.notests intel_iommu=igfx_off no_timer_check noreplace-smp rcu_nocbs=0-64 rcupdate.rcu_expedited=1 rootfstype=ext4,btrfs,xfs tsc=reliable rw"
+GRUB_CMDLINE_LINUX_DEFAULT="mitigations=off module.sig_unenforce quiet console=tty0 console=ttyS0,115200n8 cryptomgr.notests initcall_debug intel_iommu=igfx_off kvm-intel.nested=1 no_timer_check noreplace-smp page_alloc.shuffle=1 rcu_nocbs=0-64 rcupdate.rcu_expedited=1 rootfstype=ext4,btrfs,xfs tsc=reliable rw"
+GRUB_CMDLINE_LINUX=""
 
 # Preload both GPT and MBR modules so that they are not missed
 GRUB_PRELOAD_MODULES="part_gpt part_msdos"
