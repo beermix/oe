@@ -45,7 +45,6 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --without-pymalloc
                          --without-ensurepip
                          --with-computed-gotos
-                         PKG_CONFIG=$TOOLCHAIN/bin/x86_64-pc-linux-gnu-pkg-config
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
