@@ -8,7 +8,7 @@ PKG_DEPENDS_HOST="ccache:host gettext:host"
 PKG_CONFIGURE_OPTS_HOST="--with-gnu-ld"
 
 post_makeinstall_host() {
-  mv $(STAGING_DIR_HOST)/bin/pkgconf $TOOLCHAIN/bin/pkg-config.real
+  mv $TOOLCHAIN/bin/pkgconf $TOOLCHAIN/bin/pkg-config.real
   install -m755 $PKG_DIR/files/pkg-config $TOOLCHAIN/bin/pkg-config
 
   ln -sf pkgconf $TOOLCHAIN/bin/pkg-config
