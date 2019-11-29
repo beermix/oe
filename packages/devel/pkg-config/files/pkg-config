@@ -1,0 +1,6 @@
+#!/bin/sh
+
+"$(dirname "$0")/pkg-config.real" \
+--define-variable=prefix="SYSROOT_PREFIX" \
+--define-variable=exec_prefix="SYSROOT_PREFIX" \
+--define-variable=bindir="SYSROOT_PREFIX/bin" "$@"

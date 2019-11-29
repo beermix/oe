@@ -1,24 +1,16 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-
 PKG_NAME="pkg-config"
-PKG_VERSION="0.29.2"
-PKG_SHA256="6fc69c01688c9458a57eb9a1664c9aba372ccda420a02bf4429fe610e7e7d591"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.freedesktop.org/software/pkgconfig/"
-PKG_URL="http://pkg-config.freedesktop.org/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_VERSION="1.6.3"
+PKG_SHA256="61f0b31b0d5ea0e862b454a80c170f57bad47879c0c42bd8de89200ff62ea210"
+PKG_SITE="https://github.com/pkgconf/pkgconf/releases"
+PKG_URL="https://distfiles.dereferenced.org/pkgconf/pkgconf-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host gettext:host"
-PKG_LONGDESC="A system for managing library compile/link flags that works with automake and autoconf."
 
-PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules \
-                         --with-internal-glib --disable-dtrace \
-                         --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--with-gnu-ld"
 
 post_makeinstall_host() {
-  mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
-    cp pkg.m4 $SYSROOT_PREFIX/usr/share/aclocal
-}
+  mv $(STAGING_DIR_HOST)/bin/pkgconf $TOOLCHAIN/bin/pkg-config.real
+  install -m644 $PKG_DIR/files/pkg-config $TOOLCHAIN/bin/pkg-config
 
-pre_configure_host() {
-  export CFLAGS="$CFLAGS -Wall"
+  ln -sf pkgconf $TOOLCHAIN/bin/pkg-config
+#  ln -sf pkgconf $TOOLCHAIN/bin/x86_64-pc-linux-gnu-pkg-config
 }

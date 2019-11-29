@@ -11,7 +11,7 @@ bergner (2):
       Backport from mainline 	2019-10-08  Tulio Magno Quites Machado Filho  <tuliom@linux.ibm.com>
       Backport fix for PR92090.
 
-burnus (8):
+burnus (9):
       Fortran] PR91586 Fix ICE on invalid code with CLASS
       Fortran] PR91863 - fix call to bind(C) with array descriptor
       Backport Fortran BIND(C) fixes
@@ -20,6 +20,7 @@ burnus (8):
       Fortran] PR91253 fix continuation-line handling with -pre_include
       PR fortran/92470 Fixes for CFI_address
       Fix gfortran.dg/ISO_Fortran_binding_17.c using rel. #include
+      Fortran] PR 92050 - fix ICE with -fcheck=all
 
 claziss (1):
       [ARC] Backport from mainline r278056,r278057
@@ -42,7 +43,7 @@ draganm (4):
       Backport fix for PR89245
       Sanitize the constant argument for rotr<mode>3
 
-ebotcazou (12):
+ebotcazou (14):
       PR rtl-optimization/91347 	* dse.c (scan_insn): Call add_wild_read for non-const/memset tail calls 	before reload if HARD_FRAME_POINTER_IS_ARG_POINTER.
       PR target/91472 	* config/sparc/sparc.c (sparc_cannot_force_const_mem): Return true 	during LRA/reload in PIC mode if the PIC register hasn't been used yet. 	(sparc_pic_register_p): Test reload_in_progress for consistency's sake.
       PR rtl-optimization/89795 	* rtlanal.c (nonzero_bits1) <SUBREG>: Do not propagate results from 	inner REGs to paradoxical SUBREGs if WORD_REGISTER_OPERATIONS is set.
@@ -55,6 +56,8 @@ ebotcazou (12):
       * gcc.target/sparc/overflow-1.c: Add -fno-pie to the options. 	* gcc.target/sparc/overflow-2.c: Likewise.
       * c-ada-spec.c (get_underlying_decl): Do not look through typedefs. 	(dump_forward_type): Do not generate a declaration for function types. 	(dump_nested_type) <ARRAY_TYPE>: Do not generate a nested declaration 	of the component type if it is declared in another file.
       * doc/invoke.texi (-gno-internal-reset-location-views): Fix typo.
+      PR ada/92575 	* expect.c (__gnat_expect_poll [VMS, HPUX]): Fix typo.
+      PR ada/92362 	* gcc-interface/trans.c (gnat_to_gnu) <N_Attribute_Definition_Clause>: 	Use a temporary instead of clobbering the result with a freeze node.
 
 edlinger (3):
       2019-08-16  Bernd Edlinger  <bernd.edlinger@hotmail.de>
@@ -64,7 +67,11 @@ edlinger (3):
 emsr (1):
       2019-09-09  Edward Smith-Rowland  <3dw4rd@verizon.net>
 
-gccadmin (101):
+gccadmin (105):
+      Daily bump.
+      Daily bump.
+      Daily bump.
+      Daily bump.
       Daily bump.
       Daily bump.
       Daily bump.
@@ -386,7 +393,7 @@ rearnsha (3):
       [arm]  PR target/89400 fix thumb1 unaligned access expansion
       [arm][PR88167] Fix __builtin_return_address returns invalid address
 
-redi (27):
+redi (28):
       PR libstdc++/90361 add missing macro definition
       PR c++/91436 fix C++ dialect for std::make_unique fix-it hint
       Implement new serial algorithms from Parallelism TS (P0024R2)
@@ -414,6 +421,7 @@ redi (27):
       Fix more failing tests for C++98 mode
       PR libstdc++/61761 fix std::proj for targets without C99 cproj
       PR libstdc++/90682 allow set_terminate(0) and set_unexpected(0)
+      PR libstdc++/92267 fix ABI change in deque iterators
 
 rguenth (9):
       2019-08-12  Richard Biener  <rguenther@suse.de>
@@ -2136,10 +2144,21 @@ index 5f43d9de00e..abae872cd63 100644
  	  echo You must configure gcc.  Look at http://gcc.gnu.org/install/ for details.; \
  	  false; \
 diff --git a/gcc/ada/ChangeLog b/gcc/ada/ChangeLog
-index 22cd00956dc..dd515bca601 100644
+index 22cd00956dc..e2efd819c04 100644
 --- a/gcc/ada/ChangeLog
 +++ b/gcc/ada/ChangeLog
-@@ -1,3 +1,36 @@
+@@ -1,3 +1,47 @@
++2019-11-25  Eric Botcazou  <ebotcazou@adacore.com>
++
++	PR ada/92362
++	* gcc-interface/trans.c (gnat_to_gnu) <N_Attribute_Definition_Clause>:
++	Use a temporary instead of clobbering the result with a freeze node.
++
++2019-11-25  Eric Botcazou  <ebotcazou@adacore.com>
++
++	PR ada/92575
++	* expect.c (__gnat_expect_poll [VMS, HPUX]): Fix typo.
++
 +2019-11-08  Jakub Jelinek  <jakub@redhat.com>
 +
 +	Backported from mainline
@@ -2176,6 +2195,28 @@ index 22cd00956dc..dd515bca601 100644
  2019-08-12  Release Manager
  
  	* GCC 9.2.0 released.
+diff --git a/gcc/ada/expect.c b/gcc/ada/expect.c
+index 76fce788fc9..d4ffae21913 100644
+--- a/gcc/ada/expect.c
++++ b/gcc/ada/expect.c
+@@ -265,7 +265,7 @@ __gnat_expect_poll (int *fd,
+ 	  if ((status & 1) != 1)
+ 	    {
+               ready = -1;
+-              dead_process = i + 1;
++              *dead_process = i + 1;
+               return ready;
+ 	    }
+ 	}
+@@ -450,7 +450,7 @@ __gnat_expect_poll (int *fd,
+ 	            if (ei.request == TIOCCLOSE)
+ 		      {
+ 		        ioctl (fd[i], TIOCREQSET, &ei);
+-                        dead_process = i + 1;
++                        *dead_process = i + 1;
+ 		        return -1;
+ 		      }
+ 
 diff --git a/gcc/ada/gcc-interface/decl.c b/gcc/ada/gcc-interface/decl.c
 index 4e73df0d7f0..a724ba693fd 100644
 --- a/gcc/ada/gcc-interface/decl.c
@@ -2218,7 +2259,7 @@ index 4e73df0d7f0..a724ba693fd 100644
        break;
  
 diff --git a/gcc/ada/gcc-interface/trans.c b/gcc/ada/gcc-interface/trans.c
-index 49fd34656ad..f08f6aac330 100644
+index 49fd34656ad..2581b71d6fa 100644
 --- a/gcc/ada/gcc-interface/trans.c
 +++ b/gcc/ada/gcc-interface/trans.c
 @@ -2248,32 +2248,29 @@ Attribute_to_gnu (Node_Id gnat_node, tree *gnu_result_type_p, int attribute)
@@ -2285,6 +2326,38 @@ index 49fd34656ad..f08f6aac330 100644
  	by_descriptor = true;
      }
    else if (Nkind (Name (gnat_node)) == N_Attribute_Reference)
+@@ -8310,7 +8308,7 @@ gnat_to_gnu (Node_Id gnat_node)
+       gnat_temp = Entity (Name (gnat_node));
+       if (Freeze_Node (gnat_temp))
+ 	{
+-	  tree gnu_address = gnat_to_gnu (Expression (gnat_node));
++	  tree gnu_address = gnat_to_gnu (Expression (gnat_node)), gnu_temp;
+ 
+ 	  /* Get the value to use as the address and save it as the equivalent
+ 	     for the object; when it is frozen, gnat_to_gnu_entity will do the
+@@ -8320,7 +8318,7 @@ gnat_to_gnu (Node_Id gnat_node)
+ 	     of the object is limited and it is initialized with the result of
+ 	     a function call.  */
+ 	  if (Is_Subprogram (gnat_temp))
+-	    gnu_result = gnu_address;
++	    gnu_temp = gnu_address;
+ 	  else
+ 	    {
+ 	      tree gnu_type = gnat_to_gnu_type (Etype (gnat_temp));
+@@ -8329,11 +8327,11 @@ gnat_to_gnu (Node_Id gnat_node)
+ 	      gnu_type
+ 		= build_reference_type_for_mode (gnu_type, ptr_mode, true);
+ 	      gnu_address = convert (gnu_type, gnu_address);
+-	      gnu_result
++	      gnu_temp
+ 		= build_unary_op (INDIRECT_REF, NULL_TREE, gnu_address);
+ 	    }
+ 
+-	  save_gnu_tree (gnat_temp, gnu_result, true);
++	  save_gnu_tree (gnat_temp, gnu_temp, true);
+ 	}
+       break;
+ 
 diff --git a/gcc/ada/locales.c b/gcc/ada/locales.c
 index 2bf900319ca..9372bdb2d58 100644
 --- a/gcc/ada/locales.c
@@ -10540,10 +10613,19 @@ index f0e43b5fda2..9feaea9fde5 100644
    low = fold_convert_loc (loc, etype, low);
    exp = fold_convert_loc (loc, etype, exp);
 diff --git a/gcc/fortran/ChangeLog b/gcc/fortran/ChangeLog
-index e3073787ea9..42430e46ef6 100644
+index e3073787ea9..181a48c574e 100644
 --- a/gcc/fortran/ChangeLog
 +++ b/gcc/fortran/ChangeLog
-@@ -1,3 +1,403 @@
+@@ -1,3 +1,412 @@
++2019-11-25  Tobias Burnus  <tobias@codesourcery.com
++
++	Backport from mainline
++	2019-10-11  Tobias Burnus  <tobias@codesourcery.com>
++
++	PR fortran/92050
++	* trans-expr.c (gfc_conv_procedure_call): Handle code generated
++	by -fcheck=all.
++
 +2019-11-10  Thomas Koenig  <tkoenig@gcc.gnu.org>
 +
 +	Backport from trunk
@@ -12838,7 +12920,7 @@ index 9538dee5733..27613f761e3 100644
  
    return build1_v (RETURN_EXPR, result);
 diff --git a/gcc/fortran/trans-expr.c b/gcc/fortran/trans-expr.c
-index afe08fc2668..52a8cdd6902 100644
+index afe08fc2668..fe10d52dd16 100644
 --- a/gcc/fortran/trans-expr.c
 +++ b/gcc/fortran/trans-expr.c
 @@ -4989,21 +4989,30 @@ gfc_conv_gfc_desc_to_cfi_desc (gfc_se *parmse, gfc_expr *e, gfc_symbol *fsym)
@@ -13005,7 +13087,21 @@ index afe08fc2668..52a8cdd6902 100644
  		  if (GFC_DESCRIPTOR_TYPE_P (TREE_TYPE (tmp)))
  		    tmp = gfc_conv_descriptor_data_get (tmp);
  		  tmp = gfc_deallocate_with_status (tmp, NULL_TREE, NULL_TREE,
-@@ -10603,7 +10639,8 @@ gfc_trans_assignment_1 (gfc_expr * expr1, gfc_expr * expr2, bool init_flag,
+@@ -6782,8 +6818,11 @@ gfc_conv_procedure_call (gfc_se * se, gfc_symbol * sym,
+ 	gfc_allocate_lang_decl (result);
+       GFC_DECL_SAVED_DESCRIPTOR (result) = parmse.expr;
+       gfc_free_expr (class_expr);
+-      gcc_assert (parmse.pre.head == NULL_TREE
+-		  && parmse.post.head == NULL_TREE);
++      /* -fcheck= can add diagnostic code, which has to be placed before
++	 the call. */
++      if (parmse.pre.head != NULL)
++	  gfc_add_expr_to_block (&se->pre, parmse.pre.head);
++      gcc_assert (parmse.post.head == NULL_TREE);
+     }
+ 
+   /* Follow the function call with the argument post block.  */
+@@ -10603,7 +10642,8 @@ gfc_trans_assignment_1 (gfc_expr * expr1, gfc_expr * expr2, bool init_flag,
        if (expr1->ts.deferred
  	  && gfc_expr_attr (expr1).allocatable
  	  && gfc_check_dependency (expr1, expr2, true))
@@ -16940,10 +17036,22 @@ index 29f6cdc4667..33b4be79c0f 100644
    /* We have real symbol that should be in symbol table.  However try to trim
       down the refernces to libraries bit more because linker will otherwise
 diff --git a/gcc/testsuite/ChangeLog b/gcc/testsuite/ChangeLog
-index bc11ae4ae0b..f3a84448206 100644
+index bc11ae4ae0b..40c60b99e90 100644
 --- a/gcc/testsuite/ChangeLog
 +++ b/gcc/testsuite/ChangeLog
-@@ -1,3 +1,928 @@
+@@ -1,3 +1,940 @@
++2019-11-25  Tobias Burnus  <tobias@codesourcery.com
++
++	Backport from mainline
++	2019-10-11  Tobias Burnus  <tobias@codesourcery.com>
++
++	PR fortran/92050
++	* gfortran.dg/pr92050.f90: New.
++
++2019-11-25  Eric Botcazou  <ebotcazou@adacore.com>
++
++	* gnat.dg/addr14.adb: New test.
++
 +2019-11-21  Jakub Jelinek  <jakub@redhat.com>
 +
 +	PR tree-optimization/91355
@@ -17872,7 +17980,7 @@ index bc11ae4ae0b..f3a84448206 100644
  2019-08-12  Release Manager
  
  	* GCC 9.2.0 released.
-@@ -427,7 +1352,7 @@
+@@ -427,7 +1364,7 @@
  	Backport from mainline.
  	2019-05-15  Iain Sandoe  <iain@sandoe.co.uk>
  
@@ -17881,7 +17989,7 @@ index bc11ae4ae0b..f3a84448206 100644
  	(check_effective_target_powerpc_p8vector_ok): No support for Darwin.
  	(check_effective_target_powerpc_p9vector_ok): Likewise.
  	(check_effective_target_powerpc_float128_sw_ok): Likewise.
-@@ -720,7 +1645,7 @@
+@@ -720,7 +1657,7 @@
  
  	Backport from mainline
  	PR fortran/91077
@@ -17890,7 +17998,7 @@ index bc11ae4ae0b..f3a84448206 100644
  
  2019-07-05  Szabolcs Nagy  <szabolcs.nagy@arm.com>
  
-@@ -969,7 +1894,7 @@
+@@ -969,7 +1906,7 @@
         * gcc.target/i386/pr82699-6.c: Likewise
         * gcc.target/i386/returninst1.c: Likewise
         * gcc.target/i386/returninst2.c: Likewise
@@ -17899,7 +18007,7 @@ index bc11ae4ae0b..f3a84448206 100644
  
  2019-05-30  Iain Sandoe  <iain@sandoe.co.uk>
  
-@@ -1131,7 +2056,7 @@
+@@ -1131,7 +2068,7 @@
  
  	Backport from trunk
  	PR fortran/90498
@@ -17908,7 +18016,7 @@ index bc11ae4ae0b..f3a84448206 100644
  
  2019-05-17  Jakub Jelinek  <jakub@redhat.com>
  
-@@ -3801,21 +4726,21 @@
+@@ -3801,21 +4738,21 @@
  2019-02-23  Paul Thomas  <pault@gcc.gnu.org>
  
  	PR fortran/88117
@@ -17937,7 +18045,7 @@ index bc11ae4ae0b..f3a84448206 100644
  
  2019-02-22  David Malcolm  <dmalcolm@redhat.com>
  
-@@ -4444,7 +5369,7 @@
+@@ -4444,7 +5381,7 @@
  2019-02-09  Paul Thomas  <pault@gcc.gnu.org>
  
  	PR fortran/89200
@@ -17946,7 +18054,7 @@ index bc11ae4ae0b..f3a84448206 100644
  
  2019-02-09  Jakub Jelinek  <jakub@redhat.com>
  
-@@ -4704,17 +5629,17 @@
+@@ -4704,17 +5641,17 @@
  2019-02-02  Paul Thomas  <pault@gcc.gnu.org>
  
  	PR fortran/88393
@@ -24852,6 +24960,65 @@ index 00000000000..cd237d38660
 +   flush (iostat=i%kind) ! { dg-error "Expecting a variable at" }
 +   rewind (iostat=i%kind) ! { dg-error "Expecting a variable at" }
 +end
+diff --git a/gcc/testsuite/gfortran.dg/pr92050.f90 b/gcc/testsuite/gfortran.dg/pr92050.f90
+new file mode 100644
+index 00000000000..64193878d8f
+--- /dev/null
++++ b/gcc/testsuite/gfortran.dg/pr92050.f90
+@@ -0,0 +1,53 @@
++! { dg-do run }
++! { dg-options "-fcheck=all" }
++! { dg-shouldfail "above upper bound" }
++!
++! PR fortran/92050
++!
++!
++module buggy
++  implicit none (type, external)
++
++  type :: par
++  contains
++    procedure, public :: fun => fun_par
++  end type par
++
++  type comp
++    class(par), allocatable :: p
++  end type comp
++
++  type foo
++    type(comp), allocatable :: m(:)
++  end type foo
++
++contains
++
++  function fun_par(this)
++    class(par) :: this
++    integer    :: fun_par(1)
++    fun_par = 42
++  end function fun_par
++
++  subroutine update_foo(this)
++    class(foo) :: this
++    write(*,*) this%m(1)%p%fun()
++  end subroutine update_foo
++
++  subroutine bad_update_foo(this)
++    class(foo) :: this
++    write(*,*) this%m(2)%p%fun()
++  end subroutine bad_update_foo
++end module buggy
++
++program main
++  use buggy
++  implicit none (type, external)
++  type(foo) :: x
++  allocate(x%m(1))
++  allocate(x%m(1)%p)
++  call update_foo(x)
++  call bad_update_foo(x)
++end program main
++
++! { dg-output "At line 39 of file .*pr92050.f90.*Fortran runtime error: Index '2' of dimension 1 of array 'this%m' above upper bound of 1" }
 diff --git a/gcc/testsuite/gfortran.dg/pr92208.f90 b/gcc/testsuite/gfortran.dg/pr92208.f90
 new file mode 100644
 index 00000000000..9de7f4b24b5
@@ -25032,6 +25199,36 @@ index 00000000000..fa93f1d7ff2
 +      b = y - x + 1
 +   end
 +end
+diff --git a/gcc/testsuite/gnat.dg/addr14.adb b/gcc/testsuite/gnat.dg/addr14.adb
+new file mode 100644
+index 00000000000..e92c902f038
+--- /dev/null
++++ b/gcc/testsuite/gnat.dg/addr14.adb
+@@ -0,0 +1,24 @@
++--  { dg-do run }
++
++with System;
++
++procedure Addr14 is
++
++  type Arr is array (1 .. 4) of aliased Integer;
++
++  A : Arr := (1, 2, 3, 4);
++  I : Natural := 0;
++
++  function Get_Address return System.Address is
++  begin
++    I := I + 1;
++    return A(I)'Address;
++  end;
++
++  Foo : Integer with Address => Get_Address;
++
++begin
++  if Foo /= 1 then
++    raise Program_Error;
++  end if;
++end;
 diff --git a/gcc/testsuite/obj-c++.dg/stubify-1.mm b/gcc/testsuite/obj-c++.dg/stubify-1.mm
 index c2355437afc..e8f21882de9 100644
 --- a/gcc/testsuite/obj-c++.dg/stubify-1.mm
@@ -27651,10 +27848,20 @@ index 6cd4a5bac8b..06a605ff467 100644
  #endif
  
 diff --git a/libstdc++-v3/ChangeLog b/libstdc++-v3/ChangeLog
-index 8ac50251005..ef28457065c 100644
+index 8ac50251005..c793fe97722 100644
 --- a/libstdc++-v3/ChangeLog
 +++ b/libstdc++-v3/ChangeLog
-@@ -1,3 +1,332 @@
+@@ -1,3 +1,342 @@
++2019-11-22  Jonathan Wakely  <jwakely@redhat.com>
++
++	Backport from mainline
++	2019-10-29  Jonathan Wakely  <jwakely@redhat.com>
++
++	PR libstdc++/92267
++	* include/bits/stl_deque.h (_Deque_iterator(const _Deque_iterator&)):
++	Do not define as defaulted.
++	* testsuite/23_containers/deque/types/92267.cc: New test.
++
 +2019-10-28  John David Anglin  <danglin@gcc.gnu.org>
 +
 +	* config/abi/post/hppa-linux-gnu/baseline_symbols.txt: Update.
@@ -31314,6 +31521,31 @@ index 3b1139401ee..6e9316a24cd 100644
      struct __copy_move
      {
        template<typename _II, typename _OI>
+diff --git a/libstdc++-v3/include/bits/stl_deque.h b/libstdc++-v3/include/bits/stl_deque.h
+index 5c86efc0db2..5a95399162f 100644
+--- a/libstdc++-v3/include/bits/stl_deque.h
++++ b/libstdc++-v3/include/bits/stl_deque.h
+@@ -158,13 +158,16 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
+ #else
+       // Conversion from iterator to const_iterator.
+       template<typename _Iter,
+-              typename = _Require<is_same<_Self, const_iterator>,
+-                                  is_same<_Iter, iterator>>>
++	       typename = _Require<is_same<_Self, const_iterator>,
++				   is_same<_Iter, iterator>>>
+        _Deque_iterator(const _Iter& __x) noexcept
+        : _M_cur(__x._M_cur), _M_first(__x._M_first),
+-         _M_last(__x._M_last), _M_node(__x._M_node) { }
++	 _M_last(__x._M_last), _M_node(__x._M_node) { }
++
++      _Deque_iterator(const _Deque_iterator& __x) noexcept
++       : _M_cur(__x._M_cur), _M_first(__x._M_first),
++	 _M_last(__x._M_last), _M_node(__x._M_node) { }
+ 
+-      _Deque_iterator(const _Deque_iterator&) = default;
+       _Deque_iterator& operator=(const _Deque_iterator&) = default;
+ #endif
+ 
 diff --git a/libstdc++-v3/include/bits/stl_numeric.h b/libstdc++-v3/include/bits/stl_numeric.h
 index e859c76bc44..387bed91174 100644
 --- a/libstdc++-v3/include/bits/stl_numeric.h
@@ -33700,6 +33932,39 @@ index 8051196011b..83ee4492ff3 100644
  // { dg-prune-output "no matching function .*_M_fill_insert" }
  
  #include <deque>
+diff --git a/libstdc++-v3/testsuite/23_containers/deque/types/92267.cc b/libstdc++-v3/testsuite/23_containers/deque/types/92267.cc
+new file mode 100644
+index 00000000000..cab8d25f0db
+--- /dev/null
++++ b/libstdc++-v3/testsuite/23_containers/deque/types/92267.cc
+@@ -0,0 +1,27 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-do compile { target c++11 } }
++
++#include <deque>
++
++using std::deque;
++using std::is_trivially_copy_constructible;
++
++// PR libstdc++/92267
++static_assert(!is_trivially_copy_constructible<deque<int>::iterator>::value);
++static_assert(!is_trivially_copy_constructible<deque<int>::const_iterator>::value);
 diff --git a/libstdc++-v3/testsuite/23_containers/list/requirements/dr438/assign_neg.cc b/libstdc++-v3/testsuite/23_containers/list/requirements/dr438/assign_neg.cc
 index a3da00b03e9..a4dd34d8a6d 100644
 --- a/libstdc++-v3/testsuite/23_containers/list/requirements/dr438/assign_neg.cc
