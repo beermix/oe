@@ -15,27 +15,28 @@ PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:hos
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_DEPENDS_INIT="toolchain"
-#PKG_DEPENDS_UNPACK+=" isl"
+PKG_DEPENDS_UNPACK+=" isl"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-gold -lto -hardening"
 
-#post_unpack() {
-#  ISL_DIR=$(get_build_dir isl)
-#  ln -s $ISL_DIR $PKG_BUILD/isl
-#}
+post_unpack() {
+  ISL_DIR=$(get_build_dir isl)
+  ln -s $ISL_DIR $PKG_BUILD/isl
+}
  
-#post_patch() {
-#  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
+post_patch() {
+  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
-#}
+}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
+                           --with-isl \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
