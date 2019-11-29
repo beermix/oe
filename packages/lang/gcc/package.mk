@@ -52,7 +52,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libunwind-exceptions \
                            --disable-vtable-verify \
                            --without-ppl \
-                           --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libatomic \
@@ -66,7 +65,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
-                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
