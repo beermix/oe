@@ -38,7 +38,7 @@ pre_make_target() {
   esac
 
   export GOOS=linux
-  export CGO_ENABLED=1
+  export CGO_ENABLED=0
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
   export LDFLAGS="-w -extldflags -static -X main.gitCommit=${PKG_GIT_COMMIT} -X main.version=$(cat ./VERSION) -extld $CC"

@@ -27,7 +27,7 @@ configure_target() {
   $GOLANG generate -v ./lib/auto ./cmd/strelaypoolsrv/auto
 
   export GOOS=linux
-  export CGO_ENABLED=1
+  export CGO_ENABLED=0
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
   export LDFLAGS="-w -linkmode external -extldflags -Wl,--unresolved-symbols=ignore-in-shared-libs -extld $CC -X main.Version=v$PKG_VERSION"
