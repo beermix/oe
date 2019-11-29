@@ -5,8 +5,6 @@ PKG_SITE="https://github.com/pkgconf/pkgconf/releases"
 PKG_URL="https://distfiles.dereferenced.org/pkgconf/pkgconf-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host gettext:host"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-gnu-ld"
-
 post_makeinstall_host() {
   mv $TOOLCHAIN/bin/pkgconf $TOOLCHAIN/bin/pkg-config.real
 
@@ -14,5 +12,5 @@ post_makeinstall_host() {
   install -m755  $PKG_DIR/files/pkg-config $TOOLCHAIN/bin/pkg-config
 
 #  ln -sf pkgconf $TOOLCHAIN/bin/pkg-config
-#  ln -sf pkgconf $TOOLCHAIN/bin/x86_64-pc-linux-gnu-pkg-config
+  ln -sf pkg-config.real $TOOLCHAIN/bin/x86_64-pc-linux-gnu-pkg-config
 }

@@ -52,7 +52,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-system-ffi \
                            --with-system-expat \
                            --with-computed-gotos \
-                           --with-lto"
+                           --with-lto
+                           PKG_CONFIG=$TOOLCHAIN/bin/x86_64-pc-linux-gnu-pkg-config"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
