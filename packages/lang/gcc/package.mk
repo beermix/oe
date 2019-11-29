@@ -12,20 +12,20 @@ PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-9/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
-PKG_DEPENDS_TARGET="gcc:host"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_DEPENDS_INIT="toolchain"
-PKG_DEPENDS_UNPACK+=" isl"
+#PKG_DEPENDS_UNPACK+=" isl"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-gold -lto -hardening"
 
-post_unpack() {
-  ISL_DIR=$(get_build_dir isl)
-  ln -s $ISL_DIR $PKG_BUILD/isl
-}
+#post_unpack() {
+#  ISL_DIR=$(get_build_dir isl)
+#  ln -s $ISL_DIR $PKG_BUILD/isl
+#}
  
-post_patch() {
-  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
+#post_patch() {
+#  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
@@ -36,7 +36,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl \
+                           --with-isl=no \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -49,9 +49,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --disable-libunwind-exceptions \
-                           --disable-vtable-verify \
                            --without-ppl \
+                           --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libatomic \
@@ -65,6 +64,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
