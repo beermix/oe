@@ -165,6 +165,10 @@ TARGET_MESON_OPTS="--prefix=/usr \
                    --libexecdir=/usr/lib \
                    --localstatedir=/var \
                    --buildtype=${MESON_BUILD_TYPE}"
+if [ ${BUILD_WITH_DEBUG} != yes ] && flag_enabled "strip" "yes"; then
+  TARGET_MESON_OPTS+=" -Dstrip=true"
+fi
+
 
 # configure HOST build defaults
 HOST_CONFIGURE_OPTS="--host=${HOST_NAME} \
@@ -480,6 +484,8 @@ if [ "${TARGET}" = "target" -o "${TARGET}" = "init" ]; then
                   -o -name ".git*" \) \
         -exec rm -f {} \; 2>/dev/null || :
     find ${INSTALL} -type d -exec rmdir -p {} \; 2>/dev/null || :
+
+    python_fix_abi "${INSTALL}"
 
     if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
       ${STRIP} $(find ${INSTALL} \

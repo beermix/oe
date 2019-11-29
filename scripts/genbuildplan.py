@@ -1,10 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
-from __future__ import print_function
 import sys, os, codecs, json, argparse, re
 
 ROOT_PKG = "__root__"
@@ -185,8 +184,8 @@ def dep_resolve(node, resolved, unresolved, noreorder):
     for edge in node.edges:
         if edge not in resolved:
             if edge in unresolved:
-                    raise Exception('Circular reference detected: %s -> %s\nRemove %s from %s package.mk::PKG_DEPENDS_%s' % \
-                                    (node.fqname, edge.commonName(), edge.commonName(), node.name, node.target.upper()))
+                raise Exception('Circular reference detected: %s -> %s\nRemove %s from %s package.mk::PKG_DEPENDS_%s' % \
+                                (node.fqname, edge.commonName(), edge.commonName(), node.name, node.target.upper()))
             dep_resolve(edge, resolved, unresolved, noreorder)
 
     if node not in resolved:

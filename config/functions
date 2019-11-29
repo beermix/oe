@@ -221,6 +221,22 @@ setup_toolchain() {
     TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_GOLD"
   fi
 
+  # compiler optimization, descending priority: speed, size, default
+  if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
+    TARGET_CFLAGS+=" $CFLAGS_OPTIM_DEBUG"
+    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_DEBUG"
+    TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_DEBUG"
+  elif flag_enabled "speed" "no"; then
+    TARGET_CFLAGS+=" $CFLAGS_OPTIM_SPEED"
+    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_SPEED"
+  elif flag_enabled "size" "no"; then
+    TARGET_CFLAGS+=" $CFLAGS_OPTIM_SIZE"
+    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_SIZE"
+  else
+    TARGET_CFLAGS+=" $CFLAGS_OPTIM_DEFAULT"
+    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_DEFAULT"
+  fi
+
   # position-independent code
   if flag_enabled "pic" "no"; then
     TARGET_CFLAGS+=" $CFLAGS_OPTIM_PIC"
@@ -329,6 +345,11 @@ setup_toolchain() {
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)"  >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)"  >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)"  >> $CMAKE_CONF
+        if [ "${DISPLAYSERVER}" = "x11" ]; then
+          if [ "${OPENGL}" = "mesa" ] || listcontains "${GRAPHIC_DRIVERS}" "nvidia"; then
+            echo "SET(OpenGL_GL_PREFERENCE GLVND)" >> $CMAKE_CONF
+          fi
+        fi
       fi
       export HOST_CC="$TOOLCHAIN/bin/host-gcc"
       export HOST_CXX="$TOOLCHAIN/bin/host-g++"
@@ -405,6 +426,7 @@ ar = '$AR'
 strip = '$STRIP'
 pkgconfig = '$PKG_CONFIG'
 llvm-config = '$SYSROOT_PREFIX/usr/bin/llvm-config-host'
+libgcrypt-config = '$SYSROOT_PREFIX/usr/bin/libgcrypt-config'
 
 [host_machine]
 system = 'linux'
@@ -414,10 +436,10 @@ endian = 'little'
 
 [properties]
 root = '$TOOLCHAIN'
-$(python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))")
-$(python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
-$(python -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('CXXFLAGS').split()]))")
-$(python -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+$(python3 -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))")
+$(python3 -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('CXXFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
 ${!properties}
 EOF
 }
@@ -444,10 +466,10 @@ endian = 'little'
 
 [properties]
 root = '$SYSROOT_PREFIX/usr'
-$(python -c "import os; print('c_args = {}'.format([x for x in os.getenv('TARGET_CFLAGS').split()]))")
-$(python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('TARGET_LDFLAGS').split()]))")
-$(python -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('TARGET_CXXFLAGS').split()]))")
-$(python -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('TARGET_LDFLAGS').split()]))")
+$(python3 -c "import os; print('c_args = {}'.format([x for x in os.getenv('TARGET_CFLAGS').split()]))")
+$(python3 -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('TARGET_LDFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('TARGET_CXXFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('TARGET_LDFLAGS').split()]))")
 ${!properties}
 EOF
 }
@@ -476,7 +498,7 @@ reset_pkg_vars() {
   PKG_LICENSE="unknown"
   PKG_TOOLCHAIN="auto"
   PKG_IS_ADDON="no"
-  PKG_PYTHON_VERSION="python2.7"
+  PKG_PYTHON_VERSION="${DEFAULT_PYTHON_VERSION}"
 }
 
 set_debug_depends() {
@@ -822,6 +844,11 @@ get_pkg_directory() {
   echo "$_PKG_DIR"
 }
 
+# Return a list of sorted package names for this project/device/arch
+get_all_package_names() {
+  sed -e 's#@?+?@##g; s#.*/##g' ${_CACHE_PACKAGE_GLOBAL} ${_CACHE_PACKAGE_LOCAL} | sort --ignore-case --unique
+}
+
 calculate_stamp() {
   local stamp data
 
@@ -1023,6 +1050,36 @@ source_package() {
   fi
 }
 
+# arg1: file, or directory to recursively compile.
+python_compile() {
+  local path="${1:-${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}}"
+  ${TOOLCHAIN}/bin/python3 -Wi -t -B ${TOOLCHAIN}/lib/${PKG_PYTHON_VERSION}/compileall.py -f -d "${path#${INSTALL}}" "${path}"
+  python_remove_source "${path}"
+}
+
+# arg1: file, or directory from which to recursively remove all py source code
+python_remove_source() {
+  local path="${1:-${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}}"
+  if [ -d "${path}" ]; then
+    find "${path}" -type f -name '*.py' -delete
+  else
+    rm -f "${path}"
+  fi
+}
+
+# arg1: directory to process recursively
+# strip incorrect build-host ABI from native Python3 modules (see PEP3149)
+python_fix_abi() {
+  local pymodule pyname
+
+  for pymodule in $(find ${1} -type f -name '*.cpython-*.so' 2>/dev/null); do
+    pyname=${pymodule##*/}
+    pyname=${pyname%.so} # strip extension
+    pyname=${pyname%.*}  # strip incorrect ABI
+    echo "python_fix_abi: Removing ABI from ${pymodule} -> ${pyname}.so"
+    mv ${pymodule} ${pymodule%/*}/${pyname}.so
+  done
+}
 
 ### KERNEL HELPERS ###
 kernel_path() {
@@ -1225,6 +1282,7 @@ install_addon_files() {
   install_addon_source "$1"
   install_addon_images "$1"
   create_addon_xml "$1"
+  python_fix_abi "$1"
 }
 
 install_driver_addon_files() {
@@ -1280,11 +1338,12 @@ add_group() {
 # Usage: enable_service <unit> [target]
 enable_service() {
   local unit="$1"
-  local unit_dir="/usr/lib/systemd/system"
+  local unit_dir="usr/lib/systemd/system"
   local target="$2"
   local target_dir=$INSTALL
 
-  [ -f "$target_dir/$unit_dir/$unit" ] || die
+  [ -f "$target_dir/$unit_dir/$unit" ] || die "ERROR: cannot enable non-existent service $target_dir/$unit_dir/$unit"
+
   if [ -z "$target" ] ; then
     for target in `grep '^WantedBy' $target_dir/$unit_dir/$unit | cut -f2 -d=` ; do
       if [ -n "$target" ]; then
