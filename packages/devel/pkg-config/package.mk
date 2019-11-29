@@ -10,7 +10,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-gnu-ld"
 post_makeinstall_host() {
   mv $TOOLCHAIN/bin/pkgconf $TOOLCHAIN/bin/pkg-config.real
 
-  rm $TOOLCHAIN/bin/pkg-config
+  #rm $TOOLCHAIN/bin/pkg-config
   install -m755  $PKG_DIR/files/pkg-config $TOOLCHAIN/bin/pkg-config
 
 #  ln -sf pkgconf $TOOLCHAIN/bin/pkg-config
