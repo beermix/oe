@@ -6,10 +6,10 @@ PKG_VERSION="3b82f99"
 PKG_SITE="https://github.com/ninja-build/ninja"
 PKG_URL="https://github.com/ninja-build/ninja/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python3:host re2c:host"
-PKG_TOOLCHAIN="cmake-make"
+#PKG_TOOLCHAIN="cmake-make"
 PKG_TOOLCHAIN="manual"
 
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
+#PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
 
 make_host() {
   python3 $PKG_BUILD/configure.py --bootstrap
