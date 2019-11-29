@@ -6,6 +6,7 @@ PKG_NAME="gcc"
 PKG_VERSION="9.2.0"
 PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
 PKG_LICENSE="GPL"
+PKG_SITE="http://gcc.gnu.org/"
 #PKG_VERSION="9-20191123"
 #PKG_VERSION="10-20191117"
 PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
@@ -36,7 +37,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl=no \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
