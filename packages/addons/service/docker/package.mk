@@ -24,11 +24,6 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Docker"
 PKG_ADDON_TYPE="xbmc.service"
 
-pre_make_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-mno-pclmul --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fdiagnostics-color=always||g"`
-}
-
 configure_target() {
   export DOCKER_BUILDTAGS="daemon \
                            autogen \

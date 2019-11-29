@@ -3,10 +3,10 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="containerd"
-PKG_VERSION="1.3.1"
-PKG_SHA256="73e64a5373b79f15ea4c663046fb27e2631988d65f166c8236846da6a2c32c3e"
+PKG_VERSION="1.2.8"
+PKG_SHA256="6165ae2ad669d9ec6d317492d30a1511365bd31ad29efae757f19c1828bf75b3"
 PKG_LICENSE="APL"
-PKG_SITE="https://github.com/containerd/containerd/releases"
+PKG_SITE="https://containerd.tools/"
 PKG_URL="https://github.com/containerd/containerd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_LONGDESC="A daemon to control runC, built for performance and density."
@@ -16,7 +16,6 @@ PKG_TOOLCHAIN="manual"
 PKG_GIT_COMMIT="a4bc1d432a2c33aa2eed37f338dceabb93641310"
 
 pre_make_target() {
-
   case ${TARGET_ARCH} in
     x86_64)
       export GOARCH=amd64
@@ -39,7 +38,7 @@ pre_make_target() {
   esac
 
   export GOOS=linux
-  export CGO_ENABLED=0
+  export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=${CFLAGS}
   export CONTAINERD_VERSION=${PKG_VERSION}

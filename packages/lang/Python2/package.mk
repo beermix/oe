@@ -18,6 +18,7 @@ PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +speed"
 
+PKG_PYTHON_VERSION="python2.7"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
