@@ -20,7 +20,7 @@ pre_configure_host() {
 }
 
 post_makeinstall_host() {
- mkdir -p $TOOLCHAIN/bin
+# mkdir -p $TOOLCHAIN/bin
 # ln -s  /home/user/.bin/ccache $TOOLCHAIN/bin/ccache
 
 # setup ccache
