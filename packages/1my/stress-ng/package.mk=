@@ -1,0 +1,6 @@
+PKG_NAME="stress-ng"
+PKG_VERSION="1.10.11"
+PKG_SITE="https://github.com/ColinIanKing/stress-ng/releases"
+PKG_URL="https://kernel.ubuntu.com/~cking/tarballs/stress-ng/stress-ng-${PKG_VERSION}.tar.xz"
+PKG_DEPENDS_TARGET="toolchain attr keyutils libaio libcap zlib"
+PKG_TOOLCHAIN="make"
