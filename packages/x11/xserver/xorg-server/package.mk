@@ -115,6 +115,9 @@ pre_configure_target() {
 # hack to prevent a build error
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+
+  export CFLAGS="$CFLAGS -D_GNU_SOURCE -D__gid_t=gid_t -D__uid_t=uid_t"
+  export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
 }
 
 post_makeinstall_target() {
