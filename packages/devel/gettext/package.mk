@@ -22,5 +22,6 @@ configure_package() {
                            --with-included-libxml \
                            --disable-native-java \
                            --disable-csharp \
-                           --without-emacs"
+                           --without-emacs \
+                           --disable-openmp"
 }
