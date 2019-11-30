@@ -16,6 +16,8 @@ pre_configure_host() {
   export CC=$LOCAL_CC
 }
 
+PKG_CONFIGURE_OPTS_TARGET="--disable-nls"
+
 post_makeinstall_host() {
 #  mkdir -p $TOOLCHAIN/bin
 
