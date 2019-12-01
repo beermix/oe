@@ -3,15 +3,15 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gcc"
-PKG_VERSION="9.2.0"
-PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
+#PKG_VERSION="9.2.0"
+#PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
-#PKG_VERSION="9-20191123"
+PKG_VERSION="9-20191130"
 #PKG_VERSION="10-20191117"
 PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-9/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-9/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -25,12 +25,12 @@ PKG_BUILD_FLAGS="-gold -lto -hardening"
 #  ln -s $ISL_DIR $PKG_BUILD/isl
 #}
  
-post_patch() {
-  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
+#post_patch() {
+#  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
-}
+#}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -49,6 +49,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --enable-default-pie \
+                           --enable-default-ssp \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \

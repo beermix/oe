@@ -135,7 +135,7 @@ Stressor specific options:
       --dccp-ops N         stop after N DCCP  bogo operations
       --dccp-opts option   DCCP data send options [send|sendmsg|sendmmsg]
       --dccp-port P        use DCCP ports P to P + number of workers - 1
--D N, --dentry N           start N dentry thrashing stressors
+-D N, --dentry --dentry-ops           start N dentry thrashing stressors
       --dentry-ops N       stop after N dentry bogo operations
       --dentry-order O     specify unlink order (reverse, forward, stride)
       --dentries N         create N dentries per iteration
