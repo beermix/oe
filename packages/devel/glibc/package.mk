@@ -32,6 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=5.3 \
                            --without-cvs \
+                           --enable-static-pie \
                            --without-gd \
                            --disable-build-nscd \
                            --disable-nscd \
