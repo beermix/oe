@@ -36,6 +36,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-targets=x86_64-linux \
                          --enable-threads \
                          --disable-gdb \
+                         --enable-64-bit-bfd \
                          --disable-werror \
                          --with-pic \
                          --enable-lto \
