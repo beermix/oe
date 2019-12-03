@@ -2,10 +2,10 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="wireguard"
-PKG_VERSION="0.0.20190601"
-PKG_SHA256="7528461824a0174bd7d4f15e68d8f0ce9a8ea318411502b80759438e8ef65568"
+PKG_VERSION="0.0.20191127"
+PKG_SHA256="7d4e80a6f84564d4826dd05da2b59e8d17645072c0345d0fc0d197be176c3d06"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://www.wireguard.com"
+PKG_SITE="https://git.zx2c4.com/WireGuard"
 PKG_URL="https://git.zx2c4.com/WireGuard/snapshot/WireGuard-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain linux libmnl"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
