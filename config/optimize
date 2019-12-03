@@ -1,5 +1,5 @@
 # Linker hash-style is set to gnu via gcc default
-LD_OPTIM="-Wl,--as-needed"
+LD_OPTIM=""
 
 NINJA_OPTS=""
 
