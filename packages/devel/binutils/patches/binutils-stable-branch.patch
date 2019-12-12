@@ -1528,3 +1528,286 @@ index 3f2d00a8ca..264efe4b90 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit f07d629ae4656b90694cfa7fa39b411f6f0e36d0
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Dec 4 00:02:33 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 264efe4b90..2270adec5e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191203
++#define BFD_VERSION_DATE 20191204
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit dc866fa827e1d9cabab8b5a1668a7923cb25028d
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Dec 5 00:01:46 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 2270adec5e..f685392ed4 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191204
++#define BFD_VERSION_DATE 20191205
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit ac7435e1b2d88b65d3edd65f6fa2422492f68b97
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Dec 6 00:02:23 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index f685392ed4..95dbd95986 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191205
++#define BFD_VERSION_DATE 20191206
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 6e613b58acc527e366e05fb9d9b29bee04874a88
+Author: Kyrylo Tkachov <kyrylo.tkachov@arm.com>
+Date:   Fri Dec 6 12:00:17 2019 +0000
+
+    [gas] Implement .cfi_negate_ra_state directive
+    
+    2019-12-06  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
+    
+            Backported from mainline.
+            2019-12-06  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
+    
+            * dw2gencfi.c (cfi_pseudo_table): Add cfi_negate_ra_state.
+            * testsuite/gas/aarch64/pac_negate_ra_state.s: New file.
+            * testsuite/gas/aarch64/pac_negate_ra_state.d: Likewise.
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 0955809b5b..fcb5592f9f 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,12 @@
++2019-12-06  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
++
++	Backported from mainline.
++	2019-12-06  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
++
++	* dw2gencfi.c (cfi_pseudo_table): Add cfi_negate_ra_state.
++	* testsuite/gas/aarch64/pac_negate_ra_state.s: New file.
++	* testsuite/gas/aarch64/pac_negate_ra_state.d: Likewise.
++
+ 2019-10-14  Tamar Christina  <tamar.christina@arm.com>
+ 
+ 	Backported from mainline.
+diff --git a/gas/dw2gencfi.c b/gas/dw2gencfi.c
+index f30734d384..ab97ac4e16 100644
+--- a/gas/dw2gencfi.c
++++ b/gas/dw2gencfi.c
+@@ -726,6 +726,7 @@ const pseudo_typeS cfi_pseudo_table[] =
+     { "cfi_remember_state", dot_cfi, DW_CFA_remember_state },
+     { "cfi_restore_state", dot_cfi, DW_CFA_restore_state },
+     { "cfi_window_save", dot_cfi, DW_CFA_GNU_window_save },
++    { "cfi_negate_ra_state", dot_cfi, DW_CFA_AARCH64_negate_ra_state },
+     { "cfi_escape", dot_cfi_escape, 0 },
+     { "cfi_signal_frame", dot_cfi, CFI_signal_frame },
+     { "cfi_personality", dot_cfi_personality, 0 },
+diff --git a/gas/testsuite/gas/aarch64/pac_negate_ra_state.d b/gas/testsuite/gas/aarch64/pac_negate_ra_state.d
+new file mode 100644
+index 0000000000..7ab0f2369d
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/pac_negate_ra_state.d
+@@ -0,0 +1,26 @@
++#objdump: --dwarf=frames
++
++.+:     file .+
++
++Contents of the .eh_frame section:
++
++00000000 0000000000000010 00000000 CIE
++  Version:               1
++  Augmentation:          "zR"
++  Code alignment factor: 4
++  Data alignment factor: -8
++  Return address column: 30
++  Augmentation data:     1b
++  DW_CFA_def_cfa: r31 \(sp\) ofs 0
++
++00000014 0000000000000018 00000018 FDE cie=00000000 pc=0000000000000000..0000000000000008
++  DW_CFA_advance_loc: 4 to 0000000000000004
++  DW_CFA_GNU_window_save
++  DW_CFA_advance_loc: 4 to 0000000000000008
++  DW_CFA_def_cfa_offset: 16
++  DW_CFA_offset: r29 \(x29\) at cfa-16
++  DW_CFA_offset: r30 \(x30\) at cfa-8
++  DW_CFA_nop
++  DW_CFA_nop
++
++
+diff --git a/gas/testsuite/gas/aarch64/pac_negate_ra_state.s b/gas/testsuite/gas/aarch64/pac_negate_ra_state.s
+new file mode 100644
+index 0000000000..36ddbeb43b
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/pac_negate_ra_state.s
+@@ -0,0 +1,20 @@
++	.arch armv8-a
++	.text
++	.align	2
++	.global	_Z5foo_av
++	.type	_Z5foo_av, %function
++_Z5foo_av:
++.LFB0:
++	.cfi_startproc
++	hint	25 // paciasp
++	.cfi_negate_ra_state
++	stp	x29, x30, [sp, -16]!
++	.cfi_def_cfa_offset 16
++	.cfi_offset 29, -16
++	.cfi_offset 30, -8
++	.cfi_endproc
++.LFE0:
++	.size	_Z5foo_av, .-_Z5foo_av
++	.align	2
++	.global	_Z5foo_bv
++	.type	_Z5foo_bv, %function
+
+commit 78afc26291fc7c4a469273da93704c3205d0c80d
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Dec 7 00:01:30 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 95dbd95986..b057e1e9a9 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191206
++#define BFD_VERSION_DATE 20191207
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c656f9a430636a6a7fc7a08c0e08f0098a729a02
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Dec 8 00:01:57 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b057e1e9a9..7abc75d3dd 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191207
++#define BFD_VERSION_DATE 20191208
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit da3b036b57c0d409fc1fc3e25597fa13dc71baf5
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Dec 9 00:01:38 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7abc75d3dd..b0d043da11 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191208
++#define BFD_VERSION_DATE 20191209
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 4b790f2d8cb1764d62555ba95e0d8132cd3555bb
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Dec 10 00:01:18 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b0d043da11..9d2ce737bf 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191209
++#define BFD_VERSION_DATE 20191210
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c8178219fa155f093844b4518be830ad2ceb84dd
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Dec 11 00:01:19 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 9d2ce737bf..85eb373516 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191210
++#define BFD_VERSION_DATE 20191211
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c7aabb7a45d84c549f10b17a4ce7053994a01f51
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Dec 12 00:01:14 2019 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 85eb373516..1d06366565 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20191211
++#define BFD_VERSION_DATE 20191212
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@

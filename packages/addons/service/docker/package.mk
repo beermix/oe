@@ -54,7 +54,7 @@ configure_target() {
   esac
 
   export GOOS=linux
-  export CGO_ENABLED=0
+  export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=${CFLAGS}
   export LDFLAGS="-w -linkmode external -extldflags -Wl,--unresolved-symbols=ignore-in-shared-libs -extld $CC"
@@ -146,4 +146,8 @@ addon() {
 
     # tini
     cp -P $(get_build_dir tini)/.${TARGET_NAME}/tini-static ${ADDON_BUILD}/${PKG_ADDON_ID}/bin/docker-init
+}
+
+post_install_addon() {
+  sed -e "s/@DISTRO_PKG_SETTINGS_ID@/${DISTRO_PKG_SETTINGS_ID}/g" -i "${INSTALL}/default.py"
 }

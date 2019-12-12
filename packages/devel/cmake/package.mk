@@ -4,7 +4,7 @@
 
 PKG_NAME="cmake"
 PKG_VERSION="3.16.1"
-PKG_SHA256=""
+PKG_SHA256="a275b3168fa8626eca4465da7bb159ff07c8c6cb0fb7179be59e12cbdfa725fd"
 PKG_LICENSE="BSD"
 PKG_SITE="https://cmake.org/download"
 PKG_URL="http://www.cmake.org/files/v${PKG_VERSION%.*}/cmake-${PKG_VERSION}.tar.gz"
