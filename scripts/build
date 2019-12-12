@@ -388,7 +388,6 @@ pkg_call_exists pre_makeinstall_${TARGET} && pkg_call pre_makeinstall_${TARGET}
 if pkg_call_exists makeinstall_${TARGET}; then
   pkg_call makeinstall_${TARGET}
 else
-
   case "${PKG_TOOLCHAIN}:${TARGET}" in
     # ninja based builds
     "meson:target"|"cmake:target")
@@ -478,6 +477,8 @@ if [ "${TARGET}" = "target" -o "${TARGET}" = "init" ]; then
     rm -rf ${INSTALL}/{usr/,}var
     find ${INSTALL} \( -name "*.orig" \
                   -o -name "*.rej" \
+                  -o -name "*.a" \
+                  -o -name "*.la" \
                   -o -name "*.o" \
                   -o -name "*.in" \
                   -o -name ".git*" \) \
