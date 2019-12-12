@@ -1,0 +1,459 @@
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index aa5a81ffed..86ce07a1c1 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,25 @@
++2019-10-20  John David Anglin  <danglin@gcc.gnu.org>
++
++	* elf32-hppa.c (elf32_hppa_size_dynamic_sections): Provide 8-byte
++	minimum alignment for .plt section.
++
++	* elf32-hppa.c: Revise import stub sequences.
++	(LONG_BRANCH_STUB_SIZE): Define.
++	(LONG_BRANCH_SHARED_STUB_SIZE): Define.
++	(IMPORT_STUB_SIZE): Define.
++	(IMPORT_SHARED_STUB_SIZE): Define.
++	(EXPORT_STUB_SIZE): Define.
++	(plt_stub): Revise to not use register %r22.
++	(LDO_R1_R22): Define.
++	(LDW_R22_R21): Define.
++	(LDW_R22_R19): Define.
++	(hppa_build_one_stub): Update stub generation and use new defines.
++	(hppa_size_one_stub): Likewise.
++
++2019-10-13  Nick Clifton  <nickc@redhat.com>
++
++	* development.sh (development): Reset to true.
++
+ 2019-10-12  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Release 2.33.1
+diff --git a/bfd/development.sh b/bfd/development.sh
+index eb0e7b6da1..54d494c105 100644
+--- a/bfd/development.sh
++++ b/bfd/development.sh
+@@ -16,7 +16,7 @@
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ # Controls whether to enable development-mode features by default.
+-development=false
++development=true
+ 
+ # Indicate whether this is a release branch.
+ experimental=false
+diff --git a/bfd/elf32-hppa.c b/bfd/elf32-hppa.c
+index a61adbc3c8..cd99584f27 100644
+--- a/bfd/elf32-hppa.c
++++ b/bfd/elf32-hppa.c
+@@ -71,34 +71,38 @@
+ 
+    Import stub to call shared library routine from normal object file
+    (single sub-space version)
+-   :		addil LR'lt_ptr+ltoff,%dp	; get procedure entry point
+-   :		ldw RR'lt_ptr+ltoff(%r1),%r21
++   :		addil LR'lt_ptr+ltoff,%dp	; get PLT address
++   :		ldo RR'lt_ptr+ltoff(%r1),%r22   ; 
++   :		ldw 0(%r22),%r21		; get procedure entry point
+    :		bv %r0(%r21)
+-   :		ldw RR'lt_ptr+ltoff+4(%r1),%r19	; get new dlt value.
++   :		ldw 4(%r22),%r19		; get new dlt value.
+ 
+    Import stub to call shared library routine from shared library
+    (single sub-space version)
+-   :		addil LR'ltoff,%r19		; get procedure entry point
+-   :		ldw RR'ltoff(%r1),%r21
++   :		addil LR'ltoff,%r19		; get PLT address
++   :		ldo RR'ltoff(%r1),%r22
++   :		ldw 0(%r22),%r21		; get procedure entry point
+    :		bv %r0(%r21)
+-   :		ldw RR'ltoff+4(%r1),%r19	; get new dlt value.
++   :		ldw 4(%r22),%r19		; get new dlt value.
+ 
+    Import stub to call shared library routine from normal object file
+    (multiple sub-space support)
+-   :		addil LR'lt_ptr+ltoff,%dp	; get procedure entry point
+-   :		ldw RR'lt_ptr+ltoff(%r1),%r21
+-   :		ldw RR'lt_ptr+ltoff+4(%r1),%r19	; get new dlt value.
+-   :		ldsid (%r21),%r1
++   :		addil LR'lt_ptr+ltoff,%dp	; get PLT address
++   :		ldo RR'lt_ptr+ltoff(%r1),%r22   ; 
++   :		ldw 0(%r22),%r21		; get procedure entry point
++   :		ldsid (%r21),%r1		; get target sid
++   :		ldw 4(%r22),%r19		; get new dlt value.
+    :		mtsp %r1,%sr0
+    :		be 0(%sr0,%r21)			; branch to target
+    :		stw %rp,-24(%sp)		; save rp
+ 
+    Import stub to call shared library routine from shared library
+    (multiple sub-space support)
+-   :		addil LR'ltoff,%r19		; get procedure entry point
+-   :		ldw RR'ltoff(%r1),%r21
+-   :		ldw RR'ltoff+4(%r1),%r19	; get new dlt value.
+-   :		ldsid (%r21),%r1
++   :		addil LR'ltoff,%r19		; get PLT address
++   :		ldo RR'ltoff(%r1),%r22
++   :		ldw 0(%r22),%r21		; get procedure entry point
++   :		ldsid (%r21),%r1		; get target sid
++   :		ldw 4(%r22),%r19		; get new dlt value.
+    :		mtsp %r1,%sr0
+    :		be 0(%sr0,%r21)			; branch to target
+    :		stw %rp,-24(%sp)		; save rp
+@@ -136,12 +140,17 @@
+ 
+ #define PLT_ENTRY_SIZE 8
+ #define GOT_ENTRY_SIZE 4
++#define LONG_BRANCH_STUB_SIZE 8
++#define LONG_BRANCH_SHARED_STUB_SIZE 12
++#define IMPORT_STUB_SIZE 20
++#define IMPORT_SHARED_STUB_SIZE 32
++#define EXPORT_STUB_SIZE 24
+ #define ELF_DYNAMIC_INTERPRETER "/lib/ld.so.1"
+ 
+ static const bfd_byte plt_stub[] =
+ {
+-  0x0e, 0x80, 0x10, 0x96,  /* 1: ldw	0(%r20),%r22		*/
+-  0xea, 0xc0, 0xc0, 0x00,  /*    bv	%r0(%r22)		*/
++  0x0e, 0x80, 0x10, 0x95,  /* 1: ldw	0(%r20),%r21		*/
++  0xea, 0xa0, 0xc0, 0x00,  /*    bv	%r0(%r21)		*/
+   0x0e, 0x88, 0x10, 0x95,  /*    ldw	4(%r20),%r21		*/
+ #define PLT_STUB_ENTRY (3*4)
+   0xea, 0x9f, 0x1f, 0xdd,  /*    b,l	1b,%r20			*/
+@@ -662,6 +671,10 @@ hppa_type_of_stub (asection *input_sec,
+ #define ADDIL_R19	0x2a600000	/* addil LR'XXX,%r19,%r1	*/
+ #define LDW_R1_DP	0x483b0000	/* ldw   RR'XXX(%sr0,%r1),%dp	*/
+ 
++#define LDO_R1_R22	0x34360000	/* ldo   RR'XXX(%r1),%r22	*/
++#define LDW_R22_R21	0x0ec01095	/* ldw   0(%r22),%r21		*/
++#define LDW_R22_R19	0x0ec81093	/* ldw   4(%r22),%r19		*/
++
+ #define LDSID_R21_R1	0x02a010a1	/* ldsid (%sr0,%r21),%r1	*/
+ #define MTSP_R1		0x00011820	/* mtsp  %r1,%sr0		*/
+ #define BE_SR0_R21	0xe2a00000	/* be    0(%sr0,%r21)		*/
+@@ -734,7 +747,7 @@ hppa_build_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+       insn = hppa_rebuild_insn ((int) BE_SR4_R1, val, 17);
+       bfd_put_32 (stub_bfd, insn, loc + 4);
+ 
+-      size = 8;
++      size = LONG_BRANCH_STUB_SIZE;
+       break;
+ 
+     case hppa_stub_long_branch_shared:
+@@ -756,7 +769,7 @@ hppa_build_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+       val = hppa_field_adjust (sym_value, (bfd_signed_vma) -8, e_rrsel) >> 2;
+       insn = hppa_rebuild_insn ((int) BE_SR4_R1, val, 17);
+       bfd_put_32 (stub_bfd, insn, loc + 8);
+-      size = 12;
++      size = LONG_BRANCH_SHARED_STUB_SIZE;
+       break;
+ 
+     case hppa_stub_import:
+@@ -776,40 +789,35 @@ hppa_build_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+       if (hsh->stub_type == hppa_stub_import_shared)
+ 	insn = ADDIL_R19;
+ #endif
++
++      /* Load function descriptor address into register %r22.  It is
++	 sometimes needed for lazy binding.  */
+       val = hppa_field_adjust (sym_value, 0, e_lrsel),
+       insn = hppa_rebuild_insn ((int) insn, val, 21);
+       bfd_put_32 (stub_bfd, insn, loc);
+ 
+-      /* It is critical to use lrsel/rrsel here because we are using
+-	 two different offsets (+0 and +4) from sym_value.  If we use
+-	 lsel/rsel then with unfortunate sym_values we will round
+-	 sym_value+4 up to the next 2k block leading to a mis-match
+-	 between the lsel and rsel value.  */
+       val = hppa_field_adjust (sym_value, 0, e_rrsel);
+-      insn = hppa_rebuild_insn ((int) LDW_R1_R21, val, 14);
++      insn = hppa_rebuild_insn ((int) LDO_R1_R22, val, 14);
+       bfd_put_32 (stub_bfd, insn, loc + 4);
+ 
++      bfd_put_32 (stub_bfd, (bfd_vma) LDW_R22_R21, loc + 8);
++
+       if (htab->multi_subspace)
+ 	{
+-	  val = hppa_field_adjust (sym_value, (bfd_signed_vma) 4, e_rrsel);
+-	  insn = hppa_rebuild_insn ((int) LDW_R1_DLT, val, 14);
+-	  bfd_put_32 (stub_bfd, insn, loc + 8);
+-
+ 	  bfd_put_32 (stub_bfd, (bfd_vma) LDSID_R21_R1, loc + 12);
+-	  bfd_put_32 (stub_bfd, (bfd_vma) MTSP_R1,      loc + 16);
+-	  bfd_put_32 (stub_bfd, (bfd_vma) BE_SR0_R21,   loc + 20);
+-	  bfd_put_32 (stub_bfd, (bfd_vma) STW_RP,       loc + 24);
++	  bfd_put_32 (stub_bfd, (bfd_vma) LDW_R22_R19,  loc + 16);
++	  bfd_put_32 (stub_bfd, (bfd_vma) MTSP_R1,      loc + 20);
++	  bfd_put_32 (stub_bfd, (bfd_vma) BE_SR0_R21,   loc + 24);
++	  bfd_put_32 (stub_bfd, (bfd_vma) STW_RP,       loc + 28);
+ 
+-	  size = 28;
++	  size = IMPORT_SHARED_STUB_SIZE;
+ 	}
+       else
+ 	{
+-	  bfd_put_32 (stub_bfd, (bfd_vma) BV_R0_R21, loc + 8);
+-	  val = hppa_field_adjust (sym_value, (bfd_signed_vma) 4, e_rrsel);
+-	  insn = hppa_rebuild_insn ((int) LDW_R1_DLT, val, 14);
+-	  bfd_put_32 (stub_bfd, insn, loc + 12);
++	  bfd_put_32 (stub_bfd, (bfd_vma) BV_R0_R21, loc + 12);
++	  bfd_put_32 (stub_bfd, (bfd_vma) LDW_R22_R19, loc + 16);
+ 
+-	  size = 16;
++	  size = IMPORT_STUB_SIZE;
+ 	}
+ 
+       break;
+@@ -858,7 +866,7 @@ hppa_build_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+       hsh->hh->eh.root.u.def.section = stub_sec;
+       hsh->hh->eh.root.u.def.value = stub_sec->size;
+ 
+-      size = 24;
++      size = EXPORT_STUB_SIZE;
+       break;
+ 
+     default:
+@@ -906,17 +914,17 @@ hppa_size_one_stub (struct bfd_hash_entry *bh, void *in_arg)
+   htab = in_arg;
+ 
+   if (hsh->stub_type == hppa_stub_long_branch)
+-    size = 8;
++    size = LONG_BRANCH_STUB_SIZE;
+   else if (hsh->stub_type == hppa_stub_long_branch_shared)
+-    size = 12;
++    size = LONG_BRANCH_SHARED_STUB_SIZE;
+   else if (hsh->stub_type == hppa_stub_export)
+-    size = 24;
++    size = EXPORT_STUB_SIZE;
+   else /* hppa_stub_import or hppa_stub_import_shared.  */
+     {
+       if (htab->multi_subspace)
+-	size = 28;
++	size = IMPORT_SHARED_STUB_SIZE;
+       else
+-	size = 16;
++	size = IMPORT_STUB_SIZE;
+     }
+ 
+   hsh->stub_sec->size += size;
+@@ -2272,10 +2280,11 @@ elf32_hppa_size_dynamic_sections (bfd *output_bfd ATTRIBUTE_UNUSED,
+ 		 against the .got section.  */
+ 	      int gotalign = bfd_section_alignment (dynobj, htab->etab.sgot);
+ 	      int pltalign = bfd_section_alignment (dynobj, sec);
++	      int align = gotalign > 3 ? gotalign : 3;
+ 	      bfd_size_type mask;
+ 
+-	      if (gotalign > pltalign)
+-		(void) bfd_set_section_alignment (dynobj, sec, gotalign);
++	      if (align > pltalign)
++		(void) bfd_set_section_alignment (dynobj, sec, align);
+ 	      mask = ((bfd_size_type) 1 << gotalign) - 1;
+ 	      sec->size = (sec->size + sizeof (plt_stub) + mask) & ~mask;
+ 	    }
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 75324bfaac..fcb5592f9f 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,26 @@
++2019-12-06  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
++
++	Backported from mainline.
++	2019-12-06  Kyrylo Tkachov  <kyrylo.tkachov@arm.com>
++
++	* dw2gencfi.c (cfi_pseudo_table): Add cfi_negate_ra_state.
++	* testsuite/gas/aarch64/pac_negate_ra_state.s: New file.
++	* testsuite/gas/aarch64/pac_negate_ra_state.d: Likewise.
++
++2019-10-14  Tamar Christina  <tamar.christina@arm.com>
++
++	Backported from mainline.
++	2019-09-24  Tamar Christina  <tamar.christina@arm.com>
++
++	PR gas/24991
++	* config/tc-arm.c (out_of_range_p): New.
++	(md_apply_fix): Use it in BFD_RELOC_THUMB_PCREL_BRANCH9,
++	BFD_RELOC_THUMB_PCREL_BRANCH12, BFD_RELOC_THUMB_PCREL_BRANCH20,
++	BFD_RELOC_THUMB_PCREL_BRANCH23, BFD_RELOC_THUMB_PCREL_BRANCH25
++	* testsuite/gas/arm/pr24991.d: New test.
++	* testsuite/gas/arm/pr24991.l: New test.
++	* testsuite/gas/arm/pr24991.s: New test.
++
+ 2019-10-12  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Release 2.33.1
+diff --git a/gas/config/tc-arm.c b/gas/config/tc-arm.c
+index 9273bb5783..caabdbba90 100644
+--- a/gas/config/tc-arm.c
++++ b/gas/config/tc-arm.c
+@@ -106,6 +106,15 @@ enum arm_float_abi
+    should define CPU_DEFAULT here.  */
+ #endif
+ 
++/* Perform range checks on positive and negative overflows by checking if the
++   VALUE given fits within the range of an BITS sized immediate.  */
++static bfd_boolean out_of_range_p (offsetT value, offsetT bits)
++ {
++  gas_assert (bits < (offsetT)(sizeof (value) * 8));
++  return (value & ~((1 << bits)-1))
++	  && ((value & ~((1 << bits)-1)) != ~((1 << bits)-1));
++}
++
+ #ifndef FPU_DEFAULT
+ # ifdef TE_LINUX
+ #  define FPU_DEFAULT FPU_ARCH_FPA
+@@ -28047,7 +28056,7 @@ md_apply_fix (fixS *	fixP,
+       break;
+ 
+     case BFD_RELOC_THUMB_PCREL_BRANCH9: /* Conditional branch.	*/
+-      if ((value & ~0xff) && ((value & ~0xff) != ~0xff))
++      if (out_of_range_p (value, 8))
+ 	as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+ 
+       if (fixP->fx_done || !seg->use_rela_p)
+@@ -28059,7 +28068,7 @@ md_apply_fix (fixS *	fixP,
+       break;
+ 
+     case BFD_RELOC_THUMB_PCREL_BRANCH12: /* Unconditional branch.  */
+-      if ((value & ~0x7ff) && ((value & ~0x7ff) != ~0x7ff))
++      if (out_of_range_p (value, 11))
+ 	as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+ 
+       if (fixP->fx_done || !seg->use_rela_p)
+@@ -28070,6 +28079,7 @@ md_apply_fix (fixS *	fixP,
+ 	}
+       break;
+ 
++    /* This relocation is misnamed, it should be BRANCH21.  */
+     case BFD_RELOC_THUMB_PCREL_BRANCH20:
+       if (fixP->fx_addsy
+ 	  && (S_GET_SEGMENT (fixP->fx_addsy) == seg)
+@@ -28080,7 +28090,7 @@ md_apply_fix (fixS *	fixP,
+ 	  /* Force a relocation for a branch 20 bits wide.  */
+ 	  fixP->fx_done = 0;
+ 	}
+-      if ((value & ~0x1fffff) && ((value & ~0x0fffff) != ~0x0fffff))
++      if (out_of_range_p (value, 20))
+ 	as_bad_where (fixP->fx_file, fixP->fx_line,
+ 		      _("conditional branch out of range"));
+ 
+@@ -28159,12 +28169,11 @@ md_apply_fix (fixS *	fixP,
+ 	 fixP->fx_r_type = BFD_RELOC_THUMB_PCREL_BRANCH23;
+ #endif
+ 
+-      if ((value & ~0x3fffff) && ((value & ~0x3fffff) != ~0x3fffff))
++      if (out_of_range_p (value, 22))
+ 	{
+ 	  if (!(ARM_CPU_HAS_FEATURE (cpu_variant, arm_ext_v6t2)))
+ 	    as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+-	  else if ((value & ~0x1ffffff)
+-		   && ((value & ~0x1ffffff) != ~0x1ffffff))
++	  else if (out_of_range_p (value, 24))
+ 	    as_bad_where (fixP->fx_file, fixP->fx_line,
+ 			  _("Thumb2 branch out of range"));
+ 	}
+@@ -28175,7 +28184,7 @@ md_apply_fix (fixS *	fixP,
+       break;
+ 
+     case BFD_RELOC_THUMB_PCREL_BRANCH25:
+-      if ((value & ~0x0ffffff) && ((value & ~0x0ffffff) != ~0x0ffffff))
++      if (out_of_range_p (value, 24))
+ 	as_bad_where (fixP->fx_file, fixP->fx_line, BAD_RANGE);
+ 
+       if (fixP->fx_done || !seg->use_rela_p)
+diff --git a/gas/dw2gencfi.c b/gas/dw2gencfi.c
+index f30734d384..ab97ac4e16 100644
+--- a/gas/dw2gencfi.c
++++ b/gas/dw2gencfi.c
+@@ -726,6 +726,7 @@ const pseudo_typeS cfi_pseudo_table[] =
+     { "cfi_remember_state", dot_cfi, DW_CFA_remember_state },
+     { "cfi_restore_state", dot_cfi, DW_CFA_restore_state },
+     { "cfi_window_save", dot_cfi, DW_CFA_GNU_window_save },
++    { "cfi_negate_ra_state", dot_cfi, DW_CFA_AARCH64_negate_ra_state },
+     { "cfi_escape", dot_cfi_escape, 0 },
+     { "cfi_signal_frame", dot_cfi, CFI_signal_frame },
+     { "cfi_personality", dot_cfi_personality, 0 },
+diff --git a/gas/testsuite/gas/aarch64/pac_negate_ra_state.d b/gas/testsuite/gas/aarch64/pac_negate_ra_state.d
+new file mode 100644
+index 0000000000..7ab0f2369d
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/pac_negate_ra_state.d
+@@ -0,0 +1,26 @@
++#objdump: --dwarf=frames
++
++.+:     file .+
++
++Contents of the .eh_frame section:
++
++00000000 0000000000000010 00000000 CIE
++  Version:               1
++  Augmentation:          "zR"
++  Code alignment factor: 4
++  Data alignment factor: -8
++  Return address column: 30
++  Augmentation data:     1b
++  DW_CFA_def_cfa: r31 \(sp\) ofs 0
++
++00000014 0000000000000018 00000018 FDE cie=00000000 pc=0000000000000000..0000000000000008
++  DW_CFA_advance_loc: 4 to 0000000000000004
++  DW_CFA_GNU_window_save
++  DW_CFA_advance_loc: 4 to 0000000000000008
++  DW_CFA_def_cfa_offset: 16
++  DW_CFA_offset: r29 \(x29\) at cfa-16
++  DW_CFA_offset: r30 \(x30\) at cfa-8
++  DW_CFA_nop
++  DW_CFA_nop
++
++
+diff --git a/gas/testsuite/gas/aarch64/pac_negate_ra_state.s b/gas/testsuite/gas/aarch64/pac_negate_ra_state.s
+new file mode 100644
+index 0000000000..36ddbeb43b
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/pac_negate_ra_state.s
+@@ -0,0 +1,20 @@
++	.arch armv8-a
++	.text
++	.align	2
++	.global	_Z5foo_av
++	.type	_Z5foo_av, %function
++_Z5foo_av:
++.LFB0:
++	.cfi_startproc
++	hint	25 // paciasp
++	.cfi_negate_ra_state
++	stp	x29, x30, [sp, -16]!
++	.cfi_def_cfa_offset 16
++	.cfi_offset 29, -16
++	.cfi_offset 30, -8
++	.cfi_endproc
++.LFE0:
++	.size	_Z5foo_av, .-_Z5foo_av
++	.align	2
++	.global	_Z5foo_bv
++	.type	_Z5foo_bv, %function
+diff --git a/gas/testsuite/gas/arm/pr24991.d b/gas/testsuite/gas/arm/pr24991.d
+new file mode 100644
+index 0000000000..2acca2d656
+--- /dev/null
++++ b/gas/testsuite/gas/arm/pr24991.d
+@@ -0,0 +1,4 @@
++#as: -march=armv7-a
++#source: pr24991.s
++#error_output: pr24991.l
++
+diff --git a/gas/testsuite/gas/arm/pr24991.l b/gas/testsuite/gas/arm/pr24991.l
+new file mode 100644
+index 0000000000..4fc58751c8
+--- /dev/null
++++ b/gas/testsuite/gas/arm/pr24991.l
+@@ -0,0 +1,2 @@
++[^:]*: Assembler messages:
++[^:]*:4: Error: conditional branch out of range
+diff --git a/gas/testsuite/gas/arm/pr24991.s b/gas/testsuite/gas/arm/pr24991.s
+new file mode 100644
+index 0000000000..27f8daff1c
+--- /dev/null
++++ b/gas/testsuite/gas/arm/pr24991.s
+@@ -0,0 +1,5 @@
++        .arch armv7-a
++        .syntax unified
++        .thumb
++        beq     .+ 0x124f80
++
