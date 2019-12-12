@@ -5,7 +5,6 @@
 
 # automatically downloaded source files
 /sources/
-/.stamps/
 
 # prebuild target binarys to provide
 /target/
