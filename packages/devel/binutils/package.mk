@@ -29,7 +29,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --enable-deterministic-archives \
+                         --disable-deterministic-archives \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
@@ -37,6 +37,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-threads \
                          --disable-gdb \
                          --enable-64-bit-bfd \
+                         --enable-relro \
                          --disable-werror \
                          --with-pic \
                          --enable-lto \
