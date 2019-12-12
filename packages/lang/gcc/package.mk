@@ -50,11 +50,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-diagnostics-color=always \
                            --enable-default-pie \
                            --enable-default-ssp \
+                           --enable-poison-system-directories \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-fixed-point \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp"
@@ -97,7 +97,6 @@ pre_configure_host() {
 post_make_host() {
   # fix wrong link
   rm -rf $TARGET_NAME/libgcc/libgcc_s.so
-  #${TARGET_PREFIX}strip $TARGET_NAME/libgomp/.libs/libgomp.so*
   ${TARGET_PREFIX}strip $TARGET_NAME/libatomic/.libs/libatomic.so*
 
   ln -sf libgcc_s.so.1 $TARGET_NAME/libgcc/libgcc_s.so
@@ -156,7 +155,6 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/usr/lib
-    #cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
