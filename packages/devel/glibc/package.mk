@@ -30,7 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=5.3 \
+                           --enable-kernel=5.4 \
                            --without-cvs \
                            --enable-static-pie \
                            --without-gd \
