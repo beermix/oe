@@ -2,7 +2,7 @@
 # Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="ninja"
-PKG_VERSION="ba156d0"
+PKG_VERSION="0c84b0e"
 PKG_SITE="https://github.com/ninja-build/ninja"
 PKG_URL="https://github.com/ninja-build/ninja/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="cmake:host re2c:host"
