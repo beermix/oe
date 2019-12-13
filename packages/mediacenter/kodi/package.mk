@@ -241,18 +241,6 @@ configure_package() {
                          -DENABLE_DEBUGFISSION=OFF \
                          -DENABLE_APP_AUTONAME=OFF \
                          -DENABLE_INTERNAL_FLATBUFFERS=OFF \
-                         -DHAVE_SSE=TRUE \
-                         -DHAVE_SSE2=TRUE \
-                         -DHAVE_SSE3=TRUE \
-                         -DHAVE_SSE4_1=TRUE \
-                         -DHAVE_SSSE3=TRUE \
-                         -DENABLE_SSE:BOOL=ON \
-                         -DENABLE_SSE2:BOOL=ON \
-                         -DENABLE_SSE3:BOOL=ON \
-                         -DENABLE_SSE4_1:BOOL=ON \
-                         -DENABLE_SSE4_2:BOOL=OFF \
-                         -DENABLE_SSSE3:BOOL=ON \
-                         -DENABLE_AVX=ON \
                          $PKG_KODI_USE_LTO \
                          $KODI_ARCH \
                          $KODI_NEON \
