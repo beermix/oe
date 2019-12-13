@@ -5,7 +5,6 @@
 PKG_NAME="binutils"
 PKG_VERSION="2.33.1"
 PKG_SHA256="ab66fc2d1c3ec0359b8e08843c9f33b63e8707efdff5e4cc5c200eae24722cbf"
-#PKG_VERSION="4719dce"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb/tree/binutils-2_33-branch"
 PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
@@ -29,17 +28,12 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --disable-deterministic-archives \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-targets=x86_64-linux \
-                         --enable-threads \
-                         --disable-gdb \
                          --enable-64-bit-bfd \
                          --enable-relro \
-                         --disable-werror \
-                         --with-pic \
                          --enable-lto \
                          --disable-nls"
 
