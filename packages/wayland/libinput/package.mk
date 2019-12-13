@@ -2,10 +2,10 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="libinput"
-PKG_VERSION="1.14.1"
-PKG_SHA256="e333a3242835c019ca37d2cef8b51a87d3138eb47444119c0153dc7a8656ee70"
+PKG_VERSION="1.14.3"
+PKG_SHA256="0feb3a0589709cc1032893bfaf4c49150d5360bd9782bec888f9e4dd9044c5b7"
 PKG_LICENSE="GPL"
-PKG_SITE="https://www.freedesktop.org/software/libinput/?C=M;O=D"
+PKG_SITE="http://www.freedesktop.org/wiki/Software/libinput/"
 PKG_URL="http://www.freedesktop.org/software/libinput/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain systemd libevdev mtdev"
 PKG_LONGDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
