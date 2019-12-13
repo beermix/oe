@@ -16,7 +16,7 @@ PKG_TOOLCHAIN="meson"
 #PKG_TOOLCHAIN="configure"
 
 PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
-                       -Dwayland_backend=true \
+                       -Dwayland_backend=false \
                        -Dbroadway_backend=false \
                        -Dwin32_backend=false \
                        -Dquartz_backend=false \
@@ -27,7 +27,9 @@ PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
                        -Dintrospection=false \
                        -Dxinerama=no \
                        -Ddemos=false \
-                       -Dexamples=false"
+                       -Dexamples=false \
+                       -Dtests=false \
+                       -Dinstalled_tests=false"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --disable-debug \
@@ -41,8 +43,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --disable-xinerama \
                            --enable-xkb"
 
-#pre_configure_target() {
-#  LIBS="$LIBS -lXcursor"
-#  CFLAGS="$CFLAGS -DG_ENABLE_DEBUG -DG_DISABLE_CAST_CHECKS"
-#  export GLIB_COMPILE_RESOURCES=glib-compile-resources GLIB_MKENUMS=glib-mkenums GLIB_GENMARSHAL=glib-genmarshal
-#}
+pre_configure_target() {
+  LIBS="$LIBS -lXcursor"
+  CFLAGS="$CFLAGS -DG_ENABLE_DEBUG -DG_DISABLE_CAST_CHECKS"
+  export GLIB_COMPILE_RESOURCES=glib-compile-resources GLIB_MKENUMS=glib-mkenums GLIB_GENMARSHAL=glib-genmarshal
+}
