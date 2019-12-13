@@ -127,7 +127,7 @@ if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   CMAKE_BUILD_TYPE="Debug"
   MESON_BUILD_TYPE="debug"
 else
-  CMAKE_BUILD_TYPE="Release"
+  CMAKE_BUILD_TYPE=""
   MESON_BUILD_TYPE="plain"
 fi
 
@@ -150,7 +150,6 @@ TARGET_CONFIGURE_OPTS="--host=${TARGET_NAME} \
 
 TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=${CMAKE_CONF} \
                    -DCMAKE_INSTALL_PREFIX=/usr \
-                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
                    -Wno-dev"
 
 TARGET_MESON_OPTS="--prefix=/usr \
