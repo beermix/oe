@@ -5,7 +5,7 @@
 PKG_NAME="gtk3"
 PKG_VERSION="3.24.13"
 PKG_SHA256="4c775c38cf1e3c534ef0ca52ca6c7a890fe169981af66141c713e054e68930a9"
-#PKG_VERSION="e3860d2"
+#PKG_VERSION="4470e5b"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://ftp.acc.umu.se/pub/gnome/sources/gtk+/?C=M;O=D"
 PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gtk+/${PKG_VERSION:0:4}/gtk+-$PKG_VERSION.tar.xz"
@@ -13,11 +13,11 @@ PKG_URL="https://ftp.gnome.org/pub/gnome/sources/gtk+/${PKG_VERSION:0:4}/gtk+-$P
 PKG_DEPENDS_TARGET="toolchain at-spi2-atk atk cairo gdk-pixbuf glib libX11 libXi libXrandr libepoxy pango"
 PKG_LONGDESC="A library for creating graphical user interfaces for the X Window System."
 PKG_TOOLCHAIN="meson"
-#PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="configure"
 
 PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
-                       -Dwayland_backend=true \
                        -Dbroadway_backend=false \
+                       -Dwayland_backend=false \
                        -Dwin32_backend=false \
                        -Dquartz_backend=false \
                        -Dmir_backend=false \
@@ -27,7 +27,8 @@ PKG_MESON_OPTS_TARGET="-Dx11_backend=true \
                        -Dintrospection=false \
                        -Dxinerama=no \
                        -Ddemos=false \
-                       -Dexamples=false"
+                       -Dexamples=false \
+                       -Dbuiltin_immodules=yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --disable-debug \
@@ -35,14 +36,18 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-cups \
                            --disable-glibtest \
                            --disable-gtk-doc \
                            --disable-gtk-doc-html \
+                           --disable-doc-cross-references \
+                           --disable-cups \
+                           --disable-papi \
+                           --disable-cloudprint \
                            --disable-man \
                            --enable-modules \
                            --disable-papi \
                            --disable-xinerama \
                            --enable-xkb"
 
-#pre_configure_target() {
-#  LIBS="$LIBS -lXcursor"
-#  CFLAGS="$CFLAGS -DG_ENABLE_DEBUG -DG_DISABLE_CAST_CHECKS"
-#  export GLIB_COMPILE_RESOURCES=glib-compile-resources GLIB_MKENUMS=glib-mkenums GLIB_GENMARSHAL=glib-genmarshal
-#}
+pre_configure_target() {
+  LIBS="$LIBS -lXcursor"
+#  export CFLAGS="$CFLAGS -DG_ENABLE_DEBUG -DG_DISABLE_CAST_CHECKS"
+  export GLIB_COMPILE_RESOURCES=glib-compile-resources GLIB_MKENUMS=glib-mkenums GLIB_GENMARSHAL=glib-genmarshal
+}
