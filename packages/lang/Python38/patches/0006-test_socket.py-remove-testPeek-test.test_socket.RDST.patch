@@ -1,0 +1,38 @@
+From f8495058b010eb5715dbea5e805ee5b80e52cca8 Mon Sep 17 00:00:00 2001
+From: Juro Bystricky <juro.bystricky@intel.com>
+Date: Thu, 3 Oct 2019 10:46:00 -0700
+Subject: [PATCH 6/6] test_socket.py: remove testPeek
+ (test.test_socket.RDSTest)
+
+This test suffers from a race condition and hangs frequently.
+https://bugs.python.org/issue35247
+
+Signed-off-by: Juro Bystricky <juro.bystricky@intel.com>
+---
+ Lib/test/test_socket.py | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/Lib/test/test_socket.py b/Lib/test/test_socket.py
+index 1bf562a..7da2ea6 100644
+--- a/Lib/test/test_socket.py
++++ b/Lib/test/test_socket.py
+@@ -2101,16 +2101,6 @@ class RDSTest(ThreadedRDSSocketTest):
+         self.data = b'spam'
+         self.cli.sendto(self.data, 0, (HOST, self.port))
+ 
+-    def testPeek(self):
+-        data, addr = self.serv.recvfrom(self.bufsize, socket.MSG_PEEK)
+-        self.assertEqual(self.data, data)
+-        data, addr = self.serv.recvfrom(self.bufsize)
+-        self.assertEqual(self.data, data)
+-
+-    def _testPeek(self):
+-        self.data = b'spam'
+-        self.cli.sendto(self.data, 0, (HOST, self.port))
+-
+     @requireAttrs(socket.socket, 'recvmsg')
+     def testSendAndRecvMsg(self):
+         data, ancdata, msg_flags, addr = self.serv.recvmsg(self.bufsize)
+-- 
+2.23.0
+

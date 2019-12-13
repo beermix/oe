@@ -14,7 +14,7 @@ PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+speed"
 
-PKG_PYTHON_VERSION=python3.8
+PKG_PYTHON_VERSION="python3.8"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
@@ -86,18 +86,23 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --with-computed-gotos
                            --with-threads
                            --disable-ipv6
+                           --with-lto=8
 "
 
-post_unpack() {
-  # This is needed to make sure the Python build process doesn't try to
-  # regenerate those files with the pgen program. Otherwise, it builds
-  # pgen for the target, and tries to run it on the host.
-    touch $PKG_BUILD/Include/graminit.h
-    touch $PKG_BUILD/Python/graminit.c
+pre_configure_host() {
+  export PYTHON_MODULES_INCLUDE="$HOST_INCDIR"
+  export PYTHON_MODULES_LIB="$HOST_LIBDIR"
+  export DISABLED_EXTENSIONS="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES"
+}
+
+post_make_host() {
+  # python distutils per default adds -L$LIBDIR when linking binary extensions
+  sed -e "s|^ 'LIBDIR':.*| 'LIBDIR': '/usr/lib',|g" -i $(find $PKG_BUILD/.$HOST_NAME -not -path '*/__pycache__/*' -name '_sysconfigdata__*.py')
 }
 
 post_makeinstall_host() {
-  rm -f $TOOLCHAIN/bin/python*-config
+ # ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
+
   rm -f $TOOLCHAIN/bin/smtpd.py*
   rm -f $TOOLCHAIN/bin/pyvenv
   rm -f $TOOLCHAIN/bin/pydoc*
@@ -107,7 +112,15 @@ post_makeinstall_host() {
   cp $PKG_BUILD/Tools/scripts/reindent.py $TOOLCHAIN/lib/$PKG_PYTHON_VERSION
 }
 
+pre_configure_target() {
+  export PYTHON_MODULES_INCLUDE="$TARGET_INCDIR"
+  export PYTHON_MODULES_LIB="$TARGET_LIBDIR"
+  export DISABLED_EXTENSIONS="$PKG_PY_DISABLED_MODULES"
+}
+
 post_makeinstall_target() {
+ # ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
+
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
   PKG_INSTALL_PATH_LIB=$INSTALL/usr/lib/$PKG_PYTHON_VERSION
@@ -116,12 +129,13 @@ post_makeinstall_target() {
     rm -rf $PKG_INSTALL_PATH_LIB/$dir
   done
 
+  rm -rf $PKG_INSTALL_PATH_LIB/distutils/command/*.exe
+
   rm -rf $INSTALL/usr/bin/pyvenv
   rm -rf $INSTALL/usr/bin/python*-config
   rm -rf $INSTALL/usr/bin/smtpd.py $INSTALL/usr/bin/smtpd.py.*
 
-  $TOOLCHAIN/bin/python3 -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py -d ${PKG_INSTALL_PATH_LIB#${INSTALL}} -b -f $PKG_INSTALL_PATH_LIB
-  find $PKG_INSTALL_PATH_LIB -name "*.py" -exec rm -f {} \; &>/dev/null
+  python_compile $PKG_INSTALL_PATH_LIB
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
