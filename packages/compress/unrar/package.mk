@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="unrar"
-PKG_VERSION="5.8.2"
-PKG_SHA256="33386623fd3fb153b56292df4a6a69b457e69e1803b6d07b614e5fd22fb33dda"
+PKG_VERSION="5.8.5"
+PKG_SHA256="a725923a627bc8b3dd670a347b57701e1ad61f5f4e7b789d09244fb4b7f97b29"
 PKG_SITE="http://www.rarlab.com"
 PKG_URL="http://www.rarlab.com/rar/unrarsrc-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}"
