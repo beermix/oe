@@ -3,12 +3,12 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="0867eea666c654961d6dabe49b9afc3802545f32"
-PKG_SHA256="7c35c854ebff92eb6f57fbfd88b24b195eaf1a21758e0e960d3a8c3790293279"
+PKG_VERSION="f66d395"
+PKG_SHA256="444fe85522241aa7693e020308f1f9c3a1b1a9be097c9e127b7d453739b73ac5"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
-PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log"
-PKG_URL="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/$PKG_VERSION.tar.xz"
+PKG_SITE="https://github.com/freedesktop/xorg-xf86-video-intel"
+PKG_URL="https://github.com/freedesktop/xorg-xf86-video-intel/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-macros systemd xorg-server"
 PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G."
 PKG_TOOLCHAIN="autotools"
