@@ -14,7 +14,6 @@ PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERS
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host ncurses readline"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
-
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel +speed"
 
@@ -54,6 +53,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-system-expat \
                            --with-computed-gotos \
                            --with-lto"
+
+pre_configure_host() {
+  CFLAGS=${CFLAGS/-O2/-O3}
+  CXXFLAGS=${CXXFLAGS/-O2/-O3}
+}
+
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds

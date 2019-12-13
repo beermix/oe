@@ -92,6 +92,9 @@ pre_configure_host() {
   export PYTHON_MODULES_INCLUDE="$HOST_INCDIR"
   export PYTHON_MODULES_LIB="$HOST_LIBDIR"
   export DISABLED_EXTENSIONS="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES"
+
+  CFLAGS=${CFLAGS/-O2/-O3}
+  CXXFLAGS=${CXXFLAGS/-O2/-O3}
 }
 
 post_make_host() {
@@ -100,7 +103,7 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-#  ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
+  # ln -sf $PKG_PYTHON_VERSION $TOOLCHAIN/bin/python
 
   rm -f $TOOLCHAIN/bin/smtpd.py*
   rm -f $TOOLCHAIN/bin/pyvenv
@@ -118,7 +121,7 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-#  ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
+  # ln -sf $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
 
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
