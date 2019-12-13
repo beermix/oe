@@ -15,10 +15,9 @@ noobs:
 	./scripts/image noobs
 
 clean:
-	rm -rf $(BUILD_DIRS)/* $(BUILD_DIRS)/.stamps
-#	rm -rf build.*
+	rm -rf build.*
 distclean:
 	rm -rf ./.ccache ./$(BUILD_DIRS)
 
 src-pkg:
-	tar cvJf sources.tar.xz sources
+	tar cvJf sources.tar.xz sources .stamps
