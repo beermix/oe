@@ -9,14 +9,14 @@ pre_configure_target() {
   export LIBS="-lncursesw -ltinfo"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
-			      --enable-cap \
+PKG_CONFIGURE_OPTS_TARGET="--enable-cap \
 			      --enable-pcre \
 			      --disable-ansi2knr \
-			      --disable-dynamic \
-			      --with-term-lib=ncursesw \
-			      --enable-etcdir \
+			      --disable-zsh-debug \
+			      --with-term-lib='ncursesw' \
+			      --enable-multibyte \
 			      --enable-function-subdirs \
+			      --enable-fndir=/usr/lib/zsh/functions \
+			      --enable-scriptdir=/usr/lib/zsh/scripts \
 			      --with-tcsetpgrp \
-			      --enable-zsh-secure-free \
-			      --disable-zsh-debug"
+			      --enable-zsh-secure-free"

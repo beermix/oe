@@ -469,6 +469,7 @@ if [ "${TARGET}" = "target" -o "${TARGET}" = "init" ]; then
     rm -rf ${INSTALL}/{usr/local/,usr/,}share/info
     rm -rf ${INSTALL}/{usr/local/,usr/,}share/locale
     rm -rf ${INSTALL}/{usr/local/,usr/,}share/man
+    rm -rf ${INSTALL}/{usr/local/,usr/,}share/zsh
     rm -rf ${INSTALL}/{usr/local/,usr/,}var
     find ${INSTALL} \( -name "*.orig" \
                   -o -name "*.rej" \
