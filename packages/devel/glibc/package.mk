@@ -14,7 +14,7 @@ PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap pigz:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
-PKG_BUILD_FLAGS="-gold -lto -hardening"
+PKG_BUILD_FLAGS="-gold"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
@@ -28,7 +28,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=5.4 \
                            --without-cvs \
-                           --enable-static-pie \
                            --enable-stack-protector=strong \
                            --without-gd \
                            --disable-build-nscd \
@@ -55,31 +54,9 @@ pre_build_target() {
 
 pre_configure_target() {
 # Filter out some problematic *FLAGS
-  export CCACHE_DISABLE=true
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-Wl,--copy-dt-needed-entries -fasynchronous-unwind-tables -Wp,-D_REENTRANT -ftree-loop-distribute-patterns -malign-data=abi -fno-semantic-interposition -ftree-vectorize -ftree-loop-vectorize||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-g0|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-g1|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-stack-protector -U_FORTIFY_SOURCE||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-Wp,||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
@@ -90,7 +67,6 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
 
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||"`
 
   unset LD_LIBRARY_PATH
 
@@ -127,7 +103,7 @@ EOF
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
