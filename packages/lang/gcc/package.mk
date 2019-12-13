@@ -52,6 +52,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-default-pie \
                            --enable-default-ssp \
                            --enable-poison-system-directories \
+                           --with-gcc-major-version-only \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
