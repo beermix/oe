@@ -52,7 +52,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-default-pie \
                            --enable-default-ssp \
                            --enable-poison-system-directories \
-                            --without-ppl \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
@@ -109,7 +110,6 @@ post_make_host() {
   # fix wrong link
   rm -rf $TARGET_NAME/libgcc/libgcc_s.so
   ${TARGET_PREFIX}strip $TARGET_NAME/libatomic/.libs/libatomic.so*
-
   ln -sf libgcc_s.so.1 $TARGET_NAME/libgcc/libgcc_s.so
 
   if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
