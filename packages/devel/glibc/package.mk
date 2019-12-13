@@ -22,17 +22,14 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
-                           --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
-                           --with-elf \
-                           --with-tls \
-                           --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=5.4 \
                            --without-cvs \
                            --enable-static-pie \
+                           --enable-stack-protector=strong \
                            --without-gd \
                            --disable-build-nscd \
                            --disable-nscd \
@@ -98,7 +95,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+  export CFLAGS="$CFLAGS -g2"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
