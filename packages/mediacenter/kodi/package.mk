@@ -262,7 +262,7 @@ configure_package() {
 }
 
 pre_configure_target() {
-  export LIBS="-lncursesw -ltinfo"
+  export LIBS="$LIBS -lncursesw -ltinfo"
 }
 
 post_makeinstall_target() {
