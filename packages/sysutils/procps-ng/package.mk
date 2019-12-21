@@ -2,11 +2,12 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="procps-ng"
-PKG_VERSION="3.3.15"
-PKG_SHA256="191391fde24a1d3b9b0030d26f8dfdcbf641d36297aab7ecf2f941c5ca927e21"
+PKG_VERSION="3.3.16"
+PKG_SHA256="925eacd65dedcf9c98eb94e8978bbfb63f5de37294cc1047d81462ed477a20af"
 PKG_LICENSE="GPL"
 PKG_SITE="https://gitlab.com/procps-ng/procps"
 PKG_URL="https://gitlab.com/procps-ng/procps/-/archive/v${PKG_VERSION}/procps-v${PKG_VERSION}.tar.bz2"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_LONGDESC="Command line and full screen utilities for browsing procfs."
 PKG_TOOLCHAIN="autotools"
