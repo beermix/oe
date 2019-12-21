@@ -50,7 +50,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
                            --enable-default-pie \
-                           --enable-default-ssp \
                            --enable-poison-system-directories \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
