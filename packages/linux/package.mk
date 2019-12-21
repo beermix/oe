@@ -31,7 +31,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   xanmod) # https://github.com/xanmod/linux/releases
-    PKG_VERSION="5.4.2-xanmod2"
+    PKG_VERSION="5.4.4-xanmod3"
     PKG_SHA256=""
     PKG_URL="https://github.com/xanmod/linux/archive/$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="default"
