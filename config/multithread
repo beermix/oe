@@ -66,33 +66,7 @@ package_worker() {
 
   if [ "${isaddon}" = "yes" -a "${istarget}" = "yes" ]; then
     if [ ${result} -eq 0 ]; then
-      (
-        pkg_lock "${pkgname}" "packadd"
-        pkg_lock_status "ACTIVE" "${pkgname}" "packadd"
-
-        # cleanup old install path
-        rm -rf "${ADDON_BUILD}"
-
-        # install addon parts
-        if pkg_call_exists addon; then
-          pkg_call addon
-        else
-          install_binary_addon "${PKG_ADDON_ID}"
-        fi
-
-        # HACK for packages that provide multiple addons like screensavers.rsxs
-        # addon's addon() in package.mk should take care for exporting
-        # MULTI_ADDONS="addon.boo1 addon.boo2 addon.boo3"
-        if [ -n "${MULTI_ADDONS}" ] ; then
-          for addon in ${MULTI_ADDONS}; do
-            ${SCRIPTS}/install_addon "${PKG_NAME}" "${addon}"
-          done
-        else
-          ${SCRIPTS}/install_addon "${PKG_NAME}" "${PKG_ADDON_ID}"
-        fi
-
-        pkg_lock_status "UNLOCK" "${pkgname}" "packadd" "packed"
-      ) 2>&1 || result=1
+      ${SCRIPTS}/install_addon ${pkgname} 2>&1 && result=0 || result=1
     fi
 
     if [ ${result} -ne 0 ]; then
@@ -181,6 +155,8 @@ start_multithread_build() {
       MTBUILDSTART=$(date +%s) MTWITHLOCKS=yes ${TOOLCHAIN}/bin/parallel \
         --plain --no-notice --max-procs ${THREADCOUNT} --joblog="${THREAD_CONTROL}/joblog" --plus ${buildopts} \
         package_worker {%} {#} {##} {} || result=1
+
+    [ -f "${THREAD_CONTROL}"/history ] && echo && cat "${THREAD_CONTROL}"/history | ${ROOT}/tools/mtstats.py
 
     rm -f "${THREAD_CONTROL}/parallel.pid"
   fi

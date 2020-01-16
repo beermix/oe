@@ -51,6 +51,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-diagnostics-color=always \
                            --enable-poison-system-directories \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-libstdcxx-debug \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -92,19 +93,19 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-  export CCACHE_DISABLE=true
+#  export CCACHE_DISABLE=true
 
  # export CFLAGS="$HOST_CFLAGS"
  # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
  # export CXXFLAGS_FOR_TARGET="$TARGET_CFLAGS"
 }
 
-pre_configure_bootstrap() {
+#pre_configure_bootstrap() {
  # export CFLAGS="$HOST_CFLAGS"
  # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
  # export CXXFLAGS_FOR_TARGET="$TARGET_CFLAGS"
- export CCACHE_DISABLE=true
-}
+# export CCACHE_DISABLE=true
+#}
 
 post_make_host() {
   # fix wrong link
@@ -119,6 +120,8 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
+  make install-strip
+
   cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
 
   GCC_VERSION=`$TOOLCHAIN/bin/${TARGET_NAME}-gcc -dumpversion`
