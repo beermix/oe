@@ -93,19 +93,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-#  export CCACHE_DISABLE=true
-
- # export CFLAGS="$HOST_CFLAGS"
- # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
- # export CXXFLAGS_FOR_TARGET="$TARGET_CFLAGS"
 }
-
-#pre_configure_bootstrap() {
- # export CFLAGS="$HOST_CFLAGS"
- # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
- # export CXXFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-# export CCACHE_DISABLE=true
-#}
 
 post_make_host() {
   # fix wrong link
