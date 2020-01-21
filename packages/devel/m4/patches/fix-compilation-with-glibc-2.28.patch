@@ -1,6 +1,9 @@
-diff -up m4-1.4.18/lib/fflush.c.orig m4-1.4.18/lib/fflush.c
---- m4-1.4.18/lib/fflush.c.orig	2018-05-02 12:35:59.536851666 +0200
-+++ m4-1.4.18/lib/fflush.c	2018-05-02 12:37:02.768958606 +0200
+Those are changes from upstream gnulib commit which fixes compilation with glibc 2.28.
+
+diff --git a/lib/fflush.c b/lib/fflush.c
+index 983ade0..a6edfa1 100644
+--- a/lib/fflush.c
++++ b/lib/fflush.c
 @@ -33,7 +33,7 @@
  #undef fflush
  
@@ -18,7 +21,7 @@ diff -up m4-1.4.18/lib/fflush.c.orig m4-1.4.18/lib/fflush.c
 +#if ! (defined _IO_EOF_SEEN || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */)
  
  # if (defined __sferror || defined __DragonFly__ || defined __ANDROID__) && defined __SNPT
- /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
+ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
 @@ -148,7 +148,7 @@ rpl_fflush (FILE *stream)
    if (stream == NULL || ! freading (stream))
      return fflush (stream);
@@ -28,9 +31,10 @@ diff -up m4-1.4.18/lib/fflush.c.orig m4-1.4.18/lib/fflush.c
  
    clear_ungetc_buffer_preserving_position (stream);
  
-diff -up m4-1.4.18/lib/fpending.c.orig m4-1.4.18/lib/fpending.c
---- m4-1.4.18/lib/fpending.c.orig	2018-05-02 12:35:32.305806774 +0200
-+++ m4-1.4.18/lib/fpending.c	2018-05-02 12:35:44.944827347 +0200
+diff --git a/lib/fpending.c b/lib/fpending.c
+index c84e3a5..789f50e 100644
+--- a/lib/fpending.c
++++ b/lib/fpending.c
 @@ -32,7 +32,7 @@ __fpending (FILE *fp)
    /* Most systems provide FILE as a struct and the necessary bitmask in
       <stdio.h>, because they need it for implementing getc() and putc() as
@@ -39,10 +43,11 @@ diff -up m4-1.4.18/lib/fpending.c.orig m4-1.4.18/lib/fpending.c
 +#if defined _IO_EOF_SEEN || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
    return fp->_IO_write_ptr - fp->_IO_write_base;
  #elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
-   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
-diff -up m4-1.4.18/lib/fpurge.c.orig m4-1.4.18/lib/fpurge.c
---- m4-1.4.18/lib/fpurge.c.orig	2018-05-02 12:38:13.586078669 +0200
-+++ m4-1.4.18/lib/fpurge.c	2018-05-02 12:38:38.785121867 +0200
+   /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
+diff --git a/lib/fpurge.c b/lib/fpurge.c
+index b1d417c..3aedcc3 100644
+--- a/lib/fpurge.c
++++ b/lib/fpurge.c
 @@ -62,7 +62,7 @@ fpurge (FILE *fp)
    /* Most systems provide FILE as a struct and the necessary bitmask in
       <stdio.h>, because they need it for implementing getc() and putc() as
@@ -52,10 +57,11 @@ diff -up m4-1.4.18/lib/fpurge.c.orig m4-1.4.18/lib/fpurge.c
    fp->_IO_read_end = fp->_IO_read_ptr;
    fp->_IO_write_ptr = fp->_IO_write_base;
    /* Avoid memory leak when there is an active ungetc buffer.  */
-diff -up m4-1.4.18/lib/freadahead.c.orig m4-1.4.18/lib/freadahead.c
---- m4-1.4.18/lib/freadahead.c.orig	2016-12-31 14:54:41.000000000 +0100
-+++ m4-1.4.18/lib/freadahead.c	2018-05-02 11:43:19.570336724 +0200
-@@ -25,7 +25,7 @@
+diff --git a/lib/freadahead.c b/lib/freadahead.c
+index c2ecb5b..23ec76e 100644
+--- a/lib/freadahead.c
++++ b/lib/freadahead.c
+@@ -30,7 +30,7 @@ extern size_t __sreadahead (FILE *);
  size_t
  freadahead (FILE *fp)
  {
@@ -64,9 +70,10 @@ diff -up m4-1.4.18/lib/freadahead.c.orig m4-1.4.18/lib/freadahead.c
    if (fp->_IO_write_ptr > fp->_IO_write_base)
      return 0;
    return (fp->_IO_read_end - fp->_IO_read_ptr)
-diff -up m4-1.4.18/lib/freading.c.orig m4-1.4.18/lib/freading.c
---- m4-1.4.18/lib/freading.c.orig	2018-05-02 12:37:33.970011368 +0200
-+++ m4-1.4.18/lib/freading.c	2018-05-02 12:37:59.393054359 +0200
+diff --git a/lib/freading.c b/lib/freading.c
+index 73c28ac..c24d0c8 100644
+--- a/lib/freading.c
++++ b/lib/freading.c
 @@ -31,7 +31,7 @@ freading (FILE *fp)
    /* Most systems provide FILE as a struct and the necessary bitmask in
       <stdio.h>, because they need it for implementing getc() and putc() as
@@ -76,10 +83,11 @@ diff -up m4-1.4.18/lib/freading.c.orig m4-1.4.18/lib/freading.c
    return ((fp->_flags & _IO_NO_WRITES) != 0
            || ((fp->_flags & (_IO_NO_READS | _IO_CURRENTLY_PUTTING)) == 0
                && fp->_IO_read_base != NULL));
-diff -up m4-1.4.18/lib/fseeko.c.orig m4-1.4.18/lib/fseeko.c
---- m4-1.4.18/lib/fseeko.c.orig	2018-05-02 11:44:17.947460233 +0200
-+++ m4-1.4.18/lib/fseeko.c	2018-05-02 12:39:49.537216897 +0200
-@@ -47,7 +47,7 @@ fseeko (FILE *fp, off_t offset, int when
+diff --git a/lib/fseeko.c b/lib/fseeko.c
+index 0101ab5..193f4e8 100644
+--- a/lib/fseeko.c
++++ b/lib/fseeko.c
+@@ -47,7 +47,7 @@ fseeko (FILE *fp, off_t offset, int whence)
  #endif
  
    /* These tests are based on fpurge.c.  */
@@ -88,7 +96,7 @@ diff -up m4-1.4.18/lib/fseeko.c.orig m4-1.4.18/lib/fseeko.c
    if (fp->_IO_read_end == fp->_IO_read_ptr
        && fp->_IO_write_ptr == fp->_IO_write_base
        && fp->_IO_save_base == NULL)
-@@ -123,7 +123,7 @@ fseeko (FILE *fp, off_t offset, int when
+@@ -123,7 +123,7 @@ fseeko (FILE *fp, off_t offset, int whence)
            return -1;
          }
  
@@ -97,9 +105,8 @@ diff -up m4-1.4.18/lib/fseeko.c.orig m4-1.4.18/lib/fseeko.c
        fp->_flags &= ~_IO_EOF_SEEN;
        fp->_offset = pos;
  #elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
-diff -up m4-1.4.18/lib/stdio-impl.h.orig m4-1.4.18/lib/stdio-impl.h
---- m4-1.4.18/lib/stdio-impl.h.orig	2016-12-31 14:54:42.000000000 +0100
-+++ m4-1.4.18/lib/stdio-impl.h	2018-05-02 11:43:19.570336724 +0200
+--- a/lib/stdio-impl.h
++++ b/lib/stdio-impl.h
 @@ -18,6 +18,12 @@
     the same implementation of stdio extension API, except that some fields
     have different naming conventions, or their access requires some casts.  */
@@ -113,3 +120,6 @@ diff -up m4-1.4.18/lib/stdio-impl.h.orig m4-1.4.18/lib/stdio-impl.h
  
  /* BSD stdio derived implementations.  */
  
+-- 
+1.9.1
+
