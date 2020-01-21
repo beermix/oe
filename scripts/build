@@ -63,9 +63,11 @@ case "${TARGET}" in
   "init") _pkg_depends="${PKG_DEPENDS_INIT}";;
   "bootstrap") _pkg_depends="${PKG_DEPENDS_BOOTSTRAP}";;
 esac
-for p in ${_pkg_depends}; do
-  ${SCRIPTS}/build "${p}" "${PARENT_PKG}"
-done
+if is_sequential_build; then
+  for p in ${_pkg_depends}; do
+    ${SCRIPTS}/build "${p}" "${PARENT_PKG}"
+  done
+fi
 
 # virtual packages are not built as they only contain dependencies, so dont go further here
 if [ "${PKG_SECTION}" = "virtual" ]; then
@@ -404,7 +406,8 @@ else
 
     # make based builds
     "configure:target"|"cmake-make:target"|"autotools:target"|"make:target")
-      make install DESTDIR=${SYSROOT_PREFIX} -j1 ${PKG_MAKEINSTALL_OPTS_TARGET}
+      [ "${INSTALL_TO_SYSROOT}" = "yes" ] && \
+        make install DESTDIR=${SYSROOT_PREFIX} -j1 ${PKG_MAKEINSTALL_OPTS_TARGET}
       make install DESTDIR=${INSTALL} ${PKG_MAKEINSTALL_OPTS_TARGET}
       ;;
     "configure:host"|"cmake-make:host"|"autotools:host"|"make:host")
@@ -443,8 +446,10 @@ for i in $(find "${SYSROOT_PREFIX}" -type l 2>/dev/null); do
 done
 
 # Transfer the new sysroot content to the shared sysroot
+acquire_update_lock sysroot
 mkdir -p "${PKG_ORIG_SYSROOT_PREFIX}"
 cp -PRf "${SYSROOT_PREFIX}"/* "${PKG_ORIG_SYSROOT_PREFIX}"
+release_update_lock
 rm -rf "${SYSROOT_PREFIX}"
 
 export SYSROOT_PREFIX="${PKG_ORIG_SYSROOT_PREFIX}"
