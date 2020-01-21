@@ -3,7 +3,7 @@
 
 . $(get_pkg_directory rsync)/package.mk
 
-PKG_NAME="rsyncx"
+PKG_NAME="rsync"
 PKG_DEPENDS_TARGET="toolchain"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-acl-support \
