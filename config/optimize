@@ -56,7 +56,7 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fPIE"
 CXXFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fPIE"
 CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
-LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
+LDFLAGS="-Wl,-z,relro -Wl,-z,now"
 
 # add distro specific library dirs
 if [ -z "$HOST_LIBDIR" ]; then
