@@ -9,7 +9,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host util-linux:host xz:host"
-PKG_DEPENDS_TARGET="toolchain Python3:host sqlite expat zlib bzip2 xz openssl libffi readline ncurses"
+PKG_DEPENDS_TARGET="toolchain Python3:host sqlite expat zlib bzip2 xz openssl libffi readline ncurses util-linux"
 PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+speed"
@@ -127,7 +127,7 @@ post_makeinstall_target() {
 
   PKG_INSTALL_PATH_LIB=$INSTALL/usr/lib/$PKG_PYTHON_VERSION
 
-  for dir in config compiler sysconfigdata lib-dynload/sysconfigdata lib2to3 test; do
+  for dir in config compiler sysconfigdata lib-dynload/sysconfigdata lib2to3/tests test; do
     rm -rf $PKG_INSTALL_PATH_LIB/$dir
   done
 

@@ -26,12 +26,12 @@ PKG_BUILD_FLAGS="-gold -lto -hardening"
 #  ln -s $ISL_DIR $PKG_BUILD/isl
 #}
  
-post_patch() {
-  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
+#post_patch() {
+#  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
-}
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+#}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -108,8 +108,6 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-  make install-strip
-
   cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
 
   GCC_VERSION=`$TOOLCHAIN/bin/${TARGET_NAME}-gcc -dumpversion`
