@@ -1,10 +1,8 @@
 # Linker hash-style is set to gnu via gcc default
 LD_OPTIM=""
 
-NINJA_OPTS=""
-
 TARGET_CPPFLAGS=""
-TARGET_CFLAGS="$TARGET_CFLAGS -pipe $GCC_OPTIM $PROJECT_CFLAGS"
+TARGET_CFLAGS="$TARGET_CFLAGS -pipe $PROJECT_CFLAGS"
 TARGET_CXXFLAGS="$TARGET_CFLAGS"
 TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
@@ -56,7 +54,7 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fPIE"
 CXXFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fPIE"
 CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
-LDFLAGS="-Wl,-z,relro -Wl,-z,now"
+LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
 
 # add distro specific library dirs
 if [ -z "$HOST_LIBDIR" ]; then
