@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="2.30"
-PKG_SHA256="e2c4114e569afbe7edbc29131a43be833850ab9a459d81beb2588016d2bbb8af"
+PKG_VERSION="2.31"
+PKG_SHA256="9246fe44f68feeec8c666bb87973d590ce0137cca145df014c72ec95be9ffd17"
 #PKG_VERSION="186e119bbd4a10895429ffe405ae96dc5c5634b8"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
