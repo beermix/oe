@@ -29,8 +29,8 @@ PKG_BUILD_FLAGS="-gold -lto -hardening"
 #post_patch() {
 #  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
 
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O3/" $PKG_BUILD/gcc/configure
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O3/" $PKG_BUILD/libiberty/configure
 #}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
@@ -93,7 +93,22 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CFLAGS="-g0 -march=haswell -O3"
+  export CXXFLAGS="-g0 -march=haswell -O3"
+  export BOOT_CFLAGS="-g0 -march=haswell -O3"
+  export BOOT_CXXFLAGS="-g0 -march=haswell -O3"
+
   unset CPP
+}
+
+pre_configure_bootstrap() {
+  export CFLAGS="-g0 -march=haswell -O3"
+  export CXXFLAGS="-g0 -march=haswell -O3"
+  export BOOT_CFLAGS="-g0 -march=haswell -O3"
+  export BOOT_CXXFLAGS="-g0 -march=haswell -O3"
+
+  #  export CFLAGS_FOR_TARGET="-g0 -march=haswell -O3"
+  #  export CXXFLAGS_FOR_TARGET="-g0 -march=haswell -O3"
 }
 
 post_make_host() {
