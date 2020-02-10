@@ -7,7 +7,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc/tree/Leia"
 PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host Python2 zlib systemd lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav libhdhomerun libfmt lirc libfstrcmp flatbuffers:host flatbuffers"
 PKG_LONGDESC="A free and open source cross-platform media player."
-PKG_TOOLCHAIN="cmake-make"
+PKG_BUILD_FLAGS="+speed"
 
 PKG_PATCH_DIRS="$KODI_VENDOR"
 
@@ -227,9 +227,8 @@ configure_package() {
                          -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                          -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
                          -DGIT_VERSION=$PKG_VERSION \
-                         -DWITH_FFMPEG=$(get_build_dir ffmpeg) \
+                         -DFFMPEG_PATH=$SYSROOT_PREFIX/usr \
                          -DENABLE_INTERNAL_FFMPEG=OFF \
-                         -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                          -DENABLE_INTERNAL_CROSSGUID=OFF \
                          -DENABLE_UDEV=ON \
                          -DENABLE_DBUS=ON \
@@ -343,7 +342,9 @@ post_makeinstall_target() {
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.libreelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.libreelec.tv" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.libreelec.settings" $ADDON_MANIFEST
+  if [ -n "$DISTRO_PKG_SETTINGS" ]; then
+    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "$DISTRO_PKG_SETTINGS_ID" $ADDON_MANIFEST
+  fi
 
   if [ "$DRIVER_ADDONS_SUPPORT" = "yes" ]; then
     xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.program.driverselect" $ADDON_MANIFEST
