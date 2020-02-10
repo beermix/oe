@@ -1,7 +1,7 @@
-# Linker hash-style is set to gnu via gcc default -D_FORTIFY_SOURCE=2
+# Linker hash-style is set to gnu via gcc default
 LD_OPTIM=""
 
-TARGET_CPPFLAGS=""
+TARGET_CPPFLAGS="-D_FORTIFY_SOURCE=2"
 TARGET_CFLAGS="$TARGET_CFLAGS -pipe $PROJECT_CFLAGS"
 TARGET_CXXFLAGS="$TARGET_CFLAGS"
 TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM"
