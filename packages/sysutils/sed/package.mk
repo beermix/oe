@@ -10,4 +10,11 @@ PKG_URL="http://ftpmirror.gnu.org/sed/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="The sed (Stream EDitor) editor is a stream or batch (non-interactive) editor."
 
-PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-acl --without-selinux"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_search_setfilecon=no \
+			    ac_cv_header_selinux_context_h=no \
+			    ac_cv_header_selinux_selinux_h=no \
+			    --disable-acl \
+			    --disable-nls \
+			    --enable-threads=posix \
+			    --disable-i18n \
+			    --without-selinux"
