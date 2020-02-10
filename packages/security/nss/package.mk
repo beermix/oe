@@ -25,6 +25,7 @@ make_host() {
      PREFIX=$TOOLCHAIN \
      NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
+     NSS_USE_SYSTEM_SQLITE=1 \
      SKIP_SHLIBSIGN=1 \
      NSS_ENABLE_WERROR=0 \
      NSS_TESTS="dummy" \
@@ -53,7 +54,6 @@ make_target() {
   rm -rf $PKG_BUILD/dist
 
   make BUILD_OPT=1 $TARGET_USE_64 \
-     NSS_USE_SYSTEM_SQLITE=1 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
      NSS_USE_SYSTEM_SQLITE=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
