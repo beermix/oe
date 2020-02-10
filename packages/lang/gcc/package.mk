@@ -13,9 +13,9 @@ PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host zlib:host"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc zlib:host"
 PKG_DEPENDS_INIT="toolchain"
 #PKG_DEPENDS_UNPACK+=" isl"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
@@ -50,6 +50,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
                            --disable-libstdcxx-debug \
+                           --with-system-zlib \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
