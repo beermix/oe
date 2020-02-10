@@ -3,8 +3,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="runc"
-PKG_VERSION="1.0.0-rc9"
-PKG_SHA256="2ec69c25df9f02c6fd38eb287145f8afba6772f809abe01df4534b5bfd68e8d4"
+PKG_VERSION="1.0.0-rc10"
+PKG_SHA256="6b44985023347fb9c5a2cc6f761df8c41cc2c84a7a68a6e6acf834dff6653a9a"
 PKG_LICENSE="APL"
 PKG_SITE="https://github.com/opencontainers/runc"
 PKG_URL="https://github.com/opencontainers/runc/archive/v${PKG_VERSION}.tar.gz"
@@ -38,7 +38,7 @@ pre_make_target() {
   esac
 
   export GOOS=linux
-  export CGO_ENABLED=0
+  export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
   export LDFLAGS="-w -extldflags -static -X main.gitCommit=${PKG_GIT_COMMIT} -X main.version=$(cat ./VERSION) -extld $CC"
