@@ -162,11 +162,6 @@ post_makeinstall_target() {
     ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
 
-# install ArchLinux files
-#  mkdir -p $SYSROOT_PREFIX/usr/include/sys
-#  install -m644 $PKG_DIR/files/sdt.h $SYSROOT_PREFIX/usr/include/sys/sdt.h
-#  install -m644 $PKG_DIR/files/sdt-config.h $SYSROOT_PREFIX/usr/include/sys/sdt-config.h
-
 # add cross ldd script
 #  mkdir -p $TOOLCHAIN/bin/
 #    cp $PKG_DIR/scripts/cross-compile-ldd $TOOLCHAIN/bin/$TARGET_NAME-ldd
