@@ -77,7 +77,7 @@
   KODI_WEBSERVER_SUPPORT="yes"
 
 # build and install Avahi (Zeroconf) daemon (yes / no)
-  AVAHI_DAEMON="yes"
+  AVAHI_DAEMON="no"
 
 # build with UPnP support (yes / no)
   KODI_UPNP_SUPPORT="yes"
@@ -144,7 +144,7 @@
   REMOTE_SUPPORT="yes"
 
 # build and install Joystick support (yes / no)
-  JOYSTICK_SUPPORT="no"
+  JOYSTICK_SUPPORT="yes"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="no"
