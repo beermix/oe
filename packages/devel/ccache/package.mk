@@ -7,12 +7,12 @@ PKG_VERSION="3.7.7"
 PKG_SHA256="b7c1d6d6fe42f18e424de92746af863e0bc85794da3d69e44300840c478c98cd"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/ccache/ccache/releases"
-PKG_URL="https://github.com/ccache/ccache/releases/download/v$PKG_VERSION/ccache-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/ccache/ccache/releases/download/v$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="make:host"
 PKG_LONGDESC="A compiler cache to speed up re-compilation of C/C++ code by caching."
 #PKG_TOOLCHAIN="manual"
 
-PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-man"
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib=no --disable-man"
 
 pre_configure_host() {
   export CC=$LOCAL_CC
