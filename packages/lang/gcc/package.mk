@@ -93,23 +93,22 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
-  export CFLAGS="-g0 -march=haswell -O3"
-  export CXXFLAGS="-g0 -march=haswell -O3"
-  export BOOT_CFLAGS="-g0 -march=haswell -O3"
-  export BOOT_CXXFLAGS="-g0 -march=haswell -O3"
+ # export CFLAGS="-g0 -march=haswell -O3"
+ # export CXXFLAGS="-g0 -march=haswell -O3"
+ # export BOOT_CFLAGS="-g0 -march=haswell -O3"
+ # export BOOT_CXXFLAGS="-g0 -march=haswell -O3"
 
   unset CPP
 }
 
-pre_configure_bootstrap() {
-  export CFLAGS="-g0 -march=haswell -O3"
-  export CXXFLAGS="-g0 -march=haswell -O3"
-  export BOOT_CFLAGS="-g0 -march=haswell -O3"
-  export BOOT_CXXFLAGS="-g0 -march=haswell -O3"
-
+#pre_configure_bootstrap() {
+#  export CFLAGS="-g0 -march=haswell -O3"
+#  export CXXFLAGS="-g0 -march=haswell -O3"
+#  export BOOT_CFLAGS="-g0 -march=haswell -O3"
+#  export BOOT_CXXFLAGS="-g0 -march=haswell -O3"
   #  export CFLAGS_FOR_TARGET="-g0 -march=haswell -O3"
   #  export CXXFLAGS_FOR_TARGET="-g0 -march=haswell -O3"
-}
+#}
 
 post_make_host() {
   # fix wrong link
