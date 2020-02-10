@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gdb"
-PKG_VERSION="8.3.1"
-PKG_SHA256="1e55b4d7cdca7b34be12f4ceae651623aa73b2fd640152313f9f66a7149757c4"
+PKG_VERSION="9.1"
+PKG_SHA256="699e0ec832fdd2f21c8266171ea5bf44024bd05164fdf064e4d10cc4cf0d1737"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
 PKG_URL="http://ftpmirror.gnu.org/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
