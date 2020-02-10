@@ -3,8 +3,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="intel-vaapi-driver"
-PKG_VERSION="2.3.0"
-PKG_SHA256="fcc3f09291e58fd316fd015d4e1329e7e03c38cffa4651bda725d500a66aa74e"
+PKG_VERSION="2.4.0"
+PKG_SHA256="58567dac882167021f031489062cbbab76bc646214be0ee44d5f724d960b3d76"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/intel-vaapi-driver/releases"
@@ -13,13 +13,15 @@ PKG_DEPENDS_TARGET="toolchain libva libdrm"
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_TOOLCHAIN="meson"
 
-post_unpack() {
-  sed -i '1s/python$/&2/' $PKG_BUILD/src/shaders/gpp.py
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  DISPLAYSERVER_LIBVA="-Dwith_x11=yes -Dwith_wayland=no"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  DISPLAYSERVER_LIBVA="-Dwith_x11=no -Dwith_wayland=yes"
+else
+  DISPLAYSERVER_LIBVA="-Dwith_x11=no -Dwith_wayland=no"
+fi
 
-  # Fix undefined variable in src/meson.build
-  sed -i 's/2.2.0/2.2.0.0/' $PKG_BUILD/meson.build
-}
+PKG_MESON_OPTS_TARGET="-Denable_hybrid_code=false \
+                       -Denable_tests=false \
+                       $DISPLAYSERVER_LIBVA"
 
-PKG_MESON_OPTS_TARGET="-Dwith_x11=yes \
-                       -Dwith_wayland=no \
-                       -Denable_hybrid_codec=true"

@@ -3,19 +3,26 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libva"
-PKG_VERSION="2.6.0.pre1"
-PKG_SHA256="96500416183d3ef02d9e5a968ed44c0c21819004a177e9b6429dc064646e8aef"
+PKG_VERSION="2.6.1"
+PKG_SHA256="965f581e096508ece26ea9bef8bd769e93f9d1fe6840e309cc925cfef35ad13f"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/intel/libva/releases"
 PKG_URL="https://github.com/intel/libva/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm"
 PKG_LONGDESC="Libva is an implementation for VA-API (VIdeo Acceleration API)."
 PKG_TOOLCHAIN="meson"
 
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm"
+  DISPLAYSERVER_LIBVA="-Dwith_x11=yes -Dwith_glx=no -Dwith_wayland=no"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  DISPLAYSERVER_LIBVA="-Dwith_x11=no -Dwith_glx=no -Dwith_wayland=yes"
+  PKG_DEPENDS_TARGET="toolchain libdrm wayland"
+else
+  PKG_DEPENDS_TARGET="toolchain libdrm"
+  DISPLAYSERVER_LIBVA="-Dwith_x11=no -Dwith_glx=no -Dwith_wayland=no"
+fi
 PKG_MESON_OPTS_TARGET="-Ddisable_drm=false \
-                       -Dwith_x11=yes \
-                       -Dwith_glx=no \
-                       -Dwith_wayland=no \
+                       -Denable_docs=false \
                        -Denable_va_messaging=true \
-                       -Denable_docs=false"
+                       $DISPLAYSERVER_LIBVA"
