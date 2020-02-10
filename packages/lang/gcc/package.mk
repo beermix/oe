@@ -52,6 +52,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-poison-system-directories \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libstdcxx-debug \
+                           --with-gcc-major-version-only \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
