@@ -24,10 +24,10 @@ PROJECT_DIR="${ROOT}/projects"
 DISTRO="${DISTRO:-LibreELEC}"
 
 # determines PROJECT, if not forced by user
-PROJECT="${PROJECT:-Generic}"
+export PROJECT="${PROJECT:-Generic}"
 
 # determines TARGET_ARCH, if not forced by user
-ARCH="${ARCH:-x86_64}"
+export ARCH="${ARCH:-x86_64}"
 TARGET_ARCH="${ARCH}"
 
 # include helper functions
@@ -56,7 +56,6 @@ KERNEL_NAME="${KERNEL_NAME:-KERNEL}"
 
 LINUX_DEPENDS="${PROJECT_DIR}/${PROJECT}/linux ${PROJECT_DIR}/${PROJECT}/patches/linux ${PROJECT_DIR}/${PROJECT}/packages/linux ${ROOT}/packages/linux"
 [ -n "${DEVICE}" ] && LINUX_DEPENDS+=" ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/linux ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/packages/linux"
-[ "${TARGET_ARCH}" = "x86_64" ] && LINUX_DEPENDS+=" ${ROOT}/packages/linux-firmware/intel-ucode ${ROOT}/packages/linux-firmware/kernel-firmware"
 
 # Need to point to your actual cc
 # If you have ccache installed, take care that LOCAL_CC does not point to it

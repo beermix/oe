@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="19.3.2"
-PKG_SHA256="13867c3babe600aaeef7116301436237a355e286b1c2c8be980d9a6f66f40891"
+PKG_VERSION="19.3.3"
+PKG_SHA256="9a2356c4f669df9c1f22eba55c255bdb19a1eb01bb0cb9705d930567af081d8b"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/mesa3d/mesa/releases"
 PKG_URL="https://github.com/mesa3d/mesa/archive/mesa-${PKG_VERSION}.tar.gz"
@@ -54,7 +54,6 @@ fi
 
 if [ "${LLVM_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" elfutils llvm"
-  export LLVM_CONFIG="${SYSROOT_PREFIX}/usr/bin/llvm-config-host"
   PKG_MESON_OPTS_TARGET+=" -Dllvm=true"
 else
   PKG_MESON_OPTS_TARGET+=" -Dllvm=false"

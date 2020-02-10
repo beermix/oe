@@ -6,15 +6,11 @@ PKG_NAME="iptables"
 PKG_VERSION="1.8.4"
 PKG_SHA256="993a3a5490a544c2cbf2ef15cf7e7ed21af1845baf228318d5c36ef8827e157c"
 PKG_LICENSE="GPL"
-PKG_SITE="https://netfilter.org/projects/iptables/files/?C=M;O=D"
+PKG_SITE="http://www.netfilter.org/"
 PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl"
+PKG_DEPENDS_TARGET="toolchain linux:host libmnl libnftnl"
 PKG_LONGDESC="IP packet filter administration."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-hardening"
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(kernel_path)"
-
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/iptables/

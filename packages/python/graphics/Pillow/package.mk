@@ -3,8 +3,8 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="Pillow"
-PKG_VERSION="6.2.1"
-PKG_SHA256="bf4e972a88f8841d8fdc6db1a75e0f8d763e66e3754b03006cbc3854d89f1cb1"
+PKG_VERSION="7.0.0"
+PKG_SHA256="4d9ed9a64095e031435af120d3c910148067087541131e82b3e8db302f4c8946"
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/python-pillow/Pillow/releases"
 PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
@@ -26,7 +26,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
+  python_remove_source
 
   rm -rf $INSTALL/usr/bin
 }

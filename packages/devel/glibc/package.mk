@@ -11,7 +11,7 @@ PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.30/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap pigz:host"
+PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap pigz:host Python3:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
 PKG_BUILD_FLAGS="-gold"
@@ -30,7 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=5.4 \
+                           --enable-kernel=5.5 \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
@@ -99,17 +99,22 @@ build-programs=yes
 EOF
 
   # binaries to install into target
-  GLIBC_INCLUDE_BIN="getent ldd locale"
-
-  # Generic "installer" needs localedef to define drawing chars
-  if [ "$PROJECT" = "Generic" ]; then
-    GLIBC_INCLUDE_BIN+=" localedef"
-  fi
+  GLIBC_INCLUDE_BIN="getent ldd locale localedef"
 }
 
 post_makeinstall_target() {
+  mkdir -p $INSTALL/.noinstall
+    cp -p $INSTALL/usr/bin/localedef $INSTALL/.noinstall
+    cp -a $INSTALL/usr/share/i18n/locales $INSTALL/.noinstall
+    mv $INSTALL/usr/share/i18n/charmaps $INSTALL/.noinstall
+
+  # Generic "installer" needs localedef to define drawing chars
+  if [ "$PROJECT" != "Generic" ]; then
+    rm $INSTALL/usr/bin/localedef
+  fi
+
 # xlocale.h was renamed - create symlink for compatibility
-  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
@@ -122,7 +127,9 @@ post_makeinstall_target() {
 
   safe_remove $INSTALL/usr/lib/audit
   safe_remove $INSTALL/usr/lib/glibc
+  safe_remove $INSTALL/usr/lib/libc_pic
   safe_remove $INSTALL/usr/lib/*.o
+  safe_remove $INSTALL/usr/lib/*.map
   safe_remove $INSTALL/var
 
 # remove locales and charmaps

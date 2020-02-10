@@ -2,8 +2,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="pycryptodome"
-PKG_VERSION="3.9.1"
-PKG_SHA256="3500826dc3b9a8fdb762bebe551106081a6bdecd4181a3d1bd0206e48bba8974"
+PKG_VERSION="3.9.4"
+PKG_SHA256="a168e73879619b467072509a223282a02c8047d932a48b74fbd498f27224aa04"
 PKG_LICENSE="BSD"
 PKG_SITE="https://pypi.org/project/pycryptodome"
 PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
@@ -35,5 +35,5 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
+  python_remove_source
 }

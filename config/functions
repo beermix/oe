@@ -94,6 +94,7 @@ print_color() {
       CLR_PATCH_DESC)   clr_actual="${boldwhite}";;
       CLR_TARGET)       clr_actual="${boldwhite}";;
       CLR_UNPACK)       clr_actual="${boldcyan}";;
+      CLR_AUTOREMOVE)   clr_actual="${boldblue}";;
 
       CLR_ENDCOLOR)     clr_actual="${endcolor}";;
 
@@ -170,6 +171,7 @@ setup_pkg_config_target() {
   export PKG_CONFIG="$TOOLCHAIN/bin/pkg-config"
   export PKG_CONFIG_PATH=""
   export PKG_CONFIG_LIBDIR="$SYSROOT_PREFIX/usr/lib/pkgconfig:$SYSROOT_PREFIX/usr/share/pkgconfig"
+  export PKG_CONFIG_SYSROOT_BASE="$BUILD"
   export PKG_CONFIG_SYSROOT_DIR="$SYSROOT_PREFIX"
   export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
   export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
@@ -179,6 +181,7 @@ setup_pkg_config_host() {
   export PKG_CONFIG="$TOOLCHAIN/bin/pkg-config"
   export PKG_CONFIG_PATH=""
   export PKG_CONFIG_LIBDIR="$TOOLCHAIN/lib/pkgconfig:$TOOLCHAIN/share/pkgconfig"
+  export PKG_CONFIG_SYSROOT_BASE=""
   export PKG_CONFIG_SYSROOT_DIR=""
   unset PKG_CONFIG_ALLOW_SYSTEM_CFLAGS
   unset PKG_CONFIG_ALLOW_SYSTEM_LIBS
@@ -481,6 +484,7 @@ reset_pkg_vars() {
     if [ "${var}" = "PKG_CONFIG" ] || \
        [ "${var}" = "PKG_CONFIG_PATH" ] || \
        [ "${var}" = "PKG_CONFIG_LIBDIR" ] || \
+       [ "${var}" = "PKG_CONFIG_SYSROOT_BASE" ] || \
        [ "${var}" = "PKG_CONFIG_SYSROOT_DIR" ] || \
        [ "${var}" = "PKG_CONFIG_ALLOW_SYSTEM_CFLAGS" ] || \
        [ "${var}" = "PKG_CONFIG_ALLOW_SYSTEM_LIBS" ]; then
@@ -1010,6 +1014,12 @@ source_package() {
       [ "$PKG_ADDON_IS_STANDALONE" != "yes" ] && PKG_NEED_UNPACK="${PKG_NEED_UNPACK} $(get_pkg_directory $MEDIACENTER)"
     fi
 
+    if [ -n "${PKG_IS_KERNEL_PKG}" -a "${PKG_NAME}" != "linux" ]; then
+      PKG_DEPENDS_TARGET="toolchain linux ${PKG_DEPENDS_TARGET}"
+      PKG_DEPENDS_UNPACK="linux ${PKG_DEPENDS_UNPACK}"
+      PKG_NEED_UNPACK="${LINUX_DEPENDS} ${PKG_NEED_UNPACK}"
+    fi
+
     if [ -n "${PKG_DEPENDS_UNPACK}" ]; then
       for _p in ${PKG_DEPENDS_UNPACK}; do
         PKG_NEED_UNPACK+=" $(get_pkg_directory ${_p})"
@@ -1496,7 +1506,7 @@ update_dashboard() {
   [ -n "${BUILD_SUFFIX}" ] && projdevarch+=", ${BUILD_SUFFIX}"
   TZ=UTC0 printf -v elapsed "%(%H:%M:%S)T" $(($(date +%s) - MTBUILDSTART))
   printf -v preamble "%s Dashboard (%s) - %d of %d jobs completed, %s elapsed" "${DISTRONAME}" "${projdevarch}" $((num + 1)) ${MTMAXJOBS} "${elapsed}"
-  printf -v preamble "%b%-105s %s" "\e[2J\e[0;0H" "${preamble//\//\\/}" "$(date "+%Y-%m-%d %H:%M:%S")"
+  printf -v preamble "%b%-105s %s" "\e[2J\e[0;0H" "${preamble}" "$(date "+%Y-%m-%d %H:%M:%S")"
 
   if [ "${DISABLE_COLORS}" != "yes" ]; then
     boldred="\e[1;31m"
@@ -1514,10 +1524,10 @@ update_dashboard() {
     esac
   fi
 
-  printf -v line "[%0*d\/%0*d] %b%-7s%b %-7s %-35s" ${idwidth} ${MTJOBID} ${#MTMAXJOBS} ${PARALLEL_SEQ:-0} "${color}" "${status//\//\\/}" "${endcolor}" "${task}" "${pkg}"
-  [ -n "${msg}" ] && line+=" ${msg//\//\\/}"
+  printf -v line "[%0*d/%0*d] %b%-7s%b %-7s %-35s" ${idwidth} ${MTJOBID} ${#MTMAXJOBS} ${PARALLEL_SEQ:-0} "${color}" "${status}" "${endcolor}" "${task}" "${pkg}"
+  [ -n "${msg}" ] && line+=" ${msg}"
 
-  sed -e "1s/.*/${preamble}/;$((MTJOBID + 2))s/.*/${line}/" -i "${THREAD_CONTROL}/status"
+  sed -e "1s@.*@${preamble}@;$((MTJOBID + 2))s@.*@${line}@" -i "${THREAD_CONTROL}/status"
 }
 
 # Thread concurrency helpers to avoid concurrency issues with some code,
