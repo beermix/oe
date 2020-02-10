@@ -5,11 +5,9 @@
 PKG_NAME="glibc"
 PKG_VERSION="2.31"
 PKG_SHA256="9246fe44f68feeec8c666bb87973d590ce0137cca145df014c72ec95be9ffd17"
-#PKG_VERSION="186e119bbd4a10895429ffe405ae96dc5c5634b8"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=shortlog"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.30/master"
-PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap pigz:host Python3:host"
 PKG_DEPENDS_INIT="glibc"
@@ -133,7 +131,7 @@ post_makeinstall_target() {
   safe_remove $INSTALL/var
 
 # remove locales and charmaps
-  safe_remove $INSTALL/usr/share/i18n/charmaps
+#  safe_remove $INSTALL/usr/share/i18n/charmaps
 
 # add UTF-8 charmap for Generic (charmap is needed for installer)
   if [ "$PROJECT" = "Generic" ]; then
