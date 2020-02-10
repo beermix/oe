@@ -2,11 +2,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.4.11"
+PKG_VERSION="10.4.12"
 PKG_REV="103"
 PKG_SHA256="4c076232b99433b09eb3c6d62f607192b3474d022703699b8f6aef4e79de3fb9"
 PKG_LICENSE="GPL2"
-PKG_SITE="https://mariadb.org"
+PKG_SITE="https://github.com/MariaDB/server/releases"
 PKG_URL="https://downloads.mariadb.org/interstitial/${PKG_NAME}-${PKG_VERSION}/source/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain:host ncurses:host"
 PKG_DEPENDS_TARGET="toolchain binutils bzip2 libaio libxml2 lzo ncurses openssl systemd zlib mariadb:host"

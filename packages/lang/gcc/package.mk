@@ -49,8 +49,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-diagnostics-color=always \
-                           --enable-poison-system-directories \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libstdcxx-debug \
                            --without-ppl \
                            --without-cloog \
