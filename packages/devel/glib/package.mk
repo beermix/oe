@@ -17,7 +17,7 @@ PKG_TOOLCHAIN="meson"
 PKG_MESON_OPTS_HOST="-Ddefault_library=static \
                      -Dinternal_pcre=true \
                      -Dinstalled_tests=false \
-                     -Dlibmount=false"
+                     -Dlibmount=disabled"
 
 PKG_MESON_OPTS_TARGET="-Ddefault_library=shared \
                        -Dinternal_pcre=false \
