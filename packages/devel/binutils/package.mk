@@ -26,6 +26,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-targets=x86_64-linux \
+                         --with-system-zlib \
                          --enable-lto \
                          --disable-nls"
 
