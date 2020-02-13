@@ -63,6 +63,7 @@ fi
 pkg_lock_status "ACTIVE" "${PKG_NAME}:${TARGET}" "install"
 
 build_msg "CLR_INSTALL" "INSTALL" "${PKG_NAME} $(print_color CLR_TARGET "(${TARGET})")" "indent"
+
 acquire_update_lock image
 
 mkdir -p ${INSTALL}

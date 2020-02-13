@@ -63,6 +63,7 @@ case "${TARGET}" in
   "init") _pkg_depends="${PKG_DEPENDS_INIT}";;
   "bootstrap") _pkg_depends="${PKG_DEPENDS_BOOTSTRAP}";;
 esac
+
 if is_sequential_build; then
   for p in ${_pkg_depends}; do
     ${SCRIPTS}/build "${p}" "${PARENT_PKG}"
@@ -152,7 +153,7 @@ TARGET_CONFIGURE_OPTS="--host=${TARGET_NAME} \
 
 TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=${CMAKE_CONF} \
                    -DCMAKE_INSTALL_PREFIX=/usr \
-                   -Wno-dev"
+                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -Wno-dev"
 
 TARGET_MESON_OPTS="--prefix=/usr \
                    --bindir=/usr/bin \
@@ -182,8 +183,7 @@ HOST_CONFIGURE_OPTS="--host=${HOST_NAME} \
 
 HOST_CMAKE_OPTS="${CMAKE_GENERATOR} \
                  -DCMAKE_TOOLCHAIN_FILE=${CMAKE_CONF} \
-                 -DCMAKE_INSTALL_PREFIX=${TOOLCHAIN} \
-                 -Wno-dev"
+                 -DCMAKE_INSTALL_PREFIX=${TOOLCHAIN} -Wno-dev"
 
 HOST_MESON_OPTS="--prefix=${TOOLCHAIN} \
                  --bindir=${TOOLCHAIN}/bin \
@@ -246,6 +246,7 @@ if [ -n "${PKG_DEPENDS_CONFIG}" -a -n "${PKG_INSTALL}" ]; then
 
   export PKG_CONFIG_PATH
 fi
+
 pkg_call_exists pre_configure && pkg_call pre_configure
 pkg_call_exists pre_configure_${TARGET} && pkg_call pre_configure_${TARGET}
 
@@ -460,9 +461,12 @@ done
 
 # Transfer the new sysroot content to the shared sysroot
 acquire_update_lock sysroot
+
 mkdir -p "${PKG_ORIG_SYSROOT_PREFIX}"
 cp -PRf "${SYSROOT_PREFIX}"/* "${PKG_ORIG_SYSROOT_PREFIX}"
+
 release_update_lock
+
 rm -rf "${SYSROOT_PREFIX}"
 
 export SYSROOT_PREFIX="${PKG_ORIG_SYSROOT_PREFIX}"
@@ -489,7 +493,6 @@ if [ "${TARGET}" = "target" -o "${TARGET}" = "init" ]; then
     rm -rf ${INSTALL}/{usr/local/,usr/,}var
     find ${INSTALL} \( -name "*.orig" \
                   -o -name "*.rej" \
-                  -o -name "*.o" \
                   -o -name "*.in" \
                   -o -name ".git*" \) \
         -exec rm -f {} \; 2>/dev/null || :
