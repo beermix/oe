@@ -21,10 +21,13 @@ PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-gold -lto -hardening"
 
-#post_unpack() {
+post_unpack() {
 #  ISL_DIR=$(get_build_dir isl)
 #  ln -s $ISL_DIR $PKG_BUILD/isl
-#}
+
+  sed -i 's,^STRIP = .*$,STRIP = true,g'                   $PKG_BUILD/Makefile
+  sed -i 's,^STRIP_FOR_TARGET=.*$,STRIP_FOR_TARGET=true,g' $PKG_BUILD/Makefile
+}
  
 #post_patch() {
 #  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
