@@ -76,7 +76,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="-O2 -march=westmere -g2 -m64  -Wl,-z,max-page-size=0x1000 -fPIC -falign-functions=32 -Wa,-mbranches-within-32B-boundaries"
+  export CFLAGS="-O2 -g2 -m64  -Wl,-z,max-page-size=0x1000 -fPIC -falign-functions=32 -Wa,-mbranches-within-32B-boundaries"
   export ASFLAGS="-Wa,-mbranches-within-32B-boundaries"
   unset LDFLAGS
   export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
