@@ -11,7 +11,7 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  python3 $PKG_BUILD/configure.py --bootstrap
+  $TOOLCHAIN/bin/python3 $PKG_BUILD/configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {
