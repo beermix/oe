@@ -77,7 +77,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g2 -fno-stack-protector"
+  export CFLAGS="$CFLAGS -g0 -fno-stack-protector"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
