@@ -93,8 +93,19 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CFLAGS="-march=haswell -g0 -O2"
+  export CXXFLAGS="-march=haswell -g0 -O2 -std=gnu++98"
+  export BOOT_CFLAGS="-march=haswell -g0 -O2"
+  export BOOT_CXXFLAGS="-march=haswell -g0 -O2"
+
   unset CPP
+}
+
+pre_configure_bootstrap() {
+  export CFLAGS="-march=haswell -g0 -O2"
+  export CXXFLAGS="-march=haswell -g0 -O2"
+  export BOOT_CFLAGS="-march=haswell -g0 -O2"
+  export BOOT_CXXFLAGS="-march=haswell -g0 -O2"
 }
 
 post_make_host() {
