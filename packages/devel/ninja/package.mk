@@ -11,10 +11,10 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  $TOOLCHAIN/bin/python3 $PKG_BUILD/configure.py --bootstrap --verbose
+  $TOOLCHAIN/bin/python3 $PKG_BUILD/configure.py --bootstrap
 }
 
 makeinstall_host() {
   cp $PKG_BUILD/.$HOST_NAME/ninja $TOOLCHAIN/bin
-  strip -s $TOOLCHAIN/bin/ninja
+#  strip -s $TOOLCHAIN/bin/ninja
 }
