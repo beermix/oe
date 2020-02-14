@@ -57,6 +57,7 @@ pre_build_target() {
 }
 
 pre_configure_target() {
+  export CCACHE_DISABLE=true
 # Filter out some problematic *FLAGS
   export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
