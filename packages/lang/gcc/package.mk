@@ -7,12 +7,12 @@ PKG_NAME="gcc"
 #PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
-#PKG_VERSION="9-20200208"
-PKG_VERSION="7866f9e"
+PKG_VERSION="9-20200215"
+#PKG_VERSION="7866f9e"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
+#PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -21,13 +21,24 @@ PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-gold -lto -hardening"
 
-#post_unpack() {
+post_unpack() {
 #  ISL_DIR=$(get_build_dir isl)
 #  ln -s $ISL_DIR $PKG_BUILD/isl
 
 #  sed -i 's,^STRIP = .*$,STRIP = true,g'                   $PKG_BUILD/Makefile
 #  sed -i 's,^STRIP_FOR_TARGET=.*$,STRIP_FOR_TARGET=true,g' $PKG_BUILD/Makefile
-#}
+
+  rm -rf $PKG_BUILD/gcc/testsuite/ada
+  rm -rf $PKG_BUILD/gcc/testsuite/brig.dg
+  rm -rf $PKG_BUILD/gcc/testsuite/c-c++-common
+  rm -rf $PKG_BUILD/gcc/testsuite/ChangeLog*
+  rm -rf $PKG_BUILD/gcc/testsuite/config
+  rm -rf $PKG_BUILD/gcc/testsuite/g*
+  rm -rf $PKG_BUILD/gcc/testsuite/jit.dg
+  rm -rf $PKG_BUILD/gcc/testsuite/lib
+  rm -rf $PKG_BUILD/gcc/testsuite/o*
+  rm -rf $PKG_BUILD/gcc/ada/*.ad*
+}
  
 #post_patch() {
 #  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
