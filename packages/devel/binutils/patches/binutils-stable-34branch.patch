@@ -36703,3 +36703,2722 @@ index 3bdfb415ac..e6c26f3f0c 100644
      { { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
  	  0, 0, 0, 0, 0, 0 } } } }
  };
+
+commit 03397177bebf63818cd849d3fa070bb6c2ee4c83
+Author: Jozef Lawrynowicz <jozef.l@mittosystems.com>
+Date:   Mon Feb 10 20:27:36 2020 +0000
+
+    MSP430: Add printf statements to assist with debugging during relaxation
+    
+    bfd/ChangeLog:
+    
+    2020-02-10  Jozef Lawrynowicz  <jozef.l@mittosystems.com>
+    
+            * elf32-msp430.c (msp430_final_link_relocate): Add printf statements for
+            debugging relocations.
+            (msp430_elf_relax_delete_bytes): Likewise.
+            (msp430_elf_relax_add_two_words): Likewise.
+            (msp430_elf_relax_section): Likewise.
+    
+    (cherry picked from commit d60f54486a99e6b702cccdb16b3429f3524021fd)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 1b25bc3ccb..a98d83f1ad 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,13 @@
++2020-02-10  Jozef Lawrynowicz  <jozef.l@mittosystems.com>
++
++	Apply from master
++	2020-02-10  Jozef Lawrynowicz  <jozef.l@mittosystems.com>
++	* elf32-msp430.c (msp430_final_link_relocate): Add printf statements for
++	debugging relocations.
++	(msp430_elf_relax_delete_bytes): Likewise.
++	(msp430_elf_relax_add_two_words): Likewise.
++	(msp430_elf_relax_section): Likewise.
++
+ 2020-02-01  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* development.sh: Set development to true.
+diff --git a/bfd/elf32-msp430.c b/bfd/elf32-msp430.c
+index 184f01d4ee..93524dcd6a 100644
+--- a/bfd/elf32-msp430.c
++++ b/bfd/elf32-msp430.c
+@@ -26,6 +26,8 @@
+ #include "elf-bfd.h"
+ #include "elf/msp430.h"
+ 
++static bfd_boolean debug_relocs = 0;
++
+ /* All users of this file have bfd_octets_per_byte (abfd, sec) == 1.  */
+ #define OCTETS_PER_BYTE(ABFD, SEC) 1
+ 
+@@ -742,6 +744,10 @@ msp430_final_link_relocate (reloc_howto_type *	   howto,
+       BFD_ASSERT (! is_rel_reloc || rel->r_addend == 0);
+     }
+ 
++  if (debug_relocs)
++    printf ("writing relocation (%p) at 0x%lx type: %d\n", rel,
++	    input_section->output_section->vma + input_section->output_offset
++	    + rel->r_offset, howto->type);
+   if (sym_diff_section != NULL)
+     {
+       BFD_ASSERT (sym_diff_section == input_section);
+@@ -1663,6 +1669,9 @@ msp430_elf_relax_delete_bytes (bfd * abfd, asection * sec, bfd_vma addr,
+   contents = elf_section_data (sec)->this_hdr.contents;
+ 
+   toaddr = sec->size;
++  if (debug_relocs)
++    printf ("      deleting %d bytes between 0x%lx to 0x%lx\n",
++	    count, addr, toaddr);
+ 
+   irel = elf_section_data (sec)->relocs;
+   irelend = irel + sec->reloc_count;
+@@ -1710,10 +1719,15 @@ msp430_elf_relax_delete_bytes (bfd * abfd, asection * sec, bfd_vma addr,
+ 		  && (CONST_STRNEQ (name, ".Letext")
+ 		      || CONST_STRNEQ (name, ".LFE")))))
+ 	{
++	  if (debug_relocs)
++	    printf ("      adjusting value of local symbol %s from 0x%lx ",
++		    name, isym->st_value);
+ 	  if (isym->st_value < addr + count)
+ 	    isym->st_value = addr;
+ 	  else
+ 	    isym->st_value -= count;
++	  if (debug_relocs)
++	    printf ("to 0x%lx\n", isym->st_value);
+ 	}
+       /* Adjust the function symbol's size as well.  */
+       else if (ELF_ST_TYPE (isym->st_info) == STT_FUNC
+@@ -1772,6 +1786,9 @@ msp430_elf_relax_add_two_words (bfd * abfd, asection * sec, bfd_vma addr,
+   unsigned int symcount;
+   bfd_vma sec_end;
+   asection *p;
++  if (debug_relocs)
++    printf ("      adding two words at 0x%lx\n",
++	    sec->output_section->vma + sec->output_offset + addr);
+ 
+   contents = elf_section_data (sec)->this_hdr.contents;
+   sec_end = sec->size;
+@@ -1808,7 +1825,14 @@ msp430_elf_relax_add_two_words (bfd * abfd, asection * sec, bfd_vma addr,
+   for (isymend = isym + symtab_hdr->sh_info; isym < isymend; isym++)
+     if (isym->st_shndx == sec_shndx
+ 	&& isym->st_value >= addr && isym->st_value < sec_end)
+-      isym->st_value += 4;
++      {
++	if (debug_relocs)
++	  printf ("      adjusting value of local symbol %s from 0x%lx to "
++		  "0x%lx\n", bfd_elf_string_from_elf_section
++		  (abfd, symtab_hdr->sh_link, isym->st_name),
++		  isym->st_value, isym->st_value + 4);
++	isym->st_value += 4;
++      }
+ 
+   /* Now adjust the global symbols defined in this section.  */
+   symcount = (symtab_hdr->sh_size / sizeof (Elf32_External_Sym)
+@@ -1853,6 +1877,10 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+     || sec->reloc_count == 0 || (sec->flags & SEC_CODE) == 0)
+     return TRUE;
+ 
++  if (debug_relocs)
++    printf ("Relaxing %s (%p), output_offset: 0x%lx sec size: 0x%lx\n",
++	    sec->name, sec, sec->output_offset, sec->size);
++
+   symtab_hdr = & elf_tdata (abfd)->symtab_hdr;
+ 
+   /* Get a copy of the native relocations.  */
+@@ -1864,6 +1892,8 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+   /* Walk through them looking for relaxing opportunities.  */
+   irelend = internal_relocs + sec->reloc_count;
+ 
++  if (debug_relocs)
++    printf ("  trying code size growing relocs\n");
+   /* Do code size growing relocs first.  */
+   for (irel = internal_relocs; irel < irelend; irel++)
+     {
+@@ -1920,6 +1950,14 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 	    sym_sec = bfd_section_from_elf_index (abfd, isym->st_shndx);
+ 	  symval = (isym->st_value
+ 		    + sym_sec->output_section->vma + sym_sec->output_offset);
++
++	  if (debug_relocs)
++	    printf ("    processing reloc at 0x%lx for local sym: %s "
++		    "st_value: 0x%lx adj value: 0x%lx\n", sec->output_offset
++		    + sec->output_section->vma + irel->r_offset,
++		    bfd_elf_string_from_elf_section (abfd, symtab_hdr->sh_link,
++						     isym->st_name),
++		    isym->st_value, symval);
+ 	}
+       else
+ 	{
+@@ -1941,6 +1979,11 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 	  symval = (h->root.u.def.value
+ 		    + h->root.u.def.section->output_section->vma
+ 		    + h->root.u.def.section->output_offset);
++	  if (debug_relocs)
++	    printf ("    processing reloc at 0x%lx for global sym: %s "
++		    "st_value: 0x%lx adj value: 0x%lx\n", sec->output_offset
++		    + sec->output_section->vma + irel->r_offset,
++		    h->root.root.string, h->root.u.def.value, symval);
+ 	}
+ 
+       /* For simplicity of coding, we are going to modify the section
+@@ -1960,6 +2003,7 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+       value -= (sec->output_section->vma + sec->output_offset);
+       value -= irel->r_offset;
+       value -= 2;
++
+       /* Scale.  */
+       value >>= 1;
+ 
+@@ -2009,6 +2053,10 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+       /* Insert the new branch instruction.  */
+       if (uses_msp430x_relocs (abfd))
+ 	{
++	  if (debug_relocs)
++	    printf ("      R_MSP430X_10_PCREL -> R_MSP430X_ABS20_ADR_SRC "
++		    "(growing with new opcode 0x%x)\n", opcode);
++
+ 	  /* Insert an absolute branch (aka MOVA) instruction.  */
+ 	  contents = msp430_elf_relax_add_two_words
+ 	    (abfd, sec, irel->r_offset + 2, 0x0080, 0x0000);
+@@ -2024,6 +2072,9 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 	}
+       else
+ 	{
++	  if (debug_relocs)
++	    printf ("      R_MSP430_10_PCREL -> R_MSP430_16 "
++		    "(growing with new opcode 0x%x)\n", opcode);
+ 	  contents = msp430_elf_relax_add_two_words
+ 	    (abfd, sec, irel->r_offset + 2, 0x4030, 0x0000);
+ 
+@@ -2039,6 +2090,9 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+       *again = TRUE;
+     }
+ 
++    if (debug_relocs)
++      printf ("  trying code size shrinking relocs\n");
++
+     for (irel = internal_relocs; irel < irelend; irel++)
+       {
+ 	bfd_vma symval;
+@@ -2083,6 +2137,14 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 	      sym_sec = bfd_section_from_elf_index (abfd, isym->st_shndx);
+ 	    symval = (isym->st_value
+ 		      + sym_sec->output_section->vma + sym_sec->output_offset);
++
++	    if (debug_relocs)
++	      printf ("    processing reloc at 0x%lx for local sym: %s "
++		      "st_value: 0x%lx adj value: 0x%lx\n", sec->output_offset
++		      + sec->output_section->vma + irel->r_offset,
++		      bfd_elf_string_from_elf_section
++		      (abfd, symtab_hdr->sh_link, isym->st_name),
++		      isym->st_value, symval);
+ 	  }
+ 	else
+ 	  {
+@@ -2104,6 +2166,11 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 	    symval = (h->root.u.def.value
+ 		      + h->root.u.def.section->output_section->vma
+ 		      + h->root.u.def.section->output_offset);
++	    if (debug_relocs)
++	      printf ("    processing reloc at 0x%lx for global sym: %s "
++		      "st_value: 0x%lx adj value: 0x%lx\n", sec->output_offset
++		      + sec->output_section->vma + irel->r_offset,
++		      h->root.root.string, h->root.u.def.value, symval);
+ 	  }
+ 
+ 	/* For simplicity of coding, we are going to modify the section
+@@ -2187,6 +2254,8 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 		elf_section_data (sec)->this_hdr.contents = contents;
+ 		symtab_hdr->contents = (unsigned char *) isymbuf;
+ 
++		if (debug_relocs)
++		  printf ("      R_MSP430_RL_PCREL -> ");
+ 		/* Fix the relocation's type.  */
+ 		if (uses_msp430x_relocs (abfd))
+ 		  {
+@@ -2200,11 +2269,21 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 		else
+ 		  {
+ 		    if (rx->labels == 3)	/* Handle special cases.  */
+-		      irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
+-						   R_MSP430_2X_PCREL);
++		      {
++			irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
++						     R_MSP430_2X_PCREL);
++			if (debug_relocs)
++			  printf ("R_MSP430_2X_PCREL (shrinking with new opcode"
++				  " 0x%x)\n", rx->t0);
++		      }
+ 		    else
+-		      irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
+-						   R_MSP430_10_PCREL);
++		      {
++			irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
++						     R_MSP430_10_PCREL);
++			if (debug_relocs)
++			  printf ("R_MSP430_10_PCREL (shrinking with new opcode"
++				  " 0x%x)\n", rx->t0);
++		      }
+ 		  }
+ 
+ 		/* Fix the opcode right way.  */
+@@ -2266,12 +2345,18 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 		  {
+ 		    irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
+ 						 R_MSP430X_10_PCREL);
++		    if (debug_relocs)
++		      printf ("      R_MSP430X_16 -> R_MSP430X_10_PCREL ");
+ 		  }
+ 		else
+ 		  {
+ 		    irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
+ 						 R_MSP430_10_PCREL);
++		    if (debug_relocs)
++		      printf ("      R_MSP430_16 -> R_MSP430_10_PCREL ");
+ 		  }
++		if (debug_relocs)
++		  printf ("(shrinking with new opcode 0x3c00)\n");
+ 
+ 		/* Fix the opcode right way.  */
+ 		bfd_put_16 (abfd, 0x3c00, contents + irel->r_offset - 2);
+
+commit 07361958628e74507df1ce2051c935a1a67f7fe9
+Author: Jozef Lawrynowicz <jozef.l@mittosystems.com>
+Date:   Mon Feb 10 20:33:21 2020 +0000
+
+    MSP430: Enable relaxation of relocs in JMP instructions
+    
+    This patch fixes relocation overflows caused by an inability to relax
+    unconditional JMP instructions to BR instructions.
+    
+    bfd/ChangeLog:
+    
+    2020-02-10  Jozef Lawrynowicz  <jozef.l@mittosystems.com>
+    
+            * elf32-msp430.c (msp430_elf_relax_add_two_words): Rename to
+            msp430_elf_relax_add_words. Support insertion of either one or two
+            words.
+            (msp430_elf_relax_section): Catch opcode of 0x3c00 when relocation
+            needs to be grown. Handle insertion of branch instruction to replace
+            jump.
+    
+    (cherry picked from commit 8d6cb116f47b5edb2a7c2fa540fcb9dbcd3effc2)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index a98d83f1ad..1302810e3c 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -8,6 +8,14 @@
+ 	(msp430_elf_relax_add_two_words): Likewise.
+ 	(msp430_elf_relax_section): Likewise.
+ 
++	2020-02-10  Jozef Lawrynowicz  <jozef.l@mittosystems.com>
++	* elf32-msp430.c (msp430_elf_relax_add_two_words): Rename to
++	msp430_elf_relax_add_words. Support insertion of either one or two
++	words.
++	(msp430_elf_relax_section): Catch opcode of 0x3c00 when relocation
++	needs to be grown. Handle insertion of branch instruction to replace
++	jump.
++
+ 2020-02-01  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* development.sh: Set development to true.
+diff --git a/bfd/elf32-msp430.c b/bfd/elf32-msp430.c
+index 93524dcd6a..67ad9584ce 100644
+--- a/bfd/elf32-msp430.c
++++ b/bfd/elf32-msp430.c
+@@ -1768,11 +1768,11 @@ msp430_elf_relax_delete_bytes (bfd * abfd, asection * sec, bfd_vma addr,
+   return TRUE;
+ }
+ 
+-/* Insert two words into a section whilst relaxing.  */
++/* Insert one or two words into a section whilst relaxing.  */
+ 
+ static bfd_byte *
+-msp430_elf_relax_add_two_words (bfd * abfd, asection * sec, bfd_vma addr,
+-				int word1, int word2)
++msp430_elf_relax_add_words (bfd * abfd, asection * sec, bfd_vma addr,
++			    int num_words, int word1, int word2)
+ {
+   Elf_Internal_Shdr *symtab_hdr;
+   unsigned int sec_shndx;
+@@ -1787,22 +1787,24 @@ msp430_elf_relax_add_two_words (bfd * abfd, asection * sec, bfd_vma addr,
+   bfd_vma sec_end;
+   asection *p;
+   if (debug_relocs)
+-    printf ("      adding two words at 0x%lx\n",
++    printf ("      adding %d words at 0x%lx\n", num_words,
+ 	    sec->output_section->vma + sec->output_offset + addr);
+ 
+   contents = elf_section_data (sec)->this_hdr.contents;
+   sec_end = sec->size;
++  int num_bytes = num_words * 2;
+ 
+   /* Make space for the new words.  */
+-  contents = bfd_realloc (contents, sec_end + 4);
+-  memmove (contents + addr + 4, contents + addr, sec_end - addr);
++  contents = bfd_realloc (contents, sec_end + num_bytes);
++  memmove (contents + addr + num_bytes, contents + addr, sec_end - addr);
+ 
+   /* Insert the new words.  */
+   bfd_put_16 (abfd, word1, contents + addr);
+-  bfd_put_16 (abfd, word2, contents + addr + 2);
++  if (num_words == 2)
++    bfd_put_16 (abfd, word2, contents + addr + 2);
+ 
+   /* Update the section information.  */
+-  sec->size += 4;
++  sec->size += num_bytes;
+   elf_section_data (sec)->this_hdr.contents = contents;
+ 
+   /* Adjust all the relocs.  */
+@@ -1811,12 +1813,12 @@ msp430_elf_relax_add_two_words (bfd * abfd, asection * sec, bfd_vma addr,
+ 
+   for (; irel < irelend; irel++)
+     if ((irel->r_offset >= addr && irel->r_offset < sec_end))
+-      irel->r_offset += 4;
++      irel->r_offset += num_bytes;
+ 
+   /* Adjust the local symbols defined in this section.  */
+   sec_shndx = _bfd_elf_section_from_bfd_section (abfd, sec);
+   for (p = abfd->sections; p != NULL; p = p->next)
+-    msp430_elf_relax_adjust_locals (abfd, p, addr, -4,
++    msp430_elf_relax_adjust_locals (abfd, p, addr, -num_bytes,
+ 				    sec_shndx, sec_end);
+ 
+   /* Adjust the global symbols affected by the move.  */
+@@ -1830,8 +1832,8 @@ msp430_elf_relax_add_two_words (bfd * abfd, asection * sec, bfd_vma addr,
+ 	  printf ("      adjusting value of local symbol %s from 0x%lx to "
+ 		  "0x%lx\n", bfd_elf_string_from_elf_section
+ 		  (abfd, symtab_hdr->sh_link, isym->st_name),
+-		  isym->st_value, isym->st_value + 4);
+-	isym->st_value += 4;
++		  isym->st_value, isym->st_value + num_bytes);
++	isym->st_value += num_bytes;
+       }
+ 
+   /* Now adjust the global symbols defined in this section.  */
+@@ -1848,7 +1850,7 @@ msp430_elf_relax_add_two_words (bfd * abfd, asection * sec, bfd_vma addr,
+ 	  && sym_hash->root.u.def.section == sec
+ 	  && sym_hash->root.u.def.value >= addr
+ 	  && sym_hash->root.u.def.value < sec_end)
+-	sym_hash->root.u.def.value += 4;
++	sym_hash->root.u.def.value += num_bytes;
+     }
+ 
+   return contents;
+@@ -2015,8 +2017,12 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+       opcode = bfd_get_16 (abfd, contents + irel->r_offset);
+ 
+       /* Compute the new opcode.  We are going to convert:
++	 JMP label
++	   into:
++	 BR[A] label
++	   or
+ 	 J<cond> label
+-	 into:
++	   into:
+ 	 J<inv-cond> 1f
+ 	 BR[A] #label
+ 	 1:			*/
+@@ -2036,8 +2042,14 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 	     1: br label
+ 	     2:		       */
+ 	  continue;
++	case 0x3c00:
++	  if (uses_msp430x_relocs (abfd))
++	    opcode = 0x0080;	/* JMP -> BRA  */
++	  else
++	    opcode = 0x4030;	/* JMP -> BR  */
++	  break;
+ 	default:
+-	  /* Not a conditional branch instruction.  */
++	  /* Unhandled branch instruction.  */
+ 	  /* fprintf (stderr, "unrecog: %x\n", opcode); */
+ 	  continue;
+ 	}
+@@ -2057,16 +2069,29 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 	    printf ("      R_MSP430X_10_PCREL -> R_MSP430X_ABS20_ADR_SRC "
+ 		    "(growing with new opcode 0x%x)\n", opcode);
+ 
+-	  /* Insert an absolute branch (aka MOVA) instruction.  */
+-	  contents = msp430_elf_relax_add_two_words
+-	    (abfd, sec, irel->r_offset + 2, 0x0080, 0x0000);
++	  /* Insert an absolute branch (aka MOVA) instruction.
++	     Note that bits 19:16 of the address are stored in the first word
++	     of the insn, so this is where r_offset will point to.  */
++	  if (opcode == 0x0080)
++	    {
++	      /* If we're inserting a BRA because we are converting from a JMP,
++		 then only add one word for destination address; the BRA opcode
++		 has already been written.  */
++	      contents = msp430_elf_relax_add_words
++		(abfd, sec, irel->r_offset + 2, 1, 0x0000, 0);
++	    }
++	  else
++	    {
++	      contents = msp430_elf_relax_add_words
++		(abfd, sec, irel->r_offset + 2, 2, 0x0080, 0x0000);
++	      /* Update the relocation to point to the inserted branch
++		 instruction.  Note - we are changing a PC-relative reloc
++		 into an absolute reloc, but this is OK because we have
++		 arranged with the assembler to have the reloc's value be
++		 a (local) symbol, not a section+offset value.  */
++	      irel->r_offset += 2;
++	    }
+ 
+-	  /* Update the relocation to point to the inserted branch
+-	     instruction.  Note - we are changing a PC-relative reloc
+-	     into an absolute reloc, but this is OK because we have
+-	     arranged with the assembler to have the reloc's value be
+-	     a (local) symbol, not a section+offset value.  */
+-	  irel->r_offset += 2;
+ 	  irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
+ 				       R_MSP430X_ABS20_ADR_SRC);
+ 	}
+@@ -2075,12 +2100,23 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 	  if (debug_relocs)
+ 	    printf ("      R_MSP430_10_PCREL -> R_MSP430_16 "
+ 		    "(growing with new opcode 0x%x)\n", opcode);
+-	  contents = msp430_elf_relax_add_two_words
+-	    (abfd, sec, irel->r_offset + 2, 0x4030, 0x0000);
+-
+-	  /* See comment above about converting a 10-bit PC-rel
+-	     relocation into a 16-bit absolute relocation.  */
+-	  irel->r_offset += 4;
++	  if (opcode == 0x4030)
++	    {
++	      /* If we're inserting a BR because we are converting from a JMP,
++		 then only add one word for destination address; the BR opcode
++		 has already been written.  */
++	      contents = msp430_elf_relax_add_words
++		(abfd, sec, irel->r_offset + 2, 1, 0x0000, 0);
++	      irel->r_offset += 2;
++	    }
++	  else
++	    {
++	      contents = msp430_elf_relax_add_words
++		(abfd, sec, irel->r_offset + 2, 2, 0x4030, 0x0000);
++	      /* See comment above about converting a 10-bit PC-rel
++		 relocation into a 16-bit absolute relocation.  */
++	      irel->r_offset += 4;
++	    }
+ 	  irel->r_info = ELF32_R_INFO (ELF32_R_SYM (irel->r_info),
+ 				       R_MSP430_16);
+ 	}
+
+commit def23c1b07c3d86c6c13e2448c8279f0072cca69
+Author: Jozef Lawrynowicz <jozef.l@mittosystems.com>
+Date:   Mon Feb 10 20:37:57 2020 +0000
+
+    MSP430: Enable relaxation of jump instructions to hard-coded pcrel offsets
+    
+    This patch fixes execution failures which occur when the BR in a
+    sequence such as:
+      J<cond> 1f
+      BR
+      1:
+    is relaxed to a JMP, and the pc-relative offset for the destination of
+    the J<cond> instruction is hard-coded to be 2 words ahead of the
+    instruction.
+    The hard-coded offset will cause execution to jump 1 word ahead of where
+    it should actually go.
+    
+    Instead we now detect the hard-coded offset is one we inserted earlier,
+    and invert the condition, allowing us to remove the BR entirely.
+    
+    bfd/ChangeLog:
+    
+    2020-02-10  Jozef Lawrynowicz  <jozef.l@mittosystems.com>
+    
+            * elf32-msp430.c (msp430_elf_relax_section): Before relaxing a branch,
+            check if previous instruction matches a conditional jump inserted
+            earlier. Invert conditional jump and delete branch in this case.
+    
+    (cherry picked from commit ac4280dad035bb98fba999c174314435aefdf1a0)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 1302810e3c..48c58f4d8d 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -16,6 +16,12 @@
+ 	needs to be grown. Handle insertion of branch instruction to replace
+ 	jump.
+ 
++	2020-02-10  Jozef Lawrynowicz  <jozef.l@mittosystems.com>
++
++	* elf32-msp430.c (msp430_elf_relax_section): Before relaxing a branch,
++	check if previous instruction matches a conditional jump inserted
++	earlier. Invert conditional jump and delete branch in this case.
++
+ 2020-02-01  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* development.sh: Set development to true.
+diff --git a/bfd/elf32-msp430.c b/bfd/elf32-msp430.c
+index 67ad9584ce..4d68d40f67 100644
+--- a/bfd/elf32-msp430.c
++++ b/bfd/elf32-msp430.c
+@@ -2362,11 +2362,11 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 	       able to relax.  */
+ 	    if ((long) value < 1016 && (long) value > -1016)
+ 	      {
+-		int code2;
++		int code1, code2, opcode;
+ 
+ 		/* Get the opcode.  */
+ 		code2 = bfd_get_16 (abfd, contents + irel->r_offset - 2);
+-		if (code2 != 0x4030)
++		if (code2 != 0x4030) /* BR -> JMP */
+ 		  continue;
+ 		/* FIXME: check r4 and r3 ? */
+ 		/* FIXME: Handle 0x4010 as well ?  */
+@@ -2391,17 +2391,65 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 		    if (debug_relocs)
+ 		      printf ("      R_MSP430_16 -> R_MSP430_10_PCREL ");
+ 		  }
++		/* If we're trying to shrink a BR[A] after previously having
++		   grown a JMP for this reloc, then we have a sequence like
++		   this:
++		     J<cond> 1f
++		     BR[A]
++		     1:
++		   The opcode for J<cond> has the target hard-coded as 2 words
++		   ahead of the insn, instead of using a reloc.
++		   This means we cannot rely on any of the helper functions to
++		   update this hard-coded jump destination if we remove the
++		   BR[A] insn, so we must explicitly update it here.
++		   This does mean that we can remove the entire branch
++		   instruction, and invert the conditional jump, saving us 4
++		   bytes rather than only 2 if we detected this in the normal
++		   way.  */
++		code1 = bfd_get_16 (abfd, contents + irel->r_offset - 4);
++		switch (code1)
++		  {
++		    case 0x3802: opcode = 0x3401; break; /* Jl  +2 -> Jge +1 */
++		    case 0x3402: opcode = 0x3801; break; /* Jge +2 -> Jl  +1 */
++		    case 0x2c02: opcode = 0x2801; break; /* Jhs +2 -> Jlo +1 */
++		    case 0x2802: opcode = 0x2c01; break; /* Jlo +2 -> Jhs +1 */
++		    case 0x2402: opcode = 0x2001; break; /* Jeq +2 -> Jne +1 */
++		    case 0x2002: opcode = 0x2401; break; /* jne +2 -> Jeq +1 */
++		    case 0x3002: /* jn +2   */
++		      /* FIXME: There is no direct inverse of the Jn insn.  */
++		      continue;
++		    default:
++		      /* The previous opcode does not have a hard-coded jump
++			 that we added when previously relaxing, so relax the
++			 current branch as normal.  */
++		      opcode = 0x3c00;
++		      break;
++		    }
+ 		if (debug_relocs)
+-		  printf ("(shrinking with new opcode 0x3c00)\n");
+-
+-		/* Fix the opcode right way.  */
+-		bfd_put_16 (abfd, 0x3c00, contents + irel->r_offset - 2);
+-		irel->r_offset -= 2;
++		  printf ("(shrinking with new opcode 0x%x)\n", opcode);
+ 
+-		/* Delete bytes.  */
+-		if (!msp430_elf_relax_delete_bytes (abfd, sec,
+-						    irel->r_offset + 2, 2))
+-		  goto error_return;
++		if (opcode != 0x3c00)
++		  {
++		    /* Invert the opcode of the conditional jump.  */
++		    bfd_put_16 (abfd, opcode, contents + irel->r_offset - 4);
++		    irel->r_offset -= 4;
++
++		    /* Delete 4 bytes - the full BR insn.  */
++		    if (!msp430_elf_relax_delete_bytes (abfd, sec,
++							irel->r_offset + 2, 4))
++		      goto error_return;
++		  }
++		else
++		  {
++		    /* Fix the opcode right way.  */
++		    bfd_put_16 (abfd, opcode, contents + irel->r_offset - 2);
++		    irel->r_offset -= 2;
++
++		    /* Delete bytes.  */
++		    if (!msp430_elf_relax_delete_bytes (abfd, sec,
++							irel->r_offset + 2, 2))
++		      goto error_return;
++		  }
+ 
+ 		/* That will change things, so, we should relax again.
+ 		   Note that this is not required, and it may be slow.  */
+
+commit 98ef1b41d47b51735cfbeaccea68024364e93f11
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Feb 11 00:01:58 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 0b4097c12a..50b2e600e0 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200210
++#define BFD_VERSION_DATE 20200211
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 0a710062e6e0f5eb41fe052bcb019d1073b6752f
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Tue Feb 11 12:43:41 2020 +0000
+
+    Fix building elf43-msp430.c on a 32-bit host.
+    
+            * elf32-msp430.c (msp430_final_link_relocate): Always use longs
+            for addresses in print statements.
+            (msp430_elf_relax_delete_bytes): Likewise.
+            (msp430_elf_relax_add_words): Likewise.
+            (msp430_elf_relax_section): Likewise.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 48c58f4d8d..d695a0e1ae 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,13 @@
++2020-02-11  Nick Clifton  <nickc@redhat.com>
++
++	Import from the mainline:
++
++	* elf32-msp430.c (msp430_final_link_relocate): Always use longs
++	for addresses in print statements.
++	(msp430_elf_relax_delete_bytes): Likewise.
++	(msp430_elf_relax_add_words): Likewise.
++	(msp430_elf_relax_section): Likewise.
++
+ 2020-02-10  Jozef Lawrynowicz  <jozef.l@mittosystems.com>
+ 
+ 	Apply from master
+diff --git a/bfd/elf32-msp430.c b/bfd/elf32-msp430.c
+index 4d68d40f67..784c32ed02 100644
+--- a/bfd/elf32-msp430.c
++++ b/bfd/elf32-msp430.c
+@@ -746,8 +746,8 @@ msp430_final_link_relocate (reloc_howto_type *	   howto,
+ 
+   if (debug_relocs)
+     printf ("writing relocation (%p) at 0x%lx type: %d\n", rel,
+-	    input_section->output_section->vma + input_section->output_offset
+-	    + rel->r_offset, howto->type);
++	    (long) (input_section->output_section->vma + input_section->output_offset
++		    + rel->r_offset), howto->type);
+   if (sym_diff_section != NULL)
+     {
+       BFD_ASSERT (sym_diff_section == input_section);
+@@ -1671,7 +1671,7 @@ msp430_elf_relax_delete_bytes (bfd * abfd, asection * sec, bfd_vma addr,
+   toaddr = sec->size;
+   if (debug_relocs)
+     printf ("      deleting %d bytes between 0x%lx to 0x%lx\n",
+-	    count, addr, toaddr);
++	    count, (long) addr, (long) toaddr);
+ 
+   irel = elf_section_data (sec)->relocs;
+   irelend = irel + sec->reloc_count;
+@@ -1721,13 +1721,13 @@ msp430_elf_relax_delete_bytes (bfd * abfd, asection * sec, bfd_vma addr,
+ 	{
+ 	  if (debug_relocs)
+ 	    printf ("      adjusting value of local symbol %s from 0x%lx ",
+-		    name, isym->st_value);
++		    name, (long) isym->st_value);
+ 	  if (isym->st_value < addr + count)
+ 	    isym->st_value = addr;
+ 	  else
+ 	    isym->st_value -= count;
+ 	  if (debug_relocs)
+-	    printf ("to 0x%lx\n", isym->st_value);
++	    printf ("to 0x%lx\n", (long) isym->st_value);
+ 	}
+       /* Adjust the function symbol's size as well.  */
+       else if (ELF_ST_TYPE (isym->st_info) == STT_FUNC
+@@ -1788,7 +1788,7 @@ msp430_elf_relax_add_words (bfd * abfd, asection * sec, bfd_vma addr,
+   asection *p;
+   if (debug_relocs)
+     printf ("      adding %d words at 0x%lx\n", num_words,
+-	    sec->output_section->vma + sec->output_offset + addr);
++	    (long) (sec->output_section->vma + sec->output_offset + addr));
+ 
+   contents = elf_section_data (sec)->this_hdr.contents;
+   sec_end = sec->size;
+@@ -1832,7 +1832,7 @@ msp430_elf_relax_add_words (bfd * abfd, asection * sec, bfd_vma addr,
+ 	  printf ("      adjusting value of local symbol %s from 0x%lx to "
+ 		  "0x%lx\n", bfd_elf_string_from_elf_section
+ 		  (abfd, symtab_hdr->sh_link, isym->st_name),
+-		  isym->st_value, isym->st_value + num_bytes);
++		  (long) isym->st_value, (long)(isym->st_value + num_bytes));
+ 	isym->st_value += num_bytes;
+       }
+ 
+@@ -1881,7 +1881,7 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 
+   if (debug_relocs)
+     printf ("Relaxing %s (%p), output_offset: 0x%lx sec size: 0x%lx\n",
+-	    sec->name, sec, sec->output_offset, sec->size);
++	    sec->name, sec, (long) sec->output_offset, (long) sec->size);
+ 
+   symtab_hdr = & elf_tdata (abfd)->symtab_hdr;
+ 
+@@ -1955,11 +1955,12 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 
+ 	  if (debug_relocs)
+ 	    printf ("    processing reloc at 0x%lx for local sym: %s "
+-		    "st_value: 0x%lx adj value: 0x%lx\n", sec->output_offset
+-		    + sec->output_section->vma + irel->r_offset,
++		    "st_value: 0x%lx adj value: 0x%lx\n",
++		    (long) (sec->output_offset + sec->output_section->vma
++			    + irel->r_offset),
+ 		    bfd_elf_string_from_elf_section (abfd, symtab_hdr->sh_link,
+ 						     isym->st_name),
+-		    isym->st_value, symval);
++		    (long) isym->st_value, (long) symval);
+ 	}
+       else
+ 	{
+@@ -1983,9 +1984,11 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 		    + h->root.u.def.section->output_offset);
+ 	  if (debug_relocs)
+ 	    printf ("    processing reloc at 0x%lx for global sym: %s "
+-		    "st_value: 0x%lx adj value: 0x%lx\n", sec->output_offset
+-		    + sec->output_section->vma + irel->r_offset,
+-		    h->root.root.string, h->root.u.def.value, symval);
++		    "st_value: 0x%lx adj value: 0x%lx\n",
++		    (long) (sec->output_offset + sec->output_section->vma
++		    + irel->r_offset),
++	      h->root.root.string, (long) h->root.u.def.value,
++	      (long) symval);
+ 	}
+ 
+       /* For simplicity of coding, we are going to modify the section
+@@ -2176,11 +2179,12 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 
+ 	    if (debug_relocs)
+ 	      printf ("    processing reloc at 0x%lx for local sym: %s "
+-		      "st_value: 0x%lx adj value: 0x%lx\n", sec->output_offset
+-		      + sec->output_section->vma + irel->r_offset,
++		      "st_value: 0x%lx adj value: 0x%lx\n",
++		      (long) (sec->output_offset + sec->output_section->vma
++			      + irel->r_offset),
+ 		      bfd_elf_string_from_elf_section
+ 		      (abfd, symtab_hdr->sh_link, isym->st_name),
+-		      isym->st_value, symval);
++		      (long) isym->st_value, (long) symval);
+ 	  }
+ 	else
+ 	  {
+@@ -2204,9 +2208,11 @@ msp430_elf_relax_section (bfd * abfd, asection * sec,
+ 		      + h->root.u.def.section->output_offset);
+ 	    if (debug_relocs)
+ 	      printf ("    processing reloc at 0x%lx for global sym: %s "
+-		      "st_value: 0x%lx adj value: 0x%lx\n", sec->output_offset
+-		      + sec->output_section->vma + irel->r_offset,
+-		      h->root.root.string, h->root.u.def.value, symval);
++		      "st_value: 0x%lx adj value: 0x%lx\n", (long)
++		      (sec->output_offset + sec->output_section->vma
++		       + irel->r_offset),
++		      h->root.root.string, (long) h->root.u.def.value,
++		      (long) symval);
+ 	  }
+ 
+ 	/* For simplicity of coding, we are going to modify the section
+
+commit 82f439d028c65663a0baf0a17ef5c4a2ea5c84a7
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Tue Feb 11 15:55:25 2020 +0000
+
+    Import a fix from the mainline sources that prevents a potential illegal memory access when parsing PE binaries.
+    
+            PR 25447
+            * coffgen.c (_bfd_coff_close_and_cleanup): Do not clear the keep
+            syms and keep strings flags as these may have been set in order to
+            prevent a bogus call to free.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index d695a0e1ae..b7bbf9c414 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,12 @@
++2020-02-11  Nick Clifton  <nickc@redhat.com>
++
++	Import from the mainline:
++
++	PR 25447
++	* coffgen.c (_bfd_coff_close_and_cleanup): Do not clear the keep
++	syms and keep strings flags as these may have been set in order to
++	prevent a bogus call to free.
++
+ 2020-02-11  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Import from the mainline:
+diff --git a/bfd/coffgen.c b/bfd/coffgen.c
+index 2bfcf1a6b1..3ddd2d89a8 100644
+--- a/bfd/coffgen.c
++++ b/bfd/coffgen.c
+@@ -3175,8 +3175,10 @@ _bfd_coff_close_and_cleanup (bfd *abfd)
+       && bfd_family_coff (abfd)
+       && coff_data (abfd) != NULL)
+     {
+-      obj_coff_keep_syms (abfd) = FALSE;
+-      obj_coff_keep_strings (abfd) = FALSE;
++      /* PR 25447:
++	 Do not clear the keep_syms and keep_strings flags.
++	 These may have been set by pe_ILF_build_a_bfd() indicating
++	 that the syms and strings pointers are not to be freed.  */
+       if (!_bfd_coff_free_symbols (abfd))
+ 	return FALSE;
+     }
+
+commit e485a45ec33986ca052928d6a8673ad069fa5b54
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Feb 12 00:02:01 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 50b2e600e0..33964a8734 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200211
++#define BFD_VERSION_DATE 20200212
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 727f687389a1ea8b061165a528fe25cb6a4523a1
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Feb 13 00:01:45 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 33964a8734..f52150bd5d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200212
++#define BFD_VERSION_DATE 20200213
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c23fe857b840d8c3f1ca46529daee32c28eea279
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Feb 14 00:02:06 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index f52150bd5d..50e48afdea 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200213
++#define BFD_VERSION_DATE 20200214
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 95f28ba988d2407742081a3a2b7b2481294b50b6
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Feb 15 00:01:39 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 50e48afdea..87d708701d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200214
++#define BFD_VERSION_DATE 20200215
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 99f48dceb7949cb4946c7d1b7f46d24fa0af1675
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Feb 16 00:02:45 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 87d708701d..2716ec840d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200215
++#define BFD_VERSION_DATE 20200216
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 804b7fd4fdc545a6ed18aee3d4186574861634ef
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Sun Feb 16 11:33:15 2020 +0000
+
+    Import fixes for using the LTO plugin with nm.
+    
+      PR 25355
+    
+    bfd:
+     2020-02-13  H.J. Lu  <hongjiu.lu@intel.com>
+    
+     * plugin.c (try_load_plugin): Make plugin_list_iter an argument
+     and use it if it isn't NULL.  Remove has_plugin_p argument.  Add
+     a build_list_p argument.  Don't search plugin_list.  Short circuit
+     when building the plugin list.
+     (has_plugin): Renamed to has_plugin_list.
+     (bfd_plugin_set_plugin): Don't set has_plugin.
+     (bfd_plugin_specified_p): Check plugin_list instead.
+     (build_plugin_list): New function.
+     (load_plugin): Call build_plugin_list and use plugin_list.
+    
+     2020-02-11  H.J. Lu  <hongjiu.lu@intel.com>
+    
+     PR binutils/25355
+     * plugin.c (try_claim): Always clean up for LTO wrapper.
+     (try_load_plugin): Treat each object as independent.  Create a
+     copy for plugin name.
+    
+     2020-02-11  H.J. Lu  <hongjiu.lu@intel.com>
+    
+     * plugin.c (add_symbols): Clear plugin_data memory.
+    
+     2020-02-10  H.J. Lu  <hongjiu.lu@intel.com>
+    
+     PR binutils/25355
+     * configure.ac (HAVE_EXECUTABLE_SUFFIX): New AC_DEFINE.
+     (EXECUTABLE_SUFFIX): Likewise.
+     * config.in: Regenerated.
+     * configure: Likewise.
+     * plugin.c (bfd_plugin_close_and_cleanup): Removed.
+     (plugin_list_entry): Add all_symbols_read, cleanup_handler,
+     gcc, lto_wrapper, resolution_file, resolution_option, gcc_env,
+     real_bfd, real_nsyms, real_syms, lto_nsyms and lto_syms.
+     (get_lto_wrapper): New.
+     (setup_lto_wrapper_env): Likewise.
+     (current_plugin): Likewise.
+     (register_all_symbols_read): Likewise.
+     (register_cleanup): Likewise.
+     (get_symbols): Likewise.
+     (add_input_file): Likewise.
+     (bfd_plugin_close_and_cleanup): Likewise.
+     (claim_file): Removed.
+     (register_claim_file): Set current_plugin->claim_file.
+     (add_symbols): Make a copy of LTO symbols.  Set lto_nsyms and
+     lto_syms in current_plugin.
+     (try_claim): Use current_plugin->claim_file.  Call LTO plugin
+     all_symbols_read handler.  Copy real symbols to plugin_data.
+     Call LTO plugin cleanup handler.  Clean up for LTO wrapper.
+     (try_load_plugin): Don't reuse the previous plugin for LTO
+     wrapper.  Set up GCC LTO wrapper if possible.  Don't set
+     plugin_list_iter->claim_file.
+     (bfd_plugin_canonicalize_symtab): Use real LTO symbols if
+     possible.
+     * plugin.h (plugin_data_struct): Add real_bfd, real_nsyms and
+     real_syms.
+    
+    ld:
+     2020-02-10  H.J. Lu  <hongjiu.lu@intel.com>
+    
+     PR binutils/25355
+     * testsuite/ld-plugin/lto.exp: Run PR binutils/25355 test.
+     * testsuite/ld-plugin/pr25355.c: New file.
+     * testsuite/ld-plugin/pr25355.d: Likewise.
+     * testsuite/lib/ld-lib.exp (run_cc_link_tests): Support compile
+     only dump.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index b7bbf9c414..5eb7cf3c9d 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,63 @@
++2020-02-14  Nick Clifton  <nickc@redhat.com>
++
++	Import from mainline:
++	2020-02-13  H.J. Lu  <hongjiu.lu@intel.com>
++
++	* plugin.c (try_load_plugin): Make plugin_list_iter an argument
++	and use it if it isn't NULL.  Remove has_plugin_p argument.  Add
++	a build_list_p argument.  Don't search plugin_list.  Short circuit
++	when building the plugin list.
++	(has_plugin): Renamed to has_plugin_list.
++	(bfd_plugin_set_plugin): Don't set has_plugin.
++	(bfd_plugin_specified_p): Check plugin_list instead.
++	(build_plugin_list): New function.
++	(load_plugin): Call build_plugin_list and use plugin_list.
++
++	2020-02-11  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/25355
++	* plugin.c (try_claim): Always clean up for LTO wrapper.
++	(try_load_plugin): Treat each object as independent.  Create a
++	copy for plugin name.
++
++	2020-02-11  H.J. Lu  <hongjiu.lu@intel.com>
++
++	* plugin.c (add_symbols): Clear plugin_data memory.
++
++	2020-02-10  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/25355
++	* configure.ac (HAVE_EXECUTABLE_SUFFIX): New AC_DEFINE.
++	(EXECUTABLE_SUFFIX): Likewise.
++	* config.in: Regenerated.
++	* configure: Likewise.
++	* plugin.c (bfd_plugin_close_and_cleanup): Removed.
++	(plugin_list_entry): Add all_symbols_read, cleanup_handler,
++	gcc, lto_wrapper, resolution_file, resolution_option, gcc_env,
++	real_bfd, real_nsyms, real_syms, lto_nsyms and lto_syms.
++	(get_lto_wrapper): New.
++	(setup_lto_wrapper_env): Likewise.
++	(current_plugin): Likewise.
++	(register_all_symbols_read): Likewise.
++	(register_cleanup): Likewise.
++	(get_symbols): Likewise.
++	(add_input_file): Likewise.
++	(bfd_plugin_close_and_cleanup): Likewise.
++	(claim_file): Removed.
++	(register_claim_file): Set current_plugin->claim_file.
++	(add_symbols): Make a copy of LTO symbols.  Set lto_nsyms and
++	lto_syms in current_plugin.
++	(try_claim): Use current_plugin->claim_file.  Call LTO plugin
++	all_symbols_read handler.  Copy real symbols to plugin_data.
++	Call LTO plugin cleanup handler.  Clean up for LTO wrapper.
++	(try_load_plugin): Don't reuse the previous plugin for LTO
++	wrapper.  Set up GCC LTO wrapper if possible.  Don't set
++	plugin_list_iter->claim_file.
++	(bfd_plugin_canonicalize_symtab): Use real LTO symbols if
++	possible.
++	* plugin.h (plugin_data_struct): Add real_bfd, real_nsyms and
++	real_syms.
++
+ 2020-02-11  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Import from the mainline:
+diff --git a/bfd/config.in b/bfd/config.in
+index be572969fc..e1dc0f0c44 100644
+--- a/bfd/config.in
++++ b/bfd/config.in
+@@ -18,6 +18,9 @@
+    language is requested. */
+ #undef ENABLE_NLS
+ 
++/* Suffix used for executables, if any. */
++#undef EXECUTABLE_SUFFIX
++
+ /* Define to 1 if you have the <alloca.h> header file. */
+ #undef HAVE_ALLOCA_H
+ 
+@@ -95,6 +98,9 @@
+ /* Define to 1 if you have the <dlfcn.h> header file. */
+ #undef HAVE_DLFCN_H
+ 
++/* Does the platform use an executable suffix? */
++#undef HAVE_EXECUTABLE_SUFFIX
++
+ /* Define to 1 if you have the `fcntl' function. */
+ #undef HAVE_FCNTL
+ 
+diff --git a/bfd/configure b/bfd/configure
+index bc576b7894..7c0708e2f8 100755
+--- a/bfd/configure
++++ b/bfd/configure
+@@ -12813,6 +12813,16 @@ fi
+ 
+ 
+ 
++if test -n "$EXEEXT"; then
++
++$as_echo "#define HAVE_EXECUTABLE_SUFFIX 1" >>confdefs.h
++
++fi
++
++cat >>confdefs.h <<_ACEOF
++#define EXECUTABLE_SUFFIX "${EXEEXT}"
++_ACEOF
++
+ 
+ host64=false
+ target64=false
+diff --git a/bfd/configure.ac b/bfd/configure.ac
+index c5bfbd5d12..af4d4b8c13 100644
+--- a/bfd/configure.ac
++++ b/bfd/configure.ac
+@@ -157,6 +157,12 @@ AM_MAINTAINER_MODE
+ AM_CONDITIONAL(GENINSRC_NEVER, false)
+ AM_INSTALL_LIBBFD
+ AC_EXEEXT
++if test -n "$EXEEXT"; then
++  AC_DEFINE(HAVE_EXECUTABLE_SUFFIX, 1,
++	    [Does the platform use an executable suffix?])
++fi
++AC_DEFINE_UNQUOTED(EXECUTABLE_SUFFIX, "${EXEEXT}",
++		   [Suffix used for executables, if any.])
+ 
+ host64=false
+ target64=false
+diff --git a/bfd/plugin.c b/bfd/plugin.c
+index 537ab60311..47c3439042 100644
+--- a/bfd/plugin.c
++++ b/bfd/plugin.c
+@@ -69,7 +69,6 @@ dlerror (void)
+ 
+ #endif /* !defined (HAVE_DLFCN_H) && defined (HAVE_WINDOWS_H)  */
+ 
+-#define bfd_plugin_close_and_cleanup		      _bfd_generic_close_and_cleanup
+ #define bfd_plugin_bfd_free_cached_info		      _bfd_generic_bfd_free_cached_info
+ #define bfd_plugin_new_section_hook		      _bfd_generic_new_section_hook
+ #define bfd_plugin_get_section_contents		      _bfd_generic_get_section_contents
+@@ -124,13 +123,312 @@ message (int level ATTRIBUTE_UNUSED,
+   return LDPS_OK;
+ }
+ 
++struct plugin_list_entry
++{
++  /* These must be initialized for each IR object with LTO wrapper.  */
++  void *handle;
++  ld_plugin_claim_file_handler claim_file;
++  ld_plugin_all_symbols_read_handler all_symbols_read;
++  ld_plugin_all_symbols_read_handler cleanup_handler;
++  char *resolution_file;
++  char *resolution_option;
++  bfd *real_bfd;
++  long real_nsyms;
++  asymbol **real_syms;
++  int lto_nsyms;
++  const struct ld_plugin_symbol *lto_syms;
++
++  struct plugin_list_entry *next;
++
++  /* These can be reused for all IR objects.  */
++  const char *plugin_name;
++  char *gcc;
++  char *lto_wrapper;
++  char *gcc_env;
++  bfd_boolean initialized;
++};
++
++/* Use GCC LTO wrapper to covert LTO IR object to the real object.  */
++
++static bfd_boolean
++get_lto_wrapper (struct plugin_list_entry *plugin)
++{
++  struct stat st;
++  const char *real_name;
++  const char *base_name;
++  size_t length;
++  const char *target_start = NULL;
++  const char *target_end = NULL;
++  size_t target_length = 0;
++  char *gcc_name;
++  char *wrapper_name;
++  char *p;
++  char dir_seperator = '\0';
++  char *resolution_file;
++
++  if (plugin->initialized)
++    {
++      if (plugin->lto_wrapper)
++	{
++	  resolution_file = make_temp_file (".res");
++	  if (resolution_file)
++	    {
++	      plugin->resolution_file = resolution_file;
++	      plugin->resolution_option = concat ("-fresolution=",
++						  resolution_file, NULL);
++	      return TRUE;
++	    }
++	  else
++	    {
++	      /* Something is wrong.  Give up.  */
++	      free (plugin->gcc);
++	      free (plugin->lto_wrapper);
++	      free (plugin->gcc_env);
++	      plugin->gcc = NULL;
++	      plugin->gcc_env = NULL;
++	      plugin->lto_wrapper = NULL;
++	    }
++	}
++
++      return FALSE;
++    }
++
++  plugin->initialized = TRUE;
++
++  /* Check for PREFIX/libexec/gcc/TARGET/VERSION/liblto_plugin.so.  */
++  real_name = lrealpath (plugin->plugin_name);
++  base_name = lbasename (real_name);
++
++  /* The directory length in plugin pathname.  */
++  length = base_name - real_name;
++
++  /* Skip if there is no PREFIX.  */
++  if (!length)
++    return FALSE;
++
++  p = (char *) real_name + length - 1;
++  if (IS_DIR_SEPARATOR (*p))
++    {
++      int level = 0;
++      for (; p != real_name; p--)
++	if (IS_DIR_SEPARATOR (*p))
++	  {
++	    level++;
++	    if (level == 2)
++	      target_end = p;
++	    else if (level == 3)
++	      {
++		target_start = p + 1;
++		target_length = target_end - target_start;
++	      }
++	    else if (level == 5)
++	      {
++		dir_seperator = *p;
++		break;
++	      }
++	  }
++    }
++
++  /* Skip if there is no TARGET nor PREFIX.  */
++  if (!target_length || !dir_seperator)
++    return FALSE;
++
++#ifdef HAVE_EXECUTABLE_SUFFIX
++# define GCC_EXECUTABLE		"gcc" EXECUTABLE_SUFFIX
++# define LTO_WRAPPER_EXECUTABLE	"lto-wrapper" EXECUTABLE_SUFFIX
++#else
++# define GCC_EXECUTABLE		"gcc"
++# define LTO_WRAPPER_EXECUTABLE	"lto-wrapper"
++#endif
++  gcc_name = bfd_malloc (length + target_length
++			 + sizeof (GCC_EXECUTABLE));
++  if (gcc_name == NULL)
++    return FALSE;
++  memcpy (gcc_name, real_name, length);
++
++  /* Get PREFIX/bin/.  */
++  p += gcc_name - real_name;
++  memcpy (p + 1, "bin", 3);
++  p[4] = dir_seperator;
++
++  /* Try PREFIX/bin/TARGET-gcc first.  */
++  memcpy (p + 5, target_start, target_length);
++  p[5 + target_length] = '-';
++  memcpy (p + 5 + target_length + 1, GCC_EXECUTABLE,
++	  sizeof (GCC_EXECUTABLE));
++  if (stat (gcc_name, &st) != 0 || !S_ISREG (st.st_mode))
++    {
++      /* Then try PREFIX/bin/gcc.  */
++      memcpy (p + 5, GCC_EXECUTABLE, sizeof (GCC_EXECUTABLE));
++      if (stat (gcc_name, &st) != 0 || !S_ISREG (st.st_mode))
++	{
++	  free (gcc_name);
++	  return FALSE;
++	}
++    }
++
++  /* lto-wrapper should be in the same directory with LTO plugin.  */
++  wrapper_name = bfd_malloc (length + sizeof (LTO_WRAPPER_EXECUTABLE));
++  if (wrapper_name == NULL)
++    {
++      free (gcc_name);
++      return FALSE;
++    }
++  memcpy (wrapper_name, real_name, length);
++  memcpy (wrapper_name + length, LTO_WRAPPER_EXECUTABLE,
++	  sizeof (LTO_WRAPPER_EXECUTABLE));
++  if (stat (wrapper_name, &st) == 0 && S_ISREG (st.st_mode))
++    {
++      resolution_file = make_temp_file (".res");
++      if (resolution_file)
++	{
++	  plugin->gcc = gcc_name;
++	  plugin->lto_wrapper = wrapper_name;
++	  plugin->gcc_env = concat ("COLLECT_GCC=", gcc_name, NULL);
++	  plugin->resolution_file = resolution_file;
++	  plugin->resolution_option = concat ("-fresolution=",
++					      resolution_file, NULL);
++	  return TRUE;
++	}
++    }
++
++  free (gcc_name);
++  free (wrapper_name);
++  return FALSE;
++}
++
++/* Set environment variables for GCC LTO wrapper to covert LTO IR
++   object to the real object.  */
++
++static int
++setup_lto_wrapper_env (struct plugin_list_entry *plugin)
++{
++  return (putenv (plugin->gcc_env)
++	  || putenv ("COLLECT_GCC_OPTIONS="));
++}
++
++static struct plugin_list_entry *plugin_list = NULL;
++static struct plugin_list_entry *current_plugin = NULL;
++
+ /* Register a claim-file handler. */
+-static ld_plugin_claim_file_handler claim_file = NULL;
+ 
+ static enum ld_plugin_status
+ register_claim_file (ld_plugin_claim_file_handler handler)
+ {
+-  claim_file = handler;
++  current_plugin->claim_file = handler;
++  return LDPS_OK;
++}
++
++/* Register an all-symbols-read handler.  */
++
++static enum ld_plugin_status
++register_all_symbols_read (ld_plugin_all_symbols_read_handler handler)
++{
++  current_plugin->all_symbols_read = handler;
++  return LDPS_OK;
++}
++
++/* Register a cleanup handler.  */
++
++static enum ld_plugin_status
++register_cleanup (ld_plugin_all_symbols_read_handler handler)
++{
++  current_plugin->cleanup_handler = handler;
++  return LDPS_OK;
++}
++
++/* Get the symbol resolution info for a plugin-claimed input file.  */
++
++static enum ld_plugin_status
++get_symbols (const void *handle ATTRIBUTE_UNUSED, int nsyms,
++	     struct ld_plugin_symbol *syms)
++{
++  if (syms)
++    {
++      int n;
++      for (n = 0; n < nsyms; n++)
++	{
++	  switch (syms[n].def)
++	    {
++	    default:
++	      BFD_ASSERT (0);
++	      break;
++	    case LDPK_UNDEF:
++	    case LDPK_WEAKUNDEF:
++	      syms[n].resolution = LDPR_UNDEF;
++	      break;
++	    case LDPK_DEF:
++	    case LDPK_WEAKDEF:
++	    case LDPK_COMMON:
++	      /* Tell plugin that LTO symbol has references from regular
++		 object code. */
++	      syms[n].resolution  = LDPR_PREVAILING_DEF;
++	      break;
++	    }
++      }
++    }
++
++  return LDPS_OK;
++}
++
++/* Add a new (real) input file generated by a plugin.  */
++
++static enum ld_plugin_status
++add_input_file (const char *pathname)
++{
++  /* Get symbols from the real LTO object.  */
++  char **matching;
++  long real_symsize;
++  long real_nsyms;
++  asymbol **real_syms;
++  int lto_nsyms;
++  bfd_boolean lto_symbol_found = FALSE;
++  const struct ld_plugin_symbol *lto_syms;
++  bfd *rbfd;
++  int i, j;
++
++  rbfd = bfd_openr (pathname, NULL);
++  if (!bfd_check_format_matches (rbfd, bfd_object, &matching))
++    BFD_ASSERT (0);
++
++  real_symsize = bfd_get_symtab_upper_bound (rbfd);
++  if (real_symsize < 0)
++    BFD_ASSERT (0);
++
++  real_syms = (asymbol **) bfd_malloc (real_symsize);
++  if (real_syms)
++    {
++      real_nsyms = bfd_canonicalize_symtab (rbfd, real_syms);
++      if (real_nsyms < 0)
++	BFD_ASSERT (0);
++
++      /* NB: LTO plugin may generate more than one real object from one
++	 LTO IR object.  We use the one which contains LTO symbols.  */
++      lto_syms = current_plugin->lto_syms;
++      lto_nsyms = current_plugin->lto_nsyms;
++      for (i = 0; i < lto_nsyms; i++)
++	for (j = 0; j < real_nsyms; j++)
++	  if (real_syms[j]->name
++	      && strcmp (lto_syms[i].name, real_syms[j]->name) == 0)
++	    {
++	      lto_symbol_found = TRUE;
++	      break;
++	    }
++    }
++
++  if (lto_symbol_found)
++    {
++      current_plugin->real_nsyms = real_nsyms;
++      current_plugin->real_syms = real_syms;
++      /* NB: We can't close RBFD which own the real symbol info.  */
++      current_plugin->real_bfd = rbfd;
++    }
++  else
++    {
++      bfd_close (rbfd);
++      free (real_syms);
++    }
++
+   return LDPS_OK;
+ }
+ 
+@@ -143,13 +441,52 @@ add_symbols (void * handle,
+   struct plugin_data_struct *plugin_data =
+     bfd_alloc (abfd, sizeof (plugin_data_struct));
+ 
+-  plugin_data->nsyms = nsyms;
+-  plugin_data->syms = syms;
++  if (plugin_data)
++    {
++      struct ld_plugin_symbol *sym_info;
++      char *strtab;
++      size_t sym_info_size, name_length;
++      int i;
++
++      memset (plugin_data, 0, sizeof (*plugin_data));
++
++      abfd->tdata.plugin_data = plugin_data;
++
++      /* NB: LTO symbols are owned by LTO plugin.  Create a copy so
++	 that we can use it in bfd_plugin_canonicalize_symtab.  */
++      sym_info_size = nsyms * sizeof (*syms);
++
++      /* Allocate a string table  */
++      for (i = 0; i < nsyms; i++)
++	sym_info_size += strlen (syms[i].name) + 1;
++
++      sym_info = bfd_alloc (abfd, sym_info_size);
++      if (sym_info)
++	{
++	  /* Copy symbol table.  */
++	  memcpy (sym_info, syms, nsyms * sizeof (*syms));
++
++	  /* Copy symbol names in symbol table.  */
++	  strtab = (char *) (sym_info + nsyms);
++	  for (i = 0; i < nsyms; i++)
++	    {
++	      name_length = strlen (syms[i].name);
++	      memcpy (strtab, syms[i].name, name_length + 1);
++	      sym_info[i].name = strtab;
++	      strtab += name_length + 1;
++	    }
++
++	  plugin_data->nsyms = nsyms;
++	  plugin_data->syms = sym_info;
++
++	  current_plugin->lto_nsyms = nsyms;
++	  current_plugin->lto_syms = sym_info;
++	}
++    }
+ 
+   if (nsyms != 0)
+     abfd->flags |= HAS_SYMS;
+ 
+-  abfd->tdata.plugin_data = plugin_data;
+   return LDPS_OK;
+ }
+ 
+@@ -212,34 +549,72 @@ try_claim (bfd *abfd)
+   struct ld_plugin_input_file file;
+ 
+   file.handle = abfd;
+-  if (!bfd_plugin_open_input (abfd, &file))
+-    return 0;
+-  if (claim_file)
+-    claim_file (&file, &claimed);
+-  close (file.fd);
+-  return claimed;
+-}
++  if (bfd_plugin_open_input (abfd, &file)
++      && current_plugin->claim_file)
++    {
++      current_plugin->claim_file (&file, &claimed);
++      if (claimed)
++	{
++	  if (current_plugin->all_symbols_read)
++	    {
++	      struct plugin_data_struct *plugin_data
++		= abfd->tdata.plugin_data;
++	      if (plugin_data)
++		{
++		  /* Get real symbols from LTO wrapper.  */
++		  current_plugin->all_symbols_read ();
+ 
+-struct plugin_list_entry
+-{
+-  void *                        handle;
+-  ld_plugin_claim_file_handler  claim_file;
+-  struct plugin_list_entry *    next;
+-};
++		  /* Copy real symbols to plugin_data.  */
++		  plugin_data->real_bfd = current_plugin->real_bfd;
++		  plugin_data->real_nsyms = current_plugin->real_nsyms;
++		  plugin_data->real_syms = current_plugin->real_syms;
++
++		  /* Clean up LTO plugin.  */
++		  if (current_plugin->cleanup_handler)
++		    current_plugin->cleanup_handler ();
++		}
++	    }
++	}
++
++      close (file.fd);
++    }
++
++  if (current_plugin->lto_wrapper)
++    {
++      /* Clean up for LTO wrapper.  NB: Resolution file and option
++	 have been created regardless if an IR object is claimed or
++	 not.  */
++      unlink (current_plugin->resolution_file);
++      free (current_plugin->resolution_option);
++    }
+ 
+-static struct plugin_list_entry * plugin_list = NULL;
++  return claimed;
++}
+ 
+ static int
+-try_load_plugin (const char *pname, bfd *abfd, int *has_plugin_p)
++try_load_plugin (const char *pname,
++		 struct plugin_list_entry *plugin_list_iter,
++		 bfd *abfd, bfd_boolean build_list_p)
+ {
+   void *plugin_handle = NULL;
+-  struct ld_plugin_tv tv[4];
++  struct ld_plugin_tv tv[12];
+   int i;
+   ld_plugin_onload onload;
+   enum ld_plugin_status status;
+-  struct plugin_list_entry *plugin_list_iter;
+ 
+-  *has_plugin_p = 0;
++  /* NB: Each object is independent.  Reuse the previous plugin from
++     the last run will lead to wrong result.  */
++  if (current_plugin)
++    {
++      if (current_plugin->handle)
++	dlclose (current_plugin->handle);
++      memset (current_plugin, 0,
++	      offsetof (struct plugin_list_entry, next));
++      current_plugin = NULL;
++    }
++
++  if (plugin_list_iter)
++    pname = plugin_list_iter->plugin_name;
+ 
+   plugin_handle = dlopen (pname, RTLD_NOW);
+   if (!plugin_handle)
+@@ -248,28 +623,30 @@ try_load_plugin (const char *pname, bfd *abfd, int *has_plugin_p)
+       return 0;
+     }
+ 
+-  for (plugin_list_iter = plugin_list;
+-       plugin_list_iter;
+-       plugin_list_iter = plugin_list_iter->next)
++  if (plugin_list_iter == NULL)
+     {
+-      if (plugin_handle == plugin_list_iter->handle)
++      size_t length_plugin_name = strlen (pname) + 1;
++      char *plugin_name = bfd_malloc (length_plugin_name);
++      if (plugin_name == NULL)
++	return 0;
++      plugin_list_iter = bfd_malloc (sizeof *plugin_list_iter);
++      if (plugin_list_iter == NULL)
+ 	{
+-	  dlclose (plugin_handle);
+-	  if (!plugin_list_iter->claim_file)
+-	    return 0;
+-
+-	  register_claim_file (plugin_list_iter->claim_file);
+-	  goto have_claim_file;
++	  free (plugin_name);
++	  return 0;
+ 	}
++      /* Make a copy of PNAME since PNAME from load_plugin () will be
++	 freed.  */
++      memcpy (plugin_name, pname, length_plugin_name);
++      memset (plugin_list_iter, 0, sizeof (*plugin_list_iter));
++      plugin_list_iter->plugin_name = plugin_name;
++      plugin_list_iter->next = plugin_list;
++      plugin_list = plugin_list_iter;
+     }
+ 
+-  plugin_list_iter = bfd_malloc (sizeof *plugin_list_iter);
+-  if (plugin_list_iter == NULL)
+-    return 0;
+   plugin_list_iter->handle = plugin_handle;
+-  plugin_list_iter->claim_file = NULL;
+-  plugin_list_iter->next = plugin_list;
+-  plugin_list = plugin_list_iter;
++  if (build_list_p)
++    return 0;
+ 
+   onload = dlsym (plugin_handle, "onload");
+   if (!onload)
+@@ -287,23 +664,60 @@ try_load_plugin (const char *pname, bfd *abfd, int *has_plugin_p)
+   tv[i].tv_tag = LDPT_ADD_SYMBOLS;
+   tv[i].tv_u.tv_add_symbols = add_symbols;
+ 
++  if (get_lto_wrapper (plugin_list_iter))
++    {
++      ++i;
++      tv[i].tv_tag = LDPT_REGISTER_ALL_SYMBOLS_READ_HOOK;
++      tv[i].tv_u.tv_register_all_symbols_read = register_all_symbols_read;
++
++      ++i;
++      tv[i].tv_tag = LDPT_REGISTER_CLEANUP_HOOK;
++      tv[i].tv_u.tv_register_cleanup = register_cleanup;
++
++      ++i;
++      tv[i].tv_tag = LDPT_GET_SYMBOLS;
++      tv[i].tv_u.tv_get_symbols = get_symbols;
++
++      ++i;
++      tv[i].tv_tag = LDPT_GET_SYMBOLS_V2;
++      tv[i].tv_u.tv_get_symbols = get_symbols;
++
++      ++i;
++      tv[i].tv_tag = LDPT_OPTION;
++      tv[i].tv_u.tv_string = plugin_list_iter->lto_wrapper;
++
++      ++i;
++      tv[i].tv_tag = LDPT_OPTION;
++      tv[i].tv_u.tv_string = plugin_list_iter->resolution_option;
++
++      ++i;
++      tv[i].tv_tag = LDPT_LINKER_OUTPUT;
++      tv[i].tv_u.tv_val = LDPO_EXEC;
++
++      ++i;
++      tv[i].tv_tag = LDPT_ADD_INPUT_FILE;
++      tv[i].tv_u.tv_add_input_file = add_input_file;
++    }
++
+   ++i;
+   tv[i].tv_tag = LDPT_NULL;
+   tv[i].tv_u.tv_val = 0;
+ 
++  current_plugin = plugin_list_iter;
++
++  /* LTO plugin will call handler hooks to set up plugin handlers.  */
+   status = (*onload)(tv);
+ 
+   if (status != LDPS_OK)
+     return 0;
+ 
+-  plugin_list_iter->claim_file = claim_file;
+-
+-have_claim_file:
+-  *has_plugin_p = 1;
++  if (current_plugin->lto_wrapper
++      && setup_lto_wrapper_env (current_plugin))
++    return 0;
+ 
+   abfd->plugin_format = bfd_plugin_no;
+ 
+-  if (!claim_file)
++  if (!current_plugin->claim_file)
+     return 0;
+ 
+   if (!try_claim (abfd))
+@@ -314,8 +728,7 @@ have_claim_file:
+ }
+ 
+ /* There may be plugin libraries in lib/bfd-plugins.  */
+-
+-static int has_plugin = -1;
++static int has_plugin_list = -1;
+ 
+ static const bfd_target *(*ld_plugin_object_p) (bfd *);
+ 
+@@ -325,7 +738,6 @@ void
+ bfd_plugin_set_plugin (const char *p)
+ {
+   plugin_name = p;
+-  has_plugin = p != NULL;
+ }
+ 
+ /* Return TRUE if a plugin library is used.  */
+@@ -333,7 +745,7 @@ bfd_plugin_set_plugin (const char *p)
+ bfd_boolean
+ bfd_plugin_specified_p (void)
+ {
+-  return has_plugin > 0;
++  return plugin_list != NULL;
+ }
+ 
+ /* Return TRUE if ABFD can be claimed by linker LTO plugin.  */
+@@ -364,8 +776,8 @@ register_ld_plugin_object_p (const bfd_target *(*object_p) (bfd *))
+   ld_plugin_object_p = object_p;
+ }
+ 
+-static int
+-load_plugin (bfd *abfd)
++static void
++build_plugin_list (bfd *abfd)
+ {
+   /* The intent was to search ${libdir}/bfd-plugins for plugins, but
+      unfortunately the original implementation wasn't precisely that
+@@ -374,17 +786,10 @@ load_plugin (bfd *abfd)
+   static const char *path[]
+     = { LIBDIR "/bfd-plugins", BINDIR "/../lib/bfd-plugins" };
+   struct stat last_st;
+-  int found = 0;
+   unsigned int i;
+ 
+-  if (!has_plugin)
+-    return found;
+-
+-  if (plugin_name)
+-    return try_load_plugin (plugin_name, abfd, &has_plugin);
+-
+-  if (plugin_program_name == NULL)
+-    return found;
++  if (has_plugin_list >= 0)
++    return;
+ 
+   /* Try not to search the same dir twice, by looking at st_dev and
+      st_ino for the dir.  If we are on a file system that always sets
+@@ -419,26 +824,38 @@ load_plugin (bfd *abfd)
+ 
+ 		  full_name = concat (plugin_dir, "/", ent->d_name, NULL);
+ 		  if (stat (full_name, &st) == 0 && S_ISREG (st.st_mode))
+-		    {
+-		      int valid_plugin;
+-
+-		      found = try_load_plugin (full_name, abfd, &valid_plugin);
+-		      if (has_plugin <= 0)
+-			has_plugin = valid_plugin;
+-		    }
++		    try_load_plugin (full_name, NULL, abfd, TRUE);
+ 		  free (full_name);
+-		  if (found)
+-		    break;
+ 		}
+ 	      closedir (d);
+ 	    }
+ 	  free (plugin_dir);
+ 	}
+-      if (found)
+-	break;
+     }
+ 
+-  return found;
++  has_plugin_list = plugin_list != NULL;
++}
++
++static int
++load_plugin (bfd *abfd)
++{
++  struct plugin_list_entry *plugin_list_iter;
++
++  if (plugin_name)
++    return try_load_plugin (plugin_name, plugin_list, abfd, FALSE);
++
++  if (plugin_program_name == NULL)
++    return 0;
++
++  build_plugin_list (abfd);
++
++  for (plugin_list_iter = plugin_list;
++       plugin_list_iter;
++       plugin_list_iter = plugin_list_iter->next)
++    if (try_load_plugin (NULL, plugin_list_iter, abfd, FALSE))
++      return 1;
++
++  return 0;
+ }
+ 
+ 
+@@ -562,7 +979,15 @@ bfd_plugin_canonicalize_symtab (bfd *abfd,
+ 			SEC_ALLOC | SEC_LOAD | SEC_CODE | SEC_HAS_CONTENTS);
+   static asection fake_common_section
+     = BFD_FAKE_SECTION (fake_common_section, NULL, "plug", 0, SEC_IS_COMMON);
+-  int i;
++  int i, j;
++  long real_nsyms;
++  asymbol **real_syms;
++
++  real_syms = plugin_data->real_syms;
++  if (real_syms)
++    real_nsyms = plugin_data->real_nsyms;
++  else
++    real_nsyms = 0;
+ 
+   for (i = 0; i < nsyms; i++)
+     {
+@@ -587,6 +1012,15 @@ bfd_plugin_canonicalize_symtab (bfd *abfd,
+ 	case LDPK_DEF:
+ 	case LDPK_WEAKDEF:
+ 	  s->section = &fake_section;
++	  if (real_nsyms)
++	    /* Use real LTO symbols if possible.  */
++	    for (j = 0; j < real_nsyms; j++)
++	      if (real_syms[j]->name
++		  && strcmp (syms[i].name, real_syms[j]->name) == 0)
++		{
++		  s->section = real_syms[j]->section;
++		  break;
++		}
+ 	  break;
+ 	default:
+ 	  BFD_ASSERT (0);
+@@ -635,6 +1069,24 @@ bfd_plugin_sizeof_headers (bfd *a ATTRIBUTE_UNUSED,
+   return 0;
+ }
+ 
++static bfd_boolean
++bfd_plugin_close_and_cleanup (bfd *abfd)
++{
++  struct plugin_data_struct *plugin_data;
++
++  if (abfd->format != bfd_archive
++      && (plugin_data = abfd->tdata.plugin_data))
++    {
++      if (plugin_data->real_bfd)
++	bfd_close (plugin_data->real_bfd);
++
++      if (plugin_data->real_syms)
++	free (plugin_data->real_syms);
++    }
++
++  return _bfd_generic_close_and_cleanup (abfd);
++}
++
+ const bfd_target plugin_vec =
+ {
+   "plugin",			/* Name.  */
+diff --git a/bfd/plugin.h b/bfd/plugin.h
+index 098bf08455..05c3573933 100644
+--- a/bfd/plugin.h
++++ b/bfd/plugin.h
+@@ -33,6 +33,9 @@ typedef struct plugin_data_struct
+ {
+   int nsyms;
+   const struct ld_plugin_symbol *syms;
++  bfd *real_bfd;
++  long real_nsyms;
++  asymbol **real_syms;
+ }
+ plugin_data_struct;
+ 
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index a7963cc0a9..999e0f4e33 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,15 @@
++2020-02-14  Nick Clifton  <nickc@redhat.com>
++
++	Import from the mainline:
++	2020-02-10  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/25355
++	* testsuite/ld-plugin/lto.exp: Run PR binutils/25355 test.
++	* testsuite/ld-plugin/pr25355.c: New file.
++	* testsuite/ld-plugin/pr25355.d: Likewise.
++	* testsuite/lib/ld-lib.exp (run_cc_link_tests): Support compile
++	only dump.
++
+ 2020-02-01  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* configure: Regenerate.
+diff --git a/ld/testsuite/ld-plugin/lto.exp b/ld/testsuite/ld-plugin/lto.exp
+index 9b03b7b397..1b44b0da3f 100644
+--- a/ld/testsuite/ld-plugin/lto.exp
++++ b/ld/testsuite/ld-plugin/lto.exp
+@@ -234,6 +234,11 @@ set lto_link_tests [list \
+   [list "Build pr24406-2b.o" \
+    "" "-O2 -fno-lto" \
+    {pr24406-2b.c}] \
++  [list "pr25355.o" \
++   "" \
++   "-flto -fno-common $lto_no_fat" \
++   {pr25355.c} \
++   [list [list "nm" "$plug_opt" "pr25355.d"]]] \
+ ]
+ 
+ if { [at_least_gcc_version 4 7] } {
+diff --git a/ld/testsuite/ld-plugin/pr25355.c b/ld/testsuite/ld-plugin/pr25355.c
+new file mode 100644
+index 0000000000..99f01fb5c8
+--- /dev/null
++++ b/ld/testsuite/ld-plugin/pr25355.c
+@@ -0,0 +1,2 @@
++int nm_test_var;
++int nm_test_var2 = 1234;
+diff --git a/ld/testsuite/ld-plugin/pr25355.d b/ld/testsuite/ld-plugin/pr25355.d
+new file mode 100644
+index 0000000000..98d10aba1c
+--- /dev/null
++++ b/ld/testsuite/ld-plugin/pr25355.d
+@@ -0,0 +1,4 @@
++#...
++[0-9a-f]+ B _?nm_test_var
++[0-9a-f]+ D _?nm_test_var2
++#pass
+diff --git a/ld/testsuite/lib/ld-lib.exp b/ld/testsuite/lib/ld-lib.exp
+index 6752a76483..e276bb589d 100644
+--- a/ld/testsuite/lib/ld-lib.exp
++++ b/ld/testsuite/lib/ld-lib.exp
+@@ -928,6 +928,7 @@ proc run_cc_link_tests { ldtests } {
+ 
+ 	if { $binfile eq "tmpdir/" } {
+ 	    # compile only
++	    set binfile $objfile
+ 	} elseif { [regexp ".*\\.a$" $binfile] } {
+ 	    if { ![ar_simple_create $ar $ldflags $binfile "$objfiles"] } {
+ 		set failed 1
+
+commit 67683578ebe1fa89f114405c401718a6434048a6
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Feb 17 00:01:50 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 2716ec840d..c0ebe14f04 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200216
++#define BFD_VERSION_DATE 20200217
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 8df264c6b5a77c980bfe759559a5ee9d52f98e93
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Feb 18 00:01:47 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c0ebe14f04..80f0b42b80 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200217
++#define BFD_VERSION_DATE 20200218
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 09a14ccd990cbe4b91b13eb71dc89310dfbf2ff7
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Feb 19 00:01:47 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 80f0b42b80..076be37bb6 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200218
++#define BFD_VERSION_DATE 20200219
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e2b46ba142d9901897d8189422f0bcc28e5660b8
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Wed Feb 19 03:29:51 2020 -0800
+
+    plugin: Call dlclose before return in try_load_plugin
+    
+    Since plugin can be used only once in try_load_plugin, call dlclose
+    before return.
+    
+            PR binutils/25355
+            * plugin.c (plugin_list_entry): Remove handle.
+            (try_load_plugin): Call dlclose before return.
+    
+    (cherry picked from commit dcf06b89b9129da6988878a77afdd02d3acc2e30)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 5eb7cf3c9d..17cb9775b5 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,9 @@
++2020-02-19  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/25355
++	* plugin.c (plugin_list_entry): Remove handle.
++	(try_load_plugin): Call dlclose before return.
++
+ 2020-02-14  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Import from mainline:
+diff --git a/bfd/plugin.c b/bfd/plugin.c
+index 47c3439042..93d562b9fe 100644
+--- a/bfd/plugin.c
++++ b/bfd/plugin.c
+@@ -126,7 +126,6 @@ message (int level ATTRIBUTE_UNUSED,
+ struct plugin_list_entry
+ {
+   /* These must be initialized for each IR object with LTO wrapper.  */
+-  void *handle;
+   ld_plugin_claim_file_handler claim_file;
+   ld_plugin_all_symbols_read_handler all_symbols_read;
+   ld_plugin_all_symbols_read_handler cleanup_handler;
+@@ -596,22 +595,18 @@ try_load_plugin (const char *pname,
+ 		 struct plugin_list_entry *plugin_list_iter,
+ 		 bfd *abfd, bfd_boolean build_list_p)
+ {
+-  void *plugin_handle = NULL;
++  void *plugin_handle;
+   struct ld_plugin_tv tv[12];
+   int i;
+   ld_plugin_onload onload;
+   enum ld_plugin_status status;
++  int result = 0;
+ 
+   /* NB: Each object is independent.  Reuse the previous plugin from
+      the last run will lead to wrong result.  */
+   if (current_plugin)
+-    {
+-      if (current_plugin->handle)
+-	dlclose (current_plugin->handle);
+-      memset (current_plugin, 0,
+-	      offsetof (struct plugin_list_entry, next));
+-      current_plugin = NULL;
+-    }
++    memset (current_plugin, 0,
++	    offsetof (struct plugin_list_entry, next));
+ 
+   if (plugin_list_iter)
+     pname = plugin_list_iter->plugin_name;
+@@ -628,12 +623,12 @@ try_load_plugin (const char *pname,
+       size_t length_plugin_name = strlen (pname) + 1;
+       char *plugin_name = bfd_malloc (length_plugin_name);
+       if (plugin_name == NULL)
+-	return 0;
++	goto short_circuit;
+       plugin_list_iter = bfd_malloc (sizeof *plugin_list_iter);
+       if (plugin_list_iter == NULL)
+ 	{
+ 	  free (plugin_name);
+-	  return 0;
++	  goto short_circuit;
+ 	}
+       /* Make a copy of PNAME since PNAME from load_plugin () will be
+ 	 freed.  */
+@@ -644,13 +639,13 @@ try_load_plugin (const char *pname,
+       plugin_list = plugin_list_iter;
+     }
+ 
+-  plugin_list_iter->handle = plugin_handle;
++  current_plugin = plugin_list_iter;
+   if (build_list_p)
+-    return 0;
++    goto short_circuit;
+ 
+   onload = dlsym (plugin_handle, "onload");
+   if (!onload)
+-    return 0;
++    goto short_circuit;
+ 
+   i = 0;
+   tv[i].tv_tag = LDPT_MESSAGE;
+@@ -703,28 +698,30 @@ try_load_plugin (const char *pname,
+   tv[i].tv_tag = LDPT_NULL;
+   tv[i].tv_u.tv_val = 0;
+ 
+-  current_plugin = plugin_list_iter;
+-
+   /* LTO plugin will call handler hooks to set up plugin handlers.  */
+   status = (*onload)(tv);
+ 
+   if (status != LDPS_OK)
+-    return 0;
++    goto short_circuit;
+ 
+   if (current_plugin->lto_wrapper
+       && setup_lto_wrapper_env (current_plugin))
+-    return 0;
++    goto short_circuit;
+ 
+   abfd->plugin_format = bfd_plugin_no;
+ 
+   if (!current_plugin->claim_file)
+-    return 0;
++    goto short_circuit;
+ 
+   if (!try_claim (abfd))
+-    return 0;
++    goto short_circuit;
+ 
+   abfd->plugin_format = bfd_plugin_yes;
+-  return 1;
++  result = 1;
++
++short_circuit:
++  dlclose (plugin_handle);
++  return result;
+ }
+ 
+ /* There may be plugin libraries in lib/bfd-plugins.  */
+
+commit d4b50999b3b287b5f984ade2f8734aa8c9359440
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Feb 20 00:01:35 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 076be37bb6..f59b373b01 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200219
++#define BFD_VERSION_DATE 20200220
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 545c7b98b6ae9973e55b89c9aa1024b412cdcc0b
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Feb 21 00:02:59 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index f59b373b01..11f607fa1e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200220
++#define BFD_VERSION_DATE 20200221
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e4c9402701ee1b8007b5f9fa22e3ad3620e2ca54
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Feb 22 00:01:31 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 11f607fa1e..7e8aacdc0d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200221
++#define BFD_VERSION_DATE 20200222
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit acc4a8b8ac83077819948126bc7501d35eb1ea74
+Author: Alan Modra <amodra@gmail.com>
+Date:   Sat Feb 22 12:46:33 2020 +1030
+
+    PR25585, PHDR segment not covered by LOAD segment
+    
+    I closed this bug as invalid, but I think it is worth mentioning in NEWS
+    that older linkers didn't check PT_PHDR very well.  The patch also allows
+    people to force an output file with --noinhibit-exec after the error.
+    
+    bfd/
+            PR 25585
+            * elf.c (assign_file_positions_for_load_sections): Continue linking
+            on "PHDR segment not covered by LOAD segment" errors.
+    ld/
+            PR 25585
+            * NEWS: Mention better "PHDR segment not covered by LOAD segment"
+            checking.
+    
+    (cherry picked from commit 7b3c27152b5695177a2cd5adc0d7b0255f99aca0)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 17cb9775b5..e5da1b4658 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,9 @@
++2020-02-22  Alan Modra  <amodra@gmail.com>
++
++	PR 25585
++	* elf.c (assign_file_positions_for_load_sections): Continue linking
++	on "PHDR segment not covered by LOAD segment" errors.
++
+ 2020-02-19  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	PR binutils/25355
+diff --git a/bfd/elf.c b/bfd/elf.c
+index a8d98a60f4..f02b7249dd 100644
+--- a/bfd/elf.c
++++ b/bfd/elf.c
+@@ -5934,7 +5934,11 @@ assign_file_positions_for_load_sections (bfd *abfd,
+ 	  _bfd_error_handler (_("%pB: error: PHDR segment not covered"
+ 				" by LOAD segment"),
+ 			      abfd);
+-	  return FALSE;
++	  if (link_info == NULL)
++	    return FALSE;
++	  /* Arrange for the linker to exit with an error, deleting
++	     the output file unless --noinhibit-exec is given.  */
++	  link_info->callbacks->info ("%X");
+ 	}
+ 
+       /* Check that all sections are in a PT_LOAD segment.
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 999e0f4e33..ebbf64e893 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,9 @@
++2020-02-22  Alan Modra  <amodra@gmail.com>
++
++	PR 25585
++	* NEWS: Mention better "PHDR segment not covered by LOAD segment"
++	checking.
++
+ 2020-02-14  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Import from the mainline:
+diff --git a/ld/NEWS b/ld/NEWS
+index f659ccfc06..7734d23d5b 100644
+--- a/ld/NEWS
++++ b/ld/NEWS
+@@ -2,6 +2,12 @@
+ 
+ Changes in 2.34:
+ 
++* The ld check for "PHDR segment not covered by LOAD segment" is more
++  effective, catching cases that were wrongly allowed by previous versions of
++  ld.  If you see this error it is likely you are linking with a bad linker
++  script or the binary you are building is not intended to be loaded by a
++  dynamic loader.  In the latter case --no-dynamic-linker is appropriate.
++
+ * cr16c support removed.
+ 
+ * Add support for z80-elf.
+
+commit 4c60d47fdb8fe8dc110ed5febf46909a1095f7f6
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Feb 23 00:02:32 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7e8aacdc0d..f7e6fb847c 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200222
++#define BFD_VERSION_DATE 20200223
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 2832e03a50f0317d1601c1510c960d32ee8ef66c
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Feb 24 00:01:50 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index f7e6fb847c..9f9d032a03 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200223
++#define BFD_VERSION_DATE 20200224
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit fee78c33f57dd7d8f6c6504ec420734308453467
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Feb 25 00:02:13 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 9f9d032a03..9117e45405 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200224
++#define BFD_VERSION_DATE 20200225
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 42b2380cdced1f828ede6fa1c7c7d1fdf0e331ca
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Tue Feb 25 03:30:33 2020 -0800
+
+    Don't call lto-wrapper for ar and ranlib
+    
+    Since ar and ranlib don't need to know symbol types to work properly,
+    we should avoid calling lto-wrapper for them to speed them up.
+    
+    bfd/
+    
+            PR binutils/25584
+            * plugin.c (need_lto_wrapper_p): New.
+            (bfd_plugin_set_program_name): Add an int argument to set
+            need_lto_wrapper_p.
+            (get_lto_wrapper): Return FALSE if need_lto_wrapper_p isn't
+            set.
+            * plugin.h (bfd_plugin_set_program_name): Add an int argument.
+    
+    binutils/
+    
+            PR binutils/25584
+            * ar.c (main): Pass 0 to bfd_plugin_set_program_name.
+            * nm.c (main): Pass 1 to bfd_plugin_set_program_name.
+    
+    (cherry picked from commit ecda90163e2b0a6f0be96e3fc262c28820a27211)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index e5da1b4658..51eda90af1 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,13 @@
++2020-02-25  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/25584
++	* plugin.c (need_lto_wrapper_p): New.
++	(bfd_plugin_set_program_name): Add an int argument to set
++	need_lto_wrapper_p.
++	(get_lto_wrapper): Return FALSE if need_lto_wrapper_p isn't
++	set.
++	* plugin.h (bfd_plugin_set_program_name): Add an int argument.
++
+ 2020-02-22  Alan Modra  <amodra@gmail.com>
+ 
+ 	PR 25585
+diff --git a/bfd/plugin.c b/bfd/plugin.c
+index 93d562b9fe..c79468fab8 100644
+--- a/bfd/plugin.c
++++ b/bfd/plugin.c
+@@ -147,6 +147,17 @@ struct plugin_list_entry
+   bfd_boolean initialized;
+ };
+ 
++static const char *plugin_program_name;
++static int need_lto_wrapper_p;
++
++void
++bfd_plugin_set_program_name (const char *program_name,
++			     int need_lto_wrapper)
++{
++  plugin_program_name = program_name;
++  need_lto_wrapper_p = need_lto_wrapper;
++}
++
+ /* Use GCC LTO wrapper to covert LTO IR object to the real object.  */
+ 
+ static bfd_boolean
+@@ -165,6 +176,9 @@ get_lto_wrapper (struct plugin_list_entry *plugin)
+   char dir_seperator = '\0';
+   char *resolution_file;
+ 
++  if (!need_lto_wrapper_p)
++    return FALSE;
++
+   if (plugin->initialized)
+     {
+       if (plugin->lto_wrapper)
+@@ -489,14 +503,6 @@ add_symbols (void * handle,
+   return LDPS_OK;
+ }
+ 
+-static const char *plugin_program_name;
+-
+-void
+-bfd_plugin_set_program_name (const char *program_name)
+-{
+-  plugin_program_name = program_name;
+-}
+-
+ int
+ bfd_plugin_open_input (bfd *ibfd, struct ld_plugin_input_file *file)
+ {
+diff --git a/bfd/plugin.h b/bfd/plugin.h
+index 05c3573933..b2d5e50137 100644
+--- a/bfd/plugin.h
++++ b/bfd/plugin.h
+@@ -21,7 +21,7 @@
+ #ifndef _PLUGIN_H_
+ #define _PLUGIN_H_
+ 
+-void bfd_plugin_set_program_name (const char *);
++void bfd_plugin_set_program_name (const char *, int);
+ int bfd_plugin_open_input (bfd *, struct ld_plugin_input_file *);
+ void bfd_plugin_set_plugin (const char *);
+ bfd_boolean bfd_plugin_target_p (const bfd_target *);
+diff --git a/binutils/ChangeLog b/binutils/ChangeLog
+index 068b2dbb16..24b0515fd6 100644
+--- a/binutils/ChangeLog
++++ b/binutils/ChangeLog
+@@ -1,3 +1,9 @@
++2020-02-25  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/25584
++	* ar.c (main): Pass 0 to bfd_plugin_set_program_name.
++	* nm.c (main): Pass 1 to bfd_plugin_set_program_name.
++
+ 2020-02-01  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* configure: Regenerate.
+diff --git a/binutils/ar.c b/binutils/ar.c
+index 1057db9980..35dd51e04a 100644
+--- a/binutils/ar.c
++++ b/binutils/ar.c
+@@ -725,7 +725,7 @@ main (int argc, char **argv)
+   xmalloc_set_program_name (program_name);
+   bfd_set_error_program_name (program_name);
+ #if BFD_SUPPORTS_PLUGINS
+-  bfd_plugin_set_program_name (program_name);
++  bfd_plugin_set_program_name (program_name, 0);
+ #endif
+ 
+   expandargv (&argc, &argv);
+diff --git a/binutils/nm.c b/binutils/nm.c
+index 0ee3f88386..5b386592a6 100644
+--- a/binutils/nm.c
++++ b/binutils/nm.c
+@@ -1701,7 +1701,7 @@ main (int argc, char **argv)
+   xmalloc_set_program_name (program_name);
+   bfd_set_error_program_name (program_name);
+ #if BFD_SUPPORTS_PLUGINS
+-  bfd_plugin_set_program_name (program_name);
++  bfd_plugin_set_program_name (program_name, 1);
+ #endif
+ 
+   START_PROGRESS (program_name, 0);
+
+commit eb84a155e3203e9cc4936db67555944505f0e313
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Feb 26 00:01:17 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 9117e45405..5213140aab 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200225
++#define BFD_VERSION_DATE 20200226
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 1da4a8d93162092c5144e7534f6762074efc5ee2
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Feb 27 00:01:24 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5213140aab..6c3533db1f 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200226
++#define BFD_VERSION_DATE 20200227
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 40bfb9762747f8336b17c70a0173d10200fa62eb
+Author: Alan Modra <amodra@gmail.com>
+Date:   Thu Feb 27 17:28:47 2020 +1030
+
+    Re: PR24511, nm should not mark symbols in .init_array as "t"
+    
+            PR 24511
+            * syms.c (bfd_decode_symclass): Reverse order of coff_section_type
+            and decode_section_type calls.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 51eda90af1..702416cd43 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,9 @@
++2020-02-27  Alan Modra  <amodra@gmail.com>
++
++	PR 24511
++	* syms.c (bfd_decode_symclass): Reverse order of coff_section_type
++	and decode_section_type calls.
++
+ 2020-02-25  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	PR binutils/25584
+diff --git a/bfd/syms.c b/bfd/syms.c
+index 128cf19145..8a8b74f3f9 100644
+--- a/bfd/syms.c
++++ b/bfd/syms.c
+@@ -705,9 +705,9 @@ bfd_decode_symclass (asymbol *symbol)
+     c = 'a';
+   else if (symbol->section)
+     {
+-      c = decode_section_type (symbol->section);
++      c = coff_section_type (symbol->section->name);
+       if (c == '?')
+-	c = coff_section_type (symbol->section->name);
++	c = decode_section_type (symbol->section);
+     }
+   else
+     return '?';
+
+commit 0318fc4e18eee609c99952a1be4a5c8ffaeb7fd0
+Author: Alan Modra <amodra@gmail.com>
+Date:   Wed Feb 19 13:10:47 2020 +1030
+
+    Adjust PR25355 testcase
+    
+            * testsuite/ld-plugin/pr25355.d: Allow alpha-linux nm result.
+    
+    (cherry picked from commit 2e3cd5d013cee36c5bc26c0468d471878300ed22)
+
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index ebbf64e893..58ee70b1b6 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,9 @@
++2020-02-28  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2020-02-19  Alan Modra  <amodra@gmail.com>
++	* testsuite/ld-plugin/pr25355.d: Allow alpha-linux nm result.
++
+ 2020-02-22  Alan Modra  <amodra@gmail.com>
+ 
+ 	PR 25585
+diff --git a/ld/testsuite/ld-plugin/pr25355.d b/ld/testsuite/ld-plugin/pr25355.d
+index 98d10aba1c..409189959a 100644
+--- a/ld/testsuite/ld-plugin/pr25355.d
++++ b/ld/testsuite/ld-plugin/pr25355.d
+@@ -1,4 +1,4 @@
+ #...
+-[0-9a-f]+ B _?nm_test_var
+-[0-9a-f]+ D _?nm_test_var2
++[0-9a-f]+ [BS] _?nm_test_var
++[0-9a-f]+ [DG] _?nm_test_var2
+ #pass
+
+commit 2c9614faf81029089320e6d093a54c4ef2d99187
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Feb 28 00:02:45 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 6c3533db1f..42bffab97c 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200227
++#define BFD_VERSION_DATE 20200228
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit f56fe7db44c7f38492626907f2061dbc0ca45d61
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Feb 29 00:01:15 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 42bffab97c..59ad500b92 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200228
++#define BFD_VERSION_DATE 20200229
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@

@@ -49,6 +49,7 @@ fi
 post_unpack() {
   find "${PKG_BUILD}" -type f -name '*.py' -exec sed -e '1s,^#![[:space:]]*/usr/bin/python.*,#!/usr/bin/env python3,' -i {} \;
 }
+
 pre_build_target() {
   cd $PKG_BUILD
     aclocal --force --verbose
