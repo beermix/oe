@@ -20,6 +20,7 @@ PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"
 configure_init() {
   : # reuse configure_target()
 }
+
 make_init() {
   : # reuse make_target()
 }
