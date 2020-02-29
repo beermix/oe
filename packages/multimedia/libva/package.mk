@@ -22,6 +22,7 @@ else
   PKG_DEPENDS_TARGET="toolchain libdrm"
   DISPLAYSERVER_LIBVA="-Dwith_x11=no -Dwith_glx=no -Dwith_wayland=no"
 fi
+
 PKG_MESON_OPTS_TARGET="-Ddisable_drm=false \
                        -Denable_docs=false \
                        -Denable_va_messaging=true \
