@@ -7,7 +7,7 @@ PKG_NAME="gcc"
 #PKG_SHA256="ea6ef08f121239da5695f76c9b33637a118dcf63e24164422231917fa61fb206"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
-PKG_VERSION="9-20200215"
+PKG_VERSION="9-20200222"
 #PKG_VERSION="7866f9e"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -104,19 +104,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CFLAGS="-march=haswell -g0 -O2"
-  export CXXFLAGS="-march=haswell -g0 -O2 -std=gnu++98"
-  export BOOT_CFLAGS="-march=haswell -g0 -O2"
-  export BOOT_CXXFLAGS="-march=haswell -g0 -O2"
-
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-}
-
-pre_configure_bootstrap() {
-  export CFLAGS="-march=haswell -g0 -O2"
-  export CXXFLAGS="-march=haswell -g0 -O2"
-  export BOOT_CFLAGS="-march=haswell -g0 -O2"
-  export BOOT_CXXFLAGS="-march=haswell -g0 -O2"
 }
 
 post_make_host() {
