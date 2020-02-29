@@ -1,5 +1,5 @@
 PKG_NAME="iana-etc"
-PKG_VERSION="2019"
+PKG_VERSION="2020"
 PKG_LICENSE="none"
 PKG_SITE="http://www.iana.org"
 PKG_SHORTDESC="iana-etc: The Iana-Etc package provides data for network services and protocols."
