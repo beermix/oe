@@ -2,8 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="meson"
-PKG_VERSION="0.53.1"
-PKG_SHA256="ec1ba33eea701baca2c1607dac458152dc8323364a51fdef6babda2623413b04"
+PKG_VERSION="0.53.2"
+PKG_SHA256="3e8f830f33184397c2eb0b651ec502adb63decb28978bdc84b3558d71284c21f"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/mesonbuild/meson/releases"
 PKG_URL="https://github.com/mesonbuild/meson/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
