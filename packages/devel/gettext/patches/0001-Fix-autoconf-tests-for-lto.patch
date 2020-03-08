@@ -1,0 +1,71 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Wed, 4 Mar 2020 13:28:01 -0800
+Subject: [PATCH] Fix autoconf tests for lto
+
+Notably, the 'log10' libm check was failing by mistake.
+
+https://savannah.gnu.org/bugs/?56109
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ gettext-tools/gnulib-m4/mathfunc.m4 | 6 +++---
+ libtextstyle/gnulib-m4/mathfunc.m4  | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/gettext-tools/gnulib-m4/mathfunc.m4 b/gettext-tools/gnulib-m4/mathfunc.m4
+index 91b538a..b9a5726 100644
+--- a/gettext-tools/gnulib-m4/mathfunc.m4
++++ b/gettext-tools/gnulib-m4/mathfunc.m4
+@@ -1,4 +1,4 @@
+-# mathfunc.m4 serial 11
++# mathfunc.m4 serial 12
+ dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
+ dnl This file is free software; the Free Software Foundation
+ dnl gives unlimited permission to copy and/or distribute it,
+@@ -60,7 +60,7 @@ AC_DEFUN([gl_MATHFUNC],
+              #endif
+              #include <math.h>
+              $4
+-             $2 (*funcptr) $3 = ]func[;
++             $2 (* volatile funcptr) $3 = ]func[;
+              int i_ret;
+              float f_ret;
+              double d_ret;
+@@ -85,7 +85,7 @@ AC_DEFUN([gl_MATHFUNC],
+                #endif
+                #include <math.h>
+                $4
+-               $2 (*funcptr) $3 = ]func[;
++               $2 (* volatile funcptr) $3 = ]func[;
+                int i_ret;
+                float f_ret;
+                double d_ret;
+diff --git a/libtextstyle/gnulib-m4/mathfunc.m4 b/libtextstyle/gnulib-m4/mathfunc.m4
+index 91b538a..b9a5726 100644
+--- a/libtextstyle/gnulib-m4/mathfunc.m4
++++ b/libtextstyle/gnulib-m4/mathfunc.m4
+@@ -1,4 +1,4 @@
+-# mathfunc.m4 serial 11
++# mathfunc.m4 serial 12
+ dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
+ dnl This file is free software; the Free Software Foundation
+ dnl gives unlimited permission to copy and/or distribute it,
+@@ -60,7 +60,7 @@ AC_DEFUN([gl_MATHFUNC],
+              #endif
+              #include <math.h>
+              $4
+-             $2 (*funcptr) $3 = ]func[;
++             $2 (* volatile funcptr) $3 = ]func[;
+              int i_ret;
+              float f_ret;
+              double d_ret;
+@@ -85,7 +85,7 @@ AC_DEFUN([gl_MATHFUNC],
+                #endif
+                #include <math.h>
+                $4
+-               $2 (*funcptr) $3 = ]func[;
++               $2 (* volatile funcptr) $3 = ]func[;
+                int i_ret;
+                float f_ret;
+                double d_ret;
