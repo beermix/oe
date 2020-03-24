@@ -1,8 +1,3 @@
-Author: 
-Description: Description: correct where ld scripts are installed
-Author: Chris Chimelis <chris@debian.org>
-Upstream status: N/A
-Date: ??
 --- a/ld/Makefile.am
 +++ b/ld/Makefile.am
 @@ -63,7 +63,7 @@ endif

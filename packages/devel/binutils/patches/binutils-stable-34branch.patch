@@ -39911,3 +39911,123 @@ index 284d8a42f0..dbfb994694 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 0741367f3e593998ecd01281502387a50b8326c4
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Mar 19 00:00:21 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index dbfb994694..abe7e390f1 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200318
++#define BFD_VERSION_DATE 20200319
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit a367a6d2ea75e8ed83f0ed46e98a72f95e2b0e35
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Mar 20 00:00:33 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index abe7e390f1..2e2e9a5e79 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200319
++#define BFD_VERSION_DATE 20200320
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 2c0bfdb0fcde5c33583061bfd262338f67b872b5
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Mar 21 00:00:23 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 2e2e9a5e79..9b7bfb90fa 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200320
++#define BFD_VERSION_DATE 20200321
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 0d28063e3e85c675a5c01d4ff56d441e5c5c5379
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Mar 22 00:00:30 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 9b7bfb90fa..c698c084d1 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200321
++#define BFD_VERSION_DATE 20200322
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 07a517b378bd5da05eb3fb190c5f10d707030382
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Mar 23 00:00:21 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c698c084d1..1429e68d58 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200322
++#define BFD_VERSION_DATE 20200323
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 4e0b2483b9de18b77fd18c617d594b5697b13358
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Mar 24 00:00:29 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1429e68d58..0266f81e54 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200323
++#define BFD_VERSION_DATE 20200324
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
