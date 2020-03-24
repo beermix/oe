@@ -4,7 +4,7 @@
 
 PKG_NAME="ccache"
 PKG_VERSION="3.7.8"
-PKG_SHA256=""
+PKG_SHA256="99ea7b8fc34fdd5dc628169f452086c1f4d8ca3a1e52bd484fbdef3516893672"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/ccache/ccache/releases"
 PKG_URL="https://github.com/ccache/ccache/releases/download/v$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
