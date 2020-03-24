@@ -25,8 +25,10 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dacl=false \
                        -Daudit=false \
                        -Dblkid=true \
+                       -Dfdisk=false \
                        -Dkmod=true \
                        -Dpam=false \
+                       -Dpwquality=false \
                        -Dmicrohttpd=false \
                        -Dlibcryptsetup=false \
                        -Dlibcurl=false \
@@ -37,6 +39,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dgcrypt=false \
                        -Dgnutls=false \
                        -Dopenssl=false \
+                       -Dp11kit=false \
                        -Delfutils=false \
                        -Dzlib=false \
                        -Dbzip2=false \
@@ -53,12 +56,16 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dhibernate=false \
                        -Denvironment-d=false \
                        -Dbinfmt=false \
+                       -Drepart=false \
                        -Dcoredump=false \
                        -Dresolve=false \
                        -Dlogind=true \
                        -Dhostnamed=true \
                        -Dlocaled=false \
                        -Dmachined=false \
+                       -Dportabled=false \
+                       -Duserdb=false \
+                       -Dhomed=false \
                        -Dnetworkd=false \
                        -Dtimedated=false \
                        -Dtimesyncd=true \
@@ -84,6 +91,9 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dnss-systemd=false \
                        -Dman=false \
                        -Dhtml=false \
+                       -Dlink-udev-shared=true \
+                       -Dlink-systemctl-shared=true \
+                       -Dlink-networkd-shared=false \
                        -Dbashcompletiondir=no \
                        -Dzshcompletiondir=no \
                        -Dkmod-path=/usr/bin/kmod \
