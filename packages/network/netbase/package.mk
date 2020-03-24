@@ -2,10 +2,10 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="netbase"
-PKG_VERSION="5.6"
-PKG_SHA256="5d93a099deb28869b7306e914700fafbd293b55bdb5df05a5aa6effd0af5930c"
+PKG_VERSION="6.1"
+PKG_SHA256="084d743bd84d4d9380bac4c71c51e57406dce44f5a69289bb823c903e9b035d8"
 PKG_LICENSE="GPL"
-PKG_SITE="http://ftp.debian.org/debian/pool/main/n/netbase/?C=M;O=D"
+PKG_SITE="https://salsa.debian.org/md/netbase"
 PKG_URL="http://ftp.debian.org/debian/pool/main/n/netbase/netbase_$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The netbase package provides data for network services and protocols from the iana db."
@@ -13,6 +13,6 @@ PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
   mkdir -p $INSTALL/etc
-    cp etc-protocols $INSTALL/etc/protocols
-    cp etc-services $INSTALL/etc/services
+    cp etc/protocols $INSTALL/etc
+    cp etc/services $INSTALL/etc
 }

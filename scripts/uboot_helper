@@ -107,6 +107,12 @@ devices = \
         'config': 'orangepi_plus_defconfig'
       },
     },
+    'H5' : {
+      'orangepi-pc2': {
+        'dtb': 'sun50i-h5-orangepi-pc2.dtb',
+        'config': 'orangepi_pc2_defconfig'
+      },
+    },
     'H6': {
       'beelink-gs1' : {
         'dtb' : 'sun50i-h6-beelink-gs1.dtb',
@@ -136,6 +142,18 @@ devices = \
         'dtb': '',
         'config': 'p212_defconfig'
       },
+      'khadas-vim': {
+        'dtb': 'meson-gxl-s905x-khadas-vim.dtb',
+        'config': 'khadas-vim_defconfig'
+      },
+      'khadas-vim2': {
+        'dtb': 'meson-gxm-khadas-vim2.dtb',
+        'config': 'khadas-vim2_defconfig'
+      },
+      'lafrite': {
+        'dtb': 'meson-gxl-s805x-libretech-ac.dtb',
+        'config': 'libretech-ac_defconfig'
+      },
       'lepotato': {
         'dtb': 'meson-gxl-s905x-libretech-cc.dtb',
         'config': 'libretech-cc_defconfig'
@@ -153,6 +171,14 @@ devices = \
       'box': {
         'dtb': '',
         'config': 'p212_defconfig'
+      },
+      'khadas-vim3': {
+        'dtb': 'meson-g12b-a311d-khadas-vim3.dtb',
+        'config': 'khadas-vim3_defconfig'
+      },
+      'khadas-vim3l': {
+        'dtb': 'meson-sm1-khadas-vim3l.dtb',
+        'config': 'khadas-vim3l_defconfig'
       },
       'odroid-n2': {
         'dtb': 'meson-g12b-odroid-n2.dtb',
