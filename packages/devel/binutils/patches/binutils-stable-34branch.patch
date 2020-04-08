@@ -40031,3 +40031,1948 @@ index 1429e68d58..0266f81e54 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit a560c29ca5a6eeb7f84452f781f838ab35fd844b
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Tue Mar 24 06:58:40 2020 -0700
+
+    bfd: Change num_group to unsigned int
+    
+    elf.c failed with to with GCC 10 as of
+    
+    commit 906b3eb9df6c577d3f6e9c3ea5c9d7e4d1e90536
+    Author: Martin Liska <mliska@suse.cz>
+    Date:   Tue Mar 24 11:40:10 2020 +0100
+    
+        Improve endianess detection.
+    
+                PR lto/94249
+                * plugin-api.h: Add more robust endianess detection.
+    
+    binutils-gdb/bfd/elf.c: In function ‘setup_group’:
+    binutils-gdb/bfd/elf.c:740:35: error: overflow in conversion from ‘unsigned int’ to ‘int’ changes value from ‘num_group = 4294967295’ to ‘-1’ [-Werror=overflow]
+      740 |     elf_tdata (abfd)->num_group = num_group = -1;
+          |                                   ^~~~~~~~~
+    cc1: all warnings being treated as errors
+    make[2]: *** [Makefile:1608: elf.lo] Error 1
+    
+    Change num_group in elf_obj_tdata to unsigned int to compile with GCC 10.
+    
+            PR binutils/25717
+            * elf-bfd.h (elf_obj_tdata): Change num_group to unsigned int.
+    
+    (cherry picked from commit cda7e5603f6efd7c3716e45cc6ea11b70dd8daae)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index fd102a9cfe..f8abe540ba 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,8 @@
++2020-03-24  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/25717
++	* elf-bfd.h (elf_obj_tdata): Change num_group to unsigned int.
++
+ 2020-03-11  Alan Modra  <amodra@gmail.com>
+ 
+ 	* elf64-ppc.c (ppc64_elf_inline_plt): Do increment rel in for loop.
+diff --git a/bfd/elf-bfd.h b/bfd/elf-bfd.h
+index cbbba153f4..1550a08b31 100644
+--- a/bfd/elf-bfd.h
++++ b/bfd/elf-bfd.h
+@@ -1937,7 +1937,7 @@ struct elf_obj_tdata
+   struct sdt_note *sdt_note_head;
+ 
+   Elf_Internal_Shdr **group_sect_ptr;
+-  int num_group;
++  unsigned int num_group;
+ 
+   /* Index into group_sect_ptr, updated by setup_group when finding a
+      section's group.  Used to optimize subsequent group searches.  */
+
+commit b6520be37fd59993c5b6bed1fe2a185fb7a1f996
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Fri Feb 7 12:49:42 2020 +0000
+
+    Fix dwarf.c build with GCC 10
+    
+    Silcence a compile time warning message building the binutils with
+    gcc-10.
+    
+            * dwarf.c (display_debug_lines_decoded): Force a NUL termination
+            of the truncated file name.
+    
+    (cherry picked from commit e1104d08fe2fbfabcfa98aa00525211e47548bd8)
+
+diff --git a/binutils/ChangeLog b/binutils/ChangeLog
+index 24b0515fd6..fadd317151 100644
+--- a/binutils/ChangeLog
++++ b/binutils/ChangeLog
+@@ -1,3 +1,8 @@
++2020-03-24  Nick Clifton  <nickc@redhat.com>
++
++	* dwarf.c (display_debug_lines_decoded): Force a NUL termination
++	of the truncated file name.
++
+ 2020-02-25  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	PR binutils/25584
+diff --git a/binutils/dwarf.c b/binutils/dwarf.c
+index 35842f74b2..6ecfab5d5a 100644
+--- a/binutils/dwarf.c
++++ b/binutils/dwarf.c
+@@ -4905,6 +4905,11 @@ display_debug_lines_decoded (struct dwarf_section *  section,
+ 		  strncpy (newFileName,
+ 			   fileName + fileNameLength - MAX_FILENAME_LENGTH,
+ 			   MAX_FILENAME_LENGTH + 1);
++		  /* FIXME: This is to pacify gcc-10 which can warn that the
++		     strncpy above might leave a non-NUL terminated string
++		     in newFileName.  It won't, but gcc's analysis doesn't
++		     quite go far enough to discover this.  */
++		  newFileName[MAX_FILENAME_LENGTH] = 0;
+ 		}
+ 	      else
+ 		{
+
+commit d91a83902d10bea7be77e7cd843dc3f770ea2f1c
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Mar 25 00:00:27 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 0266f81e54..d30a67a693 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200324
++#define BFD_VERSION_DATE 20200325
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e7c0ee5110c175cc8762a8d379bdf2e3405d45d3
+Author: Martin Liska <mliska@suse.cz>
+Date:   Wed Mar 25 06:47:35 2020 -0700
+
+    Include: Sync lto-symtab.h and plugin-api.h with GCC
+    
+    2020-03-19  Martin Liska  <mliska@suse.cz>
+    
+            * lto-symtab.h (enum gcc_plugin_symbol_type): New.
+            (enum gcc_plugin_symbol_section_kind): Likewise.
+    
+    2020-03-19  Martin Liska  <mliska@suse.cz>
+    
+            * plugin-api.h (struct ld_plugin_symbol): Split
+            int def into 4 char fields.
+            (enum ld_plugin_symbol_type): New.
+            (enum ld_plugin_symbol_section_kind): New.
+            (enum ld_plugin_tag): Add LDPT_ADD_SYMBOLS_V2.
+    
+    (cherry picked from commit 3734bec8336f6f33927ab99460cb681035c2ca4f)
+
+diff --git a/include/ChangeLog b/include/ChangeLog
+index c7fd4ab141..7ce635dbe5 100644
+--- a/include/ChangeLog
++++ b/include/ChangeLog
+@@ -1,3 +1,16 @@
++2020-03-25  Martin Liska  <mliska@suse.cz>
++
++	* lto-symtab.h (enum gcc_plugin_symbol_type): New.
++	(enum gcc_plugin_symbol_section_kind): Likewise.
++
++2020-03-25  Martin Liska  <mliska@suse.cz>
++
++	* plugin-api.h (struct ld_plugin_symbol): Split
++	int def into 4 char fields.
++	(enum ld_plugin_symbol_type): New.
++	(enum ld_plugin_symbol_section_kind): New.
++	(enum ld_plugin_tag): Add LDPT_ADD_SYMBOLS_V2.
++
+ 2020-01-18  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Binutils 2.34 branch created.
+diff --git a/include/lto-symtab.h b/include/lto-symtab.h
+index 0ce0de1012..ef2e35f19c 100644
+--- a/include/lto-symtab.h
++++ b/include/lto-symtab.h
+@@ -38,4 +38,17 @@ enum gcc_plugin_symbol_visibility
+     GCCPV_HIDDEN
+   };
+ 
++enum gcc_plugin_symbol_type
++{
++  GCCST_UNKNOWN,
++  GCCST_FUNCTION,
++  GCCST_VARIABLE,
++};
++
++enum gcc_plugin_symbol_section_kind
++{
++  GCCSSK_DEFAULT,
++  GCCSSK_BSS
++};
++
+ #endif /* GCC_LTO_SYMTAB_H  */
+diff --git a/include/plugin-api.h b/include/plugin-api.h
+index 09e1202df0..f0f9667bf3 100644
+--- a/include/plugin-api.h
++++ b/include/plugin-api.h
+@@ -87,7 +87,19 @@ struct ld_plugin_symbol
+ {
+   char *name;
+   char *version;
+-  int def;
++  /* This is for compatibility with older ABIs.  The older ABI defined
++     only 'def' field.  */
++#ifdef __BIG_ENDIAN__
++  char unused;
++  char section_kind;
++  char symbol_type;
++  char def;
++#else
++  char def;
++  char symbol_type;
++  char section_kind;
++  char unused;
++#endif
+   int visibility;
+   uint64_t size;
+   char *comdat_key;
+@@ -123,6 +135,21 @@ enum ld_plugin_symbol_visibility
+   LDPV_HIDDEN
+ };
+ 
++/* The type of the symbol.  */
++
++enum ld_plugin_symbol_type
++{
++  LDST_UNKNOWN,
++  LDST_FUNCTION,
++  LDST_VARIABLE,
++};
++
++enum ld_plugin_symbol_section_kind
++{
++  LDSSK_DEFAULT,
++  LDSSK_BSS
++};
++
+ /* How a symbol is resolved.  */
+ 
+ enum ld_plugin_symbol_resolution
+@@ -431,7 +458,8 @@ enum ld_plugin_tag
+   LDPT_GET_INPUT_SECTION_ALIGNMENT = 29,
+   LDPT_GET_INPUT_SECTION_SIZE = 30,
+   LDPT_REGISTER_NEW_INPUT_HOOK = 31,
+-  LDPT_GET_WRAP_SYMBOLS = 32
++  LDPT_GET_WRAP_SYMBOLS = 32,
++  LDPT_ADD_SYMBOLS_V2 = 33
+ };
+ 
+ /* The plugin transfer vector.  */
+
+commit aaa1e160040ce2d8f382f9327cc7aea078373f3d
+Author: Alan Modra <amodra@gmail.com>
+Date:   Wed Mar 25 06:52:33 2020 -0700
+
+    Silence warnings due to plugin API change
+    
+            * testplug.c (parse_symdefstr): Use %hhi to read sym->def, and
+            clear new fields.
+            * testplug2.c (parse_symdefstr): Likewise.
+            * testplug3.c (parse_symdefstr): Likewise.
+            * testplug4.c (parse_symdefstr): Likewise.
+    
+    (cherry picked from commit c02d66610b3b79f6fb5052e8890969bc7185b7be)
+
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 58ee70b1b6..ad6b68137d 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,11 @@
++2020-03-25  Alan Modra  <amodra@gmail.com>
++
++	* testplug.c (parse_symdefstr): Use %hhi to read sym->def, and
++	clear new fields.
++	* testplug2.c (parse_symdefstr): Likewise.
++	* testplug3.c (parse_symdefstr): Likewise.
++	* testplug4.c (parse_symdefstr): Likewise.
++
+ 2020-02-28  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
+diff --git a/ld/testplug.c b/ld/testplug.c
+index 9dd0b91e45..c126f03607 100644
+--- a/ld/testplug.c
++++ b/ld/testplug.c
+@@ -239,12 +239,15 @@ parse_symdefstr (const char *str, struct ld_plugin_symbol *sym)
+   /* Finally we'll use sscanf to parse the numeric fields, then
+      we'll split out the strings which we need to allocate separate
+      storage for anyway so that we can add nul termination.  */
+-  n = sscanf (colon2 + 1, "%i:%i:%lli", &sym->def, &sym->visibility, &size);
++  n = sscanf (colon2 + 1, "%hhi:%i:%lli", &sym->def, &sym->visibility, &size);
+   if (n != 3)
+     return LDPS_ERR;
+ 
+   /* Parsed successfully, so allocate strings and fill out fields.  */
+   sym->size = size;
++  sym->unused = 0;
++  sym->section_kind = 0;
++  sym->symbol_type = 0;
+   sym->resolution = LDPR_UNKNOWN;
+   sym->name = malloc (colon1 - str + 1);
+   if (!sym->name)
+diff --git a/ld/testplug2.c b/ld/testplug2.c
+index ecd9a44d73..27553d0781 100644
+--- a/ld/testplug2.c
++++ b/ld/testplug2.c
+@@ -218,12 +218,15 @@ parse_symdefstr (const char *str, struct ld_plugin_symbol *sym)
+   /* Finally we'll use sscanf to parse the numeric fields, then
+      we'll split out the strings which we need to allocate separate
+      storage for anyway so that we can add nul termination.  */
+-  n = sscanf (colon2 + 1, "%i:%i:%lli", &sym->def, &sym->visibility, &size);
++  n = sscanf (colon2 + 1, "%hhi:%i:%lli", &sym->def, &sym->visibility, &size);
+   if (n != 3)
+     return LDPS_ERR;
+ 
+   /* Parsed successfully, so allocate strings and fill out fields.  */
+   sym->size = size;
++  sym->unused = 0;
++  sym->section_kind = 0;
++  sym->symbol_type = 0;
+   sym->resolution = LDPR_UNKNOWN;
+   sym->name = malloc (colon1 - str + 1);
+   if (!sym->name)
+diff --git a/ld/testplug3.c b/ld/testplug3.c
+index 05fdca02e2..928f4d6842 100644
+--- a/ld/testplug3.c
++++ b/ld/testplug3.c
+@@ -217,12 +217,15 @@ parse_symdefstr (const char *str, struct ld_plugin_symbol *sym)
+   /* Finally we'll use sscanf to parse the numeric fields, then
+      we'll split out the strings which we need to allocate separate
+      storage for anyway so that we can add nul termination.  */
+-  n = sscanf (colon2 + 1, "%i:%i:%lli", &sym->def, &sym->visibility, &size);
++  n = sscanf (colon2 + 1, "%hhi:%i:%lli", &sym->def, &sym->visibility, &size);
+   if (n != 3)
+     return LDPS_ERR;
+ 
+   /* Parsed successfully, so allocate strings and fill out fields.  */
+   sym->size = size;
++  sym->unused = 0;
++  sym->section_kind = 0;
++  sym->symbol_type = 0;
+   sym->resolution = LDPR_UNKNOWN;
+   sym->name = malloc (colon1 - str + 1);
+   if (!sym->name)
+diff --git a/ld/testplug4.c b/ld/testplug4.c
+index adaedf47c3..ca899b11da 100644
+--- a/ld/testplug4.c
++++ b/ld/testplug4.c
+@@ -218,12 +218,15 @@ parse_symdefstr (const char *str, struct ld_plugin_symbol *sym)
+   /* Finally we'll use sscanf to parse the numeric fields, then
+      we'll split out the strings which we need to allocate separate
+      storage for anyway so that we can add nul termination.  */
+-  n = sscanf (colon2 + 1, "%i:%i:%lli", &sym->def, &sym->visibility, &size);
++  n = sscanf (colon2 + 1, "%hhi:%i:%lli", &sym->def, &sym->visibility, &size);
+   if (n != 3)
+     return LDPS_ERR;
+ 
+   /* Parsed successfully, so allocate strings and fill out fields.  */
+   sym->size = size;
++  sym->unused = 0;
++  sym->section_kind = 0;
++  sym->symbol_type = 0;
+   sym->resolution = LDPR_UNKNOWN;
+   sym->name = malloc (colon1 - str + 1);
+   if (!sym->name)
+
+commit 64f5c0afcc4683f0003b60d6a5a299beb08f38de
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Wed Mar 25 06:54:20 2020 -0700
+
+    plugin: Use LDPT_ADD_SYMBOLS_V2 to get symbol type
+    
+    Since LTO plugin may generate more than one ltrans.o file from one input
+    IR object as LTO wrapper ignores -flto-partition=none:
+    
+    lto-wrapper.c:608:
+    
+       604          /* Drop arguments that we want to take from the link line.  */
+       605          case OPT_flto_:
+       606          case OPT_flto:
+       607          case OPT_flto_partition_:
+       608            continue;
+    
+    the LTO wrapper approach is not only slow but also unreliable.  Since
+    the LTO plugin API has been extended to add LDPT_ADD_SYMBOLS_V2 with
+    symbol type and section kind, we can use LDPT_ADD_SYMBOLS_V2 to get
+    symbol type, instead of invoking the LTO wrapper.
+    
+            PR binutils/25640
+            * plugin.c (plugin_list_entry): Add has_symbol_type.
+            (add_symbols_v2): New function.
+            (bfd_plugin_open_input): Don't invoke LTO wrapper if LTO plugin
+            provides symbol type.
+            (try_load_plugin): Add LDPT_ADD_SYMBOLS_V2.
+            (bfd_plugin_canonicalize_symtab): Use LTO plugin symbol type if
+            available.
+    
+    (cherry picked from commit c3a1714ce7806002726a60c0db09371425fe3097)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index f8abe540ba..72496da147 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,14 @@
++2020-03-25  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/25640
++	* plugin.c (plugin_list_entry): Add has_symbol_type.
++	(add_symbols_v2): New function.
++	(bfd_plugin_open_input): Don't invoke LTO wrapper if LTO plugin
++	provides symbol type.
++	(try_load_plugin): Add LDPT_ADD_SYMBOLS_V2.
++	(bfd_plugin_canonicalize_symtab): Use LTO plugin symbol type if
++	available.
++
+ 2020-03-24  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	PR binutils/25717
+diff --git a/bfd/plugin.c b/bfd/plugin.c
+index c79468fab8..0f045372b7 100644
+--- a/bfd/plugin.c
++++ b/bfd/plugin.c
+@@ -136,6 +136,7 @@ struct plugin_list_entry
+   asymbol **real_syms;
+   int lto_nsyms;
+   const struct ld_plugin_symbol *lto_syms;
++  bfd_boolean has_symbol_type;
+ 
+   struct plugin_list_entry *next;
+ 
+@@ -503,6 +504,14 @@ add_symbols (void * handle,
+   return LDPS_OK;
+ }
+ 
++static enum ld_plugin_status
++add_symbols_v2 (void *handle, int nsyms,
++		const struct ld_plugin_symbol *syms)
++{
++  current_plugin->has_symbol_type = TRUE;
++  return add_symbols (handle, nsyms, syms);
++}
++
+ int
+ bfd_plugin_open_input (bfd *ibfd, struct ld_plugin_input_file *file)
+ {
+@@ -560,7 +569,8 @@ try_claim (bfd *abfd)
+       current_plugin->claim_file (&file, &claimed);
+       if (claimed)
+ 	{
+-	  if (current_plugin->all_symbols_read)
++	  if (current_plugin->all_symbols_read
++	      && !current_plugin->has_symbol_type)
+ 	    {
+ 	      struct plugin_data_struct *plugin_data
+ 		= abfd->tdata.plugin_data;
+@@ -602,7 +612,7 @@ try_load_plugin (const char *pname,
+ 		 bfd *abfd, bfd_boolean build_list_p)
+ {
+   void *plugin_handle;
+-  struct ld_plugin_tv tv[12];
++  struct ld_plugin_tv tv[13];
+   int i;
+   ld_plugin_onload onload;
+   enum ld_plugin_status status;
+@@ -665,6 +675,10 @@ try_load_plugin (const char *pname,
+   tv[i].tv_tag = LDPT_ADD_SYMBOLS;
+   tv[i].tv_u.tv_add_symbols = add_symbols;
+ 
++  ++i;
++  tv[i].tv_tag = LDPT_ADD_SYMBOLS_V2;
++  tv[i].tv_u.tv_add_symbols = add_symbols_v2;
++
+   if (get_lto_wrapper (plugin_list_iter))
+     {
+       ++i;
+@@ -977,9 +991,15 @@ bfd_plugin_canonicalize_symtab (bfd *abfd,
+   struct plugin_data_struct *plugin_data = abfd->tdata.plugin_data;
+   long nsyms = plugin_data->nsyms;
+   const struct ld_plugin_symbol *syms = plugin_data->syms;
+-  static asection fake_section
+-    = BFD_FAKE_SECTION (fake_section, NULL, "plug", 0,
++  static asection fake_text_section
++    = BFD_FAKE_SECTION (fake_text_section, NULL, "plug", 0,
+ 			SEC_ALLOC | SEC_LOAD | SEC_CODE | SEC_HAS_CONTENTS);
++  static asection fake_data_section
++    = BFD_FAKE_SECTION (fake_data_section, NULL, "plug", 0,
++			SEC_ALLOC | SEC_LOAD | SEC_DATA | SEC_HAS_CONTENTS);
++  static asection fake_bss_section
++    = BFD_FAKE_SECTION (fake_bss_section, NULL, "plug", 0,
++			SEC_ALLOC);
+   static asection fake_common_section
+     = BFD_FAKE_SECTION (fake_common_section, NULL, "plug", 0, SEC_IS_COMMON);
+   int i, j;
+@@ -1014,16 +1034,34 @@ bfd_plugin_canonicalize_symtab (bfd *abfd,
+ 	  break;
+ 	case LDPK_DEF:
+ 	case LDPK_WEAKDEF:
+-	  s->section = &fake_section;
+-	  if (real_nsyms)
+-	    /* Use real LTO symbols if possible.  */
+-	    for (j = 0; j < real_nsyms; j++)
+-	      if (real_syms[j]->name
+-		  && strcmp (syms[i].name, real_syms[j]->name) == 0)
+-		{
+-		  s->section = real_syms[j]->section;
+-		  break;
+-		}
++	  if (current_plugin->has_symbol_type)
++	    switch (syms[i].symbol_type)
++	      {
++	      case LDST_UNKNOWN:
++		/* What is the best fake section for LDST_UNKNOWN?  */
++	      case LDST_FUNCTION:
++		s->section = &fake_text_section;
++		break;
++	      case LDST_VARIABLE:
++		if (syms[i].section_kind == LDSSK_BSS)
++		  s->section = &fake_bss_section;
++		else
++		  s->section = &fake_data_section;
++		break;
++	      }
++	  else
++	    {
++	      s->section = &fake_text_section;
++	      if (real_nsyms)
++		/* Use real LTO symbols if possible.  */
++		for (j = 0; j < real_nsyms; j++)
++		  if (real_syms[j]->name
++		      && strcmp (syms[i].name, real_syms[j]->name) == 0)
++		    {
++		      s->section = real_syms[j]->section;
++		      break;
++		    }
++	    }
+ 	  break;
+ 	default:
+ 	  BFD_ASSERT (0);
+
+commit 23820109ced73d231b69ea6fa9a85b743d7843c8
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Wed Mar 25 06:58:19 2020 -0700
+
+    plugin: Don't invoke LTO-wrapper
+    
+    Don't invoke LTO-wrapper since the LTO wrapper approach is not only
+    slow but also unreliable.  For GCC 10 or newer, LDPT_ADD_SYMBOLS_V2
+    will be used.
+    
+    bfd/
+    
+            * configure.ac (HAVE_EXECUTABLE_SUFFIX): Removed.
+            (EXECUTABLE_SUFFIX): Likewise.
+            * config.in: Regenerated.
+            * configure: Likewise.
+            * plugin.c (bfd_plugin_close_and_cleanup): Defined as
+            _bfd_generic_close_and_cleanup.
+            (plugin_list_entry): Remove resolution_file, resolution_option,
+            real_bfd, real_nsyms, real_syms, lto_nsyms, lto_syms, gcc,
+            lto_wrapper, gcc_env and initialized,
+            (need_lto_wrapper_p): Removed.
+            (get_lto_wrapper): Likewise.
+            (setup_lto_wrapper_env): Likewise.
+            (register_all_symbols_read): Likewise.
+            (egister_cleanup): Likewise.
+            (get_symbols): Likewise.
+            (add_input_file): Likewise.
+            (bfd_plugin_set_program_name): Remove need_lto_wrapper.
+            (add_symbols): Updated.
+            (try_claim): Likewise.
+            (try_load_plugin): Likewise.
+            (bfd_plugin_canonicalize_symtab): Likewise.
+            * plugin.h (bfd_plugin_set_program_name): Remove int argument.
+            (plugin_data_struct): Remove real_bfd, real_nsyms and
+            real_syms.
+    
+    binutils/
+    
+            * ar.c (main): Update bfd_plugin_set_program_name call.
+            * nm.c (main): Likewise.
+    
+    ld/
+    
+            * testsuite/ld-plugin/lto.exp (lto_link_tests): Run PR ld/25355
+            test only for GCC 10 or newer.
+    
+    (cherry picked from commit 3d98c46092341c1373d960d0a66ca502d5b7ee7f)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 72496da147..bdc4b93719 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,30 @@
++2020-03-25  H.J. Lu  <hongjiu.lu@intel.com>
++
++	* configure.ac (HAVE_EXECUTABLE_SUFFIX): Removed.
++	(EXECUTABLE_SUFFIX): Likewise.
++	* config.in: Regenerated.
++	* configure: Likewise.
++	* plugin.c (bfd_plugin_close_and_cleanup): Defined as
++	_bfd_generic_close_and_cleanup.
++	(plugin_list_entry): Remove resolution_file, resolution_option,
++	real_bfd, real_nsyms, real_syms, lto_nsyms, lto_syms, gcc,
++	lto_wrapper, gcc_env and initialized,
++	(need_lto_wrapper_p): Removed.
++	(get_lto_wrapper): Likewise.
++	(setup_lto_wrapper_env): Likewise.
++	(register_all_symbols_read): Likewise.
++	(egister_cleanup): Likewise.
++	(get_symbols): Likewise.
++	(add_input_file): Likewise.
++	(bfd_plugin_set_program_name): Remove need_lto_wrapper.
++	(add_symbols): Updated.
++	(try_claim): Likewise.
++	(try_load_plugin): Likewise.
++	(bfd_plugin_canonicalize_symtab): Likewise.
++	* plugin.h (bfd_plugin_set_program_name): Remove int argument.
++	(plugin_data_struct): Remove real_bfd, real_nsyms and
++	real_syms.
++
+ 2020-03-25  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	PR binutils/25640
+diff --git a/bfd/config.in b/bfd/config.in
+index e1dc0f0c44..be572969fc 100644
+--- a/bfd/config.in
++++ b/bfd/config.in
+@@ -18,9 +18,6 @@
+    language is requested. */
+ #undef ENABLE_NLS
+ 
+-/* Suffix used for executables, if any. */
+-#undef EXECUTABLE_SUFFIX
+-
+ /* Define to 1 if you have the <alloca.h> header file. */
+ #undef HAVE_ALLOCA_H
+ 
+@@ -98,9 +95,6 @@
+ /* Define to 1 if you have the <dlfcn.h> header file. */
+ #undef HAVE_DLFCN_H
+ 
+-/* Does the platform use an executable suffix? */
+-#undef HAVE_EXECUTABLE_SUFFIX
+-
+ /* Define to 1 if you have the `fcntl' function. */
+ #undef HAVE_FCNTL
+ 
+diff --git a/bfd/configure b/bfd/configure
+index 7c0708e2f8..bc576b7894 100755
+--- a/bfd/configure
++++ b/bfd/configure
+@@ -12813,16 +12813,6 @@ fi
+ 
+ 
+ 
+-if test -n "$EXEEXT"; then
+-
+-$as_echo "#define HAVE_EXECUTABLE_SUFFIX 1" >>confdefs.h
+-
+-fi
+-
+-cat >>confdefs.h <<_ACEOF
+-#define EXECUTABLE_SUFFIX "${EXEEXT}"
+-_ACEOF
+-
+ 
+ host64=false
+ target64=false
+diff --git a/bfd/configure.ac b/bfd/configure.ac
+index af4d4b8c13..c5bfbd5d12 100644
+--- a/bfd/configure.ac
++++ b/bfd/configure.ac
+@@ -157,12 +157,6 @@ AM_MAINTAINER_MODE
+ AM_CONDITIONAL(GENINSRC_NEVER, false)
+ AM_INSTALL_LIBBFD
+ AC_EXEEXT
+-if test -n "$EXEEXT"; then
+-  AC_DEFINE(HAVE_EXECUTABLE_SUFFIX, 1,
+-	    [Does the platform use an executable suffix?])
+-fi
+-AC_DEFINE_UNQUOTED(EXECUTABLE_SUFFIX, "${EXEEXT}",
+-		   [Suffix used for executables, if any.])
+ 
+ host64=false
+ target64=false
+diff --git a/bfd/plugin.c b/bfd/plugin.c
+index 0f045372b7..b2b1630e35 100644
+--- a/bfd/plugin.c
++++ b/bfd/plugin.c
+@@ -69,6 +69,7 @@ dlerror (void)
+ 
+ #endif /* !defined (HAVE_DLFCN_H) && defined (HAVE_WINDOWS_H)  */
+ 
++#define bfd_plugin_close_and_cleanup		      _bfd_generic_close_and_cleanup
+ #define bfd_plugin_bfd_free_cached_info		      _bfd_generic_bfd_free_cached_info
+ #define bfd_plugin_new_section_hook		      _bfd_generic_new_section_hook
+ #define bfd_plugin_get_section_contents		      _bfd_generic_get_section_contents
+@@ -129,196 +130,20 @@ struct plugin_list_entry
+   ld_plugin_claim_file_handler claim_file;
+   ld_plugin_all_symbols_read_handler all_symbols_read;
+   ld_plugin_all_symbols_read_handler cleanup_handler;
+-  char *resolution_file;
+-  char *resolution_option;
+-  bfd *real_bfd;
+-  long real_nsyms;
+-  asymbol **real_syms;
+-  int lto_nsyms;
+-  const struct ld_plugin_symbol *lto_syms;
+   bfd_boolean has_symbol_type;
+ 
+   struct plugin_list_entry *next;
+ 
+   /* These can be reused for all IR objects.  */
+   const char *plugin_name;
+-  char *gcc;
+-  char *lto_wrapper;
+-  char *gcc_env;
+-  bfd_boolean initialized;
+ };
+ 
+ static const char *plugin_program_name;
+-static int need_lto_wrapper_p;
+ 
+ void
+-bfd_plugin_set_program_name (const char *program_name,
+-			     int need_lto_wrapper)
++bfd_plugin_set_program_name (const char *program_name)
+ {
+   plugin_program_name = program_name;
+-  need_lto_wrapper_p = need_lto_wrapper;
+-}
+-
+-/* Use GCC LTO wrapper to covert LTO IR object to the real object.  */
+-
+-static bfd_boolean
+-get_lto_wrapper (struct plugin_list_entry *plugin)
+-{
+-  struct stat st;
+-  const char *real_name;
+-  const char *base_name;
+-  size_t length;
+-  const char *target_start = NULL;
+-  const char *target_end = NULL;
+-  size_t target_length = 0;
+-  char *gcc_name;
+-  char *wrapper_name;
+-  char *p;
+-  char dir_seperator = '\0';
+-  char *resolution_file;
+-
+-  if (!need_lto_wrapper_p)
+-    return FALSE;
+-
+-  if (plugin->initialized)
+-    {
+-      if (plugin->lto_wrapper)
+-	{
+-	  resolution_file = make_temp_file (".res");
+-	  if (resolution_file)
+-	    {
+-	      plugin->resolution_file = resolution_file;
+-	      plugin->resolution_option = concat ("-fresolution=",
+-						  resolution_file, NULL);
+-	      return TRUE;
+-	    }
+-	  else
+-	    {
+-	      /* Something is wrong.  Give up.  */
+-	      free (plugin->gcc);
+-	      free (plugin->lto_wrapper);
+-	      free (plugin->gcc_env);
+-	      plugin->gcc = NULL;
+-	      plugin->gcc_env = NULL;
+-	      plugin->lto_wrapper = NULL;
+-	    }
+-	}
+-
+-      return FALSE;
+-    }
+-
+-  plugin->initialized = TRUE;
+-
+-  /* Check for PREFIX/libexec/gcc/TARGET/VERSION/liblto_plugin.so.  */
+-  real_name = lrealpath (plugin->plugin_name);
+-  base_name = lbasename (real_name);
+-
+-  /* The directory length in plugin pathname.  */
+-  length = base_name - real_name;
+-
+-  /* Skip if there is no PREFIX.  */
+-  if (!length)
+-    return FALSE;
+-
+-  p = (char *) real_name + length - 1;
+-  if (IS_DIR_SEPARATOR (*p))
+-    {
+-      int level = 0;
+-      for (; p != real_name; p--)
+-	if (IS_DIR_SEPARATOR (*p))
+-	  {
+-	    level++;
+-	    if (level == 2)
+-	      target_end = p;
+-	    else if (level == 3)
+-	      {
+-		target_start = p + 1;
+-		target_length = target_end - target_start;
+-	      }
+-	    else if (level == 5)
+-	      {
+-		dir_seperator = *p;
+-		break;
+-	      }
+-	  }
+-    }
+-
+-  /* Skip if there is no TARGET nor PREFIX.  */
+-  if (!target_length || !dir_seperator)
+-    return FALSE;
+-
+-#ifdef HAVE_EXECUTABLE_SUFFIX
+-# define GCC_EXECUTABLE		"gcc" EXECUTABLE_SUFFIX
+-# define LTO_WRAPPER_EXECUTABLE	"lto-wrapper" EXECUTABLE_SUFFIX
+-#else
+-# define GCC_EXECUTABLE		"gcc"
+-# define LTO_WRAPPER_EXECUTABLE	"lto-wrapper"
+-#endif
+-  gcc_name = bfd_malloc (length + target_length
+-			 + sizeof (GCC_EXECUTABLE));
+-  if (gcc_name == NULL)
+-    return FALSE;
+-  memcpy (gcc_name, real_name, length);
+-
+-  /* Get PREFIX/bin/.  */
+-  p += gcc_name - real_name;
+-  memcpy (p + 1, "bin", 3);
+-  p[4] = dir_seperator;
+-
+-  /* Try PREFIX/bin/TARGET-gcc first.  */
+-  memcpy (p + 5, target_start, target_length);
+-  p[5 + target_length] = '-';
+-  memcpy (p + 5 + target_length + 1, GCC_EXECUTABLE,
+-	  sizeof (GCC_EXECUTABLE));
+-  if (stat (gcc_name, &st) != 0 || !S_ISREG (st.st_mode))
+-    {
+-      /* Then try PREFIX/bin/gcc.  */
+-      memcpy (p + 5, GCC_EXECUTABLE, sizeof (GCC_EXECUTABLE));
+-      if (stat (gcc_name, &st) != 0 || !S_ISREG (st.st_mode))
+-	{
+-	  free (gcc_name);
+-	  return FALSE;
+-	}
+-    }
+-
+-  /* lto-wrapper should be in the same directory with LTO plugin.  */
+-  wrapper_name = bfd_malloc (length + sizeof (LTO_WRAPPER_EXECUTABLE));
+-  if (wrapper_name == NULL)
+-    {
+-      free (gcc_name);
+-      return FALSE;
+-    }
+-  memcpy (wrapper_name, real_name, length);
+-  memcpy (wrapper_name + length, LTO_WRAPPER_EXECUTABLE,
+-	  sizeof (LTO_WRAPPER_EXECUTABLE));
+-  if (stat (wrapper_name, &st) == 0 && S_ISREG (st.st_mode))
+-    {
+-      resolution_file = make_temp_file (".res");
+-      if (resolution_file)
+-	{
+-	  plugin->gcc = gcc_name;
+-	  plugin->lto_wrapper = wrapper_name;
+-	  plugin->gcc_env = concat ("COLLECT_GCC=", gcc_name, NULL);
+-	  plugin->resolution_file = resolution_file;
+-	  plugin->resolution_option = concat ("-fresolution=",
+-					      resolution_file, NULL);
+-	  return TRUE;
+-	}
+-    }
+-
+-  free (gcc_name);
+-  free (wrapper_name);
+-  return FALSE;
+-}
+-
+-/* Set environment variables for GCC LTO wrapper to covert LTO IR
+-   object to the real object.  */
+-
+-static int
+-setup_lto_wrapper_env (struct plugin_list_entry *plugin)
+-{
+-  return (putenv (plugin->gcc_env)
+-	  || putenv ("COLLECT_GCC_OPTIONS="));
+ }
+ 
+ static struct plugin_list_entry *plugin_list = NULL;
+@@ -333,119 +158,6 @@ register_claim_file (ld_plugin_claim_file_handler handler)
+   return LDPS_OK;
+ }
+ 
+-/* Register an all-symbols-read handler.  */
+-
+-static enum ld_plugin_status
+-register_all_symbols_read (ld_plugin_all_symbols_read_handler handler)
+-{
+-  current_plugin->all_symbols_read = handler;
+-  return LDPS_OK;
+-}
+-
+-/* Register a cleanup handler.  */
+-
+-static enum ld_plugin_status
+-register_cleanup (ld_plugin_all_symbols_read_handler handler)
+-{
+-  current_plugin->cleanup_handler = handler;
+-  return LDPS_OK;
+-}
+-
+-/* Get the symbol resolution info for a plugin-claimed input file.  */
+-
+-static enum ld_plugin_status
+-get_symbols (const void *handle ATTRIBUTE_UNUSED, int nsyms,
+-	     struct ld_plugin_symbol *syms)
+-{
+-  if (syms)
+-    {
+-      int n;
+-      for (n = 0; n < nsyms; n++)
+-	{
+-	  switch (syms[n].def)
+-	    {
+-	    default:
+-	      BFD_ASSERT (0);
+-	      break;
+-	    case LDPK_UNDEF:
+-	    case LDPK_WEAKUNDEF:
+-	      syms[n].resolution = LDPR_UNDEF;
+-	      break;
+-	    case LDPK_DEF:
+-	    case LDPK_WEAKDEF:
+-	    case LDPK_COMMON:
+-	      /* Tell plugin that LTO symbol has references from regular
+-		 object code. */
+-	      syms[n].resolution  = LDPR_PREVAILING_DEF;
+-	      break;
+-	    }
+-      }
+-    }
+-
+-  return LDPS_OK;
+-}
+-
+-/* Add a new (real) input file generated by a plugin.  */
+-
+-static enum ld_plugin_status
+-add_input_file (const char *pathname)
+-{
+-  /* Get symbols from the real LTO object.  */
+-  char **matching;
+-  long real_symsize;
+-  long real_nsyms;
+-  asymbol **real_syms;
+-  int lto_nsyms;
+-  bfd_boolean lto_symbol_found = FALSE;
+-  const struct ld_plugin_symbol *lto_syms;
+-  bfd *rbfd;
+-  int i, j;
+-
+-  rbfd = bfd_openr (pathname, NULL);
+-  if (!bfd_check_format_matches (rbfd, bfd_object, &matching))
+-    BFD_ASSERT (0);
+-
+-  real_symsize = bfd_get_symtab_upper_bound (rbfd);
+-  if (real_symsize < 0)
+-    BFD_ASSERT (0);
+-
+-  real_syms = (asymbol **) bfd_malloc (real_symsize);
+-  if (real_syms)
+-    {
+-      real_nsyms = bfd_canonicalize_symtab (rbfd, real_syms);
+-      if (real_nsyms < 0)
+-	BFD_ASSERT (0);
+-
+-      /* NB: LTO plugin may generate more than one real object from one
+-	 LTO IR object.  We use the one which contains LTO symbols.  */
+-      lto_syms = current_plugin->lto_syms;
+-      lto_nsyms = current_plugin->lto_nsyms;
+-      for (i = 0; i < lto_nsyms; i++)
+-	for (j = 0; j < real_nsyms; j++)
+-	  if (real_syms[j]->name
+-	      && strcmp (lto_syms[i].name, real_syms[j]->name) == 0)
+-	    {
+-	      lto_symbol_found = TRUE;
+-	      break;
+-	    }
+-    }
+-
+-  if (lto_symbol_found)
+-    {
+-      current_plugin->real_nsyms = real_nsyms;
+-      current_plugin->real_syms = real_syms;
+-      /* NB: We can't close RBFD which own the real symbol info.  */
+-      current_plugin->real_bfd = rbfd;
+-    }
+-  else
+-    {
+-      bfd_close (rbfd);
+-      free (real_syms);
+-    }
+-
+-  return LDPS_OK;
+-}
+-
+ static enum ld_plugin_status
+ add_symbols (void * handle,
+ 	     int nsyms,
+@@ -455,52 +167,16 @@ add_symbols (void * handle,
+   struct plugin_data_struct *plugin_data =
+     bfd_alloc (abfd, sizeof (plugin_data_struct));
+ 
+-  if (plugin_data)
+-    {
+-      struct ld_plugin_symbol *sym_info;
+-      char *strtab;
+-      size_t sym_info_size, name_length;
+-      int i;
+-
+-      memset (plugin_data, 0, sizeof (*plugin_data));
+-
+-      abfd->tdata.plugin_data = plugin_data;
+-
+-      /* NB: LTO symbols are owned by LTO plugin.  Create a copy so
+-	 that we can use it in bfd_plugin_canonicalize_symtab.  */
+-      sym_info_size = nsyms * sizeof (*syms);
++  if (!plugin_data)
++    return LDPS_ERR;
+ 
+-      /* Allocate a string table  */
+-      for (i = 0; i < nsyms; i++)
+-	sym_info_size += strlen (syms[i].name) + 1;
+-
+-      sym_info = bfd_alloc (abfd, sym_info_size);
+-      if (sym_info)
+-	{
+-	  /* Copy symbol table.  */
+-	  memcpy (sym_info, syms, nsyms * sizeof (*syms));
+-
+-	  /* Copy symbol names in symbol table.  */
+-	  strtab = (char *) (sym_info + nsyms);
+-	  for (i = 0; i < nsyms; i++)
+-	    {
+-	      name_length = strlen (syms[i].name);
+-	      memcpy (strtab, syms[i].name, name_length + 1);
+-	      sym_info[i].name = strtab;
+-	      strtab += name_length + 1;
+-	    }
+-
+-	  plugin_data->nsyms = nsyms;
+-	  plugin_data->syms = sym_info;
+-
+-	  current_plugin->lto_nsyms = nsyms;
+-	  current_plugin->lto_syms = sym_info;
+-	}
+-    }
++  plugin_data->nsyms = nsyms;
++  plugin_data->syms = syms;
+ 
+   if (nsyms != 0)
+     abfd->flags |= HAS_SYMS;
+ 
++  abfd->tdata.plugin_data = plugin_data;
+   return LDPS_OK;
+ }
+ 
+@@ -567,42 +243,9 @@ try_claim (bfd *abfd)
+       && current_plugin->claim_file)
+     {
+       current_plugin->claim_file (&file, &claimed);
+-      if (claimed)
+-	{
+-	  if (current_plugin->all_symbols_read
+-	      && !current_plugin->has_symbol_type)
+-	    {
+-	      struct plugin_data_struct *plugin_data
+-		= abfd->tdata.plugin_data;
+-	      if (plugin_data)
+-		{
+-		  /* Get real symbols from LTO wrapper.  */
+-		  current_plugin->all_symbols_read ();
+-
+-		  /* Copy real symbols to plugin_data.  */
+-		  plugin_data->real_bfd = current_plugin->real_bfd;
+-		  plugin_data->real_nsyms = current_plugin->real_nsyms;
+-		  plugin_data->real_syms = current_plugin->real_syms;
+-
+-		  /* Clean up LTO plugin.  */
+-		  if (current_plugin->cleanup_handler)
+-		    current_plugin->cleanup_handler ();
+-		}
+-	    }
+-	}
+-
+       close (file.fd);
+     }
+ 
+-  if (current_plugin->lto_wrapper)
+-    {
+-      /* Clean up for LTO wrapper.  NB: Resolution file and option
+-	 have been created regardless if an IR object is claimed or
+-	 not.  */
+-      unlink (current_plugin->resolution_file);
+-      free (current_plugin->resolution_option);
+-    }
+-
+   return claimed;
+ }
+ 
+@@ -612,7 +255,7 @@ try_load_plugin (const char *pname,
+ 		 bfd *abfd, bfd_boolean build_list_p)
+ {
+   void *plugin_handle;
+-  struct ld_plugin_tv tv[13];
++  struct ld_plugin_tv tv[5];
+   int i;
+   ld_plugin_onload onload;
+   enum ld_plugin_status status;
+@@ -679,41 +322,6 @@ try_load_plugin (const char *pname,
+   tv[i].tv_tag = LDPT_ADD_SYMBOLS_V2;
+   tv[i].tv_u.tv_add_symbols = add_symbols_v2;
+ 
+-  if (get_lto_wrapper (plugin_list_iter))
+-    {
+-      ++i;
+-      tv[i].tv_tag = LDPT_REGISTER_ALL_SYMBOLS_READ_HOOK;
+-      tv[i].tv_u.tv_register_all_symbols_read = register_all_symbols_read;
+-
+-      ++i;
+-      tv[i].tv_tag = LDPT_REGISTER_CLEANUP_HOOK;
+-      tv[i].tv_u.tv_register_cleanup = register_cleanup;
+-
+-      ++i;
+-      tv[i].tv_tag = LDPT_GET_SYMBOLS;
+-      tv[i].tv_u.tv_get_symbols = get_symbols;
+-
+-      ++i;
+-      tv[i].tv_tag = LDPT_GET_SYMBOLS_V2;
+-      tv[i].tv_u.tv_get_symbols = get_symbols;
+-
+-      ++i;
+-      tv[i].tv_tag = LDPT_OPTION;
+-      tv[i].tv_u.tv_string = plugin_list_iter->lto_wrapper;
+-
+-      ++i;
+-      tv[i].tv_tag = LDPT_OPTION;
+-      tv[i].tv_u.tv_string = plugin_list_iter->resolution_option;
+-
+-      ++i;
+-      tv[i].tv_tag = LDPT_LINKER_OUTPUT;
+-      tv[i].tv_u.tv_val = LDPO_EXEC;
+-
+-      ++i;
+-      tv[i].tv_tag = LDPT_ADD_INPUT_FILE;
+-      tv[i].tv_u.tv_add_input_file = add_input_file;
+-    }
+-
+   ++i;
+   tv[i].tv_tag = LDPT_NULL;
+   tv[i].tv_u.tv_val = 0;
+@@ -724,10 +332,6 @@ try_load_plugin (const char *pname,
+   if (status != LDPS_OK)
+     goto short_circuit;
+ 
+-  if (current_plugin->lto_wrapper
+-      && setup_lto_wrapper_env (current_plugin))
+-    goto short_circuit;
+-
+   abfd->plugin_format = bfd_plugin_no;
+ 
+   if (!current_plugin->claim_file)
+@@ -1002,15 +606,7 @@ bfd_plugin_canonicalize_symtab (bfd *abfd,
+ 			SEC_ALLOC);
+   static asection fake_common_section
+     = BFD_FAKE_SECTION (fake_common_section, NULL, "plug", 0, SEC_IS_COMMON);
+-  int i, j;
+-  long real_nsyms;
+-  asymbol **real_syms;
+-
+-  real_syms = plugin_data->real_syms;
+-  if (real_syms)
+-    real_nsyms = plugin_data->real_nsyms;
+-  else
+-    real_nsyms = 0;
++  int i;
+ 
+   for (i = 0; i < nsyms; i++)
+     {
+@@ -1050,18 +646,7 @@ bfd_plugin_canonicalize_symtab (bfd *abfd,
+ 		break;
+ 	      }
+ 	  else
+-	    {
+-	      s->section = &fake_text_section;
+-	      if (real_nsyms)
+-		/* Use real LTO symbols if possible.  */
+-		for (j = 0; j < real_nsyms; j++)
+-		  if (real_syms[j]->name
+-		      && strcmp (syms[i].name, real_syms[j]->name) == 0)
+-		    {
+-		      s->section = real_syms[j]->section;
+-		      break;
+-		    }
+-	    }
++	    s->section = &fake_text_section;
+ 	  break;
+ 	default:
+ 	  BFD_ASSERT (0);
+@@ -1110,24 +695,6 @@ bfd_plugin_sizeof_headers (bfd *a ATTRIBUTE_UNUSED,
+   return 0;
+ }
+ 
+-static bfd_boolean
+-bfd_plugin_close_and_cleanup (bfd *abfd)
+-{
+-  struct plugin_data_struct *plugin_data;
+-
+-  if (abfd->format != bfd_archive
+-      && (plugin_data = abfd->tdata.plugin_data))
+-    {
+-      if (plugin_data->real_bfd)
+-	bfd_close (plugin_data->real_bfd);
+-
+-      if (plugin_data->real_syms)
+-	free (plugin_data->real_syms);
+-    }
+-
+-  return _bfd_generic_close_and_cleanup (abfd);
+-}
+-
+ const bfd_target plugin_vec =
+ {
+   "plugin",			/* Name.  */
+diff --git a/bfd/plugin.h b/bfd/plugin.h
+index b2d5e50137..098bf08455 100644
+--- a/bfd/plugin.h
++++ b/bfd/plugin.h
+@@ -21,7 +21,7 @@
+ #ifndef _PLUGIN_H_
+ #define _PLUGIN_H_
+ 
+-void bfd_plugin_set_program_name (const char *, int);
++void bfd_plugin_set_program_name (const char *);
+ int bfd_plugin_open_input (bfd *, struct ld_plugin_input_file *);
+ void bfd_plugin_set_plugin (const char *);
+ bfd_boolean bfd_plugin_target_p (const bfd_target *);
+@@ -33,9 +33,6 @@ typedef struct plugin_data_struct
+ {
+   int nsyms;
+   const struct ld_plugin_symbol *syms;
+-  bfd *real_bfd;
+-  long real_nsyms;
+-  asymbol **real_syms;
+ }
+ plugin_data_struct;
+ 
+diff --git a/binutils/ChangeLog b/binutils/ChangeLog
+index fadd317151..1e9a96c9bb 100644
+--- a/binutils/ChangeLog
++++ b/binutils/ChangeLog
+@@ -1,3 +1,8 @@
++2020-03-25  H.J. Lu  <hongjiu.lu@intel.com>
++
++	* ar.c (main): Update bfd_plugin_set_program_name call.
++	* nm.c (main): Likewise.
++
+ 2020-03-24  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* dwarf.c (display_debug_lines_decoded): Force a NUL termination
+diff --git a/binutils/ar.c b/binutils/ar.c
+index 35dd51e04a..1057db9980 100644
+--- a/binutils/ar.c
++++ b/binutils/ar.c
+@@ -725,7 +725,7 @@ main (int argc, char **argv)
+   xmalloc_set_program_name (program_name);
+   bfd_set_error_program_name (program_name);
+ #if BFD_SUPPORTS_PLUGINS
+-  bfd_plugin_set_program_name (program_name, 0);
++  bfd_plugin_set_program_name (program_name);
+ #endif
+ 
+   expandargv (&argc, &argv);
+diff --git a/binutils/nm.c b/binutils/nm.c
+index 5b386592a6..0ee3f88386 100644
+--- a/binutils/nm.c
++++ b/binutils/nm.c
+@@ -1701,7 +1701,7 @@ main (int argc, char **argv)
+   xmalloc_set_program_name (program_name);
+   bfd_set_error_program_name (program_name);
+ #if BFD_SUPPORTS_PLUGINS
+-  bfd_plugin_set_program_name (program_name, 1);
++  bfd_plugin_set_program_name (program_name);
+ #endif
+ 
+   START_PROGRESS (program_name, 0);
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index ad6b68137d..35e6ccbcd7 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,8 @@
++2020-03-25  H.J. Lu  <hongjiu.lu@intel.com>
++
++	* testsuite/ld-plugin/lto.exp (lto_link_tests): Run PR ld/25355
++	test only for GCC 10 or newer.
++
+ 2020-03-25  Alan Modra  <amodra@gmail.com>
+ 
+ 	* testplug.c (parse_symdefstr): Use %hhi to read sym->def, and
+diff --git a/ld/testsuite/ld-plugin/lto.exp b/ld/testsuite/ld-plugin/lto.exp
+index 1b44b0da3f..3f1d804223 100644
+--- a/ld/testsuite/ld-plugin/lto.exp
++++ b/ld/testsuite/ld-plugin/lto.exp
+@@ -234,13 +234,18 @@ set lto_link_tests [list \
+   [list "Build pr24406-2b.o" \
+    "" "-O2 -fno-lto" \
+    {pr24406-2b.c}] \
+-  [list "pr25355.o" \
+-   "" \
+-   "-flto -fno-common $lto_no_fat" \
+-   {pr25355.c} \
+-   [list [list "nm" "$plug_opt" "pr25355.d"]]] \
+ ]
+ 
++if { [at_least_gcc_version 10 0] } {
++    set lto_link_tests [concat $lto_link_tests [list \
++	[list "pr25355.o" \
++	 "" \
++	 "-flto -fno-common $lto_no_fat" \
++	 {pr25355.c} \
++	 [list [list "nm" "$plug_opt" "pr25355.d"]]] \
++    ]]
++}
++
+ if { [at_least_gcc_version 4 7] } {
+     set lto_link_tests [concat $lto_link_tests [list \
+       [list "Compile PR ld/12942 (1)" \
+
+commit 5e8619b959725c5789fbfdded2723af0c87a68af
+Author: Martin Liska <mliska@suse.cz>
+Date:   Wed Mar 25 07:02:17 2020 -0700
+
+    include: Sync lto-symtab.h and plugin-api.h with GCC
+    
+    Fix comma at end of enumerator list seen with -std=c++98.
+    
+            * plugin-api.h (enum ld_plugin_symbol_type): Remove
+            comma after last value of an enum.
+            * lto-symtab.h (enum gcc_plugin_symbol_type): Likewise.
+    
+    (cherry picked from commit e3b1fa32c2814772e8c8c4d2788e1d342c7493d0)
+
+diff --git a/include/ChangeLog b/include/ChangeLog
+index 7ce635dbe5..25acb165cb 100644
+--- a/include/ChangeLog
++++ b/include/ChangeLog
+@@ -1,3 +1,9 @@
++2020-03-25  Martin Liska  <mliska@suse.cz>
++
++	* plugin-api.h (enum ld_plugin_symbol_type): Remove
++	comma after last value of an enum.
++	* lto-symtab.h (enum gcc_plugin_symbol_type): Likewise.
++
+ 2020-03-25  Martin Liska  <mliska@suse.cz>
+ 
+ 	* lto-symtab.h (enum gcc_plugin_symbol_type): New.
+diff --git a/include/lto-symtab.h b/include/lto-symtab.h
+index ef2e35f19c..81a288f5fb 100644
+--- a/include/lto-symtab.h
++++ b/include/lto-symtab.h
+@@ -42,7 +42,7 @@ enum gcc_plugin_symbol_type
+ {
+   GCCST_UNKNOWN,
+   GCCST_FUNCTION,
+-  GCCST_VARIABLE,
++  GCCST_VARIABLE
+ };
+ 
+ enum gcc_plugin_symbol_section_kind
+diff --git a/include/plugin-api.h b/include/plugin-api.h
+index f0f9667bf3..673f136ce6 100644
+--- a/include/plugin-api.h
++++ b/include/plugin-api.h
+@@ -141,7 +141,7 @@ enum ld_plugin_symbol_type
+ {
+   LDST_UNKNOWN,
+   LDST_FUNCTION,
+-  LDST_VARIABLE,
++  LDST_VARIABLE
+ };
+ 
+ enum ld_plugin_symbol_section_kind
+
+commit 1b2bf0f65c19e6e37b8811bc03fa6aeb89867b7b
+Author: Martin Liska <mliska@suse.cz>
+Date:   Wed Mar 25 07:05:40 2020 -0700
+
+    include: Sync plugin-api.h with GCC
+    
+    Improve endianess detection.
+    
+            PR lto/94249
+            * plugin-api.h: Add more robust endianess detection.
+    
+    (cherry picked from commit dfb68cc35803369cbd163c2ebc07fb27e81d9950)
+
+diff --git a/include/ChangeLog b/include/ChangeLog
+index 25acb165cb..ec64261681 100644
+--- a/include/ChangeLog
++++ b/include/ChangeLog
+@@ -1,3 +1,8 @@
++2020-03-25  Martin Liska  <mliska@suse.cz>
++
++	PR lto/94249
++	* plugin-api.h: Add more robust endianess detection.
++
+ 2020-03-25  Martin Liska  <mliska@suse.cz>
+ 
+ 	* plugin-api.h (enum ld_plugin_symbol_type): Remove
+diff --git a/include/plugin-api.h b/include/plugin-api.h
+index 673f136ce6..864d2bf91a 100644
+--- a/include/plugin-api.h
++++ b/include/plugin-api.h
+@@ -37,6 +37,60 @@
+ #error cannot find uint64_t type
+ #endif
+ 
++/* Detect endianess based on __BYTE_ORDER__ macro.  */
++#if defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__) && \
++    defined(__ORDER_LITTLE_ENDIAN__) && defined(__ORDER_PDP_ENDIAN__)
++#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
++#define PLUGIN_LITTLE_ENDIAN 1
++#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
++#define PLUGIN_BIG_ENDIAN 1
++#elif __BYTE_ORDER__ == __ORDER_PDP_ENDIAN__
++#define PLUGIN_PDP_ENDIAN 1
++#endif
++#else
++/* Older GCC releases (<4.6.0) can make detection from glibc macros.  */
++#if defined(__GLIBC__) || defined(__GNU_LIBRARY__) || defined(__ANDROID__)
++#include <endian.h>
++#ifdef _BYTE_ORDER
++#if __BYTE_ORDER == __LITTLE_ENDIAN
++#define PLUGIN_LITTLE_ENDIAN 1
++#elif __BYTE_ORDER == __BIG_ENDIAN
++#define PLUGIN_BIG_ENDIAN 1
++#endif
++#endif
++#endif
++/* Include all necessary header files based on target.  */
++#if defined(__SVR4) && defined(__sun)
++#include <sys/byteorder.h>
++#endif
++#if defined(__FreeBSD__) || defined(__NetBSD__) || \
++    defined(__DragonFly__) || defined(__minix)
++#include <sys/endian.h>
++#endif
++#if defined(__OpenBSD__)
++#include <machine/endian.h>
++#endif
++/* Detect endianess based on _BYTE_ORDER.  */
++#ifdef _BYTE_ORDER
++#if _BYTE_ORDER == _LITTLE_ENDIAN
++#define PLUGIN_LITTLE_ENDIAN 1
++#elif _BYTE_ORDER == _BIG_ENDIAN
++#define PLUGIN_BIG_ENDIAN 1
++#endif
++#endif
++/* Detect based on _WIN32.  */
++#if defined(_WIN32)
++#define PLUGIN_LITTLE_ENDIAN 1
++#endif
++/* Detect based on __BIG_ENDIAN__ and __LITTLE_ENDIAN__ */
++#ifdef __LITTLE_ENDIAN__
++#define PLUGIN_LITTLE_ENDIAN 1
++#endif
++#ifdef __BIG_ENDIAN__
++#define PLUGIN_BIG_ENDIAN 1
++#endif
++#endif
++
+ #ifdef __cplusplus
+ extern "C"
+ {
+@@ -89,16 +143,23 @@ struct ld_plugin_symbol
+   char *version;
+   /* This is for compatibility with older ABIs.  The older ABI defined
+      only 'def' field.  */
+-#ifdef __BIG_ENDIAN__
++#if PLUGIN_BIG_ENDIAN == 1
+   char unused;
+   char section_kind;
+   char symbol_type;
+   char def;
+-#else
++#elif PLUGIN_LITTLE_ENDIAN == 1
+   char def;
+   char symbol_type;
+   char section_kind;
+   char unused;
++#elif PLUGIN_PDP_ENDIAN == 1
++  char symbol_type;
++  char def;
++  char unused;
++  char section_kind;
++#else
++#error "Could not detect architecture endianess"
+ #endif
+   int visibility;
+   uint64_t size;
+
+commit e3fdb8f63509011cd609aad884f8655dc5d54996
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Mar 26 00:00:30 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index d30a67a693..4f3410aaa7 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200325
++#define BFD_VERSION_DATE 20200326
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit df3926a6e8da99d26ae5343dbaa9b6b73a36774d
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Mar 27 00:00:49 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4f3410aaa7..b4238e7488 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200326
++#define BFD_VERSION_DATE 20200327
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit b1687f587b045c2e22f4c81698a21d756bc8aa26
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Mar 28 00:00:22 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b4238e7488..5479659428 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200327
++#define BFD_VERSION_DATE 20200328
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 98fd6fe7040c2ca1917df651eebbd14ccacf744b
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Mar 29 00:00:19 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5479659428..4c0720b90a 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200328
++#define BFD_VERSION_DATE 20200329
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit f7aec2b8e09768f284085259e08bfc1f61a0ae27
+Author: Alan Modra <amodra@gmail.com>
+Date:   Mon Mar 30 09:28:02 2020 +1030
+
+    PR25745, powerpc64-ld overflows string buffer in --stats mode
+    
+            PR 25745
+            * elf64-ppc.c (ppc64_elf_build_stubs): Use asprintf to form
+            statistics message.
+    
+    (cherry picked from commit 988b7300bc990abafd982bdcd217c58bc1e0679a)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index bdc4b93719..062b7ec873 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,9 @@
++2020-03-30  Alan Modra  <amodra@gmail.com>
++
++	PR 25745
++	* elf64-ppc.c (ppc64_elf_build_stubs): Use asprintf to form
++	statistics message.
++
+ 2020-03-25  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	* configure.ac (HAVE_EXECUTABLE_SUFFIX): Removed.
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index bea722c6b9..47ff6484e0 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -14116,42 +14116,46 @@ ppc64_elf_build_stubs (struct bfd_link_info *info,
+ 
+   if (stats != NULL)
+     {
+-      size_t len;
+-      *stats = bfd_malloc (500);
+-      if (*stats == NULL)
+-	return FALSE;
+-
+-      len = sprintf (*stats,
+-		     ngettext ("linker stubs in %u group\n",
+-			       "linker stubs in %u groups\n",
+-			       stub_sec_count),
+-		     stub_sec_count);
+-      sprintf (*stats + len, _("  branch         %lu\n"
+-			       "  branch toc adj %lu\n"
+-			       "  branch notoc   %lu\n"
+-			       "  branch both    %lu\n"
+-			       "  long branch    %lu\n"
+-			       "  long toc adj   %lu\n"
+-			       "  long notoc     %lu\n"
+-			       "  long both      %lu\n"
+-			       "  plt call       %lu\n"
+-			       "  plt call save  %lu\n"
+-			       "  plt call notoc %lu\n"
+-			       "  plt call both  %lu\n"
+-			       "  global entry   %lu"),
+-	       htab->stub_count[ppc_stub_long_branch - 1],
+-	       htab->stub_count[ppc_stub_long_branch_r2off - 1],
+-	       htab->stub_count[ppc_stub_long_branch_notoc - 1],
+-	       htab->stub_count[ppc_stub_long_branch_both - 1],
+-	       htab->stub_count[ppc_stub_plt_branch - 1],
+-	       htab->stub_count[ppc_stub_plt_branch_r2off - 1],
+-	       htab->stub_count[ppc_stub_plt_branch_notoc - 1],
+-	       htab->stub_count[ppc_stub_plt_branch_both - 1],
+-	       htab->stub_count[ppc_stub_plt_call - 1],
+-	       htab->stub_count[ppc_stub_plt_call_r2save - 1],
+-	       htab->stub_count[ppc_stub_plt_call_notoc - 1],
+-	       htab->stub_count[ppc_stub_plt_call_both - 1],
+-	       htab->stub_count[ppc_stub_global_entry - 1]);
++      char *groupmsg;
++      if (asprintf (&groupmsg,
++		    ngettext ("linker stubs in %u group\n",
++			      "linker stubs in %u groups\n",
++			      stub_sec_count),
++		    stub_sec_count) < 0)
++	*stats = NULL;
++      else
++	{
++	  if (asprintf (stats, _("%s"
++				 "  branch         %lu\n"
++				 "  branch toc adj %lu\n"
++				 "  branch notoc   %lu\n"
++				 "  branch both    %lu\n"
++				 "  long branch    %lu\n"
++				 "  long toc adj   %lu\n"
++				 "  long notoc     %lu\n"
++				 "  long both      %lu\n"
++				 "  plt call       %lu\n"
++				 "  plt call save  %lu\n"
++				 "  plt call notoc %lu\n"
++				 "  plt call both  %lu\n"
++				 "  global entry   %lu"),
++			groupmsg,
++			htab->stub_count[ppc_stub_long_branch - 1],
++			htab->stub_count[ppc_stub_long_branch_r2off - 1],
++			htab->stub_count[ppc_stub_long_branch_notoc - 1],
++			htab->stub_count[ppc_stub_long_branch_both - 1],
++			htab->stub_count[ppc_stub_plt_branch - 1],
++			htab->stub_count[ppc_stub_plt_branch_r2off - 1],
++			htab->stub_count[ppc_stub_plt_branch_notoc - 1],
++			htab->stub_count[ppc_stub_plt_branch_both - 1],
++			htab->stub_count[ppc_stub_plt_call - 1],
++			htab->stub_count[ppc_stub_plt_call_r2save - 1],
++			htab->stub_count[ppc_stub_plt_call_notoc - 1],
++			htab->stub_count[ppc_stub_plt_call_both - 1],
++			htab->stub_count[ppc_stub_global_entry - 1]) < 0)
++	    *stats = NULL;
++	  free (groupmsg);
++	}
+     }
+   return TRUE;
+ }
+
+commit 7936ae93cb786f8f534141ae26dd07f243262ca2
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Mar 30 00:00:22 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4c0720b90a..cc28d6086e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200329
++#define BFD_VERSION_DATE 20200330
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 5e2e02c072d1f3790570beef186b842775f60b77
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Mar 31 00:00:21 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index cc28d6086e..13a739de89 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200330
++#define BFD_VERSION_DATE 20200331
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit bfa4600ed913f683ff5f63aa28de1f0cacb42101
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Apr 1 00:00:25 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 13a739de89..17bd955bed 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200331
++#define BFD_VERSION_DATE 20200401
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 3053d7a163cef3a17c199026a2f1b97a24030a4f
+Author: Martin Liska <mliska@suse.cz>
+Date:   Wed Apr 1 02:36:11 2020 -0700
+
+    include: Sync plugin-api.h with GCC
+    
+    Fix typo in a macro usage.
+    
+            PR lto/94249
+            * plugin-api.h: Fix a typo.
+    
+    (cherry picked from commit 40bd13ced9c03c74af9d55a98d6e06ddcf11429c)
+
+diff --git a/include/ChangeLog b/include/ChangeLog
+index ec64261681..2cf472a5df 100644
+--- a/include/ChangeLog
++++ b/include/ChangeLog
+@@ -1,3 +1,9 @@
++2020-04-01  Martin Liska  <mliska@suse.cz>
++	    Maciej W. Rozycki <macro@linux-mips.org>
++
++	PR lto/94249
++	* plugin-api.h: Fix a typo.
++
+ 2020-03-25  Martin Liska  <mliska@suse.cz>
+ 
+ 	PR lto/94249
+diff --git a/include/plugin-api.h b/include/plugin-api.h
+index 864d2bf91a..e317d78478 100644
+--- a/include/plugin-api.h
++++ b/include/plugin-api.h
+@@ -51,7 +51,7 @@
+ /* Older GCC releases (<4.6.0) can make detection from glibc macros.  */
+ #if defined(__GLIBC__) || defined(__GNU_LIBRARY__) || defined(__ANDROID__)
+ #include <endian.h>
+-#ifdef _BYTE_ORDER
++#ifdef __BYTE_ORDER
+ #if __BYTE_ORDER == __LITTLE_ENDIAN
+ #define PLUGIN_LITTLE_ENDIAN 1
+ #elif __BYTE_ORDER == __BIG_ENDIAN
+
+commit e747868f34afae34d254856085e510ce90fe3da9
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Apr 2 00:00:23 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 17bd955bed..e01b29f455 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200401
++#define BFD_VERSION_DATE 20200402
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 93bb0a34262a86537bad59b2930ce14aecb53070
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Apr 3 00:00:24 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index e01b29f455..7d9bd566de 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200402
++#define BFD_VERSION_DATE 20200403
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit adbf68dffa8916135d14094ceb829dd3573f4fb1
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Apr 4 00:00:24 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7d9bd566de..544cca86d2 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200403
++#define BFD_VERSION_DATE 20200404
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 4f49d50cb9fc456233ca1076033cf309a1530982
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Apr 5 00:00:21 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 544cca86d2..daec3039b3 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200404
++#define BFD_VERSION_DATE 20200405
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 038678475a0d51fa578cbf9bf3f4c992bbb6878c
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Apr 6 00:00:18 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index daec3039b3..f675498648 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200405
++#define BFD_VERSION_DATE 20200406
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 11327a1bc2e2970eb85cd5e49ddd3a646c3fa250
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Apr 7 00:00:26 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index f675498648..91798ce4e2 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200406
++#define BFD_VERSION_DATE 20200407
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 99b7604ff63f3ec23d39d87751948066111bfd5e
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Apr 8 00:00:24 2020 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 91798ce4e2..e7cc30e919 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20200407
++#define BFD_VERSION_DATE 20200408
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
