@@ -8,7 +8,7 @@ PKG_SHA256="66415634c6e8c3fa8b71362879ec7575e27da43da562c798a8a2f223e6e47f5c"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/s/gettext/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_HOST="ccache:host m4:host automake:host"
 PKG_LONGDESC="A program internationalization library and tools."
 
 PKG_CONFIGURE_OPTS_HOST="--disable-static --enable-shared \
