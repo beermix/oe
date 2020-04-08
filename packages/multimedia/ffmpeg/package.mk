@@ -137,6 +137,7 @@ configure_target() {
               --disable-small \
               --enable-dct \
               --enable-fft \
+              --enable-nonfree \
               --enable-mdct \
               --enable-rdft \
               --disable-crystalhd \
