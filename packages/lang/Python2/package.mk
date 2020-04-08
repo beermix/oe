@@ -5,12 +5,13 @@
 
 PKG_NAME="Python2"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
-PKG_VERSION="2.7.17"
-PKG_SHA256="4d43f033cdbd0aa7b7023c81b0e986fd11e653b5248dac9144d508f11812ba41"
+PKG_VERSION="2.7.18rc1"
+PKG_SHA256="37fc3227e7ca9d78755bd7dad6b6fb3ca0d655f6a44234458482143f743856e6"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
 #PKG_URL="https://github.com/python/cpython/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/Python-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host ncurses readline"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
