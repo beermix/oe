@@ -8,7 +8,6 @@ PKG_NAME="gcc"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_VERSION="9.3.0"
-#PKG_VERSION="7866f9e"
 PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -21,24 +20,24 @@ PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 PKG_BUILD_FLAGS="-gold -lto -hardening"
 
-post_unpack() {
+#post_unpack() {
 #  ISL_DIR=$(get_build_dir isl)
 #  ln -s $ISL_DIR $PKG_BUILD/isl
-
+#
 #  sed -i 's,^STRIP = .*$,STRIP = true,g'                   $PKG_BUILD/Makefile
 #  sed -i 's,^STRIP_FOR_TARGET=.*$,STRIP_FOR_TARGET=true,g' $PKG_BUILD/Makefile
-
-  rm -rf $PKG_BUILD/gcc/testsuite/ada
-  rm -rf $PKG_BUILD/gcc/testsuite/brig.dg
-  rm -rf $PKG_BUILD/gcc/testsuite/c-c++-common
-  rm -rf $PKG_BUILD/gcc/testsuite/ChangeLog*
-  rm -rf $PKG_BUILD/gcc/testsuite/config
-  rm -rf $PKG_BUILD/gcc/testsuite/g*
-  rm -rf $PKG_BUILD/gcc/testsuite/jit.dg
-  rm -rf $PKG_BUILD/gcc/testsuite/lib
-  rm -rf $PKG_BUILD/gcc/testsuite/o*
-  rm -rf $PKG_BUILD/gcc/ada/*.ad*
-}
+#
+#  rm -rf $PKG_BUILD/gcc/testsuite/ada
+#  rm -rf $PKG_BUILD/gcc/testsuite/brig.dg
+#  rm -rf $PKG_BUILD/gcc/testsuite/c-c++-common
+#  rm -rf $PKG_BUILD/gcc/testsuite/ChangeLog*
+#  rm -rf $PKG_BUILD/gcc/testsuite/config
+#  rm -rf $PKG_BUILD/gcc/testsuite/g*
+#  rm -rf $PKG_BUILD/gcc/testsuite/jit.dg
+#  rm -rf $PKG_BUILD/gcc/testsuite/lib
+#  rm -rf $PKG_BUILD/gcc/testsuite/o*
+#  rm -rf $PKG_BUILD/gcc/ada/*.ad*
+#}
  
 #post_patch() {
 #  echo $PKG_VERSION > $PKG_BUILD/gcc/BASE-VER
