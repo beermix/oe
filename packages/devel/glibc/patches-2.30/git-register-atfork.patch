@@ -6,24 +6,24 @@ Date:   Sun Feb 9 17:55:37 2020 +0000
     
     Since we need it also in the static linking case.
 
-diff --git a/htl/Makefile b/htl/Makefile
-index 0dccf25ebc..71b14d5e96 100644
---- a/htl/Makefile
-+++ b/htl/Makefile
-@@ -163,7 +163,7 @@ headers :=				\
+Index: glibc-2.30/htl/Makefile
+===================================================================
+--- glibc-2.30.orig/htl/Makefile
++++ glibc-2.30/htl/Makefile
+@@ -169,7 +169,7 @@ headers :=				\
  
  distribute :=
  
--routines := forward libc_pthread_init alloca_cutoff pt-atfork
-+routines := forward libc_pthread_init alloca_cutoff register-atfork pt-atfork
+-routines := forward libc_pthread_init alloca_cutoff
++routines := forward libc_pthread_init alloca_cutoff register-atfork
  shared-only-routines = forward
- static-only-routines = pt-atfork
  
-diff --git a/htl/forward.c b/htl/forward.c
-index b0cc5f574b..dfb7b79327 100644
---- a/htl/forward.c
-+++ b/htl/forward.c
-@@ -143,141 +143,3 @@ FORWARD (pthread_setcanceltype, (int type, int *oldtype), (type, oldtype), 0)
+ extra-libs := libpthread
+Index: glibc-2.30/htl/forward.c
+===================================================================
+--- glibc-2.30.orig/htl/forward.c
++++ glibc-2.30/htl/forward.c
+@@ -143,141 +143,3 @@ FORWARD (pthread_setcanceltype, (int typ
  struct __pthread_cancelation_handler *dummy_list;
  FORWARD2 (__pthread_get_cleanup_stack, struct __pthread_cancelation_handler **,
  	  (void), (), return &dummy_list);
@@ -165,11 +165,10 @@ index b0cc5f574b..dfb7b79327 100644
 -    }
 -  __libc_lock_unlock (atfork_lock);
 -}
-diff --git a/htl/register-atfork.c b/htl/register-atfork.c
-new file mode 100644
-index 0000000000..256b1148ac
+Index: glibc-2.30/htl/register-atfork.c
+===================================================================
 --- /dev/null
-+++ b/htl/register-atfork.c
++++ glibc-2.30/htl/register-atfork.c
 @@ -0,0 +1,157 @@
 +/* Atfork handling.  Hurd pthread version.
 +   Copyright (C) 2002-2020 Free Software Foundation, Inc.
