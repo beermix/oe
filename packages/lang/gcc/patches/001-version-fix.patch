@@ -1,0 +1,6 @@
+diff -Naur gcc-9.3.0-orig/gcc/BASE-VER gcc-9.3.0/gcc/BASE-VER
+--- gcc-9.3.0-orig/gcc/BASE-VER	2020-04-09 17:39:36.977075240 +0300
++++ gcc-9.3.0/gcc/BASE-VER	2020-04-09 17:40:14.484075206 +0300
+@@ -1 +1 @@
+-9.3.1
++9.3.0
