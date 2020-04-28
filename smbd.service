@@ -4,7 +4,6 @@ After=network.target nmbd.service winbindd.service
 
 [Service]
 Type=forking
-PIDFile=/var/run/smbd.pid
 ExecStart=/usr/bin/smbd -D
 ExecReload=/bin/kill -HUP $MAINPID
 LimitNOFILE=1048576
