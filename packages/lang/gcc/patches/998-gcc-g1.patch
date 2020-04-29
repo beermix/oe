@@ -1,0 +1,68 @@
+diff --git a/configure b/configure
+index abd93a990..c46e33085 100755
+--- a/configure
++++ b/configure
+@@ -4711,9 +4711,9 @@ if test "$ac_test_CFLAGS" = set; then
+   CFLAGS=$ac_save_CFLAGS
+ elif test $ac_cv_prog_cc_g = yes; then
+   if test "$GCC" = yes; then
+-    CFLAGS="-g -O2"
++    CFLAGS="-g1 -O2"
+   else
+-    CFLAGS="-g"
++    CFLAGS="-g1"
+   fi
+ else
+   if test "$GCC" = yes; then
+@@ -5058,9 +5058,9 @@ if test "$ac_test_CXXFLAGS" = set; then
+   CXXFLAGS=$ac_save_CXXFLAGS
+ elif test $ac_cv_prog_cxx_g = yes; then
+   if test "$GXX" = yes; then
+-    CXXFLAGS="-g -O2"
++    CXXFLAGS="-g1 -O2"
+   else
+-    CXXFLAGS="-g"
++    CXXFLAGS="-g1"
+   fi
+ else
+   if test "$GXX" = yes; then
+@@ -6830,7 +6830,7 @@ fi
+ # CFLAGS_FOR_TARGET and CXXFLAGS_FOR_TARGET.
+ if test "x$CFLAGS_FOR_TARGET" = x; then
+   if test "x${is_cross_compiler}" = xyes; then
+-    CFLAGS_FOR_TARGET="-g -O2"
++    CFLAGS_FOR_TARGET="-g1 -O2"
+   else
+     CFLAGS_FOR_TARGET=$CFLAGS
+     case " $CFLAGS " in
+@@ -6847,7 +6847,7 @@ fi
+ 
+ if test "x$CXXFLAGS_FOR_TARGET" = x; then
+   if test "x${is_cross_compiler}" = xyes; then
+-    CXXFLAGS_FOR_TARGET="-g -O2"
++    CXXFLAGS_FOR_TARGET="-g1 -O2"
+   else
+     CXXFLAGS_FOR_TARGET=$CXXFLAGS
+     case " $CXXFLAGS " in
+diff --git a/configure.ac b/configure.ac
+index 9db4fd14a..52496e5ce 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2351,7 +2351,7 @@ AC_SUBST(DEBUG_PREFIX_CFLAGS_FOR_TARGET)
+ # CFLAGS_FOR_TARGET and CXXFLAGS_FOR_TARGET.
+ if test "x$CFLAGS_FOR_TARGET" = x; then
+   if test "x${is_cross_compiler}" = xyes; then
+-    CFLAGS_FOR_TARGET="-g -O2"
++    CFLAGS_FOR_TARGET="-g1 -O2"
+   else
+     CFLAGS_FOR_TARGET=$CFLAGS
+     case " $CFLAGS " in
+@@ -2368,7 +2368,7 @@ AC_SUBST(CFLAGS_FOR_TARGET)
+ 
+ if test "x$CXXFLAGS_FOR_TARGET" = x; then
+   if test "x${is_cross_compiler}" = xyes; then
+-    CXXFLAGS_FOR_TARGET="-g -O2"
++    CXXFLAGS_FOR_TARGET="-g1 -O2"
+   else
+     CXXFLAGS_FOR_TARGET=$CXXFLAGS
+     case " $CXXFLAGS " in
