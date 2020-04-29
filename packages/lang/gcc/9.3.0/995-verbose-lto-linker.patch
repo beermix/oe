@@ -1,0 +1,97 @@
+# DP: Emit some stderr output while doing the LTO Links
+
+Index: b/src/gcc/lock-and-run.sh
+===================================================================
+--- a/gcc/lock-and-run.sh
++++ b/gcc/lock-and-run.sh
+@@ -1,7 +1,8 @@
+-#! /bin/sh
++#! /bin/bash
+ # Shell-based mutex using mkdir.
+ 
+ lockdir="$1" prog="$2"; shift 2 || exit 1
++cmd=$(echo $prog "$@" | sed 's,^[^ ]*/,,;s, .*\( -o [^ ]*\) .*,\1,')
+ 
+ # Remember when we started trying to acquire the lock.
+ count=0
+@@ -11,24 +12,72 @@ trap 'rm -r "$lockdir" lock-stamp.$$' 0
+ 
+ until mkdir "$lockdir" 2>/dev/null; do
+     # Say something periodically so the user knows what's up.
+-    if [ `expr $count % 30` = 0 ]; then
++    if [ `expr $count % 60` = 0 ]; then
+ 	# Reset if the lock has been renewed.
+ 	if [ -n "`find \"$lockdir\" -newer lock-stamp.$$`" ]; then
+ 	    touch lock-stamp.$$
+ 	    count=1
+-	# Steal the lock after 5 minutes.
+-	elif [ $count = 300 ]; then
+-	    echo removing stale $lockdir >&2
++	# Steal the lock after 30 minutes.
++	elif [ $count = 1800 ]; then
++	    echo "removing stale $lockdir ($cmd)" >&2
+ 	    rm -r "$lockdir"
+ 	else
+-	    echo waiting to acquire $lockdir >&2
++	    echo "waiting to acquire $lockdir ($cmd)" >&2
+ 	fi
+     fi
+-    sleep 1
+-    count=`expr $count + 1`
++    sleep 6
++    count=`expr $count + 6`
+ done
+ 
+ echo $prog "$@"
+-$prog "$@"
++$prog "$@" &
++pid=$!
++
++count=0
++# once the "stale" locks are released, everything runs in
++# parallel, so be gentle with the timeout
++max_count=$((10 * 60 * 60))
++
++while true; do
++    status=$(jobs -l | sed -n "/ $pid /s/^.* $pid //p")
++    case "x$status" in
++    xRunning*)
++	: echo >&2 "running ..."
++	;;
++    xExit*)
++	: echo >&2 "exit ..."
++	rv=$(echo $status | awk '{print $2}')
++	break
++	;;
++    xDone*)
++	rv=0
++	break
++	;;
++    x)
++	: echo >&2 "??? ..."
++	pstatus=$(ps $pid)
++	if [ "$?" -ne 0 ]; then
++	    rv=0
++	    break
++	fi
++	;;
++    *)
++	echo >&2 "$(basename $0): PID $pid ($cmd): unknown: $status"
++	rv=48
++	break
++    esac
++    sleep 2
++    count=$(($count + 6))
++    if [ "$(($count % 300))" -eq 0 ]; then
++	echo >&2 "$(basename $0): PID $pid ($cmd) running for $count seconds"
++    fi
++    if [ $count -ge $max_count ]; then
++	echo >&2 "$(basename $0): PID $pid ($cmd) timeout after $count seconds"
++	kill -1 $pid
++	rv=47
++    fi
++done
++echo >&2 "$(basename $0): PID $pid ($cmd) finished after $count seconds"
+ 
+ # The trap runs on exit.
++exit $rv
