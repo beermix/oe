@@ -1,0 +1,15 @@
+Add dummy GLIBC_2.30 symbol version used in SHLIB_COMPAT checks
+
+diff --git a/nss/Versions b/nss/Versions
+index db8c8877202fbcd1..24efd56601127804 100644
+--- a/nss/Versions
++++ b/nss/Versions
+@@ -9,6 +9,8 @@ libc {
+   }
+   GLIBC_2.27 {
+   }
++  GLIBC_2.30 {
++  }
+   GLIBC_PRIVATE {
+     _nss_files_parse_grent; _nss_files_parse_pwent; _nss_files_parse_spent;
+     __nss_disable_nscd; __nss_lookup_function; _nss_files_parse_sgent;

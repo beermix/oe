@@ -1,0 +1,69 @@
+diff --git a/lib/tty/key.c b/lib/tty/key.c
+index 1706755f3..96cd69517 100644
+Index: lib/tty/key.c
+===================================================================
+--- a/lib/tty/key.c
++++ b/lib/tty/key.c
+@@ -2127,8 +2127,12 @@ tty_get_event (struct Gpm_Event *event, gboolean redo_event, gboolean block)
+ #endif /* KEY_MOUSE */
+                           || c == MCKEY_EXTENDED_MOUSE))
+     {
+-        /* Mouse event */
+-        xmouse_get_event (event, c == MCKEY_EXTENDED_MOUSE);
++        /* Mouse event. See tickets 2956 and 3954 for extended mode detection. */
++        xmouse_get_event (event, c == MCKEY_EXTENDED_MOUSE
++#ifdef KEY_MOUSE
++                                 || (c == KEY_MOUSE && xmouse_seq == NULL && xmouse_extended_seq != NULL)
++#endif /* KEY_MOUSE */
++                                 );
+         c = (event->type != 0) ? EV_MOUSE : EV_NONE;
+     }
+     else if (c == MCKEY_BRACKETED_PASTING_START)
+diff --git a/lib/tty/mouse.c b/lib/tty/mouse.c
+index e7616a74f..bfc94ed70 100644
+Index: lib/tty/mouse.c
+===================================================================
+--- a/lib/tty/mouse.c
++++ b/lib/tty/mouse.c
+@@ -90,8 +90,14 @@ init_mouse (void)
+ 
+     case MOUSE_XTERM_NORMAL_TRACKING:
+     case MOUSE_XTERM_BUTTON_EVENT_TRACKING:
+-        define_sequence (MCKEY_MOUSE, xmouse_seq, MCKEY_NOACTION);
+-        define_sequence (MCKEY_EXTENDED_MOUSE, xmouse_extended_seq, MCKEY_NOACTION);
++        if (xmouse_seq != NULL)
++        {
++            define_sequence (MCKEY_MOUSE, xmouse_seq, MCKEY_NOACTION);
++        }
++        if (xmouse_extended_seq != NULL)
++        {
++            define_sequence (MCKEY_EXTENDED_MOUSE, xmouse_extended_seq, MCKEY_NOACTION);
++        }
+         break;
+ 
+     default:
+diff --git a/lib/tty/tty.c b/lib/tty/tty.c
+index 611a80b89..a02c004c3 100644
+Index: lib/tty/tty.c
+===================================================================
+--- a/lib/tty/tty.c
++++ b/lib/tty/tty.c
+@@ -361,9 +361,17 @@ tty_init_xterm_support (gboolean is_xterm)
+         }
+     }
+ 
+-    /* No termcap for SGR extended mouse (yet), hardcode it for now */
++    /* There's only one termcap entry "kmous", typically containing "\E[M" or "\E[<".
++     * We need the former in xmouse_seq, the latter in xmouse_extended_seq.
++     * See tickets 2956 and 3954 for details. */
+     if (xmouse_seq != NULL)
++    {
++        if (strcmp (xmouse_seq, ESC_STR "[<") == 0)
++        {
++            xmouse_seq = NULL;
++        }
+         xmouse_extended_seq = ESC_STR "[<";
++    }
+ }
+ 
+ /* --------------------------------------------------------------------------------------------- */
