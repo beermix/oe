@@ -1,0 +1,313 @@
+commit a9368c34d70cef91ca59b09941f496df11d6b146
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Wed May 15 13:51:35 2019 +0200
+
+    nss: Turn __nss_database_lookup into a compatibility symbol
+    
+    The function uses the internal service_user type, so it is not
+    really usable from the outside of glibc.  Rename the function
+    to __nss_database_lookup2 for internal use, and change
+    __nss_database_lookup to always indicate failure to the caller.
+    
+    __nss_next already was a compatibility symbol.  The new
+    implementation always fails and no longer calls __nss_next2.
+    
+    unscd, the alternative nscd implementation, does not use
+    __nss_database_lookup, so it is not affected by this change.
+
+diff --git a/grp/initgroups.c b/grp/initgroups.c
+index b4c8633ea3aecf46..a22f33c934d395e0 100644
+--- a/grp/initgroups.c
++++ b/grp/initgroups.c
+@@ -79,12 +79,12 @@ internal_getgrouplist (const char *user, gid_t group, long int *size,
+ 
+   if (__nss_initgroups_database == NULL)
+     {
+-      if (__nss_database_lookup ("initgroups", NULL, "",
+-				 &__nss_initgroups_database) < 0)
++      if (__nss_database_lookup2 ("initgroups", NULL, "",
++				  &__nss_initgroups_database) < 0)
+ 	{
+ 	  if (__nss_group_database == NULL)
+-	    no_more = __nss_database_lookup ("group", NULL, DEFAULT_CONFIG,
+-					     &__nss_group_database);
++	    no_more = __nss_database_lookup2 ("group", NULL, DEFAULT_CONFIG,
++					      &__nss_group_database);
+ 
+ 	  __nss_initgroups_database = __nss_group_database;
+ 	}
+diff --git a/nscd/aicache.c b/nscd/aicache.c
+index cf9b91d14996aa9f..ff5d66870c8c3013 100644
+--- a/nscd/aicache.c
++++ b/nscd/aicache.c
+@@ -93,9 +93,9 @@ addhstaiX (struct database_dyn *db, int fd, request_header *req,
+   int herrno = 0;
+ 
+   if (hosts_database == NULL)
+-    no_more = __nss_database_lookup ("hosts", NULL,
+-				     "dns [!UNAVAIL=return] files",
+-				     &hosts_database);
++    no_more = __nss_database_lookup2 ("hosts", NULL,
++				      "dns [!UNAVAIL=return] files",
++				      &hosts_database);
+   else
+     no_more = 0;
+   nip = hosts_database;
+diff --git a/nscd/initgrcache.c b/nscd/initgrcache.c
+index 02823baac647406b..28e218243bb4a143 100644
+--- a/nscd/initgrcache.c
++++ b/nscd/initgrcache.c
+@@ -88,8 +88,8 @@ addinitgroupsX (struct database_dyn *db, int fd, request_header *req,
+   int no_more;
+ 
+   if (group_database == NULL)
+-    no_more = __nss_database_lookup ("group", NULL, DEFAULT_CONFIG,
+-				     &group_database);
++    no_more = __nss_database_lookup2 ("group", NULL, DEFAULT_CONFIG,
++				      &group_database);
+   else
+     no_more = 0;
+   nip = group_database;
+diff --git a/nscd/netgroupcache.c b/nscd/netgroupcache.c
+index 9a9783318b852703..cda276eadefbf69c 100644
+--- a/nscd/netgroupcache.c
++++ b/nscd/netgroupcache.c
+@@ -143,7 +143,7 @@ addgetnetgrentX (struct database_dyn *db, int fd, request_header *req,
+   *tofreep = NULL;
+ 
+   if (netgroup_database == NULL
+-      && __nss_database_lookup ("netgroup", NULL, NULL, &netgroup_database))
++      && __nss_database_lookup2 ("netgroup", NULL, NULL, &netgroup_database))
+     {
+       /* No such service.  */
+       cacheable = do_notfound (db, fd, req, key, &dataset, &total, &timeout,
+diff --git a/nss/Versions b/nss/Versions
+index 24efd56601127804..529d85ae5c7d8bd1 100644
+--- a/nss/Versions
++++ b/nss/Versions
+@@ -1,8 +1,10 @@
+ libc {
+   GLIBC_2.0 {
+-     # functions used in other libraries
++    __nss_configure_lookup;
++
++    # Functions exported as no-op compat symbols.
+     __nss_passwd_lookup; __nss_group_lookup; __nss_hosts_lookup; __nss_next;
+-    __nss_database_lookup; __nss_configure_lookup;
++    __nss_database_lookup;
+   }
+   GLIBC_2.2.2 {
+     __nss_hostname_digits_dots;
+@@ -17,7 +19,7 @@ libc {
+ 
+     __nss_passwd_lookup2; __nss_group_lookup2; __nss_hosts_lookup2;
+     __nss_services_lookup2; __nss_next2; __nss_lookup;
+-    __nss_hash;
++    __nss_hash; __nss_database_lookup2;
+   }
+ }
+ 
+diff --git a/nss/XXX-lookup.c b/nss/XXX-lookup.c
+index cb0900d68fac901e..bc5f91adeca5eddb 100644
+--- a/nss/XXX-lookup.c
++++ b/nss/XXX-lookup.c
+@@ -57,8 +57,8 @@ DB_LOOKUP_FCT (service_user **ni, const char *fct_name, const char *fct2_name,
+ 	       void **fctp)
+ {
+   if (DATABASE_NAME_SYMBOL == NULL
+-      && __nss_database_lookup (DATABASE_NAME_STRING, ALTERNATE_NAME_STRING,
+-				DEFAULT_CONFIG, &DATABASE_NAME_SYMBOL) < 0)
++      && __nss_database_lookup2 (DATABASE_NAME_STRING, ALTERNATE_NAME_STRING,
++				 DEFAULT_CONFIG, &DATABASE_NAME_SYMBOL) < 0)
+     return -1;
+ 
+   *ni = DATABASE_NAME_SYMBOL;
+diff --git a/nss/compat-lookup.c b/nss/compat-lookup.c
+index 636b1bf18415fbfb..79f7d96314b08262 100644
+--- a/nss/compat-lookup.c
++++ b/nss/compat-lookup.c
+@@ -16,11 +16,12 @@
+    License along with the GNU C Library; if not, see
+    <http://www.gnu.org/licenses/>.  */
+ 
++#include <nsswitch.h>
++
+ #include <shlib-compat.h>
+ #if SHLIB_COMPAT (libc, GLIBC_2_0, GLIBC_2_27)
+ 
+ # include <errno.h>
+-# include <nsswitch.h>
+ 
+ /* On i386, the function calling convention changed from the standard
+    ABI calling convention to three register parameters in glibc 2.8.
+@@ -40,3 +41,30 @@ strong_alias (__nss_passwd_lookup, __nss_hosts_lookup)
+ compat_symbol (libc, __nss_hosts_lookup, __nss_hosts_lookup, GLIBC_2_0);
+ 
+ #endif /* SHLIB_COMPAT */
++
++#if SHLIB_COMPAT (libc, GLIBC_2_0, GLIBC_2_30)
++
++/* These functions were exported under a non-GLIBC_PRIVATE version,
++   even though it is not usable externally due to the service_user
++   type dependency.  */
++
++int
++attribute_compat_text_section
++__nss_next (service_user **ni, const char *fct_name, void **fctp, int status,
++            int all_values)
++{
++  return -1;
++}
++compat_symbol (libc, __nss_next, __nss_next, GLIBC_2_0);
++
++int
++attribute_compat_text_section
++__nss_database_lookup (const char *database, const char *alternate_name,
++                       const char *defconfig, service_user **ni)
++{
++  *ni = NULL;
++  return -1;
++}
++compat_symbol (libc, __nss_database_lookup, __nss_database_lookup, GLIBC_2_0);
++
++#endif /* SHLIB_COMPAT */
+diff --git a/nss/nss_compat/compat-grp.c b/nss/nss_compat/compat-grp.c
+index 8ee0799a569fea9c..91d2308e7a7aae6e 100644
+--- a/nss/nss_compat/compat-grp.c
++++ b/nss/nss_compat/compat-grp.c
+@@ -78,7 +78,7 @@ static bool in_blacklist (const char *, int, ent_t *);
+ static void
+ init_nss_interface (void)
+ {
+-  if (__nss_database_lookup ("group_compat", NULL, "nis", &ni) >= 0)
++  if (__nss_database_lookup2 ("group_compat", NULL, "nis", &ni) >= 0)
+     {
+       nss_setgrent = __nss_lookup_function (ni, "setgrent");
+       nss_getgrnam_r = __nss_lookup_function (ni, "getgrnam_r");
+diff --git a/nss/nss_compat/compat-initgroups.c b/nss/nss_compat/compat-initgroups.c
+index 52b9ce2b99771be3..02baccef3057587a 100644
+--- a/nss/nss_compat/compat-initgroups.c
++++ b/nss/nss_compat/compat-initgroups.c
+@@ -89,7 +89,7 @@ init_nss_interface (void)
+ 
+   /* Retest.  */
+   if (ni == NULL
+-      && __nss_database_lookup ("group_compat", NULL, "nis", &ni) >= 0)
++      && __nss_database_lookup2 ("group_compat", NULL, "nis", &ni) >= 0)
+     {
+       nss_initgroups_dyn = __nss_lookup_function (ni, "initgroups_dyn");
+       nss_getgrnam_r = __nss_lookup_function (ni, "getgrnam_r");
+diff --git a/nss/nss_compat/compat-pwd.c b/nss/nss_compat/compat-pwd.c
+index 2a39fd08b7ed6581..4434e11e4f2212ef 100644
+--- a/nss/nss_compat/compat-pwd.c
++++ b/nss/nss_compat/compat-pwd.c
+@@ -88,7 +88,7 @@ static bool in_blacklist (const char *, int, ent_t *);
+ static void
+ init_nss_interface (void)
+ {
+-  if (__nss_database_lookup ("passwd_compat", NULL, "nis", &ni) >= 0)
++  if (__nss_database_lookup2 ("passwd_compat", NULL, "nis", &ni) >= 0)
+     {
+       nss_setpwent = __nss_lookup_function (ni, "setpwent");
+       nss_getpwnam_r = __nss_lookup_function (ni, "getpwnam_r");
+diff --git a/nss/nss_compat/compat-spwd.c b/nss/nss_compat/compat-spwd.c
+index 4e4980fd78101484..15a3f702ebfe0a16 100644
+--- a/nss/nss_compat/compat-spwd.c
++++ b/nss/nss_compat/compat-spwd.c
+@@ -85,8 +85,8 @@ static bool in_blacklist (const char *, int, ent_t *);
+ static void
+ init_nss_interface (void)
+ {
+-  if (__nss_database_lookup ("shadow_compat", "passwd_compat",
+-			     "nis", &ni) >= 0)
++  if (__nss_database_lookup2 ("shadow_compat", "passwd_compat",
++			      "nis", &ni) >= 0)
+     {
+       nss_setspent = __nss_lookup_function (ni, "setspent");
+       nss_getspnam_r = __nss_lookup_function (ni, "getspnam_r");
+diff --git a/nss/nsswitch.c b/nss/nsswitch.c
+index 3d828f9a21a5dbb4..c4a9ffb5750436ad 100644
+--- a/nss/nsswitch.c
++++ b/nss/nsswitch.c
+@@ -115,8 +115,8 @@ static void (*nscd_init_cb) (size_t, struct traced_file *);
+ /* -1 == database not found
+     0 == database entry pointer stored */
+ int
+-__nss_database_lookup (const char *database, const char *alternate_name,
+-		       const char *defconfig, service_user **ni)
++__nss_database_lookup2 (const char *database, const char *alternate_name,
++			const char *defconfig, service_user **ni)
+ {
+   /* Prevent multiple threads to change the service table.  */
+   __libc_lock_lock (lock);
+@@ -185,7 +185,7 @@ __nss_database_lookup (const char *database, const char *alternate_name,
+ 
+   return *ni != NULL ? 0 : -1;
+ }
+-libc_hidden_def (__nss_database_lookup)
++libc_hidden_def (__nss_database_lookup2)
+ 
+ 
+ /* -1 == not found
+@@ -260,16 +260,6 @@ __nss_next2 (service_user **ni, const char *fct_name, const char *fct2_name,
+ }
+ libc_hidden_def (__nss_next2)
+ 
+-
+-int
+-attribute_compat_text_section
+-__nss_next (service_user **ni, const char *fct_name, void **fctp, int status,
+-	    int all_values)
+-{
+-  return __nss_next2 (ni, fct_name, NULL, fctp, status, all_values);
+-}
+-
+-
+ int
+ __nss_configure_lookup (const char *dbname, const char *service_line)
+ {
+@@ -835,7 +825,7 @@ nss_load_all_libraries (const char *service, const char *def)
+ {
+   service_user *ni = NULL;
+ 
+-  if (__nss_database_lookup (service, NULL, def, &ni) == 0)
++  if (__nss_database_lookup2 (service, NULL, def, &ni) == 0)
+     while (ni != NULL)
+       {
+ 	nss_load_library (ni);
+diff --git a/nss/nsswitch.h b/nss/nsswitch.h
+index 475e007e33790ea3..79a874e9d66f383b 100644
+--- a/nss/nsswitch.h
++++ b/nss/nsswitch.h
+@@ -125,10 +125,10 @@ extern bool __nss_database_custom[NSS_DBSIDX_max] attribute_hidden;
+    If there is no configuration for this database in the file,
+    parse a service list from DEFCONFIG and use that.  More
+    than one function can use the database.  */
+-extern int __nss_database_lookup (const char *database,
+-				  const char *alternative_name,
+-				  const char *defconfig, service_user **ni);
+-libc_hidden_proto (__nss_database_lookup)
++extern int __nss_database_lookup2 (const char *database,
++				   const char *alternative_name,
++				   const char *defconfig, service_user **ni);
++libc_hidden_proto (__nss_database_lookup2)
+ 
+ /* Put first function with name FCT_NAME for SERVICE in FCTP.  The
+    position is remembered in NI.  The function returns a value < 0 if
+diff --git a/sysdeps/posix/getaddrinfo.c b/sysdeps/posix/getaddrinfo.c
+index aa054b620f2af75e..64f2ea7261902525 100644
+--- a/sysdeps/posix/getaddrinfo.c
++++ b/sysdeps/posix/getaddrinfo.c
+@@ -737,9 +737,9 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ #endif
+ 
+ 	  if (__nss_hosts_database == NULL)
+-	    no_more = __nss_database_lookup ("hosts", NULL,
+-					     "dns [!UNAVAIL=return] files",
+-					     &__nss_hosts_database);
++	    no_more = __nss_database_lookup2 ("hosts", NULL,
++					      "dns [!UNAVAIL=return] files",
++					      &__nss_hosts_database);
+ 	  else
+ 	    no_more = 0;
+ 	  nip = __nss_hosts_database;

@@ -1,0 +1,32 @@
+# DP: ia64: relocation truncated to fit: GPREL22
+
+The symbol is exposed to C by dso_handle.h, and since it's a single
+8-byte pointer, it is just within the threshold for being in the small
+data (or bss) section, so code accessing it will use GP-relative
+addressing. Therefore we must put it in .sdata/.sbss in case our other
+data sections grow too big and we overflow the 22-bit relocation.
+
+libgcc/
+	* config/ia64/crtbegin.S (__dso_handle): Put in .sdata/.sbss
+	rather than .data/.bss so it can be accessed via gp-relative
+	addressing.
+---
+ libgcc/config/ia64/crtbegin.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/libgcc/config/ia64/crtbegin.S
++++ b/libgcc/config/ia64/crtbegin.S
+@@ -45,11 +45,11 @@ dtor_ptr:
+ 	.type __dso_handle,@object
+ 	.size __dso_handle,8
+ #ifdef SHARED
+-	.section .data
++	.section .sdata
+ __dso_handle:
+ 	data8	__dso_handle
+ #else
+-	.section .bss
++	.section .sbss
+ 	.align 8
+ __dso_handle:
+ 	.skip	8
