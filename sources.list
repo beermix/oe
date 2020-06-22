@@ -1,0 +1,43 @@
+# 
+
+# deb cdrom:[Debian GNU/Linux 10.3.0 _Buster_ - Official amd64 NETINST 20200208-12:07]/ buster main
+
+#deb cdrom:[Debian GNU/Linux 10.3.0 _Buster_ - Official amd64 NETINST 20200208-12:07]/ buster main
+
+#deb http://deb.debian.org/debian/ bullseye main non-free contrib
+#deb-src http://deb.debian.org/debian/ testing main non-free contrib
+
+deb http://deb.debian.org/debian/ bullseye main contrib non-free
+deb-src http://deb.debian.org/debian/ bullseye main contrib non-free
+
+#deb http://security.debian.org/debian-security bullseye/updates main
+#deb-src http://security.debian.org/debian-security bullseye/updates main
+
+# buster-updates, previously known as 'volatile'
+deb http://deb.debian.org/debian/ bullseye-updates main
+deb-src http://deb.debian.org/debian/ bullseye-updates main
+
+deb http://deb.debian.org/debian bullseye-backports main
+deb-src http://deb.debian.org/debian bullseye-backports main
+
+#deb http://deb.xanmod.org releases main
+
+#deb http://deb.xanmod.org releases main
+deb https://ookla.bintray.com/debian generic main
+
+#deb http://security.debian.org/debian-security bullseye/updates main contrib non-free
+#deb-src http://security.debian.org/debian-security bullseye/updates main contrib non-free
+
+# buster-updates, previously known as 'volatile'
+#deb http://deb.debian.org/debian/ bullseye-updates main contrib non-free
+#deb-src http://deb.debian.org/debian/ bullseye-updates main contrib non-free
+
+# buster-backports, previously on backports.debian.org
+#deb http://deb.debian.org/debian/ bulls-backports main contrib non-free
+#deb-src http://deb.debian.org/debian/ bullseye-backports main contrib non-free
+
+# This system was installed using small removable media
+# (e.g. netinst, live or single CD). The matching "deb cdrom"
+# entries were disabled at the end of the installation process.
+# For information about how to configure apt package sources,
+# see the sources.list(5) manual.
